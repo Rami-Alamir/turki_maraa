@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "345256923907",
+    "project_id": "new-turki",
+    "storage_bucket": "new-turki.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345256923907:android:d789856622acfcf3dbcf36",
+        "android_client_info": {
+          "package_name": "com.almaraa.new_turki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "345256923907-gt14j25g2pek13nvpisqel7rbcp3o1pt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.almaraa.new_turki",
+            "certificate_hash": "60dffe0f3fb3aed1d16c953da5a8ff305841b0b2"
+          }
+        },
+        {
+          "client_id": "345256923907-bu2nkvn6g7a5th7v16u9acf8fqfpjqbc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb06mLKjPh7uG2sNwj_XyYsuTzb8Ua7d8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "345256923907-bu2nkvn6g7a5th7v16u9acf8fqfpjqbc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
