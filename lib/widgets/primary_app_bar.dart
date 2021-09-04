@@ -4,10 +4,15 @@ import 'logo.dart';
 
 class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool back;
-  final bool search;
+  final bool action;
+  final IconData icon;
   final String? title;
 
-  const PrimaryAppBar({this.back = true, this.search = false, this.title});
+  const PrimaryAppBar(
+      {this.back = true,
+      this.action = false,
+      this.title,
+      this.icon = Icons.notifications_active_outlined});
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +30,28 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         leading: Visibility(
           visible: back,
-          child: IconButton(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            icon: Icon(Icons.arrow_back_ios,
-                color: Theme.of(context).primaryColor),
-            onPressed: () => Navigator.of(context).pop(),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              width: 55,
+              height: 66,
+              child: IconButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                icon: Icon(Icons.arrow_back_ios,
+                    color: Theme.of(context).primaryColor),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
           ),
         ),
         actions: [
           Visibility(
-            visible: search,
+            visible: action,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(
-                RA7ICONS.search,
+                icon,
                 size: 25,
                 color: Theme.of(context).primaryColor,
               ),

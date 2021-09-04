@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
 import 'package:new_turki/models/category_data.dart';
-import 'package:new_turki/screens/cart/shopping_cart.dart';
-import 'package:new_turki/screens/home_food.dart';
+import 'package:new_turki/provider/app_provider.dart';
+import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/widgets/category_app_bar.dart';
 import 'package:new_turki/widgets/category_card.dart';
-import 'package:new_turki/widgets/turki_drawer.dart';
+import 'package:provider/provider.dart';
 
 class Home2 extends StatefulWidget {
   final GlobalKey<ScaffoldState> parentScaffoldKey;
@@ -22,6 +21,13 @@ class _HomeState extends State<Home2> {
   final _advancedDrawerController = AdvancedDrawerController();
 
   @override
+  void initState() {
+    final appProvider = Provider.of<AppProvider>(context, listen: false);
+    appProvider.context = context;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final List<CategoryData> list = [
       CategoryData(
@@ -29,7 +35,7 @@ class _HomeState extends State<Home2> {
           image: "assets/images/i4.png",
           //  'https://storage.googleapis.com/tm-zopsmart-uploads/320/20201031/210840_1-20201031-233123.png',
           // 'https://purepng.com/public/uploads/large/purepng.com-meatmeatanimalfleshchicken-1411527785185fjjh1.png',
-          color: Color.fromRGBO(155, 0, 0, 1),
+          color: Color.fromRGBO(165, 0, 0, 1),
           color2: Theme.of(context).primaryColor,
           title: 'لحوم'),
       CategoryData(

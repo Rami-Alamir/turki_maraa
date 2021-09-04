@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/screens/profile/about.dart';
 import 'package:new_turki/screens/profile/faq.dart';
 import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/utilities/social_icons_icons.dart';
+import 'package:new_turki/widgets/primary_app_bar.dart';
 import 'package:new_turki/widgets/profile/profile_footer.dart';
 import 'package:new_turki/widgets/profile/profile_header.dart';
 import 'package:new_turki/widgets/profile/profile_row.dart';
@@ -19,19 +21,16 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PrimaryAppBar(
+        back: false,
+        action: true,
+        title: 'حسابي',
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: ListView(
-          padding: EdgeInsets.only(top: 60),
+          padding: EdgeInsets.only(top: 15),
           children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text('حسابي',
-                  style: TextStyle(
-                      color: Color.fromRGBO(132, 15, 15, 1),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700)),
-            ),
             ProfileHeader(),
             Container(width: 120, child: ProfileState()),
             Padding(
@@ -93,7 +92,12 @@ class _ProfileState extends State<Profile> {
                 icon: Icons.question_answer_outlined,
                 title: 'الأسئلة الشائعة'),
             ProfileRow(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => About()),
+                );
+              },
               icon: RA7ICONS.info,
               title: 'عن تركي للذبائح',
             ),

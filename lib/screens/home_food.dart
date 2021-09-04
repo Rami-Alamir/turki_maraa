@@ -77,7 +77,7 @@ class _HomeFoodState extends State<HomeFood> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PrimaryAppBar(
-        search: true,
+        action: true,
       ),
       body: ScrollConfiguration(
         behavior: Behavior(),

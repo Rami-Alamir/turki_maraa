@@ -3,6 +3,7 @@ import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/cart/cart_card.dart';
 import 'package:new_turki/widgets/cart/cart_card2.dart';
 import 'package:new_turki/widgets/cart/promo_code.dart';
+import 'package:new_turki/widgets/primary_app_bar.dart';
 import 'package:new_turki/widgets/rounded_rectangle_button.dart';
 import 'invoice.dart';
 
@@ -17,23 +18,21 @@ class _ShoppingCartState extends State<ShoppingCart> {
   bool selected = false;
   final TextEditingController _controller = TextEditingController();
 
+  var value = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PrimaryAppBar(
+        title: 'سلة التسوق',
+        back: false,
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: ListView(
-          padding: EdgeInsets.only(top: 60),
+          padding: EdgeInsets.only(top: 15),
           children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text('سلة التسوق',
-                  style: TextStyle(
-                      color: Color.fromRGBO(132, 15, 15, 1),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700)),
-            ),
-            CartCard2(
+            CartCard(
               image:
                   'https://cdn.salla.sa/SUhBOwA5SymmGRzaVk9u7fLhryzdmyz30kmBPBfx.jpg',
               price: 1450,
@@ -41,7 +40,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
               qty: 1,
               title: 'نعيمي',
             ),
-            CartCard2(
+            CartCard(
               image:
                   'https://cdn.salla.sa/BZO1UQmddN80gCDYphVW5aBCCnwUAx2vSaafilUV.jpeg',
               price: 50,
@@ -49,7 +48,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
               qty: 1,
               title: 'كبدة عجل طازجة',
             ),
-            CartCard2(
+            CartCard(
               image:
                   'https://cdn.salla.sa/URkxvAaSbSWAQyXEGLub9jJk2jwZykt2suJau981.jpeg',
               price: 180,
@@ -203,6 +202,27 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   ),
                 )
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 28.0, right: 5),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: this.value,
+                    checkColor: Colors.white, // color of tick Mark
+                    activeColor: Theme.of(context).primaryColor,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        this.value = value!;
+                      });
+                    },
+                  ), //Checkbox
+                  Text(
+                    'استخدم رصيدي (100.00 ر.س)',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(

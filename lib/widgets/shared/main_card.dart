@@ -32,7 +32,9 @@ class MainCard extends StatelessWidget {
           child: ClipRRect(
               borderRadius: BorderRadius.all(const Radius.circular(6.5)),
               child: Container(
-                  width: SizeConfig.screenWidth, height: height, child: child)),
+                  constraints: BoxConstraints(minHeight: height),
+                  width: SizeConfig.screenWidth,
+                  child: child)),
         ),
       ),
     );

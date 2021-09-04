@@ -27,10 +27,8 @@ class TagsList extends StatelessWidget {
                 padding: EdgeInsetsDirectional.fromSTEB(15.0, 5.0, 0.0, 10.0),
                 child: Text(
                   title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      ?.copyWith(fontSize: _width > 600 ? 24 : 16),
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      fontSize: _width > 600 ? 24 : 16, color: Colors.black),
                 ),
               ),
               Container(

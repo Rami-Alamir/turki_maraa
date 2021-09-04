@@ -29,7 +29,7 @@ class RoundedRectangleButton extends StatelessWidget {
         highlightColor: Colors.transparent,
         fillColor: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(const Radius.circular(10))),
+            borderRadius: BorderRadius.all(const Radius.circular(5))),
         child: Text(
           title,
           textAlign: TextAlign.center,

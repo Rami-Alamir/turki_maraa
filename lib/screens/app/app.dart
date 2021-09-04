@@ -8,6 +8,7 @@ import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/utilities/tab_Item.dart';
 import 'package:flutter/material.dart';
+import 'package:new_turki/widgets/shared/badge.dart';
 import 'package:new_turki/widgets/shared/turki_drawer.dart';
 
 //used to build all in one bottom nav bar
@@ -61,87 +62,148 @@ class AppState extends State<App> {
 
   final selectedItemColor = Color.fromRGBO(138, 197, 67, 1);
   final unselectedItemColor = Color.fromRGBO(74, 74, 74, 1);
-  Future<bool> getDrawer() async {
-    final isFirstRouteInCurrentTab =
-        !await tabs[currentTab].key.currentState!.maybePop();
-    return isFirstRouteInCurrentTab;
-  }
-
-  final _advancedDrawerController = AdvancedDrawerController();
 
   @override
   Widget build(BuildContext context) {
+    print(tabs[0].key.currentState?.canPop());
     SizeConfig().init(context);
+    print(index.toString());
     // WillPopScope handle android back button
-    return TurkiDrawer(
-      child: WillPopScope(
-        onWillPop: () async {
-          final isFirstRouteInCurrentTab =
-              !await tabs[currentTab].key.currentState!.maybePop();
-          if (isFirstRouteInCurrentTab) {
-            // if not on the 'main' tab
-            if (currentTab != 0) {
-              // select 'main' tab
-              _selectTab(0);
-              // back button handled by app
-              return false;
-            }
-          }
-          // let system handle back button if we're on the first route
-          return isFirstRouteInCurrentTab;
-        },
-        child: Scaffold(
-            key: _scaffoldKey,
-            //   drawer: getDrawer() ? TurkiDrawer() : null,
-
-            // indexed stack shows only one child
-            body: Container(
-              child: IndexedStack(
-                index: currentTab,
-                children: tabs.map((e) => e.page).toList(),
-              ),
+    return (!(tabs[0].key.currentState?.canPop() ?? false) && index == 0)
+        ? TurkiDrawer(
+            child: WillPopScope(
+              onWillPop: () async {
+                final isFirstRouteInCurrentTab =
+                    !await tabs[currentTab].key.currentState!.maybePop();
+                if (isFirstRouteInCurrentTab) {
+                  // if not on the 'main' tab
+                  if (currentTab != 0) {
+                    // select 'main' tab
+                    _selectTab(0);
+                    // back button handled by app
+                    return false;
+                  }
+                }
+                // let system handle back button if we're on the first route
+                return isFirstRouteInCurrentTab;
+              },
+              child: Scaffold(
+                  key: _scaffoldKey,
+                  // indexed stack shows only one child
+                  body: Container(
+                    child: IndexedStack(
+                      index: currentTab,
+                      children: tabs.map((e) => e.page).toList(),
+                    ),
+                  ),
+                  bottomNavigationBar: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: BottomNavigationBar(
+                        backgroundColor: Colors.white10,
+                        type: BottomNavigationBarType.fixed,
+                        iconSize: 25,
+                        showUnselectedLabels: true,
+                        selectedItemColor: Theme.of(context).primaryColor,
+                        unselectedItemColor: Colors.black38,
+                        selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
+                        elevation: 0,
+                        unselectedLabelStyle:
+                            TextStyle(fontSize: 10, height: 2),
+                        currentIndex: index,
+                        items: [
+                          BottomNavigationBarItem(
+                            icon: Icon(RA7ICONS.home),
+                            label: "الرئيسية",
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(RA7ICONS.comment),
+                            label: "مساعدة",
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(RA7ICONS.shopping_cart_empty_side_view),
+                            label: "السلة",
+                          ),
+                          BottomNavigationBarItem(
+                              icon: Icon(RA7ICONS.box__2_), label: "طلباتي"),
+                          BottomNavigationBarItem(
+                            icon: Icon(RA7ICONS.user),
+                            label: "حسابي",
+                          ),
+                        ],
+                        onTap: (index) {
+                          this.index = index;
+                          _selectTab(index);
+                        }),
+                  )),
             ),
-            bottomNavigationBar: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
-              child: BottomNavigationBar(
-                  backgroundColor: Colors.white10,
-                  type: BottomNavigationBarType.fixed,
-                  iconSize: 25,
-                  showUnselectedLabels: true,
-                  selectedItemColor: Theme.of(context).primaryColor,
-                  unselectedItemColor: Colors.black38,
-                  selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
-                  elevation: 0,
-                  unselectedLabelStyle: TextStyle(fontSize: 10, height: 2),
-                  currentIndex: index,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Icon(RA7ICONS.home),
-                      label: "الرئيسية",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(RA7ICONS.comment),
-                      label: "مساعدة",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(RA7ICONS.shopping_cart_empty_side_view),
-                      label: "السلة",
-                    ),
-                    BottomNavigationBarItem(
-                        icon: Icon(RA7ICONS.box__2_), label: "طلباتي"),
-                    BottomNavigationBarItem(
-                      icon: Icon(RA7ICONS.user),
-                      label: "حسابي",
-                    ),
-                  ],
-                  onTap: (index) {
-                    this.index = index;
-                    _selectTab(index);
-                  }),
-            )),
-      ),
-    );
+          )
+        : WillPopScope(
+            onWillPop: () async {
+              final isFirstRouteInCurrentTab =
+                  !await tabs[currentTab].key.currentState!.maybePop();
+              if (isFirstRouteInCurrentTab) {
+                // if not on the 'main' tab
+                if (currentTab != 0) {
+                  // select 'main' tab
+                  _selectTab(0);
+                  // back button handled by app
+                  return false;
+                }
+              }
+              // let system handle back button if we're on the first route
+              return isFirstRouteInCurrentTab;
+            },
+            child: Scaffold(
+                key: _scaffoldKey,
+                // indexed stack shows only one child
+                body: Container(
+                  child: IndexedStack(
+                    index: currentTab,
+                    children: tabs.map((e) => e.page).toList(),
+                  ),
+                ),
+                bottomNavigationBar: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: BottomNavigationBar(
+                      backgroundColor: Colors.white10,
+                      type: BottomNavigationBarType.fixed,
+                      iconSize: 25,
+                      showUnselectedLabels: true,
+                      selectedItemColor: Theme.of(context).primaryColor,
+                      unselectedItemColor: Colors.black38,
+                      selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
+                      elevation: 0,
+                      unselectedLabelStyle: TextStyle(fontSize: 10, height: 2),
+                      currentIndex: index,
+                      items: [
+                        BottomNavigationBarItem(
+                          icon: Icon(RA7ICONS.home),
+                          label: "الرئيسية",
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(RA7ICONS.comment),
+                          label: "مساعدة",
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(RA7ICONS.shopping_cart_empty_side_view),
+                          label: "السلة",
+                        ),
+                        BottomNavigationBarItem(
+                            icon: Icon(RA7ICONS.box__2_), label: "طلباتي"),
+                        BottomNavigationBarItem(
+                          icon: Icon(RA7ICONS.user),
+                          label: "حسابي",
+                        ),
+                      ],
+                      onTap: (index) {
+                        this.index = index;
+                        _selectTab(index);
+                      }),
+                )),
+          );
   }
 }

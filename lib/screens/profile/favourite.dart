@@ -36,21 +36,41 @@ class _FavouriteState extends State<Favourite> {
             // ),
             FavouriteCard(
               image:
-                  'https://cdn.salla.sa/SUhBOwA5SymmGRzaVk9u7fLhryzdmyz30kmBPBfx.jpg',
+                  'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
               price: 1450,
-              title: 'نعيمي',
+              title: 'حري',
+              subtitle:
+                  'خروف حري وسط من إنتاج مزرعتنا وزنه بعد الذبح لا يقل عن 14 كيلو',
             ),
-            Divider(
-              height: 1,
-              color: Colors.grey.withOpacity(0.4),
-              endIndent: 10,
-              indent: 10,
+
+            FavouriteCard(
+              image:
+                  'https://cdn.salla.sa/j1teZ7YCaJKLWZu7Qsol4cGva1dz9VMt8jkatYIq.jpeg',
+              price: 50,
+              title: 'أوصال عجل',
+              subtitle: 'أوصال عجل مع دهن خفيف',
             ),
             FavouriteCard(
               image:
-                  'https://cdn.salla.sa/BZO1UQmddN80gCDYphVW5aBCCnwUAx2vSaafilUV.jpeg',
+                  'https://cdn.salla.sa/3jpV0mrHh4FFTH61SSkavrFYqaLX6euK8wBUR70G.jpeg',
               price: 50,
-              title: 'كبدة عجل طازجة',
+              title: 'مفروم عجل بدون دهن',
+              subtitle:
+                  '(لحمة حمراء) يتم إختيارها حسب طلبكم من العجل (البقر) ويتم فرمها وتوزيعها في الأطباق حسب رغبتكم',
+            ),
+            FavouriteCard(
+              image:
+                  'https://cdn.salla.sa/HeMRLkpnfrIjtVzTu6twhTXqxgHENAG1SC09mcnQ.jpeg',
+              price: 99,
+              title: 'ستيك ريب اي',
+              subtitle: 'استمتع بشرائح اللحم الطازجة',
+            ),
+            FavouriteCard(
+              image:
+                  'https://cdn.salla.sa/j1teZ7YCaJKLWZu7Qsol4cGva1dz9VMt8jkatYIq.jpeg',
+              price: 50,
+              title: 'أوصال عجل',
+              subtitle: 'أوصال عجل مع دهن خفيف',
             ),
           ],
         ),

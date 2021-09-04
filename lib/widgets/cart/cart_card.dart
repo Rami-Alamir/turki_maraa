@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/screens/item_details.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/widgets/shared/main_container.dart';
+import 'package:new_turki/widgets/shared/main_card.dart';
 
 import '../rounded_rectangle_button.dart';
 
@@ -29,10 +29,11 @@ class CartCard extends StatelessWidget {
             MaterialPageRoute(builder: (context) => ItemDetails()),
           );
         },
-        child: MainContainer(
-          padding: const EdgeInsets.symmetric(vertical: 18.0),
+        child: MainCard(
+          padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 3),
+          height: 125,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Card(
                 elevation: 0,

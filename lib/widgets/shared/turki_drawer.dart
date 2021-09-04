@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:new_turki/provider/app_provider.dart';
+import 'package:new_turki/screens/profile/about.dart';
+import 'package:new_turki/screens/profile/faq.dart';
+import 'package:new_turki/screens/profile/favourite.dart';
+import 'package:new_turki/screens/profile/notification.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/utilities/social_icons_icons.dart';
 import 'package:provider/provider.dart';
 
-import '../logo.dart';
-
 class TurkiDrawer extends StatelessWidget {
-  final child;
-
+  final Widget child;
   TurkiDrawer({required this.child});
 
   @override
@@ -86,34 +87,30 @@ class TurkiDrawer extends StatelessWidget {
                     title: 'الرئيسية',
                   ),
                   drawerRow(
-                    onTap: () {},
+                    onTap: () {
+                      appProvider.navigateTo(Favourite());
+                    },
                     icon: Icons.favorite,
                     title: 'المفضلة',
                   ),
                   drawerRow(
-                    onTap: () {},
+                    onTap: () {
+                      appProvider.navigateTo(UserNotification());
+                    },
                     icon: Icons.notifications_active,
                     title: 'الاشعارات',
                   ),
-
-                  // Padding(
-                  //   padding: const EdgeInsets.all(15.0),
-                  //   child: Text(
-                  //     'المساعدة والدعم',
-                  //     style: TextStyle(
-                  //         fontWeight: FontWeight.w600,
-                  //         fontSize: 10,
-                  //         color: Colors.grey),
-                  //   ),
-                  // ),
-
                   drawerRow(
-                    onTap: () {},
+                    onTap: () {
+                      appProvider.navigateTo(Faq());
+                    },
                     icon: Icons.question_answer,
                     title: 'الأسئلة الشائعة',
                   ),
                   drawerRow(
-                    onTap: () {},
+                    onTap: () {
+                      appProvider.navigateTo(About());
+                    },
                     icon: Icons.info,
                     title: 'عن تركي للذبائح',
                   ),

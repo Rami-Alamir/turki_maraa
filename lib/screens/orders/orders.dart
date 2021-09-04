@@ -3,8 +3,9 @@ import 'package:new_turki/widgets/orders/order_card.dart';
 import 'package:new_turki/widgets/primary_app_bar.dart';
 
 class Orders extends StatefulWidget {
-  const Orders({Key? key}) : super(key: key);
+  final bool back;
 
+  const Orders({this.back = false});
   @override
   _OrdersState createState() => _OrdersState();
 }
@@ -18,7 +19,7 @@ class _OrdersState extends State<Orders> {
     return Scaffold(
       appBar: PrimaryAppBar(
         title: 'طلباتي',
-        back: false,
+        back: widget.back,
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),

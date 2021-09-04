@@ -27,7 +27,10 @@ class _ProfileStateState extends State<ProfileState> {
                 InkWell(
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Orders()),
+                    MaterialPageRoute(
+                        builder: (context) => Orders(
+                              back: true,
+                            )),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

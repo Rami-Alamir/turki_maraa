@@ -25,11 +25,13 @@ class Tag extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 6),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 6.0, horizontal: 15),
               child: Text(title.toString(),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline4?.copyWith(
-                      color: selected ? Colors.white : Colors.black45)),
+                      color: selected ? Colors.white : Colors.black45,
+                      fontSize: 14)),
             )),
       ),
     );

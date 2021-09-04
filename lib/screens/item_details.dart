@@ -22,7 +22,6 @@ class _ItemDetailsState extends State<ItemDetails> {
   @override
   Widget build(BuildContext context) {
     Scaffold.of(context).openEndDrawer();
-    print(widget.name!);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -118,7 +117,10 @@ class _ItemDetailsState extends State<ItemDetails> {
               children: [
                 Text(
                   'نعيمي',
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1!
+                      .copyWith(color: Colors.black),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 15.0),
@@ -129,17 +131,14 @@ class _ItemDetailsState extends State<ItemDetails> {
                         children: [
                           Text(
                             '1850',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1
-                                ?.copyWith(color: Colors.black),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                           Text(
                             'ريال',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1
-                                ?.copyWith(fontSize: 16, color: Colors.black),
+                            style:
+                                Theme.of(context).textTheme.subtitle1?.copyWith(
+                                      fontSize: 16,
+                                    ),
                           ),
                         ],
                       ),
@@ -164,28 +163,34 @@ class _ItemDetailsState extends State<ItemDetails> {
                     textAlign: TextAlign.justify,
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset(
-                              'assets/images/star.png',
-                              width: 20,
-                              height: 20,
+                Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                'assets/images/star.png',
+                                width: 20,
+                                height: 20,
+                              ),
                             ),
-                          ),
-                          Text('4.9')
-                        ],
+                            Text(
+                              '4.9',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
+                      Row(
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -195,27 +200,39 @@ class _ItemDetailsState extends State<ItemDetails> {
                               height: 20,
                             ),
                           ),
-                          Text('18-20')
+                          Text(
+                            '18-20 كيلو',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12),
+                          )
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset(
-                              'assets/images/fire.png',
-                              width: 20,
-                              height: 20,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                'assets/images/fire.png',
+                                width: 20,
+                                height: 20,
+                              ),
                             ),
-                          ),
-                          Text('4000')
-                        ],
+                            Text(
+                              '4000 سعرة حرارية',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
