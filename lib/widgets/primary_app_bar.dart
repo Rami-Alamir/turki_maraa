@@ -30,18 +30,15 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         leading: Visibility(
           visible: back,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
-              width: 55,
-              height: 66,
-              child: IconButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                icon: Icon(Icons.arrow_back_ios,
-                    color: Theme.of(context).primaryColor),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
+          child: Container(
+            width: 55,
+            height: 66,
+            child: IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              icon: Icon(Icons.arrow_back_ios,
+                  color: Theme.of(context).primaryColor),
+              onPressed: () => Navigator.of(context).pop(),
             ),
           ),
         ),

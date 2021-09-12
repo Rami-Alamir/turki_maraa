@@ -48,7 +48,7 @@ class TurkiDrawer extends StatelessWidget {
                   CircleAvatar(
                     radius: 30,
                     backgroundColor: Theme.of(context).primaryColor,
-                    child: Text('أ',
+                    child: Text('ر ا',
                         style: TextStyle(fontSize: 20, color: Colors.white)),
                   ),
                   Padding(
@@ -58,12 +58,12 @@ class TurkiDrawer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('أحمد ابراهيم',
+                        Text('رامي الأمير',
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black)),
-                        Text('0584560000',
+                        Text('0580809976',
                             style: TextStyle(
                                 fontSize: 14,
                                 height: 2,
@@ -129,26 +129,11 @@ class TurkiDrawer extends StatelessWidget {
                     icon: Icons.share,
                     title: 'مشاركة التطبيق',
                   ),
-                  // Divider(
-                  //   indent: 20,
-                  //   color: Colors.grey.withOpacity(0.35),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(15.0),
-                  //   child: Text(
-                  //     'الاعدادات',
-                  //     style: TextStyle(
-                  //         fontWeight: FontWeight.w600,
-                  //         fontSize: 10,
-                  //         color: Colors.grey),
-                  //   ),
-                  // ),
                   drawerRow(
                     onTap: () {},
                     icon: Icons.language,
                     title: 'English',
                   ),
-
                   drawerRow(
                     onTap: () {},
                     icon: Icons.brightness_1_rounded,
@@ -159,11 +144,6 @@ class TurkiDrawer extends StatelessWidget {
                     icon: Icons.brightness_3,
                     title: 'الوضع الليلي',
                   ),
-
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 28.0),
-                  //   child: Logo(),
-                  // ),
                 ],
               ),
             ),

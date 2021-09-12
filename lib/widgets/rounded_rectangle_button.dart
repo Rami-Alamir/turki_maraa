@@ -22,7 +22,9 @@ class RoundedRectangleButton extends StatelessWidget {
       padding: padding,
       child: RawMaterialButton(
         constraints: BoxConstraints.tight(Size(width, height)),
-        onPressed: onPressed(),
+        onPressed: () {
+          onPressed();
+        },
         elevation: 0.0,
         splashColor: Colors.transparent,
         focusElevation: 0,

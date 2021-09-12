@@ -4,9 +4,13 @@ class ProfileRow extends StatelessWidget {
   final String title;
   final IconData icon;
   final Function onTap;
+  final bool withDivider;
 
   const ProfileRow(
-      {required this.title, required this.icon, required this.onTap});
+      {required this.title,
+      required this.icon,
+      required this.onTap,
+      this.withDivider = true});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -55,10 +59,13 @@ class ProfileRow extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
-              indent: 10,
-              endIndent: 10,
-              color: Colors.grey.withOpacity(0.3),
+            Visibility(
+              visible: withDivider,
+              child: Divider(
+                indent: 10,
+                endIndent: 10,
+                color: Colors.grey.withOpacity(0.3),
+              ),
             )
           ],
         ),

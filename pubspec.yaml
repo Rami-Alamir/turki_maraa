@@ -26,6 +26,8 @@ dependencies:
   auto_size_text: ^3.0.0-nullsafety.0
   webview_flutter: ^2.0.12
   flutter_advanced_drawer: ^1.2.3
+  avatar_glow: ^2.0.1
+  country_code_picker: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -36,48 +38,33 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/t1.gif
     - assets/images/placeholder.png
     - assets/images/turki_white.png
     - assets/images/amazon.png
-    - assets/images/cash-back.png
     - assets/images/money.png
-    - assets/images/favourites.png
     - assets/images/medal.png
     - assets/images/turki_icon.png
     - assets/images/turki.png
     - assets/images/w.png
     - assets/images/turki2.png
     - assets/images/turki3.png
-    - assets/images/Sheep.png
     - assets/images/naimi.png
     - assets/images/hary.png
     - assets/images/scooter.png
-    - assets/images/pngpng-01.png
-    - assets/images/pngpng-02.png
-    - assets/images/pngpng-03.png
-    - assets/images/pngpng-04.png
     - assets/images/weight.png
     - assets/images/star.png
     - assets/images/fire.png
-    - assets/images/pngpng-05.png
-    - assets/images/pngpng-06.png
-    - assets/images/i1.png
-    - assets/images/i2.png
     - assets/images/i3.png
     - assets/images/i4.png
     - assets/images/i5.png
     - assets/images/q1.png
     - assets/images/q2.png
-    - assets/images/q3.jpg
-    - assets/images/q4.bmp
     - assets/images/q5.png
     - assets/images/q6.png
     - assets/images/applepay.png
     - assets/images/cod.png
     - assets/images/mada.png
-    - assets/images/mada2.png
-    - assets/images/mada3.png
-    - assets/images/master6.jpeg
     - assets/images/visa.png
     - assets/images/master.png
     - assets/language/ar.json

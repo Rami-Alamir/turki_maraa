@@ -13,7 +13,7 @@ class ProfileHeader extends StatelessWidget {
           CircleAvatar(
             radius: 35,
             backgroundColor: Theme.of(context).primaryColor,
-            child: Text('أ', style: TextStyle(fontSize: 20)),
+            child: Text('ر ا', style: TextStyle(fontSize: 20)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -21,12 +21,12 @@ class ProfileHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('أحمد ابراهيم',
+                Text('رامي الأمير',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Colors.black)),
-                Text('0584560000',
+                Text('0580809976',
                     style: TextStyle(
                         fontSize: 14,
                         height: 2,

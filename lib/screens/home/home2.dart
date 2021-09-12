@@ -106,11 +106,8 @@ class _HomeState extends State<Home2> {
   }
 
   void _handleMenuButtonPressed() {
-    print('ee');
-
     // NOTICE: Manage Advanced Drawer state through the Controller.
     // _advancedDrawerController.value = AdvancedDrawerValue.visible();
     _advancedDrawerController.showDrawer();
-    print('ee');
   }
 }

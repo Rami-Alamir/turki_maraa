@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/cart/cart_card.dart';
 import 'package:new_turki/widgets/cart/cart_card2.dart';
+import 'package:new_turki/widgets/cart/note.dart';
 import 'package:new_turki/widgets/cart/promo_code.dart';
 import 'package:new_turki/widgets/primary_app_bar.dart';
 import 'package:new_turki/widgets/rounded_rectangle_button.dart';
@@ -220,6 +221,20 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   Text(
                     'استخدم رصيدي (100.00 ر.س)',
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  right: 20, bottom: 10, left: 20, top: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Note(
+                    controller: _controller,
+                    promoStatus: -1,
                   ),
                 ],
               ),
