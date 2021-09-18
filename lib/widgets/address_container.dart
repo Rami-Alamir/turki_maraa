@@ -13,7 +13,9 @@ class AddressContainer extends StatelessWidget {
           Column(
             children: [
               Container(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).backgroundColor == Colors.black
+                    ? Theme.of(context).accentColor
+                    : Theme.of(context).primaryColor,
                 height: 35,
               ),
               Container(
@@ -30,10 +32,14 @@ class AddressContainer extends StatelessWidget {
                 height: 60,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(7)),
-                  color: Colors.white,
+                  color: Theme.of(context).backgroundColor,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
+                      color: Theme.of(context)
+                          .textTheme
+                          .subtitle2!
+                          .color!
+                          .withOpacity(0.3),
                       blurRadius: 6,
                       spreadRadius: 0.5,
                     )
@@ -51,7 +57,7 @@ class AddressContainer extends StatelessWidget {
                               .copyWith(fontSize: 14)),
                       Icon(
                         Icons.keyboard_arrow_down_rounded,
-                        color: Color.fromRGBO(87, 87, 87, 1),
+                        color: Theme.of(context).textTheme.subtitle2!.color,
                         size: 35,
                       )
                     ],

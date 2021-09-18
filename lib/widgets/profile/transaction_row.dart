@@ -13,8 +13,9 @@ class TransactionRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
-        elevation: 500,
-        shadowColor: Colors.grey.withOpacity(0.1),
+        elevation: 1,
+        shadowColor:
+            Theme.of(context).textTheme.headline4!.color!.withOpacity(0.1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         child: Container(
           width: SizeConfig.screenWidth,
@@ -24,7 +25,7 @@ class TransactionRow extends StatelessWidget {
               child: Container(
                   constraints: BoxConstraints(minHeight: 70),
                   width: SizeConfig.screenWidth,
-                  color: Colors.white,
+                  color: Theme.of(context).accentColor,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10.0, vertical: 5),
@@ -110,7 +111,7 @@ class TransactionRow extends StatelessWidget {
                                           '20//05/2021',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .subtitle2!
+                                              .headline4!
                                               .copyWith(
                                                   fontSize: 12,
                                                   fontWeight:

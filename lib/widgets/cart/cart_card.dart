@@ -43,11 +43,14 @@ class CartCard extends StatelessWidget {
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
                     ),
-                    child: Image.network(
-                      image,
-                      width: 110,
-                      height: 110,
-                      fit: BoxFit.fill,
+                    child: Container(
+                      color: Theme.of(context).accentColor,
+                      child: Image.network(
+                        image,
+                        width: 110,
+                        height: 110,
+                        fit: BoxFit.fill,
+                      ),
                     )),
               ),
               Padding(
@@ -69,43 +72,24 @@ class CartCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(title,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700)),
-                              // Padding(
-                              //   padding: const EdgeInsets.only(left: 15.0),
-                              //   child: Container(
-                              //     width: 17.5,
-                              //     height: 17.5,
-                              //     decoration: BoxDecoration(
-                              //       shape: BoxShape.circle,
-                              //       color: Colors.grey, // inner circle color
-                              //     ),
-                              //     child: Row(
-                              //       mainAxisAlignment: MainAxisAlignment.center,
-                              //       crossAxisAlignment:
-                              //           CrossAxisAlignment.center,
-                              //       children: [
-                              //         Text('X',
-                              //             style: TextStyle(
-                              //                 color: Colors.white,
-                              //                 fontSize: 10,
-                              //                 height: 1.3,
-                              //                 fontWeight: FontWeight.w700)),
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline1!
+                                      .copyWith(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700)),
                             ],
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5.0),
                             child: Text(subtitle,
-                                style: TextStyle(
-                                    height: 1.5,
-                                    color: Colors.black,
-                                    fontSize: 12)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1!
+                                    .copyWith(
+                                        height: 1.5,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.normal)),
                           ),
                         ],
                       ),
@@ -144,7 +128,6 @@ class CartCard extends StatelessWidget {
                             style:
                                 Theme.of(context).textTheme.headline1?.copyWith(
                                       fontSize: 14,
-                                      color: Colors.black,
                                     ),
                           ),
                         ],

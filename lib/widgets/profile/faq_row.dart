@@ -41,6 +41,7 @@ class _FaqRowState extends State<FaqRow> {
                 trailing: Icon(
                   selected ? Icons.remove : Icons.add,
                   size: 20,
+                  color: Theme.of(context).textTheme.headline6!.color,
                 ),
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
               ),

@@ -39,7 +39,8 @@ class SearchRow extends StatelessWidget {
                               elevation: 5,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0)),
-                              child: SizedBox(
+                              child: Container(
+                                color: Theme.of(context).accentColor,
                                 width: 60,
                                 height: 60,
                                 child: ClipRRect(
@@ -67,9 +68,10 @@ class SearchRow extends StatelessWidget {
                       AutoSizeText(
                         item.title!,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            fontSize: _width > 600 ? 18 : 14,
-                            color: Colors.black),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(fontSize: 14),
                         maxLines: 1,
                       ),
                     ],
@@ -78,7 +80,11 @@ class SearchRow extends StatelessWidget {
               ],
             ),
             Divider(
-              color: Colors.grey.withOpacity(0.3),
+              color: Theme.of(context)
+                  .textTheme
+                  .headline6!
+                  .color!
+                  .withOpacity(0.3),
             )
           ],
         ),

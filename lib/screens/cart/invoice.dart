@@ -33,11 +33,13 @@ class Invoice extends StatelessWidget {
             ),
           ),
           InvoiceRow(
+              fontColor: Theme.of(context).textTheme.headline4!.color!,
               title: 'order_total',
               value: '$subtotal ${AppLocalizations.of(context)!.tr('sr')}'),
           Visibility(
             visible: shipping > 0,
             child: InvoiceRow(
+                fontColor: Theme.of(context).textTheme.headline4!.color!,
                 title: 'delivery_fees',
                 value: '$shipping ${AppLocalizations.of(context)!.tr('sr')}'),
           ),
@@ -57,7 +59,11 @@ class Invoice extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Divider(
               height: 2,
-              color: Colors.grey,
+              color: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .color!
+                  .withOpacity(0.35),
               indent: 7,
               endIndent: 7,
             ),

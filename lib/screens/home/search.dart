@@ -52,10 +52,10 @@ class _SearchState extends State<Search> {
                   padding: const EdgeInsets.only(
                       top: 10.0, right: 30, left: 30, bottom: 20),
                   child: Text('X',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6!
+                          .copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
                 ),
               ),
             ],

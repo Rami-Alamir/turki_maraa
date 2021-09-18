@@ -22,16 +22,13 @@ class ProfileHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('رامي الأمير',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black)),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        )),
                 Text('0580809976',
-                    style: TextStyle(
-                        fontSize: 14,
-                        height: 2,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w500))
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                        fontSize: 14, height: 2, fontWeight: FontWeight.w500))
               ],
             ),
           )

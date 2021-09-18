@@ -56,7 +56,10 @@ class Indicator extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 10),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(fontWeight: FontWeight.normal, fontSize: 10),
             ),
           ),
         ),

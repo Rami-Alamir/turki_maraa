@@ -38,8 +38,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
                           'رقم الطلب: 54698#',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1!
+                              .copyWith(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                       ),
                     ],
@@ -70,11 +73,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                                         children: [
                                           Text(
                                             'تاريخ التوصيل',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: Colors.black
-                                                    .withOpacity(0.5)),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 12,
+                                                ),
                                           ),
                                           Text(
                                             '10/09/2021',
@@ -93,11 +98,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                                         children: [
                                           Text(
                                             'فترة التوصيل',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: Colors.black
-                                                    .withOpacity(0.5)),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 12,
+                                                ),
                                           ),
                                           Text(
                                             'فترة الظهر',
@@ -131,11 +138,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           children: [
                                             Text(
                                               'تاريخ الطلب',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12,
-                                                  color: Colors.black
-                                                      .withOpacity(0.5)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline5!
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12,
+                                                  ),
                                             ),
                                             Text(
                                               '1/9/2021',
@@ -154,11 +163,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           children: [
                                             Text(
                                               'النقاط المكتسبة',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12,
-                                                  color: Colors.black
-                                                      .withOpacity(0.5)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline5!
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12,
+                                                  ),
                                             ),
                                             Text(
                                               '4000 نقطة',
@@ -188,35 +199,24 @@ class _OrderDetailsState extends State<OrderDetails> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Indicator(
-                        //   title: 'تم ارسال الطلب',
-                        //   color: Theme.of(context).primaryColor,
-                        //   icon: Icons.check,
-                        // ),
-                        // Line(
-                        //     color1: Theme.of(context).primaryColor,
-                        //     color2: Theme.of(context).primaryColor),
                         Indicator(
                           title: 'تم تأكيد الطلب',
                           color: Theme.of(context).primaryColor,
                           color2: Theme.of(context).primaryColor,
                           icon: Icons.confirmation_num_outlined,
                         ),
-
                         Indicator(
                           title: 'جاري التجهيز',
                           color: Theme.of(context).primaryColor,
                           color2: Theme.of(context).primaryColor,
                           icon: Icons.sync_problem_sharp,
                         ),
-
                         Indicator(
                           title: 'اختبار الجودة',
                           color: Theme.of(context).primaryColor,
                           color2: Colors.amber,
                           icon: Icons.fact_check_outlined,
                         ),
-
                         Indicator(
                           title: 'جاري التوصيل',
                           color: Colors.amber,
@@ -241,7 +241,10 @@ class _OrderDetailsState extends State<OrderDetails> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
             child: Text(
               'عنوان التوصيل',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(fontWeight: FontWeight.bold, fontSize: 12),
             ),
           ),
           MainCard(
@@ -252,10 +255,10 @@ class _OrderDetailsState extends State<OrderDetails> {
               children: [
                 Icon(Icons.location_pin, color: Theme.of(context).primaryColor),
                 Text(' الياسمين طريق الملك عبدالعزيز',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: Colors.black.withOpacity(0.7))),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        )),
               ],
             )),
           ),
@@ -263,7 +266,10 @@ class _OrderDetailsState extends State<OrderDetails> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
             child: Text(
               'طريقة الدفع',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(fontWeight: FontWeight.bold, fontSize: 12),
             ),
           ),
           MainCard(
@@ -281,10 +287,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                 ),
                 Text(' أبل باي',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: Colors.black.withOpacity(0.7))),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        )),
               ],
             )),
           ),
@@ -292,7 +298,10 @@ class _OrderDetailsState extends State<OrderDetails> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
             child: Text(
               'تفاصيل الطلب',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(fontWeight: FontWeight.bold, fontSize: 12),
             ),
           ),
           MainCard(
@@ -305,10 +314,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                       const EdgeInsets.only(right: 15.0, top: 20, bottom: 10),
                   child: Text(
                     'عدد الاصناف (4)',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
                   ),
                 ),
                 OrderDetailsRow(

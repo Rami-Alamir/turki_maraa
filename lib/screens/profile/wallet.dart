@@ -78,7 +78,7 @@ class _UserWalletState extends State<UserWallet> {
                               style: Theme.of(context)
                                   .textTheme
                                   .headline1!
-                                  .copyWith(fontSize: 40, color: Colors.black),
+                                  .copyWith(fontSize: 40),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(4.0),
@@ -88,8 +88,7 @@ class _UserWalletState extends State<UserWallet> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
-                                    .copyWith(
-                                        fontSize: 14, color: Colors.black),
+                                    .copyWith(fontSize: 14),
                               ),
                             ),
                           ],
@@ -113,10 +112,10 @@ class _UserWalletState extends State<UserWallet> {
                     child: Text(
                       'اضافة رصيد',
                       textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 12,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
@@ -125,7 +124,11 @@ class _UserWalletState extends State<UserWallet> {
                       children: [
                         Card(
                           elevation: 500,
-                          shadowColor: Colors.grey.withOpacity(0.1),
+                          shadowColor: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .color!
+                              .withOpacity(0.6),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.0)),
                           child: Container(
@@ -137,7 +140,7 @@ class _UserWalletState extends State<UserWallet> {
                                 child: Container(
                                     constraints: BoxConstraints(minHeight: 100),
                                     width: SizeConfig.screenWidth! * 045,
-                                    color: Colors.white,
+                                    color: Theme.of(context).accentColor,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10.0, vertical: 10),
@@ -164,7 +167,6 @@ class _UserWalletState extends State<UserWallet> {
                                                   .headline1!
                                                   .copyWith(
                                                     fontSize: 12,
-                                                    color: Colors.black,
                                                   ),
                                             ),
                                           ],
@@ -175,7 +177,11 @@ class _UserWalletState extends State<UserWallet> {
                         ),
                         Card(
                           elevation: 500,
-                          shadowColor: Colors.grey.withOpacity(0.1),
+                          shadowColor: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .color!
+                              .withOpacity(0.6),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.0)),
                           child: Container(
@@ -187,7 +193,7 @@ class _UserWalletState extends State<UserWallet> {
                                 child: Container(
                                     constraints: BoxConstraints(minHeight: 100),
                                     width: SizeConfig.screenWidth! * 045,
-                                    color: Colors.white,
+                                    color: Theme.of(context).accentColor,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10.0, vertical: 10),
@@ -214,7 +220,6 @@ class _UserWalletState extends State<UserWallet> {
                                                   .headline1!
                                                   .copyWith(
                                                     fontSize: 12,
-                                                    color: Colors.black,
                                                   ),
                                             ),
                                           ],
@@ -231,10 +236,10 @@ class _UserWalletState extends State<UserWallet> {
                     child: Text(
                       'تفاصيل العمليات',
                       textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 12,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                   ListView.builder(

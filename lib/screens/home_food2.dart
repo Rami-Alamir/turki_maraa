@@ -4,13 +4,10 @@ import 'package:new_turki/screens/home/home_list.dart';
 import 'package:new_turki/utilities/behavior.dart';
 import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/widgets/banners.dart';
 import 'package:new_turki/widgets/banners2.dart';
 import 'package:new_turki/widgets/discover_card.dart';
 import 'package:new_turki/widgets/item_card.dart';
 import 'package:new_turki/widgets/logo.dart';
-import 'package:new_turki/widgets/primary_app_bar.dart';
-
 import 'home/search.dart';
 
 class HomeFood2 extends StatefulWidget {
@@ -135,7 +132,10 @@ class _HomeFood2State extends State<HomeFood2> {
                       Icons.arrow_back_ios,
                       color: _changecolor
                           ? Theme.of(context).primaryColor
-                          : Colors.white,
+                          : Theme.of(context).backgroundColor ==
+                                  Color.fromRGBO(243, 224, 177, 1)
+                              ? Color.fromRGBO(243, 224, 177, 1)
+                              : Colors.white,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
@@ -145,7 +145,10 @@ class _HomeFood2State extends State<HomeFood2> {
                   actionsIconTheme: IconThemeData(
                     color: _changecolor
                         ? Theme.of(context).primaryColor
-                        : Colors.white,
+                        : Theme.of(context).backgroundColor ==
+                                Color.fromRGBO(243, 224, 177, 1)
+                            ? Color.fromRGBO(243, 224, 177, 1)
+                            : Colors.white,
                   ),
                   actions: [
                     Padding(
@@ -208,7 +211,7 @@ class _HomeFood2State extends State<HomeFood2> {
                     width: SizeConfig.screenWidth,
                     height: 100,
                     child: ListView.builder(
-                        padding: EdgeInsets.all(0),
+                        padding: EdgeInsets.symmetric(horizontal: 5),
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         physics: ScrollPhysics(),
@@ -216,7 +219,7 @@ class _HomeFood2State extends State<HomeFood2> {
                         itemBuilder: (BuildContext ctxt, int index) {
                           return Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                index == 0 ? 8 : 3.0, 0, 0, 0),
+                                index == 0 ? 8 : 3.0, 0, 8, 0),
                             child: DiscoverCard(
                               item: itemList7[index],
                             ),

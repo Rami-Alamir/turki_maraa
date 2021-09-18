@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/item.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/widgets/discover_card.dart';
-import 'package:new_turki/widgets/item_card.dart';
 import 'package:new_turki/widgets/item_card2.dart';
 import 'package:new_turki/widgets/primary_app_bar.dart';
 
@@ -56,7 +54,8 @@ class _HomeList2State extends State<HomeList2> {
                     elevation: 1,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    child: SizedBox(
+                    child: Container(
+                      color: Theme.of(context).accentColor,
                       width: 160,
                       height: 160,
                       child: ClipRRect(

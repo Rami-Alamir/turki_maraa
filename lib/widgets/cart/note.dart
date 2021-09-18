@@ -24,11 +24,8 @@ class Note extends StatelessWidget {
             controller: controller,
             enabled: promoStatus == -1,
             maxLines: 6,
-            style: TextStyle(
-                fontSize: 18.0,
-                height: 0.7,
-                color: Colors.black,
-                fontWeight: FontWeight.normal),
+            style: Theme.of(context).textTheme.headline4!.copyWith(
+                fontSize: 18.0, height: 0.7, fontWeight: FontWeight.normal),
             decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(5.0, 15.0, 5.0, 15.0),
               suffix: GestureDetector(
@@ -47,26 +44,39 @@ class Note extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor, width: 1)),
+                      color: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .color!
+                          .withOpacity(0.35),
+                      width: 1)),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
-                      color: promoStatus == 0
-                          ? Colors.red
-                          : Theme.of(context).primaryColor,
-                      width: controller.text.length > 0 ? 1 : 0.35)),
+                      color: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .color!
+                          .withOpacity(0.35),
+                      width: 0.35)),
               disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(
-                    color: promoStatus == 0 ? Colors.red : Colors.black38,
+                    color: Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .color!
+                        .withOpacity(0.35),
                     width: 0.35),
               ),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
-                      color: promoStatus == 0
-                          ? Colors.red
-                          : Theme.of(context).primaryColor)),
+                      color: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .color!
+                          .withOpacity(0.35))),
             )),
       ],
     );

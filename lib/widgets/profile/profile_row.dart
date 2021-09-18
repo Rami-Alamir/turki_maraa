@@ -36,16 +36,16 @@ class ProfileRow extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Icon(
                           icon,
-                          color: Colors.black,
+                          color: Theme.of(context).textTheme.headline4!.color!,
                           size: 20,
                         ),
                       ),
                       Text(title,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
-                          )),
+                          style:
+                              Theme.of(context).textTheme.headline4!.copyWith(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal,
+                                  )),
                     ],
                   ),
                 ),
@@ -53,7 +53,11 @@ class ProfileRow extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Icon(
                     Icons.arrow_forward_ios,
-                    color: Colors.black.withOpacity(0.8),
+                    color: Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .color!
+                        .withOpacity(0.8),
                     size: 18,
                   ),
                 ),

@@ -96,47 +96,54 @@ class AppState extends State<App> {
                       children: tabs.map((e) => e.page).toList(),
                     ),
                   ),
-                  bottomNavigationBar: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: BottomNavigationBar(
-                        backgroundColor: Colors.white10,
-                        type: BottomNavigationBarType.fixed,
-                        iconSize: 25,
-                        showUnselectedLabels: true,
-                        selectedItemColor: Theme.of(context).primaryColor,
-                        unselectedItemColor: Colors.black38,
-                        selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
-                        elevation: 0,
-                        unselectedLabelStyle:
-                            TextStyle(fontSize: 10, height: 2),
-                        currentIndex: index,
-                        items: [
-                          BottomNavigationBarItem(
-                            icon: Icon(RA7ICONS.home),
-                            label: "الرئيسية",
-                          ),
-                          BottomNavigationBarItem(
-                            icon: Icon(RA7ICONS.comment),
-                            label: "مساعدة",
-                          ),
-                          BottomNavigationBarItem(
-                            icon: Icon(RA7ICONS.shopping_cart_empty_side_view),
-                            label: "السلة",
-                          ),
-                          BottomNavigationBarItem(
-                              icon: Icon(RA7ICONS.box__2_), label: "طلباتي"),
-                          BottomNavigationBarItem(
-                            icon: Icon(RA7ICONS.user),
-                            label: "حسابي",
-                          ),
-                        ],
-                        onTap: (index) {
-                          this.index = index;
-                          _selectTab(index);
-                        }),
-                  )),
+                  bottomNavigationBar: BottomNavigationBar(
+                      type: BottomNavigationBarType.fixed,
+                      iconSize: 25,
+                      showUnselectedLabels: true,
+                      selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
+                      elevation: 0,
+                      unselectedLabelStyle: TextStyle(fontSize: 10, height: 2),
+                      currentIndex: index,
+                      items: [
+                        BottomNavigationBarItem(
+                          backgroundColor: Theme.of(context)
+                              .bottomNavigationBarTheme
+                              .backgroundColor,
+                          icon: Icon(RA7ICONS.home),
+                          label: "الرئيسية",
+                        ),
+                        BottomNavigationBarItem(
+                          backgroundColor: Theme.of(context)
+                              .bottomNavigationBarTheme
+                              .backgroundColor,
+                          icon: Icon(RA7ICONS.comment),
+                          label: "مساعدة",
+                        ),
+                        BottomNavigationBarItem(
+                          backgroundColor: Theme.of(context)
+                              .bottomNavigationBarTheme
+                              .backgroundColor,
+                          icon: Icon(RA7ICONS.shopping_cart_empty_side_view),
+                          label: "السلة",
+                        ),
+                        BottomNavigationBarItem(
+                            backgroundColor: Theme.of(context)
+                                .bottomNavigationBarTheme
+                                .backgroundColor,
+                            icon: Icon(RA7ICONS.box__2_),
+                            label: "طلباتي"),
+                        BottomNavigationBarItem(
+                          backgroundColor: Theme.of(context)
+                              .bottomNavigationBarTheme
+                              .backgroundColor,
+                          icon: Icon(RA7ICONS.user),
+                          label: "حسابي",
+                        ),
+                      ],
+                      onTap: (index) {
+                        this.index = index;
+                        _selectTab(index);
+                      })),
             ),
           )
         : WillPopScope(
@@ -165,16 +172,10 @@ class AppState extends State<App> {
                   ),
                 ),
                 bottomNavigationBar: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
                   child: BottomNavigationBar(
-                      backgroundColor: Colors.white10,
                       type: BottomNavigationBarType.fixed,
                       iconSize: 25,
                       showUnselectedLabels: true,
-                      selectedItemColor: Theme.of(context).primaryColor,
-                      unselectedItemColor: Colors.black38,
                       selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
                       elevation: 0,
                       unselectedLabelStyle: TextStyle(fontSize: 10, height: 2),

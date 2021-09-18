@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/widgets/image_slider2.dart';
 import 'package:new_turki/widgets/rounded_rectangle_button.dart';
-import 'package:new_turki/widgets/tag.dart';
 import 'package:new_turki/widgets/tags_list.dart';
-import '../widgets/image_slider.dart';
-import '../widgets/primary_app_bar.dart';
 
 class ItemDetails extends StatefulWidget {
   final String name;
@@ -24,7 +21,6 @@ class _ItemDetailsState extends State<ItemDetails> {
     Scaffold.of(context).openEndDrawer();
 
     return Scaffold(
-      backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
@@ -117,10 +113,7 @@ class _ItemDetailsState extends State<ItemDetails> {
               children: [
                 Text(
                   'نعيمي',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: Colors.black),
+                  style: Theme.of(context).textTheme.headline1,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 15.0),
@@ -144,10 +137,8 @@ class _ItemDetailsState extends State<ItemDetails> {
                       ),
                       Text(
                         '(شامل ضريبة القيمة المضافة)',
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.grey,
-                            fontSize: 10,
-                            fontWeight: FontWeight.normal),
+                        style: Theme.of(context).textTheme.headline6?.copyWith(
+                            fontSize: 10, fontWeight: FontWeight.normal),
                       ),
                     ],
                   ),
@@ -182,10 +173,12 @@ class _ItemDetailsState extends State<ItemDetails> {
                             ),
                             Text(
                               '4.9',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
                             )
                           ],
                         ),
@@ -202,10 +195,11 @@ class _ItemDetailsState extends State<ItemDetails> {
                           ),
                           Text(
                             '18-20 كيلو',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(
+                                    fontWeight: FontWeight.bold, fontSize: 14),
                           )
                         ],
                       ),
@@ -223,10 +217,12 @@ class _ItemDetailsState extends State<ItemDetails> {
                             ),
                             Text(
                               '4000 سعرة حرارية',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
                             )
                           ],
                         ),

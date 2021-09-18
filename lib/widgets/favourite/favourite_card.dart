@@ -3,13 +3,6 @@ import 'package:new_turki/screens/item_details.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 
-import 'package:flutter/material.dart';
-import 'package:new_turki/screens/item_details.dart';
-import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/widgets/shared/main_card.dart';
-
-import '../rounded_rectangle_button.dart';
-
 class FavouriteCard extends StatelessWidget {
   final String image;
   final String title;
@@ -46,11 +39,14 @@ class FavouriteCard extends StatelessWidget {
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
                     ),
-                    child: Image.network(
-                      image,
-                      width: 110,
-                      height: 110,
-                      fit: BoxFit.fill,
+                    child: Container(
+                      color: Theme.of(context).accentColor,
+                      child: Image.network(
+                        image,
+                        width: 110,
+                        height: 110,
+                        fit: BoxFit.fill,
+                      ),
                     )),
               ),
               Padding(
@@ -72,19 +68,13 @@ class FavouriteCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(title,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700)),
+                                  style: Theme.of(context).textTheme.headline4),
                             ],
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5.0),
                             child: Text(subtitle,
-                                style: TextStyle(
-                                    height: 1.5,
-                                    color: Colors.black.withOpacity(0.5),
-                                    fontSize: 12)),
+                                style: Theme.of(context).textTheme.headline6),
                           ),
                         ],
                       ),
@@ -93,17 +83,8 @@ class FavouriteCard extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'حذف',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1
-                                  ?.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.grey,
-                                  ),
-                            ),
+                            Text('حذف',
+                                style: Theme.of(context).textTheme.headline5),
                             Text(
                               '$price ريال ',
                               style: Theme.of(context)

@@ -68,9 +68,21 @@ class RectangleTextField extends StatelessWidget {
                   borderSide: BorderSide(
                       color: Theme.of(context).primaryColor, width: 1)),
               enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black38, width: 0.35)),
+                  borderSide: BorderSide(
+                      color: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .color!
+                          .withOpacity(0.35),
+                      width: 0.35)),
               disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black38, width: 0.35),
+                borderSide: BorderSide(
+                    color: Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .color!
+                        .withOpacity(0.35),
+                    width: 0.35),
               ),
               hintText: hint,
               hintStyle: Theme.of(context).textTheme.subtitle2!.copyWith(

@@ -41,7 +41,8 @@ class ItemCard extends StatelessWidget {
                       elevation: 1,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0)),
-                      child: SizedBox(
+                      child: Container(
+                        color: Theme.of(context).accentColor,
                         width:
                             _width > 590 ? _width / 2.85 * 0.65 : _width / 2.85,
                         height:
@@ -96,10 +97,7 @@ class ItemCard extends StatelessWidget {
                 child: AutoSizeText(
                   item.title!,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
+                  style: Theme.of(context).textTheme.headline4,
                   minFontSize: _width > 590 ? 16 : 14,
                   maxFontSize: _width > 590 ? 18 : 14,
                   maxLines: 1,
@@ -114,13 +112,15 @@ class ItemCard extends StatelessWidget {
                           AutoSizeText(
                             item.price.toString(),
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                decoration: item.discount! > 0.0
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none,
-                                color: Colors.black.withOpacity(0.8),
-                                fontSize: item.discount! > 0 ? 10 : 14,
-                                fontWeight: FontWeight.w500),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6!
+                                .copyWith(
+                                    decoration: item.discount! > 0.0
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                    fontSize: item.discount! > 0 ? 10 : 14,
+                                    fontWeight: FontWeight.w500),
                             minFontSize: item.discount! > 0 ? 12 : 14,
                             maxFontSize: item.discount! > 0 ? 12 : 14,
                             maxLines: 1,
@@ -128,10 +128,12 @@ class ItemCard extends StatelessWidget {
                           AutoSizeText(
                             ' ريال',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.black.withOpacity(0.8),
-                                fontSize: item.discount! > 0 ? 8 : 12,
-                                fontWeight: FontWeight.w500),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6!
+                                .copyWith(
+                                    fontSize: item.discount! > 0 ? 8 : 12,
+                                    fontWeight: FontWeight.w500),
                             minFontSize: item.discount! > 0 ? 8 : 12,
                             maxFontSize: item.discount! > 0 ? 8 : 12,
                             maxLines: 1,

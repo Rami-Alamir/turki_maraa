@@ -20,13 +20,19 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           AppBar(
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).backgroundColor == Colors.black
+                ? Theme.of(context).accentColor
+                : Theme.of(context).primaryColor,
             title: Logo(type: 1),
             centerTitle: true,
             leading: IconButton(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              icon: Icon(RA7ICONS.menu__1_, color: Colors.white),
+              icon: Icon(RA7ICONS.menu__1_,
+                  color: Theme.of(context).backgroundColor ==
+                          Color.fromRGBO(243, 224, 177, 1)
+                      ? Color.fromRGBO(243, 224, 177, 1)
+                      : Colors.white),
               onPressed: () {
                 appProvider.showDrawer();
               },
@@ -39,7 +45,9 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
           Container(
             width: double.infinity,
             height: 25,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).backgroundColor == Colors.black
+                ? Theme.of(context).accentColor
+                : Theme.of(context).primaryColor,
           ),
           AddressContainer(title: 'الياسمين'),
         ],

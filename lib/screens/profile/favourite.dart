@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/widgets/cart/cart_card.dart';
-import 'package:new_turki/widgets/cart/promo_code.dart';
 import 'package:new_turki/widgets/favourite/favourite_card.dart';
 import 'package:new_turki/widgets/primary_app_bar.dart';
-import 'package:new_turki/widgets/rounded_rectangle_button.dart';
 
 class Favourite extends StatefulWidget {
   const Favourite({Key? key}) : super(key: key);
@@ -26,14 +22,6 @@ class _FavouriteState extends State<Favourite> {
         child: ListView(
           padding: EdgeInsets.only(top: 0),
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(15.0),
-            //   child: Text('المفضلة',
-            //       style: TextStyle(
-            //           color: Color.fromRGBO(132, 15, 15, 1),
-            //           fontSize: 20,
-            //           fontWeight: FontWeight.w700)),
-            // ),
             FavouriteCard(
               image:
                   'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
@@ -42,7 +30,6 @@ class _FavouriteState extends State<Favourite> {
               subtitle:
                   'خروف حري وسط من إنتاج مزرعتنا وزنه بعد الذبح لا يقل عن 14 كيلو',
             ),
-
             FavouriteCard(
               image:
                   'https://cdn.salla.sa/j1teZ7YCaJKLWZu7Qsol4cGva1dz9VMt8jkatYIq.jpeg',

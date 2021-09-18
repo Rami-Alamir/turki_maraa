@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:new_turki/provider/app_provider.dart';
+import 'package:new_turki/provider/app_theme.dart';
 import 'package:new_turki/screens/profile/about.dart';
 import 'package:new_turki/screens/profile/faq.dart';
 import 'package:new_turki/screens/profile/favourite.dart';
@@ -16,8 +17,9 @@ class TurkiDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appProvider = Provider.of<AppProvider>(context, listen: false);
+    final theme = Provider.of<AppTheme>(context, listen: false);
     return AdvancedDrawer(
-      backdropColor: Colors.white,
+      backdropColor: Theme.of(context).backgroundColor,
       controller: appProvider.advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
@@ -58,17 +60,22 @@ class TurkiDrawer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('رامي الأمير',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black)),
+                        Text(
+                          'رامي الأمير',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(
+                                  fontWeight: FontWeight.w600, fontSize: 14),
+                        ),
                         Text('0580809976',
-                            style: TextStyle(
-                                fontSize: 14,
-                                height: 2,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w500))
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle2!
+                                .copyWith(
+                                    fontSize: 14,
+                                    height: 2,
+                                    fontWeight: FontWeight.w500))
                       ],
                     ),
                   )
@@ -80,6 +87,7 @@ class TurkiDrawer extends StatelessWidget {
               child: ListView(
                 children: [
                   drawerRow(
+                    context: context,
                     onTap: () {
                       appProvider.hideDrawer();
                     },
@@ -87,6 +95,7 @@ class TurkiDrawer extends StatelessWidget {
                     title: 'الرئيسية',
                   ),
                   drawerRow(
+                    context: context,
                     onTap: () {
                       appProvider.navigateTo(Favourite());
                     },
@@ -94,6 +103,7 @@ class TurkiDrawer extends StatelessWidget {
                     title: 'المفضلة',
                   ),
                   drawerRow(
+                    context: context,
                     onTap: () {
                       appProvider.navigateTo(UserNotification());
                     },
@@ -101,6 +111,7 @@ class TurkiDrawer extends StatelessWidget {
                     title: 'الاشعارات',
                   ),
                   drawerRow(
+                    context: context,
                     onTap: () {
                       appProvider.navigateTo(Faq());
                     },
@@ -108,6 +119,7 @@ class TurkiDrawer extends StatelessWidget {
                     title: 'الأسئلة الشائعة',
                   ),
                   drawerRow(
+                    context: context,
                     onTap: () {
                       appProvider.navigateTo(About());
                     },
@@ -120,29 +132,58 @@ class TurkiDrawer extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.35),
                   ),
                   drawerRow(
+                    context: context,
                     onTap: () {},
                     icon: Icons.chat,
                     title: 'تواصل معنا عبر الواتس اب',
                   ),
                   drawerRow(
+                    context: context,
                     onTap: () {},
                     icon: Icons.share,
                     title: 'مشاركة التطبيق',
                   ),
                   drawerRow(
+                    context: context,
                     onTap: () {},
                     icon: Icons.language,
                     title: 'English',
                   ),
-                  drawerRow(
-                    onTap: () {},
-                    icon: Icons.brightness_1_rounded,
-                    title: 'الوضع الكلاسيكي',
+                  Visibility(
+                    visible: theme.themeName != 'light',
+                    child: drawerRow(
+                      context: context,
+                      onTap: () {
+                        theme.changeTheme('light');
+                        print('light');
+                      },
+                      icon: Icons.brightness_4,
+                      title: 'الوضع المضيء',
+                    ),
                   ),
-                  drawerRow(
-                    onTap: () {},
-                    icon: Icons.brightness_3,
-                    title: 'الوضع الليلي',
+                  Visibility(
+                    visible: theme.themeName != 'classic',
+                    child: drawerRow(
+                      context: context,
+                      onTap: () {
+                        theme.changeTheme('classic');
+                        print('classic');
+                      },
+                      icon: Icons.brightness_1_rounded,
+                      title: 'الوضع الكلاسيكي',
+                    ),
+                  ),
+                  Visibility(
+                    visible: theme.themeName != 'dark',
+                    child: drawerRow(
+                      context: context,
+                      onTap: () {
+                        theme.changeTheme('dark');
+                        print('dark');
+                      },
+                      icon: Icons.brightness_3,
+                      title: 'الوضع الليلي',
+                    ),
                   ),
                 ],
               ),
@@ -198,11 +239,14 @@ class TurkiDrawer extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 20.0),
-                        child: Text('الاتصال بالدعم',
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black)),
+                        child: Text(
+                          'الاتصال بالدعم',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(
+                                  fontWeight: FontWeight.w600, fontSize: 12),
+                        ),
                       ),
                     ],
                   ),
@@ -223,6 +267,7 @@ class TurkiDrawer extends StatelessWidget {
 
   Widget drawerRow(
       {required IconData icon,
+      required BuildContext context,
       required String title,
       required Function onTap}) {
     return Padding(
@@ -237,11 +282,17 @@ class TurkiDrawer extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 15, 0),
-              child: Icon(icon),
+              child: Icon(
+                icon,
+                color: Theme.of(context).textTheme.headline4!.color,
+              ),
             ),
             Text(
               title,
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(fontWeight: FontWeight.w600, fontSize: 12),
             ),
           ],
         ),

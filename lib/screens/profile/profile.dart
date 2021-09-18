@@ -76,11 +76,10 @@ class _ProfileState extends State<Profile> {
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
               child: Text('الاعدادات',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  )),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                      )),
             ),
             MainCard(
                 padding: EdgeInsets.only(bottom: 1, right: 7, left: 7),
@@ -108,11 +107,10 @@ class _ProfileState extends State<Profile> {
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
               child: Text('المساعدة والدعم',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  )),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                      )),
             ),
             MainCard(
                 padding: EdgeInsets.only(bottom: 1, right: 7, left: 7),
@@ -182,17 +180,29 @@ class _ProfileState extends State<Profile> {
                         Icon(
                           SocialIcons.instagram_2,
                           size: 20,
-                          color: Colors.black.withOpacity(0.5),
+                          color: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .color!
+                              .withOpacity(0.5),
                         ),
                         Icon(
                           SocialIcons.snapchat,
                           size: 20,
-                          color: Colors.black.withOpacity(0.5),
+                          color: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .color!
+                              .withOpacity(0.5),
                         ),
                         Icon(
                           SocialIcons.facebook_2,
                           size: 20,
-                          color: Colors.black.withOpacity(0.5),
+                          color: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .color!
+                              .withOpacity(0.5),
                         ),
                       ],
                     ),

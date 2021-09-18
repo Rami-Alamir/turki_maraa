@@ -22,56 +22,48 @@ class DiscoverCard extends StatelessWidget {
             MaterialPageRoute(builder: (context) => HomeList2(item: item)),
           );
         },
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Stack(
-              children: [
-                Container(
-                  color: Colors.white,
-                  height: 90,
-                  child: Card(
-                    elevation: 1,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    child: SizedBox(
+        child: Stack(
+          children: [
+            Container(
+              color: Colors.transparent,
+              width: 165,
+              height: 90,
+              child: SizedBox(
+                height: 90,
+                width: 165,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Image.network(
+                      '${item.image?.trim()}',
                       width: 165,
                       height: 90,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Image.network(
-                            '${item.image?.trim()}',
-                            width: 165,
-                            colorBlendMode: BlendMode.darken,
-                            height: 90,
-                            fit: BoxFit.cover,
-                          )),
+                      fit: BoxFit.fill,
+                    )),
+              ),
+            ),
+            Container(
+              height: 90,
+              width: 165,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.25),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Center(
+                child: Container(
+                  width: 140.0,
+                  height: 22,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      item.title!,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
                     ),
                   ),
                 ),
-                Container(
-                  color: Colors.white.withOpacity(0.25),
-                  height: 90,
-                  width: 165,
-                  child: Center(
-                    child: Container(
-                      width: 140.0,
-                      height: 22,
-                      child: FittedBox(
-                        fit: BoxFit.contain,
-                        child: Text(
-                          item.title!,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ],
         ),

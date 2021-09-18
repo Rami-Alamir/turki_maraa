@@ -22,7 +22,7 @@ class _ImageSlider2State extends State<ImageSlider2> {
       child: Stack(
         children: [
           Container(
-            color: Colors.grey.withOpacity(0.1),
+            color: Theme.of(context).accentColor.withOpacity(0.9),
             child: CarouselSlider(
               options: CarouselOptions(
                 disableCenter: true,
@@ -68,13 +68,17 @@ class _ImageSlider2State extends State<ImageSlider2> {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
+                      color: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .color!
+                          .withOpacity(0.3),
                       blurRadius: 44,
                       offset: Offset(4, 8), // Shadow position
                     ),
                   ],
                   shape: BoxShape.circle,
-                  color: Colors.white, // inner circle color
+                  color: Theme.of(context).accentColor, // inner circle color
                 ),
                 child: Icon(Icons.favorite_border,
                     color: Theme.of(context).primaryColor),

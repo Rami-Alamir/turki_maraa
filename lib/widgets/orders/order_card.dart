@@ -43,7 +43,6 @@ class OrderCard extends StatelessWidget {
                   Theme.of(context).primaryColor.withOpacity(0.78),
                 ],
               ),
-              //color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(8.0),
                   topLeft: Radius.circular(8.0),
@@ -51,7 +50,11 @@ class OrderCard extends StatelessWidget {
                   bottomLeft: Radius.circular(5.0)),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.15),
+                  color: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .color!
+                      .withOpacity(0.15),
                   spreadRadius: 0.5,
                   blurRadius: 11,
                 ),
@@ -64,7 +67,7 @@ class OrderCard extends StatelessWidget {
                     child: Container(
                       width: SizeConfig.screenWidth,
                       height: 175,
-                      color: Colors.white,
+                      color: Theme.of(context).accentColor,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Column(
@@ -83,11 +86,14 @@ class OrderCard extends StatelessWidget {
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(11),
                                         ),
-                                        child: Image.network(
-                                          image,
-                                          width: 60,
-                                          height: 60,
-                                          fit: BoxFit.fill,
+                                        child: Container(
+                                          color: Theme.of(context).accentColor,
+                                          child: Image.network(
+                                            image,
+                                            width: 60,
+                                            height: 60,
+                                            fit: BoxFit.fill,
+                                          ),
                                         )),
                                   ),
                                 ),
@@ -102,36 +108,48 @@ class OrderCard extends StatelessWidget {
                                       Row(
                                         children: [
                                           Text("رقم الطلب: ",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w600)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline1!
+                                                  .copyWith(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w600)),
                                           Text(id,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w600)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline1!
+                                                  .copyWith(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w600)),
                                         ],
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 5.0),
                                         child: Text('1x حري',
-                                            style: TextStyle(
-                                                height: 1,
-                                                color: Colors.black
-                                                    .withOpacity(0.7),
-                                                fontSize: 14)),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5!
+                                                .copyWith(
+                                                    height: 1,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.normal)),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 5.0),
                                         child: Text('1x برجر',
-                                            style: TextStyle(
-                                                height: 1,
-                                                color: Colors.black
-                                                    .withOpacity(0.7),
-                                                fontSize: 14)),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5!
+                                                .copyWith(
+                                                    height: 1,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.normal)),
                                       ),
                                     ],
                                   ),
@@ -168,24 +186,29 @@ class OrderCard extends StatelessWidget {
                                                   children: [
                                                     Text(
                                                       'طريقة الدفع',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12,
-                                                          color: Colors.black
-                                                              .withOpacity(
-                                                                  0.5)),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline5!
+                                                          .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 12,
+                                                          ),
                                                     ),
                                                     Text(
                                                       payment,
-                                                      style: TextStyle(
-                                                          height: 1.6,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 10,
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryColor),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline5!
+                                                          .copyWith(
+                                                              height: 1.6,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 10,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor),
                                                     ),
                                                   ],
                                                 ),
@@ -193,13 +216,14 @@ class OrderCard extends StatelessWidget {
                                                   children: [
                                                     Text(
                                                       'حالة الطلب',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12,
-                                                          color: Colors.black
-                                                              .withOpacity(
-                                                                  0.5)),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline5!
+                                                          .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 12,
+                                                          ),
                                                     ),
                                                     Text(
                                                       status,
@@ -233,24 +257,30 @@ class OrderCard extends StatelessWidget {
                                                     children: [
                                                       Text(
                                                         'تاريخ الطلب',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 12,
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    0.5)),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline5!
+                                                            .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 12,
+                                                            ),
                                                       ),
                                                       Text(
                                                         date,
-                                                        style: TextStyle(
-                                                            height: 1.6,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 10,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline5!
+                                                            .copyWith(
+                                                                height: 1.6,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 10,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryColor),
                                                       ),
                                                     ],
                                                   ),
@@ -260,24 +290,30 @@ class OrderCard extends StatelessWidget {
                                                     children: [
                                                       Text(
                                                         'نوع الطلب',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 12,
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    0.5)),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline5!
+                                                            .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 12,
+                                                            ),
                                                       ),
                                                       Text(
                                                         type,
-                                                        style: TextStyle(
-                                                            height: 1.6,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 10,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline5!
+                                                            .copyWith(
+                                                                height: 1.6,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 10,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryColor),
                                                       ),
                                                     ],
                                                   ),

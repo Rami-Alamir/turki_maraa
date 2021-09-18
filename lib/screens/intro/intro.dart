@@ -12,14 +12,7 @@ class Intro extends StatefulWidget {
 
 class _IntroState extends State<Intro> {
   int mSelectedPosition = 0;
-  // final List<IntroData> list = [
-  //   IntroData('assets/svg/intro1.svg', 'اختر منتجك المفضل',
-  //       "بعدها فريقنا المحترف بيساعدك وياكدلك الطلب"),
-  //   IntroData('assets/svg/intro2.svg', 'اختر طريقة الدفع المناسبة',
-  //       'نوفر لك العديد من طرق الدفع'),
-  //   IntroData('assets/svg/intro1.svg', 'حدد عنوان التوصيل',
-  //       "فريقنا بيقوم بتوصيلها لك في الموعد المحدد"),
-  // ];
+
   final List<IntroData> list = [
     IntroData('assets/images/q1.png', 'اختر منتجك المفضل',
         "بعدها فريقنا المحترف بيساعدك وياكدلك الطلب"),
@@ -30,6 +23,7 @@ class _IntroState extends State<Intro> {
     IntroData('assets/images/q6.png', 'حدد عنوان التوصيل',
         "فريقنا بيقوم بتوصيلها لك في الموعد المحدد"),
   ];
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -67,15 +61,6 @@ class _IntroState extends State<Intro> {
                     ],
                   ),
                 ),
-                // Container(
-                //   width: _width * 0.7,
-                //   child: SvgPicture.asset(
-                //     list[mSelectedPosition].image!,
-                //     width: _width * 1.5,
-                //     height: _height * 0.49,
-                //     fit: BoxFit.contain,
-                //   ),
-                // ),
                 Container(
                   width: _width * 0.7,
                   child: Image.asset(
@@ -157,7 +142,6 @@ class _IntroState extends State<Intro> {
                                 MaterialPageRoute(builder: (context) => App()),
                               )
                             : setState(() {
-                                print('ddd');
                                 mSelectedPosition = mSelectedPosition + 1;
                               });
                       },

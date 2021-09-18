@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/cart/cart_card.dart';
-import 'package:new_turki/widgets/cart/cart_card2.dart';
 import 'package:new_turki/widgets/cart/note.dart';
 import 'package:new_turki/widgets/cart/promo_code.dart';
 import 'package:new_turki/widgets/primary_app_bar.dart';
@@ -18,6 +17,7 @@ class ShoppingCart extends StatefulWidget {
 class _ShoppingCartState extends State<ShoppingCart> {
   bool selected = false;
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
 
   var value = false;
 
@@ -108,7 +108,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
                         border: Border.all(
                             color: selected
                                 ? Color.fromRGBO(132, 15, 15, 1)
-                                : Colors.grey)),
+                                : Theme.of(context).textTheme.headline4!.color!,
+                            width: selected ? 1 : 0.35)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -125,7 +126,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             'دفع نقدي',
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(fontSize: 14),
                           ),
                         ),
                       ],
@@ -149,7 +153,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
                         border: Border.all(
                             color: !selected
                                 ? Color.fromRGBO(132, 15, 15, 1)
-                                : Colors.grey)),
+                                : Theme.of(context).textTheme.headline4!.color!,
+                            width: !selected ? 1 : 0.35)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -195,7 +200,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'دفع اونلاين',
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(fontSize: 14),
                           ),
                         ),
                       ],
@@ -210,8 +218,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 children: [
                   Checkbox(
                     value: this.value,
-                    checkColor: Colors.white, // color of tick Mark
-                    activeColor: Theme.of(context).primaryColor,
+                    checkColor:
+                        Theme.of(context).primaryColor, // color of tick Mark
+                    activeColor: Theme.of(context).textTheme.headline1!.color!,
                     onChanged: (bool? value) {
                       setState(() {
                         this.value = value!;
@@ -220,7 +229,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   ), //Checkbox
                   Text(
                     'استخدم رصيدي (100.00 ر.س)',
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(fontWeight: FontWeight.w600, fontSize: 12),
                   ),
                 ],
               ),
@@ -233,7 +245,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Note(
-                    controller: _controller,
+                    controller: _controller2,
                     promoStatus: -1,
                   ),
                 ],

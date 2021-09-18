@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/item.dart';
 import 'package:new_turki/models/point.dart';
-import 'package:new_turki/models/wallet.dart';
 import 'package:new_turki/utilities/behavior.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/points_card.dart';
@@ -96,17 +95,6 @@ class _UserPointsState extends State<UserPoints> {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              // decoration: BoxDecoration(
-                              //
-                              //   // gradient: LinearGradient(
-                              //   //   begin: Alignment.topRight,
-                              //   //   end: Alignment.bottomLeft,
-                              //   //   colors: [
-                              //   //     Color.fromRGBO(112, 112, 112, 1),
-                              //   //     Color.fromRGBO(133, 133, 133, 1),
-                              //   //   ],
-                              //   ),
-
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20.0, vertical: 20),
@@ -209,10 +197,10 @@ class _UserPointsState extends State<UserPoints> {
                     child: Text(
                       'استبدل بالمكافات',
                       textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 12,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Column(
@@ -242,10 +230,10 @@ class _UserPointsState extends State<UserPoints> {
                     child: Text(
                       'تفاصيل العمليات',
                       textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 12,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                   ListView.builder(

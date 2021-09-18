@@ -34,11 +34,14 @@ class OrderDetailsRow extends StatelessWidget {
                     height: 60,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(5.0),
-                        child: Image.network(
-                          '${item.image?.trim()}',
-                          width: 60,
-                          height: 60,
-                          fit: BoxFit.cover,
+                        child: Container(
+                          color: Theme.of(context).accentColor,
+                          child: Image.network(
+                            '${item.image?.trim()}',
+                            width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,
+                          ),
                         )),
                   ),
                 ),
@@ -53,8 +56,8 @@ class OrderDetailsRow extends StatelessWidget {
                       item.title!,
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1!
-                          .copyWith(fontSize: 14, color: Colors.black),
+                          .headline1!
+                          .copyWith(fontSize: 14),
                       maxLines: 1,
                     ),
                     Visibility(
@@ -67,11 +70,9 @@ class OrderDetailsRow extends StatelessWidget {
                             subtitle,
                             style: Theme.of(context)
                                 .textTheme
-                                .subtitle1!
+                                .headline4!
                                 .copyWith(
-                                    fontSize: 12,
-                                    color: Colors.black.withOpacity(0.62),
-                                    fontWeight: FontWeight.w400),
+                                    fontSize: 12, fontWeight: FontWeight.w400),
                             maxLines: 2,
                           ),
                         ),

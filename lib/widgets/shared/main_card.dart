@@ -19,23 +19,21 @@ class MainCard extends StatelessWidget {
           const EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 10)});
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: Padding(
-        padding: padding,
-        child: Card(
-          color: Colors.white,
-          elevation: 1,
-          shadowColor: Colors.grey.withOpacity(0.15),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(6.5))),
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(const Radius.circular(6.5)),
-              child: Container(
-                  constraints: BoxConstraints(minHeight: height),
-                  width: SizeConfig.screenWidth,
-                  child: child)),
-        ),
+    return Padding(
+      padding: padding,
+      child: Card(
+        color: Theme.of(context).accentColor,
+        elevation: 3,
+        shadowColor:
+            Theme.of(context).textTheme.headline6!.color!.withOpacity(0.15),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(6.5))),
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(const Radius.circular(6.5)),
+            child: Container(
+                constraints: BoxConstraints(minHeight: height),
+                width: SizeConfig.screenWidth,
+                child: child)),
       ),
     );
   }

@@ -13,7 +13,7 @@ Future<void> main() async {
   //get last app localization
   SharedPreferences _prefs = await SharedPreferences.getInstance();
   String? _language = _prefs.getString('language_code');
-  bool _theme = _prefs.getBool('theme') ?? true;
+  String _theme = _prefs.getString('theme') ?? 'light';
 
   Locale _locale = Locale(_language ?? 'ar');
   runApp(MultiProvider(providers: [

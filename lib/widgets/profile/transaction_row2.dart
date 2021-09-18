@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/point.dart';
-import 'package:new_turki/models/wallet.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/widgets/shared/main_container.dart';
 
 class TransactionRow2 extends StatelessWidget {
   final Point transaction;
@@ -16,7 +14,8 @@ class TransactionRow2 extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
         elevation: 500,
-        shadowColor: Colors.grey.withOpacity(0.1),
+        shadowColor:
+            Theme.of(context).textTheme.headline4!.color!.withOpacity(0.4),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         child: Container(
           width: SizeConfig.screenWidth,
@@ -26,7 +25,7 @@ class TransactionRow2 extends StatelessWidget {
               child: Container(
                   constraints: BoxConstraints(minHeight: 70),
                   width: SizeConfig.screenWidth,
-                  color: Colors.white,
+                  color: Theme.of(context).accentColor,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10.0, vertical: 10),

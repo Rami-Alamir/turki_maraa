@@ -28,7 +28,7 @@ class NotificationCard extends StatelessWidget {
       child: Container(
           height: 375,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(8.0),
                 topLeft: Radius.circular(8.0),
@@ -36,7 +36,11 @@ class NotificationCard extends StatelessWidget {
                 bottomLeft: Radius.circular(5.0)),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.15),
+                color: Theme.of(context)
+                    .textTheme
+                    .headline4!
+                    .color!
+                    .withOpacity(0.15),
                 spreadRadius: 0.5,
                 blurRadius: 11,
               ),
@@ -49,7 +53,6 @@ class NotificationCard extends StatelessWidget {
                   child: Container(
                     width: SizeConfig.screenWidth,
                     height: 255,
-                    color: Colors.white,
                     child: Image.network(
                       image,
                       width: SizeConfig.screenWidth,
@@ -65,18 +68,21 @@ class NotificationCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(title,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.w600)),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(subtitle,
-                            style: TextStyle(
-                                height: 1.45,
-                                color: Colors.black.withOpacity(0.8),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400)),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6!
+                                .copyWith(
+                                    height: 1.45,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0),
@@ -84,10 +90,12 @@ class NotificationCard extends StatelessWidget {
                           width: SizeConfig.screenWidth,
                           child: Text(date,
                               textAlign: TextAlign.end,
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(0.4),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w400)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w400)),
                         ),
                       ),
                     ],

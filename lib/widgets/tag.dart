@@ -20,7 +20,13 @@ class Tag extends StatelessWidget {
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.all(Radius.circular(5)),
               border: Border.all(
-                color: Colors.grey.withOpacity(0.35),
+                color: selected
+                    ? Colors.transparent
+                    : Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .color!
+                        .withOpacity(0.35),
                 width: 2.0,
               ),
             ),
@@ -30,7 +36,9 @@ class Tag extends StatelessWidget {
               child: Text(title.toString(),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline4?.copyWith(
-                      color: selected ? Colors.white : Colors.black45,
+                      color: selected
+                          ? Colors.white
+                          : Theme.of(context).textTheme.headline6!.color,
                       fontSize: 14)),
             )),
       ),

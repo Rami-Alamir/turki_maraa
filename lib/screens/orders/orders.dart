@@ -26,15 +26,6 @@ class _OrdersState extends State<Orders> {
         child: ListView(
           padding: EdgeInsets.only(top: 5),
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(15.0),
-            //   child: Text('طلباتي',
-            //       style: TextStyle(
-            //           color: Color.fromRGBO(132, 15, 15, 1),
-            //           fontSize: 20,
-            //           fontWeight: FontWeight.w700)),
-            // ),
-
             OrderCard(
               image:
                   'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',

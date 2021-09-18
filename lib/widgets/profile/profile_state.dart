@@ -40,7 +40,6 @@ class _ProfileStateState extends State<ProfileState> {
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.black,
-                              //     color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w600)),
                       Text('طلباتي',
                           style: TextStyle(

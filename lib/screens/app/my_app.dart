@@ -5,7 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:new_turki/screens/intro/intro.dart';
+import 'package:new_turki/screens/intro/intro2.dart';
 import '../../provider/app_theme.dart';
 import '../../utilities/app_localizations.dart';
 import '../../provider/app_language.dart';
@@ -18,7 +18,7 @@ class MyApp extends StatefulWidget {
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   final Locale locale;
-  final bool theme;
+  final String theme;
 
   MyApp({required this.locale, required this.theme});
 
@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
     FirebaseAnalytics analytics = FirebaseAnalytics();
-    final appTheme = Provider.of<AppTheme>(context, listen: false);
+    final appTheme = Provider.of<AppTheme>(context);
 
     //Consumer for change app language only
     return Consumer<AppLanguage>(builder: (ctx, lang, child) {
@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
             Locale('en', ''),
           ],
           home: LayoutBuilder(builder: (ctx, constraints) {
-            return Intro();
+            return Intro2();
           }));
     });
   }
