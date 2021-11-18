@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:new_turki/screens/profile/notification.dart';
 
 class AppProvider with ChangeNotifier {
-  late BuildContext _context;
-
-  set context(BuildContext value) {
-    _context = value;
-  }
-
   final advancedDrawerController = AdvancedDrawerController();
   void showDrawer() {
     // NOTICE: Manage Advanced Drawer state through the Controller.
@@ -22,11 +15,12 @@ class AppProvider with ChangeNotifier {
     advancedDrawerController.hideDrawer();
   }
 
-  void navigateTo(route) {
-    Navigator.push(
-      _context,
-      MaterialPageRoute(builder: (context) => route),
-    );
+  void navigateTo(BuildContext context, String routeName) {
+    // Navigator.push(
+    //   _context,
+    //   MaterialPageRoute(builder: (context) => route),
+    // );
+    Navigator.pushNamed(context, routeName);
     advancedDrawerController.hideDrawer();
   }
 }

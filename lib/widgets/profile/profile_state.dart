@@ -1,17 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:new_turki/screens/orders/orders.dart';
-import 'package:new_turki/screens/profile/points.dart';
-import 'package:new_turki/screens/profile/wallet.dart';
+import 'package:new_turki/models/user.dart';
+import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
-class ProfileState extends StatefulWidget {
-  const ProfileState({Key? key}) : super(key: key);
+class ProfileState extends StatelessWidget {
+  final User user;
 
-  @override
-  _ProfileStateState createState() => _ProfileStateState();
-}
+  const ProfileState({required this.user});
 
-class _ProfileStateState extends State<ProfileState> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,100 +22,66 @@ class _ProfileStateState extends State<ProfileState> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Orders(
-                              back: true,
-                            )),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text('6',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600)),
-                      Text('طلباتي',
-                          style: TextStyle(
-                              fontSize: 14,
-                              height: 2,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey)),
-                    ],
-                  ),
+                _stateItem(
+                    context: context,
+                    routeName: "/Orders",
+                    value: user.orders!,
+                    title: 'orders'),
+                _verticalDivider(
+                  context: context,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    height: 40,
-                    color: Colors.grey.withOpacity(0.5),
-                    width: 1,
-                  ),
+                _stateItem(
+                    context: context,
+                    routeName: "/UserPoints",
+                    value: user.point!,
+                    title: 'my_points'),
+                _verticalDivider(
+                  context: context,
                 ),
-                InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => UserPoints()),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text('150',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              //     color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600)),
-                      Text('نقاطي',
-                          style: TextStyle(
-                              fontSize: 14,
-                              height: 2,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey)),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    height: 40,
-                    color: Colors.grey.withOpacity(0.5),
-                    width: 1,
-                  ),
-                ),
-                InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => UserWallet()),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text('100',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              //     color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600)),
-                      Text('رصيدي',
-                          style: TextStyle(
-                              fontSize: 14,
-                              height: 2,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey)),
-                    ],
-                  ),
-                ),
+                _stateItem(
+                    context: context,
+                    routeName: "/UserWallet",
+                    value: user.credit!,
+                    title: 'credit'),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  String convertDouble(double value) {
+    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 2)}';
+  }
+
+  Widget _stateItem(
+      {required BuildContext context,
+      required String routeName,
+      required String title,
+      required double value}) {
+    return InkWell(
+      onTap: () => Navigator.pushNamed(context, routeName),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(convertDouble(value),
+              style: Theme.of(context).textTheme.headline6),
+          Text(AppLocalizations.of(context)!.tr(title),
+              style: Theme.of(context).textTheme.subtitle2),
+        ],
+      ),
+    );
+  }
+
+  Widget _verticalDivider({required BuildContext context}) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        height: 40,
+        color: Theme.of(context).colorScheme.secondaryVariant,
+        width: 1,
       ),
     );
   }

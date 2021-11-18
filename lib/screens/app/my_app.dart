@@ -1,11 +1,10 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:new_turki/screens/intro/intro2.dart';
+import 'package:new_turki/utilities/firebase_helper.dart';
+import 'package:new_turki/utilities/route_generator.dart';
 import '../../provider/app_theme.dart';
 import '../../utilities/app_localizations.dart';
 import '../../provider/app_language.dart';
@@ -13,13 +12,9 @@ import 'package:provider/provider.dart';
 
 //App Widget tree
 class MyApp extends StatefulWidget {
-  final FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseInAppMessaging fiam = FirebaseInAppMessaging();
-  final FirebaseMessaging messaging = FirebaseMessaging.instance;
-
+  final FirebaseHelper firebaseHelper = FirebaseHelper();
   final Locale locale;
   final String theme;
-
   MyApp({required this.locale, required this.theme});
 
   @override
@@ -46,31 +41,31 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    FirebaseAnalytics analytics = FirebaseAnalytics();
     final appTheme = Provider.of<AppTheme>(context);
 
     //Consumer for change app language only
     return Consumer<AppLanguage>(builder: (ctx, lang, child) {
       return MaterialApp(
-          navigatorObservers: [
-            FirebaseAnalyticsObserver(analytics: analytics),
-          ],
-          theme: appTheme.getThemeData,
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          locale: lang.appLocal,
-          supportedLocales: [
-            Locale('ar', ''),
-            Locale('en', ''),
-          ],
-          home: LayoutBuilder(builder: (ctx, constraints) {
-            return Intro2();
-          }));
+        navigatorObservers: [
+          FirebaseHelper.observer!,
+        ],
+        theme: appTheme.getThemeData,
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        locale: lang.appLocal,
+        supportedLocales: [
+          Locale('ar', ''),
+          Locale('en', ''),
+        ],
+        onGenerateRoute: RouteGenerator.generateRoute,
+        initialRoute: '/',
+        // home: Splash(),
+      );
     });
   }
 }

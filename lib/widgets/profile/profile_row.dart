@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/utilities/app_localizations.dart';
 
 class ProfileRow extends StatelessWidget {
   final String title;
@@ -40,7 +41,7 @@ class ProfileRow extends StatelessWidget {
                           size: 20,
                         ),
                       ),
-                      Text(title,
+                      Text(AppLocalizations.of(context)!.tr(title),
                           style:
                               Theme.of(context).textTheme.headline4!.copyWith(
                                     fontSize: 12,
@@ -68,7 +69,6 @@ class ProfileRow extends StatelessWidget {
               child: Divider(
                 indent: 10,
                 endIndent: 10,
-                color: Colors.grey.withOpacity(0.3),
               ),
             )
           ],

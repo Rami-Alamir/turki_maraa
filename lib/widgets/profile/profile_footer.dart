@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/screens/profile/policies.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 
 class ProfileFooter extends StatelessWidget {
@@ -18,18 +17,15 @@ class ProfileFooter extends StatelessWidget {
           overlayColor:
               MaterialStateColor.resolveWith((states) => Colors.transparent),
         ),
-        onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    Policies(url: url, title: title))),
+        onPressed: () => Navigator.pushNamed(context, '/Policies',
+            arguments: {"url": url, "title": title}),
         child: Text(AppLocalizations.of(context)!.tr(title),
             textAlign: TextAlign.center, style: textStyle),
       );
     }
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 50.0, top: 20),
+      padding: const EdgeInsets.only(bottom: 50.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -44,7 +40,7 @@ class ProfileFooter extends StatelessWidget {
             ],
           ),
           Visibility(
-              visible: version != null,
+              visible: version.isNotEmpty,
               child: Text('V$version',
                   textAlign: TextAlign.center, style: textStyle)),
           SizedBox(height: 15),

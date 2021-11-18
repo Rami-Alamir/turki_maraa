@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/screens/item_details.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/widgets/shared/main_container.dart';
-
-import '../rounded_rectangle_button.dart';
 
 class MainCard extends StatelessWidget {
   final Widget child;
@@ -14,7 +10,7 @@ class MainCard extends StatelessWidget {
   MainCard(
       {required this.child,
       this.width = 0,
-      this.height = 150,
+      this.height = 100,
       this.padding =
           const EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 10)});
   @override
@@ -22,10 +18,9 @@ class MainCard extends StatelessWidget {
     return Padding(
       padding: padding,
       child: Card(
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).colorScheme.secondary,
         elevation: 3,
-        shadowColor:
-            Theme.of(context).textTheme.headline6!.color!.withOpacity(0.15),
+        shadowColor: Theme.of(context).colorScheme.secondary.withOpacity(0.14),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(6.5))),
         child: ClipRRect(

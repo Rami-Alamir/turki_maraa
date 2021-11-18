@@ -5,9 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppLanguage with ChangeNotifier {
   Locale? _appLocale;
   SharedPreferences? _prefs;
-
   String get language =>
       (_appLocale ?? Locale("ar")) == Locale("ar") ? 'ar' : 'en';
+  bool get isArabic => (_appLocale ?? Locale("ar")) == Locale("ar");
 
   Locale? get appLocal => _appLocale;
 
