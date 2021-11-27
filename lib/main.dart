@@ -5,6 +5,7 @@ import 'package:new_turki/provider/app_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'provider/app_theme.dart';
+import 'provider/orders_provider.dart';
 import 'screens/app/my_app.dart';
 import 'package:provider/provider.dart';
 import 'provider/app_language.dart';
@@ -34,5 +35,7 @@ Future<void> main() async {
     ChangeNotifierProvider<AppLanguage>(create: (context) => AppLanguage()),
     ChangeNotifierProvider<AppTheme>(create: (context) => AppTheme()),
     ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),
+    ChangeNotifierProvider<OrdersProvider>(
+        create: (context) => OrdersProvider()),
   ], child: MyApp(locale: _locale, theme: _theme)));
 }

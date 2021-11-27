@@ -37,7 +37,7 @@ class AppState extends State<App> {
         page: ShoppingCart(),
       ),
       TabItem(
-        page: Orders(),
+        page: Orders(back: false),
       ),
       TabItem(
         page: Profile(),
@@ -65,67 +65,66 @@ class AppState extends State<App> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     // WillPopScope handle android back button
-    return TurkiDrawer(
-      child: WillPopScope(
-        onWillPop: () async {
-          final isFirstRouteInCurrentTab =
-              !await tabs[currentTab].key.currentState!.maybePop();
-          if (isFirstRouteInCurrentTab) {
-            // if not on the 'main' tab
-            if (currentTab != 0) {
-              // select 'main' tab
-              _selectTab(0);
-              // back button handled by app
-              return false;
-            }
+    // return TurkiDrawer(
+    return WillPopScope(
+      onWillPop: () async {
+        final isFirstRouteInCurrentTab =
+            !await tabs[currentTab].key.currentState!.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          // if not on the 'main' tab
+          if (currentTab != 0) {
+            // select 'main' tab
+            _selectTab(0);
+            // back button handled by app
+            return false;
           }
-          // let system handle back button if we're on the first route
-          return isFirstRouteInCurrentTab;
-        },
-        child: Scaffold(
-            key: _appKey,
-            // indexed stack shows only one child
-            body: Container(
-              child: IndexedStack(
-                index: currentTab,
-                children: tabs.map((e) => e.page).toList(),
-              ),
+        }
+        // let system handle back button if we're on the first route
+        return isFirstRouteInCurrentTab;
+      },
+      child: Scaffold(
+          key: _appKey,
+          // indexed stack shows only one child
+          body: Container(
+            child: IndexedStack(
+              index: currentTab,
+              children: tabs.map((e) => e.page).toList(),
             ),
-            bottomNavigationBar: Container(
-              child: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  iconSize: 25,
-                  showUnselectedLabels: true,
-                  elevation: 0,
-                  currentIndex: index,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Icon(RA7ICONS.home),
-                      label: AppLocalizations.of(context)!.tr('home'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(RA7ICONS.comment),
-                      label: AppLocalizations.of(context)!.tr('support'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(RA7ICONS.shopping_cart_empty_side_view),
-                      label: AppLocalizations.of(context)!.tr('cart'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(RA7ICONS.box__2_),
-                      label: AppLocalizations.of(context)!.tr('orders'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(RA7ICONS.user),
-                      label: AppLocalizations.of(context)!.tr('profile'),
-                    ),
-                  ],
-                  onTap: (index) {
-                    this.index = index;
-                    _selectTab(index);
-                  }),
-            )),
-      ),
+          ),
+          bottomNavigationBar: Container(
+            child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                iconSize: 25,
+                showUnselectedLabels: true,
+                elevation: 0,
+                currentIndex: index,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(RA7ICONS.home),
+                    label: AppLocalizations.of(context)!.tr('home'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(RA7ICONS.comment),
+                    label: AppLocalizations.of(context)!.tr('support'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(RA7ICONS.shopping_cart_empty_side_view),
+                    label: AppLocalizations.of(context)!.tr('cart'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(RA7ICONS.box__2_),
+                    label: AppLocalizations.of(context)!.tr('orders'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(RA7ICONS.user),
+                    label: AppLocalizations.of(context)!.tr('profile'),
+                  ),
+                ],
+                onTap: (index) {
+                  this.index = index;
+                  _selectTab(index);
+                }),
+          )),
     );
   }
 }

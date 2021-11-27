@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
               title: 'title',
               onPressed: () {
                 dd();
-                Navigator.pushNamed(context, '/Login');
+                Navigator.pushNamed(context, '/NewVersion');
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(builder: (context) => Login()),

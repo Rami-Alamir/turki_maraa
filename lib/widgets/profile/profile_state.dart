@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/user.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -61,7 +59,7 @@ class ProfileState extends StatelessWidget {
       required String title,
       required double value}) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, routeName),
+      onTap: () => Navigator.pushNamed(context, routeName, arguments: true),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,

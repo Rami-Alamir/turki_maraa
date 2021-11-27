@@ -1,6 +1,7 @@
 class User {
   String? name;
   String? phone;
+  String? category;
   double? orders;
   double? credit;
   double? point;
@@ -12,6 +13,7 @@ class User {
       this.phone,
       this.orders,
       this.credit,
+      this.category,
       this.point,
       this.lat,
       this.lng});

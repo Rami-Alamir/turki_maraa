@@ -60,12 +60,10 @@ class UserDataHeader extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Login()),
-                            );
-                          },
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            '/Login',
+                          ),
                           child: Text(
                             AppLocalizations.of(context)!.tr('login'),
                             style: Theme.of(context).textTheme.subtitle1,

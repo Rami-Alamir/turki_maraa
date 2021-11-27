@@ -32,8 +32,10 @@ dependencies:
   geolocator: ^7.7.1
   google_maps_flutter:
   location: ^4.3.0
-  url_launcher: ^6.0.13
+  url_launcher: ^6.0.15
   share: ^2.0.4
+  firebase_dynamic_links: ^3.0.1
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +59,12 @@ flutter:
     - assets/images/q6.png
     - assets/images/turki_car.png
     - assets/images/turki.png
+    - assets/images/medal.png
+    - assets/images/w.png
+    - assets/images/turki_icon.png
+    - assets/images/money.png
     - assets/images/turki2.png
+    - assets/images/t1.gif
     - assets/language/ar.json
     - assets/language/en.json
 
