@@ -1,3 +1,4 @@
+import 'package:flutter_dropdown_alert/dropdown_alert.dart';
 import 'package:new_turki/screens/cart/shopping_cart.dart';
 import 'package:new_turki/screens/chat/chat.dart';
 import 'package:new_turki/screens/home/home.dart';
@@ -85,18 +86,24 @@ class AppState extends State<App> {
       child: Scaffold(
           key: _appKey,
           // indexed stack shows only one child
-          body: Container(
-            child: IndexedStack(
-              index: currentTab,
-              children: tabs.map((e) => e.page).toList(),
-            ),
+          body: Stack(
+            children: [
+              Container(
+                child: IndexedStack(
+                  index: currentTab,
+                  children: tabs.map((e) => e.page).toList(),
+                ),
+              ),
+              DropdownAlert()
+            ],
           ),
           bottomNavigationBar: Container(
             child: BottomNavigationBar(
+                backgroundColor: Theme.of(context).backgroundColor,
                 type: BottomNavigationBarType.fixed,
                 iconSize: 25,
                 showUnselectedLabels: true,
-                elevation: 0,
+                elevation: 0.5,
                 currentIndex: index,
                 items: [
                   BottomNavigationBarItem(

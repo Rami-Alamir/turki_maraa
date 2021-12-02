@@ -8,6 +8,7 @@ import 'package:new_turki/widgets/profile/profile_header.dart';
 import 'package:new_turki/widgets/profile/settings_card.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';
 import 'package:new_turki/widgets/shared/social_media.dart';
+import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
@@ -39,24 +40,33 @@ class _ProfileState extends State<Profile> {
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        child: ListView(
-          padding: EdgeInsets.only(top: 15),
-          children: [
-            ProfileHeader(
-              user: _auth.user,
-              isAuth: _auth.isAuth,
-            ),
-            PersonalInfoCard(isAuth: _auth.isAuth),
-            SettingsCard(),
-            HelpCard(),
-            SocialMedia(
-              color: Theme.of(context).colorScheme.secondaryVariant,
-            ),
-            ProfileFooter(
-              version: '5.0.0',
-            )
-          ],
-        ),
+        child: _auth.isLoading
+            ? SpinkitIndicator()
+            : RefreshIndicator(
+                color: Theme.of(context).primaryColor,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                onRefresh: () async {
+                  await _auth.getUser();
+                },
+                child: ListView(
+                  padding: EdgeInsets.only(top: 15),
+                  children: [
+                    ProfileHeader(
+                      user: _auth.user,
+                      isAuth: _auth.isAuth,
+                    ),
+                    PersonalInfoCard(isAuth: _auth.isAuth),
+                    SettingsCard(),
+                    HelpCard(),
+                    SocialMedia(
+                      color: Theme.of(context).colorScheme.secondaryVariant,
+                    ),
+                    ProfileFooter(
+                      version: '5.0.0',
+                    )
+                  ],
+                ),
+              ),
       ),
     );
   }

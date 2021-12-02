@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/models/order.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/order/item_column.dart';
@@ -6,6 +7,9 @@ import 'package:new_turki/widgets/shared/main_card.dart';
 import 'order_tracking.dart';
 
 class OrderDetailsHeader extends StatelessWidget {
+  final Order order;
+
+  const OrderDetailsHeader({required this.order});
   @override
   Widget build(BuildContext context) {
     return MainCard(
@@ -96,7 +100,9 @@ class OrderDetailsHeader extends StatelessWidget {
                 )
               ],
             ),
-            OrderTracking(),
+            OrderTracking(
+              statusCode: order.statusCode,
+            ),
           ],
         ),
       ),

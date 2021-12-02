@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/models/order.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 
 class PaymentMethod extends StatelessWidget {
-  final String image;
-  final String title;
+  final Payment paymentMethod;
 
-  const PaymentMethod({required this.image, required this.title});
+  const PaymentMethod({required this.paymentMethod});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,12 +31,12 @@ class PaymentMethod extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.network(
-                  image,
+                  paymentMethod.image,
                   width: 35,
                   height: 35,
                 ),
               ),
-              Text(title,
+              Text(paymentMethod.title,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 12,

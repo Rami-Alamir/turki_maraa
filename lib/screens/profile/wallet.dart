@@ -14,6 +14,13 @@ class UserWallet extends StatefulWidget {
 
 class _UserWalletState extends State<UserWallet> {
   @override
+  void initState() {
+    final _auth = Provider.of<Auth>(context, listen: false);
+    _auth.getUserWallet();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _auth = Provider.of<Auth>(context);
     return Scaffold(
@@ -21,32 +28,39 @@ class _UserWalletState extends State<UserWallet> {
           back: true,
           title: AppLocalizations.of(context)!.tr('credit'),
         ),
-        body: ListView(
-          children: [
-            WalletHeader(credit: _auth.user.credit!),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(
-                AppLocalizations.of(context)!.tr('transaction_details'),
-                textAlign: TextAlign.start,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1!
-                    .copyWith(fontSize: 12, fontWeight: FontWeight.bold),
+        body: RefreshIndicator(
+          color: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          onRefresh: () async {
+            await _auth.getUser();
+          },
+          child: ListView(
+            children: [
+              WalletHeader(credit: _auth.user.credit!),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(
+                  AppLocalizations.of(context)!.tr('transaction_details'),
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: DummyData.walletList.length,
-                padding: EdgeInsets.all(0),
-                itemBuilder: (BuildContext ctxt, int index) {
-                  return TransactionRow(
-                    transaction: DummyData.walletList[index],
-                  );
-                })
-          ],
+              ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: DummyData.walletList.length,
+                  padding: EdgeInsets.all(0),
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return TransactionRow(
+                      transaction: DummyData.walletList[index],
+                    );
+                  })
+            ],
+          ),
         ));
   }
 }

@@ -32,10 +32,11 @@ class IntroFooter extends StatelessWidget {
                 },
                 child: Text(
                   AppLocalizations.of(context)!.tr('skip'),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromRGBO(132, 15, 15, 1),
-                  ),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Color.fromRGBO(132, 15, 15, 1),
+                      ),
                 ),
               ),
             ),

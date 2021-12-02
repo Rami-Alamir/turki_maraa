@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';
+import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
+import 'package:provider/provider.dart';
+import '../../widgets/profile/credit_text_field.dart';
 
 class AddCredit extends StatefulWidget {
   const AddCredit({Key? key}) : super(key: key);
@@ -17,30 +20,19 @@ class _AddCreditState extends State<AddCredit> {
       appBar: PrimaryAppBar(
         title: AppLocalizations.of(context)!.tr('add_credit'),
       ),
-      body: ListView(
-        children: [
-          MainCard(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Container(
-              height: 100,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      AppLocalizations.of(context)!.tr('amount'),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(fontSize: 14),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CreditTextField(),
+              RoundedRectangleButton(
+                  title: AppLocalizations.of(context)!.tr('next'),
+                  onPressed: () {})
+            ],
+          ),
+        ),
       ),
     );
   }

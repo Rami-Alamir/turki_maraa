@@ -8,6 +8,7 @@ import 'package:new_turki/screens/orders/order_details.dart';
 import 'package:new_turki/screens/orders/orders.dart';
 import 'package:new_turki/screens/other/new_version.dart';
 import 'package:new_turki/screens/other/no_internet.dart';
+import 'package:new_turki/screens/other/success.dart';
 import 'package:new_turki/screens/profile/about.dart';
 import 'package:new_turki/screens/profile/add_credit.dart';
 import 'package:new_turki/screens/profile/add_gift_card.dart';
@@ -72,6 +73,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => AddCredit());
       case '/AddGiftCard':
         return MaterialPageRoute(builder: (_) => AddGiftCard());
+      case '/Success':
+        return MaterialPageRoute(
+            builder: (_) => Success(
+                  title: args as String,
+                ));
       default:
         return null;
     }

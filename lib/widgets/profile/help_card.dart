@@ -71,7 +71,7 @@ class HelpCard extends StatelessWidget {
                       visible: _auth.isAuth,
                       child: ProfileRow(
                           onTap: () {
-                            _auth.logOut();
+                            _auth.logOut(context);
                           },
                           withDivider: false,
                           icon: RA7ICONS.exit,

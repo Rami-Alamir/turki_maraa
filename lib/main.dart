@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/app_provider.dart';
 import 'package:new_turki/provider/auth.dart';
+import 'package:new_turki/provider/cart_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'provider/app_theme.dart';
 import 'provider/orders_provider.dart';
@@ -25,17 +26,20 @@ Future<void> main() async {
     provisional: false,
     sound: true,
   );
+
   //get user preference
   SharedPreferences _prefs = await SharedPreferences.getInstance();
   String? _language = _prefs.getString('language_code');
   String _theme = _prefs.getString('theme') ?? 'light';
+  String _userToken = _prefs.getString('user_token') ?? '';
   Locale _locale = Locale(_language ?? 'ar');
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<Auth>(create: (context) => Auth()),
     ChangeNotifierProvider<AppLanguage>(create: (context) => AppLanguage()),
     ChangeNotifierProvider<AppTheme>(create: (context) => AppTheme()),
     ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),
+    ChangeNotifierProvider<CartProvider>(create: (context) => CartProvider()),
     ChangeNotifierProvider<OrdersProvider>(
         create: (context) => OrdersProvider()),
-  ], child: MyApp(locale: _locale, theme: _theme)));
+  ], child: MyApp(locale: _locale, theme: _theme, token: _userToken)));
 }

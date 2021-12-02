@@ -7,6 +7,7 @@ class RoundedRectangleButton extends StatelessWidget {
   final double width;
   final double height;
   final EdgeInsets padding;
+  final Color color;
 
   const RoundedRectangleButton(
       {required this.title,
@@ -14,7 +15,8 @@ class RoundedRectangleButton extends StatelessWidget {
       this.fontSize = 18,
       this.width = 320,
       this.padding = const EdgeInsets.all(25.0),
-      this.height = 55});
+      this.height = 55,
+      this.color = const Color.fromRGBO(107, 0, 0, 1)});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +27,11 @@ class RoundedRectangleButton extends StatelessWidget {
         onPressed: () {
           onPressed();
         },
-        elevation: 10.0,
-        splashColor: Color.fromRGBO(107, 0, 0, 1),
+        elevation: 00.0,
+        splashColor: color,
         focusElevation: 0,
-        highlightColor: Color.fromRGBO(107, 0, 0, 1),
-        fillColor: Color.fromRGBO(107, 0, 0, 1),
+        highlightColor: color,
+        fillColor: color,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(const Radius.circular(5))),
         child: Text(

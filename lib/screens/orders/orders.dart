@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/orders_provider.dart';
-import 'package:new_turki/screens/other/no_orders.dart';
+import 'package:new_turki/widgets/order/no_orders.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/order/order_card.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';

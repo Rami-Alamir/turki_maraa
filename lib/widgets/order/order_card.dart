@@ -121,7 +121,7 @@ class OrderCard extends StatelessWidget {
                                                   const EdgeInsets.symmetric(
                                                       vertical: 5.0),
                                               child: Text(
-                                                  "${order.orderItems[0].qty}X ${order.orderItems[0].title}",
+                                                  "${order.orderItems[0].qty} x ${order.orderItems[0].title}",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline5!
@@ -138,7 +138,7 @@ class OrderCard extends StatelessWidget {
                                                   const EdgeInsets.symmetric(
                                                       vertical: 5.0),
                                               child: Text(
-                                                  "${order.orderItems[1].qty}X ${order.orderItems[1].title}",
+                                                  "${order.orderItems[1].qty} x ${order.orderItems[1].title}",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline5!

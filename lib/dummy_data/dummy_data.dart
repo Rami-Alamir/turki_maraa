@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/models/cart.dart';
+import 'package:new_turki/models/item.dart';
 import 'package:new_turki/models/notification_data.dart';
 import 'package:new_turki/models/order.dart';
 import 'package:new_turki/models/points_tran.dart';
@@ -154,6 +156,13 @@ class DummyData {
   ];
   static List<Order> ordersList = [
     Order(
+      address: ' الياسمين طريق الملك عبدالعزيز',
+      paymentMethod: Payment(
+        title: 'Apple pay',
+        image:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1024px-Apple_Pay_logo.svg.png',
+      ),
+      statusCode: 11,
       image:
           'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
       total: "1450",
@@ -161,10 +170,26 @@ class DummyData {
       type: 'توصيل',
       payment: 'تم السداد',
       status: 'جاري التجهيز',
-      orderItems: [OrderItem(qty: "1", title: "حري")],
+      orderItems: [
+        OrderItem(
+            id: 1,
+            qty: "1",
+            subtitle: "",
+            title: "حري",
+            image:
+                'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
+            price: "1450")
+      ],
       id: '50805',
     ),
     Order(
+      address: ' الياسمين طريق الملك عبدالعزيز',
+      paymentMethod: Payment(
+        title: 'Apple pay',
+        image:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1024px-Apple_Pay_logo.svg.png',
+      ),
+      statusCode: 11,
       type: 'استلام من الفرع',
       image:
           'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
@@ -173,19 +198,54 @@ class DummyData {
       payment: 'جاري التحقق من عملية الدفع',
       status: 'تم التوصيل',
       orderItems: [
-        OrderItem(qty: "1", title: "برجر"),
-        OrderItem(qty: "1", title: "مفروم")
+        OrderItem(
+            qty: "1",
+            id: 1,
+            title: "برجر",
+            subtitle: "",
+            image:
+                'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
+            price: "1450"),
+        OrderItem(
+            id: 1,
+            qty: "1",
+            title: "مفروم",
+            subtitle: "",
+            image:
+                'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
+            price: "1450")
       ],
       id: '50812',
     ),
     Order(
+      address: ' الياسمين طريق الملك عبدالعزيز',
+      paymentMethod: Payment(
+        title: 'Apple pay',
+        image:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1024px-Apple_Pay_logo.svg.png',
+      ),
+      statusCode: 11,
       type: 'توصيل',
       image:
           'https://cdn.salla.sa/DotcN83mIYoUkupjKMdxfJ5iuULWTPToc5xAVRkO.jpeg',
       total: "1320",
       orderItems: [
-        OrderItem(qty: "1", title: "برجر"),
-        OrderItem(qty: "1", title: "مفروم")
+        OrderItem(
+            id: 1,
+            qty: "1",
+            title: "برجر",
+            subtitle: "",
+            image:
+                'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
+            price: "1450"),
+        OrderItem(
+            id: 1,
+            qty: "1",
+            title: "مفروم",
+            subtitle: "",
+            image:
+                'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
+            price: "1450")
       ],
       payment: 'الدفع عند الاستلام',
       date: '21/8/2021',
@@ -193,37 +253,135 @@ class DummyData {
       id: '50833',
     ),
     Order(
+      address: ' الياسمين طريق الملك عبدالعزيز',
+      paymentMethod: Payment(
+        title: 'Apple pay',
+        image:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1024px-Apple_Pay_logo.svg.png',
+      ),
       type: 'توصيل',
       image:
           'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
       total: "1450",
       orderItems: [
-        OrderItem(qty: "1", title: "نعيمي"),
-        OrderItem(qty: "1", title: "مفروم")
+        OrderItem(
+            id: 1,
+            subtitle: "",
+            qty: "1",
+            title: "برجر",
+            image:
+                'https://cdn.salla.sa/7Uv2ZnbDos0fZoX1fUSQMWKDq7mYxezM8kvh1wqt.jpeg',
+            price: "60"),
+        OrderItem(
+            id: 1,
+            subtitle: "",
+            qty: "2",
+            title: "ريش غنم",
+            image:
+                'https://cdn.salla.sa/8tbiQBKYSSj9cjQLKgUxecpAVcaLbOXM3i5KICD8.jpeg',
+            price: "190"),
+        OrderItem(
+            id: 1,
+            subtitle: 'نعيمي هرفي صغير - تقطيع ثلاجة - فاكيوم',
+            qty: "1",
+            image:
+                'https://cdn.salla.sa/dbPPv/ArNOJzNYSAzorMhVAEw2CVWu8Zid2tdadfIDhfr9.jpg',
+            price: "1850",
+            title: 'نعيمي'),
+        OrderItem(
+            id: 1,
+            subtitle: "",
+            qty: "1",
+            title: "برجر",
+            image:
+                'https://cdn.salla.sa/7Uv2ZnbDos0fZoX1fUSQMWKDq7mYxezM8kvh1wqt.jpeg',
+            price: "60"),
+        OrderItem(
+            id: 1,
+            subtitle: "",
+            qty: "2",
+            title: "ريش غنم",
+            image:
+                'https://cdn.salla.sa/8tbiQBKYSSj9cjQLKgUxecpAVcaLbOXM3i5KICD8.jpeg',
+            price: "190"),
+        OrderItem(
+            id: 1,
+            subtitle: 'نعيمي هرفي صغير - تقطيع ثلاجة - فاكيوم',
+            qty: "1",
+            image:
+                'https://cdn.salla.sa/dbPPv/ArNOJzNYSAzorMhVAEw2CVWu8Zid2tdadfIDhfr9.jpg',
+            price: "1850",
+            title: 'نعيمي'),
       ],
       date: '30/8/2021',
       payment: 'تم السداد',
       status: 'تم التوصيل',
+      statusCode: 11,
       id: '50812',
     ),
     Order(
+      address: ' الياسمين طريق الملك عبدالعزيز',
+      paymentMethod: Payment(
+        title: 'Apple pay',
+        image:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1024px-Apple_Pay_logo.svg.png',
+      ),
       type: 'توصيل',
       payment: 'تم السداد',
       image:
           'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
       total: "230",
+      statusCode: 11,
       date: '22/8/2021',
       orderItems: [
-        OrderItem(qty: "2", title: "برجر"),
-        OrderItem(qty: "1", title: "مفروم")
+        OrderItem(
+            id: 1,
+            subtitle: "",
+            qty: "1",
+            title: "برجر",
+            image:
+                'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
+            price: "1450"),
+        OrderItem(
+            id: 1,
+            subtitle: "",
+            qty: "1",
+            title: "مفروم",
+            image:
+                'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
+            price: "1450")
       ],
       status: 'تم التوصيل',
       id: '50812',
     ),
     Order(
+      address: ' الياسمين طريق الملك عبدالعزيز',
+      paymentMethod: Payment(
+        title: 'Apple pay',
+        image:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1024px-Apple_Pay_logo.svg.png',
+      ),
+      statusCode: 11,
       type: 'توصيل',
       payment: 'تم السداد',
-      orderItems: [OrderItem(qty: "1", title: "نعيمي")],
+      orderItems: [
+        OrderItem(
+            id: 1,
+            subtitle: "",
+            qty: "1",
+            title: "برجر",
+            image:
+                'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
+            price: "1450"),
+        OrderItem(
+            id: 1,
+            subtitle: "",
+            qty: "1",
+            title: "مفروم",
+            image:
+                'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
+            price: "1450")
+      ],
       image:
           'https://cdn.salla.sa/DotcN83mIYoUkupjKMdxfJ5iuULWTPToc5xAVRkO.jpeg',
       total: "1320",
@@ -232,4 +390,36 @@ class DummyData {
       id: '50833',
     ),
   ];
+
+  static Cart cart = Cart(
+      invoice: InvoiceData(total: 1000, subtotal: 990, shipping: 10),
+      items: [
+        CartItem(
+            nameAr: "برجر",
+            nameEn: "Burger",
+            image:
+                'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
+            price: "50",
+            qty: '1',
+            extraEn: '',
+            extraAr: ''),
+        CartItem(
+            nameAr: "مفروم",
+            nameEn: "Burger",
+            image:
+                'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
+            price: "50",
+            qty: '1',
+            extraEn: '',
+            extraAr: ''),
+        CartItem(
+            qty: "1",
+            image:
+                'https://cdn.salla.sa/dbPPv/ArNOJzNYSAzorMhVAEw2CVWu8Zid2tdadfIDhfr9.jpg',
+            price: "1850",
+            nameAr: 'نعيمي',
+            nameEn: "Naime",
+            extraEn: 'نعيمي هرفي صغير - تقطيع ثلاجة - فاكيوم',
+            extraAr: 'نعيمي هرفي صغير - تقطيع ثلاجة - فاكيوم')
+      ]);
 }

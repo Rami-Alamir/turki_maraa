@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/user.dart';
-import 'package:new_turki/screens/profile/login.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 
@@ -60,8 +59,9 @@ class UserDataHeader extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextButton(
-                          onPressed: () => Navigator.pushNamed(
-                            context,
+                          onPressed: () =>
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushNamed(
                             '/Login',
                           ),
                           child: Text(

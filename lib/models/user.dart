@@ -1,8 +1,11 @@
 class User {
   String? name;
   String? phone;
+  String? email;
+  String? nationality;
   String? category;
   double? orders;
+  double? age;
   double? credit;
   double? point;
   double? lat;
@@ -11,7 +14,10 @@ class User {
   User(
       {this.name,
       this.phone,
+      this.email,
+      this.nationality,
       this.orders,
+      this.age,
       this.credit,
       this.category,
       this.point,
