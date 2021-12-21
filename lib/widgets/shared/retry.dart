@@ -8,9 +8,11 @@ class Retry extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 60.0),
+        padding: const EdgeInsets.only(top: 60.0),
         child: IconButton(
-          onPressed: onPressed(),
+          onPressed: () {
+            onPressed();
+          },
           icon: Icon(
             Icons.refresh,
             size: 30,

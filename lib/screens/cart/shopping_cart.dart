@@ -10,6 +10,8 @@ import 'package:new_turki/widgets/cart/empty_cart.dart';
 import 'package:new_turki/widgets/cart/note.dart';
 import 'package:new_turki/widgets/cart/payment_method.dart';
 import 'package:new_turki/widgets/cart/promo_code.dart';
+import 'package:new_turki/widgets/cart/use_credit.dart';
+import 'package:new_turki/widgets/shared/not_auth.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
@@ -24,64 +26,67 @@ class ShoppingCart extends StatefulWidget {
 
 class _ShoppingCartState extends State<ShoppingCart> {
   @override
-  void initState() {
-    final _cart = Provider.of<CartProvider>(context, listen: false);
-    _cart.getCartData();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final _cart = Provider.of<CartProvider>(context);
-    final _auth = Provider.of<Auth>(context);
+    final _auth = Provider.of<Auth>(context, listen: false);
     return Scaffold(
       appBar: PrimaryAppBar(
         title: AppLocalizations.of(context)!.tr('cart'),
         back: false,
       ),
-      body: _cart.isLoading
-          ? SpinkitIndicator()
-          : _cart.retry
-              ? Retry(
-                  onPressed: () {
-                    _cart.reInitOrdersList();
-                  },
-                )
-              : _cart.cartData.items.isEmpty
-                  ? EmptyCart()
-                  : RefreshIndicator(
-                      color: Theme.of(context).primaryColor,
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      onRefresh: () async {
-                        await _cart.reInitOrdersList();
+      body: _cart.cartLength == 0
+          ? _cart.isLoading
+              ? SpinkitIndicator()
+              : _cart.retry
+                  ? Retry(
+                      onPressed: () {
+                        _cart.reInitOrdersList();
                       },
-                      child: ListView(
-                        children: [
-                          ListView.builder(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              physics: ScrollPhysics(),
-                              itemCount: _cart.cartData.items.length,
-                              itemBuilder: (BuildContext ctxt, int index) {
-                                return CartCard();
-                              }),
-                          DeliveryAddress(address: _auth.deliveryAddress),
-                          DeliveryDate(),
-                          DeliveryTime(),
-                          PaymentMethod(),
-                          Note(),
-                          PromoCode(),
-                          Invoice(
-                              total: _cart.cartData.invoice.total,
-                              subtotal: _cart.cartData.invoice.subtotal,
-                              shipping: _cart.cartData.invoice.shipping),
-                          RoundedRectangleButton(
-                              title: AppLocalizations.of(context)!
-                                  .tr('place_order'),
-                              onPressed: () {})
-                        ],
-                      ),
-                    ),
+                    )
+                  : !_cart.isAuth
+                      ? NotAuth()
+                      : EmptyCart()
+          : RefreshIndicator(
+              color: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              onRefresh: () async {
+                await _cart.reInitOrdersList();
+              },
+              child: GestureDetector(
+                onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+                child: ListView(
+                  children: [
+                    ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemCount: _cart.cartData.items.length,
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          return CartCard(
+                            item: _cart.cartData.items[index],
+                            index: index,
+                          );
+                        }),
+                    DeliveryAddress(address: _auth.deliveryAddress),
+                    DeliveryDate(),
+                    DeliveryTime(),
+                    PaymentMethod(),
+                    UseCredit(credit: "100.6"),
+                    Note(),
+                    PromoCode(),
+                    Invoice(
+                        myCredit: _cart.useCredit ? 100.6 : 0.0,
+                        total: _cart.cartData.invoice.total -
+                            (_cart.useCredit ? 100.6 : 0.0),
+                        subtotal: _cart.cartData.invoice.subtotal,
+                        shipping: _cart.cartData.invoice.shipping),
+                    RoundedRectangleButton(
+                        title: AppLocalizations.of(context)!.tr('place_order'),
+                        onPressed: () {})
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

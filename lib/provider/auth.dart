@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropdown_alert/alert_controller.dart';
@@ -11,13 +12,18 @@ class Auth with ChangeNotifier {
   TextEditingController ageController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController nationalityController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController keyController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController giftController = TextEditingController();
   String _deliveryAddress = "الرياض الياسيمن ";
   bool _isLoading = true;
   int _cardValue = 0;
-
+  int _isAuthStatus = -1;
   int get cardValue => _cardValue;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  int get isAuthStatus => _isAuthStatus;
 
   String get deliveryAddress => _deliveryAddress;
 
@@ -37,27 +43,58 @@ class Auth with ChangeNotifier {
       point: 6500);
 
   bool get isLoading => _isLoading;
-  bool? _isAuth = false;
+  bool? _isAuth = true;
 
   User get user => _user;
 
   bool get isAuth => _isAuth!;
 
-  Future<void> login() async {
+  Future<void> login(BuildContext context) async {
+    _showDialogIndicator(context);
+
+    _isAuthStatus = 1;
+    _isAuth = true;
     ageController.text = (_user.age ?? 0) > 0 ? _user.age.toString() : "";
     usernameController.text = _user.name ?? "";
     nationalityController.text = _user.nationality ?? "";
     emailController.text = _user.email ?? "";
+    await Future.delayed(Duration(milliseconds: 2500), () {
+      notifyListeners();
+    });
+    _user = User(
+        name: 'رامي الأمير',
+        phone: '0580809976',
+        lng: 1.0,
+        lat: 1.0,
+        orders: 6,
+        credit: 100.6,
+        category: 'الفئة الفضية',
+        point: 6500);
+
+    Navigator.pop(context);
+    notifyListeners();
+  }
+
+  Future<void> login3() async {
+    _isAuthStatus = 1;
+    _isAuth = true;
+    ageController.text = (_user.age ?? 0) > 0 ? _user.age.toString() : "";
+    usernameController.text = _user.name ?? "";
+    nationalityController.text = _user.nationality ?? "";
+    emailController.text = _user.email ?? "";
+    notifyListeners();
   }
 
   Future<void> getUserData(String token) async {
-    await login();
     await Future.delayed(Duration(milliseconds: 5500), () {
       _isAuth = true;
       _isLoading = false;
-
-      notifyListeners();
     });
+    if (isAuth)
+      await login3();
+    else
+      _isAuthStatus = 0;
+    notifyListeners();
   }
 
   Future<void> updateUser(BuildContext context) async {
@@ -95,6 +132,7 @@ class Auth with ChangeNotifier {
         .confirmDialog(context, "Are_you_sure_you_want_to_log_out", () {
       _user = User();
       _isAuth = false;
+      _isAuthStatus = 0;
       notifyListeners();
     });
   }
@@ -147,4 +185,34 @@ class Auth with ChangeNotifier {
             TypeAlert.error);
     }
   }
+
+  void initCountyCode() {
+    keyController.text = '+966';
+  }
+
+  Timer? _timer;
+  int _start = 59;
+
+  Timer get timer => _timer!;
+
+  void startTimer() {
+    print('startTimer');
+    _start = 59;
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          timer.cancel();
+        } else {
+          _start--;
+        }
+        notifyListeners();
+      },
+    );
+    _start = 59;
+    notifyListeners();
+  }
+
+  int get start => _start;
 }

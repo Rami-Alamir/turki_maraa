@@ -37,6 +37,7 @@ dependencies:
   firebase_dynamic_links: ^3.0.1
   flutter_spinkit: ^5.1.0
   flutter_dropdown_alert: ^1.0.3
+  flutter_html: ^2.2.1
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,7 @@ flutter:
     - assets/images/q1.png
     - assets/images/q2.png
     - assets/images/no_internet.gif
+    - assets/images/not_auth.png
     - assets/images/q5.png
     - assets/images/q6.png
     - assets/images/turki_car.png
@@ -66,7 +68,17 @@ flutter:
     - assets/images/money.png
     - assets/images/turki2.png
     - assets/images/t1.gif
+    - assets/images/shop.png
+    - assets/images/i3.png
+    - assets/images/i5.png
+    - assets/images/amazon.png
+    - assets/images/fish.png
+    - assets/images/c1.png
+    - assets/images/hary.png
+    - assets/images/delivery-truck.png
+    - assets/images/not_supported.png
     - assets/images/success.gif
+    - assets/images/empty_cart.png
     - assets/language/ar.json
     - assets/language/en.json
 
@@ -81,6 +93,9 @@ flutter:
     - family: RA7ICONS
       fonts:
         - asset: assets/icons/RA7ICONS.ttf
+    - family: TURKIICONS
+      fonts:
+        - asset: assets/icons/TURKIICONS.ttf
     - family: RA1ICONS
       fonts:
         - asset: assets/icons/RA1ICONS.ttf

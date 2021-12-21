@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/screens/cart/shopping_cart.dart';
 import 'package:new_turki/screens/chat/chat.dart';
+import 'package:new_turki/screens/home/discover.dart';
 import 'package:new_turki/screens/home/home.dart';
-import 'package:new_turki/screens/home/item_details.dart';
+import 'package:new_turki/screens/home/products_home.dart';
+import 'package:new_turki/screens/home/product_details.dart';
+import 'package:new_turki/screens/home/products_home1.dart';
+import 'package:new_turki/screens/home/products_home2.dart';
+import 'package:new_turki/screens/home/products_home3.dart';
+import 'package:new_turki/screens/home/products_home4.dart';
+import 'package:new_turki/screens/home/products_list.dart';
+import 'package:new_turki/screens/home/search.dart';
 import 'package:new_turki/screens/orders/order_details.dart';
 import 'package:new_turki/screens/orders/orders.dart';
 import 'package:new_turki/screens/other/new_version.dart';
@@ -17,9 +26,12 @@ import 'package:new_turki/screens/profile/favourite.dart';
 import 'package:new_turki/screens/profile/login.dart';
 import 'package:new_turki/screens/profile/notification.dart';
 import 'package:new_turki/screens/profile/personal_information.dart';
+import 'package:new_turki/screens/profile/phone_login.dart';
 import 'package:new_turki/screens/profile/points.dart';
 import 'package:new_turki/screens/profile/policies.dart';
 import 'package:new_turki/screens/profile/profile.dart';
+import 'package:new_turki/screens/profile/username.dart';
+import 'package:new_turki/screens/profile/verify_phone.dart';
 import 'package:new_turki/screens/profile/wallet.dart';
 
 class TabItem {
@@ -66,10 +78,14 @@ class TabItem {
             case '/NewVersion':
               return MaterialPageRoute(builder: (_) => NewVersion());
             case '/Home':
-              return MaterialPageRoute(builder: (_) => Home());
-            case '/ItemDetails':
               return MaterialPageRoute(
-                  builder: (_) => ItemDetails(id: args as int));
+                  builder: (_) => Home(
+                        parentScaffoldStateKey:
+                            args as GlobalKey<ScaffoldState>,
+                      ));
+            case '/ProductDetails':
+              return MaterialPageRoute(
+                  builder: (_) => ProductDetails(id: args as int));
             case '/Profile':
               return MaterialPageRoute(builder: (_) => Profile());
             case '/Orders':
@@ -84,6 +100,12 @@ class TabItem {
               return MaterialPageRoute(builder: (_) => Chat());
             case '/Login':
               return MaterialPageRoute(builder: (_) => Login());
+            case '/PhoneLogin':
+              return MaterialPageRoute(builder: (_) => PhoneLogin());
+            case '/VerifyPhone':
+              return MaterialPageRoute(builder: (_) => VerifyPhone());
+            case '/Username':
+              return MaterialPageRoute(builder: (_) => Username());
             case '/Favourite':
               return MaterialPageRoute(builder: (_) => Favourite());
             case '/Notifications':
@@ -105,6 +127,25 @@ class TabItem {
               return MaterialPageRoute(builder: (_) => AddCredit());
             case '/AddGiftCard':
               return MaterialPageRoute(builder: (_) => AddGiftCard());
+            case '/ProductsHome':
+              return MaterialPageRoute(builder: (_) => ProductsHome());
+            case '/ProductsHome1':
+              return MaterialPageRoute(builder: (_) => ProductsHome1());
+            case '/ProductsHome2':
+              return MaterialPageRoute(builder: (_) => ProductsHome2());
+            case '/ProductsHome3':
+              return MaterialPageRoute(builder: (_) => ProductsHome3());
+            case '/ProductsHome4':
+              return MaterialPageRoute(builder: (_) => ProductsHome4());
+            case '/Search':
+              return MaterialPageRoute(builder: (_) => Search());
+            case '/Discover':
+              return MaterialPageRoute(
+                  builder: (_) => Discover(item: args as DiscoverItem));
+            case '/ProductsList':
+              return MaterialPageRoute(
+                  builder: (_) =>
+                      ProductsList(data: args as Map<String, dynamic>));
             case '/Success':
               return MaterialPageRoute(
                   builder: (_) => Success(

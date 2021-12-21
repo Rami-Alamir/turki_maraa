@@ -36,9 +36,10 @@ class ConfirmDialog extends StatelessWidget {
             style:
                 Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 12),
           ),
-          onPressed: () {
-            confirmAction();
+          onPressed: () async {
             Navigator.pop(context);
+
+            await confirmAction();
           },
         )
       ],

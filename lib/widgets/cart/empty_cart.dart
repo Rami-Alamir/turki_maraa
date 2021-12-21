@@ -14,12 +14,10 @@ class EmptyCart extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.network(
-                'https://cdn.dribbble.com/users/1168645/screenshots/3152485/no-orders_2x.png',
-                width: 200,
-                height: 200),
+            Image.asset('assets/images/empty_cart.png',
+                width: 333, height: 333),
             Text(
-              AppLocalizations.of(context)!.tr('order_now'),
+              AppLocalizations.of(context)!.tr('empty_cart'),
               style:
                   Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12),
             ),

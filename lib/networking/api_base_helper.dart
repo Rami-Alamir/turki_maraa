@@ -3,14 +3,25 @@ import 'package:http/http.dart' as http;
 import 'app_exception.dart';
 
 class ApiBaseHelper {
-  final String _baseUrl = 'turki.turkieshop.com';
+  final String _baseUrl = 'https://almaraacompany.com/turki-api/api/v1/';
 
   Map<String, String> headers = {
     "Accept": "application/json",
     "App-Key": "Nghf9AP72aWF635xLHCnd9q88pRmSaP95BLRDI0n"
   };
 
-  Future<dynamic> get(String url, queryParameters) async {
+  Future<dynamic> get(String url) async {
+    var uri = Uri.parse(_baseUrl + url);
+    var responseJson;
+    try {
+      var response = await http.get(uri, headers: headers);
+      responseJson = _returnResponse(response);
+      print(responseJson.toString());
+    } catch (e) {}
+    return responseJson;
+  }
+
+  Future<dynamic> get2(String url, queryParameters) async {
     var uri = Uri.https(_baseUrl, url, queryParameters);
     var responseJson;
     try {

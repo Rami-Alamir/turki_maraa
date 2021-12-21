@@ -8,15 +8,18 @@ class RoundedRectangleButton extends StatelessWidget {
   final double height;
   final EdgeInsets padding;
   final Color color;
+  final Color fontColor;
 
-  const RoundedRectangleButton(
-      {required this.title,
-      required this.onPressed,
-      this.fontSize = 18,
-      this.width = 320,
-      this.padding = const EdgeInsets.all(25.0),
-      this.height = 55,
-      this.color = const Color.fromRGBO(107, 0, 0, 1)});
+  const RoundedRectangleButton({
+    required this.title,
+    required this.onPressed,
+    this.fontSize = 18,
+    this.width = 320,
+    this.padding = const EdgeInsets.all(25.0),
+    this.height = 55,
+    this.color = const Color.fromRGBO(107, 0, 0, 1),
+    this.fontColor = Colors.white,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,7 @@ class RoundedRectangleButton extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .headline3
-              ?.copyWith(fontSize: fontSize),
+              ?.copyWith(fontSize: fontSize, color: fontColor),
         ),
       ),
     );

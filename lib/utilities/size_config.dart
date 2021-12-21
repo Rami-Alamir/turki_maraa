@@ -39,7 +39,8 @@ class SizeConfig {
     return DeviceScreenType.Mobile;
   }
 
-  static double setWidgetHeight(double mobile, double tablet, double desktop) {
+  static double setWidgetHeightWithFactor(
+      double mobile, double tablet, double desktop) {
     switch (deviceScreenType) {
       case DeviceScreenType.Desktop:
         return screenHeight! * desktop;
@@ -50,7 +51,19 @@ class SizeConfig {
     }
   }
 
-  static double setWidgetWidth(double mobile, double tablet, double desktop) {
+  static double setWidgetHeight(double mobile, double tablet, double desktop) {
+    switch (deviceScreenType) {
+      case DeviceScreenType.Desktop:
+        return desktop;
+      case DeviceScreenType.Tablet:
+        return tablet;
+      default:
+        return mobile;
+    }
+  }
+
+  static double setWidgetWidthWithFactor(
+      double mobile, double tablet, double desktop) {
     switch (deviceScreenType) {
       case DeviceScreenType.Desktop:
         return screenWidth! * desktop;
@@ -58,6 +71,17 @@ class SizeConfig {
         return screenWidth! * tablet;
       default:
         return screenWidth! * mobile;
+    }
+  }
+
+  static double setWidgetWidth(double mobile, double tablet, double desktop) {
+    switch (deviceScreenType) {
+      case DeviceScreenType.Desktop:
+        return desktop;
+      case DeviceScreenType.Tablet:
+        return tablet;
+      default:
+        return mobile;
     }
   }
 }

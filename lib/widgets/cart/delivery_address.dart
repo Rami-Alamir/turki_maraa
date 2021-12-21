@@ -12,30 +12,42 @@ class DeliveryAddress extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 15.0, top: 15, left: 15),
+          padding: const EdgeInsets.only(right: 15.0, top: 30, left: 15),
           child: Text(
             AppLocalizations.of(context)!.tr('delivery_address'),
             style: Theme.of(context)
                 .textTheme
                 .headline1!
-                .copyWith(fontWeight: FontWeight.bold, fontSize: 12),
+                .copyWith(fontWeight: FontWeight.bold, fontSize: 14),
           ),
         ),
-        Container(
+        Padding(
+          padding: const EdgeInsets.only(right: 10.0, top: 15, left: 10),
+          child: Container(
+            constraints: BoxConstraints(minHeight: 56),
+            decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryVariant,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
             child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(Icons.location_pin, color: Theme.of(context).primaryColor),
-              Text(address,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12,
-                      )),
-            ],
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(Icons.location_pin,
+                      color: Theme.of(context).primaryColor),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(address,
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 12,
+                            )),
+                  ),
+                ],
+              ),
+            ),
           ),
-        )),
+        ),
       ],
     );
   }

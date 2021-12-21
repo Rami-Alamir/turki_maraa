@@ -21,16 +21,16 @@ class IntroCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              width: SizeConfig.setWidgetWidth(0.7, 0.4, 0.3),
+              width: SizeConfig.setWidgetWidthWithFactor(0.7, 0.4, 0.3),
               child: Image.asset(
                 IntroList.introData[mSelectedPosition].image!,
-                width: SizeConfig.setWidgetWidth(1.5, .5, .5),
-                height: SizeConfig.setWidgetHeight(0.45, 0.49, 0.49),
+                width: SizeConfig.setWidgetWidthWithFactor(1.5, .5, .5),
+                height: SizeConfig.setWidgetHeightWithFactor(0.45, 0.49, 0.49),
                 fit: BoxFit.contain,
               ),
             ),
             Container(
-                width: SizeConfig.setWidgetWidth(0.8, 0.8, 0.8),
+                width: SizeConfig.setWidgetWidthWithFactor(0.8, 0.8, 0.8),
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
                 child: AutoSizeText(
                   _lang.language == 'ar'
@@ -46,7 +46,7 @@ class IntroCard extends StatelessWidget {
                   ),
                 )),
             Container(
-                width: SizeConfig.setWidgetWidth(0.52, 0.52, 0.52),
+                width: SizeConfig.setWidgetWidthWithFactor(0.52, 0.52, 0.52),
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                 child: AutoSizeText(
                   _lang.language == 'ar'

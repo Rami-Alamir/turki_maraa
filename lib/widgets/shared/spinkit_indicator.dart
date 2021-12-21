@@ -6,7 +6,7 @@ class SpinkitIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 60.0),
+        padding: const EdgeInsets.only(top: 60.0),
         child: SpinKitPulse(
           color: Theme.of(context).primaryColor,
           size: 30.0,

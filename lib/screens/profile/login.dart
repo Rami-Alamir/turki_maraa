@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:new_turki/screens/profile/phone_login.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:country_code_picker/country_code_picker.dart';
@@ -65,20 +64,23 @@ class _LoginState extends State<Login> {
                       children: [
                         InkWell(
                           onTap: () {},
-                          child: Text('  ادخل رقم جوالك',
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8.0, 0, 0, 0),
+                            child: Text(
+                                AppLocalizations.of(context)!
+                                    .tr('enter_your_mobile_number'),
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 100),
                           child: InkWell(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PhoneLogin()),
-                            ),
+                            onTap: () =>
+                                Navigator.pushNamed(context, "/PhoneLogin"),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

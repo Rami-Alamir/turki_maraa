@@ -3,6 +3,7 @@ import 'package:new_turki/provider/orders_provider.dart';
 import 'package:new_turki/widgets/order/no_orders.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/order/order_card.dart';
+import 'package:new_turki/widgets/shared/not_auth.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
@@ -17,13 +18,6 @@ class Orders extends StatefulWidget {
 }
 
 class _OrdersState extends State<Orders> {
-  @override
-  void initState() {
-    final _orders = Provider.of<OrdersProvider>(context, listen: false);
-    _orders.getOrdersList();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final _orders = Provider.of<OrdersProvider>(context);
@@ -41,7 +35,9 @@ class _OrdersState extends State<Orders> {
                         _orders.reInitOrdersList();
                       },
                     )
-                  : NoOrders()
+                  : !_orders.isAuth
+                      ? NotAuth()
+                      : NoOrders()
           : RefreshIndicator(
               color: Theme.of(context).primaryColor,
               backgroundColor: Theme.of(context).colorScheme.secondary,

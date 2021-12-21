@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/cart.dart';
+import 'package:new_turki/models/category_data.dart';
+import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/models/item.dart';
 import 'package:new_turki/models/notification_data.dart';
 import 'package:new_turki/models/order.dart';
@@ -393,6 +395,21 @@ class DummyData {
 
   static Cart cart = Cart(
       invoice: InvoiceData(total: 1000, subtotal: 990, shipping: 10),
+      deliveryDate: [
+        DeliveryDateTime(title: '14', subtitle: 'اليوم'),
+        DeliveryDateTime(title: '15', subtitle: 'غدا'),
+        DeliveryDateTime(title: '16', subtitle: 'الجمعة'),
+        DeliveryDateTime(title: '17', subtitle: 'السبت'),
+        DeliveryDateTime(title: '18', subtitle: 'الاحد'),
+        DeliveryDateTime(title: '19', subtitle: 'الاثنين'),
+      ],
+      deliveryTime: [
+        DeliveryDateTime(title: 'فترة الصباح', subtitle: 'اليوم'),
+        DeliveryDateTime(title: 'فترة الظهر', subtitle: 'غدا'),
+        DeliveryDateTime(title: 'فترة العصر', subtitle: 'الجمعة'),
+        DeliveryDateTime(title: 'فترة المغرب', subtitle: 'السبت'),
+        DeliveryDateTime(title: 'فترة العشاء', subtitle: 'الاحد'),
+      ],
       items: [
         CartItem(
             nameAr: "برجر",
@@ -422,4 +439,112 @@ class DummyData {
             extraEn: 'نعيمي هرفي صغير - تقطيع ثلاجة - فاكيوم',
             extraAr: 'نعيمي هرفي صغير - تقطيع ثلاجة - فاكيوم')
       ]);
+
+  static List<Item> itemsList = [
+    Item(
+      image:
+          'https://cdn.salla.sa/dbPPv/ArNOJzNYSAzorMhVAEw2CVWu8Zid2tdadfIDhfr9.jpg',
+      price: "1850",
+      nameAr: 'نعيمي',
+      nameEn: "Naime",
+      id: '1',
+    ),
+    Item(
+      price: "1850",
+      nameAr: "برجر",
+      nameEn: "Burger",
+      image:
+          'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
+      id: '2',
+    ),
+    Item(
+      price: "1850",
+      nameAr: "مفروم",
+      nameEn: "Burger",
+      image:
+          'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
+      id: '3',
+    ),
+  ];
+
+  final List<String> banners = [
+    'https://www.cooperbutchers.com/media/mbimages/b/a/banner_02.jpg',
+    'https://media-exp1.licdn.com/dms/image/C4E1BAQG1SWqAyr9jaw/company-background_10000/0/1612628803012?e=2159024400&v=beta&t=sxVAog3nqeO0uV4HwE2JpvoTp57oxNSAWfMGYKokERo',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBmHgNwdnmp3C7AJt7ZQevJ1_DV8h1hElLgBT21We2RTcJjKNZDXXiTKaqu1ooTKOvNNI&usqp=CAU',
+    'https://pbs.twimg.com/media/E9e-hOMWUAEnAw2.jpg'
+  ];
+  final List<DiscoverItem> discoverList = [
+    DiscoverItem(
+        banner:
+            'https://expertphotography.b-cdn.net/wp-content/uploads/2020/06/meat-photography-12.jpg',
+        image:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZgsBZ51rLjHnX3JCGUxMRPZ8jy--uJp9C3RIfonWo05IwLKYw37772Q1VMI6nrdWCk1E&usqp=CAU',
+        nameAr: 'عروضنا',
+        descriptionAr: 'تشكيلة واسعة من المنتجات الفاخرة سريعة التحضير',
+        descriptionEn:
+            'A wide range of premium products that are ready to be prepared',
+        nameEn: "offers",
+        id: '1'),
+    DiscoverItem(
+        banner:
+            'https://expertphotography.b-cdn.net/wp-content/uploads/2020/06/meat-photography-12.jpg',
+        image:
+            'https://media.istockphoto.com/photos/ribeye-steaks-cooking-on-flaming-grill-panorama-picture-id1151530639?k=6&m=1151530639&s=612x612&w=0&h=N7SM5rN4F6gkTeOU2yiObOHo8Zjl7zalvdQ6SkQLOp4=',
+        nameAr: 'مجهز للشواء',
+        nameEn: "BBQ",
+        descriptionAr: 'تشكيلة واسعة من المنتجات الفاخرة سريعة التحضير',
+        descriptionEn:
+            'A wide range of premium products that are ready to be prepared',
+        id: '2'),
+    DiscoverItem(
+        descriptionAr: 'تشكيلة واسعة من المنتجات الفاخرة سريعة التحضير',
+        descriptionEn:
+            'A wide range of premium products that are ready to be prepared',
+        image:
+            'https://expertphotography.b-cdn.net/wp-content/uploads/2020/06/meat-photography-12.jpg',
+        nameAr: 'سلملي عالجوع',
+        nameEn: "Peace be upon hunger",
+        id: '3',
+        banner:
+            'https://expertphotography.b-cdn.net/wp-content/uploads/2020/06/meat-photography-12.jpg'),
+    DiscoverItem(
+        descriptionAr: 'تشكيلة واسعة من المنتجات الفاخرة سريعة التحضير',
+        descriptionEn:
+            'A wide range of premium products that are ready to be prepared',
+        banner:
+            'https://expertphotography.b-cdn.net/wp-content/uploads/2020/06/meat-photography-12.jpg',
+        image:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsUMKOybQvnZpcVZNoLQ9gR5c94P5K7qDsE1UJ6tudSHnWDilW27S2kliLFe4CxzcTcS0&usqp=CAU',
+        nameAr: 'جديدنا',
+        nameEn: "New arrival",
+        id: '4'),
+  ];
+
+  List<CategoryData> categoryData = [
+    CategoryData(
+      image: "assets/images/hary.png",
+      color: Color.fromRGBO(107, 0, 0, 1),
+      color2: Color.fromRGBO(107, 0, 0, 0.9),
+      titleAr: 'لحوم',
+      titleEn: 'Meat',
+    ),
+    CategoryData(
+        image: "assets/images/c1.png",
+        color: Color.fromRGBO(212, 92, 100, 1),
+        color2: Color.fromRGBO(202, 88, 86, 1),
+        titleAr: 'دواجن',
+        titleEn: 'Poultry'),
+    CategoryData(
+        image: "assets/images/i5.png",
+        color: Color.fromRGBO(18, 135, 86, 1),
+        color2: Colors.green,
+        titleAr: 'خضار وفواكه',
+        titleEn: 'Fruits and vegetables'),
+    CategoryData(
+        image: "assets/images/fish.png",
+        color: Colors.indigoAccent,
+        color2: Colors.indigo,
+        titleAr: 'أسماك',
+        titleEn: 'Fis'),
+  ];
 }

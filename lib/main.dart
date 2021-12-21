@@ -6,6 +6,7 @@ import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'provider/app_theme.dart';
+import 'provider/home_provider.dart';
 import 'provider/orders_provider.dart';
 import 'screens/app/my_app.dart';
 import 'package:provider/provider.dart';
@@ -35,11 +36,21 @@ Future<void> main() async {
   Locale _locale = Locale(_language ?? 'ar');
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<Auth>(create: (context) => Auth()),
+    ChangeNotifierProvider<HomeProvider>(create: (context) => HomeProvider()),
     ChangeNotifierProvider<AppLanguage>(create: (context) => AppLanguage()),
     ChangeNotifierProvider<AppTheme>(create: (context) => AppTheme()),
     ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),
-    ChangeNotifierProvider<CartProvider>(create: (context) => CartProvider()),
-    ChangeNotifierProvider<OrdersProvider>(
-        create: (context) => OrdersProvider()),
+    ChangeNotifierProxyProvider<Auth, CartProvider>(
+      create: (BuildContext context) =>
+          CartProvider(Provider.of<Auth>(context, listen: false).isAuthStatus),
+      update: (BuildContext context, Auth auth, CartProvider? cart) =>
+          CartProvider(auth.isAuthStatus),
+    ),
+    ChangeNotifierProxyProvider<Auth, OrdersProvider>(
+      create: (BuildContext context) => OrdersProvider(
+          Provider.of<Auth>(context, listen: false).isAuthStatus),
+      update: (BuildContext context, Auth auth, OrdersProvider? order) =>
+          OrdersProvider(auth.isAuthStatus),
+    ),
   ], child: MyApp(locale: _locale, theme: _theme, token: _userToken)));
 }

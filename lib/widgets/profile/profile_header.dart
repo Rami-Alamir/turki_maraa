@@ -22,12 +22,10 @@ class ProfileHeader extends StatelessWidget {
               user: user,
               isAuth: isAuth,
             ),
-            Visibility(
-              visible: isAuth,
-              child: ProfileState(
+            if (isAuth)
+              ProfileState(
                 user: user,
               ),
-            ),
           ],
         ));
   }

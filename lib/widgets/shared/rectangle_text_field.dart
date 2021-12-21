@@ -12,10 +12,12 @@ class RectangleTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final validated;
   final onChanged;
+  final contentPadding;
   final bool? emailValidate;
   final bool? obscureText;
   final EdgeInsets? padding;
   final int maxLength;
+  final int maxLines;
   final double? customWidth;
   final bool? white;
 
@@ -24,12 +26,14 @@ class RectangleTextField extends StatelessWidget {
     this.hint,
     this.focusNode,
     this.nextFocusNode,
+    this.contentPadding = const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
     this.white,
     this.textInputType,
     this.onChanged,
     this.validated,
     this.emailValidate,
     this.maxLength = 120,
+    this.maxLines = 1,
     this.textInputAction,
     this.obscureText,
     this.padding,
@@ -45,7 +49,7 @@ class RectangleTextField extends StatelessWidget {
         width: customWidth ?? (width * 0.9),
         child: TextFormField(
           textAlignVertical: TextAlignVertical.center,
-          maxLines: 1,
+          maxLines: maxLines,
           maxLength: maxLength,
           keyboardType: textInputType ?? TextInputType.text,
           keyboardAppearance: Brightness.dark,
@@ -66,7 +70,7 @@ class RectangleTextField extends StatelessWidget {
               counterText: "",
               fillColor: white != null ? Colors.white : Colors.transparent,
               filled: true,
-              contentPadding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+              contentPadding: contentPadding,
               border: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Theme.of(context).primaryColor, width: 1)),

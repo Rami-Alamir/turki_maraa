@@ -43,8 +43,10 @@ class PointsCard extends StatelessWidget {
                       color: Theme.of(context).colorScheme.secondary,
                       child: Image.network(
                         '${pointsData.image.trim()}',
-                        width: SizeConfig.setWidgetWidth(0.35, 0.54, 0.54),
-                        height: SizeConfig.setWidgetWidth(0.35, 0.54, 0.54),
+                        width: SizeConfig.setWidgetWidthWithFactor(
+                            0.35, 0.54, 0.54),
+                        height: SizeConfig.setWidgetWidthWithFactor(
+                            0.35, 0.54, 0.54),
                         fit: BoxFit.cover,
                       ),
                     )),

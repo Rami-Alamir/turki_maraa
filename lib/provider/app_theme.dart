@@ -126,6 +126,7 @@ final classicTheme = ThemeData(
     )),
     colorScheme: ColorScheme.fromSwatch().copyWith(
         secondary: Color.fromRGBO(243, 224, 177, 1),
+        primaryVariant: Color.fromRGBO(235, 215, 191, 1),
         secondaryVariant: Color.fromRGBO(150, 122, 89, 0.5)));
 
 final lightTheme = ThemeData(
@@ -203,6 +204,7 @@ final lightTheme = ThemeData(
   )),
   colorScheme: ColorScheme.fromSwatch().copyWith(
     secondary: Colors.white,
+    primaryVariant: Color.fromRGBO(240, 240, 240, 1),
     secondaryVariant: Colors.grey.withOpacity(0.5),
   ),
 );
@@ -278,4 +280,5 @@ final darkTheme = ThemeData(
     )),
     colorScheme: ColorScheme.fromSwatch().copyWith(
         secondary: Color.fromRGBO(28, 28, 28, 1),
+        primaryVariant: Color.fromRGBO(28, 28, 28, 1),
         secondaryVariant: Colors.grey.withOpacity(0.5)));
