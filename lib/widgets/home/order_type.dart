@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
+import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:provider/provider.dart';
 
 class OrderType extends StatelessWidget {
@@ -22,7 +23,7 @@ class OrderType extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Container(
                     width: SizeConfig.screenWidth,
-                    height: 100,
+                    height: 72,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -30,12 +31,12 @@ class OrderType extends StatelessWidget {
                             type: 0,
                             context: context,
                             title: 'delivery',
-                            image: 'assets/images/delivery-truck.png'),
+                            icon: TURKIICONS.delivery_truck_2),
                         item(
                             type: 1,
                             context: context,
                             title: 'pickup',
-                            image: 'assets/images/shop.png'),
+                            icon: TURKIICONS.merchant_1),
                       ],
                     ),
                   ),
@@ -50,7 +51,7 @@ class OrderType extends StatelessWidget {
       {required BuildContext context,
       required int type,
       required String title,
-      required String image}) {
+      required IconData icon}) {
     final _homeProvider = Provider.of<HomeProvider>(context);
     bool selected = _homeProvider.selectedOrderType == type;
     return Padding(
@@ -61,7 +62,7 @@ class OrderType extends StatelessWidget {
         },
         child: Container(
           padding: const EdgeInsets.all(3.0),
-          width: SizeConfig.screenWidth! * .37,
+          width: SizeConfig.screenWidth! / 2 - 30,
           height: 87,
           constraints: const BoxConstraints(
             minHeight: 75,
@@ -73,16 +74,25 @@ class OrderType extends StatelessWidget {
                       ? Colors.white
                       : Theme.of(context).colorScheme.secondaryVariant,
                   width: selected ? 1 : 0.8)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Image.asset(
-                  image,
-                  width: 40,
-                  height: 28,
-                ),
+                padding: const EdgeInsetsDirectional.fromSTEB(6.0, 0, 8, 0),
+                child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primaryVariant
+                            .withOpacity(0.16),
+                        borderRadius: BorderRadius.all(Radius.circular(25))),
+                    child: Icon(
+                      icon,
+                      size: 17.5,
+                      color: Colors.white,
+                    )),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),

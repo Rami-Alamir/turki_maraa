@@ -54,7 +54,7 @@ class _ProductsHomeState extends State<ProductsHome> {
                         DiscoverSection(
                           discoverList: _homeProvider.discoverList,
                         ),
-                        // HtmlSection(),
+                        // // HtmlSection(),
                         ProductsSection(products: _homeProvider.productsList),
                       ])),
     );

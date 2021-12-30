@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/provider/app_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
+import 'package:new_turki/provider/favourite_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'provider/app_theme.dart';
 import 'provider/home_provider.dart';
@@ -40,17 +41,10 @@ Future<void> main() async {
     ChangeNotifierProvider<AppLanguage>(create: (context) => AppLanguage()),
     ChangeNotifierProvider<AppTheme>(create: (context) => AppTheme()),
     ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),
-    ChangeNotifierProxyProvider<Auth, CartProvider>(
-      create: (BuildContext context) =>
-          CartProvider(Provider.of<Auth>(context, listen: false).isAuthStatus),
-      update: (BuildContext context, Auth auth, CartProvider? cart) =>
-          CartProvider(auth.isAuthStatus),
-    ),
-    ChangeNotifierProxyProvider<Auth, OrdersProvider>(
-      create: (BuildContext context) => OrdersProvider(
-          Provider.of<Auth>(context, listen: false).isAuthStatus),
-      update: (BuildContext context, Auth auth, OrdersProvider? order) =>
-          OrdersProvider(auth.isAuthStatus),
-    ),
+    ChangeNotifierProvider<CartProvider>(create: (context) => CartProvider()),
+    ChangeNotifierProvider<FavouriteProvider>(
+        create: (context) => FavouriteProvider()),
+    ChangeNotifierProvider<OrdersProvider>(
+        create: (context) => OrdersProvider()),
   ], child: MyApp(locale: _locale, theme: _theme, token: _userToken)));
 }

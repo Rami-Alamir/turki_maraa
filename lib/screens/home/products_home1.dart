@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/item.dart';
 import 'package:new_turki/models/products.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/home/discover_section.dart';
 import 'package:new_turki/widgets/home/food_appbar.dart';
 import 'package:new_turki/widgets/home/product_card.dart';
-import 'package:new_turki/widgets/home/products_section.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';

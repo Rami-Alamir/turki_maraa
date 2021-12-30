@@ -34,7 +34,7 @@ class SearchBar extends StatelessWidget {
                   borderRadius: BorderRadius.all(
                     Radius.circular(8.0),
                   ),
-                  borderSide: new BorderSide(
+                  borderSide: BorderSide(
                       color: Theme.of(context)
                           .textTheme
                           .headline6!
@@ -42,20 +42,20 @@ class SearchBar extends StatelessWidget {
                           .withOpacity(0.35),
                       width: 2)),
               enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(8.0),
                   ),
-                  borderSide: new BorderSide(
+                  borderSide: BorderSide(
                       color: Theme.of(context)
                           .colorScheme
                           .secondaryVariant
                           .withOpacity(0.35),
                       width: 1)),
               focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(8.0),
                   ),
-                  borderSide: new BorderSide(
+                  borderSide: BorderSide(
                     width: 1.8,
                     color: Theme.of(context)
                         .colorScheme

@@ -1,4 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:new_turki/utilities/size_config.dart';
 
 class CategoryCard extends StatelessWidget {
   final int index;
@@ -22,7 +24,7 @@ class CategoryCard extends StatelessWidget {
       onTap: () => Navigator.pushNamed(context, "/ProductsHome$index"),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           gradient: LinearGradient(
             begin: Alignment.bottomLeft,
             end: Alignment.topLeft,
@@ -39,26 +41,35 @@ class CategoryCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(
                   top: 40.0, right: 20, left: 20, bottom: 0),
-              child: Text(title, style: Theme.of(context).textTheme.headline3),
+              child: AutoSizeText(
+                title,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontSize: title.length < 15 ? 20 : 16),
+                maxLines: 1,
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(20.0),
-                      bottomLeft: Radius.circular(20.0)),
-                  // child: Image.network(
-                  child: Image.asset(
-                    image,
-                    fit: BoxFit.fitWidth,
-                    height: (133 * scaleFactor) - 21,
-                    width: (MediaQuery.of(context).size.width / 2) -
-                        18 -
-                        (color2 == Colors.indigo ? 40 : 0),
+            Container(
+              constraints: BoxConstraints(
+                maxHeight: (133 * scaleFactor) - 21,
+                maxWidth: (SizeConfig.screenWidth! / 2) - 18,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(20.0),
+                        bottomLeft: Radius.circular(20.0)),
+                    child: Image.network(
+                      image,
+                      fit: BoxFit.fitWidth,
+                      width: (SizeConfig.screenWidth! / 2) - 18,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),

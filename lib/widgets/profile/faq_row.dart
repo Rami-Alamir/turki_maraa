@@ -11,7 +11,7 @@ class FaqRow extends StatefulWidget {
 }
 
 class _FaqRowState extends State<FaqRow> {
-  bool selected = false;
+  bool _selected = false;
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
@@ -27,7 +27,7 @@ class _FaqRowState extends State<FaqRow> {
                 focusColor: Colors.transparent,
                 onTap: () {
                   setState(() {
-                    selected = !selected;
+                    _selected = !_selected;
                   });
                 },
                 dense: true,
@@ -39,14 +39,14 @@ class _FaqRowState extends State<FaqRow> {
                       .copyWith(fontSize: 12, fontWeight: FontWeight.w600),
                 ),
                 trailing: Icon(
-                  selected ? Icons.remove : Icons.add,
+                  _selected ? Icons.remove : Icons.add,
                   size: 20,
                   color: Theme.of(context).textTheme.headline6!.color,
                 ),
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
               ),
               Visibility(
-                visible: selected,
+                visible: _selected,
                 child: Padding(
                   padding: const EdgeInsets.only(
                       right: 15, bottom: 20, left: 15, top: 5),

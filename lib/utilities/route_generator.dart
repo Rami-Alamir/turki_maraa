@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dropdown_alert/dropdown_alert.dart';
 import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/screens/cart/shopping_cart.dart';
 import 'package:new_turki/screens/chat/chat.dart';
+import 'package:new_turki/screens/home/add_new_address.dart';
 import 'package:new_turki/screens/home/discover.dart';
 import 'package:new_turki/screens/home/home.dart';
 import 'package:new_turki/screens/home/products_home.dart';
@@ -22,7 +24,7 @@ import 'package:new_turki/screens/profile/about.dart';
 import 'package:new_turki/screens/profile/add_credit.dart';
 import 'package:new_turki/screens/profile/add_gift_card.dart';
 import 'package:new_turki/screens/profile/faq.dart';
-import 'package:new_turki/screens/profile/favourite.dart';
+import 'package:new_turki/screens/favourite/favourite.dart';
 import 'package:new_turki/screens/profile/login.dart';
 import 'package:new_turki/screens/profile/notification.dart';
 import 'package:new_turki/screens/profile/personal_information.dart';
@@ -105,6 +107,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => ProductsHome3());
       case '/ProductsHome4':
         return MaterialPageRoute(builder: (_) => ProductsHome4());
+      case '/AddNewAddress':
+        return MaterialPageRoute(builder: (_) => AddNewAddress());
       case '/Search':
         return MaterialPageRoute(builder: (_) => Search());
       case '/Discover':

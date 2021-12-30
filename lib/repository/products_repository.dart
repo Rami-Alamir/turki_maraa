@@ -7,7 +7,7 @@ class ProductsRepository {
   //get Products list
   Future<Products> getProductsList(String categoryId) async {
     print("getProductsList");
-    final response = await _helper.get("sub-categories/$categoryId");
+    final response = await _helper.get("products/by-subcategory/$categoryId");
     Products? products;
     try {
       products = Products.fromJson(response);

@@ -5,7 +5,6 @@ import 'package:new_turki/screens/home/home.dart';
 import 'package:new_turki/screens/orders/orders.dart';
 import 'package:new_turki/screens/profile/profile.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/utilities/tab_Item.dart';
@@ -14,6 +13,9 @@ import 'package:new_turki/widgets/shared/drawer/turki_drawer.dart';
 
 //used to build all in one bottom nav bar
 class App extends StatefulWidget {
+  final int index;
+
+  const App({this.index = 0});
   @override
   State<StatefulWidget> createState() => AppState();
 }
@@ -63,77 +65,81 @@ class AppState extends State<App> {
   }
 
   @override
+  void initState() {
+    index = widget.index;
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     // WillPopScope handle android back button
-    return TurkiDrawer(
-      child: WillPopScope(
-        onWillPop: () async {
-          final isFirstRouteInCurrentTab =
-              !await tabs[currentTab].key.currentState!.maybePop();
-          if (isFirstRouteInCurrentTab) {
-            // if not on the 'main' tab
-            if (currentTab != 0) {
-              // select 'main' tab
-              _selectTab(0);
-              // back button handled by app
-              return false;
-            }
+    return WillPopScope(
+      onWillPop: () async {
+        final isFirstRouteInCurrentTab =
+            !await tabs[currentTab].key.currentState!.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          // if not on the 'main' tab
+          if (currentTab != 0) {
+            // select 'main' tab
+            _selectTab(0);
+            // back button handled by app
+            return false;
           }
-          // let system handle back button if we're on the first route
-          return isFirstRouteInCurrentTab;
-        },
-        child: Scaffold(
-            key: _appKey,
-
-            // indexed stack shows only one child
-            body: Stack(
-              children: [
-                Container(
-                  child: IndexedStack(
-                    index: currentTab,
-                    children: tabs.map((e) => e.page).toList(),
-                  ),
+        }
+        // let system handle back button if we're on the first route
+        return isFirstRouteInCurrentTab;
+      },
+      child: Scaffold(
+          key: _appKey,
+          // indexed stack shows only one child
+          body: Stack(
+            children: [
+              Container(
+                child: IndexedStack(
+                  index: currentTab,
+                  children: tabs.map((e) => e.page).toList(),
                 ),
-                DropdownAlert()
-              ],
-            ),
-            bottomNavigationBar: Container(
-              child: BottomNavigationBar(
-                  backgroundColor: Theme.of(context).backgroundColor,
-                  type: BottomNavigationBarType.fixed,
-                  iconSize: 25,
-                  showUnselectedLabels: true,
-                  elevation: 5,
-                  currentIndex: index,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Icon(TURKIICONS.tabnav_home),
-                      label: AppLocalizations.of(context)!.tr('home'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(TURKIICONS.ask),
-                      label: AppLocalizations.of(context)!.tr('support'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(RA7ICONS.shopping_cart_empty_side_view),
-                      label: AppLocalizations.of(context)!.tr('cart'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(TURKIICONS.tabnav_myorders),
-                      label: AppLocalizations.of(context)!.tr('orders'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(TURKIICONS.tabnav_user),
-                      label: AppLocalizations.of(context)!.tr('profile'),
-                    ),
-                  ],
-                  onTap: (index) {
-                    this.index = index;
-                    _selectTab(index);
-                  }),
-            )),
-      ),
+              ),
+              // DropdownAlert()
+            ],
+          ),
+          bottomNavigationBar: Container(
+            child: BottomNavigationBar(
+                backgroundColor: Theme.of(context).backgroundColor,
+                type: BottomNavigationBarType.fixed,
+                iconSize: 25,
+                showUnselectedLabels: true,
+                elevation: 5,
+                currentIndex: index,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(TURKIICONS.tabnav_home),
+                    label: AppLocalizations.of(context)!.tr('home'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(TURKIICONS.ask),
+                    label: AppLocalizations.of(context)!.tr('support'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(TURKIICONS.cart),
+                    label: AppLocalizations.of(context)!.tr('cart'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(TURKIICONS.tabnav_myorders),
+                    label: AppLocalizations.of(context)!.tr('orders'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(TURKIICONS.tabnav_user),
+                    label: AppLocalizations.of(context)!.tr('profile'),
+                  ),
+                ],
+                onTap: (index) {
+                  this.index = index;
+                  _selectTab(index);
+                }),
+          )),
     );
   }
 }

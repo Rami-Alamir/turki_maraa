@@ -16,10 +16,6 @@ class AppProvider with ChangeNotifier {
   }
 
   void navigateTo(BuildContext context, String routeName) {
-    // Navigator.push(
-    //   _context,
-    //   MaterialPageRoute(builder: (context) => route),
-    // );
     Navigator.pushNamed(context, routeName);
     advancedDrawerController.hideDrawer();
   }

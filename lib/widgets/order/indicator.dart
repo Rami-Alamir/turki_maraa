@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'container.dart';
+import 'line.dart';
 
 class Indicator extends StatelessWidget {
   final Color color;

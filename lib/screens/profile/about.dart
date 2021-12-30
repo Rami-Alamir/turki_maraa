@@ -26,11 +26,11 @@ class _AboutState extends State<About> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    "assets/images/turki.png",
+                    "assets/images/turki_gold.png",
                     colorBlendMode: BlendMode.dstATop,
-                    fit: BoxFit.fill,
-                    width: 300,
-                    height: 70,
+                    fit: BoxFit.contain,
+                    width: 260,
+                    height: 80,
                   ),
                 ],
               ),

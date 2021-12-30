@@ -1,16 +1,47 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:new_turki/dummy_data/dummy_data.dart';
 import 'package:new_turki/models/category_data.dart';
 import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/models/products.dart';
+import 'package:new_turki/repository/home_repository.dart';
 import 'package:new_turki/repository/products_repository.dart';
 
 class HomeProvider with ChangeNotifier {
   TextEditingController searchController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  bool _canPickup = true;
   bool _isLoading = true;
   bool _foodsIsLoading = true;
   bool _discoverIsLoading = true;
+  BitmapDescriptor? _myMarker;
+  LatLng? _latLng;
+  bool? _initMap = false;
+
+  bool get canPickup => _canPickup;
+
+  bool get initMap => _initMap!;
+
+  set initMap(bool value) {
+    _initMap = value;
+  }
+
+  LatLng get latLng => _latLng ?? LatLng(0, 0);
+
+  set latLng(LatLng value) {
+    _latLng = value;
+    print(value.toString());
+  }
+
+  set setIsLoading(bool value) {
+    _isLoading = value;
+    _retry = false;
+    notifyListeners();
+  }
+
+  BitmapDescriptor get myMarker => _myMarker!;
 
   bool get discoverIsLoading => _discoverIsLoading;
 
@@ -38,7 +69,7 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<CategoryData> _categoryData = [];
+  CategoryData? _categoryData;
   Products? _productsList;
   List<DiscoverItem> _discoverList = [];
 
@@ -46,13 +77,19 @@ class HomeProvider with ChangeNotifier {
 
   List<DiscoverItem> get discoverList => _discoverList;
 
-  List<CategoryData> get categoryData => _categoryData;
+  CategoryData get categoryData => _categoryData!;
 
   Future<void> getData() async {
-    await Future.delayed(Duration(milliseconds: 1500), () {
-      _categoryData = DummyData().categoryData;
-      _isLoading = false;
-    });
+    await Future.delayed(Duration(milliseconds: 1500), () {});
+    _isLoading = true;
+    _retry = false;
+    try {
+      _categoryData = await HomeRepository().getCategoriesList();
+    } catch (e) {
+      print(e.toString());
+      _retry = true;
+    }
+    _isLoading = false;
     notifyListeners();
   }
 
@@ -67,7 +104,7 @@ class HomeProvider with ChangeNotifier {
     _foodsRetry = false;
     _foodsIsLoading = true;
     try {
-      await Future.wait([getDiscoverList(), getBanners(), _getProducts("1")]);
+      await Future.wait([getDiscoverList(), getBanners(), _getProducts("2")]);
     } catch (e) {
       _foodsRetry = true;
     }
@@ -98,7 +135,29 @@ class HomeProvider with ChangeNotifier {
     try {
       _productsList = await ProductsRepository().getProductsList(id);
     } catch (e) {
-      print(e.toString());
+      print(e.toString() + "rami");
     }
   }
+
+  //get user location + init marker
+  void initMapData() async {
+    print('initMapData');
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(size: Size(25, 25)), 'assets/images/pin.png')
+        .then((onValue) {
+      _myMarker = onValue;
+      notifyListeners();
+    });
+    LocationData _locationData = await Location().getLocation();
+    _latLng = LatLng(_locationData.latitude!, _locationData.longitude!);
+  }
+
+  //for test
+  List<String> address = ["الموقع الحالي", "الياسمين", "العمل", "المنزل"];
+  int selectedAddress = 0;
+  List<String> address2 = [
+    "ملحمة الياسمين",
+    "ملحمة المونسية",
+  ];
+  int selectedAddress2 = 0;
 }

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/ra7_icons.dart';
+import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -44,28 +44,28 @@ class HelpCard extends StatelessWidget {
                                 "whatsapp://send?phone=$phone&text=${Uri.parse(' ')}";
                           _launchURL(url);
                         },
-                        icon: RA7ICONS.translator,
+                        icon: TURKIICONS.whatssapp_outline_1,
                         title: 'contact_whatsApp'),
                     ProfileRow(
                         onTap: () {
                           _launchURL('tel:+966920002974');
                         },
-                        icon: Icons.local_phone_outlined,
+                        icon: TURKIICONS.call_calling,
                         title: 'contact_support'),
                     ProfileRow(
                         onTap: () => Navigator.pushNamed(context, '/FAQ'),
-                        icon: Icons.question_answer_outlined,
+                        icon: TURKIICONS.messages,
                         title: 'faq'),
                     ProfileRow(
                         onTap: () => Navigator.pushNamed(context, '/About'),
-                        icon: RA7ICONS.info,
+                        icon: TURKIICONS.info_circle,
                         title: 'about'),
                     ProfileRow(
                         onTap: () {
                           _share(context);
                         },
                         withDivider: _auth.isAuth,
-                        icon: RA7ICONS.share,
+                        icon: TURKIICONS.share4_1,
                         title: 'share'),
                     Visibility(
                       visible: _auth.isAuth,
@@ -74,7 +74,7 @@ class HelpCard extends StatelessWidget {
                             _auth.logOut(context);
                           },
                           withDivider: false,
-                          icon: RA7ICONS.exit,
+                          icon: TURKIICONS.logout,
                           title: 'log_out'),
                     ),
                   ],
@@ -98,6 +98,7 @@ class HelpCard extends StatelessWidget {
 
   //used to share app url
   Future<void> _share(BuildContext context) async {
-    Share.share('text', subject: AppLocalizations.of(context)!.tr('turki_app'));
+    Share.share('https://turki.turkieshop.com/system//shareit/b5ef3',
+        subject: AppLocalizations.of(context)!.tr('turki_app'));
   }
 }

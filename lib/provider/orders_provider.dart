@@ -3,7 +3,6 @@ import 'package:new_turki/dummy_data/dummy_data.dart';
 import 'package:new_turki/models/order.dart';
 
 class OrdersProvider with ChangeNotifier {
-  int _isAuthStatus = 0;
   bool _isAuth = false;
   bool _isLoading = true;
   bool _isLoading2 = true;
@@ -12,7 +11,6 @@ class OrdersProvider with ChangeNotifier {
   Order? _order;
 
   bool get isAuth => _isAuth;
-  int get isAuthStatus => _isAuthStatus;
 
   Order get order => _order!;
 
@@ -48,17 +46,5 @@ class OrdersProvider with ChangeNotifier {
       _isLoading2 = false;
       notifyListeners();
     });
-  }
-
-  OrdersProvider(_isAuthStatus) {
-    if (_isAuthStatus == 1) {
-      _isAuth = true;
-
-      getOrdersList();
-    } else if (_isAuthStatus == 0) {
-      _isAuth = false;
-      _isLoading = false;
-      notifyListeners();
-    }
   }
 }

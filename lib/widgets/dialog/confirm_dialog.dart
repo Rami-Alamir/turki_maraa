@@ -17,6 +17,7 @@ class ConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Theme.of(context).backgroundColor,
       content: Text(
         AppLocalizations.of(context)!.tr(msg),
         style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),

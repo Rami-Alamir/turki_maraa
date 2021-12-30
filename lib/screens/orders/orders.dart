@@ -22,36 +22,35 @@ class _OrdersState extends State<Orders> {
   Widget build(BuildContext context) {
     final _orders = Provider.of<OrdersProvider>(context);
     return Scaffold(
-      appBar: PrimaryAppBar(
-        title: AppLocalizations.of(context)!.tr('orders'),
-        back: widget.back!,
-      ),
-      body: _orders.ordersList.isEmpty
-          ? _orders.isLoading
-              ? SpinkitIndicator()
-              : _orders.retry
-                  ? Retry(
-                      onPressed: () {
-                        _orders.reInitOrdersList();
-                      },
-                    )
-                  : !_orders.isAuth
-                      ? NotAuth()
-                      : NoOrders()
-          : RefreshIndicator(
-              color: Theme.of(context).primaryColor,
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              onRefresh: () async {
-                await _orders.reInitOrdersList();
-              },
-              child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemCount: _orders.ordersList.length,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return OrderCard(order: _orders.ordersList[index]);
-                  })),
-    );
+        appBar: PrimaryAppBar(
+          title: AppLocalizations.of(context)!.tr('orders'),
+          back: widget.back!,
+        ),
+        body: !_orders.isAuth ? NotAuth() : NoOrders()
+        // _orders.ordersList.isEmpty
+        //       ? _orders.isLoading
+        //           ? SpinkitIndicator()
+        //           : _orders.retry
+        //               ? Retry(
+        //                   onPressed: () {
+        //                     _orders.reInitOrdersList();
+        //                   },
+        //                 )
+        //               : NoOrders()
+        //       : RefreshIndicator(
+        //           color: Theme.of(context).primaryColor,
+        //           backgroundColor: Theme.of(context).colorScheme.secondary,
+        //           onRefresh: () async {
+        //             await _orders.reInitOrdersList();
+        //           },
+        //           child: ListView.builder(
+        //               padding: EdgeInsets.zero,
+        //               shrinkWrap: true,
+        //               physics: ScrollPhysics(),
+        //               itemCount: _orders.ordersList.length,
+        //               itemBuilder: (BuildContext ctxt, int index) {
+        //                 return OrderCard(order: _orders.ordersList[index]);
+        //               })),
+        );
   }
 }

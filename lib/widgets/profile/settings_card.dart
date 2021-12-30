@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/provider/app_language.dart';
 import 'package:new_turki/provider/app_theme.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/ra7_icons.dart';
+import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
+import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:provider/provider.dart';
 import 'profile_row.dart';
@@ -34,7 +35,7 @@ class SettingsCard extends StatelessWidget {
                         onTap: () {
                           _language.changeLanguage();
                         },
-                        icon: RA7ICONS.translator,
+                        icon: TURKIICONS.language,
                         title: 'language'),
                     Visibility(
                       visible: _theme.themeName != 'light',
@@ -42,7 +43,7 @@ class SettingsCard extends StatelessWidget {
                           onTap: () {
                             _theme.changeTheme('light');
                           },
-                          icon: RA7ICONS.brightness,
+                          icon: TURKIICONS.lightmode,
                           title: 'light_mode'),
                     ),
                     Visibility(
@@ -62,7 +63,7 @@ class SettingsCard extends StatelessWidget {
                             _theme.changeTheme('dark');
                           },
                           withDivider: false,
-                          icon: RA7ICONS.moon,
+                          icon: TURKIICONS.darkmode,
                           title: 'dark_mode'),
                     ),
                   ],

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/cart.dart';
-import 'package:new_turki/models/category_data.dart';
 import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/models/item.dart';
 import 'package:new_turki/models/notification_data.dart';
 import 'package:new_turki/models/order.dart';
 import 'package:new_turki/models/points_tran.dart';
+import 'package:new_turki/models/products.dart';
 import 'package:new_turki/models/qa.dart';
 import 'package:new_turki/models/points_data.dart';
 import 'package:new_turki/models/wallet.dart';
@@ -393,6 +393,99 @@ class DummyData {
     ),
   ];
 
+  static List<ProductData> bestSellerList = [
+    ProductData(
+      id: 1,
+      nameAr: 'الهامور',
+      nameEn: 'برجر لحم عجل',
+      description: 'برجر لحم عجل',
+      weight: 'برجر لحم عجل',
+      calories: 'برجر لحم عجل',
+      noRating: 0,
+      image:
+          'https://api.fishday.com.sa/storage/uploads/vbR7bnUmEKYRwMTaC5T6yyNVjU1eiIkdqWrohjlt.webp',
+      price: 100.0,
+      isActive: true,
+      isShalwata: true,
+      isDelivered: 0,
+      isPickedUp: 0,
+      categoryId: 0,
+      subCategoryId: 0,
+    ),
+    ProductData(
+      id: 1,
+      nameAr: 'حمام فرنسي',
+      nameEn: 'برجر لحم عجل',
+      description: 'برجر لحم عجل',
+      weight: 'برجر لحم عجل',
+      calories: 'برجر لحم عجل',
+      noRating: 0,
+      image:
+          'https://cdnprod.mafretailproxy.com/sys-master-root/hd1/h05/9194857070622/110964_main.jpg_480Wx480H',
+      price: 50.0,
+      isActive: true,
+      isShalwata: true,
+      isDelivered: 0,
+      isPickedUp: 0,
+      categoryId: 0,
+      subCategoryId: 0,
+    ),
+    ProductData(
+      id: 1,
+      nameAr: 'برجر لحم عجل',
+      nameEn: 'برجر لحم عجل',
+      description: 'برجر لحم عجل',
+      weight: 'برجر لحم عجل',
+      calories: 'برجر لحم عجل',
+      noRating: 0,
+      image:
+          'https://cdn.salla.sa/7Uv2ZnbDos0fZoX1fUSQMWKDq7mYxezM8kvh1wqt.jpeg',
+      price: 60.0,
+      isActive: true,
+      isShalwata: true,
+      isDelivered: 0,
+      isPickedUp: 0,
+      categoryId: 0,
+      subCategoryId: 0,
+    ),
+    ProductData(
+      id: 1,
+      nameAr: 'أوصال شوي',
+      nameEn: 'برجر لحم عجل',
+      description: 'برجر لحم عجل',
+      weight: 'برجر لحم عجل',
+      calories: 'برجر لحم عجل',
+      noRating: 0,
+      image:
+          'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
+      price: 60.0,
+      isActive: true,
+      isShalwata: true,
+      isDelivered: 0,
+      isPickedUp: 0,
+      categoryId: 0,
+      subCategoryId: 0,
+    ),
+    ProductData(
+      id: 1,
+      nameAr: 'ريش غنم',
+      nameEn: 'برجر لحم عجل',
+      description: 'برجر لحم عجل',
+      weight: 'برجر لحم عجل',
+      calories: 'برجر لحم عجل',
+      noRating: 0,
+      image:
+          'https://cdn.salla.sa/8tbiQBKYSSj9cjQLKgUxecpAVcaLbOXM3i5KICD8.jpeg',
+      price: 95.0,
+      isActive: true,
+      isShalwata: true,
+      isDelivered: 0,
+      isPickedUp: 0,
+      categoryId: 0,
+      subCategoryId: 0,
+    )
+  ];
+
   static Cart cart = Cart(
       invoice: InvoiceData(total: 1000, subtotal: 990, shipping: 10),
       deliveryDate: [
@@ -520,31 +613,31 @@ class DummyData {
         id: '4'),
   ];
 
-  List<CategoryData> categoryData = [
-    CategoryData(
-      image: "assets/images/hary.png",
-      color: Color.fromRGBO(107, 0, 0, 1),
-      color2: Color.fromRGBO(107, 0, 0, 0.9),
-      titleAr: 'لحوم',
-      titleEn: 'Meat',
-    ),
-    CategoryData(
-        image: "assets/images/c1.png",
-        color: Color.fromRGBO(212, 92, 100, 1),
-        color2: Color.fromRGBO(202, 88, 86, 1),
-        titleAr: 'دواجن',
-        titleEn: 'Poultry'),
-    CategoryData(
-        image: "assets/images/i5.png",
-        color: Color.fromRGBO(18, 135, 86, 1),
-        color2: Colors.green,
-        titleAr: 'خضار وفواكه',
-        titleEn: 'Fruits and vegetables'),
-    CategoryData(
-        image: "assets/images/fish.png",
-        color: Colors.indigoAccent,
-        color2: Colors.indigo,
-        titleAr: 'أسماك',
-        titleEn: 'Fis'),
-  ];
+  // List<CategoryData> categoryData = [
+  //   CategoryData(
+  //     image: "assets/images/hary.png",
+  //     color: Color.fromRGBO(90, 4, 9, 1),
+  //     color2: Color.fromRGBO(107, 0, 0, 0.9),
+  //     titleAr: 'لحوم',
+  //     titleEn: 'Meat',
+  //   ),
+  //   CategoryData(
+  //       image: "assets/images/c1.png",
+  //       color: Color.fromRGBO(226, 198, 101, 1),
+  //       color2: Color.fromRGBO(233, 198, 101, 1),
+  //       titleAr: 'دواجن',
+  //       titleEn: 'Poultry'),
+  //   CategoryData(
+  //       image: "assets/images/i5.png",
+  //       color2: Color.fromRGBO(51, 79, 45, 1),
+  //       color: Color.fromRGBO(66, 79, 45, 1),
+  //       titleAr: 'خضار وفواكه',
+  //       titleEn: 'Fruits and vegetables'),
+  //   CategoryData(
+  //       image: "assets/images/fish.png",
+  //       color2: Color.fromRGBO(235, 190, 210, 1),
+  //       color: Color.fromRGBO(224, 183, 201, 1),
+  //       titleAr: 'أسماك',
+  //       titleEn: 'Fis'),
+  // ];
 }

@@ -48,7 +48,7 @@ class TurkiDrawer extends StatelessWidget {
       drawer: SafeArea(
         child: Column(
           children: [
-            UserDataHeader(user: _auth.user, isAuth: _auth.isAuth),
+            UserDataHeader(),
             Container(
               height: (SizeConfig.screenHeight! * 0.55),
               child: ListView(

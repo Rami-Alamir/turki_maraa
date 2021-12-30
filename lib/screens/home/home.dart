@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:new_turki/dummy_data/dummy_data.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/size_config.dart';
+import 'package:new_turki/widgets/home/address_container.dart';
+import 'package:new_turki/widgets/home/categories_g1.dart';
+import 'package:new_turki/widgets/home/categories_g2.dart';
+import 'package:new_turki/widgets/home/categories_g3.dart';
+import 'package:new_turki/widgets/home/categories_g4.dart';
 import 'package:new_turki/widgets/home/category_app_bar.dart';
-import 'package:new_turki/widgets/home/category_card.dart';
 import 'package:new_turki/widgets/home/not_supported_area.dart';
+import 'package:new_turki/widgets/home/order_type.dart';
+import 'package:new_turki/widgets/home/product_card.dart';
+import 'package:new_turki/widgets/shared/retry.dart';
+import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -20,66 +29,172 @@ class _HomeState extends State<Home> {
   void initState() {
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
     _homeProvider.getData();
+    _homeProvider.initMapData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
-
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: CategoryAppBar(
-          address: "شارع الدرع - حي الياسمين",
           onTap: () {},
           parentScaffoldKey: widget.parentScaffoldStateKey,
         ),
         body: RefreshIndicator(
-          color: Theme.of(context).primaryColor,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          onRefresh: () async {
-            await _homeProvider.getData();
-          },
-          child: _homeProvider.areaStatus
-              ? Padding(
-                  padding: const EdgeInsets.only(top: 240.0),
-                  child: NotSupportedArea(),
-                )
-              : ListView(
-                  children: [
-                    Text(
-                        AppLocalizations.of(context)!
-                            .tr('what_would_you_want_today'),
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.subtitle1),
-                    StaggeredGridView.countBuilder(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                        shrinkWrap: true,
-                        physics: ScrollPhysics(),
-                        crossAxisSpacing: 10,
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 12,
-                        itemCount: _homeProvider.categoryData.length,
-                        itemBuilder: (context, index) {
-                          return CategoryCard(
-                            index: index + 1,
-                            scaleFactor: index % 2 == 0 ? 1.8 : 1.1,
-                            image: _homeProvider.categoryData[index].image!,
-                            title: AppLocalizations.of(context)!.locale ==
-                                    Locale("ar")
-                                ? _homeProvider.categoryData[index].titleAr!
-                                : _homeProvider.categoryData[index].titleEn!,
-                            color: _homeProvider.categoryData[index].color!,
-                            color2: _homeProvider.categoryData[index].color2!,
-                          );
-                        },
-                        staggeredTileBuilder: (index) {
-                          return StaggeredTile.count(
-                              1, index % 2 == 0 ? 1.6 : 1.1);
-                        }),
-                  ],
+            color: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            onRefresh: () async {
+              await _homeProvider.getData();
+            },
+            child: Stack(
+              children: [
+                _homeProvider.isLoading
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 130.0),
+                        child: SpinkitIndicator(),
+                      )
+                    : _homeProvider.retry
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 130.0),
+                            child: Retry(
+                              onPressed: () {
+                                _homeProvider.setIsLoading = true;
+                                _homeProvider.getData();
+                              },
+                            ),
+                          )
+                        : ListView(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: _homeProvider.canPickup ? 180.0 : 100),
+                                child: Text(
+                                    AppLocalizations.of(context)!
+                                        .tr('what_would_you_want_today'),
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1),
+                              ),
+                              categoriesGroup(
+                                  _homeProvider.categoryData.data?.length ?? 0),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 20.0, left: 5, bottom: 8, top: 10),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                            AppLocalizations.of(context)!
+                                                .tr('most_wanted'),
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16)),
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                  AppLocalizations.of(context)!
+                                                      .tr('view_all'),
+                                                  style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      fontSize: 10)),
+                                              Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 15,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: SizeConfig.screenWidth,
+                                    height: 200,
+                                    child: ListView.builder(
+                                        padding: EdgeInsets.all(0),
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.horizontal,
+                                        physics: const ScrollPhysics(),
+                                        itemCount:
+                                            DummyData.bestSellerList.length,
+                                        itemBuilder:
+                                            (BuildContext ctxt, int index) {
+                                          return Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    index == 0 ? 8 : 3.0,
+                                                    0,
+                                                    0,
+                                                    0),
+                                            child: ProductCard(
+                                                product: DummyData
+                                                    .bestSellerList[index]),
+                                          );
+                                        }),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                Positioned(
+                  top: 100,
+                  child: Column(
+                    children: [
+                      Visibility(
+                        visible: _homeProvider.canPickup,
+                        child: Container(
+                          constraints: BoxConstraints(minHeight: 100),
+                          color:
+                              Theme.of(context).backgroundColor == Colors.black
+                                  ? Theme.of(context).colorScheme.secondary
+                                  : Theme.of(context).primaryColor,
+                          child: OrderType(
+                            visible: _homeProvider.canPickup,
+                          ),
+                        ),
+                      ),
+                      AddressContainer(),
+                    ],
+                  ),
                 ),
-        ));
+              ],
+            )));
+  }
+
+  Widget categoriesGroup(int length) {
+    switch (length) {
+      case 0:
+        return Padding(
+          padding: EdgeInsets.only(top: 240.0),
+          child: NotSupportedArea(),
+        );
+      case 1:
+        return CategoriesG1();
+      case 2:
+        return CategoriesG2();
+      case 3:
+        return CategoriesG3();
+      default:
+        return CategoriesG4();
+    }
   }
 }

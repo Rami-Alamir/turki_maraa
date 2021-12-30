@@ -51,6 +51,7 @@ class WalletHeader extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               addCreditCard(
                   context, 'add_credit', Icons.credit_card, "/AddCredit"),

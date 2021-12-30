@@ -53,7 +53,8 @@ class ProductCardLarge extends StatelessWidget {
                       constraints: BoxConstraints(minWidth: 40),
                       decoration: BoxDecoration(
                         color: hexToColor(product.tagColor!),
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20.0)),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(

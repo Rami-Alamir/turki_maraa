@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/provider/home_provider.dart';
-import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/home/product_card_large.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';

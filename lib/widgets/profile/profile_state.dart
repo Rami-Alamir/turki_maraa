@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/user.dart';
+import 'package:new_turki/models/user_data.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
 class ProfileState extends StatelessWidget {
-  final User user;
+  final UserData user;
 
   const ProfileState({required this.user});
 
@@ -23,7 +23,8 @@ class ProfileState extends StatelessWidget {
                 _stateItem(
                     context: context,
                     routeName: "/Orders",
-                    value: user.orders!,
+                    value: 0,
+                    //value: user.orders!,
                     title: 'orders'),
                 _verticalDivider(
                   context: context,
@@ -31,7 +32,7 @@ class ProfileState extends StatelessWidget {
                 _stateItem(
                     context: context,
                     routeName: "/UserPoints",
-                    value: user.point!,
+                    value: double.parse(user.data!.points!),
                     title: 'my_points'),
                 _verticalDivider(
                   context: context,
@@ -39,7 +40,7 @@ class ProfileState extends StatelessWidget {
                 _stateItem(
                     context: context,
                     routeName: "/UserWallet",
-                    value: user.credit!,
+                    value: double.parse(user.data!.wallet!),
                     title: 'credit'),
               ],
             ),

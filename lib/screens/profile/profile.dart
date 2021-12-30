@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/profile/help_card.dart';
 import 'package:new_turki/widgets/profile/personal_info_card.dart';
 import 'package:new_turki/widgets/profile/profile_footer.dart';
@@ -29,7 +30,7 @@ class _ProfileState extends State<Profile> {
           padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8),
           child: IconButton(
             icon: Icon(
-              Icons.notifications_outlined,
+              TURKIICONS.notification,
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
@@ -46,13 +47,12 @@ class _ProfileState extends State<Profile> {
                 color: Theme.of(context).primaryColor,
                 backgroundColor: Theme.of(context).colorScheme.secondary,
                 onRefresh: () async {
-                  await _auth.getUser();
+                  await _auth.delayed();
                 },
                 child: ListView(
                   padding: EdgeInsets.only(top: 15),
                   children: [
                     ProfileHeader(
-                      user: _auth.user,
                       isAuth: _auth.isAuth,
                     ),
                     PersonalInfoCard(isAuth: _auth.isAuth),

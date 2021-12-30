@@ -25,7 +25,7 @@ class _UserNotificationState extends State<UserNotification> {
         backgroundColor: Theme.of(context).colorScheme.secondary,
         onRefresh: () async {
           final _auth = Provider.of<Auth>(context, listen: false);
-          await _auth.getUser();
+          await _auth.delayed();
         },
         child: GridView.builder(
             shrinkWrap: true,

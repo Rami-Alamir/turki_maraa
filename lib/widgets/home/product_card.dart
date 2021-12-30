@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
       child: SizedBox(
         width: SizeConfig.setWidgetWidthWithFactor(0.35, 0.35, 0.35),
         height: SizeConfig.setWidgetWidthWithFactor(0.35, 0.35, 0.35),
@@ -45,8 +45,6 @@ class ProductCard extends StatelessWidget {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
                             child: Image.network(
-                              //'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
-
                               '${product.image?.trim()}',
                               width: SizeConfig.setWidgetWidthWithFactor(
                                   0.35, 0.35, 0.35),
@@ -64,11 +62,11 @@ class ProductCard extends StatelessWidget {
                         top: 15,
                         end: 10,
                         child: Container(
-                          constraints: BoxConstraints(minWidth: 40),
+                          constraints: const BoxConstraints(minWidth: 40),
                           decoration: BoxDecoration(
                             color: hexToColor(product.tagColor!),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
+                                const BorderRadius.all(Radius.circular(20.0)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -85,7 +83,7 @@ class ProductCard extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(top: 5, left: 10, right: 10),
+                padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
                 child: AutoSizeText(
                   _isAr ? product.nameAr! : product.nameEn!,
                   textAlign: TextAlign.center,
@@ -96,13 +94,14 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.only(top: 5, left: 10, right: 10),
+                  padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
                   child: Row(
                     children: [
                       Visibility(
                         visible: product.discount! > 0,
                         child: Padding(
-                          padding: EdgeInsets.only(top: 3, left: 5, right: 5),
+                          padding:
+                              const EdgeInsets.only(top: 3, left: 5, right: 5),
                           child: Row(
                             children: [
                               AutoSizeText(

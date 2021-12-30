@@ -32,7 +32,7 @@ class _UserWalletState extends State<UserWallet> {
           color: Theme.of(context).primaryColor,
           backgroundColor: Theme.of(context).colorScheme.secondary,
           onRefresh: () async {
-            await _auth.getUser();
+            await _auth.delayed();
           },
           child: ListView(
             children: [

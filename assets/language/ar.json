@@ -6,6 +6,7 @@
   "orders": "طلباتي",
   "order_details": "تفاصيل الطلب",
   "delivery_address": "عنوان التوصيل",
+  "add_address": "اضف عنوان",
   "login": "تسجيل الدخول",
   "promo_code": "كود الخصم",
   "invoice": "الفاتورة",
@@ -15,7 +16,7 @@
   "order_total": "مجموع الطلب",
   "delivery_fees": "رسوم التوصيل",
   "discount": "الخصم",
-  "credit": "رصيدي",
+  "credit": "المحفظة",
   "payment_method": "طريقة الدفع",
   "total2": "الإجمالي",
   "vat": "جميع الأسعار تشمل 15% ضريبه القيمة المضافة",
@@ -106,6 +107,8 @@
   "did_you_not_receive_the_activation_code": "لم يصلك كود التفعيل؟",
   "resend": "اعادة الارسال",
   "please_enter_a_valid_mobile_number": "الرجاء ادخال رقم جوال صحيح",
+  "please_enter_otp": "الرجاء ادخال كود التفعيل",
+  "invalid_activation_code": "كود التفعيل غير صالح",
   "lets_get_to_know_you": "خلنا نتعرف عليك",
   "are_you_sure_you_want_to_remove_the_product" : "هل انت متاكد انك ترغب في ازالة المنتج؟",
   "add_to_favorites": "اضف للمفضلة",
@@ -120,6 +123,15 @@
   "search_products": "البحث في المنتجات",
   "not_supported_area" : "للاسف انت خارج نطاق تغطيتنا",
   "discover": "اكتشف",
-  "view_all": "مشاهدة الكل"
-
+  "view_all": "مشاهدة الكل",
+  "description": "الوصف",
+  "best_seller" : "الاكثر مبيعا",
+  "unexpected_error": "حدث خطأ غير متوقع، الرجاء المحاولة مره اخرى",
+  "gender": "الجنس",
+  "please_enter_your_name" : "الرجاء ادخال الاسم",
+  "delete": "حذف",
+  "empty_favourite": "لايوجد اي منتجات بالمفضلة",
+  "most_wanted" : "الأكثر طلبا",
+  "current_location": "الموقع الحالي",
+  "add_new_delivery_address" : "اضف عنوان توصيل جديد"
 }

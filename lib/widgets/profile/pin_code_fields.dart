@@ -1,100 +1,85 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:new_turki/provider/auth.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 
-class PinCodeFields extends StatefulWidget {
-  @override
-  _PinCodeFieldsState createState() => _PinCodeFieldsState();
-}
-
-class _PinCodeFieldsState extends State<PinCodeFields> {
-  final TextEditingController _controller1 = TextEditingController();
-  final TextEditingController _controller2 = TextEditingController();
-  final TextEditingController _controller3 = TextEditingController();
-  final TextEditingController _controller4 = TextEditingController();
-
-  final FocusNode _inputFocusNode1 = new FocusNode();
-  final FocusNode _inputFocusNode2 = new FocusNode();
-  final FocusNode _inputFocusNode3 = new FocusNode();
-  final FocusNode _inputFocusNode4 = new FocusNode();
-  final FocusNode _inputFocusNode5 = new FocusNode();
-
-  @override
-  void dispose() {
-    _inputFocusNode1.dispose();
-    _inputFocusNode2.dispose();
-    _inputFocusNode3.dispose();
-    _inputFocusNode4.dispose();
-    _inputFocusNode5.dispose();
-    super.dispose();
-  }
-
+class PinCodeFields extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _auth = Provider.of<Auth>(context);
+    TextEditingController otpController = TextEditingController();
+
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Padding(
-        padding: const EdgeInsets.only(
-            right: 8.0, left: 8.0, bottom: 10.0, top: 25.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _textField(context, _controller1, _inputFocusNode1,
-                _inputFocusNode2, TextInputAction.next),
-            _textField(context, _controller2, _inputFocusNode2,
-                _inputFocusNode3, TextInputAction.next),
-            _textField(context, _controller3, _inputFocusNode3,
-                _inputFocusNode4, TextInputAction.next),
-            _textField(context, _controller4, _inputFocusNode4,
-                _inputFocusNode5, TextInputAction.done),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _textField(
-      BuildContext context,
-      TextEditingController controller,
-      FocusNode focusNode,
-      FocusNode nextFocusNode,
-      TextInputAction textInputAction) {
-    return SizedBox(
-      // width: 40,
-      width: 60,
-      height: 60,
-      child: TextFormField(
-          autofocus: true,
-          style: Theme.of(context).textTheme.headline4,
-          textAlign: TextAlign.center,
-          maxLength: 1,
-          cursorColor: Theme.of(context).scaffoldBackgroundColor,
-          controller: controller,
-          keyboardType: TextInputType.phone,
-          decoration: InputDecoration(
-            counterText: "",
-            border: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor, width: 1)),
-            disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1)),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor, width: 2)),
-            focusColor: Theme.of(context).primaryColor,
-          ),
-          focusNode: focusNode,
-          textInputAction: textInputAction,
-          onChanged: (value) {
-            setState(() {});
-            if (controller.text.isNotEmpty)
-              FocusScope.of(context).requestFocus(nextFocusNode);
-          },
-          onEditingComplete: () {
-            if (controller.text.isNotEmpty)
-              FocusScope.of(context).requestFocus(nextFocusNode);
-          }),
+          padding: const EdgeInsets.only(top: 25.0),
+          child: Center(
+            child: SizedBox(
+              width: 250,
+              child: PinCodeTextField(
+                appContext: context,
+                controller: otpController,
+                pastedTextStyle: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                length: 4,
+                obscureText: false,
+                obscuringCharacter: '*',
+                obscuringWidget: Image.asset(
+                  'assets/images/turki_icon.png',
+                  width: 35,
+                  height: 35,
+                ),
+                blinkWhenObscuring: true,
+                animationType: AnimationType.fade,
+                validator: (v) {
+                  if (v!.length < 4) {
+                    return '';
+                  } else {
+                    return null;
+                  }
+                },
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.box,
+                  borderRadius: BorderRadius.circular(5),
+                  fieldHeight: 50,
+                  fieldWidth: 50,
+                  errorBorderColor: Theme.of(context).primaryColor,
+                  inactiveColor: Theme.of(context).colorScheme.secondaryVariant,
+                  activeColor: Theme.of(context).primaryColor,
+                  inactiveFillColor: Theme.of(context).backgroundColor,
+                  selectedFillColor: Theme.of(context).backgroundColor,
+                  selectedColor: Theme.of(context).primaryColor,
+                  disabledColor: Theme.of(context).backgroundColor,
+                  activeFillColor: Colors.white,
+                ),
+                cursorColor: Theme.of(context).primaryColor,
+                animationDuration: Duration(milliseconds: 300),
+                enableActiveFill: true,
+                keyboardType: TextInputType.number,
+                boxShadows: [
+                  BoxShadow(
+                    offset: Offset(0, 1),
+                    color: Colors.black12,
+                    blurRadius: 0,
+                  )
+                ],
+                onCompleted: (v) async {
+                  await _auth.verifyOTP(context);
+                },
+                onChanged: (value) {
+                  _auth.otpController.text = value;
+                },
+                beforeTextPaste: (text) {
+                  return true;
+                },
+              ),
+            ),
+          )),
     );
   }
 }

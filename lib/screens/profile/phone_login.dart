@@ -13,6 +13,13 @@ class PhoneLogin extends StatefulWidget {
 
 class _PhoneLoginState extends State<PhoneLogin> {
   @override
+  void initState() {
+    final _auth = Provider.of<Auth>(context, listen: false);
+    _auth.formKey = GlobalKey<FormState>();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _auth = Provider.of<Auth>(
       context,
@@ -26,9 +33,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
           backgroundColor: Colors.transparent,
         ),
         body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           child: ListView(
             children: [
               Padding(
@@ -46,13 +51,11 @@ class _PhoneLoginState extends State<PhoneLogin> {
                   title: _auth.start == 0 || _auth.start == 59
                       ? AppLocalizations.of(context)!.tr('next')
                       : _auth.start.toString(),
-                  onPressed: () {
-                    print(_auth.start.toString());
-
+                  onPressed: () async {
                     if (_auth.start == 59 || _auth.start == 0) {
-                      if (_auth.formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, "/VerifyPhone");
+                      if (_auth.formKey!.currentState!.validate()) {
                         _auth.startTimer();
+                        await _auth.sendOTP(context);
                       }
                     }
                   }),

@@ -14,8 +14,7 @@ class ProductsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
 
-    return SliverToBoxAdapter(
-        child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
@@ -28,9 +27,9 @@ class ProductsSection extends StatelessWidget {
               physics: ScrollPhysics(),
               itemCount: products.data!.length,
               itemBuilder: (BuildContext ctxt, int index) {
-                print(products.data!.length.toString() + "leee");
                 return Container(
                   width: SizeConfig.screenWidth,
+                  color: Colors.red,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -110,6 +109,6 @@ class ProductsSection extends StatelessWidget {
               }),
         ),
       ],
-    ));
+    );
   }
 }

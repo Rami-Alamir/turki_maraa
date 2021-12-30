@@ -13,28 +13,13 @@ class CartProvider with ChangeNotifier {
   int _selectedPayment = 0;
   int _selectedDate = 0;
   int _selectedTime = 0;
-  int _isAuthStatus = 0;
   int _cartLength = 0;
 
   int get cartLength => _cartLength;
 
-  int get isAuthStatus => _isAuthStatus;
+  bool get isAuth => _isAuth;
+  bool _isAuth = false;
 
-  bool get isAuth => _isAuth = false;
-  bool? _isAuth = false;
-
-  CartProvider(_isAuthStatus) {
-    if (_isAuthStatus == 1) {
-      _isAuth = true;
-      _isLoading = true;
-
-      getCartData();
-    } else if (_isAuthStatus == 0) {
-      _isAuth = false;
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
   int get selectedDate => _selectedDate;
 
   set setSelectedDate(int value) {

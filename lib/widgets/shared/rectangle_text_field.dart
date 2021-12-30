@@ -46,7 +46,7 @@ class RectangleTextField extends StatelessWidget {
     return Padding(
       padding: padding ?? EdgeInsets.all(0),
       child: Container(
-        width: customWidth ?? (width * 0.9),
+        width: customWidth ?? SizeConfig.screenWidth,
         child: TextFormField(
           textAlignVertical: TextAlignVertical.center,
           maxLines: maxLines,

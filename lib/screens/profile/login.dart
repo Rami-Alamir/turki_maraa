@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_turki/screens/profile/phone_login.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:country_code_picker/country_code_picker.dart';
@@ -20,16 +21,14 @@ class _LoginState extends State<Login> {
           backgroundColor: Colors.transparent,
         ),
         body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           child: Container(
             width: SizeConfig.screenWidth,
             height: SizeConfig.screenHeight,
             decoration: BoxDecoration(
                 image: DecorationImage(
               image: ExactAssetImage('assets/images/t1.gif'),
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.fill,
             )),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,7 +65,7 @@ class _LoginState extends State<Login> {
                           onTap: () {},
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0, 0, 0),
+                                15.0, 0, 0, 0),
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .tr('enter_your_mobile_number'),
@@ -79,8 +78,12 @@ class _LoginState extends State<Login> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 100),
                           child: InkWell(
-                            onTap: () =>
-                                Navigator.pushNamed(context, "/PhoneLogin"),
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      PhoneLogin()),
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
