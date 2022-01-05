@@ -35,6 +35,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    double _statusBarHeight = MediaQuery.of(context).padding.top;
     final _homeProvider = Provider.of<HomeProvider>(context);
     return Scaffold(
         extendBodyBehindAppBar: true,
@@ -51,29 +52,30 @@ class _HomeState extends State<Home> {
             child: Stack(
               children: [
                 _homeProvider.isLoading
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 130.0),
-                        child: SpinkitIndicator(),
+                    ? SpinkitIndicator(
+                        padding: EdgeInsets.only(top: 140),
                       )
                     : _homeProvider.retry
-                        ? Padding(
-                            padding: const EdgeInsets.only(top: 130.0),
-                            child: Retry(
-                              onPressed: () {
-                                _homeProvider.setIsLoading = true;
-                                _homeProvider.getData();
-                              },
-                            ),
+                        ? Retry(
+                            padding: EdgeInsets.only(top: 140),
+                            onPressed: () {
+                              _homeProvider.setIsLoading = true;
+                              _homeProvider.getData();
+                            },
                           )
                         : ListView(
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(
-                                    top: _homeProvider.canPickup ? 180.0 : 100),
+                                    top: _homeProvider.canPickup
+                                        ? 220.0 - _statusBarHeight
+                                        : 100,
+                                    right: 20,
+                                    left: 20),
                                 child: Text(
                                     AppLocalizations.of(context)!
                                         .tr('what_would_you_want_today'),
-                                    textAlign: TextAlign.center,
+                                    textAlign: TextAlign.start,
                                     style:
                                         Theme.of(context).textTheme.subtitle1),
                               ),
@@ -156,20 +158,14 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                 Positioned(
-                  top: 100,
+                  top: 56 + _statusBarHeight,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Visibility(
                         visible: _homeProvider.canPickup,
-                        child: Container(
-                          constraints: BoxConstraints(minHeight: 100),
-                          color:
-                              Theme.of(context).backgroundColor == Colors.black
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : Theme.of(context).primaryColor,
-                          child: OrderType(
-                            visible: _homeProvider.canPickup,
-                          ),
+                        child: OrderType(
+                          visible: _homeProvider.canPickup,
                         ),
                       ),
                       AddressContainer(),
@@ -180,7 +176,9 @@ class _HomeState extends State<Home> {
             )));
   }
 
-  Widget categoriesGroup(int length) {
+  Widget categoriesGroup(
+    int length,
+  ) {
     switch (length) {
       case 0:
         return Padding(

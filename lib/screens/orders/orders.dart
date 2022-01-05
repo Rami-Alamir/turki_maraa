@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/orders_provider.dart';
 import 'package:new_turki/widgets/order/no_orders.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -19,38 +20,53 @@ class Orders extends StatefulWidget {
 
 class _OrdersState extends State<Orders> {
   @override
+  void initState() {
+    final _orders = Provider.of<OrdersProvider>(context, listen: false);
+    final _auth = Provider.of<Auth>(context, listen: false);
+    _orders.getOrdersList(_auth.accessToken);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _orders = Provider.of<OrdersProvider>(context);
+    final _auth = Provider.of<Auth>(context);
     return Scaffold(
-        appBar: PrimaryAppBar(
-          title: AppLocalizations.of(context)!.tr('orders'),
-          back: widget.back!,
-        ),
-        body: !_orders.isAuth ? NotAuth() : NoOrders()
-        // _orders.ordersList.isEmpty
-        //       ? _orders.isLoading
-        //           ? SpinkitIndicator()
-        //           : _orders.retry
-        //               ? Retry(
-        //                   onPressed: () {
-        //                     _orders.reInitOrdersList();
-        //                   },
-        //                 )
-        //               : NoOrders()
-        //       : RefreshIndicator(
-        //           color: Theme.of(context).primaryColor,
-        //           backgroundColor: Theme.of(context).colorScheme.secondary,
-        //           onRefresh: () async {
-        //             await _orders.reInitOrdersList();
-        //           },
-        //           child: ListView.builder(
-        //               padding: EdgeInsets.zero,
-        //               shrinkWrap: true,
-        //               physics: ScrollPhysics(),
-        //               itemCount: _orders.ordersList.length,
-        //               itemBuilder: (BuildContext ctxt, int index) {
-        //                 return OrderCard(order: _orders.ordersList[index]);
-        //               })),
-        );
+      appBar: PrimaryAppBar(
+        title: AppLocalizations.of(context)!.tr('orders'),
+        back: widget.back!,
+      ),
+      body: !_auth.isAuth
+          ? NotAuth()
+          : _orders.isLoading
+              ? SpinkitIndicator()
+              : _orders.retry
+                  ? Retry(
+                      onPressed: () {
+                        _orders.setIsLoading = true;
+                        _orders.getOrdersList(_auth.accessToken);
+                      },
+                    )
+                  : (_orders.ordersData?.data?.length ?? 0) > 0
+                      ? RefreshIndicator(
+                          color: Theme.of(context).primaryColor,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                          onRefresh: () async {
+                            await _orders.getOrdersList(_auth.accessToken);
+                          },
+                          child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              physics: ScrollPhysics(),
+                              itemCount:
+                                  (_orders.ordersData?.data?.length ?? 0),
+                              itemBuilder: (BuildContext ctxt, int index) {
+                                return OrderCard(
+                                    index: index,
+                                    order: (_orders.ordersData!.data![index]));
+                              }))
+                      : NoOrders(),
+    );
   }
 }

@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/order.dart';
+import 'package:new_turki/models/orders_data.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
 import 'item_column.dart';
 
 class OrderCard extends StatelessWidget {
-  final Order order;
+  final Data order;
+  final int index;
 
   const OrderCard({
     required this.order,
+    required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
+    final _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.5),
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, '/OrderDetails',
-            arguments: int.parse(order.id)),
+        onTap: () =>
+            Navigator.pushNamed(context, '/OrderDetails', arguments: index),
         child: Container(
             height: 250,
             decoration: BoxDecoration(
@@ -78,7 +81,7 @@ class OrderCard extends StatelessWidget {
                                               .colorScheme
                                               .secondary,
                                           child: Image.network(
-                                            order.image,
+                                            "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
                                             width: 60,
                                             height: 60,
                                             fit: BoxFit.fill,
@@ -105,7 +108,7 @@ class OrderCard extends StatelessWidget {
                                                       fontSize: 13,
                                                       fontWeight:
                                                           FontWeight.w600)),
-                                          Text(order.id,
+                                          Text(order.refNo!,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .headline1!
@@ -115,13 +118,13 @@ class OrderCard extends StatelessWidget {
                                                           FontWeight.w600)),
                                         ],
                                       ),
-                                      order.orderItems.length >= 1
+                                      order.products!.length >= 1
                                           ? Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       vertical: 5.0),
                                               child: Text(
-                                                  "${order.orderItems[0].qty} x ${order.orderItems[0].title}",
+                                                  "qty x ${_isAr ? order.products![0].nameAr : order.products![0].nameEn}",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline5!
@@ -132,13 +135,13 @@ class OrderCard extends StatelessWidget {
                                                               .normal)),
                                             )
                                           : Container(),
-                                      order.orderItems.length >= 2
+                                      order.products!.length >= 2
                                           ? Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       vertical: 5.0),
                                               child: Text(
-                                                  "${order.orderItems[1].qty} x ${order.orderItems[1].title}",
+                                                  "qty x ${_isAr ? order.products![1].nameAr : order.products![1].nameEn}",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline5!
@@ -178,12 +181,21 @@ class OrderCard extends StatelessWidget {
                                             children: [
                                               ItemColumn(
                                                   title: 'payment_method',
-                                                  value: order.payment,
+                                                  value: AppLocalizations.of(
+                                                          context)!
+                                                      .tr(order.paymentTypeId ==
+                                                              1
+                                                          ? "online_payment"
+                                                          : "cod"),
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start),
                                               ItemColumn(
                                                   title: 'order_status',
-                                                  value: order.status,
+                                                  value: _isAr
+                                                      ? order
+                                                          .orderState!.stateAr!
+                                                      : order
+                                                          .orderState!.stateEn!,
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.end),
                                             ],
@@ -206,13 +218,19 @@ class OrderCard extends StatelessWidget {
                                               children: [
                                                 ItemColumn(
                                                     title: 'order_date',
-                                                    value: order.date,
+                                                    value: order.createdAt!
+                                                        .substring(0, 10),
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start),
                                                 ItemColumn(
                                                     title: 'order_type',
-                                                    value: order.type,
+                                                    value: AppLocalizations.of(
+                                                            context)!
+                                                        .tr(order.paymentTypeId ==
+                                                                1
+                                                            ? "pickup"
+                                                            : "delivery"),
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment.end),
                                               ],
@@ -249,7 +267,7 @@ class OrderCard extends StatelessWidget {
                                         fontSize: 10,
                                         fontWeight: FontWeight.w600)),
                                 Text(
-                                    "${order.total} ${AppLocalizations.of(context)!.tr('sr')}",
+                                    "${order.orderTotal} ${AppLocalizations.of(context)!.tr('sr')}",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
@@ -288,7 +306,7 @@ class OrderCard extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 3),
                                       child: Text(
-                                          "${order.total} ${AppLocalizations.of(context)!.tr('point')}",
+                                          "points  ${AppLocalizations.of(context)!.tr('point')}",
                                           style: TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold,

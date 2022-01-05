@@ -56,34 +56,37 @@ class PaymentMethod extends StatelessWidget {
                 color: selected
                     ? Theme.of(context).primaryColor
                     : Theme.of(context).colorScheme.primaryVariant,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: Center(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Container(
-                      height: 45,
-                      width: 45,
-                      decoration: BoxDecoration(
-                          color: selected
-                              ? Color.fromRGBO(120, 17, 17, 1)
-                              : Colors.white,
-                          shape: BoxShape.circle),
-                      child: Icon(
-                        icon,
-                        size: 40,
-                        color: selected ? Colors.white : Colors.black,
-                      ),
+                borderRadius: const BorderRadius.all(Radius.circular(10))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Container(
+                    height: 45,
+                    width: 45,
+                    decoration: BoxDecoration(
+                        color: selected
+                            ? Color.fromRGBO(90, 4, 9, 1)
+                            : Colors.white,
+                        shape: BoxShape.circle),
+                    child: Icon(
+                      icon,
+                      size: 40,
+                      color: selected ? Colors.white : Colors.black,
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: SizeConfig.setWidgetWidth(95, 130, 130),
+                      child: Text(
                         AppLocalizations.of(context)!.tr(title),
+                        maxLines: 1,
                         style: Theme.of(context).textTheme.headline5!.copyWith(
                             fontSize: 12,
                             height: 2,
@@ -92,29 +95,23 @@ class PaymentMethod extends StatelessWidget {
                                 ? Colors.white
                                 : Theme.of(context).textTheme.headline5!.color),
                       ),
-                      SizedBox(
-                        width: SizeConfig.setWidgetWidth(90, 120, 120),
-                        child: Text(
-                          AppLocalizations.of(context)!.tr(subtitle),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5!
-                              .copyWith(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.normal,
-                                  height: 2,
-                                  color: selected
-                                      ? Colors.white
-                                      : Theme.of(context)
-                                          .textTheme
-                                          .headline5!
-                                          .color),
-                        ),
+                    ),
+                    SizedBox(
+                      width: SizeConfig.setWidgetWidth(90, 120, 120),
+                      child: Text(
+                        AppLocalizations.of(context)!.tr(subtitle),
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                            fontSize: 8,
+                            fontWeight: FontWeight.normal,
+                            height: 2,
+                            color: selected
+                                ? Colors.white
+                                : Theme.of(context).textTheme.headline5!.color),
                       ),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                  ],
+                )
+              ],
             )),
       ),
     );

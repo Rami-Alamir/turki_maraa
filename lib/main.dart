@@ -33,7 +33,7 @@ Future<void> main() async {
   SharedPreferences _prefs = await SharedPreferences.getInstance();
   String? _language = _prefs.getString('language_code');
   String _theme = _prefs.getString('theme') ?? 'light';
-  String _userToken = _prefs.getString('user_token') ?? '';
+  String _accessToken = _prefs.getString('accessToken') ?? '';
   Locale _locale = Locale(_language ?? 'ar');
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<Auth>(create: (context) => Auth()),
@@ -46,5 +46,5 @@ Future<void> main() async {
         create: (context) => FavouriteProvider()),
     ChangeNotifierProvider<OrdersProvider>(
         create: (context) => OrdersProvider()),
-  ], child: MyApp(locale: _locale, theme: _theme, token: _userToken)));
+  ], child: MyApp(locale: _locale, theme: _theme, token: _accessToken)));
 }

@@ -20,7 +20,7 @@ class _ProductsHome4State extends State<ProductsHome4> {
   void initState() {
     _scrollController = ScrollController()..addListener(() => setState(() {}));
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    _homeProvider.getFoodsPageData();
+    _homeProvider.getFoodsPageData(4);
     super.initState();
   }
 
@@ -171,7 +171,7 @@ class _ProductsHome4State extends State<ProductsHome4> {
           : _homeProvider.foodsRetry
               ? Retry(
                   onPressed: () {
-                    _homeProvider.getFoodsPageData();
+                    _homeProvider.getFoodsPageData(4);
                   },
                 )
               : RefreshIndicator(

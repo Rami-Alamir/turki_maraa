@@ -5,6 +5,7 @@ import 'package:location/location.dart';
 import 'package:new_turki/dummy_data/dummy_data.dart';
 import 'package:new_turki/models/category_data.dart';
 import 'package:new_turki/models/discover_item.dart';
+import 'package:new_turki/models/product.dart';
 import 'package:new_turki/models/products.dart';
 import 'package:new_turki/repository/home_repository.dart';
 import 'package:new_turki/repository/products_repository.dart';
@@ -14,11 +15,23 @@ class HomeProvider with ChangeNotifier {
   TextEditingController descriptionController = TextEditingController();
   bool _canPickup = true;
   bool _isLoading = true;
+  bool _productIsLoading = true;
+  bool _productIsRetry = false;
   bool _foodsIsLoading = true;
   bool _discoverIsLoading = true;
   BitmapDescriptor? _myMarker;
   LatLng? _latLng;
   bool? _initMap = false;
+  int _selectedSize = -1;
+  int _selectedPackaging = -1;
+  int _selectedChopping = -1;
+  int _selectedShalwata = -1;
+
+  bool get productIsRetry => _productIsRetry;
+
+  bool get productIsLoading => _productIsLoading;
+
+  int get selectedSize => _selectedSize;
 
   bool get canPickup => _canPickup;
 
@@ -71,6 +84,9 @@ class HomeProvider with ChangeNotifier {
 
   CategoryData? _categoryData;
   Products? _productsList;
+  Product? _productData;
+
+  Product get productData => _productData!;
   List<DiscoverItem> _discoverList = [];
 
   Products get productsList => _productsList!;
@@ -100,11 +116,11 @@ class HomeProvider with ChangeNotifier {
     _foodsRetry = false;
   }
 
-  Future<void> getFoodsPageData() async {
+  Future<void> getFoodsPageData(int id, {bool isLoading = true}) async {
     _foodsRetry = false;
-    _foodsIsLoading = true;
+    _foodsIsLoading = isLoading;
     try {
-      await Future.wait([getDiscoverList(), getBanners(), _getProducts("2")]);
+      await Future.wait([getDiscoverList(), getBanners(), _getProducts("$id")]);
     } catch (e) {
       _foodsRetry = true;
     }
@@ -116,7 +132,7 @@ class HomeProvider with ChangeNotifier {
   Future<void> getDiscoverList() async {
     _discoverIsLoading = true;
     _discoverRetry = false;
-    await Future.delayed(Duration(milliseconds: 1500), () {
+    await Future.delayed(Duration(milliseconds: 500), () {
       _discoverList = DummyData().discoverList;
     });
     _discoverIsLoading = false;
@@ -137,6 +153,19 @@ class HomeProvider with ChangeNotifier {
     } catch (e) {
       print(e.toString() + "rami");
     }
+  }
+
+  // get Product
+  Future<void> getProductData(String id) async {
+    _productIsLoading = true;
+    try {
+      _productData = await ProductsRepository().getProduct(id);
+    } catch (e) {
+      print(e.toString() + "rami");
+      _productIsRetry = true;
+    }
+    _productIsLoading = false;
+    notifyListeners();
   }
 
   //get user location + init marker
@@ -160,4 +189,57 @@ class HomeProvider with ChangeNotifier {
     "ملحمة المونسية",
   ];
   int selectedAddress2 = 0;
+
+  int get selectedPackaging => _selectedPackaging;
+
+  int get selectedChopping => _selectedChopping;
+
+  int get selectedShalwata => _selectedShalwata;
+
+  set setSelectedShalwata(int value) {
+    _selectedShalwata = value;
+    notifyListeners();
+  }
+
+  set setSelectedChopping(int value) {
+    _selectedChopping = value;
+    notifyListeners();
+  }
+
+  set setProductIsLoading(bool value) {
+    _productIsLoading = value;
+    notifyListeners();
+  }
+
+  set setSelectedPackaging(int value) {
+    _selectedPackaging = value;
+    notifyListeners();
+  }
+
+  set setSelectedSize(int value) {
+    _selectedSize = value;
+    notifyListeners();
+  }
+
+  void initExtras() {
+    _selectedSize = -1;
+    _selectedChopping = -1;
+    _selectedPackaging = -1;
+    _selectedShalwata = -1;
+  }
+
+  double getProductPrice() {
+    double price = double.parse(_productData!.data!.price!);
+    if (_selectedSize >= 0)
+      price = double.parse(_productData!.data!.sizes![_selectedSize].price!);
+    if (_selectedPackaging >= 0)
+      price += double.parse(
+          _productData!.data!.packaging![_selectedPackaging].price!);
+    if (_selectedChopping >= 0)
+      price +=
+          double.parse(_productData!.data!.chopping![_selectedChopping].price!);
+    if (_selectedShalwata >= 0)
+      price += double.parse(_productData!.data!.shalwata!.price!);
+    return price;
+  }
 }

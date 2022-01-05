@@ -36,7 +36,7 @@ class DiscoverSection extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  physics: ScrollPhysics(),
+                  physics: const ScrollPhysics(),
                   itemCount: discoverList.length,
                   itemBuilder: (BuildContext ctxt, int index) {
                     return Padding(

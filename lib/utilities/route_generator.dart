@@ -98,7 +98,7 @@ class RouteGenerator {
       case '/AddGiftCard':
         return MaterialPageRoute(builder: (_) => AddGiftCard());
       case '/ProductsHome':
-        return MaterialPageRoute(builder: (_) => ProductsHome());
+        return MaterialPageRoute(builder: (_) => ProductsHome(id: args as int));
       case '/ProductsHome1':
         return MaterialPageRoute(builder: (_) => ProductsHome1());
       case '/ProductsHome2':

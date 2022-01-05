@@ -20,7 +20,7 @@ class CategoriesG4 extends StatelessWidget {
         itemCount: _homeProvider.categoryData.data!.length,
         itemBuilder: (context, index) {
           return CategoryCard(
-            index: index + 1,
+            categoryId: _homeProvider.categoryData.data![index].id!,
             scaleFactor: index % 2 == 0 ? 1.8 : 1.1,
             image: _homeProvider.categoryData.data![index].imageUrl!,
             title: AppLocalizations.of(context)!.locale == Locale("ar")

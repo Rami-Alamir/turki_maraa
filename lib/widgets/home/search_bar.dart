@@ -29,9 +29,9 @@ class SearchBar extends StatelessWidget {
                 Icons.search,
                 color: Theme.of(context).textTheme.headline6!.color,
               ),
-              contentPadding: EdgeInsets.only(top: 5),
+              contentPadding: const EdgeInsets.only(top: 5),
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(8.0),
                   ),
                   borderSide: BorderSide(

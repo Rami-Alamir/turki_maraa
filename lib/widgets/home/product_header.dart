@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:new_turki/models/product.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/dots_indicator.dart';
-
 import 'circle_icon.dart';
 
 class ProductHeader extends StatefulWidget {
-  final List<String> imgList;
+  final List<Images> imgList;
   const ProductHeader({required this.imgList});
 
   @override
@@ -28,8 +28,6 @@ class _ProductHeaderState extends State<ProductHeader> {
         children: [
           Container(
             color: Colors.transparent,
-
-            //  color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
             child: CarouselSlider(
               options: CarouselOptions(
                 disableCenter: true,
@@ -42,7 +40,7 @@ class _ProductHeaderState extends State<ProductHeader> {
                 return Builder(
                   builder: (BuildContext context) {
                     return Image.network(
-                      url.trim(),
+                      url.imageUrl!.trim(),
                       fit: BoxFit.cover,
                     );
                   },

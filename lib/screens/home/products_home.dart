@@ -8,6 +8,9 @@ import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ProductsHome extends StatefulWidget {
+  final int id;
+
+  const ProductsHome({required this.id});
   @override
   _ProductsHomeState createState() => _ProductsHomeState();
 }
@@ -19,7 +22,8 @@ class _ProductsHomeState extends State<ProductsHome> {
   void initState() {
     _scrollController = ScrollController()..addListener(() => setState(() {}));
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    _homeProvider.getFoodsPageData();
+    print('${widget.id}ddd');
+    _homeProvider.getFoodsPageData(widget.id);
     super.initState();
   }
 
@@ -34,16 +38,22 @@ class _ProductsHomeState extends State<ProductsHome> {
     final _homeProvider = Provider.of<HomeProvider>(context);
     return Scaffold(
       body: _homeProvider.foodsIsLoading
-          ? SpinkitIndicator()
+          ? SpinkitIndicator(
+              padding: EdgeInsets.only(top: 60),
+            )
           : _homeProvider.foodsRetry
               ? Retry(
+                  padding: EdgeInsets.only(top: 60),
                   onPressed: () {
-                    _homeProvider.getFoodsPageData();
+                    _homeProvider.getFoodsPageData(widget.id);
                   },
                 )
               : RefreshIndicator(
                   color: Theme.of(context).primaryColor,
-                  onRefresh: () async {},
+                  onRefresh: () async {
+                    await _homeProvider.getFoodsPageData(widget.id,
+                        isLoading: false);
+                  },
                   child: CustomScrollView(
                       controller: _scrollController,
                       slivers: <Widget>[
@@ -55,7 +65,9 @@ class _ProductsHomeState extends State<ProductsHome> {
                           discoverList: _homeProvider.discoverList,
                         ),
                         // // HtmlSection(),
-                        ProductsSection(products: _homeProvider.productsList),
+                        SliverToBoxAdapter(
+                            child: ProductsSection(
+                                products: _homeProvider.productsList)),
                       ])),
     );
   }

@@ -14,4 +14,12 @@ class RegistrationRepository {
     final response = await _helper.post3("verfiyOtpCode", body);
     return response;
   }
+
+  //get user data
+  Future<dynamic> login(String authorization) async {
+    print("login");
+    final response = await _helper.get2("customers/show-profile",
+        authorization: authorization);
+    return response;
+  }
 }

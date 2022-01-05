@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/dummy_data/dummy_data.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/widgets/home/SearchBar.dart';
+import 'package:new_turki/widgets/home/search_bar.dart';
 import 'package:new_turki/widgets/home/search_row.dart';
 import 'package:provider/provider.dart';
 
 class Search extends StatefulWidget {
-  const Search({Key? key}) : super(key: key);
-
   @override
   _SearchState createState() => _SearchState();
 }
@@ -30,7 +28,7 @@ class _SearchState extends State<Search> {
                   padding: const EdgeInsets.all(15.0),
                   child: Text(AppLocalizations.of(context)!.tr('search'),
                       style: TextStyle(
-                          color: Color.fromRGBO(132, 15, 15, 1),
+                          color: Color.fromRGBO(90, 4, 9, 1),
                           fontSize: 20,
                           fontWeight: FontWeight.w700)),
                 ),

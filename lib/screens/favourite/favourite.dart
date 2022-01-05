@@ -26,7 +26,6 @@ class _FavouriteState extends State<Favourite> {
       final _favourite = Provider.of<FavouriteProvider>(context, listen: false);
       _favourite.getFavouriteData("Bearer " + _auth.accessToken);
     }
-
     super.initState();
   }
 

@@ -28,7 +28,7 @@ class CircleIcon extends StatelessWidget {
                   .secondaryVariant
                   .withOpacity(0.3),
               blurRadius: 44,
-              offset: Offset(4, 8), // Shadow position
+              offset: const Offset(4, 8), // Shadow position
             ),
           ],
           shape: BoxShape.circle,

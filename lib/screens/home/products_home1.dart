@@ -21,7 +21,7 @@ class _ProductsHome1State extends State<ProductsHome1> {
   void initState() {
     _scrollController = ScrollController()..addListener(() => setState(() {}));
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    _homeProvider.getFoodsPageData();
+    _homeProvider.getFoodsPageData(1);
     super.initState();
   }
 
@@ -51,7 +51,7 @@ class _ProductsHome1State extends State<ProductsHome1> {
       subCategoryId: 0,
     ),
     ProductData(
-      id: 1,
+      id: 2,
       nameAr: 'أوصال شوي',
       nameEn: 'برجر لحم عجل',
       description: 'برجر لحم عجل',
@@ -69,7 +69,7 @@ class _ProductsHome1State extends State<ProductsHome1> {
       subCategoryId: 0,
     ),
     ProductData(
-      id: 1,
+      id: 3,
       nameAr: 'ريش غنم',
       nameEn: 'برجر لحم عجل',
       description: 'برجر لحم عجل',
@@ -107,8 +107,8 @@ class _ProductsHome1State extends State<ProductsHome1> {
       subCategoryId: 0,
     ),
     ProductData(
-      id: 1,
-      nameAr: 'ربع نعيمي',
+      id: 2,
+      nameAr: 'نص نعيمي',
       nameEn: 'برجر لحم عجل',
       description: 'برجر لحم عجل',
       weight: 'برجر لحم عجل',
@@ -116,7 +116,7 @@ class _ProductsHome1State extends State<ProductsHome1> {
       noRating: 0,
       image:
           'https://cdn.salla.sa/DotcN83mIYoUkupjKMdxfJ5iuULWTPToc5xAVRkO.jpeg',
-      price: 600.0,
+      price: 650.0,
       isActive: true,
       isShalwata: true,
       isDelivered: 0,
@@ -125,7 +125,7 @@ class _ProductsHome1State extends State<ProductsHome1> {
       subCategoryId: 0,
     ),
     ProductData(
-      id: 1,
+      id: 3,
       nameAr: 'نعيمي بالكيلو',
       nameEn: 'برجر لحم عجل',
       description: 'برجر لحم عجل',
@@ -163,7 +163,7 @@ class _ProductsHome1State extends State<ProductsHome1> {
       subCategoryId: 0,
     ),
     ProductData(
-      id: 1,
+      id: 2,
       nameAr: 'فخذ حري',
       nameEn: 'برجر لحم عجل',
       description: 'برجر لحم عجل',
@@ -181,7 +181,7 @@ class _ProductsHome1State extends State<ProductsHome1> {
       subCategoryId: 0,
     ),
     ProductData(
-      id: 1,
+      id: 3,
       nameAr: 'حري بالكيلو',
       nameEn: 'برجر لحم عجل',
       description: 'برجر لحم عجل',
@@ -208,7 +208,7 @@ class _ProductsHome1State extends State<ProductsHome1> {
           : _homeProvider.foodsRetry
               ? Retry(
                   onPressed: () {
-                    _homeProvider.getFoodsPageData();
+                    _homeProvider.getFoodsPageData(1);
                   },
                 )
               : RefreshIndicator(

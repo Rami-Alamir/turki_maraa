@@ -12,7 +12,7 @@ class OrderType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: visible ? 110 : 40,
+      height: 105,
       color: Theme.of(context).backgroundColor == Colors.black
           ? Theme.of(context).colorScheme.secondary
           : Theme.of(context).primaryColor,

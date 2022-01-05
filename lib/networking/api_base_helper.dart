@@ -25,14 +25,19 @@ class ApiBaseHelper {
     return responseJson;
   }
 
-  Future<dynamic> get2(String url, queryParameters) async {
-    var uri = Uri.https(_baseUrl, url, queryParameters);
+  Future<dynamic> get2(String url, {String authorization = " "}) async {
+    headers['authorization'] = authorization;
+    var uri = Uri.parse(_baseUrl + url);
     var responseJson;
+    var response;
     try {
-      var response = await http.get(uri, headers: headers);
+      response = await http.get(uri, headers: headers);
       responseJson = _returnResponse(response);
-    } catch (e) {}
-    return responseJson;
+      print(responseJson.toString());
+    } catch (e) {
+      print(e.toString());
+    }
+    return response;
   }
 
   Future<dynamic> post(String url, var body) async {
@@ -46,13 +51,18 @@ class ApiBaseHelper {
     return responseJson;
   }
 
-  Future<int> post2(String url, var body) async {
+  Future<int> post2(String url, var body, {String authorization = " "}) async {
+    headers['authorization'] = authorization;
+    print(authorization);
     var uri = Uri.parse(_baseUrl + url);
+    print(uri.toString());
     var response;
     try {
       response = await http.post(uri, body: body, headers: headers);
       print(_returnResponse(response));
-    } catch (e) {}
+    } catch (e) {
+      print(e.toString());
+    }
     return response.statusCode;
   }
 

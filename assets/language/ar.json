@@ -133,5 +133,16 @@
   "empty_favourite": "لايوجد اي منتجات بالمفضلة",
   "most_wanted" : "الأكثر طلبا",
   "current_location": "الموقع الحالي",
-  "add_new_delivery_address" : "اضف عنوان توصيل جديد"
+  "add_new_delivery_address" : "اضف عنوان توصيل جديد",
+  "product_options": "خيارات المنتج",
+  "vat_included": "(شامل ضريبة القيمة المضافة)",
+  "calories":"السعرات الحرارية",
+  "weight": "الوزن",
+  "kg": "كيلو",
+  "add_to_cart": "اضف للسلة",
+  "packaging": "التغليف",
+  "size": "الحجم",
+  "chopping" : "التقطيع",
+  "shalwata": "شلوطة",
+  "product_added_cart": "تم اضافة المنتج لسلة التسوق"
 }

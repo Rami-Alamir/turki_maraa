@@ -27,7 +27,7 @@ class DeliveryAddress extends StatelessWidget {
             constraints: BoxConstraints(minHeight: 56),
             decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryVariant,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+                borderRadius: const BorderRadius.all(Radius.circular(10))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(

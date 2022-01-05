@@ -6,9 +6,11 @@ import 'package:new_turki/utilities/size_config.dart';
 import 'package:provider/provider.dart';
 
 class DeliveryTime extends StatelessWidget {
+  final deliveryTime;
+
+  const DeliveryTime({required this.deliveryTime});
   @override
   Widget build(BuildContext context) {
-    final _cartProvider = Provider.of<CartProvider>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -30,16 +32,13 @@ class DeliveryTime extends StatelessWidget {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               physics: const ScrollPhysics(),
-              itemCount: _cartProvider.cartData.deliveryTime.length,
+              itemCount: deliveryTime.length,
               itemBuilder: (BuildContext ctxt, int index) {
                 return Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(
                       index == 0 ? 10 : 3.0, 15, 10, 0),
-                  child: _item(
-                      context,
-                      index,
-                      _cartProvider.cartData.deliveryTime[index].title,
-                      _cartProvider.cartData.deliveryTime[index].subtitle),
+                  child: _item(context, index, deliveryTime[index].title,
+                      deliveryTime[index].subtitle),
                 );
               }),
         ),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Tag extends StatelessWidget {
+class ExtraTag extends StatelessWidget {
   final title;
   final selected;
   final onTap;
-  const Tag({required this.title, required this.selected, required this.onTap});
+  const ExtraTag(
+      {required this.title, required this.selected, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class Tag extends StatelessWidget {
             constraints: BoxConstraints(minHeight: 40),
             decoration: BoxDecoration(
               color: !selected
-                  ? Color.fromRGBO(240, 240, 240, 1)
+                  ? Theme.of(context).colorScheme.secondaryVariant
                   : Theme.of(context).primaryColor,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.all(Radius.circular(5)),

@@ -30,7 +30,7 @@ class Note extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(10),
                   ),
                   color: Theme.of(context).colorScheme.primaryVariant,
@@ -54,21 +54,21 @@ class Note extends StatelessWidget {
                       fillColor: Colors.transparent,
                       filled: true,
                       border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0)),
+                          borderSide: const BorderSide(
+                              color: Colors.transparent, width: 0)),
                       errorStyle: TextStyle(fontSize: 12),
                       errorBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0)),
+                          borderSide: const BorderSide(
+                              color: Colors.transparent, width: 0)),
                       focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0)),
+                          borderSide: const BorderSide(
+                              color: Colors.transparent, width: 0)),
                       enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0)),
+                          borderSide: const BorderSide(
+                              color: Colors.transparent, width: 0)),
                       disabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.transparent, width: 0),
+                        borderSide: const BorderSide(
+                            color: Colors.transparent, width: 0),
                       ),
                       hintText: AppLocalizations.of(context)!.tr("note_hint"),
                       hintStyle: Theme.of(context)

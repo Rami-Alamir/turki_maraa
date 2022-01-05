@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CategoryCardG3 extends StatelessWidget {
-  final int index;
+  final int categoryId;
   final String title;
   final String image;
   final Color color;
@@ -14,12 +14,13 @@ class CategoryCardG3 extends StatelessWidget {
     required this.image,
     required this.color,
     required this.color2,
-    required this.index,
+    required this.categoryId,
   });
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, "/ProductsHome$index"),
+      onTap: () =>
+          Navigator.pushNamed(context, "/ProductsHome", arguments: categoryId),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(12)),

@@ -73,9 +73,9 @@ class ProductData {
   String? calories;
   int? noRating;
   String? image;
-  String? tagColor = "#ff0000";
-  String? tagTitleAr = "-10%";
-  String? tagTitleEn = "-10%";
+  // String? tagColor;
+  // String? tagTitleAr;
+  // String? tagTitleEn;
 
   double? price;
   double? discount = 0.0;

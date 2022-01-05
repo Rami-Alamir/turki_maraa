@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/auth.dart';
+import 'package:new_turki/provider/cart_provider.dart';
+import 'package:new_turki/provider/home_provider.dart';
+import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/home/product_description.dart';
 import 'package:new_turki/widgets/home/product_header.dart';
+import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
-import 'package:new_turki/widgets/tags_list.dart';
+import 'package:new_turki/widgets/home/extras_list.dart';
+import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
   final int id;
@@ -13,200 +20,188 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  bool selected2 = true;
-  bool selected3 = true;
-  bool selected4 = true;
-  bool selected = true;
+  int _count = 1;
+  @override
+  void initState() {
+    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    _homeProvider.initExtras();
+    _homeProvider.getProductData(widget.id.toString());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final _homeProvider = Provider.of<HomeProvider>(context);
+    final _cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final _authProvider = Provider.of<Auth>(context, listen: false);
     return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          ProductHeader(
-            imgList: [
-              'https://media.istockphoto.com/photos/various-cuts-of-meat-shot-from-the-top-on-a-black-background-with-picture-id1214484853?k=20&m=1214484853&s=612x612&w=0&h=knuk2LWm9ZcKd6DsAWHURBD0wpqmnRwcI6Q1SRNtCtc=',
-              'https://storage.googleapis.com/tm-zopsmart-uploads/320/20201031/210840_1-20201031-233123.png',
-              'https://sc04.alicdn.com/kf/U0378557e32e4448f8263411cc91952014.png',
-              'https://5.imimg.com/data5/MU/NR/MY-35620512/sirohi-goat-meat-500x500.png',
-            ],
-          ),
-          ProductDescription(),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 0.0, 10.0),
-            child: Text(
-              'معلومات المنتج',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4
-                  ?.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
-            ),
-          ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Column(
-          //       children: [
-          //         Padding(
-          //           padding:
-          //               EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 0.0, 10.0),
-          //           child: Text(
-          //             'الوزن',
-          //             style: Theme.of(context)
-          //                 .textTheme
-          //                 .headline4
-          //                 ?.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
-          //           ),
-          //         ),
-          //         Padding(
-          //           padding:
-          //               EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 0.0, 10.0),
-          //           child: Text(
-          //             'السعرت',
-          //             style: Theme.of(context)
-          //                 .textTheme
-          //                 .headline4
-          //                 ?.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //     Column(
-          //       children: [
-          //         Padding(
-          //           padding:
-          //               EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 0.0, 10.0),
-          //           child: Text(
-          //             'الوزن',
-          //             style: Theme.of(context)
-          //                 .textTheme
-          //                 .subtitle1
-          //                 ?.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
-          //           ),
-          //         ),
-          //         Padding(
-          //           padding:
-          //               EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 0.0, 10.0),
-          //           child: Text(
-          //             'السعرت',
-          //             style: Theme.of(context)
-          //                 .textTheme
-          //                 .headline4
-          //                 ?.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
-          //           ),
-          //         ),
-          //       ],
-          //     )
-          //   ],
-          // ),
-          TagsList(
-            title: 'الحجم',
-            tags: [
-              'جذع صغير',
-              'جذع وسط',
-            ],
-            isSelected: [
-              selected,
-              !selected,
-            ],
-            onTap: () {
-              setState(() {
-                selected = !selected;
-              });
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: TagsList(
-              title: 'التقطيع',
-              tags: [
-                'كاملة',
-                'ثلاجة',
-              ],
-              isSelected: [
-                selected2,
-                !selected2,
-              ],
-              onTap: () {
-                setState(() {
-                  selected2 = !selected2;
-                });
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: TagsList(
-              title: 'التغليف',
-              tags: [
-                'أكياس فاكيوم',
-                'أطباق',
-              ],
-              isSelected: [
-                selected3,
-                !selected3,
-              ],
-              onTap: () {
-                setState(() {
-                  selected3 = !selected3;
-                });
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    RoundedRectangleButton(
-                      padding: EdgeInsets.all(0),
-                      onPressed: () {
-                        //   _cartProvider.removeItem(context, index);
-                      },
-                      width: 40,
-                      height: 40,
-                      fontSize: 22,
-                      title: '-',
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "1",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline1
-                            ?.copyWith(fontSize: 16),
+      body: _homeProvider.productIsLoading
+          ? SpinkitIndicator(
+              padding: EdgeInsets.only(top: 60),
+            )
+          : _homeProvider.productIsRetry
+              ? Retry(
+                  padding: EdgeInsets.only(top: 60),
+                  onPressed: () {
+                    _homeProvider.setProductIsLoading = true;
+                    _homeProvider.getProductData(widget.id.toString());
+                  },
+                )
+              : RefreshIndicator(
+                  color: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  onRefresh: () async {
+                    _homeProvider.getProductData(widget.id.toString());
+                  },
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      ProductHeader(
+                        imgList: _homeProvider.productData.data!.images!,
                       ),
+                      ProductDescription(
+                          product: _homeProvider.productData,
+                          price: _homeProvider.getProductPrice()),
+                      // Padding(
+                      //   padding: EdgeInsetsDirectional.fromSTEB(
+                      //       15.0, 10.0, 0.0, 10.0),
+                      //   child: Text(
+                      //     AppLocalizations.of(context)!.tr('product_options'),
+                      //     style: Theme.of(context)
+                      //         .textTheme
+                      //         .headline4
+                      //         ?.copyWith(
+                      //             fontSize: 16, fontWeight: FontWeight.bold),
+                      //   ),
+                      // ),
+                      ExtrasList(
+                        title: AppLocalizations.of(context)!.tr('size'),
+                        tags: _homeProvider.productData.data!.sizes!,
+                        onTap: (value) {
+                          _homeProvider.setSelectedSize = value;
+                        },
+                        selected: _homeProvider.selectedSize,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: ExtrasList(
+                          title: AppLocalizations.of(context)!.tr('chopping'),
+                          tags: _homeProvider.productData.data!.chopping!,
+                          selected: _homeProvider.selectedChopping,
+                          onTap: (value) {
+                            _homeProvider.setSelectedChopping = value;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: ExtrasList(
+                          title: AppLocalizations.of(context)!.tr('packaging'),
+                          tags: _homeProvider.productData.data!.packaging!,
+                          selected: _homeProvider.selectedPackaging,
+                          onTap: (value) {
+                            _homeProvider.setSelectedPackaging = value;
+                          },
+                        ),
+                      ),
+                      if (_homeProvider.productData.data!.isShalwata!)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: ExtrasList(
+                            title: AppLocalizations.of(context)!.tr('shalwata'),
+                            tags: [
+                              _homeProvider.productData.data!.shalwata!,
+                            ],
+                            selected: _homeProvider.selectedShalwata,
+                            onTap: (value) {
+                              print(value);
+                              _homeProvider.setSelectedShalwata = value;
+                            },
+                          ),
+                        ),
+                      SizedBox(height: 60)
+                    ],
+                  ),
+                ),
+      bottomSheet: !_homeProvider.productIsLoading &&
+              !_homeProvider.productIsRetry
+          ? Container(
+              color: Theme.of(context).backgroundColor,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        RoundedRectangleButton(
+                          padding: EdgeInsets.all(0),
+                          onPressed: () {
+                            setState(() {
+                              _count = _count == 1 ? _count : _count - 1;
+                            });
+                          },
+                          width: 40,
+                          height: 40,
+                          fontSize: 22,
+                          title: '-',
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "$_count",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1
+                                ?.copyWith(fontSize: 16),
+                          ),
+                        ),
+                        RoundedRectangleButton(
+                          onPressed: () {
+                            setState(() {
+                              _count += 1;
+                            });
+                          },
+                          padding: EdgeInsets.all(0),
+                          width: 40,
+                          height: 40,
+                          fontSize: 22,
+                          title: '+',
+                        ),
+                        RoundedRectangleButton(
+                          onPressed: () {
+                            _cartProvider.addToCart(
+                              context: context,
+                              authorization:
+                                  "Bearer " + _authProvider.accessToken,
+                              quantity: '$_count',
+                              sizeId:
+                                  "${_homeProvider.selectedSize > -1 ? (_homeProvider.productData.data?.sizes?[_homeProvider.selectedSize].id!.toString()) : ""}",
+                              preparationId:
+                                  "${_homeProvider.selectedPackaging > -1 ? (_homeProvider.productData.data?.packaging?[_homeProvider.selectedPackaging].id!.toString()) : ""}",
+                              cutId:
+                                  "${_homeProvider.selectedChopping > -1 ? (_homeProvider.productData.data?.chopping?[_homeProvider.selectedChopping].id!.toString()) : ""}",
+                              isShalwata:
+                                  "${_homeProvider.selectedShalwata > -1 ? (_homeProvider.productData.data?.shalwata!.id!.toString()) : ""}",
+                              productId:
+                                  '${_homeProvider.productData.data!.id}',
+                            );
+                          },
+                          padding: EdgeInsets.all(0),
+                          width: SizeConfig.screenWidth! - 150,
+                          height: 40,
+                          fontSize: 15,
+                          title:
+                              AppLocalizations.of(context)!.tr('add_to_cart'),
+                        )
+                      ],
                     ),
-                    RoundedRectangleButton(
-                      onPressed: () {
-                        // _cartProvider.addItem(context, index);
-                      },
-                      padding: EdgeInsets.all(0),
-                      width: 40,
-                      height: 40,
-                      fontSize: 22,
-                      title: '+',
-                    ),
-                    RoundedRectangleButton(
-                      onPressed: () {
-                        // _cartProvider.addItem(context, index);
-                      },
-                      padding: EdgeInsets.all(0),
-                      width: SizeConfig.screenWidth! - 150,
-                      height: 40,
-                      fontSize: 15,
-                      title: 'اضف للسلة',
-                    )
                   ],
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
+              ),
+            )
+          : Container(),
     );
   }
 }

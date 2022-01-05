@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/order.dart';
+import 'package:new_turki/models/orders_data.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/order/item_column.dart';
@@ -7,7 +7,7 @@ import 'package:new_turki/widgets/shared/main_card.dart';
 import 'order_tracking.dart';
 
 class OrderDetailsHeader extends StatelessWidget {
-  final Order order;
+  final Data order;
 
   const OrderDetailsHeader({required this.order});
   @override
@@ -26,7 +26,7 @@ class OrderDetailsHeader extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
-                    '${AppLocalizations.of(context)!.tr("order_id")}: #54698',
+                    '${AppLocalizations.of(context)!.tr("order_id")}: #${order.refNo}',
                     style: Theme.of(context)
                         .textTheme
                         .headline1!
@@ -57,12 +57,12 @@ class OrderDetailsHeader extends StatelessWidget {
                                 children: [
                                   ItemColumn(
                                       title: 'delivery_date',
-                                      value: '10/09/2021',
+                                      value: 'تاريخ التوصيل هنا',
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start),
                                   ItemColumn(
                                       title: 'delivery_time',
-                                      value: 'فترة الظهر',
+                                      value: 'فترة التوصيل هنا',
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end),
                                 ],
@@ -81,12 +81,12 @@ class OrderDetailsHeader extends StatelessWidget {
                                 children: [
                                   ItemColumn(
                                       title: 'order_date',
-                                      value: '10/09/2021',
+                                      value: order.createdAt!.substring(0, 10),
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start),
                                   ItemColumn(
                                       title: 'points_earned',
-                                      value: 'فترة الظهر',
+                                      value: 'نقاط هنا',
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end),
                                 ],
@@ -101,7 +101,7 @@ class OrderDetailsHeader extends StatelessWidget {
               ],
             ),
             OrderTracking(
-              statusCode: order.statusCode,
+              statusCode: 100,
             ),
           ],
         ),

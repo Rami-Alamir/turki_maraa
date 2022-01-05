@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 
 class Retry extends StatelessWidget {
   final Function onPressed;
-  const Retry({required this.onPressed});
+  final EdgeInsets padding;
+
+  const Retry(
+      {required this.onPressed,
+      this.padding = const EdgeInsets.only(top: 0.0)});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 60.0),
+        padding: padding,
         child: IconButton(
           onPressed: () {
             onPressed();

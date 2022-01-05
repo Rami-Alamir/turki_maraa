@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/dummy_data/dd.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
+import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/size_config.dart';
+import 'package:new_turki/widgets/cart/cart_bottom_sheet.dart';
 import 'package:new_turki/widgets/cart/cart_card.dart';
 import 'package:new_turki/widgets/cart/delivery_address.dart';
 import 'package:new_turki/widgets/cart/delivery_date.dart';
@@ -26,69 +30,118 @@ class ShoppingCart extends StatefulWidget {
 
 class _ShoppingCartState extends State<ShoppingCart> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _cart = Provider.of<CartProvider>(context);
-    final _auth = Provider.of<Auth>(context, listen: false);
-    print(_cart.isAuth.toString() + "ddd");
+    final _auth = Provider.of<Auth>(context);
+    print(_auth.accessToken);
+    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
     return Scaffold(
-        appBar: PrimaryAppBar(
-          title: AppLocalizations.of(context)!.tr('cart'),
-          back: false,
-        ),
-        body: !_cart.isAuth ? NotAuth() : EmptyCart()
-        // _cart.cartLength == 0
-        //       ? _cart.isLoading
-        //           ? SpinkitIndicator()
-        //           : _cart.retry
-        //               ? Retry(
-        //                   onPressed: () {
-        //                     _cart.reInitOrdersList();
-        //                   },
-        //                 )
-        //               : EmptyCart()
-        //       : RefreshIndicator(
-        //           color: Theme.of(context).primaryColor,
-        //           backgroundColor: Theme.of(context).colorScheme.secondary,
-        //           onRefresh: () async {
-        //             await _cart.reInitOrdersList();
-        //           },
-        //           child: GestureDetector(
-        //             onTap: () =>
-        //                 FocusScope.of(context).requestFocus(FocusNode()),
-        //             child: ListView(
-        //               children: [
-        //                 ListView.builder(
-        //                     padding: EdgeInsets.zero,
-        //                     shrinkWrap: true,
-        //                     physics: const ScrollPhysics(),
-        //                     itemCount: _cart.cartData.items.length,
-        //                     itemBuilder: (BuildContext ctxt, int index) {
-        //                       return CartCard(
-        //                         item: _cart.cartData.items[index],
-        //                         index: index,
-        //                       );
-        //                     }),
-        //                 DeliveryAddress(address: _auth.deliveryAddress),
-        //                 DeliveryDate(),
-        //                 DeliveryTime(),
-        //                 PaymentMethod(),
-        //                 UseCredit(credit: "100.6"),
-        //                 Note(),
-        //                 PromoCode(),
-        //                 Invoice(
-        //                     myCredit: _cart.useCredit ? 100.6 : 0.0,
-        //                     total: _cart.cartData.invoice.total -
-        //                         (_cart.useCredit ? 100.6 : 0.0),
-        //                     subtotal: _cart.cartData.invoice.subtotal,
-        //                     shipping: _cart.cartData.invoice.shipping),
-        //                 RoundedRectangleButton(
-        //                     title:
-        //                         AppLocalizations.of(context)!.tr('place_order'),
-        //                     onPressed: () {})
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        );
+      appBar: PrimaryAppBar(
+        title: AppLocalizations.of(context)!.tr('cart'),
+        back: false,
+      ),
+      body: !_auth.isAuth
+          ? NotAuth()
+          : _cart.isLoading
+              ? SpinkitIndicator()
+              : _cart.retry
+                  ? Retry(
+                      onPressed: () {
+                        _cart.setIsLoading = true;
+                        _cart.getCartData(_auth.accessToken);
+                      },
+                    )
+                  : (_cart.cartData?.data?.data?.length ?? 0) > 0
+                      ? RefreshIndicator(
+                          color: Theme.of(context).primaryColor,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                          onRefresh: () async {
+                            // await _cart.reInitOrdersList();
+                          },
+                          child: GestureDetector(
+                            onTap: () => FocusScope.of(context)
+                                .requestFocus(FocusNode()),
+                            child: Stack(
+                              children: [
+                                ListView(
+                                  physics: const ScrollPhysics(),
+                                  children: [
+                                    ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        shrinkWrap: true,
+                                        physics: const ScrollPhysics(),
+                                        itemCount: _cart
+                                                .cartData?.data?.data?.length ??
+                                            0,
+                                        itemBuilder:
+                                            (BuildContext ctxt, int index) {
+                                          return CartCard(
+                                            item: _cart
+                                                .cartData!.data!.data![index],
+                                            index: index,
+                                          );
+                                        }),
+                                    DeliveryAddress(
+                                        address: _homeProvider.address[
+                                            _homeProvider.selectedAddress]),
+                                    DeliveryDate(
+                                      dateList: [
+                                        DeliveryDateTime(
+                                            title: '14', subtitle: 'اليوم'),
+                                        DeliveryDateTime(
+                                            title: '15', subtitle: 'غدا'),
+                                        DeliveryDateTime(
+                                            title: '16', subtitle: 'الجمعة'),
+                                        DeliveryDateTime(
+                                            title: '17', subtitle: 'السبت'),
+                                        DeliveryDateTime(
+                                            title: '18', subtitle: 'الاحد'),
+                                        DeliveryDateTime(
+                                            title: '19', subtitle: 'الاثنين'),
+                                      ],
+                                    ),
+                                    DeliveryTime(
+                                      deliveryTime: [
+                                        DeliveryDateTime(
+                                            title: 'فترة الصباح',
+                                            subtitle: 'اليوم'),
+                                        DeliveryDateTime(
+                                            title: 'فترة الظهر',
+                                            subtitle: 'غدا'),
+                                        DeliveryDateTime(
+                                            title: 'فترة العصر',
+                                            subtitle: 'الجمعة'),
+                                        DeliveryDateTime(
+                                            title: 'فترة المغرب',
+                                            subtitle: 'السبت'),
+                                        DeliveryDateTime(
+                                            title: 'فترة العشاء',
+                                            subtitle: 'الاحد'),
+                                      ],
+                                    ),
+                                    PaymentMethod(),
+                                    UseCredit(
+                                        credit: _auth.userData.data!.wallet!),
+                                    Note(),
+                                    SizedBox(
+                                      height: SizeConfig.screenHeight! * 0.25,
+                                    )
+                                  ],
+                                ),
+                                CartBottomSheet(
+                                  total: 100,
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      : EmptyCart(),
+    );
   }
 }

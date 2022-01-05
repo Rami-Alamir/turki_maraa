@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:new_turki/models/order.dart';
+import 'package:new_turki/models/orders_data.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
 class OrderDetailsRow extends StatelessWidget {
-  final OrderItem item;
+  final Products item;
   const OrderDetailsRow({required this.item});
   @override
   Widget build(BuildContext context) {
+    final _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
       child: InkWell(
-        onTap: () =>
-            Navigator.pushNamed(context, '/ItemDetails', arguments: item.id),
+        //    onTap: () =>
+        // Navigator.pushNamed(context, '/ItemDetails', arguments: item.),
         child: Container(
           width: SizeConfig.screenWidth!,
           child: Row(
@@ -37,7 +39,7 @@ class OrderDetailsRow extends StatelessWidget {
                         child: Container(
                           color: Theme.of(context).colorScheme.secondary,
                           child: Image.network(
-                            '${item.image.trim()}',
+                            'https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112',
                             width: 60,
                             height: 60,
                             fit: BoxFit.cover,
@@ -53,7 +55,7 @@ class OrderDetailsRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     AutoSizeText(
-                      "${item.qty} x ${item.title}",
+                      "qty x ${_isAr ? item.nameAr : item.nameEn}",
                       style: Theme.of(context)
                           .textTheme
                           .headline1!
@@ -65,7 +67,7 @@ class OrderDetailsRow extends StatelessWidget {
                       child: Container(
                         width: SizeConfig.screenWidth! * .6,
                         child: AutoSizeText(
-                          item.subtitle,
+                          item.description ?? "",
                           style: Theme.of(context)
                               .textTheme
                               .headline4!

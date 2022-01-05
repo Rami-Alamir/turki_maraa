@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/discover_item.dart';
-import 'package:new_turki/models/item.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 
 class DiscoverCard extends StatelessWidget {

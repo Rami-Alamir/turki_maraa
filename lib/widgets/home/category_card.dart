@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
 class CategoryCard extends StatelessWidget {
-  final int index;
+  final int categoryId;
   final String title;
   final String image;
   final Color color;
   final Color color2;
   final double scaleFactor;
+
 
   const CategoryCard({
     required this.title,
@@ -16,12 +17,12 @@ class CategoryCard extends StatelessWidget {
     required this.image,
     required this.color,
     required this.color2,
-    required this.index,
+    required this.categoryId,
   });
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, "/ProductsHome$index"),
+      onTap: () => Navigator.pushNamed(context, "/ProductsHome", arguments: categoryId),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(12)),

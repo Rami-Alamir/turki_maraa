@@ -15,8 +15,8 @@ class ProductCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
       child: SizedBox(
-        width: SizeConfig.setWidgetWidthWithFactor(0.35, 0.35, 0.35),
-        height: SizeConfig.setWidgetWidthWithFactor(0.35, 0.35, 0.35),
+        width: SizeConfig.setWidgetWidthWithFactor(0.35, 0.175, 0.175),
+        height: SizeConfig.setWidgetWidthWithFactor(0.35, 0.175, 0.175),
         child: InkWell(
           onTap: () => Navigator.pushNamed(context, "/ProductDetails",
               arguments: product.id),
@@ -31,7 +31,7 @@ class ProductCard extends StatelessWidget {
                   Container(
                     color: Colors.transparent,
                     height:
-                        SizeConfig.setWidgetWidthWithFactor(0.35, 0.35, 0.35),
+                        SizeConfig.setWidgetWidthWithFactor(0.35, 0.175, 0.175),
                     child: Card(
                       elevation: 1,
                       shape: RoundedRectangleBorder(
@@ -39,47 +39,47 @@ class ProductCard extends StatelessWidget {
                       child: Container(
                         color: Theme.of(context).colorScheme.secondary,
                         width: SizeConfig.setWidgetWidthWithFactor(
-                            0.35, 0.35, 0.35),
+                            0.35, 0.175, 0.175),
                         height: SizeConfig.setWidgetWidthWithFactor(
-                            0.35, 0.35, 0.35),
+                            0.35, 0.175, 0.175),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
                             child: Image.network(
-                              '${product.image?.trim()}',
+                              '${(product.productImages!.length > 0) ? product.productImages![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
                               width: SizeConfig.setWidgetWidthWithFactor(
-                                  0.35, 0.35, 0.35),
+                                  0.35, 0.175, 0.175),
                               height: SizeConfig.setWidgetWidthWithFactor(
-                                  0.35, 0.35, 0.35),
+                                  0.35, 0.175, 0.175),
                               fit: BoxFit.cover,
                             )),
                       ),
                     ),
                   ),
-                  Visibility(
-                    visible: product.tagColor != null,
-                    child: Positioned.directional(
-                        textDirection: TextDirection.rtl,
-                        top: 15,
-                        end: 10,
-                        child: Container(
-                          constraints: const BoxConstraints(minWidth: 40),
-                          decoration: BoxDecoration(
-                            color: hexToColor(product.tagColor!),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20.0)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: 1.0, right: 10, left: 10),
-                            child: Text(
-                              _isAr ? product.tagTitleAr! : product.tagTitleEn!,
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 14),
-                            ),
-                          ),
-                        )),
-                  )
+                  // Visibility(
+                  //   visible: product.tagColor != null,
+                  //   child: Positioned.directional(
+                  //       textDirection: TextDirection.rtl,
+                  //       top: 15,
+                  //       end: 10,
+                  //       child: Container(
+                  //         constraints: const BoxConstraints(minWidth: 40),
+                  //         decoration: BoxDecoration(
+                  //           color: hexToColor(product.tagColor!),
+                  //           borderRadius:
+                  //               const BorderRadius.all(Radius.circular(20.0)),
+                  //         ),
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(
+                  //               bottom: 1.0, right: 10, left: 10),
+                  //           child: Text(
+                  //             _isAr ? product.tagTitleAr! : product.tagTitleEn!,
+                  //             textAlign: TextAlign.center,
+                  //             style:
+                  //                 TextStyle(color: Colors.white, fontSize: 14),
+                  //           ),
+                  //         ),
+                  //       )),
+                  // )
                 ],
               ),
               Padding(

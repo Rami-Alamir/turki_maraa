@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCardG1 extends StatelessWidget {
-  final int index;
+  final int categoryId;
   final String title;
   final String image;
   final Color color;
@@ -13,12 +13,13 @@ class CategoryCardG1 extends StatelessWidget {
     required this.image,
     required this.color,
     required this.color2,
-    required this.index,
+    required this.categoryId,
   });
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, "/ProductsHome$index"),
+      onTap: () =>
+          Navigator.pushNamed(context, "/ProductsHome", arguments: categoryId),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Container(

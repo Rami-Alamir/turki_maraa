@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/widgets/tag.dart';
+import 'package:new_turki/models/product.dart';
+import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/widgets/home/extra_tag.dart';
 
-class TagsList extends StatelessWidget {
-  final title;
-  final tags;
-  final List isSelected;
-  final onTap;
-
-  TagsList({
+class ExtrasList extends StatelessWidget {
+  final String title;
+  final List<Extra> tags;
+  final Function onTap;
+  final int selected;
+  ExtrasList({
     required this.title,
     required this.tags,
     required this.onTap,
-    required this.isSelected,
+    required this.selected,
   });
-  List<Widget> tagsList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,10 @@ class TagsList extends StatelessWidget {
                 padding: EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 0.0, 10.0),
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.headline4?.copyWith(
-                      fontSize: _width > 600 ? 24 : 16,
-                      fontWeight: FontWeight.normal),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      ?.copyWith(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
               Container(
@@ -37,22 +38,24 @@ class TagsList extends StatelessWidget {
                 width: _width,
                 child: Wrap(
                   direction: Axis.horizontal,
-                  children: getTags(),
+                  children: getTags(context),
                 ),
               ),
             ],
           );
   }
 
-  List<Widget> getTags() {
+  List<Widget> getTags(BuildContext context) {
+    final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+    List<Widget> tagsList = [];
     for (int i = 0; i < tags.length; i++)
-      tagsList.add(Tag(
-        selected: isSelected[i],
+      tagsList.add(ExtraTag(
+        selected: selected == i,
         onTap: () {
-          isSelected[i] = !isSelected[i];
-          onTap();
+          print("iiiii$i");
+          onTap(i);
         },
-        title: tags[i],
+        title: _isAr ? tags[i].nameAr : tags[i].nameEn,
       ));
     return tagsList;
   }

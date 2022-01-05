@@ -33,7 +33,7 @@ class Data {
   });
 
   Data.fromJson(Map<String, dynamic> json) {
-    mobile = json['mobile'];
+    mobile = json['mobile'] ?? "";
     name = json['name'] ?? " ";
     email = json['email'] ?? " ";
     age = json['age'] ?? " ".toString();

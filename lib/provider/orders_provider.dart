@@ -1,50 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/dummy_data/dummy_data.dart';
-import 'package:new_turki/models/order.dart';
+import 'package:new_turki/models/orders_data.dart';
+import 'package:new_turki/repository/order_repository.dart';
 
 class OrdersProvider with ChangeNotifier {
-  bool _isAuth = false;
   bool _isLoading = true;
-  bool _isLoading2 = true;
   bool _retry = false;
-  List<Order> _ordersList = [];
-  Order? _order;
+  OrdersData? _ordersData;
 
-  bool get isAuth => _isAuth;
-
-  Order get order => _order!;
+  OrdersData? get ordersData => _ordersData;
 
   bool get retry => _retry;
 
-  List<Order> get ordersList => _ordersList;
-
   bool get isLoading => _isLoading;
-  bool get isLoading2 => _isLoading2;
 
-  Future<void> getOrdersList() async {
-    if (_isAuth)
-      await Future.delayed(Duration(milliseconds: 2500), () {
-        _ordersList = DummyData.ordersList;
-        _isLoading = false;
-        notifyListeners();
-      });
+  set setIsLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
   }
 
-  Future<void> reInitOrdersList() async {
-    if (_isAuth)
-      await Future.delayed(Duration(milliseconds: 1500), () {
-        _ordersList = DummyData.ordersList;
-        _isLoading = false;
-        notifyListeners();
-      });
-  }
+  //getCartData
+  Future<void> getOrdersList(String token) async {
+    _isLoading = true;
+    _retry = false;
 
-  Future<void> getOrder() async {
-    _isLoading2 = true;
-    await Future.delayed(Duration(milliseconds: 500), () {
-      _order = DummyData.ordersList[3];
-      _isLoading2 = false;
-      notifyListeners();
-    });
+    try {
+      _ordersData = await OrderRepository().getOrdersList("Bearer $token");
+    } catch (e) {
+      print('catch cart');
+      print(e.toString());
+      _retry = true;
+    }
+    _isLoading = false;
+    notifyListeners();
   }
 }

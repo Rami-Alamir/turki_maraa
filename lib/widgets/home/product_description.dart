@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/provider/home_provider.dart';
+import 'package:new_turki/models/product.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:provider/provider.dart';
-
+import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'circle_icon.dart';
 
 class ProductDescription extends StatelessWidget {
-  final bool isFavourite = false;
+  final Product product;
+  final double price;
 
+  const ProductDescription({required this.product, required this.price});
   @override
   Widget build(BuildContext context) {
-    final _homeProvider = Provider.of<HomeProvider>(context);
+    final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,14 +28,16 @@ class ProductDescription extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'نعيمي',
+                      _isAr
+                          ? product.data!.subCategory!.typeAr!
+                          : product.data!.subCategory!.typeEn!,
                       style: Theme.of(context)
                           .textTheme
                           .subtitle2!
                           .copyWith(fontSize: 14),
                     ),
                     Text(
-                      'نعيمي',
+                      _isAr ? product.data!.nameAr! : product.data!.nameEn!,
                       style: Theme.of(context)
                           .textTheme
                           .headline4!
@@ -48,17 +51,18 @@ class ProductDescription extends StatelessWidget {
               padding: const EdgeInsetsDirectional.fromSTEB(0, 15.0, 12.0, 0),
               child: Row(
                 children: [
-                  CircleIcon(
-                      icon: Icons.share,
-                      onTap: () {},
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0)),
+                  // CircleIcon(
+                  //     icon: Icons.share,
+                  //     onTap: () {},
+                  //     padding:
+                  //         const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0)),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0),
                     child: CircleIcon(
-                        icon: isFavourite
-                            ? Icons.favorite
-                            : Icons.favorite_border_outlined,
+                        icon: Icons.favorite_border_outlined,
+                        // icon: isFavourite
+                        //     ? Icons.favorite
+                        //     : Icons.favorite_border_outlined,
                         onTap: () {
                           // isFavourite = !isFavourite;
                           // setState(() {});
@@ -72,42 +76,34 @@ class ProductDescription extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 15.0, right: 12, left: 12),
+          padding: const EdgeInsets.only(top: 10.0, right: 12, left: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(
-                Icons.star,
-                size: 20,
-                color: Color.fromRGBO(250, 202, 29, 1),
+              Container(
+                height: 25,
+                child: ListView.builder(
+                    itemCount: 5,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Icon(
+                        Icons.star,
+                        size: 20,
+                        color: product.data!.noRating! >= index
+                            ? Color.fromRGBO(250, 202, 29, 1)
+                            : Theme.of(context).colorScheme.secondaryVariant,
+                      );
+                    }),
               ),
-              Icon(
-                Icons.star,
-                size: 20,
-                color: Color.fromRGBO(250, 202, 29, 1),
-              ),
-              Icon(
-                Icons.star,
-                size: 20,
-                color: Color.fromRGBO(250, 202, 29, 1),
-              ),
-              Icon(
-                Icons.star,
-                size: 20,
-                color: Color.fromRGBO(250, 202, 29, 1),
-              ),
-              Icon(
-                Icons.star,
-                size: 20,
-                color: Color.fromRGBO(223, 223, 223, 1),
-              ),
-              Text(
-                ' (4.8) ',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle2!
-                    .copyWith(fontSize: 14, height: 1.4),
-              ),
+              // Text(
+              //   ' (${product.data!.noRating!}) ',
+              //   style: Theme.of(context)
+              //       .textTheme
+              //       .subtitle2!
+              //       .copyWith(fontSize: 14, height: 1.4),
+              // ),
             ],
           ),
         ),
@@ -116,7 +112,7 @@ class ProductDescription extends StatelessWidget {
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12, 4, 12),
               child: Text(
-                '1850${AppLocalizations.of(context)!.tr('sr')}',
+                '${formatDecimal(price)}${AppLocalizations.of(context)!.tr('sr')}',
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1!
@@ -124,9 +120,10 @@ class ProductDescription extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
               child: Text(
-                '(شامل ضريبة القيمة المضافة)',
+                AppLocalizations.of(context)!.tr('vat_included'),
                 style: Theme.of(context)
                     .textTheme
                     .subtitle2!
@@ -136,7 +133,7 @@ class ProductDescription extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: const EdgeInsets.only(right: 12.0, left: 12, bottom: 10),
           child: Text(
             'خروف نعيمي بلدي مربى محليا في مزارعنا يصلك طازج ومغلف ومقطع حسب اختيارك',
             style: Theme.of(context)
@@ -145,7 +142,107 @@ class ProductDescription extends StatelessWidget {
                 .copyWith(fontSize: 14, height: 1.5),
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _item(
+                context: context,
+                title: 'weight',
+                value: product.data!.weight!,
+                size: 20,
+                icon: TURKIICONS.weight_1),
+            Visibility(
+                visible: product.data!.calories!.length > 0,
+                child: Padding(padding: const EdgeInsets.all(20))),
+            _item(
+                context: context,
+                title: 'calories',
+                value: product.data!.calories!,
+                size: 40,
+                icon: TURKIICONS.calories_1),
+          ],
+        ),
       ],
     );
+  }
+
+  Widget _item(
+      {required BuildContext context,
+      required String title,
+      required IconData icon,
+      required String value,
+      required double size}) {
+    return Visibility(
+      visible: value.length > 0,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          children: [
+            Container(
+              width: 45,
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: Theme.of(context).primaryColor.withOpacity(0.2),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    color: Theme.of(context).primaryColor,
+                    size: size,
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 5.0),
+                  child: Text(
+                    AppLocalizations.of(context)!.tr(title),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(fontSize: 12, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(8.0, 5.0, 0.0, 0.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        value,
+                        style: Theme.of(context).textTheme.headline4?.copyWith(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      Visibility(
+                        visible: size == 20,
+                        child: Text(
+                          " " + AppLocalizations.of(context)!.tr('kg'),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4
+                              ?.copyWith(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  formatDecimal(double value) {
+    return value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 3);
   }
 }

@@ -10,7 +10,7 @@ class CategoriesG1 extends StatelessWidget {
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
     return CategoryCardG1(
-      index: 1,
+      categoryId: _homeProvider.categoryData.data![0].id!,
       image: _homeProvider.categoryData.data![0].imageUrl!,
       title: AppLocalizations.of(context)!.locale == Locale("ar")
           ? _homeProvider.categoryData.data![0].titleAr!

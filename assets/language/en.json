@@ -132,5 +132,16 @@
   "delete": "delete",
   "empty_favourite": "Empty favourite",
   "most_wanted" : "Most wanted",
-  "add_new_delivery_address": "Add a new delivery address"
+  "add_new_delivery_address": "Add a new delivery address",
+  "product_options": "Product Options",
+  "vat_included":"(VAT included)",
+  "calories": "Calories",
+  "weight": "Weight",
+  "kg": "kg",
+  "add_to_cart": "Add to cart",
+  "packaging": "Packaging",
+  "size": "Size",
+  "chopping" : "Chopping",
+  "shalwata": "Shalwata",
+  "product_added_cart": "Product added to cart"
 }

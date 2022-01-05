@@ -1,15 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/dummy_data/dummy_data.dart';
-import 'package:new_turki/models/cart.dart';
-import 'package:new_turki/utilities/show_dialog.dart';
+import 'package:new_turki/models/cart_data.dart';
+import 'package:new_turki/repository/cart_repository.dart';
+import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 
 class CartProvider with ChangeNotifier {
   TextEditingController noteController = TextEditingController();
+  TextEditingController promoCodeController = TextEditingController();
   bool _isLoading = true;
   bool _retry = false;
+  CartData? _cartData;
+  bool get isLoading => _isLoading;
+  bool get retry => _retry;
+  CartData? get cartData => _cartData;
+
+  set setIsLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  } //add item to cart
+
+  Future<void> addToCart({
+    required BuildContext context,
+    required String authorization,
+    required String productId,
+    required String quantity,
+    String preparationId = '',
+    String sizeId = '',
+    String cutId = '',
+    String isShalwata = '',
+  }) async {
+    var _response;
+    _dialogContext = context;
+    _showDialogIndicator(context);
+    try {
+      _response = await CartRepository().addToCart({
+        "product_id": "$productId",
+        "quantity": "$quantity",
+        "preparation_id": "$preparationId",
+        "size_id": "$sizeId",
+        "cut_id": "$cutId",
+        "is_shalwata": "",
+      }, authorization);
+
+      showSnackBar(context,
+          _response == 200 ? "product_added_cart" : "unexpected_error");
+    } catch (e) {
+      print('catch');
+      print(e.toString());
+      showSnackBar(context, "unexpected_error");
+    }
+    Navigator.pop(_dialogContext!);
+  }
+
+  //getCartData
+  Future<void> getCartData(String token) async {
+    _isLoading = true;
+    _retry = false;
+
+    try {
+      _cartData = await CartRepository().getCartList("Bearer $token");
+    } catch (e) {
+      print('catch cart');
+      print(e.toString());
+      _retry = true;
+    }
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  void showSnackBar(BuildContext context, String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      AppLocalizations.of(context)!.tr(msg),
+      textAlign: TextAlign.center,
+    )));
+  }
+
+  //for test
+
   bool _useCredit = false;
-  Cart? _cartData;
   int _selectedPayment = 0;
   int _selectedDate = 0;
   int _selectedTime = 0;
@@ -41,64 +110,7 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get isLoading => _isLoading;
-  bool get retry => _retry;
-  Cart get cartData => _cartData!;
-
-  Future<void> getCartData() async {
-    await Future.delayed(Duration(milliseconds: 500), () {
-      _cartData = DummyData.cart;
-      _isLoading = false;
-      _cartLength = _cartData?.items.length ?? 0;
-      notifyListeners();
-    });
-  }
-
-  Future<void> removeCartItemData(context, index) async {
-    _dialogContext = context;
-    _showDialogIndicator(context);
-    await Future.delayed(Duration(milliseconds: 500), () {
-      _cartData!.items.removeAt(index);
-    });
-    Navigator.pop(_dialogContext!);
-    notifyListeners();
-  }
-
-  Future<void> reInitOrdersList() async {
-    await Future.delayed(Duration(milliseconds: 500), () {
-      _cartData = DummyData.cart;
-      _isLoading = false;
-      notifyListeners();
-    });
-  }
-
   BuildContext? _dialogContext;
-
-  Future<void> removeItem(BuildContext context, int index) async {
-    if (_cartData!.items[index].qty == "1") {
-      ShowConfirmDialog().confirmDialog(
-          context, "are_you_sure_you_want_to_remove_the_product", () {
-        removeCartItemData(context, index);
-      });
-    } else {
-      _cartData!.items[index].qty =
-          (int.parse(_cartData!.items[index].qty) - 1).toString();
-      notifyListeners();
-      _showDialogIndicator(context);
-
-      await getCartData();
-      Navigator.pop(_dialogContext!);
-    }
-  }
-
-  Future<void> addItem(BuildContext context, int index) async {
-    _cartData!.items[index].qty =
-        (int.parse(_cartData!.items[index].qty) + 1).toString();
-    notifyListeners();
-    _showDialogIndicator(context);
-    await getCartData();
-    Navigator.pop(_dialogContext!);
-  }
 
   // show indicator dialog
   void _showDialogIndicator(BuildContext context) {

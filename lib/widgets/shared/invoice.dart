@@ -14,7 +14,7 @@ class Invoice extends StatelessWidget {
     required this.subtotal,
     required this.total,
     this.discountVoucher = 0,
-    this.shipping = 10,
+    this.shipping = 0,
     this.myCredit = 0,
   });
 

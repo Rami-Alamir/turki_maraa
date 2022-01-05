@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/cart.dart';
 import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/models/item.dart';
 import 'package:new_turki/models/notification_data.dart';
@@ -404,6 +403,11 @@ class DummyData {
       noRating: 0,
       image:
           'https://api.fishday.com.sa/storage/uploads/vbR7bnUmEKYRwMTaC5T6yyNVjU1eiIkdqWrohjlt.webp',
+      productImages: [
+        ProductImages(
+            imageUrl:
+                'https://api.fishday.com.sa/storage/uploads/vbR7bnUmEKYRwMTaC5T6yyNVjU1eiIkdqWrohjlt.webp')
+      ],
       price: 100.0,
       isActive: true,
       isShalwata: true,
@@ -420,6 +424,11 @@ class DummyData {
       weight: 'برجر لحم عجل',
       calories: 'برجر لحم عجل',
       noRating: 0,
+      productImages: [
+        ProductImages(
+            imageUrl:
+                'https://cdnprod.mafretailproxy.com/sys-master-root/hd1/h05/9194857070622/110964_main.jpg_480Wx480H')
+      ],
       image:
           'https://cdnprod.mafretailproxy.com/sys-master-root/hd1/h05/9194857070622/110964_main.jpg_480Wx480H',
       price: 50.0,
@@ -438,6 +447,12 @@ class DummyData {
       weight: 'برجر لحم عجل',
       calories: 'برجر لحم عجل',
       noRating: 0,
+      productImages: [
+        ProductImages(
+          imageUrl:
+              'https://cdn.salla.sa/7Uv2ZnbDos0fZoX1fUSQMWKDq7mYxezM8kvh1wqt.jpeg',
+        )
+      ],
       image:
           'https://cdn.salla.sa/7Uv2ZnbDos0fZoX1fUSQMWKDq7mYxezM8kvh1wqt.jpeg',
       price: 60.0,
@@ -456,6 +471,12 @@ class DummyData {
       weight: 'برجر لحم عجل',
       calories: 'برجر لحم عجل',
       noRating: 0,
+      productImages: [
+        ProductImages(
+          imageUrl:
+              'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
+        )
+      ],
       image:
           'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
       price: 60.0,
@@ -474,6 +495,12 @@ class DummyData {
       weight: 'برجر لحم عجل',
       calories: 'برجر لحم عجل',
       noRating: 0,
+      productImages: [
+        ProductImages(
+          imageUrl:
+              'https://cdn.salla.sa/8tbiQBKYSSj9cjQLKgUxecpAVcaLbOXM3i5KICD8.jpeg',
+        )
+      ],
       image:
           'https://cdn.salla.sa/8tbiQBKYSSj9cjQLKgUxecpAVcaLbOXM3i5KICD8.jpeg',
       price: 95.0,
@@ -485,53 +512,6 @@ class DummyData {
       subCategoryId: 0,
     )
   ];
-
-  static Cart cart = Cart(
-      invoice: InvoiceData(total: 1000, subtotal: 990, shipping: 10),
-      deliveryDate: [
-        DeliveryDateTime(title: '14', subtitle: 'اليوم'),
-        DeliveryDateTime(title: '15', subtitle: 'غدا'),
-        DeliveryDateTime(title: '16', subtitle: 'الجمعة'),
-        DeliveryDateTime(title: '17', subtitle: 'السبت'),
-        DeliveryDateTime(title: '18', subtitle: 'الاحد'),
-        DeliveryDateTime(title: '19', subtitle: 'الاثنين'),
-      ],
-      deliveryTime: [
-        DeliveryDateTime(title: 'فترة الصباح', subtitle: 'اليوم'),
-        DeliveryDateTime(title: 'فترة الظهر', subtitle: 'غدا'),
-        DeliveryDateTime(title: 'فترة العصر', subtitle: 'الجمعة'),
-        DeliveryDateTime(title: 'فترة المغرب', subtitle: 'السبت'),
-        DeliveryDateTime(title: 'فترة العشاء', subtitle: 'الاحد'),
-      ],
-      items: [
-        CartItem(
-            nameAr: "برجر",
-            nameEn: "Burger",
-            image:
-                'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
-            price: "50",
-            qty: '1',
-            extraEn: '',
-            extraAr: ''),
-        CartItem(
-            nameAr: "مفروم",
-            nameEn: "Burger",
-            image:
-                'https://cdn.salla.sa/DGWNy/SdmVcN3c2ZXu4nYGqzSlqrUjgIm5SnK0qvTYUSLX.jpg',
-            price: "50",
-            qty: '1',
-            extraEn: '',
-            extraAr: ''),
-        CartItem(
-            qty: "1",
-            image:
-                'https://cdn.salla.sa/dbPPv/ArNOJzNYSAzorMhVAEw2CVWu8Zid2tdadfIDhfr9.jpg',
-            price: "1850",
-            nameAr: 'نعيمي',
-            nameEn: "Naime",
-            extraEn: 'نعيمي هرفي صغير - تقطيع ثلاجة - فاكيوم',
-            extraAr: 'نعيمي هرفي صغير - تقطيع ثلاجة - فاكيوم')
-      ]);
 
   static List<Item> itemsList = [
     Item(

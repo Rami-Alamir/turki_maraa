@@ -1,4 +1,6 @@
 import 'package:flutter_dropdown_alert/dropdown_alert.dart';
+import 'package:new_turki/provider/auth.dart';
+import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/screens/cart/shopping_cart.dart';
 import 'package:new_turki/screens/chat/chat.dart';
 import 'package:new_turki/screens/home/home.dart';
@@ -10,6 +12,7 @@ import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/utilities/tab_Item.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/widgets/shared/drawer/turki_drawer.dart';
+import 'package:provider/provider.dart';
 
 //used to build all in one bottom nav bar
 class App extends StatefulWidget {
@@ -138,6 +141,15 @@ class AppState extends State<App> {
                 onTap: (index) {
                   this.index = index;
                   _selectTab(index);
+                  final _auth = Provider.of<Auth>(context, listen: false);
+
+                  if (index == 2 && _auth.isAuth) {
+                    final _cart =
+                        Provider.of<CartProvider>(context, listen: false);
+                    _cart.setIsLoading = true;
+
+                    _cart.getCartData(_auth.accessToken);
+                  }
                 }),
           )),
     );

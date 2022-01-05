@@ -4,9 +4,6 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 
 class PaymentMethod extends StatelessWidget {
-  final Payment paymentMethod;
-
-  const PaymentMethod({required this.paymentMethod});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,15 +25,15 @@ class PaymentMethod extends StatelessWidget {
               child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.network(
-                  paymentMethod.image,
-                  width: 35,
-                  height: 35,
-                ),
-              ),
-              Text(paymentMethod.title,
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Image.network(
+              //     paymentMethod.image,
+              //     width: 35,
+              //     height: 35,
+              //   ),
+              // ),
+              Text("صورة وطريقة الدفع هنا",
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 12,

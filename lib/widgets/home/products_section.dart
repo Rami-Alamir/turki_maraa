@@ -19,17 +19,15 @@ class ProductsSection extends StatelessWidget {
       children: [
         Container(
           width: SizeConfig.screenWidth,
-          height: 300,
           child: ListView.builder(
               padding: EdgeInsets.all(0),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               itemCount: products.data!.length,
               itemBuilder: (BuildContext ctxt, int index) {
                 return Container(
                   width: SizeConfig.screenWidth,
-                  color: Colors.red,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -91,7 +89,7 @@ class ProductsSection extends StatelessWidget {
                             padding: EdgeInsets.all(0),
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            physics: ScrollPhysics(),
+                            physics: const ScrollPhysics(),
                             itemCount: products.data![index].products!.length,
                             itemBuilder: (BuildContext ctxt, int index2) {
                               return Padding(

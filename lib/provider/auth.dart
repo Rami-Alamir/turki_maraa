@@ -13,6 +13,7 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/convert_phone.dart';
 import 'package:new_turki/utilities/show_dialog.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
   TextEditingController keyController = TextEditingController();
@@ -32,7 +33,11 @@ class Auth with ChangeNotifier {
   bool? _isAuth = false;
   UserData get userData => _userData!;
   String? _accessToken;
+  SharedPreferences? _prefs;
+  bool _isLoading = true;
+  bool _retry = false;
 
+  bool get retry => _retry;
   Timer? _timer;
 
   Timer get timer => _timer!;
@@ -85,9 +90,18 @@ class Auth with ChangeNotifier {
     }
   }
 
+  // init Shared Preferences
+  Future<void> _initPrefs() async {
+    _prefs = _prefs ?? await SharedPreferences.getInstance();
+  }
+
+  set setIsLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   // verify otp and login
   Future<void> verifyOTP(BuildContext context) async {
-    print(otpController.text.length.toString() + "l");
     _dialogContext = context;
     if (otpController.text.length < 4) {
       showSnackBar(context, 'please_enter_otp');
@@ -101,6 +115,8 @@ class Auth with ChangeNotifier {
         if (_response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(_response.body.toString()));
           _accessToken = _userData!.data!.accessToken;
+          await _initPrefs();
+          _prefs!.setString("accessToken", _accessToken!);
           ageController.text = (_userData!.data!.age!);
           usernameController.text = _userData!.data!.name ?? "";
           genderController.text = _userData!.data!.gender ?? "";
@@ -137,6 +153,32 @@ class Auth with ChangeNotifier {
     }
   }
 
+  // auto login
+  Future<void> getUserData(String token) async {
+    _isLoading = true;
+    if (token.length > 0) {
+      var _response;
+      try {
+        _response = await RegistrationRepository().login("Bearer $token");
+        if (_response.statusCode == 200) {
+          _userData = UserData.fromJson(json.decode(_response.body.toString()));
+          _accessToken = token;
+          ageController.text = (_userData!.data!.age!);
+          usernameController.text = _userData!.data!.name ?? "";
+          genderController.text = _userData!.data!.gender ?? "";
+          emailController.text = _userData!.data!.email ?? "";
+          _isAuth = true;
+        }
+      } catch (e) {
+        print('catch');
+        print(e.toString());
+        _retry = true;
+      }
+    }
+    _isLoading = false;
+    notifyListeners();
+  }
+
   // show indicator dialog
   void _showDialogIndicator(context) {
     showDialog(
@@ -157,11 +199,15 @@ class Auth with ChangeNotifier {
   }
 
   // logout
-  void logOut(BuildContext context) {
+  void logOut(BuildContext context) async {
+    await _initPrefs();
+
     ShowConfirmDialog()
         .confirmDialog(context, "Are_you_sure_you_want_to_log_out", () {
       _userData = null;
       _isAuth = false;
+      _accessToken = "";
+      _prefs!.remove("accessToken");
       notifyListeners();
     });
   }
@@ -280,7 +326,7 @@ class Auth with ChangeNotifier {
   //for test
   TextEditingController giftController = TextEditingController();
   String _deliveryAddress = "الرياض الياسيمن ";
-  bool _isLoading = true;
+
   int _cardValue = 0;
   int get cardValue => _cardValue;
   GlobalKey<FormState>? formKey;
@@ -324,18 +370,6 @@ class Auth with ChangeNotifier {
         point: 6500);
 
     Navigator.pop(context);
-    notifyListeners();
-  }
-
-  Future<void> getUserData(String token) async {
-    await Future.delayed(Duration(milliseconds: 1500), () {
-      _isAuth = false;
-      _isLoading = false;
-    });
-    // if (isAuth)
-    //   await login3();
-    // else
-    //   _isAuthStatus = 0;
     notifyListeners();
   }
 

@@ -5,8 +5,9 @@ import 'package:new_turki/utilities/size_config.dart';
 
 class ProfileState extends StatelessWidget {
   final UserData user;
+  final int orders;
 
-  const ProfileState({required this.user});
+  const ProfileState({required this.user, required this.orders});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class ProfileState extends StatelessWidget {
                 _stateItem(
                     context: context,
                     routeName: "/Orders",
-                    value: 0,
+                    value: orders * 1.0,
                     //value: user.orders!,
                     title: 'orders'),
                 _verticalDivider(
