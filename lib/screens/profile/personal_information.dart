@@ -25,10 +25,10 @@ class _PersonalInformationState extends State<PersonalInformation> {
             AvatarGlow(
               glowColor: Theme.of(context).primaryColor,
               endRadius: 78.0,
-              duration: Duration(milliseconds: 2000),
+              duration: const Duration(milliseconds: 2000),
               repeat: true,
               showTwoGlows: true,
-              repeatPauseDuration: Duration(milliseconds: 100),
+              repeatPauseDuration: const Duration(milliseconds: 100),
               child: Container(
                 child: CircleAvatar(
                   radius: 60,
@@ -49,66 +49,26 @@ class _PersonalInformationState extends State<PersonalInformation> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(AppLocalizations.of(context)!.tr('name'),
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColor,
-                        )),
-                  ),
-                  RectangleTextField(
-                    controller: _auth.usernameController,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(AppLocalizations.of(context)!.tr('email'),
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColor,
-                        )),
-                  ),
-                  RectangleTextField(
-                    controller: _auth.emailController,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(AppLocalizations.of(context)!.tr('gender'),
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColor,
-                        )),
-                  ),
-                  RectangleTextField(
-                    controller: _auth.genderController,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(AppLocalizations.of(context)!.tr('age'),
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColor,
-                        )),
-                  ),
-                  RectangleTextField(
-                    controller: _auth.ageController,
-                    textInputType: TextInputType.number,
-                  ),
+                  _item(
+                      title: 'name',
+                      textEditingController: _auth.usernameController),
+                  _item(
+                      title: 'email',
+                      textEditingController: _auth.emailController),
+                  _item(
+                      title: 'gender',
+                      textEditingController: _auth.genderController),
+                  _item(
+                      title: 'age',
+                      textEditingController: _auth.ageController,
+                      textInputType: TextInputType.number),
                 ],
               ),
             ),
             RoundedRectangleButton(
               height: 50,
-              padding:
-                  EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 20),
+              padding: const EdgeInsets.only(
+                  right: 20, left: 20, top: 10, bottom: 20),
               fontSize: 16,
               title: AppLocalizations.of(context)!.tr('update'),
               onPressed: () async {
@@ -118,6 +78,32 @@ class _PersonalInformationState extends State<PersonalInformation> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _item(
+      {required String title,
+      required TextEditingController textEditingController,
+      TextInputType textInputType = TextInputType.text}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(AppLocalizations.of(context)!.tr(title),
+              textAlign: TextAlign.start,
+              style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).primaryColor,
+                  )),
+        ),
+        RectangleTextField(
+          controller: textEditingController,
+          textInputType: textInputType,
+        ),
+      ],
     );
   }
 }

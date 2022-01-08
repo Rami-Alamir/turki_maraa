@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:new_turki/models/orders_data.dart';
+import 'package:new_turki/models/order.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
@@ -14,8 +14,8 @@ class OrderDetailsRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
       child: InkWell(
-        //    onTap: () =>
-        // Navigator.pushNamed(context, '/ItemDetails', arguments: item.),
+        onTap: () =>
+            Navigator.pushNamed(context, '/ProductDetails', arguments: item.id),
         child: Container(
           width: SizeConfig.screenWidth!,
           child: Row(
@@ -67,7 +67,9 @@ class OrderDetailsRow extends StatelessWidget {
                       child: Container(
                         width: SizeConfig.screenWidth! * .6,
                         child: AutoSizeText(
-                          item.description ?? "",
+                          _isAr
+                              ? item.descriptionAr ?? ""
+                              : item.descriptionEn ?? "",
                           style: Theme.of(context)
                               .textTheme
                               .headline4!

@@ -113,7 +113,7 @@ class _LoginState extends State<Login> {
                                         style: TextStyle(color: Colors.white)),
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   indent: 25,
                                   endIndent: 20,
                                   thickness: 3,

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/product.dart';
+import 'package:new_turki/provider/auth.dart';
+import 'package:new_turki/provider/favourite_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
+import 'package:provider/provider.dart';
 import 'circle_icon.dart';
 
 class ProductDescription extends StatelessWidget {
@@ -64,8 +67,16 @@ class ProductDescription extends StatelessWidget {
                         //     ? Icons.favorite
                         //     : Icons.favorite_border_outlined,
                         onTap: () {
-                          // isFavourite = !isFavourite;
-                          // setState(() {});
+                          final favourite = Provider.of<FavouriteProvider>(
+                              context,
+                              listen: false);
+                          final auth =
+                              Provider.of<Auth>(context, listen: false);
+                          if (auth.isAuth)
+                            favourite.addToFavourite(
+                                context: context,
+                                authorization: "Bearer ${auth.accessToken}",
+                                id: '${product.data!.id!}');
                         },
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0, 0, 0)),

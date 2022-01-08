@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/favourite.dart';
 import 'package:new_turki/repository/favourite_repository.dart';
+import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 
 class FavouriteProvider with ChangeNotifier {
@@ -34,19 +35,56 @@ class FavouriteProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // remove favourite item
-  Future<void> removeFavouriteItem(
-      BuildContext context, int index, String authorization) async {
-    _isLoading = true;
-    _retry = false;
+  Future<void> deleteFromFavourite({
+    required BuildContext context,
+    required String authorization,
+    required String id,
+    required int index,
+  }) async {
+    var _response;
+    _dialogContext = context;
+    _showDialogIndicator(context);
     try {
-      _favourite = await FavouriteRepository().getFavouriteList(authorization);
+      _response =
+          await FavouriteRepository().deleteFromFavourite(id, authorization);
+      if (_response == 200) _favourite!.dataT!.data!.removeAt(index);
     } catch (e) {
-      _retry = true;
+      print('catch');
       print(e.toString());
+      showSnackBar(context, "unexpected_error");
     }
-    _isLoading = false;
+    Navigator.pop(_dialogContext!);
     notifyListeners();
+  }
+
+  Future<void> addToFavourite({
+    required BuildContext context,
+    required String authorization,
+    required String id,
+  }) async {
+    var _response;
+    _dialogContext = context;
+    _showDialogIndicator(context);
+    try {
+      _response = await FavouriteRepository().addFavourite(id, authorization);
+      if (_response == 200)
+        showSnackBar(
+            context, "The_product_has_not_been_added_to_the_favourites");
+    } catch (e) {
+      print('catch');
+      print(e.toString());
+      showSnackBar(context, "unexpected_error");
+    }
+    Navigator.pop(_dialogContext!);
+    notifyListeners();
+  }
+
+  void showSnackBar(BuildContext context, String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      AppLocalizations.of(context)!.tr(msg),
+      textAlign: TextAlign.center,
+    )));
   }
 
   // show indicator dialog

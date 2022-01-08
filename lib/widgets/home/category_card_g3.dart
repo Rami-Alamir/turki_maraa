@@ -49,12 +49,12 @@ class CategoryCardG3 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       bottomRight: Radius.circular(20.0),
                       bottomLeft: Radius.circular(20.0)),
                   child: Image.network(
                     image,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                     height: scaleFactor == 0.8 ? 100 : 180,
                     width: scaleFactor == 0.8 ? 100 : 150,
                   ),

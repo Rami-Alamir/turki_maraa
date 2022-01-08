@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/orders_data.dart';
+import 'package:new_turki/models/order.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/order/item_column.dart';
@@ -100,9 +100,7 @@ class OrderDetailsHeader extends StatelessWidget {
                 )
               ],
             ),
-            OrderTracking(
-              statusCode: 100,
-            ),
+            OrderTracking(statusCode: order.orderState!.code!),
           ],
         ),
       ),

@@ -59,7 +59,7 @@ class CategoryCardG2 extends StatelessWidget {
                       bottomLeft: Radius.circular(20.0)),
                   child: Image.network(
                     image,
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.contain,
                     height: (133 * scaleFactor) - 21,
                     width: (SizeConfig.screenWidth! / 2) - 18,
                   ),

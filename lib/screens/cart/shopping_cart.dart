@@ -13,14 +13,11 @@ import 'package:new_turki/widgets/cart/delivery_time.dart';
 import 'package:new_turki/widgets/cart/empty_cart.dart';
 import 'package:new_turki/widgets/cart/note.dart';
 import 'package:new_turki/widgets/cart/payment_method.dart';
-import 'package:new_turki/widgets/cart/promo_code.dart';
 import 'package:new_turki/widgets/cart/use_credit.dart';
 import 'package:new_turki/widgets/shared/not_auth.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
-import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
-import 'package:new_turki/widgets/shared/invoice.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingCart extends StatefulWidget {
@@ -53,7 +50,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   ? Retry(
                       onPressed: () {
                         _cart.setIsLoading = true;
-                        _cart.getCartData(_auth.accessToken);
+                        if (_auth.isAuth) _cart.getCartData(_auth.accessToken);
                       },
                     )
                   : (_cart.cartData?.data?.data?.length ?? 0) > 0
@@ -88,8 +85,15 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                           );
                                         }),
                                     DeliveryAddress(
-                                        address: _homeProvider.address[
-                                            _homeProvider.selectedAddress]),
+                                        address:
+                                            _homeProvider.selectedAddress == -1
+                                                ? AppLocalizations.of(context)!
+                                                    .tr('current_location')
+                                                : _homeProvider
+                                                    .userAddress!
+                                                    .data![_homeProvider
+                                                        .selectedAddress]
+                                                    .address!),
                                     DeliveryDate(
                                       dateList: [
                                         DeliveryDateTime(

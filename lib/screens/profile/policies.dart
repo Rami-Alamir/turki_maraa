@@ -14,15 +14,12 @@ class Policies extends StatefulWidget {
 class _PoliciesState extends State<Policies> {
   @override
   Widget build(BuildContext context) {
-    print(widget.policiesData.toString);
-
     return Scaffold(
       appBar: PrimaryAppBar(
         title: AppLocalizations.of(context)!.tr(widget.policiesData['title']!),
       ),
       body: WebView(
         initialUrl: widget.policiesData['url'],
-        //body:Container(
       ),
     );
   }

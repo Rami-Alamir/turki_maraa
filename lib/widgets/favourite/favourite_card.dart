@@ -17,18 +17,20 @@ class FavouriteCard extends StatelessWidget {
     required this.accessToken,
     required this.index,
   });
+
   @override
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
-        if (direction == DismissDirection.endToStart) {
-          final _favourite =
-              Provider.of<FavouriteProvider>(context, listen: false);
-          _favourite.removeFavouriteItem(context, index, accessToken);
-        } else
-          print('favorite');
+        final _favourite =
+            Provider.of<FavouriteProvider>(context, listen: false);
+        _favourite.deleteFromFavourite(
+            context: context,
+            index: index,
+            authorization: accessToken,
+            id: data.id!.toString());
       },
       background: Container(
         color: Colors.red,
@@ -49,6 +51,8 @@ class FavouriteCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onTap: () => Navigator.pushNamed(context, '/ProductDetails',
               arguments: data.product!.id!),
           child: MainCard(
@@ -69,7 +73,7 @@ class FavouriteCard extends StatelessWidget {
                         color: Colors.transparent,
                         child: FadeInImage.assetNetwork(
                           placeholder: 'assets/images/turki_icon.png',
-                          image: data.product!.image!,
+                          image: data.product!.productImages![0].imageUrl!,
                           width: 110,
                           height: 110,
                           fit: BoxFit.fill,
@@ -118,12 +122,25 @@ class FavouriteCard extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                      AppLocalizations.of(context)!
-                                          .tr('delete'),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline5),
+                                  InkWell(
+                                    onTap: () {
+                                      final _favourite =
+                                          Provider.of<FavouriteProvider>(
+                                              context,
+                                              listen: false);
+                                      _favourite.deleteFromFavourite(
+                                          context: context,
+                                          index: index,
+                                          authorization: accessToken,
+                                          id: data.id!.toString());
+                                    },
+                                    child: Text(
+                                        AppLocalizations.of(context)!
+                                            .tr('delete'),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline5),
+                                  ),
                                   Text(
                                     '${data.product!.price} ${AppLocalizations.of(context)!.tr('sr')}',
                                     style: Theme.of(context)

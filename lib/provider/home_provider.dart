@@ -7,8 +7,12 @@ import 'package:new_turki/models/category_data.dart';
 import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/models/product.dart';
 import 'package:new_turki/models/products.dart';
+import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/repository/home_repository.dart';
 import 'package:new_turki/repository/products_repository.dart';
+import 'package:new_turki/repository/user_repository.dart';
+import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 
 class HomeProvider with ChangeNotifier {
   TextEditingController searchController = TextEditingController();
@@ -26,6 +30,14 @@ class HomeProvider with ChangeNotifier {
   int _selectedPackaging = -1;
   int _selectedChopping = -1;
   int _selectedShalwata = -1;
+  UserAddress? _userAddress;
+  BuildContext? _dialogContext;
+
+  set setUserAddress(UserAddress value) {
+    _userAddress = value;
+  }
+
+  UserAddress? get userAddress => _userAddress;
 
   bool get productIsRetry => _productIsRetry;
 
@@ -95,18 +107,23 @@ class HomeProvider with ChangeNotifier {
 
   CategoryData get categoryData => _categoryData!;
 
-  Future<void> getData() async {
-    await Future.delayed(Duration(milliseconds: 1500), () {});
-    _isLoading = true;
-    _retry = false;
+  Future<void> getCategories() async {
     try {
       _categoryData = await HomeRepository().getCategoriesList();
     } catch (e) {
       print(e.toString());
       _retry = true;
     }
-    _isLoading = false;
-    notifyListeners();
+  }
+
+  Future<void> getAddressList(String token) async {
+    if (token.length > 0)
+      try {
+        _userAddress = await UserRepository().getAddressList(token);
+      } catch (e) {
+        print(e.toString());
+        _retry = true;
+      }
   }
 
   void disposeFood() {
@@ -114,6 +131,19 @@ class HomeProvider with ChangeNotifier {
     _discoverList.clear();
     _bannersList.clear();
     _foodsRetry = false;
+  }
+
+  Future<void> getHomePageData(String token, {bool isLoading = true}) async {
+    _retry = false;
+    _isLoading = isLoading;
+    try {
+      await Future.wait([getAddressList(token), getCategories()]);
+    } catch (e) {
+      _retry = true;
+    }
+    _isLoading = false;
+
+    notifyListeners();
   }
 
   Future<void> getFoodsPageData(int id, {bool isLoading = true}) async {
@@ -132,7 +162,7 @@ class HomeProvider with ChangeNotifier {
   Future<void> getDiscoverList() async {
     _discoverIsLoading = true;
     _discoverRetry = false;
-    await Future.delayed(Duration(milliseconds: 500), () {
+    await Future.delayed(Duration(milliseconds: 10), () {
       _discoverList = DummyData().discoverList;
     });
     _discoverIsLoading = false;
@@ -141,7 +171,7 @@ class HomeProvider with ChangeNotifier {
   }
 
   Future<void> getBanners() async {
-    await Future.delayed(Duration(milliseconds: 1500), () {
+    await Future.delayed(Duration(milliseconds: 10), () {
       _bannersList = DummyData().banners;
     });
   }
@@ -170,7 +200,6 @@ class HomeProvider with ChangeNotifier {
 
   //get user location + init marker
   void initMapData() async {
-    print('initMapData');
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(size: Size(25, 25)), 'assets/images/pin.png')
         .then((onValue) {
@@ -181,14 +210,20 @@ class HomeProvider with ChangeNotifier {
     _latLng = LatLng(_locationData.latitude!, _locationData.longitude!);
   }
 
-  //for test
-  List<String> address = ["الموقع الحالي", "الياسمين", "العمل", "المنزل"];
-  int selectedAddress = 0;
-  List<String> address2 = [
-    "ملحمة الياسمين",
-    "ملحمة المونسية",
-  ];
-  int selectedAddress2 = 0;
+  int _selectedAddress = 0;
+  int _selectedAddress2 = 0;
+
+  int get selectedAddress => _selectedAddress;
+
+  set setSelectedAddress(int value) {
+    _selectedAddress = value;
+  }
+
+  int get selectedAddress2 => _selectedAddress2;
+
+  set setSelectedAddress2(int value) {
+    _selectedAddress2 = value;
+  }
 
   int get selectedPackaging => _selectedPackaging;
 
@@ -241,5 +276,82 @@ class HomeProvider with ChangeNotifier {
     if (_selectedShalwata >= 0)
       price += double.parse(_productData!.data!.shalwata!.price!);
     return price;
+  }
+
+  void showSnackBar(BuildContext context, String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      AppLocalizations.of(context)!.tr(msg),
+      textAlign: TextAlign.center,
+    )));
+  }
+
+  // show indicator dialog
+  void _showDialogIndicator(context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          _dialogContext = context;
+          return IndicatorDialog();
+        });
+  }
+
+  // add new address
+  Future<void> addNewAddress(BuildContext context, String accessToken) async {
+    if (accessToken.length == 0) {
+      Navigator.pop(context);
+    } else {
+      _dialogContext = context;
+      _showDialogIndicator(_dialogContext);
+      var _response;
+      try {
+        _response = await UserRepository().addAddress({
+          "country_id": "1",
+          "city_id": "2",
+          "address":
+              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "."} ",
+          "comment":
+              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "."} ",
+          "label": "label",
+          "is_default": "0",
+          "long": "${latLng.latitude}",
+          "lat": "${latLng.longitude}",
+        }, "Bearer $accessToken");
+        print(_response.body.toString());
+
+        if (_response.statusCode == 200) {
+          // showSnackBar(context, 'data_has_been_updated_successfully');
+          // AlertController.show(
+          //     " ",
+          //     AppLocalizations.of(context)!
+          //         .tr('data_has_been_updated_successfully'),
+          //     TypeAlert.success);
+          await getAddressList("Bearer $accessToken");
+          notifyListeners();
+          Navigator.pop(_dialogContext!);
+          Navigator.pop(context);
+        } else {
+          Navigator.pop(_dialogContext!);
+          showSnackBar(context, "unexpected_error");
+
+          // AlertController.show(
+          //     "",
+          //     AppLocalizations.of(context)!.tr(_response.statusCode == 400
+          //         ? "please_enter_your_name"
+          //         : "unexpected_error"),
+          //     TypeAlert.error);
+        }
+      } catch (e) {
+        print('catch');
+        print(e.toString());
+        if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
+        showSnackBar(context, "unexpected_error");
+        // AlertController.show(
+        //     "",
+        //     AppLocalizations.of(context)!.tr("unexpected_error"),
+        //     TypeAlert.error);
+      }
+    }
   }
 }

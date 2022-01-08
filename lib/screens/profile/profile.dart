@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     PersonalInfoCard(isAuth: _auth.isAuth),
                     SettingsCard(),
-                    HelpCard(),
+                    HelpCard(isAuth: _auth.isAuth),
                     SocialMedia(
                       color: Theme.of(context).colorScheme.secondaryVariant,
                     ),

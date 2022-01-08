@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -16,9 +17,7 @@ class _AddressContainerState extends State<AddressContainer> {
   @override
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
-    final List<String> _addressList = _homeProvider.selectedOrderType == 0
-        ? _homeProvider.address
-        : _homeProvider.address2;
+    final List<Data>? _addressList = _homeProvider.userAddress?.data;
     return AnimatedContainer(
       duration: Duration(microseconds: 1),
       child: InkWell(
@@ -45,7 +44,7 @@ class _AddressContainerState extends State<AddressContainer> {
                       const EdgeInsets.only(right: 20.0, left: 20.0, top: 60),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(7),
                           bottomRight: Radius.circular(7)),
                       color: Theme.of(context).backgroundColor,
@@ -56,27 +55,51 @@ class _AddressContainerState extends State<AddressContainer> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Visibility(
+                                visible: _homeProvider.selectedOrderType == 0,
+                                child: InkWell(
+                                  onTap: () {
+                                    _homeProvider.setSelectedAddress = -1;
+                                    _selected = false;
+                                    setState(() {});
+                                  },
+                                  child: addressRow(
+                                      AppLocalizations.of(context)!
+                                          .tr('current_location'),
+                                      divider: true),
+                                )),
                             Container(
                               width: SizeConfig.screenWidth,
+                              constraints: BoxConstraints(
+                                maxHeight: SizeConfig.screenHeight! * .4,
+                              ),
                               child: ListView.builder(
                                   padding: EdgeInsets.all(0),
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
                                   physics: ScrollPhysics(),
-                                  itemCount: _addressList.length,
+                                  itemCount:
+                                      _homeProvider.selectedOrderType == 0
+                                          ? _addressList?.length ?? 0
+                                          : 1,
                                   itemBuilder: (BuildContext ctxt, int index) {
                                     return InkWell(
                                       onTap: () {
                                         if (_homeProvider.selectedOrderType ==
                                             0)
-                                          _homeProvider.selectedAddress = index;
+                                          _homeProvider.setSelectedAddress =
+                                              index;
                                         else
-                                          _homeProvider.selectedAddress2 =
+                                          _homeProvider.setSelectedAddress2 =
                                               index;
                                         _selected = false;
                                         setState(() {});
                                       },
-                                      child: addressRow(_addressList[index],
+                                      child: addressRow(
+                                          _homeProvider.selectedOrderType == 0
+                                              ? _addressList![index].address!
+                                              : AppLocalizations.of(context)!
+                                                  .tr('soon'),
                                           divider: index !=
                                               (_homeProvider.selectedOrderType ==
                                                           0
@@ -122,10 +145,14 @@ class _AddressContainerState extends State<AddressContainer> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                                _addressList[
-                                    _homeProvider.selectedOrderType == 0
-                                        ? _homeProvider.selectedAddress
-                                        : _homeProvider.selectedAddress2],
+                                _homeProvider.selectedOrderType == 0
+                                    ? _homeProvider.selectedAddress == -1
+                                        ? AppLocalizations.of(context)!
+                                            .tr('current_location')
+                                        : _addressList![
+                                                _homeProvider.selectedAddress]
+                                            .address!
+                                    : AppLocalizations.of(context)!.tr('soon'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!

@@ -23,7 +23,7 @@ class _OrdersState extends State<Orders> {
   void initState() {
     final _orders = Provider.of<OrdersProvider>(context, listen: false);
     final _auth = Provider.of<Auth>(context, listen: false);
-    _orders.getOrdersList(_auth.accessToken);
+    if (_auth.isAuth) _orders.getOrdersList(_auth.accessToken);
     super.initState();
   }
 
@@ -44,7 +44,8 @@ class _OrdersState extends State<Orders> {
                   ? Retry(
                       onPressed: () {
                         _orders.setIsLoading = true;
-                        _orders.getOrdersList(_auth.accessToken);
+                        if (_auth.isAuth)
+                          _orders.getOrdersList(_auth.accessToken);
                       },
                     )
                   : (_orders.ordersData?.data?.length ?? 0) > 0
@@ -55,17 +56,21 @@ class _OrdersState extends State<Orders> {
                           onRefresh: () async {
                             await _orders.getOrdersList(_auth.accessToken);
                           },
-                          child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              physics: ScrollPhysics(),
-                              itemCount:
-                                  (_orders.ordersData?.data?.length ?? 0),
-                              itemBuilder: (BuildContext ctxt, int index) {
-                                return OrderCard(
-                                    index: index,
-                                    order: (_orders.ordersData!.data![index]));
-                              }))
+                          child: ListView(
+                            children: [
+                              ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  physics: const ScrollPhysics(),
+                                  itemCount:
+                                      (_orders.ordersData?.data?.length ?? 0),
+                                  itemBuilder: (BuildContext ctxt, int index) {
+                                    return OrderCard(
+                                        order:
+                                            (_orders.ordersData!.data![index]));
+                                  }),
+                            ],
+                          ))
                       : NoOrders(),
     );
   }

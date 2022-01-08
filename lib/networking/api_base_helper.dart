@@ -88,6 +88,36 @@ class ApiBaseHelper {
     return responseJson;
   }
 
+  Future<int> delete(String url, {String authorization = " "}) async {
+    headers['authorization'] = authorization;
+    print(authorization);
+    var uri = Uri.parse(_baseUrl + url);
+    print(uri.toString());
+    var response;
+    try {
+      response = await http.delete(uri, headers: headers);
+      print(_returnResponse(response));
+    } catch (e) {
+      print(e.toString());
+    }
+    return response.statusCode;
+  }
+
+  Future<int> get3(String url, {String authorization = " "}) async {
+    headers['authorization'] = authorization;
+    print(authorization);
+    var uri = Uri.parse(_baseUrl + url);
+    print(uri.toString());
+    var response;
+    try {
+      response = await http.get(uri, headers: headers);
+      print(_returnResponse(response));
+    } catch (e) {
+      print(e.toString());
+    }
+    return response.statusCode;
+  }
+
   dynamic _returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:

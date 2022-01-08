@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 class SocialMedia extends StatelessWidget {
   final Color color;
 
-  const SocialMedia({this.color = const Color.fromRGBO(107, 0, 0, 1)});
+  const SocialMedia({this.color = const Color.fromRGBO(90, 4, 9, 1.0)});
   @override
   Widget build(BuildContext context) {
     return Row(

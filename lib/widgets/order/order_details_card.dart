@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/provider/orders_provider.dart';
+import 'package:new_turki/models/order.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/shared/invoice.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
-import 'package:provider/provider.dart';
-
 import 'order_details_row.dart';
 
-class OrderDetailsCard extends StatefulWidget {
-  final int index;
+class OrderDetailsCard extends StatelessWidget {
+  final Order order;
 
-  const OrderDetailsCard({required this.index});
-  @override
-  _OrderDetailsCardState createState() => _OrderDetailsCardState();
-}
-
-class _OrderDetailsCardState extends State<OrderDetailsCard> {
+  const OrderDetailsCard({required this.order});
   @override
   Widget build(BuildContext context) {
-    final _orders = Provider.of<OrdersProvider>(context);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
@@ -37,7 +29,7 @@ class _OrderDetailsCardState extends State<OrderDetailsCard> {
             Padding(
               padding: const EdgeInsets.only(right: 15.0, top: 20, bottom: 10),
               child: Text(
-                "${AppLocalizations.of(context)!.tr('items')} (${_orders.ordersData?.data?[widget.index].products?.length ?? 0})",
+                "${AppLocalizations.of(context)!.tr('items')} (${order.data?[0].products?.length ?? 0})",
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
@@ -47,26 +39,20 @@ class _OrderDetailsCardState extends State<OrderDetailsCard> {
             ListView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
-                physics: ScrollPhysics(),
-                itemCount:
-                    (_orders.ordersData?.data?[widget.index].products?.length ??
-                        0),
+                physics: const ScrollPhysics(),
+                itemCount: order.data?[0].products?.length ?? 0,
                 itemBuilder: (BuildContext ctxt, int index) {
                   return OrderDetailsRow(
-                    item: _orders
-                        .ordersData!.data![widget.index].products![index],
+                    item: order.data![0].products![index],
                   );
                 }),
             Invoice(
-              total: double.parse(_orders
-                  .ordersData!.data![widget.index].totalAmountAfterDiscount!),
-              subtotal: double.parse(
-                  _orders.ordersData!.data![widget.index].orderTotal!),
-              shipping: double.parse(
-                  _orders.ordersData!.data![widget.index].deliveryFee!),
-              discountVoucher: 0.0,
-              myCredit: double.parse(
-                  _orders.ordersData!.data![widget.index].walletAmountUsed!),
+              total: double.parse(order.data![0].totalAmountAfterDiscount!),
+              subtotal: double.parse(order.data![0].orderTotal!),
+              shipping: double.parse(order.data![0].deliveryFee!),
+              discountVoucher: double.parse(order.data![0].totalAmount!) -
+                  double.parse(order.data![0].totalAmountAfterDiscount!),
+              myCredit: double.parse(order.data![0].walletAmountUsed!),
             )
           ],
         ),

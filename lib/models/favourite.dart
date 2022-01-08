@@ -31,12 +31,13 @@ class DataT {
 
 class Data {
   Product? product;
-
-  Data({this.product});
+  int? id;
+  Data({this.product, this.id});
 
   Data.fromJson(Map<String, dynamic> json) {
     product =
         json['product'] != null ? Product.fromJson(json['product']) : null;
+    id = json['id'];
   }
 }
 
@@ -57,6 +58,7 @@ class Product {
   int? isPickedUp;
   int? categoryId;
   int? subCategoryId;
+  List<ProductImages>? productImages;
 
   Product(
       {this.id,
@@ -74,6 +76,7 @@ class Product {
       this.isDelivered,
       this.isPickedUp,
       this.categoryId,
+      this.productImages,
       this.subCategoryId});
 
   Product.fromJson(Map<String, dynamic> json) {
@@ -94,5 +97,40 @@ class Product {
     isPickedUp = json['is_picked_up'] ?? "";
     categoryId = json['category_id'] ?? "";
     subCategoryId = json['sub_category_id'] ?? "";
+    if (json['product_images'] != null) {
+      productImages = <ProductImages>[];
+      json['product_images'].forEach((v) {
+        productImages!.add(new ProductImages.fromJson(v));
+      });
+    }
+  }
+}
+
+class ProductImages {
+  int? id;
+  int? productId;
+  int? isDefault;
+  String? createdAt;
+  String? updatedAt;
+  String? imageUrl;
+  String? thumbnailUrl;
+
+  ProductImages(
+      {this.id,
+      this.productId,
+      this.isDefault,
+      this.createdAt,
+      this.updatedAt,
+      this.imageUrl,
+      this.thumbnailUrl});
+
+  ProductImages.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    productId = json['product_id'];
+    isDefault = json['is_default'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    imageUrl = json['image_url'];
+    thumbnailUrl = json['thumbnail_url'];
   }
 }

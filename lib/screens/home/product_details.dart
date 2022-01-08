@@ -51,7 +51,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   color: Theme.of(context).primaryColor,
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   onRefresh: () async {
-                    _homeProvider.getProductData(widget.id.toString());
+                    await _homeProvider.getProductData(widget.id.toString());
                   },
                   child: ListView(
                     padding: EdgeInsets.zero,
@@ -171,22 +171,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         RoundedRectangleButton(
                           onPressed: () {
-                            _cartProvider.addToCart(
-                              context: context,
-                              authorization:
-                                  "Bearer " + _authProvider.accessToken,
-                              quantity: '$_count',
-                              sizeId:
-                                  "${_homeProvider.selectedSize > -1 ? (_homeProvider.productData.data?.sizes?[_homeProvider.selectedSize].id!.toString()) : ""}",
-                              preparationId:
-                                  "${_homeProvider.selectedPackaging > -1 ? (_homeProvider.productData.data?.packaging?[_homeProvider.selectedPackaging].id!.toString()) : ""}",
-                              cutId:
-                                  "${_homeProvider.selectedChopping > -1 ? (_homeProvider.productData.data?.chopping?[_homeProvider.selectedChopping].id!.toString()) : ""}",
-                              isShalwata:
-                                  "${_homeProvider.selectedShalwata > -1 ? (_homeProvider.productData.data?.shalwata!.id!.toString()) : ""}",
-                              productId:
-                                  '${_homeProvider.productData.data!.id}',
-                            );
+                            if (_authProvider.isAuth) {
+                              _cartProvider.addToCart(
+                                context: context,
+                                authorization:
+                                    "Bearer " + _authProvider.accessToken,
+                                quantity: '$_count',
+                                sizeId:
+                                    "${_homeProvider.selectedSize > -1 ? (_homeProvider.productData.data?.sizes?[_homeProvider.selectedSize].id!.toString()) : ""}",
+                                preparationId:
+                                    "${_homeProvider.selectedPackaging > -1 ? (_homeProvider.productData.data?.packaging?[_homeProvider.selectedPackaging].id!.toString()) : ""}",
+                                cutId:
+                                    "${_homeProvider.selectedChopping > -1 ? (_homeProvider.productData.data?.chopping?[_homeProvider.selectedChopping].id!.toString()) : ""}",
+                                isShalwata:
+                                    "${_homeProvider.selectedShalwata > -1 ? (_homeProvider.productData.data?.shalwata!.id!.toString()) : ""}",
+                                productId:
+                                    '${_homeProvider.productData.data!.id}',
+                              );
+                            } else
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushNamed('/Login');
                           },
                           padding: EdgeInsets.all(0),
                           width: SizeConfig.screenWidth! - 150,

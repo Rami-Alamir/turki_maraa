@@ -43,7 +43,7 @@ class ProfileFooter extends StatelessWidget {
               visible: version.isNotEmpty,
               child: Text('V$version',
                   textAlign: TextAlign.center, style: textStyle)),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Text(AppLocalizations.of(context)!.tr('all_rights_reserved'),
               textAlign: TextAlign.center, style: textStyle),
         ],

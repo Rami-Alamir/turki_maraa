@@ -35,7 +35,7 @@ class ProductCardLarge extends StatelessWidget {
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Image.network(
-                          'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
+                          '${(product.productImages!.length > 0) ? product.productImages![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
                           width: 160,
                           height: 160,
                           fit: BoxFit.cover,
@@ -43,30 +43,30 @@ class ProductCardLarge extends StatelessWidget {
                   ),
                 ),
               ),
-              // Visibility(
-              //   visible: product.tagColor != null,
-              //   child: Positioned.directional(
-              //       textDirection: TextDirection.rtl,
-              //       top: 15,
-              //       end: 10,
-              //       child: Container(
-              //         constraints: BoxConstraints(minWidth: 40),
-              //         decoration: BoxDecoration(
-              //           color: hexToColor(product.tagColor!),
-              //           borderRadius:
-              //               const BorderRadius.all(Radius.circular(20.0)),
-              //         ),
-              //         child: Padding(
-              //           padding: const EdgeInsets.only(
-              //               bottom: 1.0, right: 10, left: 10),
-              //           child: Text(
-              //             _isAr ? product.tagTitleAr! : product.tagTitleEn!,
-              //             textAlign: TextAlign.center,
-              //             style: TextStyle(color: Colors.white, fontSize: 14),
-              //           ),
-              //         ),
-              //       )),
-              // )
+              if ((product.tags?.length ?? 0) > 0)
+                Positioned.directional(
+                    textDirection: TextDirection.rtl,
+                    top: 15,
+                    end: 10,
+                    child: Container(
+                      constraints: const BoxConstraints(minWidth: 40),
+                      decoration: BoxDecoration(
+                        color: hexToColor(product.tags![0].color!),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20.0)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 1.0, right: 10, left: 10),
+                        child: Text(
+                          _isAr
+                              ? product.tags![0].nameAr!
+                              : product.tags![0].nameEn!,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white, fontSize: 14),
+                        ),
+                      ),
+                    ))
             ],
           ),
           Padding(

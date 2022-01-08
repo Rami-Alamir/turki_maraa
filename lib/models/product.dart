@@ -89,15 +89,15 @@ class Data {
       });
     }
     if (json['cuts'] != null) {
-      packaging = <Extra>[];
+      chopping = <Extra>[];
       json['cuts'].forEach((v) {
-        packaging!.add(Extra.fromJson(v));
+        chopping!.add(Extra.fromJson(v));
       });
     }
     if (json['preparations'] != null) {
-      chopping = <Extra>[];
+      packaging = <Extra>[];
       json['preparations'].forEach((v) {
-        chopping!.add(Extra.fromJson(v));
+        packaging!.add(Extra.fromJson(v));
       });
     }
   }

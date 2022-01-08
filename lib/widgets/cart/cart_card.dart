@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/cart_data.dart';
-import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
-import 'package:provider/provider.dart';
 
 class CartCard extends StatelessWidget {
   final ItemData item;
@@ -79,7 +77,9 @@ class CartCard extends StatelessWidget {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(15.0),
                       child: Image.network(
-                        "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
+                        item.product!.productImages!.length > 0
+                            ? item.product!.productImages![0].imageUrl!
+                            : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
                         width: SizeConfig.setWidgetWidth(100, 135, 135),
                         height: SizeConfig.setWidgetHeight(100, 135, 135),
                         fit: BoxFit.cover,

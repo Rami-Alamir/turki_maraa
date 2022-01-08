@@ -10,7 +10,6 @@ class CategoryCard extends StatelessWidget {
   final Color color2;
   final double scaleFactor;
 
-
   const CategoryCard({
     required this.title,
     required this.scaleFactor,
@@ -22,7 +21,8 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, "/ProductsHome", arguments: categoryId),
+      onTap: () =>
+          Navigator.pushNamed(context, "/ProductsHome", arguments: categoryId),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(12)),
@@ -53,7 +53,7 @@ class CategoryCard extends StatelessWidget {
             ),
             Container(
               constraints: BoxConstraints(
-                maxHeight: (133 * scaleFactor) - 21,
+                maxHeight: (133 * scaleFactor) - 31,
                 maxWidth: (SizeConfig.screenWidth! / 2) - 18,
               ),
               child: Row(
@@ -65,7 +65,7 @@ class CategoryCard extends StatelessWidget {
                         bottomLeft: Radius.circular(20.0)),
                     child: Image.network(
                       image,
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.contain,
                       width: (SizeConfig.screenWidth! / 2) - 18,
                     ),
                   ),

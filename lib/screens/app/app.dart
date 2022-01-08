@@ -142,7 +142,7 @@ class AppState extends State<App> {
                   this.index = index;
                   _selectTab(index);
                   final _auth = Provider.of<Auth>(context, listen: false);
-
+                  print('ddddssss');
                   if (index == 2 && _auth.isAuth) {
                     final _cart =
                         Provider.of<CartProvider>(context, listen: false);

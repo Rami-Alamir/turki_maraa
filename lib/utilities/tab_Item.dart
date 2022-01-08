@@ -8,10 +8,6 @@ import 'package:new_turki/screens/home/discover.dart';
 import 'package:new_turki/screens/home/home.dart';
 import 'package:new_turki/screens/home/products_home.dart';
 import 'package:new_turki/screens/home/product_details.dart';
-import 'package:new_turki/screens/home/products_home1.dart';
-import 'package:new_turki/screens/home/products_home2.dart';
-import 'package:new_turki/screens/home/products_home3.dart';
-import 'package:new_turki/screens/home/products_home4.dart';
 import 'package:new_turki/screens/home/products_list.dart';
 import 'package:new_turki/screens/home/search.dart';
 import 'package:new_turki/screens/orders/order_details.dart';
@@ -94,7 +90,7 @@ class TabItem {
                   builder: (_) => Orders(back: args as bool));
             case '/OrderDetails':
               return MaterialPageRoute(
-                  builder: (_) => OrderDetails(id: args as int));
+                  builder: (_) => OrderDetails(id: args as String));
             case '/Cart':
               return MaterialPageRoute(builder: (_) => ShoppingCart());
             case '/Chat':
@@ -131,14 +127,7 @@ class TabItem {
             case '/ProductsHome':
               return MaterialPageRoute(
                   builder: (_) => ProductsHome(id: args as int));
-            case '/ProductsHome1':
-              return MaterialPageRoute(builder: (_) => ProductsHome1());
-            case '/ProductsHome2':
-              return MaterialPageRoute(builder: (_) => ProductsHome2());
-            case '/ProductsHome3':
-              return MaterialPageRoute(builder: (_) => ProductsHome3());
-            case '/ProductsHome4':
-              return MaterialPageRoute(builder: (_) => ProductsHome4());
+
             case '/AddNewAddress':
               return MaterialPageRoute(builder: (_) => AddNewAddress());
             case '/Search':

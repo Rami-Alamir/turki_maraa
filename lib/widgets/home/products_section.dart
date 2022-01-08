@@ -56,8 +56,7 @@ class ProductsSection extends StatelessWidget {
                                           "title": _isAr
                                               ? products.data![index].typeAr!
                                               : products.data![index].typeEn!,
-                                          "id":
-                                              products.data![index].category!.id
+                                          "index": index
                                         }),
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,

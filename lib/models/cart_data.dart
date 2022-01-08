@@ -101,6 +101,7 @@ class Product {
   int? isPickedUp;
   int? categoryId;
   int? subCategoryId;
+  List<ProductImages>? productImages;
 
   Product(
       {this.id,
@@ -117,10 +118,17 @@ class Product {
       this.isDelivered,
       this.isPickedUp,
       this.categoryId,
+      this.productImages,
       this.subCategoryId});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    if (json['product_images'] != null) {
+      productImages = <ProductImages>[];
+      json['product_images'].forEach((v) {
+        productImages!.add(ProductImages.fromJson(v));
+      });
+    }
     nameAr = json['name_ar'];
     nameEn = json['name_en'];
     description = json['description'];
@@ -135,6 +143,47 @@ class Product {
     isPickedUp = json['is_picked_up'];
     categoryId = json['category_id'];
     subCategoryId = json['sub_category_id'];
+  }
+}
+
+class ProductImages {
+  int? id;
+  int? productId;
+  int? isDefault;
+  String? createdAt;
+  String? updatedAt;
+  String? imageUrl;
+  String? thumbnailUrl;
+
+  ProductImages(
+      {this.id,
+      this.productId,
+      this.isDefault,
+      this.createdAt,
+      this.updatedAt,
+      this.imageUrl,
+      this.thumbnailUrl});
+
+  ProductImages.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    productId = json['product_id'];
+    isDefault = json['is_default'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    imageUrl = json['image_url'];
+    thumbnailUrl = json['thumbnail_url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['product_id'] = this.productId;
+    data['is_default'] = this.isDefault;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['image_url'] = this.imageUrl;
+    data['thumbnail_url'] = this.thumbnailUrl;
+    return data;
   }
 }
 

@@ -68,7 +68,7 @@ class _FavouriteState extends State<Favourite> {
                                   itemCount: (_favourite
                                           .favourite.dataT?.data?.length) ??
                                       0,
-                                  padding: EdgeInsets.only(top: 10),
+                                  padding: const EdgeInsets.only(top: 10),
                                   itemBuilder: (BuildContext ctxt, int index) {
                                     return FavouriteCard(
                                       accessToken:
@@ -78,7 +78,6 @@ class _FavouriteState extends State<Favourite> {
                                           .favourite.dataT!.data![index],
                                     );
                                   }),
-                              Container(height: SizeConfig.screenHeight)
                             ],
                           ),
                         ),

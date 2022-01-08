@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dropdown_alert/alert_controller.dart';
 import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:new_turki/models/user.dart';
+import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/models/user_data.dart';
+import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/repository/registration_repository.dart';
 import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/screens/app/app.dart';
@@ -13,6 +15,7 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/convert_phone.dart';
 import 'package:new_turki/utilities/show_dialog.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
@@ -44,7 +47,9 @@ class Auth with ChangeNotifier {
 
   int get start => _start;
 
-  String get accessToken => _accessToken!; //used to restrict resend otp
+  String get accessToken => _accessToken!;
+
+  //used to restrict resend otp
   void startTimer() {
     _start = 59;
     const oneSec = const Duration(seconds: 1);
@@ -201,7 +206,9 @@ class Auth with ChangeNotifier {
   // logout
   void logOut(BuildContext context) async {
     await _initPrefs();
-
+    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    _homeProvider.setSelectedAddress = -1;
+    _homeProvider.setUserAddress = UserAddress();
     ShowConfirmDialog()
         .confirmDialog(context, "Are_you_sure_you_want_to_log_out", () {
       _userData = null;
@@ -210,58 +217,6 @@ class Auth with ChangeNotifier {
       _prefs!.remove("accessToken");
       notifyListeners();
     });
-  }
-
-  // add new address
-  Future<void> addNewAddress(
-      BuildContext context, double lat, double lng, String address) async {
-    _dialogContext = context;
-
-    _showDialogIndicator(_dialogContext);
-    try {
-      _response = await UserRepository().addAddress({
-        "country_id": "1",
-        "city_id": "2",
-        "address": "$address address ",
-        "comment": "$address address ",
-        "label": "label",
-        "is_default": "0",
-        "long": "$lng",
-        "lat": "$lat",
-      }, "Bearer $_accessToken");
-      print(_response.body.toString());
-
-      if (_response.statusCode == 200) {
-        // showSnackBar(context, 'data_has_been_updated_successfully');
-        // AlertController.show(
-        //     " ",
-        //     AppLocalizations.of(context)!
-        //         .tr('data_has_been_updated_successfully'),
-        //     TypeAlert.success);
-
-        Navigator.pop(_dialogContext!);
-        Navigator.pop(context);
-      } else {
-        Navigator.pop(_dialogContext!);
-        showSnackBar(context, "unexpected_error");
-
-        // AlertController.show(
-        //     "",
-        //     AppLocalizations.of(context)!.tr(_response.statusCode == 400
-        //         ? "please_enter_your_name"
-        //         : "unexpected_error"),
-        //     TypeAlert.error);
-      }
-    } catch (e) {
-      print('catch');
-      print(e.toString());
-      if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-      showSnackBar(context, "unexpected_error");
-      // AlertController.show(
-      //     "",
-      //     AppLocalizations.of(context)!.tr("unexpected_error"),
-      //     TypeAlert.error);
-    }
   }
 
   // update user data
@@ -325,17 +280,9 @@ class Auth with ChangeNotifier {
 
   //for test
   TextEditingController giftController = TextEditingController();
-  String _deliveryAddress = "الرياض الياسيمن ";
-
   int _cardValue = 0;
   int get cardValue => _cardValue;
   GlobalKey<FormState>? formKey;
-
-  String get deliveryAddress => _deliveryAddress;
-
-  set setDeliveryAddress(String value) {
-    _deliveryAddress = value;
-  }
 
   User _user = User(
       name: 'رامي الأمير',

@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/hex_color.dart';
-import 'category_card.dart';
+import 'category_card_g1.dart';
 import 'package:new_turki/models/category_data.dart';
 
-class CategoriesG4 extends StatelessWidget {
+class CategoriesLarge extends StatelessWidget {
   final List<Data> categoriesList;
 
-  const CategoriesG4({required this.categoriesList});
+  const CategoriesLarge({required this.categoriesList});
   @override
   Widget build(BuildContext context) {
-    return StaggeredGridView.countBuilder(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+    return ListView.builder(
+        padding: EdgeInsets.all(0),
         shrinkWrap: true,
+        scrollDirection: Axis.vertical,
         physics: const ScrollPhysics(),
-        crossAxisSpacing: 10,
-        crossAxisCount: 2,
-        mainAxisSpacing: 12,
         itemCount: categoriesList.length,
-        itemBuilder: (context, index) {
-          return CategoryCard(
+        itemBuilder: (BuildContext ctxt, int index) {
+          return CategoryCardG1(
             categoryId: categoriesList[index].id!,
-            scaleFactor: index % 2 == 0 ? 1.8 : 1.1,
             image: categoriesList[index].imageUrl!,
             title: AppLocalizations.of(context)!.locale == Locale("ar")
                 ? categoriesList[index].titleAr!
@@ -30,9 +26,6 @@ class CategoriesG4 extends StatelessWidget {
             color: HexColor(categoriesList[index].backgroundColor1!),
             color2: HexColor(categoriesList[index].backgroundColor2!),
           );
-        },
-        staggeredTileBuilder: (index) {
-          return StaggeredTile.count(1, index % 2 == 0 ? 1.6 : 1.1);
         });
   }
 }

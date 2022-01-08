@@ -16,7 +16,7 @@ class NotificationCard extends StatelessWidget {
           height: SizeConfig.screenWidth! > 900 ? 400 : 375,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondary,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(8.0),
                 topLeft: Radius.circular(8.0),
                 bottomRight: Radius.circular(5.0),
@@ -35,7 +35,8 @@ class NotificationCard extends StatelessWidget {
           child: Column(
             children: [
               ClipRRect(
-                  borderRadius: BorderRadius.all(const Radius.circular(8)),
+                  borderRadius:
+                      const BorderRadius.all(const Radius.circular(8)),
                   child: Container(
                     width: SizeConfig.screenWidth! > 900
                         ? SizeConfig.screenWidth! / 3

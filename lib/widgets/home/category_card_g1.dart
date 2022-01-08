@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:new_turki/utilities/size_config.dart';
 
 class CategoryCardG1 extends StatelessWidget {
   final int categoryId;
@@ -21,7 +22,7 @@ class CategoryCardG1 extends StatelessWidget {
       onTap: () =>
           Navigator.pushNamed(context, "/ProductsHome", arguments: categoryId),
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
         child: Container(
           height: 200,
           decoration: BoxDecoration(
@@ -42,17 +43,20 @@ class CategoryCardG1 extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(
                     top: 40.0, right: 20, left: 20, bottom: 0),
-                child: AutoSizeText(
-                  title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(fontSize: title.length < 15 ? 20 : 16),
-                  maxLines: 1,
+                child: Container(
+                  width: SizeConfig.screenWidth! - 230,
+                  child: AutoSizeText(
+                    title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(fontSize: title.length < 20 ? 20 : 16),
+                    maxLines: 1,
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(30.0, 45, 30, 15),
+                padding: const EdgeInsetsDirectional.fromSTEB(5.0, 45, 15, 15),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                       bottomRight: Radius.circular(20.0),

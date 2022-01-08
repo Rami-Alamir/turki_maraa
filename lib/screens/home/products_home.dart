@@ -22,7 +22,6 @@ class _ProductsHomeState extends State<ProductsHome> {
   void initState() {
     _scrollController = ScrollController()..addListener(() => setState(() {}));
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    print('${widget.id}ddd');
     _homeProvider.getFoodsPageData(widget.id);
     super.initState();
   }

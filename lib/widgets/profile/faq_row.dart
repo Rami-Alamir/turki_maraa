@@ -15,10 +15,11 @@ class _FaqRowState extends State<FaqRow> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-        duration: Duration(microseconds: 1),
+        duration: const Duration(microseconds: 1),
         child: MainCard(
           height: 60,
-          padding: EdgeInsets.only(top: 2.5, bottom: 0, right: 10, left: 10),
+          padding:
+              const EdgeInsets.only(top: 2.5, bottom: 0, right: 10, left: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +44,7 @@ class _FaqRowState extends State<FaqRow> {
                   size: 20,
                   color: Theme.of(context).textTheme.headline6!.color,
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 15),
               ),
               Visibility(
                 visible: _selected,

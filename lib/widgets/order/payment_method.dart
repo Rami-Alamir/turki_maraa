@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/order.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 

@@ -73,10 +73,7 @@ class ProductData {
   String? calories;
   int? noRating;
   String? image;
-  // String? tagColor;
-  // String? tagTitleAr;
-  // String? tagTitleEn;
-
+  List<Tags>? tags;
   double? price;
   double? discount = 0.0;
   bool? isActive;
@@ -96,6 +93,7 @@ class ProductData {
       this.weight,
       this.calories,
       this.noRating,
+      this.tags,
       this.image,
       this.price,
       this.isActive,
@@ -107,6 +105,12 @@ class ProductData {
       this.productImages});
 
   ProductData.fromJson(Map<String, dynamic> json) {
+    if (json['tags'] != null) {
+      tags = <Tags>[];
+      json['tags'].forEach((v) {
+        tags!.add(Tags.fromJson(v));
+      });
+    }
     id = json['id'] ?? "";
     nameAr = json['name_ar'] ?? "";
     nameEn = json['name_en'] ?? "";
@@ -157,5 +161,30 @@ class ProductImages {
     updatedAt = json['updated_at'] ?? "";
     imageUrl = json['image_url'] ?? "";
     thumbnailUrl = json['thumbnail_url'] ?? "";
+  }
+}
+
+class Tags {
+  int? id;
+  String? nameAr;
+  String? nameEn;
+  String? color;
+
+  Tags({this.id, this.nameAr, this.nameEn, this.color});
+
+  Tags.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nameAr = json['name_ar'];
+    nameEn = json['name_en'];
+    color = json['color'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name_ar'] = this.nameAr;
+    data['name_en'] = this.nameEn;
+    data['color'] = this.color;
+    return data;
   }
 }

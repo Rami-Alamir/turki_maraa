@@ -144,5 +144,7 @@
   "size": "الحجم",
   "chopping" : "التقطيع",
   "shalwata": "شلوطة",
-  "product_added_cart": "تم اضافة المنتج لسلة التسوق"
+  "product_added_cart": "تم اضافة المنتج لسلة التسوق",
+  "soon": "قريبا",
+  "The_product_has_not_been_added_to_the_favourites" : "نم اضافة المنتج للمفضلة"
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/dummy_data/dummy_data.dart';
+import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -8,6 +9,7 @@ import 'package:new_turki/widgets/home/categories_g1.dart';
 import 'package:new_turki/widgets/home/categories_g2.dart';
 import 'package:new_turki/widgets/home/categories_g3.dart';
 import 'package:new_turki/widgets/home/categories_g4.dart';
+import 'package:new_turki/widgets/home/categories_large.dart';
 import 'package:new_turki/widgets/home/category_app_bar.dart';
 import 'package:new_turki/widgets/home/not_supported_area.dart';
 import 'package:new_turki/widgets/home/order_type.dart';
@@ -28,7 +30,9 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    _homeProvider.getData();
+    final _auth = Provider.of<Auth>(context, listen: false);
+    _homeProvider
+        .getHomePageData(_auth.isAuth ? "Bearer ${_auth.accessToken}" : "");
     _homeProvider.initMapData();
     super.initState();
   }
@@ -47,20 +51,28 @@ class _HomeState extends State<Home> {
             color: Theme.of(context).primaryColor,
             backgroundColor: Theme.of(context).colorScheme.secondary,
             onRefresh: () async {
-              await _homeProvider.getData();
+              final _homeProvider =
+                  Provider.of<HomeProvider>(context, listen: false);
+              final _auth = Provider.of<Auth>(context, listen: false);
+              _homeProvider.getHomePageData(
+                  _auth.isAuth ? "Bearer ${_auth.accessToken}" : "");
             },
             child: Stack(
               children: [
                 _homeProvider.isLoading
                     ? SpinkitIndicator(
-                        padding: EdgeInsets.only(top: 140),
+                        padding: EdgeInsets.only(top: 170),
                       )
                     : _homeProvider.retry
                         ? Retry(
-                            padding: EdgeInsets.only(top: 140),
+                            padding: EdgeInsets.only(top: 170),
                             onPressed: () {
                               _homeProvider.setIsLoading = true;
-                              _homeProvider.getData();
+                              final _auth =
+                                  Provider.of<Auth>(context, listen: false);
+                              _homeProvider.getHomePageData(_auth.isAuth
+                                  ? "Bearer ${_auth.accessToken}"
+                                  : "");
                             },
                           )
                         : ListView(
@@ -80,7 +92,8 @@ class _HomeState extends State<Home> {
                                         Theme.of(context).textTheme.subtitle1),
                               ),
                               categoriesGroup(
-                                  _homeProvider.categoryData.data?.length ?? 0),
+                                  _homeProvider.categoryData.data?.length ?? 0,
+                                  _homeProvider),
                               Padding(
                                 padding: const EdgeInsets.only(
                                     right: 20.0, left: 5, bottom: 8, top: 10),
@@ -168,7 +181,7 @@ class _HomeState extends State<Home> {
                           visible: _homeProvider.canPickup,
                         ),
                       ),
-                      AddressContainer(),
+                      if (!_homeProvider.isLoading) AddressContainer(),
                     ],
                   ),
                 ),
@@ -176,23 +189,26 @@ class _HomeState extends State<Home> {
             )));
   }
 
-  Widget categoriesGroup(
-    int length,
-  ) {
-    switch (length) {
-      case 0:
-        return Padding(
-          padding: EdgeInsets.only(top: 240.0),
-          child: NotSupportedArea(),
-        );
-      case 1:
-        return CategoriesG1();
-      case 2:
-        return CategoriesG2();
-      case 3:
-        return CategoriesG3();
-      default:
-        return CategoriesG4();
-    }
+  Widget categoriesGroup(int length, HomeProvider homeProvider) {
+    if (SizeConfig.screenWidth! > 590)
+      return CategoriesLarge(categoriesList: homeProvider.categoryData.data!);
+    else
+      switch (length) {
+        case 0:
+          return Padding(
+            padding: EdgeInsets.only(top: 240.0),
+            child: NotSupportedArea(),
+          );
+        case 1:
+          return CategoriesG1(
+            categoryData: homeProvider.categoryData.data![0],
+          );
+        case 2:
+          return CategoriesG2(categoriesList: homeProvider.categoryData.data!);
+        case 3:
+          return CategoriesG3(categoriesList: homeProvider.categoryData.data!);
+        default:
+          return CategoriesG4(categoriesList: homeProvider.categoryData.data!);
+      }
   }
 }

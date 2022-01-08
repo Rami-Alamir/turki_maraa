@@ -91,11 +91,8 @@ class _AddNewAddressState extends State<AddNewAddress> {
                   padding: const EdgeInsets.all(10),
                   onPressed: () async {
                     FocusScope.of(context).requestFocus(FocusNode());
-                    await _auth.addNewAddress(
-                        context,
-                        _homeProvider.latLng.latitude,
-                        _homeProvider.latLng.longitude,
-                        _homeProvider.descriptionController.text);
+                    await _homeProvider.addNewAddress(
+                        context, _auth.isAuth ? _auth.accessToken : "");
                   },
                 ),
               ],

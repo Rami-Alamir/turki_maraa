@@ -27,6 +27,7 @@ class _ProductsListState extends State<ProductsList> {
   @override
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
+    print("${widget.data['index']}ddq");
     return Scaffold(
       appBar: PrimaryAppBar(
         title: widget.data['title'],
@@ -55,8 +56,8 @@ class _ProductsListState extends State<ProductsList> {
                                       SizeConfig.screenWidth! - 360,
                                   mainAxisSpacing: 0,
                                   childAspectRatio: 0.85),
-                          itemCount: _homeProvider
-                              .productsList.data![0].products!.length,
+                          itemCount: _homeProvider.productsList
+                              .data![widget.data['index']].products!.length,
                           itemBuilder: (BuildContext ctx, index) {
                             return Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -66,7 +67,9 @@ class _ProductsListState extends State<ProductsList> {
                                   0),
                               child: ProductCardLarge(
                                 product: _homeProvider
-                                    .productsList.data![0].products![index],
+                                    .productsList
+                                    .data![widget.data['index']]
+                                    .products![index],
                               ),
                             );
                           }),

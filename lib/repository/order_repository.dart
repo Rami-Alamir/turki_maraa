@@ -1,11 +1,11 @@
-import 'package:new_turki/models/cart_data.dart';
+import 'package:new_turki/models/order.dart';
 import 'package:new_turki/models/orders_data.dart';
 import 'package:new_turki/networking/api_base_helper.dart';
 
 class OrderRepository {
   ApiBaseHelper _helper = ApiBaseHelper();
 
-  //add to cart
+  //place Order
   Future<int> placeOrder(body, String authorization) async {
     print('orders/add-order');
     print(body.toString());
@@ -14,7 +14,7 @@ class OrderRepository {
     return response;
   }
 
-  //get cart list
+  //get Orders list
   Future<OrdersData> getOrdersList(String authorization) async {
     final response = await _helper.get("orders", authorization: authorization);
     OrdersData? ordersData;
@@ -24,5 +24,18 @@ class OrderRepository {
       print(e.toString());
     }
     return ordersData!;
+  }
+
+  //get Order data
+  Future<Order> getOrderData(String id, String authorization) async {
+    final response =
+        await _helper.get("orders/$id", authorization: authorization);
+    Order? orderData;
+    try {
+      orderData = Order.fromJson(response);
+    } catch (e) {
+      print(e.toString());
+    }
+    return orderData!;
   }
 }

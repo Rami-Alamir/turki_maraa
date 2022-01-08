@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/dummy_data/dummy_data.dart';
+import 'package:new_turki/models/faq_data.dart';
+import 'package:new_turki/models/qa.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/profile/faq_row.dart';
@@ -15,6 +16,8 @@ class Faq extends StatefulWidget {
 class FaqState extends State<Faq> {
   @override
   Widget build(BuildContext context) {
+    final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+    List<Question> _faqList = _isAr ? FAQData.faqListAr : FAQData.faqListEn;
     return Scaffold(
       appBar: PrimaryAppBar(
         title: AppLocalizations.of(context)!.tr("faq"),
@@ -25,7 +28,7 @@ class FaqState extends State<Faq> {
           Container(
             color: Colors.transparent,
             width: double.infinity,
-            constraints: BoxConstraints(minHeight: 150, maxHeight: 200),
+            constraints: const BoxConstraints(minHeight: 150, maxHeight: 200),
             height: SizeConfig.screenWidth! / 3,
             child: Column(
               children: [
@@ -54,12 +57,12 @@ class FaqState extends State<Faq> {
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: DummyData.faqList.length,
-              padding: EdgeInsets.only(top: 10),
+              itemCount: _faqList.length,
+              padding: const EdgeInsets.only(top: 10),
               itemBuilder: (BuildContext ctxt, int index) {
                 return FaqRow(
-                  question: DummyData.faqList[index].question,
-                  answer: DummyData.faqList[index].answer,
+                  question: _faqList[index].question,
+                  answer: _faqList[index].answer,
                 );
               }),
         ],

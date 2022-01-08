@@ -7,11 +7,9 @@ import 'item_column.dart';
 
 class OrderCard extends StatelessWidget {
   final Data order;
-  final int index;
 
   const OrderCard({
     required this.order,
-    required this.index,
   });
 
   @override
@@ -20,8 +18,8 @@ class OrderCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.5),
       child: InkWell(
-        onTap: () =>
-            Navigator.pushNamed(context, '/OrderDetails', arguments: index),
+        onTap: () => Navigator.pushNamed(context, '/OrderDetails',
+            arguments: order.refNo),
         child: Container(
             height: 250,
             decoration: BoxDecoration(
@@ -33,7 +31,7 @@ class OrderCard extends StatelessWidget {
                   Theme.of(context).primaryColor.withOpacity(0.78),
                 ],
               ),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(8.0),
                   topLeft: Radius.circular(8.0),
                   bottomRight: Radius.circular(5.0),
@@ -73,7 +71,7 @@ class OrderCard extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(11.0)),
                                     child: ClipRRect(
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                           Radius.circular(11),
                                         ),
                                         child: Container(

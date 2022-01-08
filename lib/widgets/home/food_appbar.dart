@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/shared/logo.dart';
-
 import 'banners.dart';
 
 class FoodAppBar extends StatelessWidget {

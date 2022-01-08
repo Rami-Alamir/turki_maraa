@@ -7,13 +7,14 @@ import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'profile_row.dart';
 
 class HelpCard extends StatelessWidget {
+  final bool isAuth;
+
+  const HelpCard({required this.isAuth});
   @override
   Widget build(BuildContext context) {
-    final _auth = Provider.of<Auth>(context, listen: false);
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,13 +65,15 @@ class HelpCard extends StatelessWidget {
                         onTap: () {
                           _share(context);
                         },
-                        withDivider: _auth.isAuth,
+                        withDivider: isAuth,
                         icon: TURKIICONS.share4_1,
                         title: 'share'),
                     Visibility(
-                      visible: _auth.isAuth,
+                      visible: isAuth,
                       child: ProfileRow(
                           onTap: () {
+                            final _auth =
+                                Provider.of<Auth>(context, listen: false);
                             _auth.logOut(context);
                           },
                           withDivider: false,

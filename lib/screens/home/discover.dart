@@ -56,7 +56,7 @@ class _DiscoverState extends State<Discover> {
                               : widget.item.descriptionEn),
                       GridView.builder(
                           shrinkWrap: true,
-                          physics: ScrollPhysics(),
+                          physics: const ScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
