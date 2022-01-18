@@ -56,9 +56,9 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     refNo = json['ref_no'];
     deliveryFee = json['delivery_fee'];
-    orderTotal = json['order_total'];
+    orderTotal = json['order_subtotal'];
     totalAmount = json['total_amount'];
-    totalAmountAfterDiscount = json['total_amount_after_discount'];
+    totalAmountAfterDiscount = json['total_amount_after_sale'];
     comment = json['comment'];
     usingWallet = json['using_wallet'];
     walletAmountUsed = json['wallet_amount_used'];
@@ -99,6 +99,7 @@ class Products {
   int? isPickedUp;
   int? categoryId;
   int? subCategoryId;
+  List<ProductImages>? productImages;
 
   Products(
       {this.id,
@@ -113,12 +114,19 @@ class Products {
       this.salePrice,
       this.isActive,
       this.isShalwata,
+      this.productImages,
       this.isDelivered,
       this.isPickedUp,
       this.categoryId,
       this.subCategoryId});
 
   Products.fromJson(Map<String, dynamic> json) {
+    if (json['product_images'] != null) {
+      productImages = <ProductImages>[];
+      json['product_images'].forEach((v) {
+        productImages!.add(ProductImages.fromJson(v));
+      });
+    }
     id = json['id'];
     nameAr = json['name_ar'];
     nameEn = json['name_en'];
@@ -167,5 +175,34 @@ class OrderState {
     isActive = json['is_active'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+  }
+}
+
+class ProductImages {
+  int? id;
+  int? productId;
+  int? isDefault;
+  String? createdAt;
+  String? updatedAt;
+  String? imageUrl;
+  String? thumbnailUrl;
+
+  ProductImages(
+      {this.id,
+      this.productId,
+      this.isDefault,
+      this.createdAt,
+      this.updatedAt,
+      this.imageUrl,
+      this.thumbnailUrl});
+
+  ProductImages.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    productId = json['product_id'];
+    isDefault = json['is_default'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    imageUrl = json['image_url'];
+    thumbnailUrl = json['thumbnail_url'];
   }
 }

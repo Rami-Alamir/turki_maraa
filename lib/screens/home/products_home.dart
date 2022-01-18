@@ -49,6 +49,7 @@ class _ProductsHomeState extends State<ProductsHome> {
                 )
               : RefreshIndicator(
                   color: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).backgroundColor,
                   onRefresh: () async {
                     await _homeProvider.getFoodsPageData(widget.id,
                         isLoading: false);
@@ -63,7 +64,7 @@ class _ProductsHomeState extends State<ProductsHome> {
                         DiscoverSection(
                           discoverList: _homeProvider.discoverList,
                         ),
-                        // // HtmlSection(),
+                        // // // HtmlSection(),
                         SliverToBoxAdapter(
                             child: ProductsSection(
                                 products: _homeProvider.productsList)),

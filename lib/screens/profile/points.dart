@@ -24,7 +24,7 @@ class _UserPointsState extends State<UserPoints> {
 
   @override
   Widget build(BuildContext context) {
-    final _auth = Provider.of<Auth>(context, listen: true);
+    final _auth = Provider.of<Auth>(context);
 
     return Scaffold(
         appBar: PrimaryAppBar(

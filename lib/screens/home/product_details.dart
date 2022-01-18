@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/provider/auth.dart';
-import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/home/product_description.dart';
+import 'package:new_turki/widgets/home/product_details_footer.dart';
 import 'package:new_turki/widgets/home/product_header.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
-import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:new_turki/widgets/home/extras_list.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +29,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
-    final _cartProvider = Provider.of<CartProvider>(context, listen: false);
-    final _authProvider = Provider.of<Auth>(context, listen: false);
+
     return Scaffold(
       body: _homeProvider.productIsLoading
           ? SpinkitIndicator(
@@ -62,18 +58,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ProductDescription(
                           product: _homeProvider.productData,
                           price: _homeProvider.getProductPrice()),
-                      // Padding(
-                      //   padding: EdgeInsetsDirectional.fromSTEB(
-                      //       15.0, 10.0, 0.0, 10.0),
-                      //   child: Text(
-                      //     AppLocalizations.of(context)!.tr('product_options'),
-                      //     style: Theme.of(context)
-                      //         .textTheme
-                      //         .headline4
-                      //         ?.copyWith(
-                      //             fontSize: 16, fontWeight: FontWeight.bold),
-                      //   ),
-                      // ),
                       ExtrasList(
                         title: AppLocalizations.of(context)!.tr('size'),
                         tags: _homeProvider.productData.data!.sizes!,
@@ -123,89 +107,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ],
                   ),
                 ),
-      bottomSheet: !_homeProvider.productIsLoading &&
-              !_homeProvider.productIsRetry
-          ? Container(
-              color: Theme.of(context).backgroundColor,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        RoundedRectangleButton(
-                          padding: EdgeInsets.all(0),
-                          onPressed: () {
-                            setState(() {
-                              _count = _count == 1 ? _count : _count - 1;
-                            });
-                          },
-                          width: 40,
-                          height: 40,
-                          fontSize: 22,
-                          title: '-',
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "$_count",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline1
-                                ?.copyWith(fontSize: 16),
-                          ),
-                        ),
-                        RoundedRectangleButton(
-                          onPressed: () {
-                            setState(() {
-                              _count += 1;
-                            });
-                          },
-                          padding: EdgeInsets.all(0),
-                          width: 40,
-                          height: 40,
-                          fontSize: 22,
-                          title: '+',
-                        ),
-                        RoundedRectangleButton(
-                          onPressed: () {
-                            if (_authProvider.isAuth) {
-                              _cartProvider.addToCart(
-                                context: context,
-                                authorization:
-                                    "Bearer " + _authProvider.accessToken,
-                                quantity: '$_count',
-                                sizeId:
-                                    "${_homeProvider.selectedSize > -1 ? (_homeProvider.productData.data?.sizes?[_homeProvider.selectedSize].id!.toString()) : ""}",
-                                preparationId:
-                                    "${_homeProvider.selectedPackaging > -1 ? (_homeProvider.productData.data?.packaging?[_homeProvider.selectedPackaging].id!.toString()) : ""}",
-                                cutId:
-                                    "${_homeProvider.selectedChopping > -1 ? (_homeProvider.productData.data?.chopping?[_homeProvider.selectedChopping].id!.toString()) : ""}",
-                                isShalwata:
-                                    "${_homeProvider.selectedShalwata > -1 ? (_homeProvider.productData.data?.shalwata!.id!.toString()) : ""}",
-                                productId:
-                                    '${_homeProvider.productData.data!.id}',
-                              );
-                            } else
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushNamed('/Login');
-                          },
-                          padding: EdgeInsets.all(0),
-                          width: SizeConfig.screenWidth! - 150,
-                          height: 40,
-                          fontSize: 15,
-                          title:
-                              AppLocalizations.of(context)!.tr('add_to_cart'),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            )
-          : Container(),
+      bottomSheet:
+          !_homeProvider.productIsLoading && !_homeProvider.productIsRetry
+              ? ProductDetailsFooter(
+                  count: _count,
+                  add: () {
+                    setState(() {
+                      _count = _count == 1 ? _count : _count - 1;
+                    });
+                  },
+                  subtract: () {
+                    setState(() {
+                      _count += 1;
+                    });
+                  },
+                )
+              : Container(),
     );
   }
 }

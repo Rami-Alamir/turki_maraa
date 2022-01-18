@@ -35,6 +35,7 @@ class FavouriteProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // delete item from favourite list
   Future<void> deleteFromFavourite({
     required BuildContext context,
     required String authorization,
@@ -57,6 +58,7 @@ class FavouriteProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // add item to favourite list
   Future<void> addToFavourite({
     required BuildContext context,
     required String authorization,

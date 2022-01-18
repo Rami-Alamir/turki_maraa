@@ -12,7 +12,7 @@ class ExtraTag extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Container(
             constraints: BoxConstraints(minHeight: 40),
             decoration: BoxDecoration(
@@ -23,8 +23,7 @@ class ExtraTag extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(5)),
             ),
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 0.0, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

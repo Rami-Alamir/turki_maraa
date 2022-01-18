@@ -10,7 +10,6 @@ class OrderDetailsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
       child: InkWell(
@@ -39,7 +38,9 @@ class OrderDetailsRow extends StatelessWidget {
                         child: Container(
                           color: Theme.of(context).colorScheme.secondary,
                           child: Image.network(
-                            'https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112',
+                            item.productImages!.length > 0
+                                ? item.productImages![0].imageUrl!
+                                : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
                             width: 60,
                             height: 60,
                             fit: BoxFit.cover,

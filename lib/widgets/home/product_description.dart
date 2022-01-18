@@ -13,6 +13,36 @@ class ProductDescription extends StatelessWidget {
   final double price;
 
   const ProductDescription({required this.product, required this.price});
+
+  Future<void> _createDynamicLink(bool short, String link) async {
+    // // setState(() {
+    // //   _isCreatingLink = true;
+    // // });
+    //
+    // final DynamicLinkParameters parameters = DynamicLinkParameters(
+    //   uriPrefix: "https://almaraa.page.link",
+    //   link: Uri.parse("https://almaraa.page.link" + link),
+    //   androidParameters: const AndroidParameters(
+    //     packageName: 'com.almaraa.new_turki',
+    //     minimumVersion: 0,
+    //   ),
+    // );
+    //
+    // Uri url;
+    // if (short) {
+    //   final ShortDynamicLink shortLink =
+    //       await FirebaseHelper.dynamicLinks!.buildShortLink(parameters);
+    //   url = shortLink.shortUrl;
+    // } else {
+    //   url = await FirebaseHelper.dynamicLinks!.buildLink(parameters);
+    // }
+    // print(url.toString());
+    // // setState(() {
+    // //   _linkMessage = url.toString();
+    // //   _isCreatingLink = false;
+    // // });
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
@@ -54,11 +84,13 @@ class ProductDescription extends StatelessWidget {
               padding: const EdgeInsetsDirectional.fromSTEB(0, 15.0, 12.0, 0),
               child: Row(
                 children: [
-                  // CircleIcon(
-                  //     icon: Icons.share,
-                  //     onTap: () {},
-                  //     padding:
-                  //         const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0)),
+                  CircleIcon(
+                      icon: Icons.share,
+                      onTap: () async {
+                        _createDynamicLink(false, '/About');
+                      },
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0)),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0),
                     child: CircleIcon(
@@ -146,7 +178,7 @@ class ProductDescription extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 12.0, left: 12, bottom: 10),
           child: Text(
-            'خروف نعيمي بلدي مربى محليا في مزارعنا يصلك طازج ومغلف ومقطع حسب اختيارك',
+            _isAr ? product.data!.descriptionAr! : product.data!.descriptionEn!,
             style: Theme.of(context)
                 .textTheme
                 .subtitle2!
@@ -154,7 +186,7 @@ class ProductDescription extends StatelessWidget {
           ),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _item(
                 context: context,
@@ -162,9 +194,7 @@ class ProductDescription extends StatelessWidget {
                 value: product.data!.weight!,
                 size: 20,
                 icon: TURKIICONS.weight_1),
-            Visibility(
-                visible: product.data!.calories!.length > 0,
-                child: Padding(padding: const EdgeInsets.all(20))),
+            Padding(padding: const EdgeInsets.all(10)),
             _item(
                 context: context,
                 title: 'calories',

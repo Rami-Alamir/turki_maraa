@@ -14,7 +14,8 @@ class ProductCard extends StatelessWidget {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-      child: SizedBox(
+      child: Container(
+        color: Colors.transparent,
         width: SizeConfig.setWidgetWidthWithFactor(0.35, 0.175, 0.175),
         height: SizeConfig.setWidgetWidthWithFactor(0.35, 0.175, 0.175),
         child: InkWell(
@@ -37,7 +38,7 @@ class ProductCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0)),
                       child: Container(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Colors.transparent,
                         width: SizeConfig.setWidgetWidthWithFactor(
                             0.35, 0.175, 0.175),
                         height: SizeConfig.setWidgetWidthWithFactor(
@@ -45,7 +46,7 @@ class ProductCard extends StatelessWidget {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
                             child: Image.network(
-                              '${(product.productImages!.length > 0) ? product.productImages![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
+                              '${((product.productImages?.length ?? 0) > 0) ? product.productImages![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
                               width: SizeConfig.setWidgetWidthWithFactor(
                                   0.35, 0.175, 0.175),
                               height: SizeConfig.setWidgetWidthWithFactor(
@@ -65,18 +66,18 @@ class ProductCard extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: hexToColor(product.tags![0].color!),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(20.0)),
+                                const BorderRadius.all(Radius.circular(15.0)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                bottom: 1.0, right: 10, left: 10),
+                                bottom: 2.5, right: 5, left: 5, top: 2.5),
                             child: Text(
                               _isAr
                                   ? product.tags![0].nameAr!
                                   : product.tags![0].nameEn!,
                               textAlign: TextAlign.center,
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 14),
+                                  TextStyle(color: Colors.white, fontSize: 11),
                             ),
                           ),
                         ))
@@ -86,7 +87,7 @@ class ProductCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
                 child: AutoSizeText(
                   _isAr ? product.nameAr! : product.nameEn!,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.headline4,
                   minFontSize: 14,
                   maxFontSize: 14,
@@ -97,77 +98,76 @@ class ProductCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
                   child: Row(
                     children: [
-                      Visibility(
-                        visible: product.discount! > 0,
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(top: 3, left: 5, right: 5),
-                          child: Row(
-                            children: [
-                              AutoSizeText(
-                                product.price.toString(),
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6!
-                                    .copyWith(
-                                        decoration: product.discount! > 0.0
-                                            ? TextDecoration.lineThrough
-                                            : TextDecoration.none,
-                                        fontSize:
-                                            product.discount! > 0 ? 10 : 14,
-                                        fontWeight: FontWeight.w500),
-                                minFontSize: product.discount! > 0 ? 12 : 14,
-                                maxFontSize: product.discount! > 0 ? 12 : 14,
-                                maxLines: 1,
-                              ),
-                              AutoSizeText(
-                                " ${AppLocalizations.of(context)!.tr('sr')}",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6!
-                                    .copyWith(
-                                        fontSize:
-                                            product.discount! > 0 ? 8 : 12,
-                                        fontWeight: FontWeight.w500),
-                                minFontSize: product.discount! > 0 ? 8 : 12,
-                                maxFontSize: product.discount! > 0 ? 8 : 12,
-                                maxLines: 1,
-                              ),
-                            ],
-                          ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 3, left: 5, right: 5),
+                        child: Row(
+                          children: [
+                            AutoSizeText(
+                              product.price.toString(),
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
+                                      decoration: product.salePrice! > 0.0
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none,
+                                      fontSize:
+                                          product.salePrice! > 0 ? 10 : 12,
+                                      fontWeight: FontWeight.bold),
+                              minFontSize: product.salePrice! > 0 ? 10 : 12,
+                              maxFontSize: product.salePrice! > 0 ? 10 : 12,
+                              maxLines: 1,
+                            ),
+                            AutoSizeText(
+                              product.salePrice! == 0
+                                  ? " ${AppLocalizations.of(context)!.tr('sr')}"
+                                  : "",
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
+                                      fontSize: product.salePrice! > 0 ? 8 : 10,
+                                      fontWeight: FontWeight.bold),
+                              minFontSize: product.salePrice! > 0 ? 8 : 10,
+                              maxFontSize: product.salePrice! > 0 ? 8 : 10,
+                              maxLines: 1,
+                            ),
+                          ],
                         ),
                       ),
-                      Row(
-                        children: [
-                          AutoSizeText(
-                            (product.price! -
-                                    (product.price! * product.discount! / 100))
-                                .toString(),
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6!
-                                .copyWith(fontSize: 14),
-                            minFontSize: 12,
-                            maxFontSize: 14,
-                            maxLines: 1,
-                          ),
-                          AutoSizeText(
-                            " ${AppLocalizations.of(context)!.tr('sr')}",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6!
-                                .copyWith(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.normal),
-                            minFontSize: 12,
-                            maxFontSize: 14,
-                            maxLines: 1,
-                          ),
-                        ],
+                      Visibility(
+                        visible: product.salePrice! > 0,
+                        child: Row(
+                          children: [
+                            AutoSizeText(
+                              product.salePrice!.toString(),
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(fontSize: 14),
+                              minFontSize: 10,
+                              maxFontSize: 12,
+                              maxLines: 1,
+                            ),
+                            AutoSizeText(
+                              " ${AppLocalizations.of(context)!.tr('sr')}",
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),
+                              minFontSize: 10,
+                              maxFontSize: 12,
+                              maxLines: 1,
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   )),

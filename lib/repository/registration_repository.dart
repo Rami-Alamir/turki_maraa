@@ -1,12 +1,20 @@
+import 'package:new_turki/models/user_type.dart';
 import 'package:new_turki/networking/api_base_helper.dart';
 
 class RegistrationRepository {
   ApiBaseHelper _helper = ApiBaseHelper();
 
   //send otp
-  Future<int> sendOTP(body) async {
-    final responseStatusCode = await _helper.post2("sendOtpCode", body);
-    return responseStatusCode;
+  Future<UserType> sendOTP(body) async {
+    UserType? _userType;
+    print('send otp');
+    final response = await _helper.post("sendOtpCode", body);
+    try {
+      _userType = UserType.fromJson(response);
+    } catch (e) {
+      print(e.toString());
+    }
+    return _userType!;
   }
 
   //verify Otp Code

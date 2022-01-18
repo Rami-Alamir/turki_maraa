@@ -15,7 +15,9 @@ class Data {
   String? price;
   String? weight;
   String? calories;
-  int? noRating;
+  String? descriptionAr;
+  String? descriptionEn;
+  double? noRating;
   Category? category;
   SubCategory? subCategory;
   int? isPickedUp;
@@ -40,6 +42,8 @@ class Data {
       this.category,
       this.subCategory,
       this.isPickedUp,
+      this.descriptionAr,
+      this.descriptionEn,
       this.isDelivered,
       this.isShalwata,
       this.shalwata,
@@ -55,8 +59,10 @@ class Data {
     nameEn = json['name_en'] ?? '';
     price = json['price'] ?? '';
     weight = json['weight'] ?? '';
+    descriptionAr = json['description_ar'] ?? '';
+    descriptionEn = json['description_en'] ?? '';
     calories = json['calories'] ?? '';
-    noRating = json['no_rating'] ?? 5;
+    noRating = (json['no_rating'] ?? 5.0) * 1.0;
     category = json['category'] != null
         ? new Category.fromJson(json['category'])
         : null;

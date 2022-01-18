@@ -7,7 +7,9 @@ class EmptyFavourite extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 50.0),
+      padding: EdgeInsets.only(
+        top: SizeConfig.screenHeight! / 7,
+      ),
       child: Container(
         width: SizeConfig.screenWidth,
         child: Column(

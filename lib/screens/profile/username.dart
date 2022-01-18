@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/auth.dart';
+import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/shared/rectangle_text_field.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
@@ -11,6 +12,13 @@ class Username extends StatefulWidget {
 }
 
 class _UsernameState extends State<Username> {
+  @override
+  void initState() {
+    final _auth = Provider.of<Auth>(context, listen: false);
+    _auth.usernameController.clear();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final _auth = Provider.of<Auth>(context, listen: false);
@@ -47,11 +55,12 @@ class _UsernameState extends State<Username> {
                   title: AppLocalizations.of(context)!.tr('next'),
                   onPressed: () async {
                     FocusScope.of(context).requestFocus(FocusNode());
-                    await _auth.login(context);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    await _auth.updateUser(context);
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => App(index: 4)),
+                        ModalRoute.withName('/'));
                   }),
             ],
           ),

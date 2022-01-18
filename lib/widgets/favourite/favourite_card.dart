@@ -73,7 +73,9 @@ class FavouriteCard extends StatelessWidget {
                         color: Colors.transparent,
                         child: FadeInImage.assetNetwork(
                           placeholder: 'assets/images/turki_icon.png',
-                          image: data.product!.productImages![0].imageUrl!,
+                          image: data.product!.productImages!.length > 0
+                              ? data.product!.productImages![0].imageUrl!
+                              : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
                           width: 110,
                           height: 110,
                           fit: BoxFit.fill,
@@ -108,8 +110,8 @@ class FavouriteCard extends StatelessWidget {
                                   const EdgeInsets.symmetric(vertical: 2.0),
                               child: AutoSizeText(
                                   _isAr
-                                      ? data.product!.description!
-                                      : data.product!.description!,
+                                      ? data.product!.descriptionAr!
+                                      : data.product!.descriptionEn!,
                                   style: Theme.of(context).textTheme.subtitle2),
                             ),
                           ],

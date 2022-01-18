@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/user_address.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -17,7 +18,8 @@ class _AddressContainerState extends State<AddressContainer> {
   @override
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
-    final List<Data>? _addressList = _homeProvider.userAddress?.data;
+    final _addressProvider = Provider.of<AddressProvider>(context);
+    final List<Data>? _addressList = _addressProvider.userAddress?.data;
     return AnimatedContainer(
       duration: Duration(microseconds: 1),
       child: InkWell(
@@ -59,7 +61,7 @@ class _AddressContainerState extends State<AddressContainer> {
                                 visible: _homeProvider.selectedOrderType == 0,
                                 child: InkWell(
                                   onTap: () {
-                                    _homeProvider.setSelectedAddress = -1;
+                                    _addressProvider.setSelectedAddress = -1;
                                     _selected = false;
                                     setState(() {});
                                   },
@@ -87,7 +89,7 @@ class _AddressContainerState extends State<AddressContainer> {
                                       onTap: () {
                                         if (_homeProvider.selectedOrderType ==
                                             0)
-                                          _homeProvider.setSelectedAddress =
+                                          _addressProvider.setSelectedAddress =
                                               index;
                                         else
                                           _homeProvider.setSelectedAddress2 =
@@ -103,7 +105,7 @@ class _AddressContainerState extends State<AddressContainer> {
                                           divider: index !=
                                               (_homeProvider.selectedOrderType ==
                                                           0
-                                                      ? _homeProvider
+                                                      ? _addressProvider
                                                           .selectedAddress
                                                       : _homeProvider
                                                           .selectedAddress2) -
@@ -146,11 +148,11 @@ class _AddressContainerState extends State<AddressContainer> {
                           children: [
                             Text(
                                 _homeProvider.selectedOrderType == 0
-                                    ? _homeProvider.selectedAddress == -1
+                                    ? _addressProvider.selectedAddress == -1
                                         ? AppLocalizations.of(context)!
                                             .tr('current_location')
-                                        : _addressList![
-                                                _homeProvider.selectedAddress]
+                                        : _addressList![_addressProvider
+                                                .selectedAddress]
                                             .address!
                                     : AppLocalizations.of(context)!.tr('soon'),
                                 style: Theme.of(context)

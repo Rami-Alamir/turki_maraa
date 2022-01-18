@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/favourite_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/favourite/empty_favourite.dart';
 import 'package:new_turki/widgets/favourite/favourite_card.dart';
 import 'package:new_turki/widgets/shared/not_auth.dart';
@@ -49,19 +48,18 @@ class _FavouriteState extends State<Favourite> {
                             .getFavouriteData("Bearer " + _auth.accessToken);
                       },
                     )
-                  : ((_favourite.favourite.dataT?.data?.length) ?? 0) == 0
-                      ? EmptyFavourite()
-                      : RefreshIndicator(
-                          color: Theme.of(context).primaryColor,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          onRefresh: () async {
-                            await _favourite.getFavouriteData(
-                                "Bearer " + _auth.accessToken);
-                          },
-                          child: ListView(
-                            children: [
-                              ListView.builder(
+                  : RefreshIndicator(
+                      color: Theme.of(context).primaryColor,
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      onRefresh: () async {
+                        await _favourite
+                            .getFavouriteData("Bearer " + _auth.accessToken);
+                      },
+                      child: ListView(
+                        children: [
+                          ((_favourite.favourite.dataT?.data?.length) ?? 0) == 0
+                              ? EmptyFavourite()
+                              : ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
                                   physics: const NeverScrollableScrollPhysics(),
@@ -78,9 +76,9 @@ class _FavouriteState extends State<Favourite> {
                                           .favourite.dataT!.data![index],
                                     );
                                   }),
-                            ],
-                          ),
-                        ),
+                        ],
+                      ),
+                    ),
     );
   }
 }

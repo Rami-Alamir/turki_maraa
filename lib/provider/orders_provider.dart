@@ -11,22 +11,23 @@ class OrdersProvider with ChangeNotifier {
   OrdersData? _ordersData;
   Order? _order;
   String? _token;
+
   OrdersData? get ordersData => _ordersData;
-
-  bool get isLoading2 => _isLoading2;
-
-  set setIsLoading2(bool value) {
-    _isLoading2 = value;
-    notifyListeners();
-  }
+  Order get order => _order!;
 
   bool get retry => _retry;
   bool get retry2 => _retry2;
 
   bool get isLoading => _isLoading;
+  bool get isLoading2 => _isLoading2;
 
   set setIsLoading(bool value) {
     _isLoading = value;
+    notifyListeners();
+  }
+
+  set setIsLoading2(bool value) {
+    _isLoading2 = value;
     notifyListeners();
   }
 
@@ -47,16 +48,18 @@ class OrdersProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Order get order => _order!;
   //get order Data
   Future<void> getOrderData(String id) async {
     _isLoading2 = true;
     _retry2 = false;
 
     try {
-      _order = await OrderRepository().getOrderData(id, "Bearer $_token");
+      _order = await OrderRepository().getOrderData(
+          id,
+          ""
+          "Bearer $_token");
     } catch (e) {
-      print('catch cart');
+      print('catch order');
       print(e.toString());
       _retry2 = true;
     }

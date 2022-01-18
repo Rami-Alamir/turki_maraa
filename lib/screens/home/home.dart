@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/dummy_data/dummy_data.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/firebase_helper.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/home/address_container.dart';
 import 'package:new_turki/widgets/home/categories_g1.dart';
@@ -30,17 +32,44 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
     final _auth = Provider.of<Auth>(context, listen: false);
-    _homeProvider
-        .getHomePageData(_auth.isAuth ? "Bearer ${_auth.accessToken}" : "");
-    _homeProvider.initMapData();
+    _homeProvider.getHomePageData();
+    _addressProvider.initMapData();
+    _addressProvider
+        .getAddressList(_auth.isAuth ? "Bearer ${_auth.accessToken}" : "");
+    initDynamicLinks();
     super.initState();
+  }
+
+  Future<void> initDynamicLinks() async {
+    print('initDynamicLinks');
+    FirebaseHelper.dynamicLinks!.onLink.listen((dynamicLinkData) {
+      print(dynamicLinkData.asMap().toString());
+      final Uri uri = dynamicLinkData.link;
+      final queryParams = uri.queryParameters;
+      if (queryParams.isNotEmpty) {
+        String? productId = queryParams["id"];
+        Navigator.pushNamed(context, dynamicLinkData.link.path,
+            arguments: {"productId": int.parse(productId!)});
+      } else {
+        Navigator.pushNamed(
+          context,
+          dynamicLinkData.link.path,
+        );
+      }
+    }).onError((error) {
+      print('onLink error');
+      print(error.message);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     double _statusBarHeight = MediaQuery.of(context).padding.top;
     final _homeProvider = Provider.of<HomeProvider>(context);
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: CategoryAppBar(
@@ -51,11 +80,7 @@ class _HomeState extends State<Home> {
             color: Theme.of(context).primaryColor,
             backgroundColor: Theme.of(context).colorScheme.secondary,
             onRefresh: () async {
-              final _homeProvider =
-                  Provider.of<HomeProvider>(context, listen: false);
-              final _auth = Provider.of<Auth>(context, listen: false);
-              _homeProvider.getHomePageData(
-                  _auth.isAuth ? "Bearer ${_auth.accessToken}" : "");
+              _homeProvider.getHomePageData();
             },
             child: Stack(
               children: [
@@ -68,11 +93,7 @@ class _HomeState extends State<Home> {
                             padding: EdgeInsets.only(top: 170),
                             onPressed: () {
                               _homeProvider.setIsLoading = true;
-                              final _auth =
-                                  Provider.of<Auth>(context, listen: false);
-                              _homeProvider.getHomePageData(_auth.isAuth
-                                  ? "Bearer ${_auth.accessToken}"
-                                  : "");
+                              _homeProvider.getHomePageData();
                             },
                           )
                         : ListView(

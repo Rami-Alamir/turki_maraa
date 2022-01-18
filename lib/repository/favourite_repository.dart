@@ -19,7 +19,6 @@ class FavouriteRepository {
 
   //delete From Favourite
   Future<int> deleteFromFavourite(String id, String authorization) async {
-    print("wishlists/remove-from-wishlist/$id");
     final response = await _helper.delete("wishlists/remove-from-wishlist/$id",
         authorization: authorization);
     return response;

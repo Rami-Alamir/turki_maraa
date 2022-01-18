@@ -94,64 +94,66 @@ class AppState extends State<App> {
         // let system handle back button if we're on the first route
         return isFirstRouteInCurrentTab;
       },
-      child: Scaffold(
-          key: _appKey,
-          // indexed stack shows only one child
-          body: Stack(
-            children: [
-              Container(
-                child: IndexedStack(
-                  index: currentTab,
-                  children: tabs.map((e) => e.page).toList(),
+      child: TurkiDrawer(
+        child: Scaffold(
+            key: _appKey,
+            // indexed stack shows only one child
+            body: Stack(
+              children: [
+                Container(
+                  child: IndexedStack(
+                    index: currentTab,
+                    children: tabs.map((e) => e.page).toList(),
+                  ),
                 ),
-              ),
-              // DropdownAlert()
-            ],
-          ),
-          bottomNavigationBar: Container(
-            child: BottomNavigationBar(
-                backgroundColor: Theme.of(context).backgroundColor,
-                type: BottomNavigationBarType.fixed,
-                iconSize: 25,
-                showUnselectedLabels: true,
-                elevation: 5,
-                currentIndex: index,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(TURKIICONS.tabnav_home),
-                    label: AppLocalizations.of(context)!.tr('home'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(TURKIICONS.ask),
-                    label: AppLocalizations.of(context)!.tr('support'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(TURKIICONS.cart),
-                    label: AppLocalizations.of(context)!.tr('cart'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(TURKIICONS.tabnav_myorders),
-                    label: AppLocalizations.of(context)!.tr('orders'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(TURKIICONS.tabnav_user),
-                    label: AppLocalizations.of(context)!.tr('profile'),
-                  ),
-                ],
-                onTap: (index) {
-                  this.index = index;
-                  _selectTab(index);
-                  final _auth = Provider.of<Auth>(context, listen: false);
-                  print('ddddssss');
-                  if (index == 2 && _auth.isAuth) {
-                    final _cart =
-                        Provider.of<CartProvider>(context, listen: false);
-                    _cart.setIsLoading = true;
+                // DropdownAlert()
+              ],
+            ),
+            bottomNavigationBar: Container(
+              child: BottomNavigationBar(
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  type: BottomNavigationBarType.fixed,
+                  iconSize: 25,
+                  showUnselectedLabels: true,
+                  elevation: 5,
+                  currentIndex: index,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(TURKIICONS.tabnav_home),
+                      label: AppLocalizations.of(context)!.tr('home'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(TURKIICONS.ask),
+                      label: AppLocalizations.of(context)!.tr('support'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(TURKIICONS.cart),
+                      label: AppLocalizations.of(context)!.tr('cart'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(TURKIICONS.tabnav_myorders),
+                      label: AppLocalizations.of(context)!.tr('orders'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(TURKIICONS.tabnav_user),
+                      label: AppLocalizations.of(context)!.tr('profile'),
+                    ),
+                  ],
+                  onTap: (index) {
+                    this.index = index;
+                    _selectTab(index);
+                    final _auth = Provider.of<Auth>(context, listen: false);
+                    print('ddddssss');
+                    if (index == 2 && _auth.isAuth) {
+                      final _cart =
+                          Provider.of<CartProvider>(context, listen: false);
+                      _cart.setIsLoading = true;
 
-                    _cart.getCartData(_auth.accessToken);
-                  }
-                }),
-          )),
+                      _cart.getCartData(_auth.accessToken);
+                    }
+                  }),
+            )),
+      ),
     );
   }
 }

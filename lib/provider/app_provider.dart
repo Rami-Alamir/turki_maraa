@@ -3,6 +3,10 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
 class AppProvider with ChangeNotifier {
   final advancedDrawerController = AdvancedDrawerController();
+  bool _disabledGestures = true;
+
+  bool get disabledGestures => _disabledGestures;
+
   void showDrawer() {
     // NOTICE: Manage Advanced Drawer state through the Controller.
     // _advancedDrawerController.value = AdvancedDrawerValue.visible();

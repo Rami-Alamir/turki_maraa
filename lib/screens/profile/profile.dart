@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/models/user_data.dart';
 import 'package:new_turki/provider/auth.dart';
+import 'package:new_turki/provider/orders_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/profile/help_card.dart';
@@ -21,6 +23,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final _auth = Provider.of<Auth>(context);
+    final _orders = Provider.of<OrdersProvider>(context);
 
     return Scaffold(
       appBar: PrimaryAppBar(
@@ -33,9 +36,7 @@ class _ProfileState extends State<Profile> {
               TURKIICONS.notification,
               color: Theme.of(context).primaryColor,
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/Notifications');
-            },
+            onPressed: () => Navigator.pushNamed(context, '/Notifications'),
           ),
         ),
       ),
@@ -54,6 +55,8 @@ class _ProfileState extends State<Profile> {
                   children: [
                     ProfileHeader(
                       isAuth: _auth.isAuth,
+                      userData: _auth.userData ?? UserData(),
+                      ordersCount: (_orders.ordersData?.data?.length ?? 0),
                     ),
                     PersonalInfoCard(isAuth: _auth.isAuth),
                     SettingsCard(),

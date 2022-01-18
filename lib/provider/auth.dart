@@ -7,7 +7,8 @@ import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:new_turki/models/user.dart';
 import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/models/user_data.dart';
-import 'package:new_turki/provider/home_provider.dart';
+import 'package:new_turki/models/user_type.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/repository/registration_repository.dart';
 import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/screens/app/app.dart';
@@ -26,7 +27,7 @@ class Auth with ChangeNotifier {
   TextEditingController usernameController = TextEditingController();
   TextEditingController genderController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  int _start = 59;
+  int _start = 5;
   BuildContext? _dialogContext;
   String? _userPhone;
   bool? _isNewUser = false;
@@ -34,7 +35,7 @@ class Auth with ChangeNotifier {
   var _response;
   bool get isAuth => _isAuth!;
   bool? _isAuth = false;
-  UserData get userData => _userData!;
+  UserData? get userData => _userData;
   String? _accessToken;
   SharedPreferences? _prefs;
   bool _isLoading = true;
@@ -51,7 +52,7 @@ class Auth with ChangeNotifier {
 
   //used to restrict resend otp
   void startTimer() {
-    _start = 59;
+    _start = 5;
     const oneSec = const Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
@@ -64,33 +65,31 @@ class Auth with ChangeNotifier {
         notifyListeners();
       },
     );
-    _start = 59;
+    _start = 5;
     notifyListeners();
   }
+
+  UserType? _userType;
 
   String get userPhone => _userPhone ?? "";
 
   // send otp to user
-  Future<void> sendOTP(BuildContext context, {bool navigate = true}) async {
+  Future<void> sendOTP(BuildContext context) async {
     _dialogContext = context;
     _showDialogIndicator(context);
     try {
       _userPhone =
           ConvertPhone.getPhone(keyController.text, phoneController.text);
-      int statusCode =
+      _userType =
           await RegistrationRepository().sendOTP({"mobile": _userPhone});
+      print("t1");
+      _isNewUser = _userType!.code == "C100";
+      print("t2");
       Navigator.pop(_dialogContext!);
-
-      if (statusCode == 200 && navigate)
-        Navigator.pushNamed(context, "/VerifyPhone");
-      else {
-        AlertController.show(
-            AppLocalizations.of(context)!.tr('error'),
-            AppLocalizations.of(context)!.tr('unexpected_error'),
-            TypeAlert.error);
-      }
+      Navigator.pushNamed(context, "/VerifyPhone");
     } catch (e) {
       print(e.toString());
+      showSnackBar(context, "unexpected_error");
       Navigator.pop(_dialogContext!);
     }
   }
@@ -206,9 +205,10 @@ class Auth with ChangeNotifier {
   // logout
   void logOut(BuildContext context) async {
     await _initPrefs();
-    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    _homeProvider.setSelectedAddress = -1;
-    _homeProvider.setUserAddress = UserAddress();
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    _addressProvider.setSelectedAddress = -1;
+    _addressProvider.setUserAddress = UserAddress();
     ShowConfirmDialog()
         .confirmDialog(context, "Are_you_sure_you_want_to_log_out", () {
       _userData = null;
@@ -218,6 +218,8 @@ class Auth with ChangeNotifier {
       notifyListeners();
     });
   }
+
+  bool get isLoading => _isLoading;
 
   // update user data
   Future<void> updateUser(BuildContext context) async {
@@ -233,6 +235,8 @@ class Auth with ChangeNotifier {
           if (ageController.text.length > 0) "age": ageController.text.trim(),
           if (emailController.text.length > 0)
             "email": emailController.text.trim(),
+          if (genderController.text.length > 0)
+            "gender": genderController.text.trim(),
         }, "Bearer $_accessToken");
         if (_response.statusCode == 200) {
           print(_response.body.toString());
@@ -266,7 +270,7 @@ class Auth with ChangeNotifier {
           //     TypeAlert.error);
         }
       } catch (e) {
-        print('catch');
+        print('catch update user');
         print(e.toString());
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
         showSnackBar(context, "unexpected_error");
@@ -294,31 +298,7 @@ class Auth with ChangeNotifier {
       category: 'الفئة الفضية',
       point: 6500);
 
-  bool get isLoading => _isLoading;
-
   User get user => _user;
-
-  Future<void> login(BuildContext context) async {
-    _showDialogIndicator(context);
-
-    _isAuth = false;
-
-    await Future.delayed(Duration(milliseconds: 2500), () {
-      notifyListeners();
-    });
-    _user = User(
-        name: 'رامي الأمير',
-        phone: '0580809976',
-        lng: 1.0,
-        lat: 1.0,
-        orders: 6,
-        credit: 100.6,
-        category: 'الفئة الفضية',
-        point: 6500);
-
-    Navigator.pop(context);
-    notifyListeners();
-  }
 
 //for test
   Future<void> delayed() async {

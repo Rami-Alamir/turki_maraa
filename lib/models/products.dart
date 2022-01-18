@@ -71,11 +71,11 @@ class ProductData {
   String? description;
   String? weight;
   String? calories;
-  int? noRating;
+  double? noRating;
   String? image;
   List<Tags>? tags;
   double? price;
-  double? discount = 0.0;
+  double? salePrice = 0.0;
   bool? isActive;
   bool? isShalwata;
   int? isDelivered;
@@ -96,6 +96,7 @@ class ProductData {
       this.tags,
       this.image,
       this.price,
+      this.salePrice,
       this.isActive,
       this.isShalwata,
       this.isDelivered,
@@ -117,9 +118,10 @@ class ProductData {
     description = json['description'] ?? "";
     weight = json['weight'] ?? "";
     calories = json['calories'] ?? "";
-    noRating = json['no_rating'] ?? "";
+    noRating = (json['no_rating'] ?? 0.0) * 1.0;
     image = json['image'] ?? "";
-    price = double.parse(json['price'] ?? 0.0);
+    price = double.parse(json['price'] ?? "0.0");
+    salePrice = double.parse(json['sale_price'] ?? "0.0");
     isActive = json['is_active'] ?? "";
     isShalwata = json['is_shalwata'] ?? "";
     isDelivered = json['is_delivered'] ?? "";

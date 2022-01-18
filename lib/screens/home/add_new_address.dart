@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
-import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';
@@ -21,7 +21,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
 
   @override
   Widget build(BuildContext context) {
-    final _homeProvider = Provider.of<HomeProvider>(context);
+    final _addressProvider = Provider.of<AddressProvider>(context);
     final _auth = Provider.of<Auth>(context);
 
     return Scaffold(
@@ -39,13 +39,13 @@ class _AddNewAddressState extends State<AddNewAddress> {
                   Marker(
                     onDragEnd: (latLng) {
                       setState(() {
-                        _homeProvider.latLng = latLng;
+                        _addressProvider.latLng = latLng;
                       });
                     },
                     draggable: true,
                     markerId: MarkerId("1"),
-                    position: _homeProvider.latLng,
-                    icon: _homeProvider.myMarker,
+                    position: _addressProvider.latLng,
+                    icon: _addressProvider.myMarker,
                     infoWindow: const InfoWindow(
                       title: '',
                     ),
@@ -53,17 +53,17 @@ class _AddNewAddressState extends State<AddNewAddress> {
                 ],
               ),
               initialCameraPosition: CameraPosition(
-                target: _homeProvider.latLng,
+                target: _addressProvider.latLng,
                 zoom: 14,
               ),
               mapType: MapType.normal,
               onMapCreated: _onMapCreated,
               onCameraMove: (latLng) {
-                _homeProvider.latLng = latLng.target;
+                _addressProvider.latLng = latLng.target;
                 setState(() {});
               },
               onTap: (latLng) {
-                _homeProvider.latLng = latLng;
+                _addressProvider.latLng = latLng;
                 setState(() {});
               },
               myLocationEnabled: true,
@@ -80,7 +80,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                   white: true,
                   customWidth: SizeConfig.screenWidth! * 0.9,
                   hint: AppLocalizations.of(context)!.tr('description'),
-                  controller: _homeProvider.descriptionController,
+                  controller: _addressProvider.descriptionController,
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                 ),
@@ -91,7 +91,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                   padding: const EdgeInsets.all(10),
                   onPressed: () async {
                     FocusScope.of(context).requestFocus(FocusNode());
-                    await _homeProvider.addNewAddress(
+                    await _addressProvider.addNewAddress(
                         context, _auth.isAuth ? _auth.accessToken : "");
                   },
                 ),
@@ -105,18 +105,19 @@ class _AddNewAddressState extends State<AddNewAddress> {
 
   void _onMapCreated(GoogleMapController _cntlr) {
     try {
-      final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+      final _addressProvider =
+          Provider.of<AddressProvider>(context, listen: false);
       _controller = _cntlr;
       _location!.onLocationChanged.listen((l) {
-        if (!_homeProvider.initMap) {
-          _homeProvider.latLng = LatLng(l.latitude!, l.longitude!);
-          _homeProvider.initMap = true;
+        if (!_addressProvider.initMap) {
+          _addressProvider.latLng = LatLng(l.latitude!, l.longitude!);
+          _addressProvider.initMap = true;
           setState(() {});
         }
         _controller!.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
-              target: _homeProvider.latLng,
+              target: _addressProvider.latLng,
               zoom: 15,
             ),
           ),

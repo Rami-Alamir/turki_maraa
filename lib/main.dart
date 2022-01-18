@@ -6,6 +6,7 @@ import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/provider/favourite_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'provider/address_provider.dart';
 import 'provider/app_theme.dart';
 import 'provider/home_provider.dart';
 import 'provider/orders_provider.dart';
@@ -41,6 +42,8 @@ Future<void> main() async {
     ChangeNotifierProvider<AppLanguage>(create: (context) => AppLanguage()),
     ChangeNotifierProvider<AppTheme>(create: (context) => AppTheme()),
     ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),
+    ChangeNotifierProvider<AddressProvider>(
+        create: (context) => AddressProvider()),
     ChangeNotifierProvider<CartProvider>(create: (context) => CartProvider()),
     ChangeNotifierProvider<FavouriteProvider>(
         create: (context) => FavouriteProvider()),

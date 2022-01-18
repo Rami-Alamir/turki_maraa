@@ -7,6 +7,7 @@ class ApiBaseHelper {
   String authorization = "";
   Map<String, String> headers = {
     "Accept": "application/json",
+    // "Content-Type": "application/json",
     "App-Key": "Nghf9AP72aWF635xLHCnd9q88pRmSaP95BLRDI0n",
     "Authorization": ""
   };

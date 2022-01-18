@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/dummy_data/dd.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
-import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/cart/cart_bottom_sheet.dart';
@@ -35,8 +35,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
   Widget build(BuildContext context) {
     final _cart = Provider.of<CartProvider>(context);
     final _auth = Provider.of<Auth>(context);
-    print(_auth.accessToken);
-    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    if (_auth.isAuth) print(_auth.accessToken);
     return Scaffold(
       appBar: PrimaryAppBar(
         title: AppLocalizations.of(context)!.tr('cart'),
@@ -86,12 +87,13 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                         }),
                                     DeliveryAddress(
                                         address:
-                                            _homeProvider.selectedAddress == -1
+                                            _addressProvider.selectedAddress ==
+                                                    -1
                                                 ? AppLocalizations.of(context)!
                                                     .tr('current_location')
-                                                : _homeProvider
+                                                : _addressProvider
                                                     .userAddress!
-                                                    .data![_homeProvider
+                                                    .data![_addressProvider
                                                         .selectedAddress]
                                                     .address!),
                                     DeliveryDate(
@@ -131,7 +133,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                     ),
                                     PaymentMethod(),
                                     UseCredit(
-                                        credit: _auth.userData.data!.wallet!),
+                                        credit: _auth.userData!.data!.wallet!),
                                     Note(),
                                     SizedBox(
                                       height: SizeConfig.screenHeight! * 0.25,

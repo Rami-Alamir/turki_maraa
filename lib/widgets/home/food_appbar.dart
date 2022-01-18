@@ -26,6 +26,7 @@ class FoodAppBar extends StatelessWidget {
           ),
           onPressed: () => Navigator.pop(context),
         ),
+        centerTitle: true,
         backgroundColor: Theme.of(context).backgroundColor,
         pinned: true,
         actionsIconTheme: IconThemeData(

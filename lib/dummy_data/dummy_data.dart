@@ -142,6 +142,7 @@ class DummyData {
                 'https://api.fishday.com.sa/storage/uploads/vbR7bnUmEKYRwMTaC5T6yyNVjU1eiIkdqWrohjlt.webp')
       ],
       price: 100.0,
+      salePrice: 90.0,
       isActive: true,
       isShalwata: true,
       isDelivered: 0,
@@ -165,6 +166,7 @@ class DummyData {
       image:
           'https://cdnprod.mafretailproxy.com/sys-master-root/hd1/h05/9194857070622/110964_main.jpg_480Wx480H',
       price: 50.0,
+      salePrice: 00.0,
       isActive: true,
       isShalwata: true,
       isDelivered: 0,
@@ -189,6 +191,7 @@ class DummyData {
       image:
           'https://cdn.salla.sa/7Uv2ZnbDos0fZoX1fUSQMWKDq7mYxezM8kvh1wqt.jpeg',
       price: 60.0,
+      salePrice: 00.0,
       isActive: true,
       isShalwata: true,
       isDelivered: 0,
@@ -213,6 +216,7 @@ class DummyData {
       image:
           'https://cdn.salla.sa/cLyQ411CF6nz6EgMRyo3Fiirmsm0XIai7UDku11Y.jpeg',
       price: 60.0,
+      salePrice: 00.0,
       isActive: true,
       isShalwata: true,
       isDelivered: 0,
@@ -237,6 +241,7 @@ class DummyData {
       image:
           'https://cdn.salla.sa/8tbiQBKYSSj9cjQLKgUxecpAVcaLbOXM3i5KICD8.jpeg',
       price: 95.0,
+      salePrice: 85.0,
       isActive: true,
       isShalwata: true,
       isDelivered: 0,

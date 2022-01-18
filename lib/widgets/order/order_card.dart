@@ -79,7 +79,12 @@ class OrderCard extends StatelessWidget {
                                               .colorScheme
                                               .secondary,
                                           child: Image.network(
-                                            "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
+                                            order.products![0].productImages!
+                                                        .length >
+                                                    0
+                                                ? order.products![0]
+                                                    .productImages![0].imageUrl!
+                                                : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
                                             width: 60,
                                             height: 60,
                                             fit: BoxFit.fill,
@@ -265,7 +270,7 @@ class OrderCard extends StatelessWidget {
                                         fontSize: 10,
                                         fontWeight: FontWeight.w600)),
                                 Text(
-                                    "${order.orderTotal} ${AppLocalizations.of(context)!.tr('sr')}",
+                                    "${order.totalAmountAfterDiscount} ${AppLocalizations.of(context)!.tr('sr')}",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,

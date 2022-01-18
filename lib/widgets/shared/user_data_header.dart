@@ -21,8 +21,8 @@ class UserDataHeader extends StatelessWidget {
                     radius: 30,
                     backgroundColor: Theme.of(context).primaryColor,
                     child: Text(
-                        ((_auth.userData.data!.name)?.length ?? 0) > 0
-                            ? (_auth.userData.data!.name!).substring(0, 1)
+                        ((_auth.userData!.data!.name)?.length ?? 0) > 0
+                            ? (_auth.userData!.data!.name!).substring(0, 1)
                             : "",
                         style: TextStyle(fontSize: 20, color: Colors.white)),
                   ),
@@ -34,12 +34,12 @@ class UserDataHeader extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          _auth.userData.data!.name ?? "",
+                          _auth.userData!.data!.name ?? "",
                           style: Theme.of(context).textTheme.subtitle1!,
                         ),
                         Directionality(
                           textDirection: TextDirection.ltr,
-                          child: Text(_auth.userData.data?.mobile ?? "",
+                          child: Text(_auth.userData!.data?.mobile ?? "",
                               style: Theme.of(context).textTheme.subtitle2),
                         )
                       ],

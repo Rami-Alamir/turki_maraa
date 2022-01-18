@@ -45,7 +45,8 @@ class Product {
   int? id;
   String? nameAr;
   String? nameEn;
-  String? description;
+  String? descriptionAr;
+  String? descriptionEn;
   String? weight;
   String? calories;
   int? noRating;
@@ -64,7 +65,8 @@ class Product {
       {this.id,
       this.nameAr,
       this.nameEn,
-      this.description,
+      this.descriptionAr,
+      this.descriptionEn,
       this.weight,
       this.calories,
       this.noRating,
@@ -83,7 +85,8 @@ class Product {
     id = json['id'];
     nameAr = json['name_ar'] ?? "";
     nameEn = json['name_en'] ?? "";
-    description = json['description'] ?? "";
+    descriptionAr = json['description_ar'] ?? "";
+    descriptionEn = json['description_en'] ?? "";
     weight = json['weight'] ?? "";
     calories = json['calories'] ?? "";
     noRating = json['no_rating'] ?? "";

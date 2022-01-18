@@ -34,8 +34,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   radius: 60,
                   backgroundColor: Theme.of(context).primaryColor,
                   child: Text(
-                      ((_auth.userData.data!.name)?.length ?? 0) > 0
-                          ? (_auth.userData.data!.name!).substring(0, 1)
+                      ((_auth.userData!.data!.name)?.length ?? 0) > 0
+                          ? (_auth.userData!.data!.name!).substring(0, 1)
                           : "",
                       style: TextStyle(
                         fontSize: 20,

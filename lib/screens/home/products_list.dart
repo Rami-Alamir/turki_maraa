@@ -27,7 +27,6 @@ class _ProductsListState extends State<ProductsList> {
   @override
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
-    print("${widget.data['index']}ddq");
     return Scaffold(
       appBar: PrimaryAppBar(
         title: widget.data['title'],

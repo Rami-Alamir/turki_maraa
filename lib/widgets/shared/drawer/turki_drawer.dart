@@ -6,7 +6,9 @@ import 'package:new_turki/provider/app_provider.dart';
 import 'package:new_turki/provider/app_theme.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/utilities/size_config.dart';
+import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/shared/drawer/turki_drawer_footer.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -21,10 +23,11 @@ class TurkiDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _appProvider = Provider.of<AppProvider>(context, listen: false);
+    final _appProvider = Provider.of<AppProvider>(context);
     final _theme = Provider.of<AppTheme>(context);
     final _language = Provider.of<AppLanguage>(context);
     final _auth = Provider.of<Auth>(context);
+
     return AdvancedDrawer(
       backdropColor: Theme.of(context).backgroundColor,
       controller: _appProvider.advancedDrawerController,
@@ -33,7 +36,7 @@ class TurkiDrawer extends StatelessWidget {
       animateChildDecoration: true,
       openRatio: 0.75,
       rtlOpening: _language.isArabic,
-      disabledGestures: false,
+      disabledGestures: true,
       childDecoration: const BoxDecoration(
         //  to add shadow behind the page.
         // Keep in mind that it may cause animation jerks.
@@ -57,35 +60,35 @@ class TurkiDrawer extends StatelessWidget {
                     onTap: () {
                       _appProvider.hideDrawer();
                     },
-                    icon: Icons.home,
+                    icon: TURKIICONS.tabnav_home,
                     title: 'home',
                   ),
                   DrawerRow(
                     onTap: () {
                       _appProvider.navigateTo(context, '/Favourite');
                     },
-                    icon: Icons.favorite,
+                    icon: TURKIICONS.cart_favourite,
                     title: 'favorite',
                   ),
                   DrawerRow(
                     onTap: () {
                       _appProvider.navigateTo(context, "/Notifications");
                     },
-                    icon: Icons.notifications_active,
+                    icon: TURKIICONS.notification,
                     title: 'notifications',
                   ),
                   DrawerRow(
                     onTap: () {
                       _appProvider.navigateTo(context, '/FAQ');
                     },
-                    icon: Icons.question_answer,
+                    icon: TURKIICONS.messages,
                     title: 'faq',
                   ),
                   DrawerRow(
                     onTap: () {
                       _appProvider.navigateTo(context, '/About');
                     },
-                    icon: Icons.info,
+                    icon: TURKIICONS.info_circle,
                     title: 'about',
                   ),
                   Divider(
@@ -105,21 +108,21 @@ class TurkiDrawer extends StatelessWidget {
                             "whatsapp://send?phone=$phone&text=${Uri.parse(' ')}";
                       _launchURL(url);
                     },
-                    icon: Icons.chat,
+                    icon: TURKIICONS.whatssapp_outline_1,
                     title: 'contact_whatsApp',
                   ),
                   DrawerRow(
                     onTap: () {
                       _share(context);
                     },
-                    icon: Icons.share,
+                    icon: TURKIICONS.share4_1,
                     title: 'share',
                   ),
                   DrawerRow(
                     onTap: () {
                       _language.changeLanguage();
                     },
-                    icon: Icons.language,
+                    icon: TURKIICONS.language,
                     title: 'language',
                   ),
                   Visibility(
@@ -128,7 +131,7 @@ class TurkiDrawer extends StatelessWidget {
                       onTap: () {
                         _theme.changeTheme('light');
                       },
-                      icon: Icons.brightness_4,
+                      icon: TURKIICONS.lightmode,
                       title: 'light_mode',
                     ),
                   ),
@@ -138,7 +141,7 @@ class TurkiDrawer extends StatelessWidget {
                       onTap: () {
                         _theme.changeTheme('classic');
                       },
-                      icon: Icons.brightness_1_rounded,
+                      icon: RA7ICONS.brightness,
                       title: 'classic_mode',
                     ),
                   ),
@@ -148,7 +151,7 @@ class TurkiDrawer extends StatelessWidget {
                       onTap: () {
                         _theme.changeTheme('dark');
                       },
-                      icon: Icons.brightness_3,
+                      icon: TURKIICONS.darkmode,
                       title: 'dark_mode',
                     ),
                   ),
@@ -179,6 +182,7 @@ class TurkiDrawer extends StatelessWidget {
 
   //used to share app url
   Future<void> _share(BuildContext context) async {
-    Share.share('text', subject: AppLocalizations.of(context)!.tr('turki_app'));
+    Share.share('https://turki.turkieshop.com/system//shareit/b5ef3',
+        subject: AppLocalizations.of(context)!.tr('turki_app'));
   }
 }

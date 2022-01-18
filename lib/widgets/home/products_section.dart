@@ -83,7 +83,7 @@ class ProductsSection extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        height: 190,
+                        height: 195,
                         child: ListView.builder(
                             padding: EdgeInsets.all(0),
                             shrinkWrap: true,

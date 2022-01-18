@@ -17,8 +17,9 @@ class CartProvider with ChangeNotifier {
   set setIsLoading(bool value) {
     _isLoading = value;
     notifyListeners();
-  } //add item to cart
+  }
 
+  //add item to cart
   Future<void> addToCart({
     required BuildContext context,
     required String authorization,
@@ -34,12 +35,22 @@ class CartProvider with ChangeNotifier {
     _showDialogIndicator(context);
     try {
       _response = await CartRepository().addToCart({
-        "product_id": "$productId",
-        "quantity": "$quantity",
-        "preparation_id": "$preparationId",
-        "size_id": "$sizeId",
-        "cut_id": "$cutId",
-        "is_shalwata": "",
+        "items": [
+          {
+            "product_id": "$productId",
+            "quantity": "$quantity",
+            "preparation_id": "$preparationId",
+            "size_id": "$sizeId",
+            "cut_id": "$cutId",
+            "is_shalwata": "0"
+          }
+        ],
+        "comment": "",
+        "using_wallet": 0,
+        "payment_type_id": 1,
+        "applied_discount_code": "",
+        "address_id": 18,
+        "address": "test"
       }, authorization);
 
       showSnackBar(context,

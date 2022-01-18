@@ -32,46 +32,46 @@ class _OrdersState extends State<Orders> {
     final _orders = Provider.of<OrdersProvider>(context);
     final _auth = Provider.of<Auth>(context);
     return Scaffold(
-      appBar: PrimaryAppBar(
-        title: AppLocalizations.of(context)!.tr('orders'),
-        back: widget.back!,
-      ),
-      body: !_auth.isAuth
-          ? NotAuth()
-          : _orders.isLoading
-              ? SpinkitIndicator()
-              : _orders.retry
-                  ? Retry(
-                      onPressed: () {
-                        _orders.setIsLoading = true;
-                        if (_auth.isAuth)
-                          _orders.getOrdersList(_auth.accessToken);
-                      },
-                    )
-                  : (_orders.ordersData?.data?.length ?? 0) > 0
-                      ? RefreshIndicator(
-                          color: Theme.of(context).primaryColor,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          onRefresh: () async {
-                            await _orders.getOrdersList(_auth.accessToken);
-                          },
-                          child: ListView(
-                            children: [
-                              ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  physics: const ScrollPhysics(),
-                                  itemCount:
-                                      (_orders.ordersData?.data?.length ?? 0),
-                                  itemBuilder: (BuildContext ctxt, int index) {
-                                    return OrderCard(
-                                        order:
-                                            (_orders.ordersData!.data![index]));
-                                  }),
-                            ],
-                          ))
-                      : NoOrders(),
-    );
+        appBar: PrimaryAppBar(
+          title: AppLocalizations.of(context)!.tr('orders'),
+          back: widget.back!,
+        ),
+        body: !_auth.isAuth
+            ? NotAuth()
+            : _orders.isLoading
+                ? SpinkitIndicator()
+                : _orders.retry
+                    ? Retry(
+                        onPressed: () {
+                          _orders.setIsLoading = true;
+                          if (_auth.isAuth)
+                            _orders.getOrdersList(_auth.accessToken);
+                        },
+                      )
+                    : RefreshIndicator(
+                        color: Theme.of(context).primaryColor,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        onRefresh: () async {
+                          await _orders.getOrdersList(_auth.accessToken);
+                        },
+                        child: ListView(
+                          children: [
+                            (_orders.ordersData?.data?.length ?? 0) > 0
+                                ? ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    physics: const ScrollPhysics(),
+                                    itemCount:
+                                        (_orders.ordersData?.data?.length ?? 0),
+                                    itemBuilder:
+                                        (BuildContext ctxt, int index) {
+                                      return OrderCard(
+                                          order: (_orders
+                                              .ordersData!.data![index]));
+                                    })
+                                : NoOrders(),
+                          ],
+                        )));
   }
 }
