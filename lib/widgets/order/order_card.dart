@@ -79,11 +79,17 @@ class OrderCard extends StatelessWidget {
                                               .colorScheme
                                               .secondary,
                                           child: Image.network(
-                                            order.products![0].productImages!
-                                                        .length >
-                                                    0
-                                                ? order.products![0]
-                                                    .productImages![0].imageUrl!
+                                            order.products!.length > 0
+                                                ? order
+                                                            .products![0]
+                                                            .productImages!
+                                                            .length >
+                                                        0
+                                                    ? order
+                                                        .products![0]
+                                                        .productImages![0]
+                                                        .imageUrl!
+                                                    : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"
                                                 : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
                                             width: 60,
                                             height: 60,
@@ -232,8 +238,8 @@ class OrderCard extends StatelessWidget {
                                                             context)!
                                                         .tr(order.paymentTypeId ==
                                                                 1
-                                                            ? "pickup"
-                                                            : "delivery"),
+                                                            ? "delivery"
+                                                            : "pickup"),
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment.end),
                                               ],

@@ -3,7 +3,7 @@ import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 
 class DiscoverCard extends StatelessWidget {
-  final DiscoverItem item;
+  final Data item;
 
   const DiscoverCard({required this.item});
 
@@ -28,7 +28,7 @@ class DiscoverCard extends StatelessWidget {
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.network(
-                      '${item.image.trim()}',
+                      '${item.image!.trim()}',
                       width: 165,
                       height: 90,
                       fit: BoxFit.fill,
@@ -50,8 +50,8 @@ class DiscoverCard extends StatelessWidget {
                     fit: BoxFit.contain,
                     child: Text(
                       AppLocalizations.of(context)!.locale == Locale('ar')
-                          ? item.nameAr
-                          : item.nameEn,
+                          ? item.titleAr!
+                          : item.titleEn!,
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,

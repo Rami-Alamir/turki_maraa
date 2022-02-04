@@ -19,7 +19,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    _timer = new Timer(const Duration(milliseconds: 4000), () {
+    _timer = Timer(const Duration(milliseconds: 3000), () {
       navigate();
     });
   }

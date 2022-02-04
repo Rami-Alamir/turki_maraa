@@ -42,10 +42,19 @@ class OrderTracking extends StatelessWidget {
             icon: Icons.delivery_dining,
           ),
           Indicator(
-            title: AppLocalizations.of(context)!.tr('delivered'),
+            title: AppLocalizations.of(context)!
+                .tr(statusCode! == 4000 ? 'canceled' : 'delivered'),
             withLine: false,
-            color: statusCode! == 200 ? Colors.green : Colors.grey,
-            color2: statusCode! == 200 ? Colors.green : Colors.grey,
+            color: statusCode! != 200
+                ? statusCode! == 4000
+                    ? Colors.red
+                    : Colors.grey
+                : Colors.green,
+            color2: statusCode! != 200
+                ? statusCode! == 4000
+                    ? Colors.red
+                    : Colors.grey
+                : Colors.green,
             icon: Icons.done_all,
           ),
         ],

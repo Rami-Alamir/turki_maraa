@@ -11,6 +11,12 @@ class ApiBaseHelper {
     "App-Key": "Nghf9AP72aWF635xLHCnd9q88pRmSaP95BLRDI0n",
     "Authorization": ""
   };
+  Map<String, String> headers2 = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "App-Key": "Nghf9AP72aWF635xLHCnd9q88pRmSaP95BLRDI0n",
+    "Authorization": ""
+  };
 
   Future<dynamic> get(String url, {String authorization = " "}) async {
     headers['authorization'] = authorization;
@@ -77,6 +83,21 @@ class ApiBaseHelper {
       response = await http.post(uri, body: body, headers: headers);
     } catch (e) {}
     return response;
+  }
+
+  Future<int> post4(String url, var body, {String authorization = " "}) async {
+    headers2['authorization'] = authorization;
+    print(authorization);
+    var uri = Uri.parse(_baseUrl + url);
+    print(uri.toString());
+    var response;
+    try {
+      response = await http.post(uri, body: body, headers: headers2);
+      print(_returnResponse(response));
+    } catch (e) {
+      print(e.toString());
+    }
+    return response.statusCode;
   }
 
   Future<dynamic> put(String url, var body) async {

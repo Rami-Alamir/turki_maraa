@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/dummy_data/dummy_data.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/home_provider.dart';
@@ -7,6 +6,7 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/firebase_helper.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/home/address_container.dart';
+import 'package:new_turki/widgets/home/best_seller_section.dart';
 import 'package:new_turki/widgets/home/categories_g1.dart';
 import 'package:new_turki/widgets/home/categories_g2.dart';
 import 'package:new_turki/widgets/home/categories_g3.dart';
@@ -15,7 +15,6 @@ import 'package:new_turki/widgets/home/categories_large.dart';
 import 'package:new_turki/widgets/home/category_app_bar.dart';
 import 'package:new_turki/widgets/home/not_supported_area.dart';
 import 'package:new_turki/widgets/home/order_type.dart';
-import 'package:new_turki/widgets/home/product_card.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
@@ -115,79 +114,8 @@ class _HomeState extends State<Home> {
                               categoriesGroup(
                                   _homeProvider.categoryData.data?.length ?? 0,
                                   _homeProvider),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 20.0, left: 5, bottom: 8, top: 10),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                            AppLocalizations.of(context)!
-                                                .tr('most_wanted'),
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16)),
-                                        InkWell(
-                                          onTap: () {},
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                  AppLocalizations.of(context)!
-                                                      .tr('view_all'),
-                                                  style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                      fontSize: 10)),
-                                              Icon(
-                                                Icons.arrow_forward_ios,
-                                                size: 15,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: SizeConfig.screenWidth,
-                                    height: 200,
-                                    child: ListView.builder(
-                                        padding: EdgeInsets.all(0),
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.horizontal,
-                                        physics: const ScrollPhysics(),
-                                        itemCount:
-                                            DummyData.bestSellerList.length,
-                                        itemBuilder:
-                                            (BuildContext ctxt, int index) {
-                                          return Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    index == 0 ? 8 : 3.0,
-                                                    0,
-                                                    0,
-                                                    0),
-                                            child: ProductCard(
-                                                product: DummyData
-                                                    .bestSellerList[index]),
-                                          );
-                                        }),
-                                  ),
-                                ],
+                              BestSellerSection(
+                                products: _homeProvider.bestSeller!,
                               )
                             ],
                           ),

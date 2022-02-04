@@ -51,7 +51,7 @@ class AppTheme with ChangeNotifier {
 
 final classicTheme = ThemeData(
     splashColor: Colors.white,
-    primaryColor: Color.fromRGBO(90, 4, 9, 1),
+    primaryColor: Color.fromRGBO(90, 4, 9, 1.0),
     fontFamily: 'Turki',
     canvasColor: Colors.transparent,
     backgroundColor: Color.fromRGBO(243, 224, 177, 1),
@@ -131,7 +131,7 @@ final classicTheme = ThemeData(
 
 final lightTheme = ThemeData(
   splashColor: Colors.white,
-  primaryColor: Color.fromRGBO(107, 0, 0, 1),
+  primaryColor: Color.fromRGBO(90, 4, 9, 1),
   fontFamily: 'Turki',
   canvasColor: Colors.transparent,
   backgroundColor: Color.fromRGBO(250, 250, 250, 1),
@@ -139,7 +139,7 @@ final lightTheme = ThemeData(
   textTheme: TextTheme(
     subtitle1: TextStyle(
         fontSize: 16,
-        color: Color.fromRGBO(107, 0, 0, 1),
+        color: Color.fromRGBO(90, 4, 9, 1),
         fontWeight: FontWeight.w600),
     subtitle2: TextStyle(
         fontSize: 14,
@@ -187,14 +187,14 @@ final lightTheme = ThemeData(
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: Colors.white10,
-    selectedItemColor: Color.fromRGBO(107, 0, 0, 1),
+    selectedItemColor: Color.fromRGBO(90, 4, 9, 1),
     unselectedItemColor: Colors.black38,
     selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
     unselectedLabelStyle: TextStyle(fontSize: 10, height: 2),
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-        primary: Color.fromRGBO(107, 0, 0, 1),
+        primary: Color.fromRGBO(90, 4, 9, 1),
         textStyle: TextStyle(color: Colors.white, fontSize: 20)),
   ),
   snackBarTheme: SnackBarThemeData(

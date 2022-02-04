@@ -4,6 +4,7 @@ import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';
 import 'package:new_turki/widgets/shared/rectangle_text_field.dart';
+import 'package:new_turki/widgets/profile/rounded_picker_button.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
 
@@ -14,8 +15,19 @@ class PersonalInformation extends StatefulWidget {
 
 class _PersonalInformationState extends State<PersonalInformation> {
   @override
+  void initState() {
+    final _auth = Provider.of<Auth>(context, listen: false);
+    _auth.initTextController();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _auth = Provider.of<Auth>(context);
+    if (_auth.genderController.text.contains("maleString") ||
+        _auth.genderController.text.contains("femaleString"))
+      _auth.genderController.text =
+          AppLocalizations.of(context)!.tr(_auth.genderController.text);
     return Scaffold(
       appBar: PrimaryAppBar(title: '', back: true),
       body: GestureDetector(
@@ -55,8 +67,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   _item(
                       title: 'email',
                       textEditingController: _auth.emailController),
-                  _item(
-                      title: 'gender',
+                  RoundedPickerButton(
                       textEditingController: _auth.genderController),
                   _item(
                       title: 'age',

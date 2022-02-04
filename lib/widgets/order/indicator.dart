@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'line.dart';
 
+// used in order_tracking
 class Indicator extends StatelessWidget {
   final Color color;
   final Color color2;

@@ -38,7 +38,7 @@ class Data {
     email = json['email'] ?? " ";
     age = json['age'] ?? " ".toString();
     wallet = (json['wallet'] ?? "0").toString();
-    gender = (json['gender'] ?? " ").toString();
+    gender = (json['gender'] ?? "").toString().trim();
     points = (json['loyalty_points'] ?? "0").toString();
     id = json['id'];
     accessToken = json['access_token'] ?? "";

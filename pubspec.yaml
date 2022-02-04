@@ -39,6 +39,7 @@ dependencies:
   flutter_html: ^2.2.1
   pin_code_fields: ^7.3.0
   flutter_dropdown_alert: ^1.0.3
+  flutter_picker: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +50,7 @@ dev_dependencies:
 
 flutter_native_splash:
   color: "#691E18"
+  background_image: "assets/images/ww1.png"
 
 flutter:
 
@@ -63,6 +65,7 @@ flutter:
     - assets/images/not_auth.png
     - assets/images/q5.png
     - assets/images/q6.png
+    - assets/images/img.png
     - assets/images/turki_car.png
     - assets/images/turki.png
     - assets/images/medal.png

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/models/cart_data.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/shared/invoice.dart';
@@ -7,9 +8,12 @@ import 'package:provider/provider.dart';
 import 'promo_code.dart';
 
 class CartBottomSheet extends StatefulWidget {
-  final double total;
+  final InvoicePreview invoicePreview;
 
-  const CartBottomSheet({required this.total});
+  const CartBottomSheet({
+    required this.invoicePreview,
+  });
+
   @override
   _CartBottomSheetState createState() => _CartBottomSheetState();
 }
@@ -24,9 +28,6 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
     return NotificationListener<DraggableScrollableNotification>(
       onNotification: (DraggableScrollableNotification dSNotification) {
         _isExpanded = dSNotification.minExtent == dSNotification.extent;
-        print(dSNotification.minExtent < dSNotification.extent);
-        print(dSNotification.minExtent);
-        print(dSNotification.extent);
         setState(() {});
         return true;
       },
@@ -74,13 +75,23 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     ? Column(
                         children: [
                           PromoCode(
-                              promoCodeController: _cart.promoCodeController),
+                            errorMsg: _cart.errorMsg,
+                            promoCodeController: _cart.promoCodeController,
+                            promoIsActive: _cart.promoIsActive,
+                            apply: () {
+                              _cart.checkCoupon(context: context);
+                            },
+                            remove: () {
+                              _cart.removePromoCode();
+                            },
+                          ),
                           Invoice(
-                              myCredit: _cart.useCredit ? 0.0 : 0.0,
-                              total: widget.total -
-                                  (_cart.useCredit ? 100.6 : 0.0),
-                              subtotal: widget.total,
-                              shipping: widget.total),
+                            myCredit: widget.invoicePreview.walletAmountUsed!,
+                            total:
+                                widget.invoicePreview.totalAmountAfterDiscount!,
+                            subtotal: widget.invoicePreview.orderSubtotal!,
+                            shipping: widget.invoicePreview.deliveryFee!,
+                          ),
                         ],
                       )
                     : Column(
@@ -104,7 +115,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 5.0),
                                   child: Text(
-                                    '${widget.total} ${AppLocalizations.of(context)!.tr('sr')}',
+                                    '${widget.invoicePreview.totalAmountAfterDiscount!} ${AppLocalizations.of(context)!.tr('sr')}',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline1!
@@ -134,7 +145,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     title: AppLocalizations.of(context)!.tr('place_order'),
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     fontSize: 16,
-                    onPressed: () {})
+                    onPressed: () {
+                      _cart.placeOrder(context: context);
+                    })
               ],
             ),
           );

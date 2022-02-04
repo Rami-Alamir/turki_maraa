@@ -20,7 +20,7 @@ class _ProductsListState extends State<ProductsList> {
   @override
   void initState() {
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    _homeProvider.getDiscoverList();
+    //   _homeProvider.getDiscoverList();
     super.initState();
   }
 
@@ -32,49 +32,49 @@ class _ProductsListState extends State<ProductsList> {
         title: widget.data['title'],
         back: true,
       ),
-      body: _homeProvider.discoverIsLoading
-          ? SpinkitIndicator()
-          : _homeProvider.discoverRetry
-              ? Retry(
-                  onPressed: () {
-                    _homeProvider.getDiscoverList();
-                  },
-                )
-              : RefreshIndicator(
-                  color: Theme.of(context).primaryColor,
-                  onRefresh: () async {},
-                  child: ListView(
-                    children: [
-                      GridView.builder(
-                          shrinkWrap: true,
-                          physics: ScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing:
-                                      SizeConfig.screenWidth! - 360,
-                                  mainAxisSpacing: 0,
-                                  childAspectRatio: 0.85),
-                          itemCount: _homeProvider.productsList
-                              .data![widget.data['index']].products!.length,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  index % 2 == 0 ? 10 : 0,
-                                  0,
-                                  index % 2 != 0 ? 10 : 00,
-                                  0),
-                              child: ProductCardLarge(
-                                product: _homeProvider
-                                    .productsList
-                                    .data![widget.data['index']]
-                                    .products![index],
-                              ),
-                            );
-                          }),
-                    ],
-                  ),
-                ),
+      // body: _homeProvider.discoverIsLoading
+      //     ? SpinkitIndicator()
+      //     : _homeProvider.discoverRetry
+      //         ? Retry(
+      //             onPressed: () {
+      //               _homeProvider.getDiscoverList();
+      //             },
+      //           )
+      //         : RefreshIndicator(
+      //             color: Theme.of(context).primaryColor,
+      //             onRefresh: () async {},
+      //             child: ListView(
+      //               children: [
+      //                 GridView.builder(
+      //                     shrinkWrap: true,
+      //                     physics: ScrollPhysics(),
+      //                     gridDelegate:
+      //                         SliverGridDelegateWithFixedCrossAxisCount(
+      //                             crossAxisCount: 2,
+      //                             crossAxisSpacing:
+      //                                 SizeConfig.screenWidth! - 360,
+      //                             mainAxisSpacing: 0,
+      //                             childAspectRatio: 0.85),
+      //                     itemCount: _homeProvider.productsList
+      //                         .data![widget.data['index']].products!.length,
+      //                     itemBuilder: (BuildContext ctx, index) {
+      //                       return Padding(
+      //                         padding: EdgeInsetsDirectional.fromSTEB(
+      //                             index % 2 == 0 ? 10 : 0,
+      //                             0,
+      //                             index % 2 != 0 ? 10 : 00,
+      //                             0),
+      //                         child: ProductCardLarge(
+      //                           product: _homeProvider
+      //                               .productsList
+      //                               .data![widget.data['index']]
+      //                               .products![index],
+      //                         ),
+      //                       );
+      //                     }),
+      //               ],
+      //             ),
+      //           ),
     );
   }
 }

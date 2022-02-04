@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/dummy_data/dummy_data.dart';
-import 'package:new_turki/provider/home_provider.dart';
+import 'package:new_turki/provider/search_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/home/search_bar.dart';
 import 'package:new_turki/widgets/home/search_row.dart';
@@ -14,7 +13,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
-    final _homeProvider = Provider.of<HomeProvider>(context);
+    final _searchProvider = Provider.of<SearchProvider>(context);
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -45,18 +44,18 @@ class _SearchState extends State<Search> {
               ],
             ),
             SearchBar(
-              controller: _homeProvider.searchController,
+              controller: _searchProvider.searchController,
               autoFocus: true,
             ),
             ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: DummyData.pointsTran.length,
+                itemCount: _searchProvider.searchData.length,
                 padding: EdgeInsets.all(0),
                 itemBuilder: (BuildContext ctxt, int index) {
                   return SearchRow(
-                    item: DummyData.itemsList[index],
+                    item: _searchProvider.searchData[index],
                   );
                 })
           ],

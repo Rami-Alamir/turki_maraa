@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:new_turki/dummy_data/dummy_data.dart';
+import 'package:new_turki/models/banners_data.dart';
+import 'package:new_turki/models/best_seller.dart';
 import 'package:new_turki/models/category_data.dart';
 import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/models/product.dart';
@@ -10,7 +11,6 @@ import 'package:new_turki/repository/products_repository.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 
 class HomeProvider with ChangeNotifier {
-  TextEditingController searchController = TextEditingController();
   bool _canPickup = true;
   bool _isLoading = true;
   bool _productIsLoading = true;
@@ -20,7 +20,7 @@ class HomeProvider with ChangeNotifier {
   int _selectedSize = -1;
   int _selectedPackaging = -1;
   int _selectedChopping = -1;
-  int _selectedShalwata = -1;
+  bool _selectedShalwata = false;
   bool _retry = false;
   bool _foodsRetry = false;
   bool _discoverRetry = false;
@@ -29,11 +29,17 @@ class HomeProvider with ChangeNotifier {
   bool visible = true;
   int _selectedOrderType = 0;
   CategoryData? _categoryData;
+  BestSeller? _bestSeller;
+  BannersData? _bannersData;
   Products? _productsList;
   Product? _productData;
-  List<DiscoverItem> _discoverList = [];
+  DiscoverItem? _discoverData;
   int _selectedAddress2 = 0;
+  bool _isFavourite = false;
 
+  BestSeller? get bestSeller => _bestSeller;
+  BannersData? get bannersData => _bannersData;
+  bool get isFavourite => _isFavourite;
   bool get productIsRetry => _productIsRetry;
   bool get productIsLoading => _productIsLoading;
   int get selectedSize => _selectedSize;
@@ -49,12 +55,12 @@ class HomeProvider with ChangeNotifier {
   int get selectedOrderType => _selectedOrderType;
   Product get productData => _productData!;
   Products get productsList => _productsList!;
-  List<DiscoverItem> get discoverList => _discoverList;
+  DiscoverItem? get discoverData => _discoverData;
   CategoryData get categoryData => _categoryData!;
   int get selectedAddress2 => _selectedAddress2;
   int get selectedPackaging => _selectedPackaging;
   int get selectedChopping => _selectedChopping;
-  int get selectedShalwata => _selectedShalwata;
+  bool get selectedShalwata => _selectedShalwata;
 
   set setIsLoading(bool value) {
     _isLoading = value;
@@ -71,7 +77,7 @@ class HomeProvider with ChangeNotifier {
     _selectedAddress2 = value;
   }
 
-  set setSelectedShalwata(int value) {
+  set setSelectedShalwata(bool value) {
     _selectedShalwata = value;
     notifyListeners();
   }
@@ -96,6 +102,16 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  set setIsFavourite(bool value) {
+    _isFavourite = value;
+  }
+
+  set setIsFavourite2(bool value) {
+    _isFavourite = value;
+    notifyListeners();
+  }
+
+  //get all categories
   Future<void> getCategories() async {
     try {
       _categoryData = await HomeRepository().getCategoriesList();
@@ -105,9 +121,19 @@ class HomeProvider with ChangeNotifier {
     }
   }
 
+  //get Best Seller
+  Future<void> getBestSeller() async {
+    try {
+      _bestSeller = await ProductsRepository().getBestSeller();
+    } catch (e) {
+      print(e.toString());
+      _retry = true;
+    }
+  }
+
   void disposeFood() {
     _foodsIsLoading = true;
-    _discoverList.clear();
+    _discoverData = null;
     _bannersList.clear();
     _foodsRetry = false;
   }
@@ -116,7 +142,7 @@ class HomeProvider with ChangeNotifier {
     _retry = false;
     _isLoading = isLoading;
     try {
-      await Future.wait([getCategories()]);
+      await Future.wait([getCategories(), getBestSeller()]);
     } catch (e) {
       _retry = true;
     }
@@ -128,30 +154,32 @@ class HomeProvider with ChangeNotifier {
     _foodsRetry = false;
     _foodsIsLoading = isLoading;
     try {
-      await Future.wait([getDiscoverList(), getBanners(), _getProducts("$id")]);
+      await Future.wait(
+          [getDiscoverList(id), getBanners(id), _getProducts("$id")]);
     } catch (e) {
       _foodsRetry = true;
     }
     _foodsIsLoading = false;
-
     notifyListeners();
   }
 
-  Future<void> getDiscoverList() async {
-    _discoverIsLoading = true;
-    _discoverRetry = false;
-    await Future.delayed(Duration(milliseconds: 10), () {
-      _discoverList = DummyData().discoverList;
-    });
-    _discoverIsLoading = false;
-
-    notifyListeners();
+  Future<void> getDiscoverList(int categoryId) async {
+    _discoverData = null;
+    try {
+      _discoverData = await HomeRepository().getDiscover(categoryId);
+    } catch (e) {
+      print(e.toString());
+      //  _foodsRetry = true;
+    }
   }
 
-  Future<void> getBanners() async {
-    await Future.delayed(Duration(milliseconds: 10), () {
-      _bannersList = DummyData().banners;
-    });
+  Future<void> getBanners(int categoryId) async {
+    try {
+      _bannersData = await HomeRepository().getBannersList(categoryId);
+    } catch (e) {
+      print(e.toString());
+      _foodsRetry = true;
+    }
   }
 
   // get Products
@@ -164,11 +192,10 @@ class HomeProvider with ChangeNotifier {
     }
   }
 
-  // get Product
+  // get Product details
   Future<void> getProductData(String id) async {
     _productIsLoading = true;
     _productIsRetry = false;
-
     try {
       _productData = await ProductsRepository().getProduct(id);
     } catch (e) {
@@ -179,13 +206,15 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // used in product details
   void initExtras() {
     _selectedSize = -1;
     _selectedChopping = -1;
     _selectedPackaging = -1;
-    _selectedShalwata = -1;
+    _selectedShalwata = false;
   }
 
+  // used in product details
   double getProductPrice() {
     double price = double.parse(_productData!.data!.price!);
     if (_selectedSize >= 0)
@@ -196,7 +225,38 @@ class HomeProvider with ChangeNotifier {
     if (_selectedChopping >= 0)
       price +=
           double.parse(_productData!.data!.chopping![_selectedChopping].price!);
-    if (_selectedShalwata >= 0)
+    if (_selectedShalwata)
+      price += double.parse(_productData!.data!.shalwata!.price!);
+    return price;
+  }
+
+  // used in product details
+  double getProductSalePrice() {
+    double price = double.parse(_productData!.data!.salePrice!);
+    if (_selectedSize >= 0) if (double.parse(
+            _productData!.data!.sizes![_selectedSize].salePrice!) >
+        0)
+      price =
+          double.parse(_productData!.data!.sizes![_selectedSize].salePrice!);
+    else
+      price = double.parse(_productData!.data!.sizes![_selectedSize].price!);
+    if (_selectedPackaging >= 0) if (double.parse(
+            _productData!.data!.packaging![_selectedPackaging].salePrice!) >
+        0)
+      price += double.parse(
+          _productData!.data!.packaging![_selectedPackaging].salePrice!);
+    else
+      price += double.parse(
+          _productData!.data!.packaging![_selectedPackaging].price!);
+    if (_selectedChopping >= 0) if (double.parse(
+            _productData!.data!.chopping![_selectedChopping].salePrice!) >
+        0)
+      price += double.parse(
+          _productData!.data!.chopping![_selectedChopping].salePrice!);
+    else
+      price +=
+          double.parse(_productData!.data!.chopping![_selectedChopping].price!);
+    if (_selectedShalwata)
       price += double.parse(_productData!.data!.shalwata!.price!);
     return price;
   }

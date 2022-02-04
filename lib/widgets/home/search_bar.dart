@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/search_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class SearchBar extends StatelessWidget {
   final controller;
@@ -15,7 +17,12 @@ class SearchBar extends StatelessWidget {
       child: Container(
         height: 50,
         child: TextField(
-          controller: controller ?? TextEditingController(),
+          controller: controller,
+          onChanged: (v) {
+            final _searchProvider =
+                Provider.of<SearchProvider>(context, listen: false);
+            _searchProvider.getSearchResultList();
+          },
           textAlignVertical: TextAlignVertical.center,
           cursorColor: Theme.of(context).textTheme.headline6!.color,
           autofocus: autoFocus,

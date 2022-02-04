@@ -95,14 +95,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => AddGiftCard());
       case '/ProductsHome':
         return MaterialPageRoute(builder: (_) => ProductsHome(id: args as int));
-
       case '/AddNewAddress':
         return MaterialPageRoute(builder: (_) => AddNewAddress());
       case '/Search':
         return MaterialPageRoute(builder: (_) => Search());
       case '/Discover':
-        return MaterialPageRoute(
-            builder: (_) => Discover(item: args as DiscoverItem));
+        return MaterialPageRoute(builder: (_) => Discover(item: args as Data));
       case '/ProductsList':
         return MaterialPageRoute(
             builder: (_) => ProductsList(data: args as Map<String, dynamic>));

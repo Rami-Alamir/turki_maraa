@@ -127,14 +127,13 @@ class TabItem {
             case '/ProductsHome':
               return MaterialPageRoute(
                   builder: (_) => ProductsHome(id: args as int));
-
             case '/AddNewAddress':
               return MaterialPageRoute(builder: (_) => AddNewAddress());
             case '/Search':
               return MaterialPageRoute(builder: (_) => Search());
             case '/Discover':
               return MaterialPageRoute(
-                  builder: (_) => Discover(item: args as DiscoverItem));
+                  builder: (_) => Discover(item: args as Data));
             case '/ProductsList':
               return MaterialPageRoute(
                   builder: (_) =>

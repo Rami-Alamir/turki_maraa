@@ -12,6 +12,7 @@ class OrderDetailsHeader extends StatelessWidget {
   const OrderDetailsHeader({required this.order});
   @override
   Widget build(BuildContext context) {
+    final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
     return MainCard(
       height: 235,
       child: Container(
@@ -57,12 +58,15 @@ class OrderDetailsHeader extends StatelessWidget {
                                 children: [
                                   ItemColumn(
                                       title: 'delivery_date',
-                                      value: 'تاريخ التوصيل هنا',
+                                      value:
+                                          '${order.deliveryDate?.dateYyyymmdd}',
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start),
                                   ItemColumn(
                                       title: 'delivery_time',
-                                      value: 'فترة التوصيل هنا',
+                                      value: _isAr
+                                          ? '${order.deliveryPeriod?.nameAr}'
+                                          : '${order.deliveryPeriod?.nameEn}',
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end),
                                 ],

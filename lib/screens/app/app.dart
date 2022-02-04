@@ -70,12 +70,13 @@ class AppState extends State<App> {
   @override
   void initState() {
     index = widget.index;
-
+    currentTab = widget.index;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final _cart = Provider.of<CartProvider>(context);
     SizeConfig().init(context);
     // WillPopScope handle android back button
     return WillPopScope(
@@ -127,8 +128,31 @@ class AppState extends State<App> {
                       label: AppLocalizations.of(context)!.tr('support'),
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(TURKIICONS.cart),
                       label: AppLocalizations.of(context)!.tr('cart'),
+                      icon: Stack(clipBehavior: Clip.none, children: <Widget>[
+                        Icon(TURKIICONS.cart),
+                        Positioned(
+                            // draw a red marble
+                            top: -5.0,
+                            left: -8.0,
+                            child: Visibility(
+                              visible: _cart.cartLength > 0,
+                              child: Container(
+                                width: 15,
+                                height: 15,
+                                decoration: BoxDecoration(
+                                    color: Colors.red, shape: BoxShape.circle),
+                                child: Text(
+                                  _cart.cartLength.toString(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12),
+                                ),
+                              ),
+                            ))
+                      ]),
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(TURKIICONS.tabnav_myorders),
@@ -143,12 +167,13 @@ class AppState extends State<App> {
                     this.index = index;
                     _selectTab(index);
                     final _auth = Provider.of<Auth>(context, listen: false);
-                    print('ddddssss');
                     if (index == 2 && _auth.isAuth) {
                       final _cart =
                           Provider.of<CartProvider>(context, listen: false);
                       _cart.setIsLoading = true;
-
+                      _cart.setSelectedTime = -1;
+                      _cart.setSelectedPayment = -1;
+                      _cart.setSelectedDate = -1;
                       _cart.getCartData(_auth.accessToken);
                     }
                   }),

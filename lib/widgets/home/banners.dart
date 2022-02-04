@@ -1,17 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:new_turki/models/banners_data.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/dots_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class Banners extends StatefulWidget {
-  final List<String> imgList;
+class BannersSlider extends StatefulWidget {
+  final BannersData bannersData;
 
-  const Banners({required this.imgList});
+  const BannersSlider({required this.bannersData});
   @override
   _BannersState createState() => _BannersState();
 }
 
-class _BannersState extends State<Banners> {
+class _BannersState extends State<BannersSlider> {
   int index = 0;
   @override
   Widget build(BuildContext context) {
@@ -30,15 +32,24 @@ class _BannersState extends State<Banners> {
                   autoPlayInterval: Duration(seconds: 5),
                   height: 270,
                   disableCenter: false),
-              items: widget.imgList.map((url) {
+              items: widget.bannersData.data![0].banners!.map((item) {
                 return Builder(
                   builder: (BuildContext context) {
-                    return Container(
-                      height: 250,
-                      width: SizeConfig.screenWidth,
-                      child: Image.network(
-                        url.trim(),
-                        fit: BoxFit.cover,
+                    return InkWell(
+                      onTap: () {
+                        if (item.type != null)
+                          Navigator.pushNamed(context, "/ProductDetails",
+                              arguments: item.productId);
+                        else
+                          _launchURL(item.redirectUrl.toString());
+                      },
+                      child: Container(
+                        height: 250,
+                        width: SizeConfig.screenWidth,
+                        child: Image.network(
+                          item.url!.trim(),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     );
                   },
@@ -57,7 +68,7 @@ class _BannersState extends State<Banners> {
                   children: [
                     DotsIndicator(
                       accentColor: Colors.white70,
-                      count: widget.imgList.length,
+                      count: widget.bannersData.data![0].banners!.length,
                       index: index,
                     ),
                   ],
@@ -68,6 +79,19 @@ class _BannersState extends State<Banners> {
         ],
       ),
     );
+  }
+
+//used to lunch url
+  Future<void> _launchURL(String url) async {
+    try {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   _onPageChanged(int index, CarouselPageChangedReason reason) {

@@ -6,8 +6,8 @@ class FavouriteRepository {
 
   //get Favourite list
   Future<Favourite> getFavouriteList(String authorization) async {
-    final response =
-        await _helper.get("wishlists", authorization: authorization);
+    final response = await _helper.get("wishlists?page=1&per_page=50",
+        authorization: authorization);
     Favourite? favourite;
     try {
       favourite = Favourite.fromJson(response);
@@ -19,6 +19,8 @@ class FavouriteRepository {
 
   //delete From Favourite
   Future<int> deleteFromFavourite(String id, String authorization) async {
+    print("wishlists/remove-from-wishlist/$id");
+
     final response = await _helper.delete("wishlists/remove-from-wishlist/$id",
         authorization: authorization);
     return response;

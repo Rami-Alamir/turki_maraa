@@ -73,7 +73,7 @@ class ProductCardLarge extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(top: 5, left: 10, right: 10),
+            padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
             child: AutoSizeText(
               _isAr ? product.nameAr! : product.nameEn!,
               textAlign: TextAlign.start,

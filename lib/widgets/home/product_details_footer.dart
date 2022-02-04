@@ -66,6 +66,29 @@ class ProductDetailsFooter extends StatelessWidget {
                     final _cartProvider =
                         Provider.of<CartProvider>(context, listen: false);
                     if (_authProvider.isAuth) {
+                      if ((_homeProvider.productData.data?.sizes?.length ?? 0) >
+                              0 &&
+                          _homeProvider.selectedSize == -1) {
+                        _cartProvider.showSnackBar(
+                            context, 'please_select_size');
+                        return;
+                      }
+                      if ((_homeProvider.productData.data?.chopping?.length ??
+                                  0) >
+                              0 &&
+                          _homeProvider.selectedChopping == -1) {
+                        _cartProvider.showSnackBar(
+                            context, 'please_select_cut');
+                        return;
+                      }
+                      if ((_homeProvider.productData.data?.packaging?.length ??
+                                  0) >
+                              0 &&
+                          _homeProvider.selectedPackaging == -1) {
+                        _cartProvider.showSnackBar(
+                            context, 'please_select_pack');
+                        return;
+                      }
                       _cartProvider.addToCart(
                         context: context,
                         authorization: "Bearer " + _authProvider.accessToken,
@@ -77,7 +100,7 @@ class ProductDetailsFooter extends StatelessWidget {
                         cutId:
                             "${_homeProvider.selectedChopping > -1 ? (_homeProvider.productData.data?.chopping?[_homeProvider.selectedChopping].id!.toString()) : ""}",
                         isShalwata:
-                            "${_homeProvider.selectedShalwata > -1 ? (_homeProvider.productData.data?.shalwata!.id!.toString()) : ""}",
+                            "${_homeProvider.selectedShalwata ? (_homeProvider.productData.data?.shalwata!.id!.toString()) : "0"}",
                         productId: '${_homeProvider.productData.data!.id}',
                       );
                     } else

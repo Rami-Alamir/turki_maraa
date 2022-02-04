@@ -1,19 +1,36 @@
 class DiscoverItem {
-  final String id;
-  final String image;
-  final String banner;
-  final String nameAr;
-  final String nameEn;
-  final String descriptionAr;
-  final String descriptionEn;
+  List<Data>? data;
 
-  DiscoverItem({
-    required this.id,
-    required this.image,
-    required this.banner,
-    required this.nameAr,
-    required this.nameEn,
-    required this.descriptionAr,
-    required this.descriptionEn,
+  DiscoverItem({this.data});
+
+  DiscoverItem.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+  }
+}
+
+class Data {
+  int? id;
+  String? titleAr;
+  String? titleEn;
+
+  String? image;
+
+  Data({
+    this.id,
+    this.titleAr,
+    this.titleEn,
+    this.image,
   });
+
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    titleAr = json['titel_ar'];
+    titleEn = json['titel_en'];
+    image = json['image'];
+  }
 }

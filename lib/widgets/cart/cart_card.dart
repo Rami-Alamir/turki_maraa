@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/cart_data.dart';
+import 'package:new_turki/provider/auth.dart';
+import 'package:new_turki/provider/cart_provider.dart';
+import 'package:new_turki/provider/favourite_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
+import 'package:provider/provider.dart';
 
 class CartCard extends StatelessWidget {
   final ItemData item;
@@ -15,17 +19,27 @@ class CartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool _language = AppLocalizations.of(context)!.locale == Locale('ar');
-    // final _cartProvider = Provider.of<CartProvider>(context);
+    final _cartProvider = Provider.of<CartProvider>(context, listen: false);
+
     return Container(
       width: SizeConfig.screenWidth,
       child: Dismissible(
-        key: Key(item.product!.id.toString() + "$index"),
+        key: UniqueKey(),
+        // key: Key(item.product!.id.toString() + "$index"),
         onDismissed: (direction) {
           if (direction == DismissDirection.endToStart) {
-            //final _cart = Provider.of<CartProvider>(context, listen: false);
-            //    _cart.removeCartItemData(context, index);
-          } else
-            print('favorite');
+            delete(context, _cartProvider);
+          } else {
+            final favourite =
+                Provider.of<FavouriteProvider>(context, listen: false);
+            final auth = Provider.of<Auth>(context, listen: false);
+            favourite.addToFavourite(
+                context: context,
+                withDialog: false,
+                authorization: "Bearer ${auth.accessToken}",
+                id: '${item.product!.id!}');
+            delete(context, _cartProvider);
+          }
         },
         background: Container(
           color: Colors.green,
@@ -138,7 +152,15 @@ class CartCard extends StatelessWidget {
                                   RoundedRectangleButton(
                                     padding: const EdgeInsets.all(0),
                                     onPressed: () {
-                                      //  _cartProvider.removeItem(context, index);
+                                      if (item.quantity! <= 1)
+                                        delete(context, _cartProvider);
+                                      else
+                                        _cartProvider.updateCartItem(
+                                          context: context,
+                                          productId: item.id.toString(),
+                                          quantity:
+                                              (item.quantity! - 1).toString(),
+                                        );
                                     },
                                     width: 30,
                                     height: 30,
@@ -154,7 +176,12 @@ class CartCard extends StatelessWidget {
                                   ),
                                   RoundedRectangleButton(
                                     onPressed: () {
-                                      //   _cartProvider.addItem(context, index);
+                                      _cartProvider.updateCartItem(
+                                        context: context,
+                                        productId: item.id.toString(),
+                                        quantity:
+                                            (item.quantity! + 1).toString(),
+                                      );
                                     },
                                     padding: const EdgeInsets.all(0),
                                     width: 30,
@@ -165,7 +192,8 @@ class CartCard extends StatelessWidget {
                                 ],
                               ),
                               Text(
-                                '${double.parse(item.size?.price ?? "0.0") + (item.isShalwata == 1 ? 20 : 0) + double.parse(item.preparation?.price ?? "0.0") + double.parse(item.cut?.price ?? "0.0")} ${AppLocalizations.of(context)!.tr('sr')}',
+                                (_cartProvider.getPrice(index) * item.quantity!)
+                                    .toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1
@@ -185,6 +213,13 @@ class CartCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void delete(BuildContext context, CartProvider cartProvider) {
+    cartProvider.deleteCartItem(
+      context: context,
+      productId: item.id.toString(),
     );
   }
 }

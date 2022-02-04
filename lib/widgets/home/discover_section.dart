@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/models/discover_item.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
+
 import 'discover_card.dart';
 
 class DiscoverSection extends StatelessWidget {
-  final List<DiscoverItem> discoverList;
+  final DiscoverItem discoverList;
   const DiscoverSection({required this.discoverList});
 
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Visibility(
-        visible: discoverList.length > 0,
+        visible: (discoverList.data?.length ?? 0) > 0,
         child: Column(
           children: [
             Row(
@@ -37,13 +38,13 @@ class DiscoverSection extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   physics: const ScrollPhysics(),
-                  itemCount: discoverList.length,
+                  itemCount: discoverList.data!.length,
                   itemBuilder: (BuildContext ctxt, int index) {
                     return Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
                           index == 0 ? 8 : 3.0, 0, 8, 0),
                       child: DiscoverCard(
-                        item: discoverList[index],
+                        item: discoverList.data![index],
                       ),
                     );
                   }),

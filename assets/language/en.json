@@ -51,6 +51,7 @@
   "redeem_for_rewards": "Redeem for rewards",
   "transaction_details": "Transaction details",
   "point": "Point",
+  "canceled": "Canceled",
   "yes" : "yes",
   "cancel" : "Cancel",
   "are_you_sure_you_want_to_redeem_points": "Are you sure you want to redeem points?",
@@ -145,7 +146,19 @@
   "shalwata": "Shalwata",
   "product_added_cart": "Product added to cart",
   "soon": "Soon",
-  "The_product_has_not_been_added_to_the_favourites" : "The product has been added to the favourites"
-
-
+  "The_product_has_not_been_added_to_the_favourites" : "The product has been added to the favourites",
+  "apply": "Apply",
+  "invalid_discount_code" : "Invalid discount code",
+  "please_select_delivery_date": "Please select a delivery date",
+  "please_select_delivery_time": "Please select a delivery time",
+  "please_choose_payment_method" : "Please select a payment method",
+  "maleString": "Male",
+  "femaleString": "Female",
+  "confirm" : "Confirm",
+  "order_successful": "Order successful",
+  "thank_order": "Thank you for choosing Turki dabayh, and now our team is preparing your order with love and care.",
+  "continue_shopping" : "Continue shopping",
+  "please_select_size" : "Please select the size",
+  "please_select_cut" : "Please select the chopping",
+  "please_select_pack" : "Please select packaging"
 }

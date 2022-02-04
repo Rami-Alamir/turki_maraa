@@ -1,82 +1,86 @@
 class OrdersData {
-  bool? success;
   List<Data>? data;
-  String? message;
-  String? description;
-  String? code;
 
-  OrdersData(
-      {this.success, this.data, this.message, this.description, this.code});
+  OrdersData({this.data});
 
   OrdersData.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
         data!.add(new Data.fromJson(v));
       });
     }
-    message = json['message'];
-    description = json['description'];
-    code = json['code'];
   }
 }
 
 class Data {
   String? refNo;
   String? deliveryFee;
-  String? orderTotal;
+  String? orderSubtotal;
   String? totalAmount;
   String? totalAmountAfterDiscount;
   String? comment;
   int? usingWallet;
   String? walletAmountUsed;
-  String? appliedDiscountCode;
+  String? discountApplied;
   String? address;
   int? addressId;
+  int? shalwataId;
   int? customerId;
   int? orderStateId;
   int? paymentTypeId;
+  int? deliveryPeriodId;
+  int? deliveryDateId;
   String? createdAt;
   String? updatedAt;
   OrderState? orderState;
   List<Products>? products;
+  DeliveryPeriod? deliveryPeriod;
+  DeliveryDate? deliveryDate;
 
   Data(
       {this.refNo,
       this.deliveryFee,
-      this.orderTotal,
+      this.orderSubtotal,
       this.totalAmount,
       this.totalAmountAfterDiscount,
       this.comment,
       this.usingWallet,
       this.walletAmountUsed,
-      this.appliedDiscountCode,
+      this.discountApplied,
       this.address,
       this.addressId,
+      this.shalwataId,
       this.customerId,
       this.orderStateId,
       this.paymentTypeId,
+      this.deliveryPeriodId,
+      this.deliveryDateId,
       this.createdAt,
       this.updatedAt,
       this.orderState,
-      this.products});
+      this.products,
+      this.deliveryPeriod,
+      this.deliveryDate});
 
   Data.fromJson(Map<String, dynamic> json) {
     refNo = json['ref_no'];
     deliveryFee = json['delivery_fee'];
-    orderTotal = json['order_subtotal'];
+    orderSubtotal = json['order_subtotal'];
     totalAmount = json['total_amount'];
-    totalAmountAfterDiscount = json['total_amount_after_sale'];
+    totalAmountAfterDiscount = json['total_amount_after_discount'];
     comment = json['comment'];
     usingWallet = json['using_wallet'];
     walletAmountUsed = json['wallet_amount_used'];
-    appliedDiscountCode = json['applied_discount_code'];
+    discountApplied = json['discount_applied'];
     address = json['address'];
     addressId = json['address_id'];
+    shalwataId = json['shalwata_id'];
     customerId = json['customer_id'];
     orderStateId = json['order_state_id'];
     paymentTypeId = json['payment_type_id'];
+    deliveryPeriodId = json['delivery_period_id'];
+    deliveryDateId = json['delivery_date_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     orderState = json['order_state'] != null
@@ -88,6 +92,12 @@ class Data {
         products!.add(new Products.fromJson(v));
       });
     }
+    deliveryPeriod = json['delivery_period'] != null
+        ? new DeliveryPeriod.fromJson(json['delivery_period'])
+        : null;
+    deliveryDate = json['delivery_date'] != null
+        ? new DeliveryDate.fromJson(json['delivery_date'])
+        : null;
   }
 }
 
@@ -98,18 +108,15 @@ class OrderState {
   String? customerStateEn;
   String? customerStateAr;
   int? isActive;
-  String? createdAt;
-  String? updatedAt;
 
-  OrderState(
-      {this.code,
-      this.stateEn,
-      this.stateAr,
-      this.customerStateEn,
-      this.customerStateAr,
-      this.isActive,
-      this.createdAt,
-      this.updatedAt});
+  OrderState({
+    this.code,
+    this.stateEn,
+    this.stateAr,
+    this.customerStateEn,
+    this.customerStateAr,
+    this.isActive,
+  });
 
   OrderState.fromJson(Map<String, dynamic> json) {
     code = json['code'];
@@ -118,8 +125,6 @@ class OrderState {
     customerStateEn = json['customer_state_en'];
     customerStateAr = json['customer_state_ar'];
     isActive = json['is_active'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 }
 
@@ -127,10 +132,12 @@ class Products {
   int? id;
   String? nameAr;
   String? nameEn;
-  String? description;
+  String? descriptionAr;
+  String? descriptionEn;
   String? weight;
   String? calories;
   int? noRating;
+  int? noSale;
   String? price;
   String? salePrice;
   bool? isActive;
@@ -138,41 +145,43 @@ class Products {
   int? isDelivered;
   int? isPickedUp;
   int? categoryId;
+  Null? shalwataId;
   int? subCategoryId;
   List<ProductImages>? productImages;
+  Null? shalwata;
 
   Products(
       {this.id,
       this.nameAr,
       this.nameEn,
-      this.description,
+      this.descriptionAr,
+      this.descriptionEn,
       this.weight,
       this.calories,
       this.noRating,
+      this.noSale,
       this.price,
       this.salePrice,
       this.isActive,
       this.isShalwata,
       this.isDelivered,
-      this.productImages,
       this.isPickedUp,
       this.categoryId,
-      this.subCategoryId});
+      this.shalwataId,
+      this.subCategoryId,
+      this.productImages,
+      this.shalwata});
 
   Products.fromJson(Map<String, dynamic> json) {
-    if (json['product_images'] != null) {
-      productImages = <ProductImages>[];
-      json['product_images'].forEach((v) {
-        productImages!.add(ProductImages.fromJson(v));
-      });
-    }
     id = json['id'];
     nameAr = json['name_ar'];
     nameEn = json['name_en'];
-    description = json['description'];
+    descriptionAr = json['description_ar'];
+    descriptionEn = json['description_en'];
     weight = json['weight'];
     calories = json['calories'];
     noRating = json['no_rating'];
+    noSale = json['no_sale'];
     price = json['price'];
     salePrice = json['sale_price'];
     isActive = json['is_active'];
@@ -180,27 +189,15 @@ class Products {
     isDelivered = json['is_delivered'];
     isPickedUp = json['is_picked_up'];
     categoryId = json['category_id'];
+    shalwataId = json['shalwata_id'];
     subCategoryId = json['sub_category_id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name_ar'] = this.nameAr;
-    data['name_en'] = this.nameEn;
-    data['description'] = this.description;
-    data['weight'] = this.weight;
-    data['calories'] = this.calories;
-    data['no_rating'] = this.noRating;
-    data['price'] = this.price;
-    data['sale_price'] = this.salePrice;
-    data['is_active'] = this.isActive;
-    data['is_shalwata'] = this.isShalwata;
-    data['is_delivered'] = this.isDelivered;
-    data['is_picked_up'] = this.isPickedUp;
-    data['category_id'] = this.categoryId;
-    data['sub_category_id'] = this.subCategoryId;
-    return data;
+    if (json['product_images'] != null) {
+      productImages = <ProductImages>[];
+      json['product_images'].forEach((v) {
+        productImages!.add(new ProductImages.fromJson(v));
+      });
+    }
+    shalwata = json['shalwata'];
   }
 }
 
@@ -208,8 +205,7 @@ class ProductImages {
   int? id;
   int? productId;
   int? isDefault;
-  String? createdAt;
-  String? updatedAt;
+
   String? imageUrl;
   String? thumbnailUrl;
 
@@ -217,8 +213,6 @@ class ProductImages {
       {this.id,
       this.productId,
       this.isDefault,
-      this.createdAt,
-      this.updatedAt,
       this.imageUrl,
       this.thumbnailUrl});
 
@@ -226,9 +220,63 @@ class ProductImages {
     id = json['id'];
     productId = json['product_id'];
     isDefault = json['is_default'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+
     imageUrl = json['image_url'];
     thumbnailUrl = json['thumbnail_url'];
+  }
+}
+
+class DeliveryPeriod {
+  int? id;
+  String? nameAr;
+  String? nameEn;
+  int? isActive;
+  String? timeHhmm;
+  String? createdAt;
+  String? updatedAt;
+
+  DeliveryPeriod(
+      {this.id,
+      this.nameAr,
+      this.nameEn,
+      this.isActive,
+      this.timeHhmm,
+      this.createdAt,
+      this.updatedAt});
+
+  DeliveryPeriod.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nameAr = json['name_ar'];
+    nameEn = json['name_en'];
+    isActive = json['is_active'];
+    timeHhmm = json['time_hhmm'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+}
+
+class DeliveryDate {
+  int? id;
+  int? cityId;
+  String? dateYyyymmdd;
+  int? isActive;
+  String? createdAt;
+  String? updatedAt;
+
+  DeliveryDate(
+      {this.id,
+      this.cityId,
+      this.dateYyyymmdd,
+      this.isActive,
+      this.createdAt,
+      this.updatedAt});
+
+  DeliveryDate.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    cityId = json['city_id'];
+    dateYyyymmdd = json['date_yyyymmdd'];
+    isActive = json['is_active'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
 }

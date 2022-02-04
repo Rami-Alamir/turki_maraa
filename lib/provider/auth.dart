@@ -9,6 +9,7 @@ import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/models/user_data.dart';
 import 'package:new_turki/models/user_type.dart';
 import 'package:new_turki/provider/address_provider.dart';
+import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/repository/registration_repository.dart';
 import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/screens/app/app.dart';
@@ -18,6 +19,7 @@ import 'package:new_turki/utilities/show_dialog.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'favourite_provider.dart';
 
 class Auth with ChangeNotifier {
   TextEditingController keyController = TextEditingController();
@@ -27,32 +29,43 @@ class Auth with ChangeNotifier {
   TextEditingController usernameController = TextEditingController();
   TextEditingController genderController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  int _start = 5;
+  //used in send otp (login)
+  int _start = 59;
+  //used to hide dialog indicator
   BuildContext? _dialogContext;
   String? _userPhone;
   bool? _isNewUser = false;
+  //used to update gender
+  int? _gender = -1;
+  //new or old user
+  UserType? _userType;
   UserData? _userData;
   var _response;
-  bool get isAuth => _isAuth!;
   bool? _isAuth = false;
-  UserData? get userData => _userData;
   String? _accessToken;
   SharedPreferences? _prefs;
   bool _isLoading = true;
   bool _retry = false;
-
-  bool get retry => _retry;
   Timer? _timer;
 
+  UserData? get userData => _userData;
   Timer get timer => _timer!;
-
+  bool get isAuth => _isAuth!;
+  bool get retry => _retry;
   int get start => _start;
-
   String get accessToken => _accessToken!;
+  int get gender => _gender!;
+  String get userPhone => _userPhone ?? "";
+  bool get isLoading => _isLoading;
+
+  set setIsLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
 
   //used to restrict resend otp
   void startTimer() {
-    _start = 5;
+    _start = 59;
     const oneSec = const Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
@@ -65,13 +78,19 @@ class Auth with ChangeNotifier {
         notifyListeners();
       },
     );
-    _start = 5;
+    _start = 59;
     notifyListeners();
   }
 
-  UserType? _userType;
-
-  String get userPhone => _userPhone ?? "";
+  void setGender(int value, BuildContext context) {
+    _gender = value;
+    genderController.text = value == 0
+        ? 'maleString'
+        : value == 1
+            ? 'femaleString'
+            : "";
+    notifyListeners();
+  }
 
   // send otp to user
   Future<void> sendOTP(BuildContext context) async {
@@ -82,9 +101,7 @@ class Auth with ChangeNotifier {
           ConvertPhone.getPhone(keyController.text, phoneController.text);
       _userType =
           await RegistrationRepository().sendOTP({"mobile": _userPhone});
-      print("t1");
       _isNewUser = _userType!.code == "C100";
-      print("t2");
       Navigator.pop(_dialogContext!);
       Navigator.pushNamed(context, "/VerifyPhone");
     } catch (e) {
@@ -97,11 +114,6 @@ class Auth with ChangeNotifier {
   // init Shared Preferences
   Future<void> _initPrefs() async {
     _prefs = _prefs ?? await SharedPreferences.getInstance();
-  }
-
-  set setIsLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
   }
 
   // verify otp and login
@@ -121,11 +133,12 @@ class Auth with ChangeNotifier {
           _accessToken = _userData!.data!.accessToken;
           await _initPrefs();
           _prefs!.setString("accessToken", _accessToken!);
-          ageController.text = (_userData!.data!.age!);
-          usernameController.text = _userData!.data!.name ?? "";
-          genderController.text = _userData!.data!.gender ?? "";
-          emailController.text = _userData!.data!.email ?? "";
+          initTextController();
+
           _isAuth = true;
+          final _favourite =
+              Provider.of<FavouriteProvider>(context, listen: false);
+          _favourite.getFavouriteData("Bearer " + accessToken);
           Navigator.pop(_dialogContext!);
           _isNewUser!
               ? Navigator.of(context).pushNamedAndRemoveUntil(
@@ -158,7 +171,7 @@ class Auth with ChangeNotifier {
   }
 
   // auto login
-  Future<void> getUserData(String token) async {
+  Future<void> getUserData(BuildContext context, String token) async {
     _isLoading = true;
     if (token.length > 0) {
       var _response;
@@ -167,14 +180,15 @@ class Auth with ChangeNotifier {
         if (_response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(_response.body.toString()));
           _accessToken = token;
-          ageController.text = (_userData!.data!.age!);
-          usernameController.text = _userData!.data!.name ?? "";
-          genderController.text = _userData!.data!.gender ?? "";
-          emailController.text = _userData!.data!.email ?? "";
+
           _isAuth = true;
+          final _favourite =
+              Provider.of<FavouriteProvider>(context, listen: false);
+          _favourite.getFavouriteData("Bearer " + accessToken);
+          initTextController();
         }
       } catch (e) {
-        print('catch');
+        print('catch login');
         print(e.toString());
         _retry = true;
       }
@@ -207,19 +221,20 @@ class Auth with ChangeNotifier {
     await _initPrefs();
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
+    final _cartProvider = Provider.of<CartProvider>(context, listen: false);
+    _cartProvider.cartLength = 0;
     _addressProvider.setSelectedAddress = -1;
     _addressProvider.setUserAddress = UserAddress();
     ShowConfirmDialog()
         .confirmDialog(context, "Are_you_sure_you_want_to_log_out", () {
       _userData = null;
       _isAuth = false;
+      _gender = -1;
       _accessToken = "";
       _prefs!.remove("accessToken");
       notifyListeners();
     });
   }
-
-  bool get isLoading => _isLoading;
 
   // update user data
   Future<void> updateUser(BuildContext context) async {
@@ -235,17 +250,13 @@ class Auth with ChangeNotifier {
           if (ageController.text.length > 0) "age": ageController.text.trim(),
           if (emailController.text.length > 0)
             "email": emailController.text.trim(),
-          if (genderController.text.length > 0)
-            "gender": genderController.text.trim(),
+          if (_gender! > -1) "gender": "$_gender",
         }, "Bearer $_accessToken");
         if (_response.statusCode == 200) {
           print(_response.body.toString());
           _userData = UserData.fromJson(json.decode(_response.body.toString()));
           _userData!.data!.accessToken = _accessToken;
-          ageController.text = _userData!.data!.age ?? " ";
-          usernameController.text = _userData!.data!.name ?? " ";
-          genderController.text = _userData!.data!.gender ?? " ";
-          emailController.text = _userData!.data!.email ?? " ";
+          initTextController();
           showSnackBar(context, 'data_has_been_updated_successfully');
           // AlertController.show(
           //     " ",
@@ -282,12 +293,34 @@ class Auth with ChangeNotifier {
     }
   }
 
+  void initCountyCode() {
+    keyController.text = '+966';
+  }
+
+  void initTextController() {
+    ageController.text = (_userData!.data!.age!);
+    usernameController.text = _userData!.data!.name ?? "";
+    genderController.text = getGenderString();
+    emailController.text = _userData!.data!.email ?? "";
+  }
+
+  String getGenderString() {
+    String gender = "";
+    print('x${(_userData?.data?.gender ?? "")}x');
+    print('x${(_userData?.data?.gender ?? "") == "0"}x');
+    gender = (_userData?.data?.gender ?? "") == "0"
+        ? 'maleString'
+        : (_userData?.data?.gender ?? "") == "1"
+            ? 'femaleString'
+            : "";
+    return gender;
+  }
+
   //for test
   TextEditingController giftController = TextEditingController();
   int _cardValue = 0;
   int get cardValue => _cardValue;
   GlobalKey<FormState>? formKey;
-
   User _user = User(
       name: 'رامي الأمير',
       phone: '0580809976',
@@ -297,10 +330,9 @@ class Auth with ChangeNotifier {
       credit: 100.6,
       category: 'الفئة الفضية',
       point: 6500);
-
   User get user => _user;
 
-//for test
+  //for test
   Future<void> delayed() async {
     await Future.delayed(Duration(milliseconds: 2500), () {
       notifyListeners();
@@ -355,9 +387,5 @@ class Auth with ChangeNotifier {
             AppLocalizations.of(context)!.tr('the_card_number_is_incorrect'),
             TypeAlert.error);
     }
-  }
-
-  void initCountyCode() {
-    keyController.text = '+966';
   }
 }

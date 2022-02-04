@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:new_turki/models/order.dart';
 import 'package:new_turki/models/orders_data.dart';
 import 'package:new_turki/networking/api_base_helper.dart';
@@ -7,9 +9,7 @@ class OrderRepository {
 
   //place Order
   Future<int> placeOrder(body, String authorization) async {
-    print('orders/add-order');
-    print(body.toString());
-    final response = await _helper.post2("orders/add-order", body,
+    final response = await _helper.post4("orders/add-order", json.encode(body),
         authorization: authorization);
     return response;
   }
@@ -20,6 +20,7 @@ class OrderRepository {
     OrdersData? ordersData;
     try {
       ordersData = OrdersData.fromJson(response);
+      print(response.toString());
     } catch (e) {
       print(e.toString());
     }

@@ -24,7 +24,7 @@ class IntroCard extends StatelessWidget {
               width: SizeConfig.setWidgetWidthWithFactor(0.7, 0.4, 0.3),
               child: Image.asset(
                 IntroList.introData[mSelectedPosition].image!,
-                width: SizeConfig.setWidgetWidthWithFactor(1.5, .5, .5),
+                width: SizeConfig.setWidgetWidthWithFactor(1, .5, .5),
                 height: SizeConfig.setWidgetHeightWithFactor(0.45, 0.49, 0.49),
                 fit: BoxFit.contain,
               ),

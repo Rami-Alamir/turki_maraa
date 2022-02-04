@@ -38,6 +38,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
     if (_auth.isAuth) print(_auth.accessToken);
+
     return Scaffold(
       appBar: PrimaryAppBar(
         title: AppLocalizations.of(context)!.tr('cart'),
@@ -54,13 +55,15 @@ class _ShoppingCartState extends State<ShoppingCart> {
                         if (_auth.isAuth) _cart.getCartData(_auth.accessToken);
                       },
                     )
-                  : (_cart.cartData?.data?.data?.length ?? 0) > 0
+                  : (_cart.cartData?.data?.cart?.data?.length ?? 0) > 0
                       ? RefreshIndicator(
                           color: Theme.of(context).primaryColor,
                           backgroundColor:
                               Theme.of(context).colorScheme.secondary,
                           onRefresh: () async {
-                            // await _cart.reInitOrdersList();
+                            if (_auth.isAuth)
+                              await _cart.getCartData(_auth.accessToken,
+                                  isLoading: false);
                           },
                           child: GestureDetector(
                             onTap: () => FocusScope.of(context)
@@ -74,14 +77,14 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                         padding: EdgeInsets.zero,
                                         shrinkWrap: true,
                                         physics: const ScrollPhysics(),
-                                        itemCount: _cart
-                                                .cartData?.data?.data?.length ??
-                                            0,
+                                        itemCount: (_cart.cartData?.data?.cart
+                                                ?.data?.length ??
+                                            0),
                                         itemBuilder:
                                             (BuildContext ctxt, int index) {
                                           return CartCard(
-                                            item: _cart
-                                                .cartData!.data!.data![index],
+                                            item: _cart.cartData!.data!.cart!
+                                                .data![index],
                                             index: index,
                                           );
                                         }),
@@ -110,6 +113,26 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                             title: '18', subtitle: 'الاحد'),
                                         DeliveryDateTime(
                                             title: '19', subtitle: 'الاثنين'),
+                                        DeliveryDateTime(
+                                            title: '19', subtitle: 'الثلاثاء'),
+                                        DeliveryDateTime(
+                                            title: '20', subtitle: 'الاربعاء'),
+                                        DeliveryDateTime(
+                                            title: '19', subtitle: 'الخميس'),
+                                        DeliveryDateTime(
+                                            title: '16', subtitle: 'الجمعة'),
+                                        DeliveryDateTime(
+                                            title: '17', subtitle: 'السبت'),
+                                        DeliveryDateTime(
+                                            title: '18', subtitle: 'الاحد'),
+                                        DeliveryDateTime(
+                                            title: '19', subtitle: 'الاثنين'),
+                                        DeliveryDateTime(
+                                            title: '19', subtitle: 'الثلاثاء'),
+                                        DeliveryDateTime(
+                                            title: '20', subtitle: 'الاربعاء'),
+                                        DeliveryDateTime(
+                                            title: '19', subtitle: 'الخميس'),
                                       ],
                                     ),
                                     DeliveryTime(
@@ -141,7 +164,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                   ],
                                 ),
                                 CartBottomSheet(
-                                  total: 100,
+                                  invoicePreview:
+                                      _cart.cartData!.data!.invoicePreview!,
                                 )
                               ],
                             ),

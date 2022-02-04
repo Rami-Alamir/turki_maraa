@@ -33,10 +33,10 @@ class ProfileFooter extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _textButton('privacy_policy',
-                  'https://green-diet.herokuapp.com/privacy-policy'),
+                  'https://almaraacompany.com/turki-app/privacy-policy.html'),
               Text('    |    ', textAlign: TextAlign.center, style: textStyle),
               _textButton('terms_of_use',
-                  'https://green-diet.herokuapp.com/terms-of-use'),
+                  'https://almaraacompany.com/turki-app/terms-of-use.html'),
             ],
           ),
           Visibility(

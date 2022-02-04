@@ -32,6 +32,8 @@ class Data {
   String? updatedAt;
   List<Products>? products;
   OrderState? orderState;
+  DeliveryPeriod? deliveryPeriod;
+  DeliveryDate? deliveryDate;
 
   Data(
       {this.refNo,
@@ -51,14 +53,16 @@ class Data {
       this.createdAt,
       this.updatedAt,
       this.products,
-      this.orderState});
+      this.orderState,
+      this.deliveryPeriod,
+      this.deliveryDate});
 
   Data.fromJson(Map<String, dynamic> json) {
     refNo = json['ref_no'];
     deliveryFee = json['delivery_fee'];
     orderTotal = json['order_subtotal'];
     totalAmount = json['total_amount'];
-    totalAmountAfterDiscount = json['total_amount_after_sale'];
+    totalAmountAfterDiscount = json['total_amount_after_discount'];
     comment = json['comment'];
     usingWallet = json['using_wallet'];
     walletAmountUsed = json['wallet_amount_used'];
@@ -75,10 +79,71 @@ class Data {
       json['products'].forEach((v) {
         products!.add(Products.fromJson(v));
       });
+      deliveryPeriod = json['delivery_period'] != null
+          ? DeliveryPeriod.fromJson(json['delivery_period'])
+          : null;
+      deliveryDate = json['delivery_date'] != null
+          ? DeliveryDate.fromJson(json['delivery_date'])
+          : null;
     }
     orderState = json['order_state'] != null
         ? OrderState.fromJson(json['order_state'])
         : null;
+  }
+}
+
+class DeliveryPeriod {
+  int? id;
+  String? nameAr;
+  String? nameEn;
+  int? isActive;
+  String? timeHhmm;
+  String? createdAt;
+  String? updatedAt;
+
+  DeliveryPeriod(
+      {this.id,
+      this.nameAr,
+      this.nameEn,
+      this.isActive,
+      this.timeHhmm,
+      this.createdAt,
+      this.updatedAt});
+
+  DeliveryPeriod.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nameAr = json['name_ar'];
+    nameEn = json['name_en'];
+    isActive = json['is_active'];
+    timeHhmm = json['time_hhmm'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+}
+
+class DeliveryDate {
+  int? id;
+  int? cityId;
+  String? dateYyyymmdd;
+  int? isActive;
+  String? createdAt;
+  String? updatedAt;
+
+  DeliveryDate(
+      {this.id,
+      this.cityId,
+      this.dateYyyymmdd,
+      this.isActive,
+      this.createdAt,
+      this.updatedAt});
+
+  DeliveryDate.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    cityId = json['city_id'];
+    dateYyyymmdd = json['date_yyyymmdd'];
+    isActive = json['is_active'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
 }
 

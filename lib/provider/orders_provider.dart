@@ -14,10 +14,8 @@ class OrdersProvider with ChangeNotifier {
 
   OrdersData? get ordersData => _ordersData;
   Order get order => _order!;
-
   bool get retry => _retry;
   bool get retry2 => _retry2;
-
   bool get isLoading => _isLoading;
   bool get isLoading2 => _isLoading2;
 
@@ -36,7 +34,6 @@ class OrdersProvider with ChangeNotifier {
     _token = token;
     _isLoading = true;
     _retry = false;
-
     try {
       _ordersData = await OrderRepository().getOrdersList("Bearer $token");
     } catch (e) {
@@ -52,7 +49,6 @@ class OrdersProvider with ChangeNotifier {
   Future<void> getOrderData(String id) async {
     _isLoading2 = true;
     _retry2 = false;
-
     try {
       _order = await OrderRepository().getOrderData(
           id,

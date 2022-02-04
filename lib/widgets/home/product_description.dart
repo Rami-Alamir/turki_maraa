@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/product.dart';
 import 'package:new_turki/provider/auth.dart';
@@ -11,8 +12,14 @@ import 'circle_icon.dart';
 class ProductDescription extends StatelessWidget {
   final Product product;
   final double price;
+  final double salePrice;
+  final bool isFavourite;
 
-  const ProductDescription({required this.product, required this.price});
+  const ProductDescription(
+      {required this.product,
+      required this.price,
+      required this.salePrice,
+      required this.isFavourite});
 
   Future<void> _createDynamicLink(bool short, String link) async {
     // // setState(() {
@@ -62,8 +69,8 @@ class ProductDescription extends StatelessWidget {
                   children: [
                     Text(
                       _isAr
-                          ? product.data!.subCategory!.typeAr!
-                          : product.data!.subCategory!.typeEn!,
+                          ? product.data!.subCategory?.typeAr ?? ""
+                          : product.data!.subCategory?.typeEn ?? "",
                       style: Theme.of(context)
                           .textTheme
                           .subtitle2!
@@ -84,27 +91,34 @@ class ProductDescription extends StatelessWidget {
               padding: const EdgeInsetsDirectional.fromSTEB(0, 15.0, 12.0, 0),
               child: Row(
                 children: [
-                  CircleIcon(
-                      icon: Icons.share,
-                      onTap: () async {
-                        _createDynamicLink(false, '/About');
-                      },
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0)),
+                  // CircleIcon(
+                  //     icon: Icons.share,
+                  //     onTap: () async {
+                  //       _createDynamicLink(false, '/About');
+                  //     },
+                  //     padding:
+                  //         const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0)),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0),
                     child: CircleIcon(
-                        icon: Icons.favorite_border_outlined,
-                        // icon: isFavourite
-                        //     ? Icons.favorite
-                        //     : Icons.favorite_border_outlined,
+                        icon: isFavourite
+                            ? Icons.favorite
+                            : Icons.favorite_border_outlined,
                         onTap: () {
                           final favourite = Provider.of<FavouriteProvider>(
                               context,
                               listen: false);
                           final auth =
                               Provider.of<Auth>(context, listen: false);
-                          if (auth.isAuth)
+                          if (auth.isAuth) if (isFavourite)
+                            favourite.deleteFromFavourite(
+                                context: context,
+                                authorization: "Bearer ${auth.accessToken}",
+                                id: favourite
+                                    .getFavouriteId(
+                                        int.parse('${product.data!.id!}'))
+                                    .toString());
+                          else
                             favourite.addToFavourite(
                                 context: context,
                                 authorization: "Bearer ${auth.accessToken}",
@@ -153,15 +167,46 @@ class ProductDescription extends StatelessWidget {
         Row(
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12, 4, 12),
-              child: Text(
-                '${formatDecimal(price)}${AppLocalizations.of(context)!.tr('sr')}',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(fontSize: 16, height: 1.4),
-              ),
-            ),
+                padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3, left: 5, right: 5),
+                      child: AutoSizeText(
+                        price.toString(),
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            decoration: salePrice > 0.0 && salePrice < price
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                            fontSize: salePrice > 0 ? 14 : 16,
+                            fontWeight: FontWeight.bold),
+                        minFontSize: salePrice > 0 ? 14 : 16,
+                        maxFontSize: salePrice > 0 ? 14 : 16,
+                        maxLines: 1,
+                      ),
+                    ),
+                    Visibility(
+                      visible: salePrice > 0 && salePrice < price,
+                      child: Text(
+                        '${formatDecimal(salePrice)}',
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1!
+                            .copyWith(fontSize: 16, height: 1.4),
+                      ),
+                    ),
+                    Text(
+                      "${AppLocalizations.of(context)!.tr('sr')}",
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .copyWith(fontSize: 16, height: 1.4),
+                    ),
+                  ],
+                )),
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
@@ -176,9 +221,10 @@ class ProductDescription extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 12.0, left: 12, bottom: 10),
+          padding: const EdgeInsets.only(right: 15.0, left: 15, bottom: 10),
           child: Text(
             _isAr ? product.data!.descriptionAr! : product.data!.descriptionEn!,
+            textAlign: TextAlign.start,
             style: Theme.of(context)
                 .textTheme
                 .subtitle2!
@@ -186,7 +232,10 @@ class ProductDescription extends StatelessWidget {
           ),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: ((product.data!.calories!.length > 0) &
+                  (product.data!.weight!.length > 0))
+              ? MainAxisAlignment.spaceAround
+              : MainAxisAlignment.start,
           children: [
             _item(
                 context: context,
@@ -194,7 +243,9 @@ class ProductDescription extends StatelessWidget {
                 value: product.data!.weight!,
                 size: 20,
                 icon: TURKIICONS.weight_1),
-            Padding(padding: const EdgeInsets.all(10)),
+            Visibility(
+                visible: product.data!.calories!.length > 0,
+                child: Padding(padding: const EdgeInsets.all(10))),
             _item(
                 context: context,
                 title: 'calories',

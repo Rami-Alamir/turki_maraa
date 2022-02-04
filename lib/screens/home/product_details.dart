@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/favourite_provider.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/home/product_description.dart';
 import 'package:new_turki/widgets/home/product_details_footer.dart';
 import 'package:new_turki/widgets/home/product_header.dart';
+import 'package:new_turki/widgets/home/shalwata_extra.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/home/extras_list.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
@@ -21,6 +23,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   void initState() {
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    final _favourite = Provider.of<FavouriteProvider>(context, listen: false);
+    _homeProvider.setIsFavourite = false;
+    _homeProvider.setIsFavourite = _favourite.isFavourite(widget.id);
     _homeProvider.initExtras();
     _homeProvider.getProductData(widget.id.toString());
     super.initState();
@@ -56,7 +61,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         imgList: _homeProvider.productData.data!.images!,
                       ),
                       ProductDescription(
+                          isFavourite: _homeProvider.isFavourite,
                           product: _homeProvider.productData,
+                          salePrice: _homeProvider.getProductSalePrice(),
                           price: _homeProvider.getProductPrice()),
                       ExtrasList(
                         title: AppLocalizations.of(context)!.tr('size'),
@@ -91,11 +98,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       if (_homeProvider.productData.data!.isShalwata!)
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
-                          child: ExtrasList(
-                            title: AppLocalizations.of(context)!.tr('shalwata'),
-                            tags: [
-                              _homeProvider.productData.data!.shalwata!,
-                            ],
+                          child: ShalwataExtra(
                             selected: _homeProvider.selectedShalwata,
                             onTap: (value) {
                               print(value);
@@ -111,12 +114,12 @@ class _ProductDetailsState extends State<ProductDetails> {
           !_homeProvider.productIsLoading && !_homeProvider.productIsRetry
               ? ProductDetailsFooter(
                   count: _count,
-                  add: () {
+                  subtract: () {
                     setState(() {
                       _count = _count == 1 ? _count : _count - 1;
                     });
                   },
-                  subtract: () {
+                  add: () {
                     setState(() {
                       _count += 1;
                     });

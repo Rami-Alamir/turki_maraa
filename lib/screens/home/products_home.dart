@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/home_provider.dart';
+import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/home/discover_section.dart';
 import 'package:new_turki/widgets/home/food_appbar.dart';
 import 'package:new_turki/widgets/home/products_section.dart';
+import 'package:new_turki/widgets/shared/primary_app_bar.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +38,21 @@ class _ProductsHomeState extends State<ProductsHome> {
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
     return Scaffold(
+      appBar: ((_homeProvider.bannersData?.data?[0].banners?.length ?? 0) == 0)
+          ? PrimaryAppBar(
+              action: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                  onPressed: () => Navigator.pushNamed(context, "/Search"),
+                  icon: Icon(
+                    RA7ICONS.search,
+                    size: 25,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+            )
+          : null,
       body: _homeProvider.foodsIsLoading
           ? SpinkitIndicator(
               padding: EdgeInsets.only(top: 60),
@@ -57,13 +74,18 @@ class _ProductsHomeState extends State<ProductsHome> {
                   child: CustomScrollView(
                       controller: _scrollController,
                       slivers: <Widget>[
-                        FoodAppBar(
-                          changeColor: _changeColor,
-                          banners: _homeProvider.bannersList,
-                        ),
-                        DiscoverSection(
-                          discoverList: _homeProvider.discoverList,
-                        ),
+                        if ((_homeProvider
+                                    .bannersData?.data?[0].banners?.length ??
+                                0) >
+                            0)
+                          FoodAppBar(
+                            changeColor: _changeColor,
+                            bannersData: _homeProvider.bannersData!,
+                          ),
+                        if (_homeProvider.discoverData != null)
+                          DiscoverSection(
+                            discoverList: _homeProvider.discoverData!,
+                          ),
                         // // // HtmlSection(),
                         SliverToBoxAdapter(
                             child: ProductsSection(

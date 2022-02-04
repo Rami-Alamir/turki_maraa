@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/product.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/home/extra_tag.dart';
 
 class ExtrasList extends StatelessWidget {
@@ -17,7 +18,6 @@ class ExtrasList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
     return tags.length == 0
         ? Container()
         : Column(
@@ -35,7 +35,7 @@ class ExtrasList extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                width: _width,
+                width: SizeConfig.screenWidth,
                 child: Wrap(
                   direction: Axis.horizontal,
                   children: getTags(context),
@@ -52,7 +52,6 @@ class ExtrasList extends StatelessWidget {
       tagsList.add(ExtraTag(
         selected: selected == i,
         onTap: () {
-          print("iiiii$i");
           onTap(i);
         },
         title: _isAr ? tags[i].nameAr : tags[i].nameEn,

@@ -1,13 +1,13 @@
 import "package:auto_size_text/auto_size_text.dart";
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/products.dart';
+import 'package:new_turki/models/best_seller.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
-class ProductCard extends StatelessWidget {
-  final ProductData product;
+class BestProductCard extends StatelessWidget {
+  final Data product;
 
-  const ProductCard({required this.product});
+  const BestProductCard({required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class ProductCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15.0),
                             // child: Image.asset("assets/images/img.png",
                             child: Image.network(
-                              '${((product.productImages?.length ?? 0) > 0) ? product.productImages![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
+                              '${((product.images?.length ?? 0) > 0) ? product.images![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
                               width: SizeConfig.setWidgetWidthWithFactor(
                                   0.35, 0.175, 0.175),
                               height: SizeConfig.setWidgetWidthWithFactor(
@@ -57,31 +57,31 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if ((product.tags?.length ?? 0) > 0)
-                    Positioned.directional(
-                        textDirection: TextDirection.rtl,
-                        top: 15,
-                        end: 10,
-                        child: Container(
-                          constraints: const BoxConstraints(minWidth: 40),
-                          decoration: BoxDecoration(
-                            color: hexToColor(product.tags![0].color!),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(15.0)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: 2.5, right: 5, left: 5, top: 2.5),
-                            child: Text(
-                              _isAr
-                                  ? product.tags![0].nameAr!
-                                  : product.tags![0].nameEn!,
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 11),
-                            ),
-                          ),
-                        ))
+                  // if ((product.tags?.length ?? 0) > 0)
+                  //   Positioned.directional(
+                  //       textDirection: TextDirection.rtl,
+                  //       top: 15,
+                  //       end: 10,
+                  //       child: Container(
+                  //         constraints: const BoxConstraints(minWidth: 40),
+                  //         decoration: BoxDecoration(
+                  //           color: hexToColor(product.tags![0].color!),
+                  //           borderRadius:
+                  //               const BorderRadius.all(Radius.circular(15.0)),
+                  //         ),
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(
+                  //               bottom: 2.5, right: 5, left: 5, top: 2.5),
+                  //           child: Text(
+                  //             _isAr
+                  //                 ? product.tags![0].nameAr!
+                  //                 : product.tags![0].nameEn!,
+                  //             textAlign: TextAlign.center,
+                  //             style:
+                  //                 TextStyle(color: Colors.white, fontSize: 11),
+                  //           ),
+                  //         ),
+                  //       ))
                 ],
               ),
               Padding(
@@ -122,7 +122,7 @@ class ProductCard extends StatelessWidget {
                               maxLines: 1,
                             ),
                             AutoSizeText(
-                              product.salePrice! == 0
+                              product.salePrice! == 0.0
                                   ? " ${AppLocalizations.of(context)!.tr('sr')}"
                                   : "",
                               textAlign: TextAlign.start,

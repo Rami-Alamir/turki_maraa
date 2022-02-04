@@ -1,16 +1,10 @@
 class Favourite {
   DataT? dataT;
-  String? message;
-  String? description;
-  String? code;
 
-  Favourite({this.dataT, this.message, this.description, this.code});
+  Favourite({this.dataT});
 
   Favourite.fromJson(Map<String, dynamic> json) {
     dataT = json['data'] != null ? new DataT.fromJson(json['data']) : null;
-    message = json['message'];
-    description = json['description'];
-    code = json['code'];
   }
 }
 
@@ -49,37 +43,28 @@ class Product {
   String? descriptionEn;
   String? weight;
   String? calories;
-  int? noRating;
   String? image;
   String? price;
   String? salePrice;
   bool? isActive;
   bool? isShalwata;
-  int? isDelivered;
-  int? isPickedUp;
-  int? categoryId;
-  int? subCategoryId;
   List<ProductImages>? productImages;
 
-  Product(
-      {this.id,
-      this.nameAr,
-      this.nameEn,
-      this.descriptionAr,
-      this.descriptionEn,
-      this.weight,
-      this.calories,
-      this.noRating,
-      this.image,
-      this.price,
-      this.salePrice,
-      this.isActive,
-      this.isShalwata,
-      this.isDelivered,
-      this.isPickedUp,
-      this.categoryId,
-      this.productImages,
-      this.subCategoryId});
+  Product({
+    this.id,
+    this.nameAr,
+    this.nameEn,
+    this.descriptionAr,
+    this.descriptionEn,
+    this.weight,
+    this.calories,
+    this.image,
+    this.price,
+    this.salePrice,
+    this.isActive,
+    this.isShalwata,
+    this.productImages,
+  });
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -89,17 +74,12 @@ class Product {
     descriptionEn = json['description_en'] ?? "";
     weight = json['weight'] ?? "";
     calories = json['calories'] ?? "";
-    noRating = json['no_rating'] ?? "";
     image = json['image'] ??
         "https://turki.turkieshop.com/images/Jk78x2iKpI1608014433.png?431112";
     price = json['price'] ?? "";
     salePrice = json['sale_price'] ?? "";
     isActive = json['is_active'] ?? "";
     isShalwata = json['is_shalwata'] ?? "";
-    isDelivered = json['is_delivered'] ?? "";
-    isPickedUp = json['is_picked_up'] ?? "";
-    categoryId = json['category_id'] ?? "";
-    subCategoryId = json['sub_category_id'] ?? "";
     if (json['product_images'] != null) {
       productImages = <ProductImages>[];
       json['product_images'].forEach((v) {

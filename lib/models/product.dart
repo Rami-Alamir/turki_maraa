@@ -13,9 +13,11 @@ class Data {
   String? nameAr;
   String? nameEn;
   String? price;
+  String? salePrice;
   String? weight;
   String? calories;
   String? descriptionAr;
+  bool isFavourite = false;
   String? descriptionEn;
   double? noRating;
   Category? category;
@@ -36,6 +38,7 @@ class Data {
       this.nameAr,
       this.nameEn,
       this.price,
+      this.salePrice,
       this.weight,
       this.calories,
       this.noRating,
@@ -58,6 +61,7 @@ class Data {
     nameAr = json['name_ar'] ?? '';
     nameEn = json['name_en'] ?? '';
     price = json['price'] ?? '';
+    salePrice = json['sale price'] ?? '0.0';
     weight = json['weight'] ?? '';
     descriptionAr = json['description_ar'] ?? '';
     descriptionEn = json['description_en'] ?? '';
@@ -114,17 +118,20 @@ class Extra {
   String? nameAr;
   String? nameEn;
   String? price;
+  String? salePrice;
   Extra({
     this.id,
     this.nameAr,
     this.nameEn,
     this.price,
+    this.salePrice,
   });
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         id: json["id"] ?? 0,
         nameAr: json["name_ar"] ?? "",
         nameEn: json["name_en"] ?? "",
         price: json["price"] ?? "",
+        salePrice: json["sale_price"] ?? "0.0",
       );
 }
 

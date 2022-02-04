@@ -28,8 +28,9 @@ class FavouriteCard extends StatelessWidget {
             Provider.of<FavouriteProvider>(context, listen: false);
         _favourite.deleteFromFavourite(
             context: context,
-            index: index,
             authorization: accessToken,
+            isLoading: false,
+            index: index,
             id: data.id!.toString());
       },
       background: Container(
@@ -132,7 +133,6 @@ class FavouriteCard extends StatelessWidget {
                                               listen: false);
                                       _favourite.deleteFromFavourite(
                                           context: context,
-                                          index: index,
                                           authorization: accessToken,
                                           id: data.id!.toString());
                                     },

@@ -29,7 +29,8 @@ class _MyAppState extends State<MyApp> {
     final appTheme = Provider.of<AppTheme>(context, listen: false);
     appTheme.setThemeData = widget.theme;
     final auth = Provider.of<Auth>(context, listen: false);
-    auth.getUserData(widget.token);
+    auth.getUserData(context, widget.token);
+
     super.initState();
   }
 

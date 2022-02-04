@@ -15,6 +15,7 @@ class RectangleTextField extends StatelessWidget {
   final contentPadding;
   final bool? emailValidate;
   final bool? obscureText;
+  final bool? enable;
   final EdgeInsets? padding;
   final int maxLength;
   final int maxLines;
@@ -28,6 +29,7 @@ class RectangleTextField extends StatelessWidget {
     this.nextFocusNode,
     this.contentPadding = const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
     this.white,
+    this.enable = true,
     this.textInputType,
     this.onChanged,
     this.validated,
@@ -48,6 +50,7 @@ class RectangleTextField extends StatelessWidget {
       child: Container(
         width: customWidth ?? SizeConfig.screenWidth,
         child: TextFormField(
+          enabled: enable,
           textAlignVertical: TextAlignVertical.center,
           maxLines: maxLines,
           maxLength: maxLength,
@@ -61,10 +64,8 @@ class RectangleTextField extends StatelessWidget {
           onChanged: (value) {
             if (onChanged != null) onChanged(value);
           },
-          style: Theme.of(context)
-              .textTheme
-              .headline2!
-              .copyWith(fontSize: width > 600 ? 20 : 16),
+          style: Theme.of(context).textTheme.headline4!.copyWith(
+              fontSize: width > 600 ? 18 : 14, fontWeight: FontWeight.normal),
           textInputAction: textInputAction ?? TextInputAction.done,
           decoration: InputDecoration(
               counterText: "",
