@@ -51,7 +51,9 @@ class _SearchState extends State<Search> {
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: _searchProvider.searchData.length,
+                itemCount: _searchProvider.searchData.length > 20
+                    ? 20
+                    : _searchProvider.searchData.length,
                 padding: EdgeInsets.all(0),
                 itemBuilder: (BuildContext ctxt, int index) {
                   return SearchRow(

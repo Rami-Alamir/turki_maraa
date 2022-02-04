@@ -72,14 +72,13 @@ class _HomeState extends State<Home> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: CategoryAppBar(
-          onTap: () {},
           parentScaffoldKey: widget.parentScaffoldStateKey,
         ),
         body: RefreshIndicator(
             color: Theme.of(context).primaryColor,
             backgroundColor: Theme.of(context).colorScheme.secondary,
             onRefresh: () async {
-              _homeProvider.getHomePageData();
+              await _homeProvider.getHomePageData();
             },
             child: Stack(
               children: [
@@ -120,18 +119,21 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                 Positioned(
-                  top: 56 + _statusBarHeight,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Visibility(
-                        visible: _homeProvider.canPickup,
-                        child: OrderType(
+                  top: 55 + _statusBarHeight,
+                  child: Visibility(
+                    visible: !_homeProvider.isLoading && !_homeProvider.retry,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Visibility(
                           visible: _homeProvider.canPickup,
+                          child: OrderType(
+                            visible: _homeProvider.canPickup,
+                          ),
                         ),
-                      ),
-                      if (!_homeProvider.isLoading) AddressContainer(),
-                    ],
+                        if (!_homeProvider.isLoading) AddressContainer(),
+                      ],
+                    ),
                   ),
                 ),
               ],

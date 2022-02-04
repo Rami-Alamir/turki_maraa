@@ -6,10 +6,8 @@ import 'package:provider/provider.dart';
 
 class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> parentScaffoldKey;
-  final Function onTap;
   const CategoryAppBar({
     required this.parentScaffoldKey,
-    required this.onTap,
   });
   @override
   Widget build(BuildContext context) {

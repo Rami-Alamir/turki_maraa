@@ -56,119 +56,107 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       },
                     )
                   : (_cart.cartData?.data?.cart?.data?.length ?? 0) > 0
-                      ? RefreshIndicator(
-                          color: Theme.of(context).primaryColor,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          onRefresh: () async {
-                            if (_auth.isAuth)
-                              await _cart.getCartData(_auth.accessToken,
-                                  isLoading: false);
-                          },
-                          child: GestureDetector(
-                            onTap: () => FocusScope.of(context)
-                                .requestFocus(FocusNode()),
-                            child: Stack(
-                              children: [
-                                ListView(
-                                  physics: const ScrollPhysics(),
-                                  children: [
-                                    ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        physics: const ScrollPhysics(),
-                                        itemCount: (_cart.cartData?.data?.cart
-                                                ?.data?.length ??
-                                            0),
-                                        itemBuilder:
-                                            (BuildContext ctxt, int index) {
-                                          return CartCard(
-                                            item: _cart.cartData!.data!.cart!
-                                                .data![index],
-                                            index: index,
-                                          );
-                                        }),
-                                    DeliveryAddress(
-                                        address:
-                                            _addressProvider.selectedAddress ==
-                                                    -1
-                                                ? AppLocalizations.of(context)!
-                                                    .tr('current_location')
-                                                : _addressProvider
-                                                    .userAddress!
-                                                    .data![_addressProvider
-                                                        .selectedAddress]
-                                                    .address!),
-                                    DeliveryDate(
-                                      dateList: [
-                                        DeliveryDateTime(
-                                            title: '14', subtitle: 'اليوم'),
-                                        DeliveryDateTime(
-                                            title: '15', subtitle: 'غدا'),
-                                        DeliveryDateTime(
-                                            title: '16', subtitle: 'الجمعة'),
-                                        DeliveryDateTime(
-                                            title: '17', subtitle: 'السبت'),
-                                        DeliveryDateTime(
-                                            title: '18', subtitle: 'الاحد'),
-                                        DeliveryDateTime(
-                                            title: '19', subtitle: 'الاثنين'),
-                                        DeliveryDateTime(
-                                            title: '19', subtitle: 'الثلاثاء'),
-                                        DeliveryDateTime(
-                                            title: '20', subtitle: 'الاربعاء'),
-                                        DeliveryDateTime(
-                                            title: '19', subtitle: 'الخميس'),
-                                        DeliveryDateTime(
-                                            title: '16', subtitle: 'الجمعة'),
-                                        DeliveryDateTime(
-                                            title: '17', subtitle: 'السبت'),
-                                        DeliveryDateTime(
-                                            title: '18', subtitle: 'الاحد'),
-                                        DeliveryDateTime(
-                                            title: '19', subtitle: 'الاثنين'),
-                                        DeliveryDateTime(
-                                            title: '19', subtitle: 'الثلاثاء'),
-                                        DeliveryDateTime(
-                                            title: '20', subtitle: 'الاربعاء'),
-                                        DeliveryDateTime(
-                                            title: '19', subtitle: 'الخميس'),
-                                      ],
-                                    ),
-                                    DeliveryTime(
-                                      deliveryTime: [
-                                        DeliveryDateTime(
-                                            title: 'فترة الصباح',
-                                            subtitle: 'اليوم'),
-                                        DeliveryDateTime(
-                                            title: 'فترة الظهر',
-                                            subtitle: 'غدا'),
-                                        DeliveryDateTime(
-                                            title: 'فترة العصر',
-                                            subtitle: 'الجمعة'),
-                                        DeliveryDateTime(
-                                            title: 'فترة المغرب',
-                                            subtitle: 'السبت'),
-                                        DeliveryDateTime(
-                                            title: 'فترة العشاء',
-                                            subtitle: 'الاحد'),
-                                      ],
-                                    ),
-                                    PaymentMethod(),
-                                    UseCredit(
-                                        credit: _auth.userData!.data!.wallet!),
-                                    Note(),
-                                    SizedBox(
-                                      height: SizeConfig.screenHeight! * 0.25,
-                                    )
-                                  ],
-                                ),
-                                CartBottomSheet(
-                                  invoicePreview:
-                                      _cart.cartData!.data!.invoicePreview!,
-                                )
-                              ],
-                            ),
+                      ? GestureDetector(
+                          onTap: () =>
+                              FocusScope.of(context).requestFocus(FocusNode()),
+                          child: Stack(
+                            children: [
+                              ListView(
+                                physics: const ScrollPhysics(),
+                                children: [
+                                  ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      physics: const ScrollPhysics(),
+                                      itemCount: (_cart.cartData?.data?.cart
+                                              ?.data?.length ??
+                                          0),
+                                      itemBuilder:
+                                          (BuildContext ctxt, int index) {
+                                        return CartCard(
+                                          item: _cart.cartData!.data!.cart!
+                                              .data![index],
+                                          index: index,
+                                        );
+                                      }),
+                                  DeliveryAddress(
+                                      address:
+                                          _addressProvider.selectedAddress == -1
+                                              ? AppLocalizations.of(context)!
+                                                  .tr('current_location')
+                                              : _addressProvider
+                                                  .userAddress!
+                                                  .data![_addressProvider
+                                                      .selectedAddress]
+                                                  .address!),
+                                  DeliveryDate(
+                                    dateList: [
+                                      DeliveryDateTime(
+                                          title: '14', subtitle: 'اليوم'),
+                                      DeliveryDateTime(
+                                          title: '15', subtitle: 'غدا'),
+                                      DeliveryDateTime(
+                                          title: '16', subtitle: 'الجمعة'),
+                                      DeliveryDateTime(
+                                          title: '17', subtitle: 'السبت'),
+                                      DeliveryDateTime(
+                                          title: '18', subtitle: 'الاحد'),
+                                      DeliveryDateTime(
+                                          title: '19', subtitle: 'الاثنين'),
+                                      DeliveryDateTime(
+                                          title: '19', subtitle: 'الثلاثاء'),
+                                      DeliveryDateTime(
+                                          title: '20', subtitle: 'الاربعاء'),
+                                      DeliveryDateTime(
+                                          title: '19', subtitle: 'الخميس'),
+                                      DeliveryDateTime(
+                                          title: '16', subtitle: 'الجمعة'),
+                                      DeliveryDateTime(
+                                          title: '17', subtitle: 'السبت'),
+                                      DeliveryDateTime(
+                                          title: '18', subtitle: 'الاحد'),
+                                      DeliveryDateTime(
+                                          title: '19', subtitle: 'الاثنين'),
+                                      DeliveryDateTime(
+                                          title: '19', subtitle: 'الثلاثاء'),
+                                      DeliveryDateTime(
+                                          title: '20', subtitle: 'الاربعاء'),
+                                      DeliveryDateTime(
+                                          title: '19', subtitle: 'الخميس'),
+                                    ],
+                                  ),
+                                  DeliveryTime(
+                                    deliveryTime: [
+                                      DeliveryDateTime(
+                                          title: 'فترة الصباح',
+                                          subtitle: 'اليوم'),
+                                      DeliveryDateTime(
+                                          title: 'فترة الظهر', subtitle: 'غدا'),
+                                      DeliveryDateTime(
+                                          title: 'فترة العصر',
+                                          subtitle: 'الجمعة'),
+                                      DeliveryDateTime(
+                                          title: 'فترة المغرب',
+                                          subtitle: 'السبت'),
+                                      DeliveryDateTime(
+                                          title: 'فترة العشاء',
+                                          subtitle: 'الاحد'),
+                                    ],
+                                  ),
+                                  PaymentMethod(),
+                                  UseCredit(
+                                      credit: _auth.userData!.data!.wallet!),
+                                  Note(),
+                                  SizedBox(
+                                    height: SizeConfig.screenHeight! * 0.25,
+                                  )
+                                ],
+                              ),
+                              CartBottomSheet(
+                                invoicePreview:
+                                    _cart.cartData!.data!.invoicePreview!,
+                              )
+                            ],
                           ),
                         )
                       : EmptyCart(),
