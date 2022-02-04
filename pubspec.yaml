@@ -49,7 +49,7 @@ dev_dependencies:
 
 
 flutter_native_splash:
-  color: "#691E18"
+  #color: "#691E18"
   background_image: "assets/images/ww1.png"
 
 flutter:

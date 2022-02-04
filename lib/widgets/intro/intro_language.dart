@@ -17,10 +17,10 @@ class IntroLanguage extends StatelessWidget {
             },
             child: Text(
               _lang.language == 'ar' ? 'En' : 'العربية',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Color.fromRGBO(132, 15, 15, 1),
-              ),
+              style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromRGBO(132, 15, 15, 1),
+                  ),
             ),
           ),
         ],
