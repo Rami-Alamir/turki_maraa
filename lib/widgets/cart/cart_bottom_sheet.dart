@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/cart_data.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/widgets/shared/invoice.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +26,11 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final _cart = Provider.of<CartProvider>(context);
-
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    String _currency = GetStrings().getCurrency(
+        AppLocalizations.of(context)!.locale!.languageCode,
+        _addressProvider.isoCountryCode);
     return NotificationListener<DraggableScrollableNotification>(
       onNotification: (DraggableScrollableNotification dSNotification) {
         _isExpanded = dSNotification.minExtent == dSNotification.extent;
@@ -115,7 +121,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 5.0),
                                   child: Text(
-                                    '${widget.invoicePreview.totalAmountAfterDiscount!} ${AppLocalizations.of(context)!.tr('sr')}',
+                                    '${widget.invoicePreview.totalAmountAfterDiscount!} $_currency',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline1!

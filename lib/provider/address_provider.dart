@@ -56,15 +56,14 @@ class AddressProvider with ChangeNotifier {
       }
   }
 
-  //get user location + init marker
   void initMapData(String languageCode) async {
-    try {
-      Locations.LocationData _locationData =
-          await Locations.Location().getLocation();
-      _latLng = LatLng(_locationData.latitude!, _locationData.longitude!);
-    } catch (e) {
-      print("initMapData " + e.toString());
-    }
+    // try {
+    //   Locations.LocationData _locationData =
+    //       await Locations.Location().getLocation();
+    //   _latLng = LatLng(_locationData.latitude!, _locationData.longitude!);
+    // } catch (e) {
+    //   print("initMapData " + e.toString());
+    // }
 
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(size: Size(25, 25)), 'assets/images/pin.png')
@@ -85,7 +84,7 @@ class AddressProvider with ChangeNotifier {
       var _response;
       try {
         _response = await UserRepository().addAddress({
-          "country_id": "1",
+          "country_id": _isoCountryCode,
           "city_id": "2",
           "address":
               "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "."} ",
@@ -96,6 +95,7 @@ class AddressProvider with ChangeNotifier {
           "long": "${latLng.latitude}",
           "lat": "${latLng.longitude}",
         }, "Bearer $accessToken");
+        print(_response.body.toString());
         if (_response.statusCode == 200) {
           // showSnackBar(context, 'data_has_been_updated_successfully');
           // AlertController.show(

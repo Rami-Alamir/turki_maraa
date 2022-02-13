@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/product.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/favourite_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:provider/provider.dart';
@@ -54,6 +56,11 @@ class ProductDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    String _currency = GetStrings().getCurrency(
+        AppLocalizations.of(context)!.locale!.languageCode,
+        _addressProvider.isoCountryCode);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +206,7 @@ class ProductDescription extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${AppLocalizations.of(context)!.tr('sr')}",
+                      "$_currency",
                       textAlign: TextAlign.start,
                       style: Theme.of(context)
                           .textTheme

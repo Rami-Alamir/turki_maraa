@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
+import 'package:provider/provider.dart';
 
 import 'invoice_row.dart';
 
@@ -20,6 +23,11 @@ class Invoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    String _currency = GetStrings().getCurrency(
+        AppLocalizations.of(context)!.locale!.languageCode,
+        _addressProvider.isoCountryCode);
     return Padding(
       padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
       child: Column(
@@ -36,21 +44,20 @@ class Invoice extends StatelessWidget {
           InvoiceRow(
               fontColor: Theme.of(context).textTheme.headline4!.color!,
               title: 'order_total',
-              value: '$subtotal ${AppLocalizations.of(context)!.tr('sr')}'),
+              value: '$subtotal $_currency'),
           InvoiceRow(
               fontColor: Theme.of(context).textTheme.headline4!.color!,
               title: 'delivery_fees',
-              value: '$shipping ${AppLocalizations.of(context)!.tr('sr')}'),
+              value: '$shipping $_currency'),
           InvoiceRow(
             title: 'discount',
-            value:
-                '-$discountVoucher ${AppLocalizations.of(context)!.tr('sr')}',
+            value: '-$discountVoucher $_currency',
             visible: discountVoucher > 0,
             fontColor: Colors.green,
           ),
           InvoiceRow(
             title: 'credit',
-            value: '-$myCredit ${AppLocalizations.of(context)!.tr('sr')}',
+            value: '-$myCredit $_currency',
             visible: myCredit > 0,
             fontColor: Colors.green,
           ),
@@ -85,7 +92,7 @@ class Invoice extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
-                    '$total ${AppLocalizations.of(context)!.tr('sr')}',
+                    '$total $_currency',
                     style: Theme.of(context)
                         .textTheme
                         .headline1!

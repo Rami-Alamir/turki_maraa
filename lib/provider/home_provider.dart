@@ -54,7 +54,9 @@ class HomeProvider with ChangeNotifier {
   Future<void> initLatLng() async {
     Location.LocationData _locationData =
         await Location.Location().getLocation();
-    _latLng = LatLng(_locationData.latitude!, _locationData.longitude!);
+    _latLng = LatLng(25.080002558191797, 55.13467766504166);
+
+    // _latLng = LatLng(_locationData.latitude!, _locationData.longitude!);
     _locationServiceStatus = 1;
     // init  isoCountryCode
     List<Placemark> placemark = await placemarkFromCoordinates(

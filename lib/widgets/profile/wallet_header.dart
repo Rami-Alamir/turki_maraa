@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/utilities/size_config.dart';
+import 'package:provider/provider.dart';
 
 class WalletHeader extends StatelessWidget {
   final double credit;
@@ -8,6 +11,11 @@ class WalletHeader extends StatelessWidget {
   const WalletHeader({required this.credit});
   @override
   Widget build(BuildContext context) {
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    String _currency = GetStrings().getCurrency(
+        AppLocalizations.of(context)!.locale!.languageCode,
+        _addressProvider.isoCountryCode);
     return Column(
       children: [
         Padding(
@@ -29,7 +37,7 @@ class WalletHeader extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      AppLocalizations.of(context)!.tr('sr'),
+                      _currency,
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme

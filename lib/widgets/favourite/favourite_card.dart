@@ -1,11 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/favourite_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:new_turki/models/favourite.dart';
 import 'package:provider/provider.dart';
+import 'package:readmore/readmore.dart';
 
 class FavouriteCard extends StatelessWidget {
   final Data data;
@@ -21,6 +24,11 @@ class FavouriteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    String _currency = GetStrings().getCurrency(
+        AppLocalizations.of(context)!.locale!.languageCode,
+        _addressProvider.isoCountryCode);
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
@@ -107,14 +115,41 @@ class FavouriteCard extends StatelessWidget {
                                   style: Theme.of(context).textTheme.headline4),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 2.0),
-                              child: AutoSizeText(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 2.0),
+                                child: ReadMoreText(
                                   _isAr
                                       ? data.product!.descriptionAr!
                                       : data.product!.descriptionEn!,
-                                  style: Theme.of(context).textTheme.subtitle2),
-                            ),
+                                  trimLines: 2,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontSize: 14, height: 1.5),
+                                  colorClickableText:
+                                      Theme.of(context).primaryColor,
+                                  trimMode: TrimMode.Line,
+                                  semanticsLabel: "",
+                                  delimiter: " ",
+                                  trimCollapsedText: "..." +
+                                      AppLocalizations.of(context)!
+                                          .tr('show_more'),
+                                  trimExpandedText:
+                                      AppLocalizations.of(context)!
+                                          .tr('show_less'),
+                                  moreStyle: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .copyWith(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.normal),
+                                )
+                                // AutoSizeText(
+                                //     _isAr
+                                //         ? data.product!.descriptionAr!
+                                //         : data.product!.descriptionEn!,
+                                //     style: Theme.of(context).textTheme.subtitle2),
+                                ),
                           ],
                         ),
                         Column(
@@ -144,7 +179,7 @@ class FavouriteCard extends StatelessWidget {
                                             .headline5),
                                   ),
                                   Text(
-                                    '${data.product!.price} ${AppLocalizations.of(context)!.tr('sr')}',
+                                    '${data.product!.price} $_currency',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline1

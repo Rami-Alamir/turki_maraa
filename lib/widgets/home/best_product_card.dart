@@ -1,8 +1,11 @@
 import "package:auto_size_text/auto_size_text.dart";
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/best_seller.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/utilities/size_config.dart';
+import 'package:provider/provider.dart';
 
 class BestProductCard extends StatelessWidget {
   final Data product;
@@ -12,6 +15,11 @@ class BestProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    String _currency = GetStrings().getCurrency(
+        AppLocalizations.of(context)!.locale!.languageCode,
+        _addressProvider.isoCountryCode);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
       child: Container(
@@ -122,9 +130,7 @@ class BestProductCard extends StatelessWidget {
                               maxLines: 1,
                             ),
                             AutoSizeText(
-                              product.salePrice! == 0.0
-                                  ? " ${AppLocalizations.of(context)!.tr('sr')}"
-                                  : "",
+                              product.salePrice! == 0.0 ? " $_currency" : "",
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
@@ -155,7 +161,7 @@ class BestProductCard extends StatelessWidget {
                               maxLines: 1,
                             ),
                             AutoSizeText(
-                              " ${AppLocalizations.of(context)!.tr('sr')}",
+                              " $_currency",
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme

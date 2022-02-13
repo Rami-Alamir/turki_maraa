@@ -1,6 +1,9 @@
 import "package:auto_size_text/auto_size_text.dart";
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
+import 'package:provider/provider.dart';
 
 class ProductCardLarge extends StatelessWidget {
   final int id;
@@ -20,6 +23,11 @@ class ProductCardLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    String _currency = GetStrings().getCurrency(
+        AppLocalizations.of(context)!.locale!.languageCode,
+        _addressProvider.isoCountryCode);
     return InkWell(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
@@ -115,7 +123,7 @@ class ProductCardLarge extends StatelessWidget {
                           maxLines: 1,
                         ),
                         AutoSizeText(
-                          " ${AppLocalizations.of(context)!.tr('sr')}",
+                          " $_currency",
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
@@ -146,7 +154,7 @@ class ProductCardLarge extends StatelessWidget {
                           maxLines: 1,
                         ),
                         AutoSizeText(
-                          " ${AppLocalizations.of(context)!.tr('sr')}",
+                          " $_currency",
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme

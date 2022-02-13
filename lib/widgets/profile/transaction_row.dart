@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/wallet.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/utilities/size_config.dart';
+import 'package:provider/provider.dart';
 
 class TransactionRow extends StatelessWidget {
   final Wallet transaction;
@@ -10,7 +13,11 @@ class TransactionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool status = transaction.after! > 0;
     final Color color = status ? Colors.green : Colors.red;
-
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    String _currency = GetStrings().getCurrency(
+        AppLocalizations.of(context)!.locale!.languageCode,
+        _addressProvider.isoCountryCode);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
@@ -89,8 +96,7 @@ class TransactionRow extends StatelessWidget {
                                                   fontSize: 14, color: color),
                                         ),
                                         Text(
-                                          AppLocalizations.of(context)!
-                                              .tr('sr'),
+                                          _currency,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline1!
@@ -137,8 +143,7 @@ class TransactionRow extends StatelessWidget {
                                                           FontWeight.normal),
                                             ),
                                             Text(
-                                              AppLocalizations.of(context)!
-                                                  .tr('sr'),
+                                              _currency,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle2!

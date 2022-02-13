@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/cart_data.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/provider/favourite_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
@@ -20,7 +22,11 @@ class CartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool _language = AppLocalizations.of(context)!.locale == Locale('ar');
     final _cartProvider = Provider.of<CartProvider>(context, listen: false);
-
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    String _currency = GetStrings().getCurrency(
+        AppLocalizations.of(context)!.locale!.languageCode,
+        _addressProvider.isoCountryCode);
     return Container(
       width: SizeConfig.screenWidth,
       child: Dismissible(
@@ -193,7 +199,8 @@ class CartCard extends StatelessWidget {
                               ),
                               Text(
                                 (_cartProvider.getPrice(index) * item.quantity!)
-                                    .toString(),
+                                        .toString() +
+                                    " $_currency",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1
