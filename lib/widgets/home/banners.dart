@@ -32,16 +32,16 @@ class _BannersState extends State<BannersSlider> {
                   autoPlayInterval: Duration(seconds: 5),
                   height: 270,
                   disableCenter: false),
-              items: widget.bannersData.data![0].banners!.map((item) {
+              items: widget.bannersData.data!.map((item) {
                 return Builder(
                   builder: (BuildContext context) {
                     return InkWell(
                       onTap: () {
-                        if (item.type != null)
-                          Navigator.pushNamed(context, "/ProductDetails",
-                              arguments: item.productId);
-                        else
-                          _launchURL(item.redirectUrl.toString());
+                        // if (item.type != null)
+                        //   Navigator.pushNamed(context, item.redirectMobileUrl!,
+                        //       arguments: item.productId);
+                        // else
+                        //   _launchURL(item.redirectUrl.toString());
                       },
                       child: Container(
                         height: 250,
@@ -68,7 +68,7 @@ class _BannersState extends State<BannersSlider> {
                   children: [
                     DotsIndicator(
                       accentColor: Colors.white70,
-                      count: widget.bannersData.data![0].banners!.length,
+                      count: widget.bannersData.data!.length,
                       index: index,
                     ),
                   ],

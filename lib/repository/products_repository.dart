@@ -1,3 +1,4 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:new_turki/models/best_seller.dart';
 import 'package:new_turki/models/product.dart';
 import 'package:new_turki/models/products.dart';
@@ -7,10 +8,12 @@ class ProductsRepository {
   ApiBaseHelper _helper = ApiBaseHelper();
 
   //get Products list
-  Future<Products> getProductsList(String categoryId) async {
+  Future<Products> getProductsList(
+      String categoryId, LatLng latLng, String countryId) async {
     print("getProductsList");
     print(categoryId);
-    final response = await _helper.get("products/by-category/$categoryId");
+    final response = await _helper.get(
+        "products/by-category/$categoryId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
     Products? products;
     try {
       products = Products.fromJson(response);
@@ -36,12 +39,13 @@ class ProductsRepository {
   }
 
   //get Best Seller
-  Future<BestSeller> getBestSeller() async {
+  Future<BestSeller> getBestSeller(LatLng latLng, String countryId) async {
     print("getBestSeller");
     final response;
     BestSeller? bestSeller;
     try {
-      response = await _helper.get("products/best-seller");
+      response = await _helper.get(
+          "products/best-seller?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
       print(response.toString());
       bestSeller = BestSeller.fromJson(response);
     } catch (e) {

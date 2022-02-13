@@ -4,8 +4,7 @@ import 'package:new_turki/repository/favourite_repository.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
-
-import 'home_provider.dart';
+import 'products_provider.dart';
 
 class FavouriteProvider with ChangeNotifier {
   TextEditingController noteController = TextEditingController();
@@ -53,8 +52,9 @@ class FavouriteProvider with ChangeNotifier {
       _response =
           await FavouriteRepository().deleteFromFavourite(id, authorization);
       if (_response == 200) {
-        final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-        _homeProvider.setIsFavourite2 = false;
+        final _productsProvider =
+            Provider.of<ProductsProvider>(context, listen: false);
+        _productsProvider.setIsFavourite2 = false;
         if (index > -1) _favourite!.dataT!.data!.removeAt(index);
         getFavouriteData(authorization, isLoading: isLoading);
       }
@@ -80,8 +80,9 @@ class FavouriteProvider with ChangeNotifier {
     try {
       _response = await FavouriteRepository().addFavourite(id, authorization);
       if (_response == 200) {
-        final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-        _homeProvider.setIsFavourite2 = true;
+        final _productsProvider =
+            Provider.of<ProductsProvider>(context, listen: false);
+        _productsProvider.setIsFavourite2 = true;
 
         getFavouriteData(authorization);
       } else

@@ -47,6 +47,7 @@ class ProductCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15.0),
                             // child: Image.asset("assets/images/img.png",
                             child: Image.network(
+                              // "https://z.nooncdn.com/tr:n-t_240/v1607407812/N31966223A_1.jpg",
                               '${((product.productImages?.length ?? 0) > 0) ? product.productImages![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
                               width: SizeConfig.setWidgetWidthWithFactor(
                                   0.35, 0.175, 0.175),
@@ -72,7 +73,7 @@ class ProductCard extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 bottom: 2.5, right: 5, left: 5, top: 2.5),
-                            child: Text(
+                            child: AutoSizeText(
                               _isAr
                                   ? product.tags![0].nameAr!
                                   : product.tags![0].nameEn!,
@@ -89,8 +90,11 @@ class ProductCard extends StatelessWidget {
                 child: AutoSizeText(
                   _isAr ? product.nameAr! : product.nameEn!,
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.headline4,
-                  minFontSize: 14,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4!
+                      .copyWith(fontSize: 12),
+                  minFontSize: 12,
                   maxFontSize: 14,
                   maxLines: 1,
                 ),

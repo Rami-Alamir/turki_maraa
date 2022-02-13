@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/app_language.dart';
 import 'package:new_turki/provider/app_theme.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -33,6 +34,14 @@ class SettingsCard extends StatelessWidget {
                   children: [
                     ProfileRow(
                         onTap: () {
+                          final _addressProvider = Provider.of<AddressProvider>(
+                              context,
+                              listen: false);
+                          _addressProvider.getAddressFromLatLng(
+                              AppLocalizations.of(context)!.locale !=
+                                      Locale('ar')
+                                  ? "AR"
+                                  : "EN");
                           _language.changeLanguage();
                         },
                         icon: TURKIICONS.language,

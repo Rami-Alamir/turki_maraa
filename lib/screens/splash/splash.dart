@@ -1,11 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:new_turki/provider/address_provider.dart';
+import 'package:new_turki/provider/app_language.dart';
+import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/screens/intro/intro.dart';
 import 'package:new_turki/screens/other/no_internet.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Splash extends StatefulWidget {
@@ -19,6 +24,8 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
+    final _home = Provider.of<HomeProvider>(context, listen: false);
+    _home.getHomePageData(true);
     _timer = Timer(const Duration(milliseconds: 3000), () {
       navigate();
     });

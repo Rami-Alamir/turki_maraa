@@ -161,5 +161,16 @@
   "continue_shopping": "متابعة التسوق",
   "please_select_size" : "الرجاء اختيار الحجم",
   "please_select_cut" : "الرجاء اختيار التقطيع",
-  "please_select_pack" : "الرجاء اختيار التغليف"
+  "please_select_pack" : "الرجاء اختيار التغليف",
+  "show_more": "المزيد",
+  "show_less": "اخفاء",
+  "please_allow_access_to_the_location": "الرجاء السماح بالوصول إلى الموقع",
+  "go_to_settings" : "الذهاب للاعدادات",
+  "today": "اليوم",
+  "tomorrow": "غدا",
+  "morning_time": "فترة الصباح",
+  "noon" : "فترة الظهر",
+  "afternoon_period": "فترة العصر",
+  "morocco_period": "فترة المغرب",
+  "isha_period": "فترة العشاء"
 }

@@ -1,16 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:provider/provider.dart';
 
 class DeliveryDate extends StatelessWidget {
-  final List dateList;
+  final List<DateTime> deliveryDataTime;
 
-  const DeliveryDate({required this.dateList});
+  const DeliveryDate({required this.deliveryDataTime});
   @override
   Widget build(BuildContext context) {
+    var format =
+        DateFormat.E(AppLocalizations.of(context)!.locale!.languageCode);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,13 +35,22 @@ class DeliveryDate extends StatelessWidget {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               physics: const ScrollPhysics(),
-              itemCount: dateList.length,
+              itemCount: deliveryDataTime.length,
               itemBuilder: (BuildContext ctxt, int index) {
                 return Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(
                       index == 0 ? 10 : 3.0, 15, 10, 0),
-                  child: _item(context, index, dateList[index].title,
-                      dateList[index].subtitle),
+                  child: _item(
+                    context,
+                    index,
+                    deliveryDataTime[index].day.toString(),
+                    deliveryDataTime[index].day == DateTime.now().day
+                        ? AppLocalizations.of(context)!.tr('today')
+                        : deliveryDataTime[index].day ==
+                                (DateTime.now().day + 1)
+                            ? AppLocalizations.of(context)!.tr('tomorrow')
+                            : format.format(deliveryDataTime[index]),
+                  ),
                 );
               }),
         ),

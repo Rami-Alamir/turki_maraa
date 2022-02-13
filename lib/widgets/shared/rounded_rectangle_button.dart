@@ -17,7 +17,7 @@ class RoundedRectangleButton extends StatelessWidget {
     this.width = 320,
     this.padding = const EdgeInsets.all(25.0),
     this.height = 55,
-    this.color = const Color.fromRGBO(90, 4, 9, 1),
+    this.color = const Color.fromRGBO(118, 24, 14, 1.0),
     this.fontColor = Colors.white,
   });
 

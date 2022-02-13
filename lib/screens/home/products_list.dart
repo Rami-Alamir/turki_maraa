@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/provider/home_provider.dart';
+import 'package:new_turki/provider/products_provider.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/home/product_card_large.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';
-import 'package:new_turki/widgets/shared/retry.dart';
-import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ProductsList extends StatefulWidget {
@@ -18,63 +16,64 @@ class ProductsList extends StatefulWidget {
 
 class _ProductsListState extends State<ProductsList> {
   @override
-  void initState() {
-    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    //   _homeProvider.getDiscoverList();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final _homeProvider = Provider.of<HomeProvider>(context);
+    final _productsProvider = Provider.of<ProductsProvider>(context);
     return Scaffold(
       appBar: PrimaryAppBar(
         title: widget.data['title'],
         back: true,
       ),
-      // body: _homeProvider.discoverIsLoading
-      //     ? SpinkitIndicator()
-      //     : _homeProvider.discoverRetry
-      //         ? Retry(
-      //             onPressed: () {
-      //               _homeProvider.getDiscoverList();
-      //             },
-      //           )
-      //         : RefreshIndicator(
-      //             color: Theme.of(context).primaryColor,
-      //             onRefresh: () async {},
-      //             child: ListView(
-      //               children: [
-      //                 GridView.builder(
-      //                     shrinkWrap: true,
-      //                     physics: ScrollPhysics(),
-      //                     gridDelegate:
-      //                         SliverGridDelegateWithFixedCrossAxisCount(
-      //                             crossAxisCount: 2,
-      //                             crossAxisSpacing:
-      //                                 SizeConfig.screenWidth! - 360,
-      //                             mainAxisSpacing: 0,
-      //                             childAspectRatio: 0.85),
-      //                     itemCount: _homeProvider.productsList
-      //                         .data![widget.data['index']].products!.length,
-      //                     itemBuilder: (BuildContext ctx, index) {
-      //                       return Padding(
-      //                         padding: EdgeInsetsDirectional.fromSTEB(
-      //                             index % 2 == 0 ? 10 : 0,
-      //                             0,
-      //                             index % 2 != 0 ? 10 : 00,
-      //                             0),
-      //                         child: ProductCardLarge(
-      //                           product: _homeProvider
-      //                               .productsList
-      //                               .data![widget.data['index']]
-      //                               .products![index],
-      //                         ),
-      //                       );
-      //                     }),
-      //               ],
-      //             ),
-      //           ),
+      body: ListView(
+        children: [
+          GridView.builder(
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: SizeConfig.screenWidth! - 360,
+                  mainAxisSpacing: 0,
+                  childAspectRatio: 0.85),
+              itemCount: _productsProvider
+                  .productsList.data![widget.data['index']].products!.length,
+              itemBuilder: (BuildContext ctx, index) {
+                return Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                      index % 2 == 0 ? 10 : 0, 0, index % 2 != 0 ? 10 : 00, 0),
+                  child: ProductCardLarge(
+                    id: _productsProvider.productsList
+                        .data![widget.data['index']].products![index].id!,
+                    nameAr: _productsProvider.productsList
+                        .data![widget.data['index']].products![index].nameAr!,
+                    nameEn: _productsProvider.productsList
+                        .data![widget.data['index']].products![index].nameEn!,
+                    image: ((_productsProvider
+                                    .productsList
+                                    .data![widget.data['index']]
+                                    .products![index]
+                                    .productImages
+                                    ?.length ??
+                                0) >
+                            0)
+                        ? (_productsProvider
+                            .productsList
+                            .data![widget.data['index']]
+                            .products![index]
+                            .productImages!
+                            .first
+                            .imageUrl!)
+                        : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
+                    price: _productsProvider.productsList
+                        .data![widget.data['index']].products![index].price!,
+                    salePrice: _productsProvider
+                        .productsList
+                        .data![widget.data['index']]
+                        .products![index]
+                        .salePrice!,
+                  ),
+                );
+              }),
+        ],
+      ),
     );
   }
 }

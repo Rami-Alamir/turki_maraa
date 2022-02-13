@@ -1,4 +1,4 @@
-import 'package:flutter_dropdown_alert/dropdown_alert.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/screens/cart/shopping_cart.dart';
@@ -170,11 +170,17 @@ class AppState extends State<App> {
                     if (index == 2 && _auth.isAuth) {
                       final _cart =
                           Provider.of<CartProvider>(context, listen: false);
+                      final _addressProvider =
+                          Provider.of<AddressProvider>(context, listen: false);
+
                       _cart.setIsLoading = true;
                       _cart.setSelectedTime = -1;
                       _cart.setSelectedPayment = -1;
                       _cart.setSelectedDate = -1;
-                      _cart.getCartData(_auth.accessToken);
+                      _cart.getCartData(
+                          _auth.accessToken,
+                          _addressProvider.latLng,
+                          _addressProvider.isoCountryCode);
                     }
                   }),
             )),

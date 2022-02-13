@@ -10,6 +10,7 @@ import 'provider/address_provider.dart';
 import 'provider/app_theme.dart';
 import 'provider/home_provider.dart';
 import 'provider/orders_provider.dart';
+import 'provider/products_provider.dart';
 import 'provider/search_provider.dart';
 import 'screens/app/my_app.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,8 @@ Future<void> main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<Auth>(create: (context) => Auth()),
     ChangeNotifierProvider<HomeProvider>(create: (context) => HomeProvider()),
+    ChangeNotifierProvider<ProductsProvider>(
+        create: (context) => ProductsProvider()),
     ChangeNotifierProvider<AppLanguage>(create: (context) => AppLanguage()),
     ChangeNotifierProvider<AppTheme>(create: (context) => AppTheme()),
     ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),

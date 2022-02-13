@@ -40,6 +40,10 @@ dependencies:
   pin_code_fields: ^7.3.0
   flutter_dropdown_alert: ^1.0.3
   flutter_picker: ^2.0.2
+  readmore: ^2.1.0
+  #permission_handler: ^8.3.0
+  app_settings: ^4.1.1
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +62,7 @@ flutter:
   assets:
     - assets/images/splash.gif
     - assets/images/pin.png
+    - assets/images/i.png
     - assets/images/q1.png
     - assets/images/q2.png
     - assets/images/no_internet.gif

@@ -63,10 +63,13 @@ class CategoryCard extends StatelessWidget {
                     borderRadius: const BorderRadius.only(
                         bottomRight: Radius.circular(20.0),
                         bottomLeft: Radius.circular(20.0)),
-                    child: Image.network(
-                      image,
-                      fit: BoxFit.contain,
-                      width: (SizeConfig.screenWidth! / 2) - 18,
+                    child: Container(
+                      height: (133 * scaleFactor) - 31,
+                      child: Image.network(
+                        image,
+                        fit: BoxFit.contain,
+                        width: (SizeConfig.screenWidth! / 2) - 18,
+                      ),
                     ),
                   ),
                 ],

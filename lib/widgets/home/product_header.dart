@@ -64,17 +64,17 @@ class _ProductHeaderState extends State<ProductHeader> {
               ),
             ),
           ),
-          Positioned.directional(
-              start: 20,
-              top: 52,
-              textDirection:
-                  AppLocalizations.of(context)!.locale == Locale('ar')
-                      ? TextDirection.rtl
-                      : TextDirection.ltr,
-              child: CircleIcon(
-                  icon: Icons.arrow_back_ios,
-                  onTap: () => Navigator.pop(context),
-                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0))),
+          // Positioned.directional(
+          //     start: 20,
+          //     top: 52,
+          //     textDirection:
+          //         AppLocalizations.of(context)!.locale == Locale('ar')
+          //             ? TextDirection.rtl
+          //             : TextDirection.ltr,
+          //     child: CircleIcon(
+          //         icon: Icons.arrow_back_ios,
+          //         onTap: () => Navigator.pop(context),
+          //         padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0))),
         ],
       ),
     );

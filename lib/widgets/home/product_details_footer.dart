@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
-import 'package:new_turki/provider/home_provider.dart';
+import 'package:new_turki/provider/products_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
@@ -59,50 +60,57 @@ class ProductDetailsFooter extends StatelessWidget {
                 ),
                 RoundedRectangleButton(
                   onPressed: () {
-                    final _homeProvider =
-                        Provider.of<HomeProvider>(context, listen: false);
+                    final _productsProvider =
+                        Provider.of<ProductsProvider>(context, listen: false);
                     final _authProvider =
                         Provider.of<Auth>(context, listen: false);
+                    final _addressProvider =
+                        Provider.of<AddressProvider>(context, listen: false);
                     final _cartProvider =
                         Provider.of<CartProvider>(context, listen: false);
                     if (_authProvider.isAuth) {
-                      if ((_homeProvider.productData.data?.sizes?.length ?? 0) >
+                      if ((_productsProvider.productData.data?.sizes?.length ??
+                                  0) >
                               0 &&
-                          _homeProvider.selectedSize == -1) {
+                          _productsProvider.selectedSize == -1) {
                         _cartProvider.showSnackBar(
                             context, 'please_select_size');
                         return;
                       }
-                      if ((_homeProvider.productData.data?.chopping?.length ??
+                      if ((_productsProvider
+                                      .productData.data?.chopping?.length ??
                                   0) >
                               0 &&
-                          _homeProvider.selectedChopping == -1) {
+                          _productsProvider.selectedChopping == -1) {
                         _cartProvider.showSnackBar(
                             context, 'please_select_cut');
                         return;
                       }
-                      if ((_homeProvider.productData.data?.packaging?.length ??
+                      if ((_productsProvider
+                                      .productData.data?.packaging?.length ??
                                   0) >
                               0 &&
-                          _homeProvider.selectedPackaging == -1) {
+                          _productsProvider.selectedPackaging == -1) {
                         _cartProvider.showSnackBar(
                             context, 'please_select_pack');
                         return;
                       }
                       _cartProvider.addToCart(
-                        context: context,
-                        authorization: "Bearer " + _authProvider.accessToken,
-                        quantity: '$count',
-                        sizeId:
-                            "${_homeProvider.selectedSize > -1 ? (_homeProvider.productData.data?.sizes?[_homeProvider.selectedSize].id!.toString()) : ""}",
-                        preparationId:
-                            "${_homeProvider.selectedPackaging > -1 ? (_homeProvider.productData.data?.packaging?[_homeProvider.selectedPackaging].id!.toString()) : ""}",
-                        cutId:
-                            "${_homeProvider.selectedChopping > -1 ? (_homeProvider.productData.data?.chopping?[_homeProvider.selectedChopping].id!.toString()) : ""}",
-                        isShalwata:
-                            "${_homeProvider.selectedShalwata ? (_homeProvider.productData.data?.shalwata!.id!.toString()) : "0"}",
-                        productId: '${_homeProvider.productData.data!.id}',
-                      );
+                          context: context,
+                          authorization: "Bearer " + _authProvider.accessToken,
+                          quantity: '$count',
+                          sizeId:
+                              "${_productsProvider.selectedSize > -1 ? (_productsProvider.productData.data?.sizes?[_productsProvider.selectedSize].id!.toString()) : ""}",
+                          preparationId:
+                              "${_productsProvider.selectedPackaging > -1 ? (_productsProvider.productData.data?.packaging?[_productsProvider.selectedPackaging].id!.toString()) : ""}",
+                          cutId:
+                              "${_productsProvider.selectedChopping > -1 ? (_productsProvider.productData.data?.chopping?[_productsProvider.selectedChopping].id!.toString()) : ""}",
+                          isShalwata:
+                              "${_productsProvider.selectedShalwata ? (_productsProvider.productData.data?.shalwata!.id!.toString()) : "0"}",
+                          productId:
+                              '${_productsProvider.productData.data!.id}',
+                          isoCountryCode: _addressProvider.isoCountryCode,
+                          latLng: _addressProvider.latLng);
                     } else
                       Navigator.of(context, rootNavigator: true)
                           .pushNamed('/Login');

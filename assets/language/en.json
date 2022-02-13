@@ -160,5 +160,16 @@
   "continue_shopping" : "Continue shopping",
   "please_select_size" : "Please select the size",
   "please_select_cut" : "Please select the chopping",
-  "please_select_pack" : "Please select packaging"
+  "please_select_pack" : "Please select packaging",
+  "show_more" : "Show more",
+  "show_less": "Show less",
+  "please_allow_access_to_the_location": "Please allow access to the location",
+  "go_to_settings": "Go to settings",
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+  "morning_time": "Morning time",
+  "noon" : "Noon",
+  "afternoon_period": "Afternoon period",
+  "morocco_period": "Morocco period",
+  "isha_period": "Isha period"
 }

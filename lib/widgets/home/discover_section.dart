@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/discover_item.dart';
+import 'package:new_turki/models/discover_data.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
 import 'discover_card.dart';
 
 class DiscoverSection extends StatelessWidget {
-  final DiscoverItem discoverList;
+  final DiscoverData discoverList;
   const DiscoverSection({required this.discoverList});
 
   @override

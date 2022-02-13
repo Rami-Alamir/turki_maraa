@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/dummy_data/dd.dart';
+import 'package:intl/intl.dart';
+import 'package:new_turki/models/delivery_date_time.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
@@ -28,6 +29,8 @@ class ShoppingCart extends StatefulWidget {
 class _ShoppingCartState extends State<ShoppingCart> {
   @override
   void initState() {
+    final _cart = Provider.of<CartProvider>(context, listen: false);
+    _cart.initDateTimeList();
     super.initState();
   }
 
@@ -38,7 +41,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
     if (_auth.isAuth) print(_auth.accessToken);
-
+    var format =
+        DateFormat.E(AppLocalizations.of(context)!.locale!.languageCode);
+    var dateString = format.format(DateTime.now());
+    print(format.format(DateTime.now()));
     return Scaffold(
       appBar: PrimaryAppBar(
         title: AppLocalizations.of(context)!.tr('cart'),
@@ -52,7 +58,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   ? Retry(
                       onPressed: () {
                         _cart.setIsLoading = true;
-                        if (_auth.isAuth) _cart.getCartData(_auth.accessToken);
+
+                        if (_auth.isAuth)
+                          _cart.getCartData(
+                              _auth.accessToken,
+                              _addressProvider.latLng,
+                              _addressProvider.isoCountryCode);
                       },
                     )
                   : (_cart.cartData?.data?.cart?.data?.length ?? 0) > 0
@@ -90,57 +101,29 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                                       .selectedAddress]
                                                   .address!),
                                   DeliveryDate(
-                                    dateList: [
-                                      DeliveryDateTime(
-                                          title: '14', subtitle: 'اليوم'),
-                                      DeliveryDateTime(
-                                          title: '15', subtitle: 'غدا'),
-                                      DeliveryDateTime(
-                                          title: '16', subtitle: 'الجمعة'),
-                                      DeliveryDateTime(
-                                          title: '17', subtitle: 'السبت'),
-                                      DeliveryDateTime(
-                                          title: '18', subtitle: 'الاحد'),
-                                      DeliveryDateTime(
-                                          title: '19', subtitle: 'الاثنين'),
-                                      DeliveryDateTime(
-                                          title: '19', subtitle: 'الثلاثاء'),
-                                      DeliveryDateTime(
-                                          title: '20', subtitle: 'الاربعاء'),
-                                      DeliveryDateTime(
-                                          title: '19', subtitle: 'الخميس'),
-                                      DeliveryDateTime(
-                                          title: '16', subtitle: 'الجمعة'),
-                                      DeliveryDateTime(
-                                          title: '17', subtitle: 'السبت'),
-                                      DeliveryDateTime(
-                                          title: '18', subtitle: 'الاحد'),
-                                      DeliveryDateTime(
-                                          title: '19', subtitle: 'الاثنين'),
-                                      DeliveryDateTime(
-                                          title: '19', subtitle: 'الثلاثاء'),
-                                      DeliveryDateTime(
-                                          title: '20', subtitle: 'الاربعاء'),
-                                      DeliveryDateTime(
-                                          title: '19', subtitle: 'الخميس'),
-                                    ],
-                                  ),
+                                      deliveryDataTime: _cart.deliveryDataTime),
                                   DeliveryTime(
                                     deliveryTime: [
                                       DeliveryDateTime(
-                                          title: 'فترة الصباح',
-                                          subtitle: 'اليوم'),
+                                          title: AppLocalizations.of(context)!
+                                              .tr('morning_time'),
+                                          subtitle: ''),
                                       DeliveryDateTime(
-                                          title: 'فترة الظهر', subtitle: 'غدا'),
+                                          title: AppLocalizations.of(context)!
+                                              .tr('noon'),
+                                          subtitle: ''),
                                       DeliveryDateTime(
-                                          title: 'فترة العصر',
-                                          subtitle: 'الجمعة'),
+                                          title: AppLocalizations.of(context)!
+                                              .tr('afternoon_period'),
+                                          subtitle: ''),
                                       DeliveryDateTime(
-                                          title: 'فترة المغرب',
-                                          subtitle: 'السبت'),
+                                          title: AppLocalizations.of(context)!
+                                              .tr('morocco_period'),
+                                          subtitle: ''),
                                       DeliveryDateTime(
-                                          title: 'فترة العشاء',
-                                          subtitle: 'الاحد'),
+                                          title: AppLocalizations.of(context)!
+                                              .tr('isha_period'),
+                                          subtitle: ''),
                                     ],
                                   ),
                                   PaymentMethod(),

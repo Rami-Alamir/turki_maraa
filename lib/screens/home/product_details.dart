@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/favourite_provider.dart';
-import 'package:new_turki/provider/home_provider.dart';
+import 'package:new_turki/provider/products_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/widgets/home/circle_icon.dart';
 import 'package:new_turki/widgets/home/product_description.dart';
 import 'package:new_turki/widgets/home/product_details_footer.dart';
 import 'package:new_turki/widgets/home/product_header.dart';
@@ -22,110 +23,134 @@ class _ProductDetailsState extends State<ProductDetails> {
   int _count = 1;
   @override
   void initState() {
-    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    final _productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
     final _favourite = Provider.of<FavouriteProvider>(context, listen: false);
-    _homeProvider.setIsFavourite = false;
-    _homeProvider.setIsFavourite = _favourite.isFavourite(widget.id);
-    _homeProvider.initExtras();
-    _homeProvider.getProductData(widget.id.toString());
+    _productsProvider.setIsFavourite = false;
+    _productsProvider.setIsFavourite = _favourite.isFavourite(widget.id);
+    _productsProvider.initExtras();
+    _productsProvider.getProductData(widget.id.toString());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final _homeProvider = Provider.of<HomeProvider>(context);
-
+    final _productsProvider = Provider.of<ProductsProvider>(context);
     return Scaffold(
-      body: _homeProvider.productIsLoading
+      extendBodyBehindAppBar: true,
+      body: _productsProvider.productIsLoading
           ? SpinkitIndicator(
               padding: EdgeInsets.only(top: 60),
             )
-          : _homeProvider.productIsRetry
+          : _productsProvider.productIsRetry
               ? Retry(
                   padding: EdgeInsets.only(top: 60),
                   onPressed: () {
-                    _homeProvider.setProductIsLoading = true;
-                    _homeProvider.getProductData(widget.id.toString());
+                    _productsProvider.setProductIsLoading = true;
+                    _productsProvider.getProductData(widget.id.toString());
                   },
                 )
-              : RefreshIndicator(
-                  color: Theme.of(context).primaryColor,
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  onRefresh: () async {
-                    await _homeProvider.getProductData(widget.id.toString());
-                  },
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: [
-                      ProductHeader(
-                        imgList: _homeProvider.productData.data!.images!,
-                      ),
-                      ProductDescription(
-                          isFavourite: _homeProvider.isFavourite,
-                          product: _homeProvider.productData,
-                          salePrice: _homeProvider.getProductSalePrice(),
-                          price: _homeProvider.getProductPrice()),
-                      ExtrasList(
-                        title: AppLocalizations.of(context)!.tr('size'),
-                        tags: _homeProvider.productData.data!.sizes!,
-                        onTap: (value) {
-                          _homeProvider.setSelectedSize = value;
-                        },
-                        selected: _homeProvider.selectedSize,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: ExtrasList(
-                          title: AppLocalizations.of(context)!.tr('chopping'),
-                          tags: _homeProvider.productData.data!.chopping!,
-                          selected: _homeProvider.selectedChopping,
-                          onTap: (value) {
-                            _homeProvider.setSelectedChopping = value;
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: ExtrasList(
-                          title: AppLocalizations.of(context)!.tr('packaging'),
-                          tags: _homeProvider.productData.data!.packaging!,
-                          selected: _homeProvider.selectedPackaging,
-                          onTap: (value) {
-                            _homeProvider.setSelectedPackaging = value;
-                          },
-                        ),
-                      ),
-                      if (_homeProvider.productData.data!.isShalwata!)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: ShalwataExtra(
-                            selected: _homeProvider.selectedShalwata,
-                            onTap: (value) {
-                              print(value);
-                              _homeProvider.setSelectedShalwata = value;
-                            },
+              : Stack(
+                  children: [
+                    RefreshIndicator(
+                      color: Theme.of(context).primaryColor,
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      onRefresh: () async {
+                        await _productsProvider
+                            .getProductData(widget.id.toString());
+                      },
+                      child: ListView(
+                        padding: EdgeInsets.zero,
+                        children: [
+                          ProductHeader(
+                            imgList:
+                                _productsProvider.productData.data!.images!,
                           ),
-                        ),
-                      SizedBox(height: 60)
-                    ],
-                  ),
+                          ProductDescription(
+                              isFavourite: _productsProvider.isFavourite,
+                              product: _productsProvider.productData,
+                              salePrice:
+                                  _productsProvider.getProductSalePrice(),
+                              price: _productsProvider.getProductPrice()),
+                          ExtrasList(
+                            title: AppLocalizations.of(context)!.tr('size'),
+                            tags: _productsProvider.productData.data!.sizes!,
+                            onTap: (value) {
+                              _productsProvider.setSelectedSize = value;
+                            },
+                            selected: _productsProvider.selectedSize,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: ExtrasList(
+                              title:
+                                  AppLocalizations.of(context)!.tr('chopping'),
+                              tags:
+                                  _productsProvider.productData.data!.chopping!,
+                              selected: _productsProvider.selectedChopping,
+                              onTap: (value) {
+                                _productsProvider.setSelectedChopping = value;
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: ExtrasList(
+                              title:
+                                  AppLocalizations.of(context)!.tr('packaging'),
+                              tags: _productsProvider
+                                  .productData.data!.packaging!,
+                              selected: _productsProvider.selectedPackaging,
+                              onTap: (value) {
+                                _productsProvider.setSelectedPackaging = value;
+                              },
+                            ),
+                          ),
+                          if (_productsProvider.productData.data!.isShalwata!)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: ShalwataExtra(
+                                selected: _productsProvider.selectedShalwata,
+                                onTap: (value) {
+                                  print(value);
+                                  _productsProvider.setSelectedShalwata = value;
+                                },
+                              ),
+                            ),
+                          SizedBox(height: 60)
+                        ],
+                      ),
+                    ),
+                    Positioned.directional(
+                        start: 20,
+                        top: 52,
+                        textDirection:
+                            AppLocalizations.of(context)!.locale == Locale('ar')
+                                ? TextDirection.rtl
+                                : TextDirection.ltr,
+                        child: CircleIcon(
+                            icon: Icons.arrow_back_ios,
+                            onTap: () => Navigator.pop(context),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8.0, 0, 0, 0))),
+                  ],
                 ),
-      bottomSheet:
-          !_homeProvider.productIsLoading && !_homeProvider.productIsRetry
-              ? ProductDetailsFooter(
-                  count: _count,
-                  subtract: () {
-                    setState(() {
-                      _count = _count == 1 ? _count : _count - 1;
-                    });
-                  },
-                  add: () {
-                    setState(() {
-                      _count += 1;
-                    });
-                  },
-                )
-              : Container(),
+      bottomSheet: !_productsProvider.productIsLoading &&
+              !_productsProvider.productIsRetry
+          ? ProductDetailsFooter(
+              count: _count,
+              subtract: () {
+                setState(() {
+                  _count = _count == 1 ? _count : _count - 1;
+                });
+              },
+              add: () {
+                setState(() {
+                  _count += 1;
+                });
+              },
+            )
+          : Container(),
     );
   }
 }

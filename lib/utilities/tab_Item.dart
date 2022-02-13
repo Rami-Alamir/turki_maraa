@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/discover_item.dart';
+import 'package:new_turki/models/discover_data.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/screens/cart/shopping_cart.dart';
 import 'package:new_turki/screens/chat/chat.dart';

@@ -22,7 +22,7 @@ class DotsIndicator extends StatelessWidget {
           height: 4,
           width: i == index ? 30 : 8,
           decoration: BoxDecoration(
-            color: i == index ? Color.fromRGBO(90, 4, 9, 1) : accentColor,
+            color: i == index ? Color.fromRGBO(97, 20, 12, 1.0) : accentColor,
             shape: BoxShape.rectangle,
             borderRadius: const BorderRadius.all(Radius.circular(0.75)),
           ),

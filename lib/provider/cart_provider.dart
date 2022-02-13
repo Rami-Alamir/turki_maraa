@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:new_turki/models/cart_data.dart';
+import 'package:new_turki/models/delivery_date_time.dart';
 import 'package:new_turki/repository/cart_repository.dart';
 import 'package:new_turki/repository/order_repository.dart';
 import 'package:new_turki/screens/orders/order_success.dart';
@@ -22,7 +25,11 @@ class CartProvider with ChangeNotifier {
   int _cartLength = 0;
   bool _isAuth = false;
   BuildContext? _dialogContext;
+  LatLng? _latLng;
+  String? _isoCountryCode;
+  List<DateTime> _deliveryDataTime = [];
 
+  List<DateTime> get deliveryDataTime => _deliveryDataTime;
   int get cartLength => _cartLength;
   bool get isAuth => _isAuth;
   int get selectedDate => _selectedDate;
@@ -74,6 +81,8 @@ class CartProvider with ChangeNotifier {
 
   //add item to cart
   Future<void> addToCart({
+    required LatLng latLng,
+    required String isoCountryCode,
     required BuildContext context,
     required String authorization,
     required String productId,
@@ -96,7 +105,7 @@ class CartProvider with ChangeNotifier {
         "is_shalwata": "$isShalwata",
         "comment": "",
         "applied_discount_code": ""
-      }, authorization);
+      }, authorization, latLng, isoCountryCode);
       _cartLength += _response == 200 ? int.parse(quantity) : 0;
       showSnackBar(context,
           _response == 200 ? "product_added_cart" : "unexpected_error");
@@ -121,9 +130,10 @@ class CartProvider with ChangeNotifier {
       _response = await CartRepository().updateCartItem({
         "quantity": "$quantity",
         "comment": "",
-      }, "Bearer $_authorization", productId);
+      }, "Bearer $_authorization", productId, _latLng!, _isoCountryCode!);
       if (_response == 200) {
-        await getCartData(_authorization!, isLoading: false);
+        await getCartData(_authorization!, _latLng!, _isoCountryCode!,
+            isLoading: false);
       } else
         showSnackBar(context, "unexpected_error");
     } catch (e) {
@@ -146,7 +156,8 @@ class CartProvider with ChangeNotifier {
       _response = await CartRepository()
           .deleteCartItem("Bearer $_authorization", productId);
       if (_response == 200) {
-        await getCartData(_authorization!, isLoading: false);
+        await getCartData(_authorization!, _latLng!, _isoCountryCode!,
+            isLoading: false);
       } else
         showSnackBar(context, "unexpected_error");
     } catch (e) {
@@ -158,12 +169,16 @@ class CartProvider with ChangeNotifier {
   }
 
   //getCartData
-  Future<void> getCartData(String token, {bool isLoading = true}) async {
+  Future<void> getCartData(String token, LatLng latLng, String countryId,
+      {bool isLoading = true}) async {
     _authorization = token;
     _isLoading = isLoading;
+    _latLng = latLng;
+    _isoCountryCode = countryId;
     _retry = false;
     try {
-      _cartData = await CartRepository().getCartList("Bearer $token");
+      _cartData = await CartRepository()
+          .getCartList("Bearer $token", latLng, countryId);
       cartItems();
 
       if ((_cartData?.data?.cart?.data?.length ?? 0) >
@@ -205,7 +220,8 @@ class CartProvider with ChangeNotifier {
         "code": promoCodeController.text.trim(),
       }, "Bearer $_authorization");
       if (_response == 200) {
-        await getCartData(_authorization!, isLoading: false);
+        await getCartData(_authorization!, _latLng!, _isoCountryCode!,
+            isLoading: false);
       } else
         _errorMsg = true;
     } catch (e) {
@@ -279,6 +295,7 @@ class CartProvider with ChangeNotifier {
         });
   }
 
+  // get price
   double getPrice(int index) {
     double price = 0.0;
     if (_cartData!.data!.cart!.data![index].size == null) {
@@ -316,5 +333,13 @@ class CartProvider with ChangeNotifier {
       _cartLength += _cartData!.data!.cart!.data![i].quantity!;
     }
     // return _cartLength;
+  }
+
+  void initDateTimeList() {
+    DateTime dt = DateTime.now();
+
+    for (int i = 0; i < 21; i++) {
+      _deliveryDataTime.add(DateTime(dt.year, dt.month, (dt.day + i)));
+    }
   }
 }

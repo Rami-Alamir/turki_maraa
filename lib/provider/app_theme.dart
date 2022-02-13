@@ -51,7 +51,7 @@ class AppTheme with ChangeNotifier {
 
 final classicTheme = ThemeData(
     splashColor: Colors.white,
-    primaryColor: Color.fromRGBO(90, 4, 9, 1.0),
+    primaryColor: Color.fromRGBO(118, 24, 14, 1.0),
     fontFamily: 'Turki',
     canvasColor: Colors.transparent,
     backgroundColor: Color.fromRGBO(243, 224, 177, 1),
@@ -59,7 +59,7 @@ final classicTheme = ThemeData(
     textTheme: TextTheme(
       subtitle1: TextStyle(
           fontSize: 16,
-          color: Color.fromRGBO(90, 4, 9, 1),
+          color: Color.fromRGBO(118, 24, 14, 1.0),
           fontWeight: FontWeight.w600),
       subtitle2: TextStyle(
         fontSize: 14,
@@ -68,14 +68,14 @@ final classicTheme = ThemeData(
         color: Color.fromRGBO(150, 122, 89, 1),
       ),
       headline1: TextStyle(
-          color: Color.fromRGBO(90, 4, 9, 1),
+          color: Color.fromRGBO(118, 24, 14, 1.0),
           fontWeight: FontWeight.bold,
           height: 1.40,
           fontSize: 20),
       headline3: TextStyle(
           fontSize: 20, color: Colors.white, fontWeight: FontWeight.w500),
       headline4: TextStyle(
-          color: Color.fromRGBO(90, 4, 9, 1),
+          color: Color.fromRGBO(118, 24, 14, 1.0),
           fontWeight: FontWeight.w600,
           fontSize: 12),
       headline5: TextStyle(
@@ -111,12 +111,12 @@ final classicTheme = ThemeData(
       backgroundColor: Color.fromRGBO(243, 224, 177, 1),
       selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
       unselectedLabelStyle: TextStyle(fontSize: 10, height: 2),
-      selectedItemColor: Color.fromRGBO(90, 4, 9, 1),
+      selectedItemColor: Color.fromRGBO(118, 24, 14, 1.0),
       unselectedItemColor: Color.fromRGBO(150, 122, 89, 1),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-          primary: Color.fromRGBO(90, 4, 9, 1),
+          primary: Color.fromRGBO(118, 24, 14, 1.0),
           textStyle: TextStyle(color: Colors.white, fontSize: 20)),
     ),
     snackBarTheme: SnackBarThemeData(
@@ -131,7 +131,7 @@ final classicTheme = ThemeData(
 
 final lightTheme = ThemeData(
   splashColor: Colors.white,
-  primaryColor: Color.fromRGBO(90, 4, 9, 1),
+  primaryColor: Color.fromRGBO(118, 24, 14, 1.0),
   fontFamily: 'Turki',
   canvasColor: Colors.transparent,
   backgroundColor: Color.fromRGBO(250, 250, 250, 1),
@@ -139,7 +139,7 @@ final lightTheme = ThemeData(
   textTheme: TextTheme(
     subtitle1: TextStyle(
         fontSize: 16,
-        color: Color.fromRGBO(90, 4, 9, 1),
+        color: Color.fromRGBO(118, 24, 14, 1.0),
         fontWeight: FontWeight.w600),
     subtitle2: TextStyle(
         fontSize: 14,
@@ -187,14 +187,14 @@ final lightTheme = ThemeData(
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: Colors.white10,
-    selectedItemColor: Color.fromRGBO(90, 4, 9, 1),
+    selectedItemColor: Color.fromRGBO(118, 24, 14, 1.0),
     unselectedItemColor: Colors.black38,
     selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
     unselectedLabelStyle: TextStyle(fontSize: 10, height: 2),
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-        primary: Color.fromRGBO(90, 4, 9, 1),
+        primary: Color.fromRGBO(118, 24, 14, 1.0),
         textStyle: TextStyle(color: Colors.white, fontSize: 20)),
   ),
   snackBarTheme: SnackBarThemeData(
@@ -210,8 +210,8 @@ final lightTheme = ThemeData(
 );
 
 final darkTheme = ThemeData(
-    splashColor: Colors.black,
-    primaryColor: Color.fromRGBO(90, 4, 9, 1),
+    splashColor: Color.fromRGBO(118, 24, 14, 1.0),
+    primaryColor: Color.fromRGBO(118, 24, 14, 1.0),
     fontFamily: 'Turki',
     canvasColor: Colors.transparent,
     backgroundColor: Colors.black,
@@ -263,11 +263,11 @@ final darkTheme = ThemeData(
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-          primary: Color.fromRGBO(90, 4, 9, 1),
+          primary: Color.fromRGBO(118, 24, 14, 1.0),
           textStyle: TextStyle(color: Colors.white, fontSize: 20)),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      selectedItemColor: Color.fromRGBO(90, 4, 9, 1),
+      selectedItemColor: Color.fromRGBO(118, 24, 14, 1.0),
       unselectedItemColor: Colors.white24,
       backgroundColor: Colors.black,
       selectedLabelStyle: TextStyle(fontSize: 12, height: 2),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/provider/home_provider.dart';
+import 'package:new_turki/provider/address_provider.dart';
+import 'package:new_turki/provider/products_provider.dart';
 import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/home/discover_section.dart';
 import 'package:new_turki/widgets/home/food_appbar.dart';
@@ -23,8 +24,12 @@ class _ProductsHomeState extends State<ProductsHome> {
   @override
   void initState() {
     _scrollController = ScrollController()..addListener(() => setState(() {}));
-    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    _homeProvider.getFoodsPageData(widget.id);
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    final _productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
+    _productsProvider.getFoodsPageData(
+        widget.id, _addressProvider.latLng, _addressProvider.isoCountryCode);
     super.initState();
   }
 
@@ -36,9 +41,11 @@ class _ProductsHomeState extends State<ProductsHome> {
 
   @override
   Widget build(BuildContext context) {
-    final _homeProvider = Provider.of<HomeProvider>(context);
+    final _productsProvider = Provider.of<ProductsProvider>(context);
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
     return Scaffold(
-      appBar: ((_homeProvider.bannersData?.data?[0].banners?.length ?? 0) == 0)
+      appBar: ((_productsProvider.bannersData?.data?.length ?? 0) == 0)
           ? PrimaryAppBar(
               action: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -53,43 +60,48 @@ class _ProductsHomeState extends State<ProductsHome> {
               ),
             )
           : null,
-      body: _homeProvider.foodsIsLoading
+      body: _productsProvider.foodsIsLoading
           ? SpinkitIndicator(
               padding: EdgeInsets.only(top: 60),
             )
-          : _homeProvider.foodsRetry
+          : _productsProvider.foodsRetry
               ? Retry(
                   padding: EdgeInsets.only(top: 60),
                   onPressed: () {
-                    _homeProvider.getFoodsPageData(widget.id);
+                    _productsProvider.setProductIsLoading = true;
+                    _productsProvider.getFoodsPageData(
+                        widget.id,
+                        _addressProvider.latLng,
+                        _addressProvider.isoCountryCode);
                   },
                 )
               : RefreshIndicator(
                   color: Theme.of(context).primaryColor,
                   backgroundColor: Theme.of(context).backgroundColor,
                   onRefresh: () async {
-                    await _homeProvider.getFoodsPageData(widget.id,
+                    await _productsProvider.getFoodsPageData(
+                        widget.id,
+                        _addressProvider.latLng,
+                        _addressProvider.isoCountryCode,
                         isLoading: false);
                   },
                   child: CustomScrollView(
                       controller: _scrollController,
                       slivers: <Widget>[
-                        if ((_homeProvider
-                                    .bannersData?.data?[0].banners?.length ??
-                                0) >
+                        if ((_productsProvider.bannersData?.data?.length ?? 0) >
                             0)
                           FoodAppBar(
                             changeColor: _changeColor,
-                            bannersData: _homeProvider.bannersData!,
+                            bannersData: _productsProvider.bannersData!,
                           ),
-                        if (_homeProvider.discoverData != null)
+                        if (_productsProvider.discoverData != null)
                           DiscoverSection(
-                            discoverList: _homeProvider.discoverData!,
+                            discoverList: _productsProvider.discoverData!,
                           ),
-                        // // // HtmlSection(),
+                        // // HtmlSection(),
                         SliverToBoxAdapter(
                             child: ProductsSection(
-                                products: _homeProvider.productsList)),
+                                products: _productsProvider.productsList)),
                       ])),
     );
   }

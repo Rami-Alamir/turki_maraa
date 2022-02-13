@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' as Locations;
 import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -9,16 +10,21 @@ import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 class AddressProvider with ChangeNotifier {
   TextEditingController descriptionController = TextEditingController();
   BitmapDescriptor? _myMarker;
+  String? _addressDescription;
   LatLng? _latLng;
   bool? _initMap = false;
   UserAddress? _userAddress;
   BuildContext? _dialogContext;
   int _selectedAddress = -1;
+  String? _isoCountryCode = 'SA';
   int get selectedAddress => _selectedAddress;
   bool get initMap => _initMap!;
   UserAddress? get userAddress => _userAddress;
   LatLng get latLng => _latLng ?? LatLng(0, 0);
   BitmapDescriptor get myMarker => _myMarker!;
+  String? get addressDescription => _addressDescription;
+
+  String get isoCountryCode => _isoCountryCode!;
 
   set initMap(bool value) {
     _initMap = value;
@@ -34,7 +40,10 @@ class AddressProvider with ChangeNotifier {
 
   set latLng(LatLng value) {
     _latLng = value;
-    print(value.toString());
+  }
+
+  set isoCountryCode(String value) {
+    _isoCountryCode = value;
   }
 
   // user address list
@@ -44,20 +53,26 @@ class AddressProvider with ChangeNotifier {
         _userAddress = await UserRepository().getAddressList(token);
       } catch (e) {
         print(e.toString());
-        //  _retry = true;
       }
   }
 
   //get user location + init marker
-  void initMapData() async {
+  void initMapData(String languageCode) async {
+    try {
+      Locations.LocationData _locationData =
+          await Locations.Location().getLocation();
+      _latLng = LatLng(_locationData.latitude!, _locationData.longitude!);
+    } catch (e) {
+      print("initMapData " + e.toString());
+    }
+
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(size: Size(25, 25)), 'assets/images/pin.png')
         .then((onValue) {
       _myMarker = onValue;
       notifyListeners();
     });
-    LocationData _locationData = await Location().getLocation();
-    _latLng = LatLng(_locationData.latitude!, _locationData.longitude!);
+    getAddressFromLatLng(languageCode);
   }
 
   // add new address
@@ -81,8 +96,6 @@ class AddressProvider with ChangeNotifier {
           "long": "${latLng.latitude}",
           "lat": "${latLng.longitude}",
         }, "Bearer $accessToken");
-        print(_response.body.toString());
-
         if (_response.statusCode == 200) {
           // showSnackBar(context, 'data_has_been_updated_successfully');
           // AlertController.show(
@@ -106,7 +119,6 @@ class AddressProvider with ChangeNotifier {
           //     TypeAlert.error);
         }
       } catch (e) {
-        print('catch');
         print(e.toString());
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
         showSnackBar(context, "unexpected_error");
@@ -135,5 +147,21 @@ class AddressProvider with ChangeNotifier {
       AppLocalizations.of(context)!.tr(msg),
       textAlign: TextAlign.center,
     )));
+  }
+
+  // Converting Latitude and Longitude to a Human-readable Address
+  getAddressFromLatLng(String languageCode) async {
+    try {
+      List<Placemark> placemark = await placemarkFromCoordinates(
+          _latLng!.latitude, _latLng!.longitude,
+          localeIdentifier: languageCode);
+      Placemark place = placemark.first;
+      _isoCountryCode = place.isoCountryCode;
+      _addressDescription = "${place.street} - ${place.subLocality} ";
+      print(_addressDescription);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -7,6 +7,7 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:readmore/readmore.dart';
 import 'circle_icon.dart';
 
 class ProductDescription extends StatelessWidget {
@@ -221,16 +222,37 @@ class ProductDescription extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 15.0, left: 15, bottom: 10),
-          child: Text(
-            _isAr ? product.data!.descriptionAr! : product.data!.descriptionEn!,
-            textAlign: TextAlign.start,
-            style: Theme.of(context)
-                .textTheme
-                .subtitle2!
-                .copyWith(fontSize: 14, height: 1.5),
-          ),
-        ),
+            padding: const EdgeInsets.only(right: 15.0, left: 15, bottom: 10),
+            child: ReadMoreText(
+              _isAr
+                  ? product.data!.descriptionAr!
+                  : product.data!.descriptionEn!,
+              trimLines: 2,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2!
+                  .copyWith(fontSize: 14, height: 1.5),
+              colorClickableText: Theme.of(context).primaryColor,
+              trimMode: TrimMode.Line,
+              semanticsLabel: "",
+              delimiter: " ",
+              trimCollapsedText:
+                  "..." + AppLocalizations.of(context)!.tr('show_more'),
+              trimExpandedText: AppLocalizations.of(context)!.tr('show_less'),
+              moreStyle: Theme.of(context)
+                  .textTheme
+                  .subtitle1!
+                  .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
+            )
+            // Text(
+            //   _isAr ? product.data!.descriptionAr! : product.data!.descriptionEn!,
+            //   textAlign: TextAlign.start,
+            //   style: Theme.of(context)
+            //       .textTheme
+            //       .subtitle2!
+            //       .copyWith(fontSize: 14, height: 1.5),
+            // ),
+            ),
         Row(
           mainAxisAlignment: ((product.data!.calories!.length > 0) &
                   (product.data!.weight!.length > 0))
@@ -315,7 +337,7 @@ class ProductDescription extends StatelessWidget {
                       Visibility(
                         visible: size == 20,
                         child: Text(
-                          " " + AppLocalizations.of(context)!.tr('kg'),
+                          " ",
                           style: Theme.of(context)
                               .textTheme
                               .headline4

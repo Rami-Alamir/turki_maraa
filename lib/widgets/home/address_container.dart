@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/provider/address_provider.dart';
+import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -19,6 +20,7 @@ class _AddressContainerState extends State<AddressContainer> {
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
     final _addressProvider = Provider.of<AddressProvider>(context);
+
     final List<Data>? _addressList = _addressProvider.userAddress?.data;
     return AnimatedContainer(
       duration: Duration(microseconds: 1),
@@ -66,8 +68,9 @@ class _AddressContainerState extends State<AddressContainer> {
                                     setState(() {});
                                   },
                                   child: addressRow(
-                                      AppLocalizations.of(context)!
-                                          .tr('current_location'),
+                                      _addressProvider.addressDescription ??
+                                          AppLocalizations.of(context)!
+                                              .tr('current_location'),
                                       divider: true),
                                 )),
                             Container(
@@ -146,21 +149,27 @@ class _AddressContainerState extends State<AddressContainer> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                                _homeProvider.selectedOrderType == 0
-                                    ? _addressProvider.selectedAddress == -1
-                                        ? AppLocalizations.of(context)!
-                                            .tr('current_location')
-                                        : _addressList![_addressProvider
-                                                .selectedAddress]
-                                            .address!
-                                    : AppLocalizations.of(context)!.tr('soon'),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline1!
-                                    .copyWith(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal)),
+                            Container(
+                              width: SizeConfig.screenWidth! - 120,
+                              child: Text(
+                                  _homeProvider.selectedOrderType == 0
+                                      ? _addressProvider.selectedAddress == -1
+                                          ? _addressProvider
+                                                  .addressDescription ??
+                                              AppLocalizations.of(context)!
+                                                  .tr('current_location')
+                                          : _addressList![_addressProvider
+                                                  .selectedAddress]
+                                              .address!
+                                      : AppLocalizations.of(context)!
+                                          .tr('soon'),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline1!
+                                      .copyWith(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal)),
+                            ),
                             Icon(
                               _selected
                                   ? Icons.keyboard_arrow_up_rounded
@@ -214,7 +223,13 @@ class _AddressContainerState extends State<AddressContainer> {
 
   Widget addNewAddress() {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, '/AddNewAddress'),
+      onTap: () {
+        final _auth = Provider.of<Auth>(context, listen: false);
+        if (_auth.isAuth)
+          Navigator.pushNamed(context, '/AddNewAddress');
+        else
+          Navigator.of(context, rootNavigator: true).pushNamed('/Login');
+      },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Row(
