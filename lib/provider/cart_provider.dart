@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:new_turki/models/cart_data.dart';
-import 'package:new_turki/models/delivery_date_time.dart';
 import 'package:new_turki/repository/cart_repository.dart';
 import 'package:new_turki/repository/order_repository.dart';
 import 'package:new_turki/screens/orders/order_success.dart';
@@ -153,8 +151,8 @@ class CartProvider with ChangeNotifier {
     _dialogContext = context;
     _showDialogIndicator(context);
     try {
-      _response = await CartRepository()
-          .deleteCartItem("Bearer $_authorization", productId);
+      _response = await CartRepository().deleteCartItem(
+          "Bearer $_authorization", productId, _latLng!, _isoCountryCode!);
       if (_response == 200) {
         await getCartData(_authorization!, _latLng!, _isoCountryCode!,
             isLoading: false);
@@ -253,12 +251,12 @@ class CartProvider with ChangeNotifier {
     _showDialogIndicator(context);
     try {
       _response = await OrderRepository().placeOrder({
-        "delivery_date_id": 11,
+        "delivery_date": "12-24",
         "delivery_period_id": 1,
         "using_wallet": 0,
         "payment_type_id": 1,
-        "address_id": 20
-      }, "Bearer $_authorization");
+        "address_id": 18
+      }, "Bearer $_authorization", _latLng!, _isoCountryCode!);
       if (_response == 200) {
         _errorMsg = false;
         _promoIsActive = true;

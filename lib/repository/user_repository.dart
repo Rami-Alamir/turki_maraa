@@ -13,6 +13,7 @@ class UserRepository {
 
   //update add Address Info
   Future<dynamic> addAddress(body, String authorization) async {
+    print(body.toString());
     final response = await _helper.post3("customers/add-address", body,
         authorization: authorization);
     return response;

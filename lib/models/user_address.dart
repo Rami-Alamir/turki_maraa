@@ -1,24 +1,15 @@
 class UserAddress {
-  bool? success;
   List<Data>? data;
-  String? message;
-  String? description;
-  String? code;
 
-  UserAddress(
-      {this.success, this.data, this.message, this.description, this.code});
+  UserAddress({this.data});
 
   UserAddress.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
         data!.add(new Data.fromJson(v));
       });
     }
-    message = json['message'];
-    description = json['description'];
-    code = json['code'];
   }
 }
 
@@ -26,6 +17,7 @@ class Data {
   int? id;
   int? customerId;
   int? countryId;
+  String? countryIosCode;
   int? cityId;
   String? address;
   String? comment;
@@ -38,6 +30,7 @@ class Data {
       {this.id,
       this.customerId,
       this.countryId,
+      this.countryIosCode,
       this.cityId,
       this.address,
       this.comment,
@@ -50,6 +43,7 @@ class Data {
     id = json['id'];
     customerId = json['customer_id'];
     countryId = json['country_id'];
+    countryIosCode = json['country_iso_code'] ?? "SA";
     cityId = json['city_id'];
     address = json['address'];
     comment = json['comment'];

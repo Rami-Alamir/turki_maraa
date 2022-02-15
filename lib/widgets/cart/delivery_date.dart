@@ -14,6 +14,7 @@ class DeliveryDate extends StatelessWidget {
   Widget build(BuildContext context) {
     var format =
         DateFormat.E(AppLocalizations.of(context)!.locale!.languageCode);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -61,8 +62,10 @@ class DeliveryDate extends StatelessWidget {
   Widget _item(
       BuildContext context, int selectedValue, String title, String subtitle) {
     final _cartProvider = Provider.of<CartProvider>(context, listen: false);
-
     final bool selected = _cartProvider.selectedDate == selectedValue;
+    var format2 = DateFormat('MM-dd');
+
+    print(format2.format(deliveryDataTime[selectedValue]));
     return InkWell(
       onTap: () {
         _cartProvider.setSelectedDate = selectedValue;

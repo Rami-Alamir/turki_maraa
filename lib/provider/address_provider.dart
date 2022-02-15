@@ -6,6 +6,9 @@ import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
+import 'package:provider/provider.dart';
+
+import 'home_provider.dart';
 
 class AddressProvider with ChangeNotifier {
   TextEditingController descriptionController = TextEditingController();
@@ -36,6 +39,7 @@ class AddressProvider with ChangeNotifier {
 
   set setSelectedAddress(int value) {
     _selectedAddress = value;
+    notifyListeners();
   }
 
   set latLng(LatLng value) {
@@ -44,6 +48,13 @@ class AddressProvider with ChangeNotifier {
 
   set isoCountryCode(String value) {
     _isoCountryCode = value;
+  }
+
+  void initSelectedAddress(int value) {
+    _selectedAddress = value;
+    _latLng = LatLng(double.parse(_userAddress!.data![value].lat!),
+        double.parse(_userAddress!.data![value].long!));
+    _isoCountryCode = _userAddress!.data![value].countryIosCode!;
   }
 
   // user address list
@@ -64,7 +75,6 @@ class AddressProvider with ChangeNotifier {
     // } catch (e) {
     //   print("initMapData " + e.toString());
     // }
-
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(size: Size(25, 25)), 'assets/images/pin.png')
         .then((onValue) {
@@ -83,17 +93,20 @@ class AddressProvider with ChangeNotifier {
       _showDialogIndicator(_dialogContext);
       var _response;
       try {
+        List<Placemark> placemark = await placemarkFromCoordinates(
+            _latLng!.latitude, _latLng!.longitude,
+            localeIdentifier: "EN");
+        _isoCountryCode = placemark.first.isoCountryCode;
         _response = await UserRepository().addAddress({
-          "country_id": _isoCountryCode,
-          "city_id": "2",
+          "country_iso_code": _isoCountryCode,
           "address":
-              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "."} ",
+              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "address${_userAddress?.data?.length ?? 1}"} ",
           "comment":
               "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "."} ",
           "label": "label",
           "is_default": "0",
-          "long": "${latLng.latitude}",
-          "lat": "${latLng.longitude}",
+          "long": "${latLng.longitude}",
+          "lat": "${latLng.latitude}",
         }, "Bearer $accessToken");
         print(_response.body.toString());
         if (_response.statusCode == 200) {
@@ -105,11 +118,22 @@ class AddressProvider with ChangeNotifier {
           //     TypeAlert.success);
           await getAddressList("Bearer $accessToken");
           notifyListeners();
+          _selectedAddress = (_userAddress?.data?.length ?? 0) - 1;
           Navigator.pop(_dialogContext!);
           Navigator.pop(context);
+          final _homeProvider =
+              Provider.of<HomeProvider>(context, listen: false);
+
+          _homeProvider.setIsLoading = true;
+          _homeProvider.getHomePageData(false,
+              latLng: _latLng!, countryId: _isoCountryCode!);
         } else {
           Navigator.pop(_dialogContext!);
-          showSnackBar(context, "unexpected_error");
+          showSnackBar(
+              context,
+              _response.statusCode == 400
+                  ? "region_not_supported"
+                  : "unexpected_error");
 
           // AlertController.show(
           //     "",

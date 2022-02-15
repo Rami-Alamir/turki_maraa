@@ -65,7 +65,19 @@ class _AddressContainerState extends State<AddressContainer> {
                                   onTap: () {
                                     _addressProvider.setSelectedAddress = -1;
                                     _selected = false;
-                                    setState(() {});
+                                    final _homeProvider =
+                                        Provider.of<HomeProvider>(context,
+                                            listen: false);
+                                    _homeProvider.setIsLoading = true;
+
+                                    _homeProvider.getHomePageData(true,
+                                        latLng: _homeProvider.latLng!,
+                                        countryId: _homeProvider
+                                            .currentIsoCountryCode);
+                                    _addressProvider.isoCountryCode =
+                                        _homeProvider.currentIsoCountryCode;
+                                    _addressProvider.latLng =
+                                        _homeProvider.latLng!;
                                   },
                                   child: addressRow(
                                       _addressProvider.addressDescription ??
@@ -91,10 +103,22 @@ class _AddressContainerState extends State<AddressContainer> {
                                     return InkWell(
                                       onTap: () {
                                         if (_homeProvider.selectedOrderType ==
-                                            0)
-                                          _addressProvider.setSelectedAddress =
-                                              index;
-                                        else
+                                            0) {
+                                          if (_addressProvider
+                                                  .selectedAddress !=
+                                              index) {
+                                            _addressProvider
+                                                .initSelectedAddress(index);
+
+                                            _homeProvider.setIsLoading = true;
+                                            _homeProvider.getHomePageData(
+                                              false,
+                                              latLng: _addressProvider.latLng,
+                                              countryId: _addressProvider
+                                                  .isoCountryCode,
+                                            );
+                                          }
+                                        } else
                                           _homeProvider.setSelectedAddress2 =
                                               index;
                                         _selected = false;
@@ -225,9 +249,10 @@ class _AddressContainerState extends State<AddressContainer> {
     return InkWell(
       onTap: () {
         final _auth = Provider.of<Auth>(context, listen: false);
-        if (_auth.isAuth)
+        if (_auth.isAuth) {
+          _selected = false;
           Navigator.pushNamed(context, '/AddNewAddress');
-        else
+        } else
           Navigator.of(context, rootNavigator: true).pushNamed('/Login');
       },
       child: Padding(

@@ -41,7 +41,7 @@ class _ProductHeaderState extends State<ProductHeader> {
                   builder: (BuildContext context) {
                     return Image.network(
                       url.imageUrl!.trim(),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     );
                   },
                 );

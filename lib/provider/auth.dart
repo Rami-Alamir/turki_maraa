@@ -20,6 +20,7 @@ import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'favourite_provider.dart';
+import 'home_provider.dart';
 
 class Auth with ChangeNotifier {
   TextEditingController keyController = TextEditingController();
@@ -234,6 +235,11 @@ class Auth with ChangeNotifier {
       _prefs!.remove("accessToken");
       notifyListeners();
     });
+    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+
+    _homeProvider.setIsLoading = true;
+    _homeProvider.getHomePageData(true,
+        latLng: _homeProvider.latLng!, countryId: _homeProvider.isoCountryCode);
   }
 
   // update user data

@@ -170,5 +170,6 @@
   "noon" : "Noon",
   "afternoon_period": "Afternoon period",
   "morocco_period": "Morocco period",
-  "isha_period": "Isha period"
+  "isha_period": "Isha period",
+  "region_not_supported"  :"Region not supported"
 }

@@ -145,11 +145,13 @@ class ProductsProvider with ChangeNotifier {
   }
 
   // get Product details
-  Future<void> getProductData(String id) async {
+  Future<void> getProductData(
+      String id, LatLng latLng, String countryId) async {
     _productIsLoading = true;
     _productIsRetry = false;
     try {
-      _productData = await ProductsRepository().getProduct(id);
+      _productData =
+          await ProductsRepository().getProduct(id, latLng, countryId);
     } catch (e) {
       print(e.toString() + "rami");
       _productIsRetry = true;

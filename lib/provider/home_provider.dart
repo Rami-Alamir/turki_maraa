@@ -22,7 +22,8 @@ class HomeProvider with ChangeNotifier {
   int _selectedAddress2 = 0;
   LatLng? _latLng;
   String? _isoCountryCode = 'SA';
-
+  String? _currentIsoCountryCode = 'SA';
+  Location.LocationData? _locationData;
   LatLng? get latLng => _latLng;
   BestSeller? get bestSeller => _bestSeller;
   bool get canPickup => _canPickup;
@@ -34,6 +35,8 @@ class HomeProvider with ChangeNotifier {
   int get selectedAddress2 => _selectedAddress2;
   int get locationServiceStatus => _locationServiceStatus;
   String get isoCountryCode => _isoCountryCode!;
+
+  String get currentIsoCountryCode => _currentIsoCountryCode!;
 
   set setIsLoading(bool value) {
     _isLoading = value;
@@ -52,22 +55,22 @@ class HomeProvider with ChangeNotifier {
 
   //init latLng
   Future<void> initLatLng() async {
-    Location.LocationData _locationData =
-        await Location.Location().getLocation();
-    _latLng = LatLng(25.080002558191797, 55.13467766504166);
-
-    // _latLng = LatLng(_locationData.latitude!, _locationData.longitude!);
+    _locationData = await Location.Location().getLocation();
+    //_latLng = LatLng(25.080002558191797, 55.13467766504166);
+    _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
     _locationServiceStatus = 1;
     // init  isoCountryCode
     List<Placemark> placemark = await placemarkFromCoordinates(
         _latLng!.latitude, _latLng!.longitude,
         localeIdentifier: "EN");
+    _currentIsoCountryCode = placemark.first.isoCountryCode;
     _isoCountryCode = placemark.first.isoCountryCode;
   }
 
   //get all categories
   Future<void> getCategories(LatLng latLng, String countryId) async {
     try {
+      print("test:+" + latLng.toString() + countryId);
       _categoryData =
           await HomeRepository().getCategoriesList(latLng, countryId);
     } catch (e) {
@@ -94,17 +97,24 @@ class HomeProvider with ChangeNotifier {
     _retry = false;
     _isLoading = isLoading;
     try {
+      print("country :$countryId");
       if (isCurrent && _latLng == null) await initLatLng();
-      if (isCurrent)
+      if (isCurrent) {
+        _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
+        _isoCountryCode = _currentIsoCountryCode;
+        // _latLng = LatLng(25.080002558191797, 55.13467766504166);
+        // _isoCountryCode = 'AE';
         await Future.wait([
           getCategories(_latLng!, _isoCountryCode!),
           getBestSeller(_latLng!, _isoCountryCode!)
         ]);
-      else
+      } else {
+        print('else $countryId');
         await Future.wait([
           getCategories(latLng, countryId),
           getBestSeller(latLng, countryId)
         ]);
+      }
     } catch (e) {
       _retry = true;
     }

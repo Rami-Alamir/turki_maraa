@@ -20,6 +20,7 @@ class BestProductCard extends StatelessWidget {
     String _currency = GetStrings().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         _addressProvider.isoCountryCode);
+    print("SizeConfig.screenWidth ${SizeConfig.screenWidth}");
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
       child: Container(
@@ -93,18 +94,21 @@ class BestProductCard extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+                padding: const EdgeInsets.only(top: 5, left: 7.5, right: 7.5),
                 child: AutoSizeText(
                   _isAr ? product.nameAr! : product.nameEn!,
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.headline4,
-                  minFontSize: 14,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4!
+                      .copyWith(fontSize: 12, height: 1.4),
+                  minFontSize: 12,
                   maxFontSize: 14,
-                  maxLines: 1,
+                  maxLines: 2,
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+                  padding: const EdgeInsets.only(top: 5, left: 7.5, right: 7.5),
                   child: Row(
                     children: [
                       Padding(

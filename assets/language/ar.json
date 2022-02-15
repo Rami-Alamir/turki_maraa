@@ -137,7 +137,7 @@
   "product_options": "خيارات المنتج",
   "vat_included": "(شامل ضريبة القيمة المضافة)",
   "calories":"السعرات الحرارية",
-  "weight": "الوزن",
+  "weight": "الكمية",
   "kg": "كيلو",
   "add_to_cart": "اضف للسلة",
   "packaging": "التغليف",
@@ -171,5 +171,6 @@
   "noon" : "فترة الظهر",
   "afternoon_period": "فترة العصر",
   "morocco_period": "فترة المغرب",
-  "isha_period": "فترة العشاء"
+  "isha_period": "فترة العشاء",
+  "region_not_supported" : "المنطقة غير مدعومة"
 }

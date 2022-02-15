@@ -7,7 +7,6 @@ class ApiBaseHelper {
   String authorization = "";
   Map<String, String> headers = {
     "Accept": "application/json",
-    // "Content-Type": "application/json",
     "App-Key": "Nghf9AP72aWF635xLHCnd9q88pRmSaP95BLRDI0n",
     "Authorization": ""
   };
@@ -92,10 +91,11 @@ class ApiBaseHelper {
     print(uri.toString());
     var response;
     try {
-      response = await http.post(uri, body: body, headers: headers2);
+      response = await http.post(uri, body: body.toString(), headers: headers2);
+      print(response.toString());
       print(_returnResponse(response));
     } catch (e) {
-      print(e.toString());
+      print(e.toString() + "post 4");
     }
     return response.statusCode;
   }

@@ -27,7 +27,6 @@ class Data {
   bool? isShalwata;
   Extra? shalwata;
   bool? isActive;
-  List<PaymentTypes>? paymentTypes;
   List<Images>? images;
   List<Extra>? sizes;
   List<Extra>? packaging;
@@ -80,12 +79,6 @@ class Data {
         json['shalwata'] != null ? new Extra.fromJson(json['shalwata']) : null;
     isActive = json['is_active'] ?? 1;
 
-    if (json['payment_types'] != null) {
-      paymentTypes = <PaymentTypes>[];
-      json['payment_types'].forEach((v) {
-        paymentTypes!.add(PaymentTypes.fromJson(v));
-      });
-    }
     if (json['images'] != null) {
       images = <Images>[];
       json['images'].forEach((v) {
@@ -203,47 +196,6 @@ class Shalwata {
     nameAr = json['name_ar'] ?? "";
     nameEn = json['name_en'] ?? "";
     price = json['price'] ?? "";
-  }
-}
-
-class PaymentTypes {
-  int? id;
-  String? nameAr;
-  String? nameEn;
-  String? code;
-  String? createdAt;
-  String? updatedAt;
-  PaymentTypesPivot? pivot;
-
-  PaymentTypes(
-      {this.id,
-      this.nameAr,
-      this.nameEn,
-      this.code,
-      this.createdAt,
-      this.updatedAt,
-      this.pivot});
-
-  PaymentTypes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    nameAr = json['name_ar'] ?? "";
-    nameEn = json['name_en'] ?? "";
-    code = json['code'] ?? "";
-    createdAt = json['created_at'] ?? "";
-    updatedAt = json['updated_at'] ?? "";
-    pivot = json['pivot'] != null
-        ? PaymentTypesPivot.fromJson(json['pivot'])
-        : null;
-  }
-}
-
-class PaymentTypesPivot {
-  int? productId;
-  int? paymentTypeId;
-  PaymentTypesPivot({this.productId, this.paymentTypeId});
-  PaymentTypesPivot.fromJson(Map<String, dynamic> json) {
-    productId = json['product_id'] ?? 0;
-    paymentTypeId = json['payment_type_id'] ?? 0;
   }
 }
 

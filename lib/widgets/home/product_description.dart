@@ -156,7 +156,7 @@ class ProductDescription extends StatelessWidget {
                       return Icon(
                         Icons.star,
                         size: 20,
-                        color: product.data!.noRating! >= index
+                        color: product.data!.noRating! <= index
                             ? Color.fromRGBO(250, 202, 29, 1)
                             : Theme.of(context).colorScheme.secondaryVariant,
                       );

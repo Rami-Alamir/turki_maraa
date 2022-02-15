@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/favourite_provider.dart';
 import 'package:new_turki/provider/products_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -25,17 +26,22 @@ class _ProductDetailsState extends State<ProductDetails> {
   void initState() {
     final _productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
     final _favourite = Provider.of<FavouriteProvider>(context, listen: false);
     _productsProvider.setIsFavourite = false;
     _productsProvider.setIsFavourite = _favourite.isFavourite(widget.id);
     _productsProvider.initExtras();
-    _productsProvider.getProductData(widget.id.toString());
+    _productsProvider.getProductData(widget.id.toString(),
+        _addressProvider.latLng, _addressProvider.isoCountryCode);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final _productsProvider = Provider.of<ProductsProvider>(context);
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: true);
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: _productsProvider.productIsLoading
@@ -47,7 +53,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                   padding: EdgeInsets.only(top: 60),
                   onPressed: () {
                     _productsProvider.setProductIsLoading = true;
-                    _productsProvider.getProductData(widget.id.toString());
+                    _productsProvider.getProductData(
+                        widget.id.toString(),
+                        _addressProvider.latLng,
+                        _addressProvider.isoCountryCode);
                   },
                 )
               : Stack(
@@ -56,8 +65,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                       color: Theme.of(context).primaryColor,
                       backgroundColor: Theme.of(context).colorScheme.secondary,
                       onRefresh: () async {
-                        await _productsProvider
-                            .getProductData(widget.id.toString());
+                        _productsProvider.getProductData(
+                            widget.id.toString(),
+                            _addressProvider.latLng,
+                            _addressProvider.isoCountryCode);
                       },
                       child: ListView(
                         padding: EdgeInsets.zero,
