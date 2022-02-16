@@ -13,6 +13,7 @@ import 'package:new_turki/utilities/tab_Item.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/widgets/shared/drawer/turki_drawer.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //used to build all in one bottom nav bar
 class App extends StatefulWidget {
@@ -164,8 +165,10 @@ class AppState extends State<App> {
                     ),
                   ],
                   onTap: (index) {
-                    this.index = index;
-                    _selectTab(index);
+                    if (index != 1) {
+                      this.index = index;
+                      _selectTab(index);
+                    }
                     final _auth = Provider.of<Auth>(context, listen: false);
                     if (index == 2 && _auth.isAuth) {
                       final _cart =
@@ -181,10 +184,25 @@ class AppState extends State<App> {
                           _auth.accessToken,
                           _addressProvider.latLng,
                           _addressProvider.isoCountryCode);
+                    } else if (index == 1) {
+                      _launchURL('tel:+966920002974');
                     }
                   }),
             )),
       ),
     );
+  }
+
+  //used to make calls, whatsapp
+  Future<void> _launchURL(String url) async {
+    try {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

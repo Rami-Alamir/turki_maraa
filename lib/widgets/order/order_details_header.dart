@@ -58,8 +58,7 @@ class OrderDetailsHeader extends StatelessWidget {
                                 children: [
                                   ItemColumn(
                                       title: 'delivery_date',
-                                      value:
-                                          '${order.deliveryDate?.dateYyyymmdd}',
+                                      value: '${order.deliveryDate}',
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start),
                                   ItemColumn(

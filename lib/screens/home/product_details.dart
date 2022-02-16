@@ -83,13 +83,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                               salePrice:
                                   _productsProvider.getProductSalePrice(),
                               price: _productsProvider.getProductPrice()),
-                          ExtrasList(
-                            title: AppLocalizations.of(context)!.tr('size'),
-                            tags: _productsProvider.productData.data!.sizes!,
-                            onTap: (value) {
-                              _productsProvider.setSelectedSize = value;
-                            },
-                            selected: _productsProvider.selectedSize,
+                          Visibility(
+                            visible: _productsProvider
+                                    .productData.data!.sizes!.length >
+                                1,
+                            child: ExtrasList(
+                              title: AppLocalizations.of(context)!.tr('size'),
+                              tags: _productsProvider.productData.data!.sizes!,
+                              onTap: (value) {
+                                print("vvv$value");
+                                _productsProvider.setSelectedSize = value;
+                              },
+                              selected: _productsProvider.selectedSize,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 10.0),

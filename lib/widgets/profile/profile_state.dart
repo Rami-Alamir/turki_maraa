@@ -25,14 +25,13 @@ class ProfileState extends StatelessWidget {
                     context: context,
                     routeName: "/Orders",
                     value: orders * 1.0,
-                    //value: user.orders!,
                     title: 'orders'),
                 _verticalDivider(
                   context: context,
                 ),
                 _stateItem(
                     context: context,
-                    routeName: "/UserPoints",
+                    //routeName: "/UserPoints",
                     value: double.parse(user.data!.points!),
                     title: 'my_points'),
                 _verticalDivider(
@@ -40,7 +39,7 @@ class ProfileState extends StatelessWidget {
                 ),
                 _stateItem(
                     context: context,
-                    routeName: "/UserWallet",
+                    // routeName: "/UserWallet",
                     value: double.parse(user.data!.wallet!),
                     title: 'credit'),
               ],
@@ -57,11 +56,15 @@ class ProfileState extends StatelessWidget {
 
   Widget _stateItem(
       {required BuildContext context,
-      required String routeName,
+      String routeName = '',
       required String title,
       required double value}) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, routeName, arguments: true),
+      //     onTap: () => Navigator.pushNamed(context, routeName, arguments: true),
+      onTap: () {
+        if (routeName.length > 0)
+          Navigator.pushNamed(context, routeName, arguments: true);
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,

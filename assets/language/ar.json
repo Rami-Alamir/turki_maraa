@@ -172,5 +172,8 @@
   "afternoon_period": "فترة العصر",
   "morocco_period": "فترة المغرب",
   "isha_period": "فترة العشاء",
-  "region_not_supported" : "المنطقة غير مدعومة"
+  "region_not_supported" : "المنطقة غير مدعومة",
+  "you_are_being_redirected_to_the_payment_page_please_wait": "جاري تحويلك لصفحة الدفع الرجاء الانتظار",
+  "the_order_has_been_sent_and_the_payment_is_being_verified": "تم ارسال الطلب وجاري التحقق من عملية الدفع",
+  "enter_valid_email" : "الرجاء ادخال بريد الكتروني صالح"
 }

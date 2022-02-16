@@ -83,7 +83,17 @@ class _PersonalInformationState extends State<PersonalInformation> {
               fontSize: 16,
               title: AppLocalizations.of(context)!.tr('update'),
               onPressed: () async {
-                await _auth.updateUser(context);
+                Pattern pattern =
+                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                RegExp regex = RegExp(pattern.toString());
+                if (!regex.hasMatch(_auth.emailController.text))
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                    AppLocalizations.of(context)!.tr('enter_valid_email'),
+                    textAlign: TextAlign.center,
+                  )));
+                else
+                  await _auth.updateUser(context);
               },
             )
           ],
@@ -112,6 +122,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
         ),
         RectangleTextField(
           controller: textEditingController,
+          maxLength: 30,
           textInputType: textInputType,
         ),
       ],

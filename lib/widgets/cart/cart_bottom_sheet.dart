@@ -152,7 +152,10 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     fontSize: 16,
                     onPressed: () {
-                      _cart.placeOrder(context: context);
+                      _cart.placeOrder(
+                          context: context,
+                          addressId: _addressProvider.userAddress!
+                              .data![_addressProvider.selectedAddress].id!);
                     })
               ],
             ),

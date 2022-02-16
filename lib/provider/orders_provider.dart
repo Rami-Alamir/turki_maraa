@@ -37,7 +37,7 @@ class OrdersProvider with ChangeNotifier {
     try {
       _ordersData = await OrderRepository().getOrdersList("Bearer $token");
     } catch (e) {
-      print('catch cart');
+      print('catch getOrdersList');
       print(e.toString());
       _retry = true;
     }

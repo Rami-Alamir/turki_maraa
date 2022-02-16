@@ -56,7 +56,8 @@ class Auth with ChangeNotifier {
   int get start => _start;
   String get accessToken => _accessToken!;
   int get gender => _gender!;
-  String get userPhone => _userPhone ?? "";
+  String get userPhone =>
+      ConvertPhone.getPhone(keyController.text, phoneController.text);
   bool get isLoading => _isLoading;
 
   set setIsLoading(bool value) {
@@ -103,6 +104,7 @@ class Auth with ChangeNotifier {
       _userType =
           await RegistrationRepository().sendOTP({"mobile": _userPhone});
       _isNewUser = _userType!.code == "C100";
+
       Navigator.pop(_dialogContext!);
       Navigator.pushNamed(context, "/VerifyPhone");
     } catch (e) {
@@ -236,7 +238,6 @@ class Auth with ChangeNotifier {
       notifyListeners();
     });
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-
     _homeProvider.setIsLoading = true;
     _homeProvider.getHomePageData(true,
         latLng: _homeProvider.latLng!, countryId: _homeProvider.isoCountryCode);
@@ -259,7 +260,6 @@ class Auth with ChangeNotifier {
           if (_gender! > -1) "gender": "$_gender",
         }, "Bearer $_accessToken");
         if (_response.statusCode == 200) {
-          print(_response.body.toString());
           _userData = UserData.fromJson(json.decode(_response.body.toString()));
           _userData!.data!.accessToken = _accessToken;
           initTextController();
@@ -299,8 +299,8 @@ class Auth with ChangeNotifier {
     }
   }
 
-  void initCountyCode() {
-    keyController.text = '+966';
+  void initCountyCode(value) {
+    keyController.text = value;
   }
 
   void initTextController() {
@@ -312,8 +312,6 @@ class Auth with ChangeNotifier {
 
   String getGenderString() {
     String gender = "";
-    print('x${(_userData?.data?.gender ?? "")}x');
-    print('x${(_userData?.data?.gender ?? "") == "0"}x');
     gender = (_userData?.data?.gender ?? "") == "0"
         ? 'maleString'
         : (_userData?.data?.gender ?? "") == "1"

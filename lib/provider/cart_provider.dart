@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:new_turki/models/cart_data.dart';
+import 'package:new_turki/models/payment_arb.dart';
 import 'package:new_turki/repository/cart_repository.dart';
 import 'package:new_turki/repository/order_repository.dart';
 import 'package:new_turki/screens/orders/order_success.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CartProvider with ChangeNotifier {
   TextEditingController noteController = TextEditingController();
@@ -231,9 +236,8 @@ class CartProvider with ChangeNotifier {
   }
 
   //placeOrder
-  Future<void> placeOrder({
-    required BuildContext context,
-  }) async {
+  Future<void> placeOrder(
+      {required BuildContext context, required int addressId}) async {
     if (_selectedDate == -1) {
       showSnackBar(context, "please_select_delivery_date");
       return;
@@ -250,26 +254,44 @@ class CartProvider with ChangeNotifier {
     _dialogContext = context;
     _showDialogIndicator(context);
     try {
+      var format = DateFormat('MM-dd');
+
       _response = await OrderRepository().placeOrder({
-        "delivery_date": "12-24",
-        "delivery_period_id": 1,
+        "delivery_date": "${format.format(deliveryDataTime[_selectedDate])}",
+        "delivery_period_id": _selectedTime + 1,
         "using_wallet": 0,
-        "payment_type_id": 1,
-        "address_id": 18
+        "payment_type_id": _selectedPayment,
+        "address_id": addressId
       }, "Bearer $_authorization", _latLng!, _isoCountryCode!);
-      if (_response == 200) {
+      var paymentId = _selectedPayment;
+      if (_response.statusCode == 200) {
         _errorMsg = false;
         _promoIsActive = true;
         _selectedPayment = -1;
         _selectedDate = -1;
         _selectedTime = -1;
         _cartData = null;
+        _cartLength = 0;
         notifyListeners();
         Navigator.pop(_dialogContext!);
-
         Navigator.of(context, rootNavigator: true).push(
-          MaterialPageRoute(builder: (BuildContext context) => OrderSuccess()),
+          MaterialPageRoute(
+              builder: (BuildContext context) => OrderSuccess(
+                    paymentType: paymentId,
+                  )),
         );
+        if (paymentId > 1) {
+          print("aaaa");
+          print(json.decode(_response.body.toString()));
+
+          PaymentARB arb =
+              PaymentARB.fromJson(json.decode(_response.body.toString()));
+          print('arb.data!.invoiceURL! ${arb.data!.invoiceURL!}');
+          await launch(arb.data!.invoiceURL!, forceSafariVC: true);
+          print('rami');
+          notifyListeners();
+        } else
+          notifyListeners();
       } else {
         Navigator.pop(_dialogContext!);
         showSnackBar(context, "unexpected_error");

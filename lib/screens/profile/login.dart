@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
+import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/screens/profile/phone_login.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -13,6 +17,11 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    final _auth = Provider.of<Auth>(context, listen: false);
+    _auth.initCountyCode(
+        GetStrings().getCountryKey(_addressProvider.isoCountryCode));
     return Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,
@@ -21,7 +30,10 @@ class _LoginState extends State<Login> {
           backgroundColor: Colors.transparent,
         ),
         body: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => PhoneLogin())),
           child: Container(
             width: SizeConfig.screenWidth,
             height: SizeConfig.screenHeight,
@@ -61,19 +73,16 @@ class _LoginState extends State<Login> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                15.0, 0, 0, 0),
-                            child: Text(
-                                AppLocalizations.of(context)!
-                                    .tr('enter_your_mobile_number'),
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
-                          ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15.0, 0, 0, 0),
+                          child: Text(
+                              AppLocalizations.of(context)!
+                                  .tr('enter_your_mobile_number'),
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold)),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 100),
@@ -90,16 +99,21 @@ class _LoginState extends State<Login> {
                                 Row(
                                   children: [
                                     CountryCodePicker(
-                                      onChanged: print,
+                                      onChanged: (key) {
+                                        _auth.initCountyCode(key);
+                                      },
+                                      enabled: false,
                                       // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                                      initialSelection: 'SA',
+                                      initialSelection:
+                                          _addressProvider.isoCountryCode,
                                       favorite: ['+966', 'SA'],
                                       countryFilter: [
                                         'SA',
                                         'AE',
                                         'BH',
                                         'KW',
-                                        'QA'
+                                        'QA',
+                                        'OM'
                                       ],
                                       textStyle: TextStyle(color: Colors.white),
                                       // flag can be styled with BoxDecoration's `borderRadius` and `shape` fields

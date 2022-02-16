@@ -63,9 +63,7 @@ class DeliveryDate extends StatelessWidget {
       BuildContext context, int selectedValue, String title, String subtitle) {
     final _cartProvider = Provider.of<CartProvider>(context, listen: false);
     final bool selected = _cartProvider.selectedDate == selectedValue;
-    var format2 = DateFormat('MM-dd');
 
-    print(format2.format(deliveryDataTime[selectedValue]));
     return InkWell(
       onTap: () {
         _cartProvider.setSelectedDate = selectedValue;

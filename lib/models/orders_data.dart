@@ -36,7 +36,7 @@ class Data {
   OrderState? orderState;
   List<Products>? products;
   DeliveryPeriod? deliveryPeriod;
-  DeliveryDate? deliveryDate;
+  String? deliveryDate;
 
   Data(
       {this.refNo,
@@ -95,9 +95,7 @@ class Data {
     deliveryPeriod = json['delivery_period'] != null
         ? new DeliveryPeriod.fromJson(json['delivery_period'])
         : null;
-    deliveryDate = json['delivery_date'] != null
-        ? new DeliveryDate.fromJson(json['delivery_date'])
-        : null;
+    deliveryDate = json['delivery_date'];
   }
 }
 
@@ -145,32 +143,29 @@ class Products {
   int? isDelivered;
   int? isPickedUp;
   int? categoryId;
-  Null? shalwataId;
   int? subCategoryId;
   List<ProductImages>? productImages;
-  Null? shalwata;
 
-  Products(
-      {this.id,
-      this.nameAr,
-      this.nameEn,
-      this.descriptionAr,
-      this.descriptionEn,
-      this.weight,
-      this.calories,
-      this.noRating,
-      this.noSale,
-      this.price,
-      this.salePrice,
-      this.isActive,
-      this.isShalwata,
-      this.isDelivered,
-      this.isPickedUp,
-      this.categoryId,
-      this.shalwataId,
-      this.subCategoryId,
-      this.productImages,
-      this.shalwata});
+  Products({
+    this.id,
+    this.nameAr,
+    this.nameEn,
+    this.descriptionAr,
+    this.descriptionEn,
+    this.weight,
+    this.calories,
+    this.noRating,
+    this.noSale,
+    this.price,
+    this.salePrice,
+    this.isActive,
+    this.isShalwata,
+    this.isDelivered,
+    this.isPickedUp,
+    this.categoryId,
+    this.subCategoryId,
+    this.productImages,
+  });
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -189,7 +184,6 @@ class Products {
     isDelivered = json['is_delivered'];
     isPickedUp = json['is_picked_up'];
     categoryId = json['category_id'];
-    shalwataId = json['shalwata_id'];
     subCategoryId = json['sub_category_id'];
     if (json['product_images'] != null) {
       productImages = <ProductImages>[];
@@ -197,7 +191,6 @@ class Products {
         productImages!.add(new ProductImages.fromJson(v));
       });
     }
-    shalwata = json['shalwata'];
   }
 }
 
@@ -250,32 +243,6 @@ class DeliveryPeriod {
     nameEn = json['name_en'];
     isActive = json['is_active'];
     timeHhmm = json['time_hhmm'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-}
-
-class DeliveryDate {
-  int? id;
-  int? cityId;
-  String? dateYyyymmdd;
-  int? isActive;
-  String? createdAt;
-  String? updatedAt;
-
-  DeliveryDate(
-      {this.id,
-      this.cityId,
-      this.dateYyyymmdd,
-      this.isActive,
-      this.createdAt,
-      this.updatedAt});
-
-  DeliveryDate.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    cityId = json['city_id'];
-    dateYyyymmdd = json['date_yyyymmdd'];
-    isActive = json['is_active'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }

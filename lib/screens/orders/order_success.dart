@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/auth.dart';
+import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/provider/orders_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -7,6 +8,9 @@ import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
 
 class OrderSuccess extends StatefulWidget {
+  final int paymentType;
+
+  const OrderSuccess({required this.paymentType});
   @override
   _OrderSuccessState createState() => _OrderSuccessState();
 }
@@ -22,6 +26,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
 
   @override
   Widget build(BuildContext context) {
+    final _cart = Provider.of<CartProvider>(context);
+    print('widget.paymentType == 1 ${widget.paymentType == 1}');
     return Scaffold(
       body: Container(
         width: SizeConfig.screenWidth,
@@ -30,11 +36,25 @@ class _OrderSuccessState extends State<OrderSuccess> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: SizeConfig.screenHeight! / 8),
-              child: Image.network(
-                  'https://sellcodes.com/assets/images/Purchase_Success.png',
-                  width: 333,
-                  height: 333),
+              padding: EdgeInsets.only(
+                  top: SizeConfig.screenHeight! / 4, bottom: 30),
+              child: Container(
+                  width: 150,
+                  height: 150,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                          colors: [
+                            Colors.green.withOpacity(1),
+                            Colors.green.withOpacity(0.8),
+                          ])),
+                  child: Icon(
+                    Icons.check,
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    size: 90,
+                  )),
             ),
             Text(
               AppLocalizations.of(context)!.tr('order_successful'),
@@ -45,7 +65,10 @@ class _OrderSuccessState extends State<OrderSuccess> {
               child: SizedBox(
                 width: 250,
                 child: Text(
-                  AppLocalizations.of(context)!.tr('thank_order'),
+                  widget.paymentType != 1
+                      ? AppLocalizations.of(context)!.tr(
+                          "the_order_has_been_sent_and_the_payment_is_being_verified")
+                      : AppLocalizations.of(context)!.tr('thank_order'),
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme

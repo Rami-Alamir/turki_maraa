@@ -25,9 +25,9 @@ class PaymentMethod extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            _item(context, 0, 'cod', 'cod_description',
+            _item(context, 1, 'cod', 'cod_description',
                 TURKIICONS.cart_cash_uncolored),
-            _item(context, 1, 'online_payment', 'online_payment_description',
+            _item(context, 2, 'online_payment', 'online_payment_description',
                 TURKIICONS.cart_online_uncolored)
           ],
         ),

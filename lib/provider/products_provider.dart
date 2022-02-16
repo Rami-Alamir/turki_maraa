@@ -152,6 +152,7 @@ class ProductsProvider with ChangeNotifier {
     try {
       _productData =
           await ProductsRepository().getProduct(id, latLng, countryId);
+      if (_productData!.data!.sizes!.length == 1) _selectedSize = 0;
     } catch (e) {
       print(e.toString() + "rami");
       _productIsRetry = true;

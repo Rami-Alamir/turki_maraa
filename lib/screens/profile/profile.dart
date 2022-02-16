@@ -31,13 +31,13 @@ class _ProfileState extends State<Profile> {
         back: false,
         action: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8),
-          child: IconButton(
-            icon: Icon(
-              TURKIICONS.notification,
-              color: Theme.of(context).primaryColor,
-            ),
-            onPressed: () => Navigator.pushNamed(context, '/Notifications'),
-          ),
+          // child: IconButton(
+          //   icon: Icon(
+          //     TURKIICONS.notification,
+          //     color: Theme.of(context).primaryColor,
+          //   ),
+          //   onPressed: () => Navigator.pushNamed(context, '/Notifications'),
+          // ),
         ),
       ),
       body: GestureDetector(

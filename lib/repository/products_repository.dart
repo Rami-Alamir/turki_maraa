@@ -28,7 +28,7 @@ class ProductsRepository {
       String productId, LatLng latLng, String countryId) async {
     print("getProductData ");
     print(
-        "products/$productId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
+        "1products/$productId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
     final response;
     Product? product;
     try {

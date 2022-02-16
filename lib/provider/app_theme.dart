@@ -54,8 +54,9 @@ final classicTheme = ThemeData(
     primaryColor: Color.fromRGBO(118, 24, 14, 1.0),
     fontFamily: 'Turki',
     canvasColor: Colors.transparent,
-    backgroundColor: Color.fromRGBO(243, 224, 177, 1),
-    scaffoldBackgroundColor: Color.fromRGBO(243, 224, 177, 1),
+    //backgroundColor: Color.fromRGBO(243, 224, 177, 1),
+    backgroundColor: Color.fromRGBO(209, 178, 147, 1),
+    scaffoldBackgroundColor: Color.fromRGBO(209, 178, 147, 1),
     textTheme: TextTheme(
       subtitle1: TextStyle(
           fontSize: 16,
@@ -108,7 +109,7 @@ final classicTheme = ThemeData(
       endIndent: 5,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: Color.fromRGBO(243, 224, 177, 1),
+      backgroundColor: Color.fromRGBO(209, 178, 147, 1),
       selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
       unselectedLabelStyle: TextStyle(fontSize: 10, height: 2),
       selectedItemColor: Color.fromRGBO(118, 24, 14, 1.0),
@@ -125,7 +126,7 @@ final classicTheme = ThemeData(
       color: Colors.white,
     )),
     colorScheme: ColorScheme.fromSwatch().copyWith(
-        secondary: Color.fromRGBO(243, 224, 177, 1),
+        secondary: Color.fromRGBO(209, 178, 147, 1),
         primaryVariant: Color.fromRGBO(217, 201, 190, 1),
         secondaryVariant: Color.fromRGBO(150, 122, 89, 0.5)));
 

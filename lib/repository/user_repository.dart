@@ -8,6 +8,7 @@ class UserRepository {
   Future<dynamic> updateInfo(body, String authorization) async {
     final response = await _helper.post3("customers/edit-profile", body,
         authorization: authorization);
+    print(body);
     return response;
   }
 

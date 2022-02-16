@@ -84,7 +84,8 @@ class ApiBaseHelper {
     return response;
   }
 
-  Future<int> post4(String url, var body, {String authorization = " "}) async {
+  Future<dynamic> post4(String url, var body,
+      {String authorization = " "}) async {
     headers2['authorization'] = authorization;
     print(authorization);
     var uri = Uri.parse(_baseUrl + url);
@@ -97,7 +98,7 @@ class ApiBaseHelper {
     } catch (e) {
       print(e.toString() + "post 4");
     }
-    return response.statusCode;
+    return response;
   }
 
   Future<dynamic> put(String url, var body) async {

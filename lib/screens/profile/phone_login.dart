@@ -21,9 +21,8 @@ class _PhoneLoginState extends State<PhoneLogin> {
 
   @override
   Widget build(BuildContext context) {
-    final _auth = Provider.of<Auth>(
-      context,
-    );
+    final _auth = Provider.of<Auth>(context);
+
     return Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/orders_data.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
 import 'item_column.dart';
@@ -194,8 +195,8 @@ class OrderCard extends StatelessWidget {
                                                           context)!
                                                       .tr(order.paymentTypeId ==
                                                               1
-                                                          ? "online_payment"
-                                                          : "cod"),
+                                                          ? "cod"
+                                                          : "online_payment"),
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start),
                                               ItemColumn(
@@ -236,10 +237,12 @@ class OrderCard extends StatelessWidget {
                                                     title: 'order_type',
                                                     value: AppLocalizations.of(
                                                             context)!
-                                                        .tr(order.paymentTypeId ==
-                                                                1
-                                                            ? "delivery"
-                                                            : "pickup"),
+                                                        .tr("delivery"
+                                                            // order.paymentTypeId ==
+                                                            //         1
+                                                            //     ? "delivery"
+                                                            //     : "pickup"
+                                                            ),
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment.end),
                                               ],
@@ -270,62 +273,62 @@ class OrderCard extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                    "${AppLocalizations.of(context)!.tr('total')} ",
+                                    "${AppLocalizations.of(context)!.tr('total')}: ",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 10,
                                         fontWeight: FontWeight.w600)),
                                 Text(
-                                    "${order.totalAmountAfterDiscount} ${AppLocalizations.of(context)!.tr('sr')}",
+                                    "${order.totalAmountAfterDiscount} ${GetStrings().getCurrency(_isAr ? "ar" : "En", (order.refNo!.substring(0, 2)))}",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.normal)),
                               ],
                             ),
-                            Container(
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      AppLocalizations.of(context)!
-                                          .tr('points_earned'),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w600)),
-                                  Container(
-                                    height: 17,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.bottomRight,
-                                        end: Alignment.bottomLeft,
-                                        colors: [
-                                          Colors.green,
-                                          Colors.green.withOpacity(0.8),
-                                        ],
-                                      ), // color: Color.fromRGBO(212, 175, 55, 1),
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.all(
-                                          const Radius.circular(15)),
-                                      border:
-                                          Border.all(color: Colors.transparent),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 3),
-                                      child: Text(
-                                          "points  ${AppLocalizations.of(context)!.tr('point')}",
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold,
-                                              height: 1.3,
-                                              color: Colors.white)),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                            // Container(
+                            //   child: Row(
+                            //     crossAxisAlignment: CrossAxisAlignment.center,
+                            //     children: [
+                            //       Text(
+                            //           AppLocalizations.of(context)!
+                            //               .tr('points_earned'),
+                            //           style: TextStyle(
+                            //               color: Colors.white,
+                            //               fontSize: 10,
+                            //               fontWeight: FontWeight.w600)),
+                            //       Container(
+                            //         height: 17,
+                            //         decoration: BoxDecoration(
+                            //           gradient: LinearGradient(
+                            //             begin: Alignment.bottomRight,
+                            //             end: Alignment.bottomLeft,
+                            //             colors: [
+                            //               Colors.green,
+                            //               Colors.green.withOpacity(0.8),
+                            //             ],
+                            //           ), // color: Color.fromRGBO(212, 175, 55, 1),
+                            //           shape: BoxShape.rectangle,
+                            //           borderRadius: BorderRadius.all(
+                            //               const Radius.circular(15)),
+                            //           border:
+                            //               Border.all(color: Colors.transparent),
+                            //         ),
+                            //         child: Padding(
+                            //           padding: const EdgeInsets.symmetric(
+                            //               horizontal: 3),
+                            //           child: Text(
+                            //               "points  ${AppLocalizations.of(context)!.tr('point')}",
+                            //               style: TextStyle(
+                            //                   fontSize: 10,
+                            //                   fontWeight: FontWeight.bold,
+                            //                   height: 1.3,
+                            //                   color: Colors.white)),
+                            //         ),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

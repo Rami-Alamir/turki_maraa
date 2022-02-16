@@ -48,6 +48,7 @@ class _UsernameState extends State<Username> {
               RectangleTextField(
                 controller: _auth.usernameController,
                 padding: EdgeInsets.all(20),
+                maxLength: 30,
                 hint: AppLocalizations.of(context)!.tr('name'),
               ),
               RoundedRectangleButton(

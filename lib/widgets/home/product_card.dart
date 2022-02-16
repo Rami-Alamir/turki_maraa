@@ -48,9 +48,9 @@ class ProductCard extends StatelessWidget {
                       child: Container(
                         color: Colors.transparent,
                         width: SizeConfig.setWidgetWidthWithFactor(
-                            0.35, 0.175, 0.175),
+                            0.35, 0.15, 0.15),
                         height: SizeConfig.setWidgetWidthWithFactor(
-                            0.35, 0.175, 0.175),
+                            0.35, 0.15, 0.15),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
                             // child: Image.asset("assets/images/img.png",
@@ -58,9 +58,9 @@ class ProductCard extends StatelessWidget {
                               // "https://z.nooncdn.com/tr:n-t_240/v1607407812/N31966223A_1.jpg",
                               '${((product.productImages?.length ?? 0) > 0) ? product.productImages![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
                               width: SizeConfig.setWidgetWidthWithFactor(
-                                  0.35, 0.175, 0.175),
+                                  0.35, 0.15, 0.15),
                               height: SizeConfig.setWidgetWidthWithFactor(
-                                  0.35, 0.175, 0.175),
+                                  0.35, 0.15, 0.15),
                               fit: BoxFit.cover,
                             )),
                       ),
