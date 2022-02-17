@@ -1,10 +1,11 @@
 class Product {
   Data? data;
-
-  Product({this.data});
+  String? description;
+  Product({this.data, this.description});
 
   Product.fromJson(Map<String, dynamic> json) {
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    description = json['description'];
   }
 }
 

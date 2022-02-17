@@ -41,6 +41,8 @@ class RoundedPickerButton extends StatelessWidget {
   }
 
   showPicker(BuildContext context) {
+    final auth = Provider.of<Auth>(context, listen: false);
+    auth.setGender(0, context);
     Picker(
         headerColor: Theme.of(context).backgroundColor,
         containerColor: Theme.of(context).backgroundColor,
@@ -76,11 +78,11 @@ class RoundedPickerButton extends StatelessWidget {
         changeToFirst: false,
         textAlign: TextAlign.left,
         columnPadding: const EdgeInsets.all(12.0),
-        onConfirm: (Picker picker, List value) {
-          final auth = Provider.of<Auth>(context, listen: false);
-          print(value.toString().substring(1, 2));
+        onSelect: (Picker picker, int i, List value) {
           auth.setGender(int.parse(value.toString().substring(1, 2)), context);
-          print(value.toString().length);
+        },
+        onConfirm: (Picker picker, List value) {
+          auth.setGender(int.parse(value.toString().substring(1, 2)), context);
         }).showModal(context);
   }
 }

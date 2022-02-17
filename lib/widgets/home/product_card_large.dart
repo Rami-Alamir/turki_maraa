@@ -23,6 +23,7 @@ class ProductCardLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+    final bool _haveSalePrice = salePrice > 0 && salePrice != price;
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
     String _currency = GetStrings().getCurrency(
@@ -113,13 +114,13 @@ class ProductCardLarge extends StatelessWidget {
                               .textTheme
                               .headline6!
                               .copyWith(
-                                  decoration: salePrice > 0.0
+                                  decoration: _haveSalePrice
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none,
-                                  fontSize: salePrice > 0 ? 10 : 14,
+                                  fontSize: _haveSalePrice ? 10 : 14,
                                   fontWeight: FontWeight.bold),
-                          minFontSize: salePrice > 0 ? 12 : 14,
-                          maxFontSize: salePrice > 0 ? 12 : 14,
+                          minFontSize: _haveSalePrice ? 12 : 14,
+                          maxFontSize: _haveSalePrice ? 12 : 14,
                           maxLines: 1,
                         ),
                         AutoSizeText(
@@ -129,17 +130,17 @@ class ProductCardLarge extends StatelessWidget {
                               .textTheme
                               .headline6!
                               .copyWith(
-                                  fontSize: salePrice > 0 ? 8 : 12,
+                                  fontSize: _haveSalePrice ? 8 : 12,
                                   fontWeight: FontWeight.bold),
-                          minFontSize: salePrice > 0 ? 8 : 12,
-                          maxFontSize: salePrice > 0 ? 8 : 12,
+                          minFontSize: _haveSalePrice ? 8 : 12,
+                          maxFontSize: _haveSalePrice ? 8 : 12,
                           maxLines: 1,
                         ),
                       ],
                     ),
                   ),
                   Visibility(
-                    visible: salePrice > 0,
+                    visible: _haveSalePrice,
                     child: Row(
                       children: [
                         AutoSizeText(

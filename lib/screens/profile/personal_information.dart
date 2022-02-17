@@ -83,10 +83,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
               fontSize: 16,
               title: AppLocalizations.of(context)!.tr('update'),
               onPressed: () async {
-                Pattern pattern =
-                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                RegExp regex = RegExp(pattern.toString());
-                if (!regex.hasMatch(_auth.emailController.text))
+                RegExp regex =
+                    RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
+
+                if (!regex.hasMatch(_auth.emailController.text) &&
+                    _auth.emailController.text.length > 0)
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
                     AppLocalizations.of(context)!.tr('enter_valid_email'),

@@ -28,12 +28,13 @@ class ProductsRepository {
       String productId, LatLng latLng, String countryId) async {
     print("getProductData ");
     print(
-        "1products/$productId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
+        "products/getProduct/$productId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
     final response;
     Product? product;
     try {
       response = await _helper.get(
-          "products/$productId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
+          "products/getProduct/$productId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
+
       print(response.toString());
       product = Product.fromJson(response);
     } catch (e) {

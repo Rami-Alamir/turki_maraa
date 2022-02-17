@@ -15,6 +15,8 @@ class BestProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+    final bool _haveSalePrice =
+        product.salePrice! > 0 && product.salePrice! != product.price!;
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
     String _currency = GetStrings().getCurrency(
@@ -123,34 +125,33 @@ class BestProductCard extends StatelessWidget {
                                   .textTheme
                                   .headline6!
                                   .copyWith(
-                                      decoration: product.salePrice! > 0.0
+                                      decoration: _haveSalePrice
                                           ? TextDecoration.lineThrough
                                           : TextDecoration.none,
-                                      fontSize:
-                                          product.salePrice! > 0 ? 10 : 12,
+                                      fontSize: _haveSalePrice ? 10 : 12,
                                       fontWeight: FontWeight.bold),
-                              minFontSize: product.salePrice! > 0 ? 10 : 12,
-                              maxFontSize: product.salePrice! > 0 ? 10 : 12,
+                              minFontSize: _haveSalePrice ? 10 : 12,
+                              maxFontSize: _haveSalePrice ? 10 : 12,
                               maxLines: 1,
                             ),
                             AutoSizeText(
-                              product.salePrice! == 0.0 ? " $_currency" : "",
+                              !_haveSalePrice ? " $_currency" : "",
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline6!
                                   .copyWith(
-                                      fontSize: product.salePrice! > 0 ? 8 : 10,
+                                      fontSize: _haveSalePrice ? 8 : 10,
                                       fontWeight: FontWeight.bold),
-                              minFontSize: product.salePrice! > 0 ? 8 : 10,
-                              maxFontSize: product.salePrice! > 0 ? 8 : 10,
+                              minFontSize: _haveSalePrice ? 8 : 10,
+                              maxFontSize: _haveSalePrice ? 8 : 10,
                               maxLines: 1,
                             ),
                           ],
                         ),
                       ),
                       Visibility(
-                        visible: product.salePrice! > 0,
+                        visible: _haveSalePrice,
                         child: Row(
                           children: [
                             AutoSizeText(

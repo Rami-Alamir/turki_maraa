@@ -19,7 +19,8 @@
   "credit": "المحفظة",
   "payment_method": "طريقة الدفع",
   "total2": "الإجمالي",
-  "vat": "جميع الأسعار تشمل 15% ضريبه القيمة المضافة",
+  "vat_sa": "جميع الأسعار تشمل 15% ضريبه القيمة المضافة",
+  "vat_ae": "جميع الأسعار تشمل 5% ضريبه القيمة المضافة",
   "terms_and_conditions_statement": "بتنفيذ طلبك فإنك توافق على",
   "terms_and_conditions": "الشروط والأحكام",
   "place_order": "تنفيذ الطلب",
@@ -175,5 +176,6 @@
   "region_not_supported" : "المنطقة غير مدعومة",
   "you_are_being_redirected_to_the_payment_page_please_wait": "جاري تحويلك لصفحة الدفع الرجاء الانتظار",
   "the_order_has_been_sent_and_the_payment_is_being_verified": "تم ارسال الطلب وجاري التحقق من عملية الدفع",
-  "enter_valid_email" : "الرجاء ادخال بريد الكتروني صالح"
+  "enter_valid_email" : "الرجاء ادخال بريد الكتروني صالح",
+  "email_is_used_please_enter_different_email" : "البريد الالكتروني مستخدم الرجاء ادخل بريد الكتروني مختلف"
 }

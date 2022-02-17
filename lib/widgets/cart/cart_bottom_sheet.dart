@@ -97,6 +97,13 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 widget.invoicePreview.totalAmountAfterDiscount!,
                             subtotal: widget.invoicePreview.orderSubtotal!,
                             shipping: widget.invoicePreview.deliveryFee!,
+                            discountVoucher:
+                                widget.invoicePreview.discountApplied!,
+                            vat:
+                                _addressProvider.isoCountryCode.toUpperCase() ==
+                                        "AE"
+                                    ? "vat_ae"
+                                    : 'vat_sa',
                           ),
                         ],
                       )
@@ -135,7 +142,12 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                             padding: const EdgeInsets.only(top: 8.0, bottom: 8),
                             child: Center(
                               child: Text(
-                                AppLocalizations.of(context)!.tr('vat'),
+                                AppLocalizations.of(context)!.tr(
+                                    _addressProvider.isoCountryCode
+                                                .toUpperCase() ==
+                                            "AE"
+                                        ? "vat_ae"
+                                        : 'vat_sa'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
@@ -154,8 +166,10 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     onPressed: () {
                       _cart.placeOrder(
                           context: context,
-                          addressId: _addressProvider.userAddress!
-                              .data![_addressProvider.selectedAddress].id!);
+                          addressId: _addressProvider.selectedAddress == -1
+                              ? -1
+                              : _addressProvider.userAddress!
+                                  .data![_addressProvider.selectedAddress].id!);
                     })
               ],
             ),

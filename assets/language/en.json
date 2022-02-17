@@ -19,7 +19,8 @@
   "delivery_fees": "Delivery fees",
   "discount": "Discount",
   "credit": "Wallet",
-  "vat": "All prices include 15% VAT",
+  "vat_sa": "All prices include 15% VAT",
+  "vat_ae": "All prices include 5% VAT",
   "terms_and_conditions_statement": "By carrying out your request, you agree to",
   "terms_and_conditions": "Terms and Conditions",
   "place_order": "Place order",
@@ -174,5 +175,6 @@
   "region_not_supported"  :"Region not supported",
   "you_are_being_redirected_to_the_payment_page_please_wait": "You are being redirected to the payment page, please wait",
   "the_order_has_been_sent_and_the_payment_is_being_verified": "The order has been sent and the payment is being verified",
-  "enter_valid_email" : "Please enter valid email"
+  "enter_valid_email" : "Please enter valid email",
+  "email_is_used_please_enter_different_email" : "Email is used please enter a different email"
 }

@@ -5,8 +5,9 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
 class OrderDetailsRow extends StatelessWidget {
+  final String currency;
   final Products item;
-  const OrderDetailsRow({required this.item});
+  const OrderDetailsRow({required this.item, required this.currency});
   @override
   Widget build(BuildContext context) {
     final _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
@@ -68,9 +69,10 @@ class OrderDetailsRow extends StatelessWidget {
                       child: Container(
                         width: SizeConfig.screenWidth! * .6,
                         child: AutoSizeText(
-                          _isAr
-                              ? item.descriptionAr ?? ""
-                              : item.descriptionEn ?? "",
+                          // _isAr
+                          //     ? item.descriptionAr ?? ""
+                          //     : item.descriptionEn ??
+                          "",
                           style: Theme.of(context)
                               .textTheme
                               .headline4!
@@ -85,7 +87,7 @@ class OrderDetailsRow extends StatelessWidget {
                       child: Container(
                         width: SizeConfig.screenWidth! * .64,
                         child: AutoSizeText(
-                          '${item.price} ${AppLocalizations.of(context)!.tr('sr')}',
+                          '${item.price} $currency',
                           textAlign: TextAlign.end,
                           style: Theme.of(context)
                               .textTheme

@@ -31,7 +31,6 @@ class CartCard extends StatelessWidget {
       width: SizeConfig.screenWidth,
       child: Dismissible(
         key: UniqueKey(),
-        // key: Key(item.product!.id.toString() + "$index"),
         onDismissed: (direction) {
           if (direction == DismissDirection.endToStart) {
             delete(context, _cartProvider);

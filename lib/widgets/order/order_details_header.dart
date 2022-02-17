@@ -87,11 +87,11 @@ class OrderDetailsHeader extends StatelessWidget {
                                       value: order.createdAt!.substring(0, 10),
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start),
-                                  ItemColumn(
-                                      title: 'points_earned',
-                                      value: 'نقاط هنا',
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end),
+                                  // ItemColumn(
+                                  //     title: 'points_earned',
+                                  //     value: 'نقاط هنا',
+                                  //     crossAxisAlignment:
+                                  //         CrossAxisAlignment.end),
                                 ],
                               ),
                             ),

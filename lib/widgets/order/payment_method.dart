@@ -3,6 +3,9 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 
 class PaymentMethod extends StatelessWidget {
+  final int paymentTypeId;
+
+  const PaymentMethod({this.paymentTypeId = 2});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,11 +35,16 @@ class PaymentMethod extends StatelessWidget {
               //     height: 35,
               //   ),
               // ),
-              Text("صورة وطريقة الدفع هنا",
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                      )),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0),
+                child: Text(
+                    AppLocalizations.of(context)!
+                        .tr(paymentTypeId == 1 ? "cod" : "online_payment"),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        )),
+              ),
             ],
           )),
         ),

@@ -5,12 +5,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:new_turki/models/cart_data.dart';
 import 'package:new_turki/models/payment_arb.dart';
+import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/repository/cart_repository.dart';
 import 'package:new_turki/repository/order_repository.dart';
+import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/screens/orders/order_success.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'address_provider.dart';
 
 class CartProvider with ChangeNotifier {
   TextEditingController noteController = TextEditingController();
@@ -254,8 +259,31 @@ class CartProvider with ChangeNotifier {
     _dialogContext = context;
     _showDialogIndicator(context);
     try {
+      if (addressId == -1) {
+        final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+        final _addressProvider =
+            Provider.of<AddressProvider>(context, listen: false);
+        var _response = await UserRepository().addAddress({
+          "country_iso_code": _isoCountryCode,
+          "address": "${_homeProvider.currentLocationDescription}",
+          "comment": "${_homeProvider.currentLocationDescription}",
+          "label": "label",
+          "is_default": "0",
+          "long": "${_homeProvider.locationData.longitude}",
+          "lat": "${_homeProvider.locationData.latitude}",
+        }, "Bearer $_authorization");
+        print(_response.body.toString());
+        if (_response.statusCode == 200) {
+          await _addressProvider.getAddressList("Bearer $_authorization");
+          _addressProvider.setSelectedAddress =
+              (_addressProvider.userAddress?.data?.length ?? 0) - 1;
+          addressId = _addressProvider.userAddress!.data!.last.id!;
+        } else {
+          Navigator.pop(_dialogContext!);
+          throw Exception;
+        }
+      }
       var format = DateFormat('MM-dd');
-
       _response = await OrderRepository().placeOrder({
         "delivery_date": "${format.format(deliveryDataTime[_selectedDate])}",
         "delivery_period_id": _selectedTime + 1,
@@ -266,12 +294,13 @@ class CartProvider with ChangeNotifier {
       var paymentId = _selectedPayment;
       if (_response.statusCode == 200) {
         _errorMsg = false;
-        _promoIsActive = true;
+        _promoIsActive = false;
         _selectedPayment = -1;
         _selectedDate = -1;
         _selectedTime = -1;
         _cartData = null;
         _cartLength = 0;
+        promoCodeController.clear();
         notifyListeners();
         Navigator.pop(_dialogContext!);
         Navigator.of(context, rootNavigator: true).push(
@@ -281,14 +310,9 @@ class CartProvider with ChangeNotifier {
                   )),
         );
         if (paymentId > 1) {
-          print("aaaa");
-          print(json.decode(_response.body.toString()));
-
           PaymentARB arb =
               PaymentARB.fromJson(json.decode(_response.body.toString()));
-          print('arb.data!.invoiceURL! ${arb.data!.invoiceURL!}');
           await launch(arb.data!.invoiceURL!, forceSafariVC: true);
-          print('rami');
           notifyListeners();
         } else
           notifyListeners();

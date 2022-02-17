@@ -12,6 +12,8 @@ class Invoice extends StatelessWidget {
   final double shipping;
   final double myCredit;
   final double total;
+  final String currency;
+  final String vat;
 
   const Invoice({
     required this.subtotal,
@@ -19,15 +21,24 @@ class Invoice extends StatelessWidget {
     this.discountVoucher = 0,
     this.shipping = 0,
     this.myCredit = 0,
+    this.currency = "",
+    this.vat = "vat_sa",
   });
 
   @override
   Widget build(BuildContext context) {
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
-    String _currency = GetStrings().getCurrency(
-        AppLocalizations.of(context)!.locale!.languageCode,
-        _addressProvider.isoCountryCode);
+    String _currency = currency.length > 0
+        ? currency
+        : GetStrings().getCurrency(
+            AppLocalizations.of(context)!.locale!.languageCode,
+            _addressProvider.isoCountryCode);
+    String _vat = vat.length > 0
+        ? vat
+        : _addressProvider.isoCountryCode.toUpperCase() == "AE"
+            ? "vat_ae"
+            : 'vat_sa';
     return Padding(
       padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
       child: Column(
@@ -106,7 +117,7 @@ class Invoice extends StatelessWidget {
             padding: const EdgeInsets.only(top: 15.0),
             child: Center(
               child: Text(
-                AppLocalizations.of(context)!.tr('vat'),
+                AppLocalizations.of(context)!.tr(_vat),
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                       fontSize: 10,
                     ),

@@ -315,6 +315,7 @@ class InvoicePreview {
   double? deliveryFee;
   double? orderSubtotal;
   double? totalAmount;
+  double? discountApplied;
   double? totalAmountAfterDiscount;
   String? appliedDiscountCode;
   int? usingWallet;
@@ -331,6 +332,7 @@ class InvoicePreview {
 
   InvoicePreview.fromJson(Map<String, dynamic> json) {
     deliveryFee = (json['delivery_fee'] ?? 0) * 1.0;
+    discountApplied = (json['discount_applied'] ?? 0.0) * 1.0;
     orderSubtotal = (json['order_subtotal'] ?? 0) * 1.0;
     totalAmount = (json['total_amount'] ?? 0) * 1.0;
     totalAmountAfterDiscount = (json['total_amount_after_discount'] ?? 0) * 1.0;

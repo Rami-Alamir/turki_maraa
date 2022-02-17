@@ -38,7 +38,7 @@ class Data {
     subTitelEn = json['sub_titel_en'];
     descriptionAr = json['description_ar'];
     descriptionEn = json['description_en'];
-    subImage = json['sub_image'];
+    subImage = json['sub_image'] ?? "";
     if (json['products'] != null) {
       products = <Products>[];
       json['products'].forEach((v) {

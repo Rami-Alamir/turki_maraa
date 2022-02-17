@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:new_turki/models/delivery_date_time.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
@@ -12,7 +11,6 @@ import 'package:new_turki/widgets/cart/delivery_address.dart';
 import 'package:new_turki/widgets/cart/delivery_date.dart';
 import 'package:new_turki/widgets/cart/delivery_time.dart';
 import 'package:new_turki/widgets/cart/empty_cart.dart';
-import 'package:new_turki/widgets/cart/note.dart';
 import 'package:new_turki/widgets/cart/payment_method.dart';
 import 'package:new_turki/widgets/cart/use_credit.dart';
 import 'package:new_turki/widgets/shared/not_auth.dart';
@@ -41,10 +39,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
     if (_auth.isAuth) print(_auth.accessToken);
-    var format =
-        DateFormat.E(AppLocalizations.of(context)!.locale!.languageCode);
-    var dateString = format.format(DateTime.now());
-    print(format.format(DateTime.now()));
+
     return Scaffold(
       appBar: PrimaryAppBar(
         title: AppLocalizations.of(context)!.tr('cart'),
@@ -93,8 +88,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                   DeliveryAddress(
                                       address:
                                           _addressProvider.selectedAddress == -1
-                                              ? AppLocalizations.of(context)!
-                                                  .tr('current_location')
+                                              ? _addressProvider
+                                                  .addressDescription!
                                               : _addressProvider
                                                   .userAddress!
                                                   .data![_addressProvider
@@ -129,7 +124,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                   PaymentMethod(),
                                   UseCredit(
                                       credit: _auth.userData!.data!.wallet!),
-                                  Note(),
+                                  // Note(),
                                   SizedBox(
                                     height: SizeConfig.screenHeight! * 0.25,
                                   )

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/search_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,10 @@ class SearchBar extends StatelessWidget {
           onChanged: (v) {
             final _searchProvider =
                 Provider.of<SearchProvider>(context, listen: false);
-            _searchProvider.getSearchResultList();
+            final _addressProvider =
+                Provider.of<AddressProvider>(context, listen: false);
+            _searchProvider.getSearchResultList(
+                _addressProvider.latLng, _addressProvider.isoCountryCode);
           },
           textAlignVertical: TextAlignVertical.center,
           cursorColor: Theme.of(context).textTheme.headline6!.color,

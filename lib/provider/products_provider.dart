@@ -170,14 +170,12 @@ class ProductsProvider with ChangeNotifier {
   }
 
   //get discover item Data
-  Future<void> getDiscoverItem(int id) async {
+  Future<void> getDiscoverItem(int id, LatLng latLng, String countryId) async {
     _discoverIsLoading = true;
     _discoverRetry = false;
     try {
-      print("d1");
-
-      _discoverItem = await HomeRepository().getDiscoverItem(id);
-      print("d2");
+      _discoverItem =
+          await HomeRepository().getDiscoverItem(id, latLng, countryId);
     } catch (e) {
       print('catch _discoverItem');
       print(e.toString());

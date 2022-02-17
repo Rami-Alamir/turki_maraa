@@ -125,7 +125,7 @@ class AppState extends State<App> {
                       label: AppLocalizations.of(context)!.tr('home'),
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(TURKIICONS.ask),
+                      icon: Icon(TURKIICONS.c1),
                       label: AppLocalizations.of(context)!.tr('support'),
                     ),
                     BottomNavigationBarItem(

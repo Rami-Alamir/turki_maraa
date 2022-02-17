@@ -140,38 +140,38 @@ class ProductDescription extends StatelessWidget {
             )
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0, right: 12, left: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                height: 25,
-                child: ListView.builder(
-                    itemCount: 5,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Icon(
-                        Icons.star,
-                        size: 20,
-                        color: product.data!.noRating! <= index
-                            ? Color.fromRGBO(250, 202, 29, 1)
-                            : Theme.of(context).colorScheme.secondaryVariant,
-                      );
-                    }),
-              ),
-              // Text(
-              //   ' (${product.data!.noRating!}) ',
-              //   style: Theme.of(context)
-              //       .textTheme
-              //       .subtitle2!
-              //       .copyWith(fontSize: 14, height: 1.4),
-              // ),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 10.0, right: 12, left: 12),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.start,
+        //     children: [
+        //       Container(
+        //         height: 25,
+        //         child: ListView.builder(
+        //             itemCount: 5,
+        //             shrinkWrap: true,
+        //             scrollDirection: Axis.horizontal,
+        //             physics: const NeverScrollableScrollPhysics(),
+        //             itemBuilder: (BuildContext context, int index) {
+        //               return Icon(
+        //                 Icons.star,
+        //                 size: 20,
+        //                 color: product.data!.noRating! <= index
+        //                     ? Color.fromRGBO(250, 202, 29, 1)
+        //                     : Theme.of(context).colorScheme.secondaryVariant,
+        //               );
+        //             }),
+        //       ),
+        //       // Text(
+        //       //   ' (${product.data!.noRating!}) ',
+        //       //   style: Theme.of(context)
+        //       //       .textTheme
+        //       //       .subtitle2!
+        //       //       .copyWith(fontSize: 14, height: 1.4),
+        //       // ),
+        //     ],
+        //   ),
+        // ),
         Row(
           children: [
             Padding(

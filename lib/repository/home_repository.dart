@@ -56,9 +56,11 @@ class HomeRepository {
   }
 
   //get Discover item data
-  Future<DiscoverItem> getDiscoverItem(int id) async {
+  Future<DiscoverItem> getDiscoverItem(
+      int id, LatLng latLng, String countryId) async {
     print("getDiscover");
-    final response = await _helper.get("filters/$id");
+    final response = await _helper.get(
+        "filters/$id?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
     DiscoverItem? discoverItem;
     try {
       discoverItem = DiscoverItem.fromJson(response);

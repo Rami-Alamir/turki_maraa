@@ -252,13 +252,16 @@ class Auth with ChangeNotifier {
       _showDialogIndicator(_dialogContext);
       try {
         _response = await UserRepository().updateInfo({
-          if (usernameController.text.length > 0)
+          if (usernameController.text.trim().length > 0)
             "name": usernameController.text,
-          if (ageController.text.length > 0) "age": ageController.text.trim(),
-          if (emailController.text.length > 0)
+          if (ageController.text.trim().length > 0)
+            "age": ageController.text.trim(),
+          if (emailController.text.trim().length > 0 &&
+              _userData!.data!.email! != emailController.text.trim())
             "email": emailController.text.trim(),
           if (_gender! > -1) "gender": "$_gender",
         }, "Bearer $_accessToken");
+
         if (_response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(_response.body.toString()));
           _userData!.data!.accessToken = _accessToken;
@@ -276,9 +279,8 @@ class Auth with ChangeNotifier {
           showSnackBar(
               context,
               _response.statusCode == 400
-                  ? "please_enter_your_name"
+                  ? "email_is_used_please_enter_different_email"
                   : "unexpected_error");
-
           // AlertController.show(
           //     "",
           //     AppLocalizations.of(context)!.tr(_response.statusCode == 400
@@ -304,6 +306,7 @@ class Auth with ChangeNotifier {
   }
 
   void initTextController() {
+    print(userData!.data!.name);
     ageController.text = (_userData!.data!.age!);
     usernameController.text = _userData!.data!.name ?? "";
     genderController.text = getGenderString();

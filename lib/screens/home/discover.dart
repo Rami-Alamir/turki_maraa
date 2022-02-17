@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/discover_data.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/products_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -24,13 +25,18 @@ class _DiscoverState extends State<Discover> {
   void initState() {
     final _productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
-    _productsProvider.getDiscoverItem(widget.item.id!);
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    _productsProvider.getDiscoverItem(widget.item.id!, _addressProvider.latLng,
+        _addressProvider.isoCountryCode);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final _productsProvider = Provider.of<ProductsProvider>(context);
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
     return Scaffold(
       appBar: PrimaryAppBar(
@@ -42,23 +48,35 @@ class _DiscoverState extends State<Discover> {
           : _productsProvider.discoverRetry
               ? Retry(
                   onPressed: () {
-                    _productsProvider.getDiscoverItem(widget.item.id!);
+                    _productsProvider.getDiscoverItem(
+                        widget.item.id!,
+                        _addressProvider.latLng,
+                        _addressProvider.isoCountryCode);
                   },
                 )
               : RefreshIndicator(
                   color: Theme.of(context).primaryColor,
                   onRefresh: () async {
-                    await _productsProvider.getDiscoverItem(widget.item.id!);
+                    await _productsProvider.getDiscoverItem(
+                        widget.item.id!,
+                        _addressProvider.latLng,
+                        _addressProvider.isoCountryCode);
                   },
                   child: ListView(
                     children: [
-                      DiscoverHeader(
-                          image: _productsProvider.discoverItem.data!.subImage!,
-                          title: _isAr
-                              ? _productsProvider
-                                  .discoverItem.data!.descriptionAr!
-                              : _productsProvider
-                                  .discoverItem.data!.descriptionEn!),
+                      Visibility(
+                        visible: _productsProvider
+                                .discoverItem.data!.subImage!.length >
+                            0,
+                        child: DiscoverHeader(
+                            image:
+                                _productsProvider.discoverItem.data!.subImage!,
+                            title: _isAr
+                                ? _productsProvider
+                                    .discoverItem.data!.descriptionAr!
+                                : _productsProvider
+                                    .discoverItem.data!.descriptionEn!),
+                      ),
                       GridView.builder(
                           shrinkWrap: true,
                           physics: const ScrollPhysics(),

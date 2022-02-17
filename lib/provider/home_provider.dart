@@ -22,8 +22,14 @@ class HomeProvider with ChangeNotifier {
   int _selectedAddress2 = 0;
   LatLng? _latLng;
   String? _isoCountryCode = 'SA';
+  String? _currentLocationDescription = '';
   String? _currentIsoCountryCode = 'SA';
   Location.LocationData? _locationData;
+
+  Location.LocationData get locationData => _locationData!;
+
+  String get currentLocationDescription => _currentLocationDescription!;
+
   LatLng? get latLng => _latLng;
   BestSeller? get bestSeller => _bestSeller;
   bool get canPickup => _canPickup;
@@ -62,9 +68,11 @@ class HomeProvider with ChangeNotifier {
     // init  isoCountryCode
     List<Placemark> placemark = await placemarkFromCoordinates(
         _latLng!.latitude, _latLng!.longitude,
-        localeIdentifier: "EN");
+        localeIdentifier: "Ar");
     _currentIsoCountryCode = placemark.first.isoCountryCode;
     _isoCountryCode = placemark.first.isoCountryCode;
+    Placemark place = placemark.first;
+    _currentLocationDescription = "${place.street!} - ${place.subLocality} ";
   }
 
   //get all categories

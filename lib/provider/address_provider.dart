@@ -95,7 +95,8 @@ class AddressProvider with ChangeNotifier {
       try {
         List<Placemark> placemark = await placemarkFromCoordinates(
             _latLng!.latitude, _latLng!.longitude,
-            localeIdentifier: "EN");
+            localeIdentifier:
+                AppLocalizations.of(context)!.locale!.languageCode);
         _isoCountryCode = placemark.first.isoCountryCode;
         _response = await UserRepository().addAddress({
           "country_iso_code": _isoCountryCode,
