@@ -13,6 +13,9 @@ class OrderDetailsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+    final DateTime date = DateTime.parse(order.createdAt!.substring(0, 19));
+
+    final int timeZoneInHours = DateTime.now().timeZoneOffset.inHours;
     return MainCard(
       height: 235,
       child: Container(
@@ -84,7 +87,13 @@ class OrderDetailsHeader extends StatelessWidget {
                                 children: [
                                   ItemColumn(
                                       title: 'order_date',
-                                      value: order.createdAt!.substring(0, 10),
+                                      value: DateTime(
+                                              date.year,
+                                              date.month,
+                                              (date.day),
+                                              (date.hour + timeZoneInHours))
+                                          .toString()
+                                          .substring(0, 10),
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start),
                                   // ItemColumn(

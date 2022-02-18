@@ -16,6 +16,8 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+    final DateTime date = DateTime.parse(order.createdAt!.substring(0, 19));
+    final int timeZoneInHours = DateTime.now().timeZoneOffset.inHours;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.5),
       child: InkWell(
@@ -267,7 +269,13 @@ class OrderCard extends StatelessWidget {
                                               children: [
                                                 ItemColumn(
                                                     title: 'order_date',
-                                                    value: order.createdAt!
+                                                    value: DateTime(
+                                                            date.year,
+                                                            date.month,
+                                                            (date.day),
+                                                            (date.hour +
+                                                                timeZoneInHours))
+                                                        .toString()
                                                         .substring(0, 10),
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
