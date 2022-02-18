@@ -101,7 +101,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                     deliveryTime: [
                                       DeliveryDateTime(
                                           title: AppLocalizations.of(context)!
-                                              .tr('morning_time'),
+                                              .tr('morning'),
                                           subtitle: ''),
                                       DeliveryDateTime(
                                           title: AppLocalizations.of(context)!
@@ -109,15 +109,15 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                           subtitle: ''),
                                       DeliveryDateTime(
                                           title: AppLocalizations.of(context)!
-                                              .tr('afternoon_period'),
+                                              .tr('afternoon'),
                                           subtitle: ''),
                                       DeliveryDateTime(
                                           title: AppLocalizations.of(context)!
-                                              .tr('morocco_period'),
+                                              .tr('sunset'),
                                           subtitle: ''),
                                       DeliveryDateTime(
                                           title: AppLocalizations.of(context)!
-                                              .tr('isha_period'),
+                                              .tr('midnight'),
                                           subtitle: ''),
                                     ],
                                   ),

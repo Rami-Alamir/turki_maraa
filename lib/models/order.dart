@@ -32,6 +32,7 @@ class Data {
   List<Products>? products;
   OrderState? orderState;
   DeliveryPeriod? deliveryPeriod;
+  List<OrderProducts>? orderProducts;
 
   Data(
       {this.refNo,
@@ -54,6 +55,7 @@ class Data {
       this.deliveryDate,
       this.paymentId,
       this.createdAt,
+      this.orderProducts,
       this.updatedAt,
       this.products,
       this.orderState,
@@ -85,6 +87,12 @@ class Data {
       products = <Products>[];
       json['products'].forEach((v) {
         products!.add(new Products.fromJson(v));
+      });
+    }
+    if (json['order_products'] != null) {
+      orderProducts = <OrderProducts>[];
+      json['order_products'].forEach((v) {
+        orderProducts!.add(new OrderProducts.fromJson(v));
       });
     }
     orderState = json['order_state'] != null
@@ -235,5 +243,118 @@ class DeliveryPeriod {
     isActive = json['is_active'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+  }
+}
+
+class OrderProducts {
+  int? id;
+  int? quantity;
+  String? totalPrice;
+  Preparation? preparation;
+  Size? size;
+  Preparation? cut;
+  Shalwata? shalwata;
+  Product? product;
+
+  OrderProducts(
+      {this.id,
+      this.quantity,
+      this.totalPrice,
+      this.preparation,
+      this.size,
+      this.cut,
+      this.shalwata,
+      this.product});
+
+  OrderProducts.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    quantity = json['quantity'];
+    totalPrice = json['total_price'];
+    preparation = json['preparation'] != null
+        ? new Preparation.fromJson(json['preparation'])
+        : null;
+    size = json['size'] != null ? new Size.fromJson(json['size']) : null;
+    cut = json['cut'] != null ? new Preparation.fromJson(json['cut']) : null;
+    shalwata = json['shalwata'] != null
+        ? new Shalwata.fromJson(json['shalwata'])
+        : null;
+    product =
+        json['product'] != null ? new Product.fromJson(json['product']) : null;
+  }
+}
+
+class Product {
+  int? id;
+  String? nameAr;
+  String? nameEn;
+  String? descriptionAr;
+  String? descriptionEn;
+  String? price;
+  String? salePrice;
+  List<ProductImages>? productImages;
+
+  Product(
+      {this.id,
+      this.nameAr,
+      this.nameEn,
+      this.descriptionAr,
+      this.descriptionEn,
+      this.price,
+      this.salePrice,
+      this.productImages});
+
+  Product.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nameAr = json['name_ar'];
+    nameEn = json['name_en'];
+    descriptionAr = json['description_ar'];
+    descriptionEn = json['description_en'];
+    price = json['price'];
+    salePrice = json['sale_price'];
+    if (json['product_images'] != null) {
+      productImages = <ProductImages>[];
+      json['product_images'].forEach((v) {
+        productImages!.add(new ProductImages.fromJson(v));
+      });
+    }
+  }
+}
+
+class Preparation {
+  String? nameAr;
+  String? nameEn;
+
+  Preparation({this.nameAr, this.nameEn});
+
+  Preparation.fromJson(Map<String, dynamic> json) {
+    nameAr = json['name_ar'];
+    nameEn = json['name_en'];
+  }
+}
+
+class Size {
+  String? nameAr;
+  String? nameEn;
+
+  Size({
+    this.nameAr,
+    this.nameEn,
+  });
+
+  Size.fromJson(Map<String, dynamic> json) {
+    nameAr = json['name_ar'];
+    nameEn = json['name_en'];
+  }
+}
+
+class Shalwata {
+  String? nameAr;
+  String? nameEn;
+
+  Shalwata({this.nameAr, this.nameEn});
+
+  Shalwata.fromJson(Map<String, dynamic> json) {
+    nameAr = json['name_ar'];
+    nameEn = json['name_en'];
   }
 }

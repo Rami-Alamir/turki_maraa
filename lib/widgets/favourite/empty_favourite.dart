@@ -16,8 +16,11 @@ class EmptyFavourite extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset('assets/images/empty_cart.png',
-                width: 333, height: 333),
+            Padding(
+              padding: const EdgeInsets.all(50.0),
+              child: Image.asset('assets/images/wishlist.png',
+                  width: 200, height: 0200),
+            ),
             Text(
               AppLocalizations.of(context)!.tr('empty_favourite'),
               style:

@@ -20,13 +20,13 @@ class AddressProvider with ChangeNotifier {
   BuildContext? _dialogContext;
   int _selectedAddress = -1;
   String? _isoCountryCode = 'SA';
+
   int get selectedAddress => _selectedAddress;
   bool get initMap => _initMap!;
   UserAddress? get userAddress => _userAddress;
   LatLng get latLng => _latLng ?? LatLng(0, 0);
   BitmapDescriptor get myMarker => _myMarker!;
   String? get addressDescription => _addressDescription;
-
   String get isoCountryCode => _isoCountryCode!;
 
   set initMap(bool value) {
@@ -68,13 +68,6 @@ class AddressProvider with ChangeNotifier {
   }
 
   void initMapData(String languageCode) async {
-    // try {
-    //   Locations.LocationData _locationData =
-    //       await Locations.Location().getLocation();
-    //   _latLng = LatLng(_locationData.latitude!, _locationData.longitude!);
-    // } catch (e) {
-    //   print("initMapData " + e.toString());
-    // }
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(size: Size(25, 25)), 'assets/images/pin.png')
         .then((onValue) {
@@ -86,6 +79,7 @@ class AddressProvider with ChangeNotifier {
 
   // add new address
   Future<void> addNewAddress(BuildContext context, String accessToken) async {
+    String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
     if (accessToken.length == 0) {
       Navigator.pop(context);
     } else {
@@ -95,13 +89,12 @@ class AddressProvider with ChangeNotifier {
       try {
         List<Placemark> placemark = await placemarkFromCoordinates(
             _latLng!.latitude, _latLng!.longitude,
-            localeIdentifier:
-                AppLocalizations.of(context)!.locale!.languageCode);
+            localeIdentifier: languageCode);
         _isoCountryCode = placemark.first.isoCountryCode;
         _response = await UserRepository().addAddress({
           "country_iso_code": _isoCountryCode,
           "address":
-              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "address${_userAddress?.data?.length ?? 1}"} ",
+              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "${placemark.first.street} - ${placemark.first.subLocality} "} ",
           "comment":
               "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "."} ",
           "label": "label",
@@ -111,12 +104,6 @@ class AddressProvider with ChangeNotifier {
         }, "Bearer $accessToken");
         print(_response.body.toString());
         if (_response.statusCode == 200) {
-          // showSnackBar(context, 'data_has_been_updated_successfully');
-          // AlertController.show(
-          //     " ",
-          //     AppLocalizations.of(context)!
-          //         .tr('data_has_been_updated_successfully'),
-          //     TypeAlert.success);
           await getAddressList("Bearer $accessToken");
           notifyListeners();
           _selectedAddress = (_userAddress?.data?.length ?? 0) - 1;
@@ -135,22 +122,11 @@ class AddressProvider with ChangeNotifier {
               _response.statusCode == 400
                   ? "region_not_supported"
                   : "unexpected_error");
-
-          // AlertController.show(
-          //     "",
-          //     AppLocalizations.of(context)!.tr(_response.statusCode == 400
-          //         ? "please_enter_your_name"
-          //         : "unexpected_error"),
-          //     TypeAlert.error);
         }
       } catch (e) {
         print(e.toString());
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
         showSnackBar(context, "unexpected_error");
-        // AlertController.show(
-        //     "",
-        //     AppLocalizations.of(context)!.tr("unexpected_error"),
-        //     TypeAlert.error);
       }
     }
   }

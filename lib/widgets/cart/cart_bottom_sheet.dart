@@ -128,7 +128,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 5.0),
                                   child: Text(
-                                    '${widget.invoicePreview.totalAmountAfterDiscount!} $_currency',
+                                    '${formatDecimal(widget.invoicePreview.totalAmountAfterDiscount!)} $_currency',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline1!
@@ -164,12 +164,23 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     fontSize: 16,
                     onPressed: () {
-                      _cart.placeOrder(
-                          context: context,
-                          addressId: _addressProvider.selectedAddress == -1
-                              ? -1
-                              : _addressProvider.userAddress!
-                                  .data![_addressProvider.selectedAddress].id!);
+                      if (widget.invoicePreview.totalAmountAfterDiscount! < 60)
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                          AppLocalizations.of(context)!
+                                  .tr('the_minimum_order_amount_is') +
+                              " $_currency",
+                          textAlign: TextAlign.center,
+                        )));
+                      else
+                        _cart.placeOrder(
+                            context: context,
+                            addressId: _addressProvider.selectedAddress == -1
+                                ? -1
+                                : _addressProvider
+                                    .userAddress!
+                                    .data![_addressProvider.selectedAddress]
+                                    .id!);
                     })
               ],
             ),
@@ -177,5 +188,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
         },
       ),
     );
+  }
+
+  formatDecimal(double value) {
+    return value.toStringAsFixed(2);
   }
 }

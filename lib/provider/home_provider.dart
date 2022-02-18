@@ -62,7 +62,6 @@ class HomeProvider with ChangeNotifier {
   //init latLng
   Future<void> initLatLng() async {
     _locationData = await Location.Location().getLocation();
-    //_latLng = LatLng(25.080002558191797, 55.13467766504166);
     _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
     _locationServiceStatus = 1;
     // init  isoCountryCode
@@ -78,7 +77,6 @@ class HomeProvider with ChangeNotifier {
   //get all categories
   Future<void> getCategories(LatLng latLng, String countryId) async {
     try {
-      print("test:+" + latLng.toString() + countryId);
       _categoryData =
           await HomeRepository().getCategoriesList(latLng, countryId);
     } catch (e) {
@@ -105,19 +103,15 @@ class HomeProvider with ChangeNotifier {
     _retry = false;
     _isLoading = isLoading;
     try {
-      print("country :$countryId");
       if (isCurrent && _latLng == null) await initLatLng();
       if (isCurrent) {
         _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
         _isoCountryCode = _currentIsoCountryCode;
-        // _latLng = LatLng(25.080002558191797, 55.13467766504166);
-        // _isoCountryCode = 'AE';
         await Future.wait([
           getCategories(_latLng!, _isoCountryCode!),
           getBestSeller(_latLng!, _isoCountryCode!)
         ]);
       } else {
-        print('else $countryId');
         await Future.wait([
           getCategories(latLng, countryId),
           getBestSeller(latLng, countryId)

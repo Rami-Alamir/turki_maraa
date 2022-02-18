@@ -62,4 +62,13 @@ class OrdersProvider with ChangeNotifier {
     _isLoading2 = false;
     notifyListeners();
   }
+
+  // calculate order items
+  int orderItems() {
+    int _count = 0;
+    for (int i = 0; i < _order!.data!.orderProducts!.length; i++) {
+      _count += _order!.data!.orderProducts![i].quantity!;
+    }
+    return _count;
+  }
 }

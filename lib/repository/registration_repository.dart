@@ -7,7 +7,6 @@ class RegistrationRepository {
   //send otp
   Future<UserType> sendOTP(body) async {
     UserType? _userType;
-    print('send otp');
     final response = await _helper.post("sendOtpCode", body);
     try {
       _userType = UserType.fromJson(response);

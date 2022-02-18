@@ -80,15 +80,21 @@ class OrderCard extends StatelessWidget {
                                               .colorScheme
                                               .secondary,
                                           child: Image.network(
-                                            order.products!.length > 0
+                                            (order.orderProducts?.length ?? 0) >
+                                                    0
                                                 ? order
-                                                            .products![0]
+                                                            .orderProducts!
+                                                            .first
+                                                            .product!
                                                             .productImages!
                                                             .length >
                                                         0
                                                     ? order
-                                                        .products![0]
-                                                        .productImages![0]
+                                                        .orderProducts!
+                                                        .first
+                                                        .product!
+                                                        .productImages!
+                                                        .first
                                                         .imageUrl!
                                                     : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"
                                                 : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
@@ -128,40 +134,73 @@ class OrderCard extends StatelessWidget {
                                                           FontWeight.w600)),
                                         ],
                                       ),
-                                      order.products!.length >= 1
-                                          ? Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 5.0),
-                                              child: Text(
-                                                  "qty x ${_isAr ? order.products![0].nameAr : order.products![0].nameEn}",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline5!
-                                                      .copyWith(
-                                                          height: 1,
-                                                          fontSize: 14,
-                                                          fontWeight: FontWeight
-                                                              .normal)),
-                                            )
-                                          : Container(),
-                                      order.products!.length >= 2
-                                          ? Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 5.0),
-                                              child: Text(
-                                                  "qty x ${_isAr ? order.products![1].nameAr : order.products![1].nameEn}",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline5!
-                                                      .copyWith(
-                                                          height: 1,
-                                                          fontSize: 14,
-                                                          fontWeight: FontWeight
-                                                              .normal)),
-                                            )
-                                          : Container(),
+                                      Container(
+                                        width: SizeConfig.screenWidth! / 1.5,
+                                        child: ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount: (order.orderProducts
+                                                            ?.length ??
+                                                        0) >
+                                                    2
+                                                ? 2
+                                                : order.orderProducts?.length,
+                                            itemBuilder:
+                                                (BuildContext ctxt, int index) {
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 5.0),
+                                                child: Text(
+                                                    "${order.orderProducts![index].quantity} x ${_isAr ? order.products![0].nameAr : order.products![0].nameEn}",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline5!
+                                                        .copyWith(
+                                                            height: 1,
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal)),
+                                              );
+                                            }),
+                                      ),
+                                      // order.products!.length >= 1
+                                      //     ? Padding(
+                                      //         padding:
+                                      //             const EdgeInsets.symmetric(
+                                      //                 vertical: 5.0),
+                                      //         child: Text(
+                                      //             "qty x ${_isAr ? order.products![0].nameAr : order.products![0].nameEn}",
+                                      //             style: Theme.of(context)
+                                      //                 .textTheme
+                                      //                 .headline5!
+                                      //                 .copyWith(
+                                      //                     height: 1,
+                                      //                     fontSize: 14,
+                                      //                     fontWeight: FontWeight
+                                      //                         .normal)),
+                                      //       )
+                                      //     : Container(),
+                                      // order.products!.length >= 2
+                                      //     ? Padding(
+                                      //         padding:
+                                      //             const EdgeInsets.symmetric(
+                                      //                 vertical: 5.0),
+                                      //         child: Text(
+                                      //             "qty x ${_isAr ? order.products![1].nameAr : order.products![1].nameEn}",
+                                      //             style: Theme.of(context)
+                                      //                 .textTheme
+                                      //                 .headline5!
+                                      //                 .copyWith(
+                                      //                     height: 1,
+                                      //                     fontSize: 14,
+                                      //                     fontWeight: FontWeight
+                                      //                         .normal)),
+                                      //       )
+                                      //     : Container(),
                                     ],
                                   ),
                                 )

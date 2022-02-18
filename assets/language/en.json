@@ -167,14 +167,15 @@
   "go_to_settings": "Go to settings",
   "today": "Today",
   "tomorrow": "Tomorrow",
-  "morning_time": "Morning time",
+  "morning": "Morning",
   "noon" : "Noon",
-  "afternoon_period": "Afternoon period",
-  "morocco_period": "Morocco period",
-  "isha_period": "Isha period",
+  "afternoon": "Afternoon",
+  "sunset": "Sunset",
+  "midnight": "Midnight",
   "region_not_supported"  :"Region not supported",
   "you_are_being_redirected_to_the_payment_page_please_wait": "You are being redirected to the payment page, please wait",
   "the_order_has_been_sent_and_the_payment_is_being_verified": "The order has been sent and the payment is being verified",
   "enter_valid_email" : "Please enter valid email",
-  "email_is_used_please_enter_different_email" : "Email is used please enter a different email"
+  "email_is_used_please_enter_different_email" : "Email is used please enter a different email",
+  "the_minimum_order_amount_is" : "The minimum order amount is 60"
 }

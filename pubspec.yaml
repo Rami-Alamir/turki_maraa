@@ -61,6 +61,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/splash.gif
+    - assets/images/wishlist.png
     - assets/images/pin.png
     - assets/images/i.png
     - assets/images/q1.png

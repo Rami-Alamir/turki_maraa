@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>345256923907-9mf5eqbmjvi2ocfspu08dv4hmptaoveq.apps.googleusercontent.com</string>
+	<string>565100833915-t8g9ndr0itcmp3cdgkc77b2pv7t6ff0q.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.345256923907-9mf5eqbmjvi2ocfspu08dv4hmptaoveq</string>
+	<string>com.googleusercontent.apps.565100833915-t8g9ndr0itcmp3cdgkc77b2pv7t6ff0q</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>345256923907-gt14j25g2pek13nvpisqel7rbcp3o1pt.apps.googleusercontent.com</string>
+	<string>565100833915-2ll3glmk9t8fegl59vbeao5kq6sqihvm.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBvbd3k4qMEOYR5_mrBh4FzvBtmTW3tsTU</string>
+	<string>AIzaSyAL_eq3a9iUPupLnfd2I2hYyP0SXi97_eg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>345256923907</string>
+	<string>565100833915</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.almaraa.newTurki</string>
+	<string>com.digishapes.turkieshop</string>
 	<key>PROJECT_ID</key>
-	<string>new-turki</string>
+	<string>turkieshop-c8917</string>
 	<key>STORAGE_BUCKET</key>
-	<string>new-turki.appspot.com</string>
+	<string>turkieshop-c8917.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:345256923907:ios:3ceaefabeacdb83edbcf36</string>
+	<string>1:565100833915:ios:b2dcb2d6f6dd5fca3d06de</string>
+	<key>DATABASE_URL</key>
+	<string>https://turkieshop-c8917.firebaseio.com</string>
 </dict>
 </plist>

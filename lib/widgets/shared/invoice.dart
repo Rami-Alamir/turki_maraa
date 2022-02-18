@@ -3,7 +3,6 @@ import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/get_strings.dart';
 import 'package:provider/provider.dart';
-
 import 'invoice_row.dart';
 
 class Invoice extends StatelessWidget {
@@ -55,20 +54,20 @@ class Invoice extends StatelessWidget {
           InvoiceRow(
               fontColor: Theme.of(context).textTheme.headline4!.color!,
               title: 'order_total',
-              value: '$subtotal $_currency'),
+              value: '${formatDecimal(subtotal)} $_currency'),
           InvoiceRow(
               fontColor: Theme.of(context).textTheme.headline4!.color!,
               title: 'delivery_fees',
               value: '$shipping $_currency'),
           InvoiceRow(
             title: 'discount',
-            value: '-$discountVoucher $_currency',
+            value: '-${formatDecimal(discountVoucher)} $_currency',
             visible: discountVoucher > 0,
             fontColor: Colors.green,
           ),
           InvoiceRow(
             title: 'credit',
-            value: '-$myCredit $_currency',
+            value: '-${formatDecimal(myCredit)} $_currency',
             visible: myCredit > 0,
             fontColor: Colors.green,
           ),
@@ -103,7 +102,7 @@ class Invoice extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
-                    '$total $_currency',
+                    '${formatDecimal(total)} $_currency',
                     style: Theme.of(context)
                         .textTheme
                         .headline1!
@@ -127,5 +126,9 @@ class Invoice extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  formatDecimal(double value) {
+    return value.toStringAsFixed(2);
   }
 }

@@ -17,7 +17,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
   @override
   void initState() {
     final _auth = Provider.of<Auth>(context, listen: false);
-    _auth.initTextController();
+    _auth.initTextController(context);
     super.initState();
   }
 

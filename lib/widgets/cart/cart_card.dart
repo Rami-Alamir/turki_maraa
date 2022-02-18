@@ -97,7 +97,7 @@ class CartCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15.0),
                       child: Image.network(
                         item.product!.productImages!.length > 0
-                            ? item.product!.productImages![0].imageUrl!
+                            ? item.product!.productImages!.first.imageUrl!
                             : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
                         width: SizeConfig.setWidgetWidth(100, 135, 135),
                         height: SizeConfig.setWidgetHeight(100, 135, 135),

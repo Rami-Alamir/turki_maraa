@@ -6,7 +6,7 @@ import 'package:new_turki/utilities/size_config.dart';
 
 class OrderDetailsRow extends StatelessWidget {
   final String currency;
-  final Products item;
+  final OrderProducts item;
   const OrderDetailsRow({required this.item, required this.currency});
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,8 @@ class OrderDetailsRow extends StatelessWidget {
                         child: Container(
                           color: Theme.of(context).colorScheme.secondary,
                           child: Image.network(
-                            item.productImages!.length > 0
-                                ? item.productImages![0].imageUrl!
+                            item.product!.productImages!.length > 0
+                                ? item.product!.productImages!.first.imageUrl!
                                 : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
                             width: 60,
                             height: 60,
@@ -57,7 +57,7 @@ class OrderDetailsRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     AutoSizeText(
-                      "qty x ${_isAr ? item.nameAr : item.nameEn}",
+                      "${item.quantity} x ${_isAr ? item.product!.nameAr : item.product!.nameEn}",
                       style: Theme.of(context)
                           .textTheme
                           .headline1!
@@ -69,10 +69,9 @@ class OrderDetailsRow extends StatelessWidget {
                       child: Container(
                         width: SizeConfig.screenWidth! * .6,
                         child: AutoSizeText(
-                          // _isAr
-                          //     ? item.descriptionAr ?? ""
-                          //     : item.descriptionEn ??
-                          "",
+                          _isAr
+                              ? "${item.size?.nameAr ?? ""} ${item.cut?.nameAr ?? ""} ${item.preparation?.nameAr ?? ""} ${item.shalwata?.nameAr}"
+                              : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""} ${item.preparation?.nameEn ?? ""} ${item.shalwata?.nameEn}",
                           style: Theme.of(context)
                               .textTheme
                               .headline4!
@@ -87,7 +86,7 @@ class OrderDetailsRow extends StatelessWidget {
                       child: Container(
                         width: SizeConfig.screenWidth! * .64,
                         child: AutoSizeText(
-                          '${item.price} $currency',
+                          '${item.totalPrice!} $currency',
                           textAlign: TextAlign.end,
                           style: Theme.of(context)
                               .textTheme

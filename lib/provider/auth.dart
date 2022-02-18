@@ -87,9 +87,9 @@ class Auth with ChangeNotifier {
   void setGender(int value, BuildContext context) {
     _gender = value;
     genderController.text = value == 0
-        ? 'maleString'
+        ? AppLocalizations.of(context)!.tr('maleString')
         : value == 1
-            ? 'femaleString'
+            ? AppLocalizations.of(context)!.tr('femaleString')
             : "";
     notifyListeners();
   }
@@ -136,7 +136,7 @@ class Auth with ChangeNotifier {
           _accessToken = _userData!.data!.accessToken;
           await _initPrefs();
           _prefs!.setString("accessToken", _accessToken!);
-          initTextController();
+          initTextController(context);
 
           _isAuth = true;
           final _favourite =
@@ -183,12 +183,11 @@ class Auth with ChangeNotifier {
         if (_response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(_response.body.toString()));
           _accessToken = token;
-
           _isAuth = true;
           final _favourite =
               Provider.of<FavouriteProvider>(context, listen: false);
           _favourite.getFavouriteData("Bearer " + accessToken);
-          initTextController();
+          initTextController(context);
         }
       } catch (e) {
         print('catch login');
@@ -265,7 +264,7 @@ class Auth with ChangeNotifier {
         if (_response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(_response.body.toString()));
           _userData!.data!.accessToken = _accessToken;
-          initTextController();
+          initTextController(context);
           showSnackBar(context, 'data_has_been_updated_successfully');
           // AlertController.show(
           //     " ",
@@ -305,11 +304,11 @@ class Auth with ChangeNotifier {
     keyController.text = value;
   }
 
-  void initTextController() {
+  void initTextController(BuildContext context) {
     print(userData!.data!.name);
     ageController.text = (_userData!.data!.age!);
     usernameController.text = _userData!.data!.name ?? "";
-    genderController.text = getGenderString();
+    genderController.text = AppLocalizations.of(context)!.tr(getGenderString());
     emailController.text = _userData!.data!.email ?? "";
   }
 
@@ -323,7 +322,7 @@ class Auth with ChangeNotifier {
     return gender;
   }
 
-  //for test
+  // test
   TextEditingController giftController = TextEditingController();
   int _cardValue = 0;
   int get cardValue => _cardValue;
@@ -339,7 +338,7 @@ class Auth with ChangeNotifier {
       point: 6500);
   User get user => _user;
 
-  //for test
+  // test
   Future<void> delayed() async {
     await Future.delayed(Duration(milliseconds: 2500), () {
       notifyListeners();
@@ -358,6 +357,7 @@ class Auth with ChangeNotifier {
     });
   }
 
+  //  test
   void redeemPoints(BuildContext context, int point) {
     if (point > user.point!.toInt())
       AlertController.show(
@@ -376,6 +376,7 @@ class Auth with ChangeNotifier {
     }
   }
 
+  //  test
   Future<void> checkGiftCard(BuildContext context) async {
     if (giftController.text.length == 16) {
       _showDialogIndicator(context);

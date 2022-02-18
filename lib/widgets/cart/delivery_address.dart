@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/size_config.dart';
 
 class DeliveryAddress extends StatelessWidget {
   final String address;
@@ -37,11 +38,15 @@ class DeliveryAddress extends StatelessWidget {
                       color: Theme.of(context).primaryColor),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(address,
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 12,
-                            )),
+                    child: Container(
+                      width: SizeConfig.screenWidth! * .75,
+                      child: Text(address,
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 12,
+                                  )),
+                    ),
                   ),
                 ],
               ),

@@ -112,82 +112,90 @@ class AppState extends State<App> {
               ],
             ),
             bottomNavigationBar: Container(
-              child: BottomNavigationBar(
-                  backgroundColor: Theme.of(context).backgroundColor,
-                  type: BottomNavigationBarType.fixed,
-                  iconSize: 25,
-                  showUnselectedLabels: true,
-                  elevation: 5,
-                  currentIndex: index,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Icon(TURKIICONS.tabnav_home),
-                      label: AppLocalizations.of(context)!.tr('home'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(TURKIICONS.c1),
-                      label: AppLocalizations.of(context)!.tr('support'),
-                    ),
-                    BottomNavigationBarItem(
-                      label: AppLocalizations.of(context)!.tr('cart'),
-                      icon: Stack(clipBehavior: Clip.none, children: <Widget>[
-                        Icon(TURKIICONS.cart),
-                        Positioned(
-                            // draw a red marble
-                            top: -5.0,
-                            left: -8.0,
-                            child: Visibility(
-                              visible: _cart.cartLength > 0,
-                              child: Container(
-                                width: 15,
-                                height: 15,
-                                decoration: BoxDecoration(
-                                    color: Colors.red, shape: BoxShape.circle),
-                                child: Text(
-                                  _cart.cartLength.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12),
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                    canvasColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent),
+                child: BottomNavigationBar(
+                    backgroundColor: Theme.of(context).backgroundColor,
+                    type: BottomNavigationBarType.fixed,
+                    iconSize: 25,
+                    showUnselectedLabels: true,
+                    elevation: 5,
+                    currentIndex: index,
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: Icon(TURKIICONS.tabnav_home),
+                        label: AppLocalizations.of(context)!.tr('home'),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(TURKIICONS.c1),
+                        label: AppLocalizations.of(context)!.tr('support'),
+                      ),
+                      BottomNavigationBarItem(
+                        label: AppLocalizations.of(context)!.tr('cart'),
+                        icon: Stack(clipBehavior: Clip.none, children: <Widget>[
+                          Icon(TURKIICONS.cart),
+                          Positioned(
+                              // draw a red marble
+                              top: -5.0,
+                              left: -8.0,
+                              child: Visibility(
+                                visible: _cart.cartLength > 0,
+                                child: Container(
+                                  width: 15,
+                                  height: 15,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle),
+                                  child: Text(
+                                    _cart.cartLength.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12),
+                                  ),
                                 ),
-                              ),
-                            ))
-                      ]),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(TURKIICONS.tabnav_myorders),
-                      label: AppLocalizations.of(context)!.tr('orders'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(TURKIICONS.tabnav_user),
-                      label: AppLocalizations.of(context)!.tr('profile'),
-                    ),
-                  ],
-                  onTap: (index) {
-                    if (index != 1) {
-                      this.index = index;
-                      _selectTab(index);
-                    }
-                    final _auth = Provider.of<Auth>(context, listen: false);
-                    if (index == 2 && _auth.isAuth) {
-                      final _cart =
-                          Provider.of<CartProvider>(context, listen: false);
-                      final _addressProvider =
-                          Provider.of<AddressProvider>(context, listen: false);
+                              ))
+                        ]),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(TURKIICONS.tabnav_myorders),
+                        label: AppLocalizations.of(context)!.tr('orders'),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(TURKIICONS.tabnav_user),
+                        label: AppLocalizations.of(context)!.tr('profile'),
+                      ),
+                    ],
+                    onTap: (index) {
+                      if (index != 1) {
+                        this.index = index;
+                        _selectTab(index);
+                      }
+                      final _auth = Provider.of<Auth>(context, listen: false);
+                      if (index == 2 && _auth.isAuth) {
+                        final _cart =
+                            Provider.of<CartProvider>(context, listen: false);
+                        final _addressProvider = Provider.of<AddressProvider>(
+                            context,
+                            listen: false);
 
-                      _cart.setIsLoading = true;
-                      _cart.setSelectedTime = -1;
-                      _cart.setSelectedPayment = -1;
-                      _cart.setSelectedDate = -1;
-                      _cart.getCartData(
-                          _auth.accessToken,
-                          _addressProvider.latLng,
-                          _addressProvider.isoCountryCode);
-                    } else if (index == 1) {
-                      _launchURL('tel:+966920002974');
-                    }
-                  }),
+                        _cart.setIsLoading = true;
+                        _cart.setSelectedTime = -1;
+                        _cart.setSelectedPayment = -1;
+                        _cart.setSelectedDate = -1;
+                        _cart.getCartData(
+                            _auth.accessToken,
+                            _addressProvider.latLng,
+                            _addressProvider.isoCountryCode);
+                      } else if (index == 1) {
+                        _launchURL('tel:+966920002974');
+                      }
+                    }),
+              ),
             )),
       ),
     );

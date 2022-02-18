@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/auth.dart';
-import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/provider/orders_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -20,14 +19,12 @@ class _OrderSuccessState extends State<OrderSuccess> {
   void initState() {
     final _orders = Provider.of<OrdersProvider>(context, listen: false);
     final _auth = Provider.of<Auth>(context, listen: false);
-    if (_auth.isAuth) _orders.getOrdersList(_auth.accessToken);
+    _orders.getOrdersList(_auth.accessToken);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final _cart = Provider.of<CartProvider>(context);
-    print('widget.paymentType == 1 ${widget.paymentType == 1}');
     return Scaffold(
       body: Container(
         width: SizeConfig.screenWidth,

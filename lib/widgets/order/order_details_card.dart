@@ -8,8 +8,9 @@ import 'order_details_row.dart';
 
 class OrderDetailsCard extends StatelessWidget {
   final Order order;
+  final int count;
 
-  const OrderDetailsCard({required this.order});
+  const OrderDetailsCard({required this.order, required this.count});
   @override
   Widget build(BuildContext context) {
     final String _currency =
@@ -32,7 +33,7 @@ class OrderDetailsCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 15.0, top: 20, bottom: 10),
               child: Text(
-                "${AppLocalizations.of(context)!.tr('items')} (${order.data?.products?.length ?? 0})",
+                "${AppLocalizations.of(context)!.tr('items')} ($count)",
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
@@ -43,10 +44,10 @@ class OrderDetailsCard extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
-                itemCount: order.data?.products?.length ?? 0,
+                itemCount: order.data?.orderProducts?.length ?? 0,
                 itemBuilder: (BuildContext ctxt, int index) {
                   return OrderDetailsRow(
-                    item: order.data!.products![index],
+                    item: order.data!.orderProducts![index],
                     currency: _currency,
                   );
                 }),

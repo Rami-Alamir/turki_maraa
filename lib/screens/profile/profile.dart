@@ -3,7 +3,6 @@ import 'package:new_turki/models/user_data.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/orders_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/profile/help_card.dart';
 import 'package:new_turki/widgets/profile/personal_info_card.dart';
 import 'package:new_turki/widgets/profile/profile_footer.dart';

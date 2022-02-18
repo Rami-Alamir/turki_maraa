@@ -37,6 +37,7 @@ class Data {
   List<Products>? products;
   DeliveryPeriod? deliveryPeriod;
   String? deliveryDate;
+  List<OrderProducts>? orderProducts;
 
   Data(
       {this.refNo,
@@ -59,12 +60,19 @@ class Data {
       this.createdAt,
       this.updatedAt,
       this.orderState,
+      this.orderProducts,
       this.products,
       this.deliveryPeriod,
       this.deliveryDate});
 
   Data.fromJson(Map<String, dynamic> json) {
     refNo = json['ref_no'];
+    if (json['order_products'] != null) {
+      orderProducts = <OrderProducts>[];
+      json['order_products'].forEach((v) {
+        orderProducts!.add(OrderProducts.fromJson(v));
+      });
+    }
     deliveryFee = json['delivery_fee'];
     orderSubtotal = json['order_subtotal'];
     totalAmount = json['total_amount'];
@@ -245,5 +253,41 @@ class DeliveryPeriod {
     timeHhmm = json['time_hhmm'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+  }
+}
+
+class OrderProducts {
+  int? id;
+  int? quantity;
+  Product? product;
+
+  OrderProducts({this.id, this.quantity, this.product});
+
+  OrderProducts.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    quantity = json['quantity'];
+    product =
+        json['product'] != null ? Product.fromJson(json['product']) : null;
+  }
+}
+
+class Product {
+  int? id;
+  String? nameAr;
+  String? nameEn;
+  List<ProductImages>? productImages;
+
+  Product({this.id, this.nameAr, this.nameEn, this.productImages});
+
+  Product.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nameAr = json['name_ar'];
+    nameEn = json['name_en'];
+    if (json['product_images'] != null) {
+      productImages = <ProductImages>[];
+      json['product_images'].forEach((v) {
+        productImages!.add(new ProductImages.fromJson(v));
+      });
+    }
   }
 }

@@ -20,7 +20,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
-
+  messaging.getToken().then((token) {
+    print("token");
+    print(token); // Print the Token in Console
+  });
   messaging.getAPNSToken().then((value) => print("token is $value"));
   messaging.requestPermission(
     alert: true,
