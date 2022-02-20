@@ -20,7 +20,7 @@ class _AddressContainerState extends State<AddressContainer> {
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
     final _addressProvider = Provider.of<AddressProvider>(context);
-
+    print('${_homeProvider.locationServiceStatus}');
     final List<Data>? _addressList = _addressProvider.userAddress?.data;
     return AnimatedContainer(
       duration: Duration(microseconds: 1),
@@ -60,7 +60,10 @@ class _AddressContainerState extends State<AddressContainer> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Visibility(
-                                visible: _homeProvider.selectedOrderType == 0,
+                                visible: _homeProvider.selectedOrderType == 0 &&
+                                    (_homeProvider.locationServiceStatus != 2 &&
+                                        _homeProvider.locationServiceStatus !=
+                                            0),
                                 child: InkWell(
                                   onTap: () {
                                     _addressProvider.setSelectedAddress = -1;
@@ -80,9 +83,19 @@ class _AddressContainerState extends State<AddressContainer> {
                                         _homeProvider.latLng!;
                                   },
                                   child: addressRow(
-                                      _addressProvider.addressDescription ??
-                                          AppLocalizations.of(context)!
-                                              .tr('current_location'),
+                                      (_homeProvider.locationServiceStatus ==
+                                                      0 ||
+                                                  _homeProvider
+                                                          .locationServiceStatus ==
+                                                      2) &&
+                                              _addressProvider.selectedAddress ==
+                                                  -1
+                                          ? AppLocalizations.of(context)!
+                                              .tr("choose")
+                                          : _addressProvider
+                                                  .addressDescription ??
+                                              AppLocalizations.of(context)!
+                                                  .tr('current_location'),
                                       divider: true),
                                 )),
                             Container(
@@ -109,6 +122,11 @@ class _AddressContainerState extends State<AddressContainer> {
                                               index) {
                                             _addressProvider
                                                 .initSelectedAddress(index);
+                                            if (_homeProvider
+                                                    .locationServiceStatus ==
+                                                0)
+                                              _homeProvider
+                                                  .setLocationServiceStatus = 2;
 
                                             _homeProvider.setIsLoading = true;
                                             _homeProvider.getHomePageData(
@@ -176,17 +194,25 @@ class _AddressContainerState extends State<AddressContainer> {
                             Container(
                               width: SizeConfig.screenWidth! - 120,
                               child: Text(
-                                  _homeProvider.selectedOrderType == 0
-                                      ? _addressProvider.selectedAddress == -1
-                                          ? _addressProvider
-                                                  .addressDescription ??
-                                              AppLocalizations.of(context)!
-                                                  .tr('current_location')
-                                          : _addressList![_addressProvider
-                                                  .selectedAddress]
-                                              .address!
-                                      : AppLocalizations.of(context)!
-                                          .tr('soon'),
+                                  (_homeProvider.locationServiceStatus == 0 ||
+                                              _homeProvider
+                                                      .locationServiceStatus ==
+                                                  2) &&
+                                          _addressProvider.selectedAddress == -1
+                                      ? AppLocalizations.of(context)!
+                                          .tr('choose')
+                                      : _homeProvider.selectedOrderType == 0
+                                          ? _addressProvider.selectedAddress ==
+                                                  -1
+                                              ? _addressProvider
+                                                      .addressDescription ??
+                                                  AppLocalizations.of(context)!
+                                                      .tr('current_location')
+                                              : _addressList![_addressProvider
+                                                      .selectedAddress]
+                                                  .address!
+                                          : AppLocalizations.of(context)!
+                                              .tr('soon'),
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline1!

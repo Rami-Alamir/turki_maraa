@@ -1,42 +1,90 @@
 {
   "project_info": {
-    "project_number": "345256923907",
-    "project_id": "new-turki",
-    "storage_bucket": "new-turki.appspot.com"
+    "project_number": "565100833915",
+    "firebase_url": "https://turkieshop-c8917.firebaseio.com",
+    "project_id": "turkieshop-c8917",
+    "storage_bucket": "turkieshop-c8917.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:345256923907:android:d789856622acfcf3dbcf36",
+        "mobilesdk_app_id": "1:565100833915:android:33474c957dbfda293d06de",
         "android_client_info": {
-          "package_name": "com.almaraa.new_turki"
+          "package_name": "com.digishapes.turkieshop"
         }
       },
       "oauth_client": [
         {
-          "client_id": "345256923907-gt14j25g2pek13nvpisqel7rbcp3o1pt.apps.googleusercontent.com",
+          "client_id": "565100833915-2ll3glmk9t8fegl59vbeao5kq6sqihvm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.almaraa.new_turki",
-            "certificate_hash": "60dffe0f3fb3aed1d16c953da5a8ff305841b0b2"
+            "package_name": "com.digishapes.turkieshop",
+            "certificate_hash": "4f2dc237bded54fb051fd2c5049563753e5db2ea"
           }
         },
         {
-          "client_id": "345256923907-bu2nkvn6g7a5th7v16u9acf8fqfpjqbc.apps.googleusercontent.com",
+          "client_id": "565100833915-b8rkrvd17c5tber0h5u55h7o2pe86pm9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digishapes.turkieshop",
+            "certificate_hash": "2444b626ef0700d20d147dc3d4e7c4cf2d35008b"
+          }
+        },
+        {
+          "client_id": "565100833915-brfn2f68ehu509l75nhf3gknjum1hf8f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digishapes.turkieshop",
+            "certificate_hash": "c5fa12a0c1009808bff113bd92e24049f3a2176b"
+          }
+        },
+        {
+          "client_id": "565100833915-dab586q0jd497qm17tknvlo89u3pmaah.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digishapes.turkieshop",
+            "certificate_hash": "d6bd29067876f14507747d37bc798144af068039"
+          }
+        },
+        {
+          "client_id": "565100833915-ki4ntdcvbju3aolshd9gjcsn4bjr602b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digishapes.turkieshop",
+            "certificate_hash": "33a369ca56b22342c0cf225b9115864b9928acf7"
+          }
+        },
+        {
+          "client_id": "565100833915-og87ooln5t1r7ibstv85in8c9151pnc1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digishapes.turkieshop",
+            "certificate_hash": "e3851508f24155dac382a3b945295520e6f309d5"
+          }
+        },
+        {
+          "client_id": "565100833915-h3cm0r6sm45ro64mt3s450r88kh315k9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDb06mLKjPh7uG2sNwj_XyYsuTzb8Ua7d8"
+          "current_key": "AIzaSyArpTzMr6uNa-g9teOAShmdQceS4B4XkDg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "345256923907-bu2nkvn6g7a5th7v16u9acf8fqfpjqbc.apps.googleusercontent.com",
+              "client_id": "565100833915-h3cm0r6sm45ro64mt3s450r88kh315k9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "565100833915-t8g9ndr0itcmp3cdgkc77b2pv7t6ff0q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.digishapes.turkieshop"
+              }
             }
           ]
         }

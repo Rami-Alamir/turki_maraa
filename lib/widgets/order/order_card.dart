@@ -156,7 +156,7 @@ class OrderCard extends StatelessWidget {
                                                     const EdgeInsets.symmetric(
                                                         vertical: 5.0),
                                                 child: Text(
-                                                    "${order.orderProducts![index].quantity} x ${_isAr ? order.products![0].nameAr : order.products![0].nameEn}",
+                                                    "${order.orderProducts![index].quantity} x ${_isAr ? order.products![index].nameAr : order.products![index].nameEn}",
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .headline5!

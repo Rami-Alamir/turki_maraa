@@ -70,8 +70,8 @@ class OrderDetailsRow extends StatelessWidget {
                         width: SizeConfig.screenWidth! * .6,
                         child: AutoSizeText(
                           _isAr
-                              ? "${item.size?.nameAr ?? ""} ${item.cut?.nameAr ?? ""} ${item.preparation?.nameAr ?? ""} ${item.shalwata?.nameAr}"
-                              : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""} ${item.preparation?.nameEn ?? ""} ${item.shalwata?.nameEn}",
+                              ? "${item.size?.nameAr ?? ""} ${item.cut?.nameAr ?? ""} ${item.preparation?.nameAr ?? ""} ${item.shalwata?.nameAr ?? ""}"
+                              : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""} ${item.preparation?.nameEn ?? ""} ${item.shalwata?.nameEn ?? ""}",
                           style: Theme.of(context)
                               .textTheme
                               .headline4!

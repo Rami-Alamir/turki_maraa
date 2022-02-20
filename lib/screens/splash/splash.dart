@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:new_turki/provider/address_provider.dart';
-import 'package:new_turki/provider/app_language.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/screens/intro/intro.dart';

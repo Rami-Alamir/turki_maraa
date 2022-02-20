@@ -48,7 +48,6 @@ class GetStrings {
         break;
       case "OM":
         countryKey = "+968";
-
         break;
     }
     return countryKey;

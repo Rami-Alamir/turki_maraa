@@ -8,6 +8,7 @@ import 'package:new_turki/models/category_data.dart';
 import 'package:new_turki/repository/home_repository.dart';
 import 'package:new_turki/repository/products_repository.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'dart:io';
 
 class HomeProvider with ChangeNotifier {
   bool _canPickup = true;
@@ -30,7 +31,8 @@ class HomeProvider with ChangeNotifier {
 
   String get currentLocationDescription => _currentLocationDescription!;
 
-  LatLng? get latLng => _latLng;
+  LatLng? get latLng =>
+      _latLng = LatLng(24.806203026859436, 46.650784343026935);
   BestSeller? get bestSeller => _bestSeller;
   bool get canPickup => _canPickup;
   bool get isLoading => _isLoading;
@@ -59,6 +61,10 @@ class HomeProvider with ChangeNotifier {
     _selectedAddress2 = value;
   }
 
+  set setLocationServiceStatus(int value) {
+    _locationServiceStatus = value;
+  }
+
   //init latLng
   Future<void> initLatLng() async {
     _locationData = await Location.Location().getLocation();
@@ -71,7 +77,11 @@ class HomeProvider with ChangeNotifier {
     _currentIsoCountryCode = placemark.first.isoCountryCode;
     _isoCountryCode = placemark.first.isoCountryCode;
     Placemark place = placemark.first;
-    _currentLocationDescription = "${place.street!} - ${place.subLocality} ";
+    if (Platform.isAndroid)
+      _currentLocationDescription =
+          "${place.postalCode} - ${place.subLocality}";
+    else
+      _currentLocationDescription = "${place.street} - ${place.subLocality} ";
   }
 
   //get all categories

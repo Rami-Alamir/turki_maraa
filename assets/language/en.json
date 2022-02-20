@@ -177,5 +177,7 @@
   "the_order_has_been_sent_and_the_payment_is_being_verified": "The order has been sent and the payment is being verified",
   "enter_valid_email" : "Please enter valid email",
   "email_is_used_please_enter_different_email" : "Email is used please enter a different email",
-  "the_minimum_order_amount_is" : "The minimum order amount is 60"
+  "the_minimum_order_amount_is" : "The minimum order amount is 60",
+  "choose": "Choose"
+
 }

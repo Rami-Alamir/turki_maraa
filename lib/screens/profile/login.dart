@@ -61,11 +61,6 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                    Text('نتوصى فيك',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
                   ],
                 ),
                 Container(

@@ -21,9 +21,11 @@ class _ProductHeaderState extends State<ProductHeader> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 346,
+      height: SizeConfig.screenWidth,
+      constraints:
+          BoxConstraints(maxHeight: SizeConfig.screenWidth! > 500 ? 600 : 400),
       color: Colors.transparent,
-      width: MediaQuery.of(context).size.width,
+      width: SizeConfig.screenWidth,
       child: Stack(
         children: [
           Container(
@@ -34,7 +36,7 @@ class _ProductHeaderState extends State<ProductHeader> {
                 viewportFraction: 1,
                 onPageChanged: _onPageChanged,
                 enableInfiniteScroll: true,
-                height: 346,
+                height: SizeConfig.screenWidth,
               ),
               items: widget.imgList.map((url) {
                 return Builder(

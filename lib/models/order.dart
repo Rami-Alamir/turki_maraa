@@ -33,6 +33,7 @@ class Data {
   OrderState? orderState;
   DeliveryPeriod? deliveryPeriod;
   List<OrderProducts>? orderProducts;
+  SelectedAddress? selectedAddress;
 
   Data(
       {this.refNo,
@@ -59,9 +60,13 @@ class Data {
       this.updatedAt,
       this.products,
       this.orderState,
-      this.deliveryPeriod});
+      this.deliveryPeriod,
+      this.selectedAddress});
 
   Data.fromJson(Map<String, dynamic> json) {
+    selectedAddress = json['selected_address'] != null
+        ? new SelectedAddress.fromJson(json['selected_address'])
+        : null;
     refNo = json['ref_no'];
     deliveryFee = json['delivery_fee'] ?? "";
     orderSubtotal = json['order_subtotal'] ?? "";
@@ -356,5 +361,26 @@ class Shalwata {
   Shalwata.fromJson(Map<String, dynamic> json) {
     nameAr = json['name_ar'];
     nameEn = json['name_en'];
+  }
+}
+
+class SelectedAddress {
+  int? id;
+  String? address;
+  String? comment;
+  String? label;
+  String? long;
+  String? lat;
+
+  SelectedAddress(
+      {this.id, this.address, this.comment, this.label, this.long, this.lat});
+
+  SelectedAddress.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    address = json['address'] ?? "";
+    comment = json['comment'];
+    label = json['label'];
+    long = json['long'];
+    lat = json['lat'];
   }
 }

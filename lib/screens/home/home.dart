@@ -85,103 +85,97 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         appBar: CategoryAppBar(
           parentScaffoldKey: widget.parentScaffoldStateKey,
         ),
-        body: _homeProvider.locationServiceStatus == 0
-            ? LocationDisabled()
-            : _homeProvider.locationServiceStatus == -1
-                ? SpinkitIndicator(
-                    padding: EdgeInsets.only(top: 170),
-                  )
-                : Stack(
-                    children: [
-                      _homeProvider.isLoading
-                          ? SpinkitIndicator(
-                              padding: EdgeInsets.only(top: 170),
-                            )
-                          : _homeProvider.retry
-                              ? Retry(
-                                  padding: EdgeInsets.only(top: 170),
-                                  onPressed: () {
-                                    _homeProvider.setIsLoading = true;
-                                    _homeProvider.getHomePageData(
+        body: Stack(
+          children: [
+            _homeProvider.locationServiceStatus == 0
+                ? LocationDisabled()
+                : _homeProvider.locationServiceStatus == -1
+                    ? SpinkitIndicator(
+                        padding: EdgeInsets.only(top: 170),
+                      )
+                    : _homeProvider.isLoading
+                        ? SpinkitIndicator(
+                            padding: EdgeInsets.only(top: 170),
+                          )
+                        : _homeProvider.retry
+                            ? Retry(
+                                padding: EdgeInsets.only(top: 170),
+                                onPressed: () {
+                                  _homeProvider.setIsLoading = true;
+                                  _homeProvider.getHomePageData(
+                                    _addressProvider.selectedAddress == -1,
+                                    latLng: _addressProvider.latLng,
+                                    countryId: _addressProvider.isoCountryCode,
+                                  );
+                                },
+                              )
+                            : Padding(
+                                padding: EdgeInsets.only(
+                                  top: _homeProvider.canPickup
+                                      ? 230.0 - _statusBarHeight
+                                      : 100,
+                                ),
+                                child: RefreshIndicator(
+                                  color: Theme.of(context).primaryColor,
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.secondary,
+                                  onRefresh: () async {
+                                    await _homeProvider.getHomePageData(
                                       _addressProvider.selectedAddress == -1,
                                       latLng: _addressProvider.latLng,
                                       countryId:
                                           _addressProvider.isoCountryCode,
                                     );
                                   },
-                                )
-                              : Padding(
-                                  padding: EdgeInsets.only(
-                                    top: _homeProvider.canPickup
-                                        ? 280.0 - _statusBarHeight
-                                        : 100,
-                                  ),
-                                  child: RefreshIndicator(
-                                    color: Theme.of(context).primaryColor,
-                                    backgroundColor:
-                                        Theme.of(context).colorScheme.secondary,
-                                    onRefresh: () async {
-                                      await _homeProvider.getHomePageData(
-                                        _addressProvider.selectedAddress == -1,
-                                        latLng: _addressProvider.latLng,
-                                        countryId:
-                                            _addressProvider.isoCountryCode,
-                                      );
-                                    },
-                                    child: Transform.translate(
-                                      offset: Offset(0, -40),
-                                      child: ListView(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 20, left: 20),
-                                            child: Visibility(
-                                              visible: (_homeProvider
-                                                          .categoryData
-                                                          .data
-                                                          ?.length ??
-                                                      0) >
-                                                  0,
-                                              child: Text(
-                                                  AppLocalizations.of(context)!.tr(
-                                                      'what_would_you_want_today'),
-                                                  textAlign: TextAlign.start,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .subtitle1),
-                                            ),
-                                          ),
-                                          CategoriesGroup(
-                                              categoryData:
-                                                  _homeProvider.categoryData),
-                                          BestSellerSection(
-                                            products: _homeProvider.bestSeller!,
-                                          )
-                                        ],
+                                  child: ListView(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            right: 20, left: 20),
+                                        child: Visibility(
+                                          visible: (_homeProvider.categoryData
+                                                      .data?.length ??
+                                                  0) >
+                                              0,
+                                          child: Text(
+                                              AppLocalizations.of(context)!.tr(
+                                                  'what_would_you_want_today'),
+                                              textAlign: TextAlign.start,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1),
+                                        ),
                                       ),
-                                    ),
+                                      CategoriesGroup(
+                                          categoryData:
+                                              _homeProvider.categoryData),
+                                      BestSellerSection(
+                                        products: _homeProvider.bestSeller!,
+                                      )
+                                    ],
                                   ),
-                                ),
-                      Positioned(
-                        top: 55 + _statusBarHeight,
-                        child: Visibility(
-                          visible:
-                              !_homeProvider.isLoading && !_homeProvider.retry,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Visibility(
-                                visible: _homeProvider.canPickup,
-                                child: OrderType(
-                                  visible: _homeProvider.canPickup,
                                 ),
                               ),
-                              if (!_homeProvider.isLoading) AddressContainer(),
-                            ],
-                          ),
-                        ),
+            Positioned(
+              top: 55 + _statusBarHeight,
+              child: Visibility(
+                visible: (!_homeProvider.isLoading && !_homeProvider.retry) ||
+                    _homeProvider.locationServiceStatus == 0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Visibility(
+                      visible: _homeProvider.canPickup,
+                      child: OrderType(
+                        visible: _homeProvider.canPickup,
                       ),
-                    ],
-                  ));
+                    ),
+                    if (!_homeProvider.isLoading) AddressContainer(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }

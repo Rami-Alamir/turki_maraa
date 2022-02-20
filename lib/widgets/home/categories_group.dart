@@ -20,7 +20,9 @@ class CategoriesGroup extends StatelessWidget {
 
 Widget categoriesGroup(int length, categoryData) {
   if (SizeConfig.screenWidth! > 590)
-    return CategoriesLarge(categoriesList: categoryData.data!);
+    return length == 0
+        ? NotSupportedArea()
+        : CategoriesLarge(categoriesList: categoryData.data!);
   else
     switch (length) {
       case 0:

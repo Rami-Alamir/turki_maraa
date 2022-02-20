@@ -178,5 +178,6 @@
   "the_order_has_been_sent_and_the_payment_is_being_verified": "تم ارسال الطلب وجاري التحقق من عملية الدفع",
   "enter_valid_email" : "الرجاء ادخال بريد الكتروني صالح",
   "email_is_used_please_enter_different_email" : "البريد الالكتروني مستخدم الرجاء ادخل بريد الكتروني مختلف",
-  "the_minimum_order_amount_is" : "الحد الأدنى لتنفيذ الطلب هو 60"
+  "the_minimum_order_amount_is" : "الحد الأدنى لتنفيذ الطلب هو 60",
+  "choose": "اختر"
 }

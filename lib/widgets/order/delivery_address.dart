@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 
 class DeliveryAddress extends StatelessWidget {
@@ -29,11 +30,14 @@ class DeliveryAddress extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(Icons.location_pin, color: Theme.of(context).primaryColor),
-              Text(address,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+              Container(
+                width: SizeConfig.screenWidth! * 0.8,
+                child: Text(address,
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
-                      )),
+                        height: 1.5)),
+              ),
             ],
           )),
         ),

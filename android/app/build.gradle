@@ -35,7 +35,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.almaraa.new_turki"
+        applicationId "com.digishapes.turkieshop"
         multiDexEnabled true
         minSdkVersion 23
         targetSdkVersion 30

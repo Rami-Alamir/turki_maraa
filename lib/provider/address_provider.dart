@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,7 +8,6 @@ import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
-
 import 'home_provider.dart';
 
 class AddressProvider with ChangeNotifier {
@@ -94,7 +94,7 @@ class AddressProvider with ChangeNotifier {
         _response = await UserRepository().addAddress({
           "country_iso_code": _isoCountryCode,
           "address":
-              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "${placemark.first.street} - ${placemark.first.subLocality} "} ",
+              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "${Platform.isAndroid ? placemark.first.postalCode : placemark.first.street} - ${placemark.first.subLocality} "} ",
           "comment":
               "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "."} ",
           "label": "label",
@@ -113,6 +113,9 @@ class AddressProvider with ChangeNotifier {
               Provider.of<HomeProvider>(context, listen: false);
 
           _homeProvider.setIsLoading = true;
+          if (_homeProvider.locationServiceStatus == 0)
+            _homeProvider.setLocationServiceStatus = 2;
+
           _homeProvider.getHomePageData(false,
               latLng: _latLng!, countryId: _isoCountryCode!);
         } else {
@@ -158,7 +161,10 @@ class AddressProvider with ChangeNotifier {
           localeIdentifier: languageCode);
       Placemark place = placemark.first;
       _isoCountryCode = place.isoCountryCode;
-      _addressDescription = "${place.street} - ${place.subLocality} ";
+      if (Platform.isAndroid)
+        _addressDescription = "${place.postalCode} - ${place.subLocality}";
+      else
+        _addressDescription = "${place.street} - ${place.subLocality} ";
       print(_addressDescription);
       notifyListeners();
     } catch (e) {

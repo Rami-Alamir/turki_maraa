@@ -240,6 +240,8 @@ class Auth with ChangeNotifier {
     _homeProvider.setIsLoading = true;
     _homeProvider.getHomePageData(true,
         latLng: _homeProvider.latLng!, countryId: _homeProvider.isoCountryCode);
+    if (_homeProvider.locationServiceStatus == 2)
+      _homeProvider.setLocationServiceStatus = 0;
   }
 
   // update user data
@@ -308,7 +310,12 @@ class Auth with ChangeNotifier {
     print(userData!.data!.name);
     ageController.text = (_userData!.data!.age!);
     usernameController.text = _userData!.data!.name ?? "";
-    genderController.text = AppLocalizations.of(context)!.tr(getGenderString());
+    try {
+      genderController.text =
+          AppLocalizations.of(context)!.tr(getGenderString());
+    } catch (e) {
+      genderController.text = "";
+    }
     emailController.text = _userData!.data!.email ?? "";
   }
 
