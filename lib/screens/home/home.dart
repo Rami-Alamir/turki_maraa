@@ -72,13 +72,20 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     double _statusBarHeight = MediaQuery.of(context).padding.top;
     final _homeProvider = Provider.of<HomeProvider>(context);
+    print(
+        "  _homeProvider.locationServiceStatus ${_homeProvider.locationServiceStatus}");
+
     final _appLanguage = Provider.of<AppLanguage>(context);
     final _addressProvider = Provider.of<AddressProvider>(context);
-    if (_addressProvider.latLng == LatLng(0, 0) &&
+    if (_addressProvider.myMarker == null) {
+      _addressProvider.initMapData(_appLanguage.language);
+    }
+    if (_addressProvider.latLng ==
+            LatLng(24.727726176454684, 46.58666208381939) &&
         _homeProvider.latLng != null) {
+      print('init ya rami');
       _addressProvider.latLng = _homeProvider.latLng!;
       _addressProvider.isoCountryCode = _homeProvider.isoCountryCode;
-      _addressProvider.initMapData(_appLanguage.language);
     }
     return Scaffold(
         extendBodyBehindAppBar: true,

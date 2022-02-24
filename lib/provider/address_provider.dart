@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart' as Locations;
 import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -24,13 +23,18 @@ class AddressProvider with ChangeNotifier {
   int get selectedAddress => _selectedAddress;
   bool get initMap => _initMap!;
   UserAddress? get userAddress => _userAddress;
-  LatLng get latLng => _latLng ?? LatLng(0, 0);
-  BitmapDescriptor get myMarker => _myMarker!;
+  LatLng get latLng => _latLng ?? LatLng(24.727726176454684, 46.58666208381939);
+  BitmapDescriptor? get myMarker => _myMarker;
   String? get addressDescription => _addressDescription;
   String get isoCountryCode => _isoCountryCode!;
 
   set initMap(bool value) {
     _initMap = value;
+  }
+
+  void clearDescription() {
+    _latLng = null;
+    _addressDescription = null;
   }
 
   set setUserAddress(UserAddress value) {
@@ -63,6 +67,7 @@ class AddressProvider with ChangeNotifier {
       try {
         _userAddress = await UserRepository().getAddressList(token);
       } catch (e) {
+        print("catch getAddressList");
         print(e.toString());
       }
   }
@@ -80,8 +85,21 @@ class AddressProvider with ChangeNotifier {
   // add new address
   Future<void> addNewAddress(BuildContext context, String accessToken) async {
     String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
+    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    print("ccessToken.length == 0${accessToken.length == 0}");
     if (accessToken.length == 0) {
       Navigator.pop(context);
+      _homeProvider.setIsLoading = true;
+      if (_homeProvider.locationServiceStatus == 0 ||
+          _homeProvider.locationServiceStatus == -1)
+        _homeProvider.setLocationServiceStatus = 2;
+      getAddressFromLatLng(languageCode);
+      List<Placemark> placemark = await placemarkFromCoordinates(
+          _latLng!.latitude, _latLng!.longitude,
+          localeIdentifier: languageCode);
+      _isoCountryCode = placemark.first.isoCountryCode;
+      _homeProvider.getHomePageData(false,
+          latLng: _latLng!, countryId: _isoCountryCode!);
     } else {
       _dialogContext = context;
       _showDialogIndicator(_dialogContext);
@@ -102,15 +120,13 @@ class AddressProvider with ChangeNotifier {
           "long": "${latLng.longitude}",
           "lat": "${latLng.latitude}",
         }, "Bearer $accessToken");
-        print(_response.body.toString());
+        print("_response" + _response.body.toString());
         if (_response.statusCode == 200) {
           await getAddressList("Bearer $accessToken");
           notifyListeners();
           _selectedAddress = (_userAddress?.data?.length ?? 0) - 1;
           Navigator.pop(_dialogContext!);
           Navigator.pop(context);
-          final _homeProvider =
-              Provider.of<HomeProvider>(context, listen: false);
 
           _homeProvider.setIsLoading = true;
           if (_homeProvider.locationServiceStatus == 0)
@@ -156,6 +172,10 @@ class AddressProvider with ChangeNotifier {
   // Converting Latitude and Longitude to a Human-readable Address
   getAddressFromLatLng(String languageCode) async {
     try {
+      print(_latLng);
+      if (_latLng == LatLng(24.727726176454684, 46.58666208381939))
+        _addressDescription = "";
+      print('getAddressFromLatLng');
       List<Placemark> placemark = await placemarkFromCoordinates(
           _latLng!.latitude, _latLng!.longitude,
           localeIdentifier: languageCode);
@@ -165,7 +185,11 @@ class AddressProvider with ChangeNotifier {
         _addressDescription = "${place.postalCode} - ${place.subLocality}";
       else
         _addressDescription = "${place.street} - ${place.subLocality} ";
+      print('getAddressFromLatLng');
+      if (_addressDescription == " -  ")
+        _addressDescription = "${place.postalCode} - ${place.name}";
       print(_addressDescription);
+      print("_addressDescription");
       notifyListeners();
     } catch (e) {
       print(e);

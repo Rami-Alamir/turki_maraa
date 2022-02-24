@@ -20,7 +20,6 @@ class _AddressContainerState extends State<AddressContainer> {
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
     final _addressProvider = Provider.of<AddressProvider>(context);
-    print('${_homeProvider.locationServiceStatus}');
     final List<Data>? _addressList = _addressProvider.userAddress?.data;
     return AnimatedContainer(
       duration: Duration(microseconds: 1),
@@ -88,10 +87,20 @@ class _AddressContainerState extends State<AddressContainer> {
                                                   _homeProvider
                                                           .locationServiceStatus ==
                                                       2) &&
-                                              _addressProvider.selectedAddress ==
+                                              _addressProvider
+                                                      .selectedAddress ==
                                                   -1
-                                          ? AppLocalizations.of(context)!
-                                              .tr("choose")
+                                          ? (_addressProvider.addressDescription
+                                                          ?.trim()
+                                                          .length ??
+                                                      0) ==
+                                                  0
+                                              ? AppLocalizations.of(context)!
+                                                  .tr("choose")
+                                              : _addressProvider
+                                                      .addressDescription ??
+                                                  AppLocalizations.of(context)!
+                                                      .tr("choose")
                                           : _addressProvider
                                                   .addressDescription ??
                                               AppLocalizations.of(context)!
@@ -195,21 +204,28 @@ class _AddressContainerState extends State<AddressContainer> {
                               width: SizeConfig.screenWidth! - 120,
                               child: Text(
                                   (_homeProvider.locationServiceStatus == 0 ||
-                                              _homeProvider
-                                                      .locationServiceStatus ==
+                                              _homeProvider.locationServiceStatus ==
                                                   2) &&
                                           _addressProvider.selectedAddress == -1
-                                      ? AppLocalizations.of(context)!
-                                          .tr('choose')
+                                      ? _addressProvider.addressDescription
+                                                  ?.trim()
+                                                  .length ==
+                                              0
+                                          ? AppLocalizations.of(context)!
+                                              .tr("choose")
+                                          : _addressProvider.addressDescription ??
+                                              AppLocalizations.of(context)!
+                                                  .tr('choose')
                                       : _homeProvider.selectedOrderType == 0
                                           ? _addressProvider.selectedAddress ==
                                                   -1
-                                              ? _addressProvider
-                                                      .addressDescription ??
-                                                  AppLocalizations.of(context)!
-                                                      .tr('current_location')
-                                              : _addressList![_addressProvider
-                                                      .selectedAddress]
+                                              ? _addressProvider.addressDescription ??
+                                                  (_homeProvider
+                                                          .currentLocationDescription ??
+                                                      AppLocalizations.of(context)!
+                                                          .tr(
+                                                              'current_location'))
+                                              : _addressList![_addressProvider.selectedAddress]
                                                   .address!
                                           : AppLocalizations.of(context)!
                                               .tr('soon'),
@@ -275,11 +291,19 @@ class _AddressContainerState extends State<AddressContainer> {
     return InkWell(
       onTap: () {
         final _auth = Provider.of<Auth>(context, listen: false);
-        if (_auth.isAuth) {
-          _selected = false;
-          Navigator.pushNamed(context, '/AddNewAddress');
-        } else
+        final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+
+        if (!_auth.isAuth && _homeProvider.locationServiceStatus == 1)
           Navigator.of(context, rootNavigator: true).pushNamed('/Login');
+        else
+          Navigator.pushNamed(context, '/AddNewAddress');
+
+        // final _auth = Provider.of<Auth>(context, listen: false);
+        // if (_auth.isAuth) {
+        //   _selected = false;
+        //   Navigator.pushNamed(context, '/AddNewAddress');
+        // } else
+        //   Navigator.of(context, rootNavigator: true).pushNamed('/Login');
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),

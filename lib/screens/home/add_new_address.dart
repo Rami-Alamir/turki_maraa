@@ -45,7 +45,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                     draggable: true,
                     markerId: MarkerId("1"),
                     position: _addressProvider.latLng,
-                    icon: _addressProvider.myMarker,
+                    icon: _addressProvider.myMarker!,
                     infoWindow: const InfoWindow(
                       title: '',
                     ),
@@ -54,7 +54,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
               ),
               initialCameraPosition: CameraPosition(
                 target: _addressProvider.latLng,
-                zoom: 14,
+                zoom: 5,
               ),
               mapType: MapType.normal,
               onMapCreated: _onMapCreated,
@@ -118,7 +118,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: _addressProvider.latLng,
-              zoom: 15,
+              zoom: 0,
             ),
           ),
         );

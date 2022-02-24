@@ -27,8 +27,8 @@ class BestProductCard extends StatelessWidget {
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
       child: Container(
         color: Colors.transparent,
-        width: SizeConfig.setWidgetWidthWithFactor(0.35, 0.15, 0.15),
-        height: SizeConfig.setWidgetWidthWithFactor(0.35, 0.15, 0.15),
+        width: SizeConfig.setWidgetWidth(136, 150, 150),
+        height: SizeConfig.setWidgetWidth(136, 150, 150),
         child: InkWell(
           onTap: () => Navigator.pushNamed(context, "/ProductDetails",
               arguments: product.id),
@@ -42,27 +42,22 @@ class BestProductCard extends StatelessWidget {
                 children: [
                   Container(
                     color: Colors.transparent,
-                    height:
-                        SizeConfig.setWidgetWidthWithFactor(0.35, 0.15, 0.15),
+                    height: SizeConfig.setWidgetWidth(136, 150, 150),
                     child: Card(
                       elevation: 1,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0)),
                       child: Container(
                         color: Colors.transparent,
-                        width: SizeConfig.setWidgetWidthWithFactor(
-                            0.35, 0.15, 0.15),
-                        height: SizeConfig.setWidgetWidthWithFactor(
-                            0.35, 0.15, 0.15),
+                        width: SizeConfig.setWidgetWidth(136, 150, 150),
+                        height: SizeConfig.setWidgetWidth(136, 150, 150),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
                             // child: Image.asset("assets/images/img.png",
                             child: Image.network(
                               '${((product.images?.length ?? 0) > 0) ? product.images![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
-                              width: SizeConfig.setWidgetWidthWithFactor(
-                                  0.35, 0.15, 0.15),
-                              height: SizeConfig.setWidgetWidthWithFactor(
-                                  0.35, 0.15, 0.15),
+                              width: SizeConfig.setWidgetWidth(136, 150, 150),
+                              height: SizeConfig.setWidgetWidth(136, 150, 150),
                               fit: BoxFit.cover,
                             )),
                       ),

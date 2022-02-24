@@ -3,6 +3,7 @@ import 'package:new_turki/models/delivery_date_time.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
+import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/cart/cart_bottom_sheet.dart';
@@ -38,106 +39,121 @@ class _ShoppingCartState extends State<ShoppingCart> {
     final _auth = Provider.of<Auth>(context);
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
+    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
     if (_auth.isAuth) print(_auth.accessToken);
-
     return Scaffold(
       appBar: PrimaryAppBar(
         title: AppLocalizations.of(context)!.tr('cart'),
         back: false,
       ),
-      body: !_auth.isAuth
-          ? NotAuth()
-          : _cart.isLoading
-              ? SpinkitIndicator()
-              : _cart.retry
-                  ? Retry(
-                      onPressed: () {
-                        _cart.setIsLoading = true;
+      body: (_addressProvider.selectedAddress) == -1 &&
+              ((_homeProvider.currentLocationDescription ?? "") == "")
+          ? EmptyCart()
+          : !_auth.isAuth
+              ? NotAuth()
+              : _cart.isLoading
+                  ? SpinkitIndicator()
+                  : _cart.retry
+                      ? Retry(
+                          onPressed: () {
+                            _cart.setIsLoading = true;
 
-                        if (_auth.isAuth)
-                          _cart.getCartData(
-                              _auth.accessToken,
-                              _addressProvider.latLng,
-                              _addressProvider.isoCountryCode);
-                      },
-                    )
-                  : (_cart.cartData?.data?.cart?.data?.length ?? 0) > 0
-                      ? GestureDetector(
-                          onTap: () =>
-                              FocusScope.of(context).requestFocus(FocusNode()),
-                          child: Stack(
-                            children: [
-                              ListView(
-                                physics: const ScrollPhysics(),
+                            if (_auth.isAuth)
+                              _cart.getCartData(
+                                  _auth.accessToken,
+                                  _addressProvider.latLng,
+                                  _addressProvider.isoCountryCode);
+                          },
+                        )
+                      : (_cart.cartData?.data?.cart?.data?.length ?? 0) > 0
+                          ? GestureDetector(
+                              onTap: () => FocusScope.of(context)
+                                  .requestFocus(FocusNode()),
+                              child: Stack(
                                 children: [
-                                  ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      shrinkWrap: true,
-                                      physics: const ScrollPhysics(),
-                                      itemCount: (_cart.cartData?.data?.cart
-                                              ?.data?.length ??
-                                          0),
-                                      itemBuilder:
-                                          (BuildContext ctxt, int index) {
-                                        return CartCard(
-                                          item: _cart.cartData!.data!.cart!
-                                              .data![index],
-                                          index: index,
-                                        );
-                                      }),
-                                  DeliveryAddress(
-                                      address:
-                                          _addressProvider.selectedAddress == -1
+                                  ListView(
+                                    physics: const ScrollPhysics(),
+                                    children: [
+                                      ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          physics: const ScrollPhysics(),
+                                          itemCount: (_cart.cartData?.data?.cart
+                                                  ?.data?.length ??
+                                              0),
+                                          itemBuilder:
+                                              (BuildContext ctxt, int index) {
+                                            return CartCard(
+                                              item: _cart.cartData!.data!.cart!
+                                                  .data![index],
+                                              index: index,
+                                            );
+                                          }),
+                                      DeliveryAddress(
+                                          address: _addressProvider
+                                                      .selectedAddress ==
+                                                  -1
                                               ? _addressProvider
-                                                  .addressDescription!
+                                                      .addressDescription ??
+                                                  _homeProvider
+                                                      .currentLocationDescription ??
+                                                  ""
                                               : _addressProvider
                                                   .userAddress!
                                                   .data![_addressProvider
                                                       .selectedAddress]
                                                   .address!),
-                                  DeliveryDate(
-                                      deliveryDataTime: _cart.deliveryDataTime),
-                                  DeliveryTime(
-                                    deliveryTime: [
-                                      DeliveryDateTime(
-                                          title: AppLocalizations.of(context)!
-                                              .tr('morning'),
-                                          subtitle: ''),
-                                      DeliveryDateTime(
-                                          title: AppLocalizations.of(context)!
-                                              .tr('noon'),
-                                          subtitle: ''),
-                                      DeliveryDateTime(
-                                          title: AppLocalizations.of(context)!
-                                              .tr('afternoon'),
-                                          subtitle: ''),
-                                      DeliveryDateTime(
-                                          title: AppLocalizations.of(context)!
-                                              .tr('sunset'),
-                                          subtitle: ''),
-                                      DeliveryDateTime(
-                                          title: AppLocalizations.of(context)!
-                                              .tr('midnight'),
-                                          subtitle: ''),
+                                      DeliveryDate(
+                                          deliveryDataTime:
+                                              _cart.deliveryDataTime),
+                                      DeliveryTime(
+                                        deliveryTime: [
+                                          DeliveryDateTime(
+                                              title:
+                                                  AppLocalizations.of(context)!
+                                                      .tr('morning'),
+                                              subtitle: ''),
+                                          DeliveryDateTime(
+                                              title:
+                                                  AppLocalizations.of(context)!
+                                                      .tr('noon'),
+                                              subtitle: ''),
+                                          DeliveryDateTime(
+                                              title:
+                                                  AppLocalizations.of(context)!
+                                                      .tr('afternoon'),
+                                              subtitle: ''),
+                                          DeliveryDateTime(
+                                              title:
+                                                  AppLocalizations.of(context)!
+                                                      .tr('sunset'),
+                                              subtitle: ''),
+                                          DeliveryDateTime(
+                                              title:
+                                                  AppLocalizations.of(context)!
+                                                      .tr('midnight'),
+                                              subtitle: ''),
+                                        ],
+                                      ),
+                                      PaymentMethod(),
+                                      UseCredit(
+                                          credit:
+                                              _auth.userData!.data!.wallet!),
+
+                                      // Note(),
+                                      SizedBox(
+                                        height: SizeConfig.screenHeight! * 0.25,
+                                      )
                                     ],
                                   ),
-                                  PaymentMethod(),
-                                  UseCredit(
-                                      credit: _auth.userData!.data!.wallet!),
-                                  // Note(),
-                                  SizedBox(
-                                    height: SizeConfig.screenHeight! * 0.25,
+                                  CartBottomSheet(
+                                    invoicePreview:
+                                        _cart.cartData!.data!.invoicePreview!,
                                   )
                                 ],
                               ),
-                              CartBottomSheet(
-                                invoicePreview:
-                                    _cart.cartData!.data!.invoicePreview!,
-                              )
-                            ],
-                          ),
-                        )
-                      : EmptyCart(),
+                            )
+                          : EmptyCart(),
     );
   }
 }

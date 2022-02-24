@@ -179,31 +179,41 @@ class CartProvider with ChangeNotifier {
   //getCartData
   Future<void> getCartData(String token, LatLng latLng, String countryId,
       {bool isLoading = true}) async {
-    _authorization = token;
-    _isLoading = isLoading;
-    _latLng = latLng;
-    _isoCountryCode = countryId;
-    _retry = false;
-    try {
-      _cartData = await CartRepository()
-          .getCartList("Bearer $token", latLng, countryId);
-      cartItems();
+    print(getCartData);
+    if (latLng == LatLng(13.271186675142177, 54.353398606181145)) {
+      print('dsadasdasdaszdcasz');
+      isLoading = false;
+      _retry = false;
+      notifyListeners();
+      return;
+    } else {
+      _authorization = token;
+      _isLoading = isLoading;
+      _latLng = latLng;
+      _isoCountryCode = countryId;
+      _retry = false;
+      try {
+        _cartData = await CartRepository()
+            .getCartList("Bearer $token", latLng, countryId);
+        cartItems();
 
-      if ((_cartData?.data?.cart?.data?.length ?? 0) >
-          0) if (_cartData!.data!.cart!.data![0].appliedDiscountCode != null) {
-        print('${_cartData!.data!.cart!.data![0].appliedDiscountCode}');
-        promoCodeController.text =
-            _cartData!.data!.cart!.data![0].appliedDiscountCode!;
-        _errorMsg = false;
-        _promoIsActive = true;
+        if ((_cartData?.data?.cart?.data?.length ?? 0) > 0) if (_cartData!
+                .data!.cart!.data![0].appliedDiscountCode !=
+            null) {
+          print('${_cartData!.data!.cart!.data![0].appliedDiscountCode}');
+          promoCodeController.text =
+              _cartData!.data!.cart!.data![0].appliedDiscountCode!;
+          _errorMsg = false;
+          _promoIsActive = true;
+        }
+      } catch (e) {
+        print('catch cart');
+        print(e.toString());
+        _retry = true;
       }
-    } catch (e) {
-      print('catch cart');
-      print(e.toString());
-      _retry = true;
+      _isLoading = false;
+      notifyListeners();
     }
-    _isLoading = false;
-    notifyListeners();
   }
 
   void showSnackBar(BuildContext context, String msg) {

@@ -1,6 +1,7 @@
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
+import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/screens/cart/shopping_cart.dart';
 import 'package:new_turki/screens/chat/chat.dart';
 import 'package:new_turki/screens/home/home.dart';
@@ -78,8 +79,12 @@ class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     final _cart = Provider.of<CartProvider>(context);
+    final _home = Provider.of<HomeProvider>(context, listen: false);
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
     SizeConfig().init(context);
     // WillPopScope handle android back button
+
     return WillPopScope(
       onWillPop: () async {
         final isFirstRouteInCurrentTab =
@@ -142,7 +147,12 @@ class AppState extends State<App> {
                               top: -5.0,
                               left: -8.0,
                               child: Visibility(
-                                visible: _cart.cartLength > 0,
+                                visible: _cart.cartLength > 0 &&
+                                    (((_home.currentLocationDescription ??
+                                                "") !=
+                                            "") ||
+                                        _addressProvider.addressDescription !=
+                                            ""),
                                 child: Container(
                                   width: 15,
                                   height: 15,
@@ -187,6 +197,7 @@ class AppState extends State<App> {
                         _cart.setSelectedTime = -1;
                         _cart.setSelectedPayment = -1;
                         _cart.setSelectedDate = -1;
+
                         _cart.getCartData(
                             _auth.accessToken,
                             _addressProvider.latLng,

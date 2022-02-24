@@ -142,6 +142,17 @@ class Auth with ChangeNotifier {
           final _favourite =
               Provider.of<FavouriteProvider>(context, listen: false);
           _favourite.getFavouriteData("Bearer " + accessToken);
+          final _homeProvider =
+              Provider.of<HomeProvider>(context, listen: false);
+          final _addressProvider =
+              Provider.of<AddressProvider>(context, listen: false);
+          if (_homeProvider.locationServiceStatus == 2 ||
+              _homeProvider.locationServiceStatus == -1) {
+            _homeProvider.setLocationServiceStatus = -1;
+            _homeProvider.clearDescription();
+            _addressProvider.clearDescription();
+            _homeProvider..getHomePageData(true);
+          }
           Navigator.pop(_dialogContext!);
           _isNewUser!
               ? Navigator.of(context).pushNamedAndRemoveUntil(
@@ -237,11 +248,17 @@ class Auth with ChangeNotifier {
       notifyListeners();
     });
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    _homeProvider.setIsLoading = true;
-    _homeProvider.getHomePageData(true,
-        latLng: _homeProvider.latLng!, countryId: _homeProvider.isoCountryCode);
-    if (_homeProvider.locationServiceStatus == 2)
+
+    if (_homeProvider.locationServiceStatus == 2) {
       _homeProvider.setLocationServiceStatus = 0;
+      _homeProvider.clearDescription();
+      _addressProvider.clearDescription();
+    } else {
+      _homeProvider.setIsLoading = true;
+      _homeProvider.getHomePageData(true,
+          latLng: _homeProvider.latLng!,
+          countryId: _homeProvider.isoCountryCode);
+    }
   }
 
   // update user data

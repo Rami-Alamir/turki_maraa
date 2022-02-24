@@ -9,9 +9,11 @@ class SizeConfig {
   static double? safeAreaHorizontal;
   static double? safeAreaVertical;
   static DeviceScreenType? deviceScreenType;
+  static Orientation? currentOrientation;
 
-  void init(BuildContext context) {
-    if (_mediaQuery == null) {
+  void init(BuildContext context, {bool init = false}) {
+    print('init');
+    if (_mediaQuery == null || init) {
       _mediaQuery = MediaQuery.of(context);
       screenWidth = _mediaQuery?.size.width;
       screenHeight = _mediaQuery?.size.height;
@@ -19,17 +21,19 @@ class SizeConfig {
           (_mediaQuery?.padding.right ?? 0.0);
       safeAreaVertical = (_mediaQuery?.padding.top ?? 0.0) +
           (_mediaQuery?.padding.bottom ?? 0.0);
-      deviceScreenType = getDeviceScreenType();
+      getDeviceScreenType();
     }
   }
 
   static DeviceScreenType getDeviceScreenType() {
-    var orientation = _mediaQuery?.orientation;
+    currentOrientation = _mediaQuery?.orientation;
     double deviceWidth = 0;
-    if (orientation == Orientation.landscape) {
-      deviceWidth = _mediaQuery!.size.height;
-    } else {
+    print(
+        "orientation == Orientation.landscape ${currentOrientation == Orientation.landscape}");
+    if (currentOrientation == Orientation.landscape) {
       deviceWidth = _mediaQuery!.size.width;
+    } else {
+      deviceWidth = _mediaQuery!.size.height;
     }
     if (deviceWidth > 950) {
       return DeviceScreenType.Desktop;

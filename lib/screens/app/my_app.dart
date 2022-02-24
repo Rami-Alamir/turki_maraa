@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/firebase_helper.dart';
 import 'package:new_turki/utilities/route_generator.dart';
+import 'package:new_turki/utilities/size_config.dart';
 import '../../provider/app_theme.dart';
 import '../../utilities/app_localizations.dart';
 import '../../provider/app_language.dart';
@@ -39,11 +40,7 @@ class _MyAppState extends State<MyApp> {
     // make status bar transparent
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-    // make app portrait mode only
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+
     final appTheme = Provider.of<AppTheme>(context);
 
     //Consumer for change app language only

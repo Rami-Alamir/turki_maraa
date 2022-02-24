@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ class HelpCard extends StatelessWidget {
                     )),
           ),
           MainCard(
+              width: SizeConfig.screenWidth!,
               padding: EdgeInsets.only(bottom: 1, right: 7, left: 7),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),

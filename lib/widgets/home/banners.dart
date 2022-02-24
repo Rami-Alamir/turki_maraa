@@ -48,7 +48,7 @@ class _BannersState extends State<BannersSlider> {
                         width: SizeConfig.screenWidth,
                         child: Image.network(
                           item.url!.trim(),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     );

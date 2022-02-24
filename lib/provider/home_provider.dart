@@ -29,10 +29,9 @@ class HomeProvider with ChangeNotifier {
 
   Location.LocationData get locationData => _locationData!;
 
-  String get currentLocationDescription => _currentLocationDescription!;
+  String? get currentLocationDescription => _currentLocationDescription;
 
-  LatLng? get latLng =>
-      _latLng = LatLng(24.806203026859436, 46.650784343026935);
+  LatLng? get latLng => _latLng;
   BestSeller? get bestSeller => _bestSeller;
   bool get canPickup => _canPickup;
   bool get isLoading => _isLoading;
@@ -45,6 +44,11 @@ class HomeProvider with ChangeNotifier {
   String get isoCountryCode => _isoCountryCode!;
 
   String get currentIsoCountryCode => _currentIsoCountryCode!;
+
+  void clearDescription() {
+    _latLng = null;
+    _currentLocationDescription = null;
+  }
 
   set setIsLoading(bool value) {
     _isLoading = value;
@@ -67,8 +71,21 @@ class HomeProvider with ChangeNotifier {
 
   //init latLng
   Future<void> initLatLng() async {
-    _locationData = await Location.Location().getLocation();
+    print("_latLng" + _latLng.toString());
+    //.timeout(Duration(seconds: 4))
+    // _locationData = await Future.any([
+    //   Location.Location().getLocation(),
+    //   Future.delayed(Duration(seconds: 5), () => null),
+    // ]);
+    // if (_locationData == null) {
+    //   print("plan b");
+    //   _locationData = await Location.Location().getLocation();
+    // }
+    // _locationData = await Location.Location().getLocation();
+    await fetchLocation();
     _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
+    print("rami:" + _latLng.toString());
+
     _locationServiceStatus = 1;
     // init  isoCountryCode
     List<Placemark> placemark = await placemarkFromCoordinates(
@@ -82,6 +99,7 @@ class HomeProvider with ChangeNotifier {
           "${place.postalCode} - ${place.subLocality}";
     else
       _currentLocationDescription = "${place.street} - ${place.subLocality} ";
+    print("_currentLocationDescription $_currentLocationDescription");
   }
 
   //get all categories
@@ -107,7 +125,7 @@ class HomeProvider with ChangeNotifier {
 
   //init home page
   Future<void> getHomePageData(bool isCurrent,
-      {LatLng latLng = const LatLng(0, 0),
+      {LatLng latLng = const LatLng(24.727726176454684, 46.58666208381939),
       String countryId = "SA",
       bool isLoading = true}) async {
     _retry = false;
@@ -130,7 +148,7 @@ class HomeProvider with ChangeNotifier {
     } catch (e) {
       _retry = true;
     }
-    if (_latLng == null) {
+    if (_latLng == null && _locationServiceStatus == -1) {
       _locationServiceStatus = 0;
     }
     _isLoading = false;
@@ -143,5 +161,29 @@ class HomeProvider with ChangeNotifier {
       AppLocalizations.of(context)!.tr(msg),
       textAlign: TextAlign.center,
     )));
+  }
+
+  Location.Location location = Location.Location();
+  fetchLocation() async {
+    bool _serviceEnabled;
+    Location.PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == Location.PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != Location.PermissionStatus.granted) {
+        return;
+      }
+    }
+    print("getLocation");
+    _locationData = await location.getLocation();
   }
 }

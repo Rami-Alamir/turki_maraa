@@ -13,9 +13,10 @@ class ProductsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
-
     return Container(
-      constraints: BoxConstraints(minHeight: SizeConfig.screenHeight!),
+      constraints: BoxConstraints(
+          minHeight: SizeConfig.screenHeight!,
+          maxWidth: SizeConfig.screenWidth!),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
