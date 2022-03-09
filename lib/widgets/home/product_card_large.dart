@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/get_strings.dart';
+import 'package:new_turki/utilities/size_config.dart';
 import 'package:provider/provider.dart';
 
 class ProductCardLarge extends StatelessWidget {
@@ -89,14 +90,22 @@ class ProductCardLarge extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
-            child: AutoSizeText(
-              _isAr ? nameAr : nameEn,
-              textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.headline4,
-              minFontSize: 14,
-              maxFontSize: 14,
-              maxLines: 1,
+            padding: const EdgeInsets.only(top: 5, left: 7.5, right: 7.5),
+            child: Container(
+              constraints: BoxConstraints(
+                maxHeight: SizeConfig.setWidgetHeight(32, 32, 32),
+              ),
+              child: AutoSizeText(
+                _isAr ? nameAr : nameEn,
+                textAlign: TextAlign.start,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4!
+                    .copyWith(height: 1.2),
+                minFontSize: 8,
+                maxFontSize: 12,
+                maxLines: 2,
+              ),
             ),
           ),
           Padding(

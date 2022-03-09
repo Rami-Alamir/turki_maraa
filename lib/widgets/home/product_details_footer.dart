@@ -110,7 +110,7 @@ class ProductDetailsFooter extends StatelessWidget {
                           productId:
                               '${_productsProvider.productData.data!.id}',
                           isoCountryCode: _addressProvider.isoCountryCode,
-                          latLng: _addressProvider.latLng);
+                          latLng: _addressProvider.selectedLatLng);
                     } else
                       Navigator.of(context, rootNavigator: true)
                           .pushNamed('/Login');

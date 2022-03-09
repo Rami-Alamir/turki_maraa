@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -10,14 +11,30 @@ import 'package:new_turki/widgets/shared/rectangle_text_field.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
 
-class AddNewAddress extends StatefulWidget {
+class SelectAddress extends StatefulWidget {
+  final int addressIndex;
+
+  const SelectAddress({this.addressIndex = -100});
   @override
-  _AddNewAddressState createState() => _AddNewAddressState();
+  _SelectAddressState createState() => _SelectAddressState();
 }
 
-class _AddNewAddressState extends State<AddNewAddress> {
+class _SelectAddressState extends State<SelectAddress> {
   GoogleMapController? _controller;
   Location? _location;
+  Data? _userAddress;
+  @override
+  void initState() {
+    if (widget.addressIndex != -100) {
+      final _addressProvider =
+          Provider.of<AddressProvider>(context, listen: false);
+      _userAddress = _addressProvider.userAddress!.data![widget.addressIndex];
+      _addressProvider.mapLatLng = LatLng(
+          double.parse(_userAddress!.lat!), double.parse(_userAddress!.long!));
+      _addressProvider.descriptionController.text = _userAddress!.comment!;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +43,9 @@ class _AddNewAddressState extends State<AddNewAddress> {
 
     return Scaffold(
       extendBody: true,
-      appBar: PrimaryAppBar(),
+      appBar: PrimaryAppBar(
+        title: AppLocalizations.of(context)!.tr("choose_delivery_location"),
+      ),
       body: Stack(
         children: [
           Container(
@@ -39,12 +58,12 @@ class _AddNewAddressState extends State<AddNewAddress> {
                   Marker(
                     onDragEnd: (latLng) {
                       setState(() {
-                        _addressProvider.latLng = latLng;
+                        _addressProvider.mapLatLng = latLng;
                       });
                     },
                     draggable: true,
                     markerId: MarkerId("1"),
-                    position: _addressProvider.latLng,
+                    position: _addressProvider.mapLatLng,
                     icon: _addressProvider.myMarker!,
                     infoWindow: const InfoWindow(
                       title: '',
@@ -53,17 +72,17 @@ class _AddNewAddressState extends State<AddNewAddress> {
                 ],
               ),
               initialCameraPosition: CameraPosition(
-                target: _addressProvider.latLng,
-                zoom: 5,
+                target: _addressProvider.mapLatLng,
+                zoom: widget.addressIndex == -100 ? 5 : 17.5,
               ),
               mapType: MapType.normal,
               onMapCreated: _onMapCreated,
               onCameraMove: (latLng) {
-                _addressProvider.latLng = latLng.target;
+                _addressProvider.mapLatLng = latLng.target;
                 setState(() {});
               },
               onTap: (latLng) {
-                _addressProvider.latLng = latLng;
+                _addressProvider.mapLatLng = latLng;
                 setState(() {});
               },
               myLocationEnabled: true,
@@ -85,14 +104,20 @@ class _AddNewAddressState extends State<AddNewAddress> {
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                 ),
                 RoundedRectangleButton(
-                  title: AppLocalizations.of(context)!.tr('add_address'),
+                  title: AppLocalizations.of(context)!.tr('confirm_location'),
                   fontSize: 16.0,
                   width: SizeConfig.screenWidth! * 0.9,
                   padding: const EdgeInsets.all(10),
                   onPressed: () async {
                     FocusScope.of(context).requestFocus(FocusNode());
-                    await _addressProvider.addNewAddress(
-                        context, _auth.isAuth ? _auth.accessToken : "");
+                    if (widget.addressIndex == -100)
+                      await _addressProvider.addNewAddress(
+                          context, _auth.isAuth ? _auth.accessToken : "");
+                    else
+                      await _addressProvider.updateAddress(
+                          context,
+                          _auth.isAuth ? _auth.accessToken : "",
+                          _userAddress?.id ?? 0);
                   },
                 ),
               ],
@@ -110,14 +135,14 @@ class _AddNewAddressState extends State<AddNewAddress> {
       _controller = _cntlr;
       _location!.onLocationChanged.listen((l) {
         if (!_addressProvider.initMap) {
-          _addressProvider.latLng = LatLng(l.latitude!, l.longitude!);
+          _addressProvider.mapLatLng = LatLng(l.latitude!, l.longitude!);
           _addressProvider.initMap = true;
           setState(() {});
         }
         _controller!.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
-              target: _addressProvider.latLng,
+              target: _addressProvider.mapLatLng,
               zoom: 0,
             ),
           ),

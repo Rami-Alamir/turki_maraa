@@ -9,7 +9,6 @@ class SizeConfig {
   static double? safeAreaHorizontal;
   static double? safeAreaVertical;
   static DeviceScreenType? deviceScreenType;
-  static Orientation? currentOrientation;
 
   void init(BuildContext context, {bool init = false}) {
     print('init');
@@ -26,15 +25,9 @@ class SizeConfig {
   }
 
   static DeviceScreenType getDeviceScreenType() {
-    currentOrientation = _mediaQuery?.orientation;
     double deviceWidth = 0;
-    print(
-        "orientation == Orientation.landscape ${currentOrientation == Orientation.landscape}");
-    if (currentOrientation == Orientation.landscape) {
-      deviceWidth = _mediaQuery!.size.width;
-    } else {
-      deviceWidth = _mediaQuery!.size.height;
-    }
+    deviceWidth = _mediaQuery!.size.width;
+
     if (deviceWidth > 950) {
       return DeviceScreenType.Desktop;
     } else if (deviceWidth > 600) {

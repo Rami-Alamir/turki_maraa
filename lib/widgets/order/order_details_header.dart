@@ -19,7 +19,7 @@ class OrderDetailsHeader extends StatelessWidget {
     return MainCard(
       height: 235,
       child: Container(
-        height: 150,
+        constraints: BoxConstraints(minHeight: 150),
         width: SizeConfig.screenWidth!,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

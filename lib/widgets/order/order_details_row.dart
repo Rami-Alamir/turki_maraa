@@ -14,8 +14,10 @@ class OrderDetailsRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
       child: InkWell(
-        onTap: () =>
-            Navigator.pushNamed(context, '/ProductDetails', arguments: item.id),
+        onTap: () {}
+        // =>
+        //     Navigator.pushNamed(context, '/ProductDetails', arguments: item.id)
+        ,
         child: Container(
           width: SizeConfig.screenWidth!,
           child: Row(

@@ -7,10 +7,15 @@ import 'package:new_turki/models/best_seller.dart';
 import 'package:new_turki/models/category_data.dart';
 import 'package:new_turki/repository/home_repository.dart';
 import 'package:new_turki/repository/products_repository.dart';
+import 'package:new_turki/screens/other/new_version.dart' as New;
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'dart:io';
+import 'package:version/version.dart';
+import 'package:new_version/new_version.dart';
 
 class HomeProvider with ChangeNotifier {
+  bool _canUpdate = false;
+  bool locationNotAvailable = false;
   bool _canPickup = true;
   bool _isLoading = true;
   bool _retry = false;
@@ -26,11 +31,12 @@ class HomeProvider with ChangeNotifier {
   String? _currentLocationDescription = '';
   String? _currentIsoCountryCode = 'SA';
   Location.LocationData? _locationData;
+  String _currentVersion = "5.2.0";
+  Location.Location location = Location.Location();
 
   Location.LocationData get locationData => _locationData!;
-
   String? get currentLocationDescription => _currentLocationDescription;
-
+  String get currentVersion => _currentVersion;
   LatLng? get latLng => _latLng;
   BestSeller? get bestSeller => _bestSeller;
   bool get canPickup => _canPickup;
@@ -42,7 +48,7 @@ class HomeProvider with ChangeNotifier {
   int get selectedAddress2 => _selectedAddress2;
   int get locationServiceStatus => _locationServiceStatus;
   String get isoCountryCode => _isoCountryCode!;
-
+  bool get canUpdate => _canUpdate;
   String get currentIsoCountryCode => _currentIsoCountryCode!;
 
   void clearDescription() {
@@ -71,21 +77,8 @@ class HomeProvider with ChangeNotifier {
 
   //init latLng
   Future<void> initLatLng() async {
-    print("_latLng" + _latLng.toString());
-    //.timeout(Duration(seconds: 4))
-    // _locationData = await Future.any([
-    //   Location.Location().getLocation(),
-    //   Future.delayed(Duration(seconds: 5), () => null),
-    // ]);
-    // if (_locationData == null) {
-    //   print("plan b");
-    //   _locationData = await Location.Location().getLocation();
-    // }
-    // _locationData = await Location.Location().getLocation();
     await fetchLocation();
     _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
-    print("rami:" + _latLng.toString());
-
     _locationServiceStatus = 1;
     // init  isoCountryCode
     List<Placemark> placemark = await placemarkFromCoordinates(
@@ -128,6 +121,7 @@ class HomeProvider with ChangeNotifier {
       {LatLng latLng = const LatLng(24.727726176454684, 46.58666208381939),
       String countryId = "SA",
       bool isLoading = true}) async {
+    locationNotAvailable = false;
     _retry = false;
     _isLoading = isLoading;
     try {
@@ -146,6 +140,7 @@ class HomeProvider with ChangeNotifier {
         ]);
       }
     } catch (e) {
+      locationNotAvailable = true;
       _retry = true;
     }
     if (_latLng == null && _locationServiceStatus == -1) {
@@ -163,19 +158,31 @@ class HomeProvider with ChangeNotifier {
     )));
   }
 
-  Location.Location location = Location.Location();
-  fetchLocation() async {
+  // check version to show update page
+  Future<void> checkNewVersion() async {
+    final newVersion = NewVersion(
+      iOSId: 'com.digishapes.turkieshop',
+      androidId: 'com.digishapes.turkieshop',
+    );
+    final status = await newVersion.getVersionStatus();
+    Version currentVersion = Version.parse(_currentVersion);
+    Version latestVersion = Version.parse(status!.storeVersion);
+    print("currentVersion $currentVersion");
+    print("latestVersion $latestVersion");
+    if (latestVersion > currentVersion) _canUpdate = true;
+  }
+
+  Future<void> fetchLocation() async {
     bool _serviceEnabled;
     Location.PermissionStatus _permissionGranted;
-
     _serviceEnabled = await location.serviceEnabled();
+    print("_serviceEnabled.toString()${_serviceEnabled.toString()}");
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
         return;
       }
     }
-
     _permissionGranted = await location.hasPermission();
     if (_permissionGranted == Location.PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
@@ -183,7 +190,22 @@ class HomeProvider with ChangeNotifier {
         return;
       }
     }
-    print("getLocation");
-    _locationData = await location.getLocation();
+    _locationData = await location.getLocation().timeout(Duration(seconds: 7));
+  }
+
+  // show new version page
+  void showNewVersion(BuildContext context) async {
+    if (_canUpdate) {
+      _canUpdate = false;
+      await Future.delayed(const Duration(milliseconds: 1500), () {
+        Navigator.of(
+          context,
+          rootNavigator: true,
+        ).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (BuildContext context) => New.NewVersion()),
+            ModalRoute.withName('/'));
+      });
+    }
   }
 }

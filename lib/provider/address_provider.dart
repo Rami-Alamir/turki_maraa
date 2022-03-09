@@ -13,27 +13,31 @@ class AddressProvider with ChangeNotifier {
   TextEditingController descriptionController = TextEditingController();
   BitmapDescriptor? _myMarker;
   String? _addressDescription;
-  LatLng? _latLng;
+  //LatLng? _latLng;
+  LatLng? _selectedLatLng;
+  LatLng? _mapLatLng;
   bool? _initMap = false;
   UserAddress? _userAddress;
   BuildContext? _dialogContext;
   int _selectedAddress = -1;
   String? _isoCountryCode = 'SA';
-
   int get selectedAddress => _selectedAddress;
   bool get initMap => _initMap!;
   UserAddress? get userAddress => _userAddress;
-  LatLng get latLng => _latLng ?? LatLng(24.727726176454684, 46.58666208381939);
+  LatLng get selectedLatLng =>
+      _selectedLatLng ?? LatLng(24.727726176454684, 46.58666208381939);
   BitmapDescriptor? get myMarker => _myMarker;
   String? get addressDescription => _addressDescription;
   String get isoCountryCode => _isoCountryCode!;
+  LatLng get mapLatLng =>
+      _mapLatLng ?? LatLng(24.727726176454684, 46.58666208381939);
 
   set initMap(bool value) {
     _initMap = value;
   }
 
   void clearDescription() {
-    _latLng = null;
+    _selectedLatLng = null;
     _addressDescription = null;
   }
 
@@ -46,8 +50,12 @@ class AddressProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  set latLng(LatLng value) {
-    _latLng = value;
+  set setSelectedLatLng(LatLng value) {
+    _selectedLatLng = value;
+  }
+
+  set mapLatLng(LatLng value) {
+    _mapLatLng = value;
   }
 
   set isoCountryCode(String value) {
@@ -56,7 +64,7 @@ class AddressProvider with ChangeNotifier {
 
   void initSelectedAddress(int value) {
     _selectedAddress = value;
-    _latLng = LatLng(double.parse(_userAddress!.data![value].lat!),
+    _selectedLatLng = LatLng(double.parse(_userAddress!.data![value].lat!),
         double.parse(_userAddress!.data![value].long!));
     _isoCountryCode = _userAddress!.data![value].countryIosCode!;
   }
@@ -79,46 +87,45 @@ class AddressProvider with ChangeNotifier {
       _myMarker = onValue;
       notifyListeners();
     });
-    getAddressFromLatLng(languageCode);
+    //getAddressFromLatLng(languageCode, _selectedLatLng!);
   }
 
   // add new address
   Future<void> addNewAddress(BuildContext context, String accessToken) async {
     String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    print("ccessToken.length == 0${accessToken.length == 0}");
     if (accessToken.length == 0) {
       Navigator.pop(context);
       _homeProvider.setIsLoading = true;
       if (_homeProvider.locationServiceStatus == 0 ||
           _homeProvider.locationServiceStatus == -1)
         _homeProvider.setLocationServiceStatus = 2;
-      getAddressFromLatLng(languageCode);
+      getAddressFromLatLng(languageCode, _mapLatLng!);
       List<Placemark> placemark = await placemarkFromCoordinates(
-          _latLng!.latitude, _latLng!.longitude,
+          _mapLatLng!.latitude, _mapLatLng!.longitude,
           localeIdentifier: languageCode);
       _isoCountryCode = placemark.first.isoCountryCode;
       _homeProvider.getHomePageData(false,
-          latLng: _latLng!, countryId: _isoCountryCode!);
+          latLng: _mapLatLng!, countryId: _isoCountryCode!);
     } else {
       _dialogContext = context;
       _showDialogIndicator(_dialogContext);
       var _response;
       try {
         List<Placemark> placemark = await placemarkFromCoordinates(
-            _latLng!.latitude, _latLng!.longitude,
+            _mapLatLng!.latitude, _mapLatLng!.longitude,
             localeIdentifier: languageCode);
         _isoCountryCode = placemark.first.isoCountryCode;
         _response = await UserRepository().addAddress({
           "country_iso_code": _isoCountryCode,
           "address":
-              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "${Platform.isAndroid ? placemark.first.postalCode : placemark.first.street} - ${placemark.first.subLocality} "} ",
+              "${Platform.isAndroid ? placemark.first.postalCode : placemark.first.street} - ${placemark.first.subLocality} ",
           "comment":
-              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "."} ",
+              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "${Platform.isAndroid ? placemark.first.postalCode : placemark.first.street} - ${placemark.first.subLocality} "} ",
           "label": "label",
           "is_default": "0",
-          "long": "${latLng.longitude}",
-          "lat": "${latLng.latitude}",
+          "long": "${_mapLatLng!.longitude}",
+          "lat": "${_mapLatLng!.latitude}",
         }, "Bearer $accessToken");
         print("_response" + _response.body.toString());
         if (_response.statusCode == 200) {
@@ -131,9 +138,9 @@ class AddressProvider with ChangeNotifier {
           _homeProvider.setIsLoading = true;
           if (_homeProvider.locationServiceStatus == 0)
             _homeProvider.setLocationServiceStatus = 2;
-
+          _selectedLatLng = _mapLatLng;
           _homeProvider.getHomePageData(false,
-              latLng: _latLng!, countryId: _isoCountryCode!);
+              latLng: _selectedLatLng!, countryId: _isoCountryCode!);
         } else {
           Navigator.pop(_dialogContext!);
           showSnackBar(
@@ -147,6 +154,65 @@ class AddressProvider with ChangeNotifier {
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
         showSnackBar(context, "unexpected_error");
       }
+    }
+  }
+
+  //update address
+  Future<void> updateAddress(
+      BuildContext context, String accessToken, int addressId) async {
+    String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
+    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    _dialogContext = context;
+    _showDialogIndicator(_dialogContext);
+    var _response;
+    try {
+      List<Placemark> placemark = await placemarkFromCoordinates(
+          _mapLatLng!.latitude, _mapLatLng!.longitude,
+          localeIdentifier: languageCode);
+      _isoCountryCode = placemark.first.isoCountryCode;
+      _response = await UserRepository().updateAddress({
+        "country_iso_code": _isoCountryCode,
+        "address":
+            "${Platform.isAndroid ? placemark.first.postalCode : placemark.first.street} - ${placemark.first.subLocality} ",
+        "comment":
+            "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "."} ",
+        "label": "label",
+        "is_default": "0",
+        "long": "${_mapLatLng!.longitude}",
+        "lat": "${_mapLatLng!.latitude}",
+      }, "Bearer $accessToken", "$addressId");
+      print("_response" + _response.body.toString());
+      if (_response.statusCode == 200) {
+        int _currentLength = _userAddress!.data!.length;
+        await getAddressList("Bearer $accessToken");
+        notifyListeners();
+        if (_userAddress!.data!.length < _currentLength) {
+          _selectedAddress = (_userAddress?.data?.length ?? 0) - 1;
+          _selectedLatLng = LatLng(
+              double.parse(_userAddress!.data![_selectedAddress].lat!),
+              double.parse(_userAddress!.data![_selectedAddress].long!));
+          _isoCountryCode =
+              _userAddress!.data![_selectedAddress].countryIosCode;
+          _homeProvider.setIsLoading = true;
+          if (_homeProvider.locationServiceStatus == 0)
+            _homeProvider.setLocationServiceStatus = 2;
+          _homeProvider.getHomePageData(false,
+              latLng: _mapLatLng!, countryId: _isoCountryCode!);
+        }
+        Navigator.pop(_dialogContext!);
+        Navigator.pop(context);
+      } else {
+        Navigator.pop(_dialogContext!);
+        showSnackBar(
+            context,
+            _response.statusCode == 400
+                ? "region_not_supported"
+                : "unexpected_error");
+      }
+    } catch (e) {
+      print(e.toString());
+      if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
+      showSnackBar(context, "unexpected_error");
     }
   }
 
@@ -170,14 +236,13 @@ class AddressProvider with ChangeNotifier {
   }
 
   // Converting Latitude and Longitude to a Human-readable Address
-  getAddressFromLatLng(String languageCode) async {
+  getAddressFromLatLng(String languageCode, LatLng latLng) async {
     try {
-      print(_latLng);
-      if (_latLng == LatLng(24.727726176454684, 46.58666208381939))
+      print(latLng);
+      if (latLng == LatLng(24.727726176454684, 46.58666208381939))
         _addressDescription = "";
-      print('getAddressFromLatLng');
       List<Placemark> placemark = await placemarkFromCoordinates(
-          _latLng!.latitude, _latLng!.longitude,
+          latLng.latitude, latLng.longitude,
           localeIdentifier: languageCode);
       Placemark place = placemark.first;
       _isoCountryCode = place.isoCountryCode;
@@ -185,11 +250,8 @@ class AddressProvider with ChangeNotifier {
         _addressDescription = "${place.postalCode} - ${place.subLocality}";
       else
         _addressDescription = "${place.street} - ${place.subLocality} ";
-      print('getAddressFromLatLng');
       if (_addressDescription == " -  ")
         _addressDescription = "${place.postalCode} - ${place.name}";
-      print(_addressDescription);
-      print("_addressDescription");
       notifyListeners();
     } catch (e) {
       print(e);

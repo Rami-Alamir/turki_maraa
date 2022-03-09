@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/app_language.dart';
 import 'package:new_turki/provider/app_provider.dart';
 import 'package:new_turki/provider/app_theme.dart';
-import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -26,7 +26,6 @@ class TurkiDrawer extends StatelessWidget {
     final _appProvider = Provider.of<AppProvider>(context);
     final _theme = Provider.of<AppTheme>(context);
     final _language = Provider.of<AppLanguage>(context);
-    final _auth = Provider.of<Auth>(context);
 
     return AdvancedDrawer(
       backdropColor: Theme.of(context).backgroundColor,
@@ -70,13 +69,13 @@ class TurkiDrawer extends StatelessWidget {
                     icon: TURKIICONS.cart_favourite,
                     title: 'favorite',
                   ),
-                  DrawerRow(
-                    onTap: () {
-                      _appProvider.navigateTo(context, "/Notifications");
-                    },
-                    icon: TURKIICONS.notification,
-                    title: 'notifications',
-                  ),
+                  // DrawerRow(
+                  //   onTap: () {
+                  //     _appProvider.navigateTo(context, "/Notifications");
+                  //   },
+                  //   icon: TURKIICONS.notification,
+                  //   title: 'notifications',
+                  // ),
                   DrawerRow(
                     onTap: () {
                       _appProvider.navigateTo(context, '/FAQ');
@@ -99,7 +98,12 @@ class TurkiDrawer extends StatelessWidget {
                   ),
                   DrawerRow(
                     onTap: () {
-                      String phone = '+966500852759';
+                      final _addressProvider =
+                          Provider.of<AddressProvider>(context, listen: false);
+
+                      String phone = _addressProvider.isoCountryCode == "AE"
+                          ? "+971544055556"
+                          : '+966500852759';
                       String url;
                       if (Platform.isIOS)
                         url = "whatsapp://wa.me/$phone/?text=${Uri.parse(' ')}";
@@ -159,7 +163,9 @@ class TurkiDrawer extends StatelessWidget {
               ),
             ),
             SocialMedia(),
-            TurkiDrawerFooter(ltr: !_language.isArabic)
+            TurkiDrawerFooter(
+              ltr: !_language.isArabic,
+            )
           ],
         ),
       ),

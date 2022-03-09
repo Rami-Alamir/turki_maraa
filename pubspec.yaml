@@ -1,7 +1,7 @@
 name: new_turki
-description: A new project.
+description: A new turki app project.
 
-version: 5.0.0+1
+version: 5.2.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -14,11 +14,11 @@ dependencies:
 
 
   cupertino_icons: ^1.0.4
-  firebase_core: ^1.11.0
-  firebase_messaging: ^11.1.0
-  firebase_analytics: ^8.3.4
-  firebase_in_app_messaging: ^0.5.0+13
-  firebase_dynamic_links: ^4.0.4
+  firebase_core: ^1.13.1
+  firebase_messaging: ^11.2.8
+#  firebase_analytics: ^9.1.2
+  firebase_in_app_messaging: ^0.6.0+9
+  firebase_dynamic_links: ^4.0.8
   carousel_slider: ^4.0.0
   flutter_staggered_grid_view: 0.4.1
   shared_preferences: ^2.0.13
@@ -30,20 +30,20 @@ dependencies:
   avatar_glow: ^2.0.2
   country_code_picker: ^2.0.2
   geocoding: ^2.0.2
-  #geolocator: ^8.1.0
-  google_maps_flutter: ^2.1.1
+  google_maps_flutter: ^2.1.2
   location: ^4.3.0
-  url_launcher: ^6.0.18
+  url_launcher: ^6.0.20
   share: ^2.0.4
   flutter_spinkit: ^5.1.0
   pin_code_fields: ^7.3.0
   flutter_dropdown_alert: ^1.0.3
-  flutter_picker: ^2.0.2
+  flutter_picker: ^2.0.3
   readmore: ^2.1.0
-  #permission_handler: ^8.3.0
   app_settings: ^4.1.1
   intl: ^0.17.0
-  tamara_sdk: ^0.9.1
+  new_version: ^0.3.0
+  version: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -61,9 +61,9 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/splash.gif
+    - assets/images/ww1.png
     - assets/images/wishlist.png
     - assets/images/pin.png
-    - assets/images/i.png
     - assets/images/q1.png
     - assets/images/q2.png
     - assets/images/no_internet.gif
@@ -71,7 +71,6 @@ flutter:
     - assets/images/not_auth.png
     - assets/images/q5.png
     - assets/images/q6.png
-    - assets/images/img.png
     - assets/images/turki_car.png
     - assets/images/turki.png
     - assets/images/medal.png
@@ -80,7 +79,6 @@ flutter:
     - assets/images/money.png
     - assets/images/turki2.png
     - assets/images/t1.gif
-    - assets/images/hary.png
     - assets/images/not_supported.png
     - assets/images/success.gif
     - assets/images/empty_cart.png

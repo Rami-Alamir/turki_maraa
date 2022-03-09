@@ -1,16 +1,16 @@
-class ConvertPhone {
+class ConvertNumbers {
   static String getPhone(String key, String phone) {
     String newPhone = key;
     newPhone += phone.length == 10
-        ? convertPhone(phone).substring(1, 10)
-        : convertPhone(phone);
+        ? convertNumbers(phone).substring(1, 10)
+        : convertNumbers(phone);
     return newPhone;
   }
 
-  static String convertPhone(String phone) {
+  static String convertNumbers(String numbers) {
     String newPhone = '';
-    for (int i = 0; i < phone.length; i++) {
-      newPhone += convertNumber(phone[i]);
+    for (int i = 0; i < numbers.length; i++) {
+      newPhone += convertNumber(numbers[i]);
     }
     return newPhone;
   }

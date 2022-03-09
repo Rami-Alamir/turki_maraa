@@ -52,8 +52,11 @@ class CartRepository {
   }
 
   //check coupon
-  Future<int> checkCoupon(body, String authorization) async {
-    final response = await _helper.post2("carts/check-coupon", body,
+  Future<int> checkCoupon(
+      LatLng latLng, String countryId, body, String authorization) async {
+    final response = await _helper.post2(
+        "carts/check-coupon?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
+        body,
         authorization: authorization);
     return response;
   }

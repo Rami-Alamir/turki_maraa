@@ -80,11 +80,11 @@ class AppState extends State<App> {
   Widget build(BuildContext context) {
     final _cart = Provider.of<CartProvider>(context);
     final _home = Provider.of<HomeProvider>(context, listen: false);
+
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
     SizeConfig().init(context);
     // WillPopScope handle android back button
-
     return WillPopScope(
       onWillPop: () async {
         final isFirstRouteInCurrentTab =
@@ -200,7 +200,7 @@ class AppState extends State<App> {
 
                         _cart.getCartData(
                             _auth.accessToken,
-                            _addressProvider.latLng,
+                            _addressProvider.selectedLatLng,
                             _addressProvider.isoCountryCode);
                       } else if (index == 1) {
                         _launchURL('tel:+966920002974');

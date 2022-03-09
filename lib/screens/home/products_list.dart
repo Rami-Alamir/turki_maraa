@@ -32,7 +32,7 @@ class _ProductsListState extends State<ProductsList> {
                   crossAxisCount: 2,
                   crossAxisSpacing: SizeConfig.screenWidth! - 360,
                   mainAxisSpacing: 0,
-                  childAspectRatio: 0.85),
+                  childAspectRatio: 0.8),
               itemCount: _productsProvider
                   .productsList.data![widget.data['index']].products!.length,
               itemBuilder: (BuildContext ctx, index) {

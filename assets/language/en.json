@@ -19,6 +19,7 @@
   "delivery_fees": "Delivery fees",
   "discount": "Discount",
   "credit": "Wallet",
+  "edit": "Edit",
   "vat_sa": "All prices include 15% VAT",
   "vat_ae": "All prices include 5% VAT",
   "terms_and_conditions_statement": "By carrying out your request, you agree to",
@@ -30,6 +31,7 @@
   "favorite" : "Favorite",
   "notifications": "Notifications",
   "faq": "FAQ",
+  "my_addresses": "My addresses",
   "about" : "About",
   "contact_whatsApp": "Contact us via WhatsApp",
   "share" : "Share",
@@ -57,7 +59,7 @@
   "are_you_sure_you_want_to_redeem_points": "Are you sure you want to redeem points?",
   "your_points_balance_is_not_enough": "Your points balance is not enough",
   "your_points_have_been_successfully_redeemed" : "Your points have been successfully redeemed",
-  "new_update_desc": "Update the app now and enjoy the new features",
+  "new_update_desc": "Update the app now and enjoy the best shopping experience",
   "new_update": "New update for the app",
   "update_now": "Update now",
   "your_current_balance": "Your current balance",
@@ -178,6 +180,13 @@
   "enter_valid_email" : "Please enter valid email",
   "email_is_used_please_enter_different_email" : "Email is used please enter a different email",
   "the_minimum_order_amount_is" : "The minimum order amount is 60",
-  "choose": "Choose"
-
+  "choose": "Choose",
+  "per_grams": "per 100 grams",
+  "the_address_used_as_a_delivery_address_cannot_be_changed" : "The address used as a delivery address cannot be changed",
+  "allow_access_to_the_location" : "Allow access to the location",
+  "delivery_to" : "Delivery to",
+  "we_need_your_location_information": "We need your location information to show the products available in your area and give you the best shopping experience.",
+  "choose_delivery_location": "Choose a delivery location",
+  "confirm_location" : "Confirm location",
+  "move_pin" : "Move the pin to select your location on map"
 }

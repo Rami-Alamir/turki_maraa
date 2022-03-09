@@ -43,7 +43,8 @@ class SettingsCard extends StatelessWidget {
                               AppLocalizations.of(context)!.locale !=
                                       Locale('ar')
                                   ? "AR"
-                                  : "EN");
+                                  : "EN",
+                              _addressProvider.selectedLatLng);
                           _language.changeLanguage();
                         },
                         icon: TURKIICONS.language,

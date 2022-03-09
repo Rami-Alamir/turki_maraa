@@ -28,8 +28,8 @@ class _ProductsHomeState extends State<ProductsHome> {
         Provider.of<AddressProvider>(context, listen: false);
     final _productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
-    _productsProvider.getFoodsPageData(
-        widget.id, _addressProvider.latLng, _addressProvider.isoCountryCode);
+    _productsProvider.getFoodsPageData(widget.id,
+        _addressProvider.selectedLatLng, _addressProvider.isoCountryCode);
     super.initState();
   }
 
@@ -71,7 +71,7 @@ class _ProductsHomeState extends State<ProductsHome> {
                     _productsProvider.setProductIsLoading = true;
                     _productsProvider.getFoodsPageData(
                         widget.id,
-                        _addressProvider.latLng,
+                        _addressProvider.selectedLatLng,
                         _addressProvider.isoCountryCode);
                   },
                 )
@@ -81,7 +81,7 @@ class _ProductsHomeState extends State<ProductsHome> {
                   onRefresh: () async {
                     await _productsProvider.getFoodsPageData(
                         widget.id,
-                        _addressProvider.latLng,
+                        _addressProvider.selectedLatLng,
                         _addressProvider.isoCountryCode,
                         isLoading: false);
                   },

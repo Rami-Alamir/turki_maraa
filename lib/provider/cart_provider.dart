@@ -225,18 +225,20 @@ class CartProvider with ChangeNotifier {
   }
 
   //check coupon
-  Future<void> checkCoupon({
-    required BuildContext context,
-  }) async {
+  Future<void> checkCoupon({required BuildContext context}) async {
     _errorMsg = false;
     _promoIsActive = true;
     var _response;
     _dialogContext = context;
     _showDialogIndicator(context);
     try {
-      _response = await CartRepository().checkCoupon({
-        "code": promoCodeController.text.trim(),
-      }, "Bearer $_authorization");
+      _response = await CartRepository().checkCoupon(
+          _latLng!,
+          _isoCountryCode!,
+          {
+            "code": promoCodeController.text.trim(),
+          },
+          "Bearer $_authorization");
       if (_response == 200) {
         await getCartData(_authorization!, _latLng!, _isoCountryCode!,
             isLoading: false);

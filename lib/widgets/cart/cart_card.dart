@@ -198,7 +198,7 @@ class CartCard extends StatelessWidget {
                               ),
                               Text(
                                 (_cartProvider.getPrice(index) * item.quantity!)
-                                        .toString() +
+                                        .toStringAsFixed(2) +
                                     " $_currency",
                                 style: Theme.of(context)
                                     .textTheme

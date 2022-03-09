@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -96,12 +97,18 @@ class OrderType extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text(
-                  AppLocalizations.of(context)!.tr(title),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                      fontSize: 12,
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal),
+                child: Container(
+                  width: SizeConfig.screenWidth! / 2 - 95,
+                  child: AutoSizeText(
+                    AppLocalizations.of(context)!.tr(title),
+                    maxLines: 2,
+                    minFontSize: 8,
+                    maxFontSize: 12,
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal),
+                  ),
                 ),
               ),
             ],

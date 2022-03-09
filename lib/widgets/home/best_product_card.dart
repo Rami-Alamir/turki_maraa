@@ -92,16 +92,21 @@ class BestProductCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 5, left: 7.5, right: 7.5),
-                child: AutoSizeText(
-                  _isAr ? product.nameAr! : product.nameEn!,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4!
-                      .copyWith(fontSize: 12, height: 1.4),
-                  minFontSize: 12,
-                  maxFontSize: 14,
-                  maxLines: 2,
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxHeight: SizeConfig.setWidgetHeight(32, 32, 32),
+                  ),
+                  child: AutoSizeText(
+                    _isAr ? product.nameAr! : product.nameEn!,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .copyWith(height: 1.2),
+                    minFontSize: 8,
+                    maxFontSize: 12,
+                    maxLines: 2,
+                  ),
                 ),
               ),
               Padding(

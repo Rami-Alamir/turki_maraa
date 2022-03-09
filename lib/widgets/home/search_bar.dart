@@ -24,8 +24,8 @@ class SearchBar extends StatelessWidget {
                 Provider.of<SearchProvider>(context, listen: false);
             final _addressProvider =
                 Provider.of<AddressProvider>(context, listen: false);
-            _searchProvider.getSearchResultList(
-                _addressProvider.latLng, _addressProvider.isoCountryCode);
+            _searchProvider.getSearchResultList(_addressProvider.selectedLatLng,
+                _addressProvider.isoCountryCode);
           },
           textAlignVertical: TextAlignVertical.center,
           cursorColor: Theme.of(context).textTheme.headline6!.color,

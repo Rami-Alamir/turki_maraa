@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -16,6 +17,9 @@ class HelpCard extends StatelessWidget {
   const HelpCard({required this.isAuth});
   @override
   Widget build(BuildContext context) {
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +41,9 @@ class HelpCard extends StatelessWidget {
                   children: [
                     ProfileRow(
                         onTap: () {
-                          String phone = '+966500852759';
+                          String phone = _addressProvider.isoCountryCode == "AE"
+                              ? "+971544055556"
+                              : '+966500852759';
                           String url;
                           if (Platform.isIOS)
                             url =
@@ -51,7 +57,9 @@ class HelpCard extends StatelessWidget {
                         title: 'contact_whatsApp'),
                     ProfileRow(
                         onTap: () {
-                          _launchURL('tel:+966920002974');
+                          _launchURL(_addressProvider.isoCountryCode == "AE"
+                              ? "tel:+97180050050"
+                              : 'tel:+966920002974');
                         },
                         icon: TURKIICONS.call_calling,
                         title: 'contact_support'),

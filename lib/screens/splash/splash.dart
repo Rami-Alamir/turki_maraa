@@ -22,6 +22,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     final _home = Provider.of<HomeProvider>(context, listen: false);
+    _home.checkNewVersion();
     _home.getHomePageData(true);
     _timer = Timer(const Duration(milliseconds: 3000), () {
       navigate();

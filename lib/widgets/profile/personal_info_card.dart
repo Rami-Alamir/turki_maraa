@@ -23,6 +23,10 @@ class PersonalInfoCard extends StatelessWidget {
                     icon: TURKIICONS.user6_1,
                     title: 'personal_information'),
                 ProfileRow(
+                    onTap: () => Navigator.pushNamed(context, '/MyAddresses'),
+                    icon: TURKIICONS.home_location_white,
+                    title: 'my_addresses'),
+                ProfileRow(
                     onTap: () => Navigator.pushNamed(context, '/Favourite'),
                     icon: TURKIICONS.cart_favourite_2,
                     withDivider: false,

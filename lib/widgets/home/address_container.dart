@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/user_address.dart';
 import 'package:new_turki/provider/address_provider.dart';
-import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
+import 'package:new_turki/widgets/shared/add_new_address.dart';
 import 'package:provider/provider.dart';
 
 class AddressContainer extends StatefulWidget {
@@ -78,7 +77,7 @@ class _AddressContainerState extends State<AddressContainer> {
                                             .currentIsoCountryCode);
                                     _addressProvider.isoCountryCode =
                                         _homeProvider.currentIsoCountryCode;
-                                    _addressProvider.latLng =
+                                    _addressProvider.setSelectedLatLng =
                                         _homeProvider.latLng!;
                                   },
                                   child: addressRow(
@@ -140,7 +139,8 @@ class _AddressContainerState extends State<AddressContainer> {
                                             _homeProvider.setIsLoading = true;
                                             _homeProvider.getHomePageData(
                                               false,
-                                              latLng: _addressProvider.latLng,
+                                              latLng: _addressProvider
+                                                  .selectedLatLng,
                                               countryId: _addressProvider
                                                   .isoCountryCode,
                                             );
@@ -153,7 +153,7 @@ class _AddressContainerState extends State<AddressContainer> {
                                       },
                                       child: addressRow(
                                           _homeProvider.selectedOrderType == 0
-                                              ? _addressList![index].address!
+                                              ? _addressList![index].comment!
                                               : AppLocalizations.of(context)!
                                                   .tr('soon'),
                                           divider: index !=
@@ -169,7 +169,7 @@ class _AddressContainerState extends State<AddressContainer> {
                             ),
                             Visibility(
                                 visible: _homeProvider.selectedOrderType == 0,
-                                child: addNewAddress())
+                                child: AddNewAddress())
                           ],
                         )),
                   ),
@@ -226,7 +226,7 @@ class _AddressContainerState extends State<AddressContainer> {
                                                           .tr(
                                                               'current_location'))
                                               : _addressList![_addressProvider.selectedAddress]
-                                                  .address!
+                                                  .comment!
                                           : AppLocalizations.of(context)!
                                               .tr('soon'),
                                   style: Theme.of(context)
@@ -284,47 +284,6 @@ class _AddressContainerState extends State<AddressContainer> {
                 padding: const EdgeInsets.all(4.0),
               ),
       ],
-    );
-  }
-
-  Widget addNewAddress() {
-    return InkWell(
-      onTap: () {
-        final _auth = Provider.of<Auth>(context, listen: false);
-        final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-
-        if (!_auth.isAuth && _homeProvider.locationServiceStatus == 1)
-          Navigator.of(context, rootNavigator: true).pushNamed('/Login');
-        else
-          Navigator.pushNamed(context, '/AddNewAddress');
-
-        // final _auth = Provider.of<Auth>(context, listen: false);
-        // if (_auth.isAuth) {
-        //   _selected = false;
-        //   Navigator.pushNamed(context, '/AddNewAddress');
-        // } else
-        //   Navigator.of(context, rootNavigator: true).pushNamed('/Login');
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: Row(
-          children: [
-            RoundedRectangleButton(
-              onPressed: () {},
-              padding: const EdgeInsets.all(0),
-              width: 22,
-              height: 22,
-              fontSize: 18,
-              title: '+',
-            ),
-            Text(AppLocalizations.of(context)!.tr('add_new_delivery_address'),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.normal)),
-          ],
-        ),
-      ),
     );
   }
 }

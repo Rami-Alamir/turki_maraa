@@ -61,7 +61,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                             if (_auth.isAuth)
                               _cart.getCartData(
                                   _auth.accessToken,
-                                  _addressProvider.latLng,
+                                  _addressProvider.selectedLatLng,
                                   _addressProvider.isoCountryCode);
                           },
                         )

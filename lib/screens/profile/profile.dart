@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/user_data.dart';
 import 'package:new_turki/provider/auth.dart';
+import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/provider/orders_provider.dart';
+import 'package:new_turki/screens/home/home.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/profile/help_card.dart';
 import 'package:new_turki/widgets/profile/personal_info_card.dart';
@@ -23,6 +25,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final _auth = Provider.of<Auth>(context);
     final _orders = Provider.of<OrdersProvider>(context);
+    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
 
     return Scaffold(
       appBar: PrimaryAppBar(
@@ -64,7 +67,7 @@ class _ProfileState extends State<Profile> {
                       color: Theme.of(context).colorScheme.secondaryVariant,
                     ),
                     ProfileFooter(
-                      version: '5.0.0',
+                      version: _homeProvider.currentVersion,
                     )
                   ],
                 ),

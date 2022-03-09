@@ -113,12 +113,15 @@ class Extra {
   String? nameEn;
   String? price;
   String? salePrice;
+  String? weight;
+
   Extra({
     this.id,
     this.nameAr,
     this.nameEn,
     this.price,
     this.salePrice,
+    this.weight,
   });
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         id: json["id"] ?? 0,
@@ -126,6 +129,7 @@ class Extra {
         nameEn: json["name_en"] ?? "",
         price: json["price"] ?? "",
         salePrice: json["sale_price"] ?? "0.0",
+        weight: json["weight"] ?? "",
       );
 }
 

@@ -17,12 +17,14 @@ class ProductDescription extends StatelessWidget {
   final double price;
   final double salePrice;
   final bool isFavourite;
+  final String weight;
 
   const ProductDescription(
       {required this.product,
       required this.price,
       required this.salePrice,
-      required this.isFavourite});
+      required this.isFavourite,
+      required this.weight});
 
   Future<void> _createDynamicLink(bool short, String link) async {
     // // setState(() {
@@ -261,15 +263,16 @@ class ProductDescription extends StatelessWidget {
             // ),
             ),
         Row(
-          mainAxisAlignment: ((product.data!.calories!.length > 0) &
-                  (product.data!.weight!.length > 0))
-              ? MainAxisAlignment.spaceAround
-              : MainAxisAlignment.start,
+          mainAxisAlignment:
+              ((product.data!.calories!.length > 0) & (weight.length > 0))
+                  ? MainAxisAlignment.spaceAround
+                  : MainAxisAlignment.start,
           children: [
             _item(
                 context: context,
                 title: 'weight',
-                value: product.data!.weight!,
+                value: weight,
+                description: "",
                 size: 20,
                 icon: TURKIICONS.weight_1),
             Visibility(
@@ -278,6 +281,7 @@ class ProductDescription extends StatelessWidget {
             _item(
                 context: context,
                 title: 'calories',
+                description: AppLocalizations.of(context)!.tr('per_grams'),
                 value: product.data!.calories!,
                 size: 40,
                 icon: TURKIICONS.calories_1),
@@ -292,6 +296,7 @@ class ProductDescription extends StatelessWidget {
       required String title,
       required IconData icon,
       required String value,
+      required String description,
       required double size}) {
     return Visibility(
       visible: value.length > 0,
@@ -337,20 +342,14 @@ class ProductDescription extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        value,
+                        value + " ",
                         style: Theme.of(context).textTheme.headline4?.copyWith(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
-                      Visibility(
-                        visible: size == 20,
-                        child: Text(
-                          " ",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4
-                              ?.copyWith(
-                                  fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
+                      Text(
+                        description,
+                        style: Theme.of(context).textTheme.headline4?.copyWith(
+                            fontSize: 10, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

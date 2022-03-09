@@ -186,6 +186,15 @@ class ProductsProvider with ChangeNotifier {
   }
 
   // used in product details
+  String getProductWeight() {
+    String weight = _productData!.data!.weight!;
+    if (_selectedSize >=
+        0) if (_productData!.data!.sizes![_selectedSize].weight!.length > 0)
+      weight = _productData!.data!.sizes![_selectedSize].weight!;
+    return weight;
+  }
+
+  // used in product details
   double getProductPrice() {
     double price = double.parse(_productData!.data!.price!);
     if (_selectedSize >= 0)

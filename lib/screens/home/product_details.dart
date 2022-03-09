@@ -33,7 +33,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     _productsProvider.setIsFavourite = _favourite.isFavourite(widget.id);
     _productsProvider.initExtras();
     _productsProvider.getProductData(widget.id.toString(),
-        _addressProvider.latLng, _addressProvider.isoCountryCode);
+        _addressProvider.selectedLatLng, _addressProvider.isoCountryCode);
     super.initState();
   }
 
@@ -55,7 +55,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     _productsProvider.setProductIsLoading = true;
                     _productsProvider.getProductData(
                         widget.id.toString(),
-                        _addressProvider.latLng,
+                        _addressProvider.selectedLatLng,
                         _addressProvider.isoCountryCode);
                   },
                 )
@@ -67,7 +67,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       onRefresh: () async {
                         _productsProvider.getProductData(
                             widget.id.toString(),
-                            _addressProvider.latLng,
+                            _addressProvider.selectedLatLng,
                             _addressProvider.isoCountryCode);
                       },
                       child: ListView(
@@ -80,6 +80,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ProductDescription(
                               isFavourite: _productsProvider.isFavourite,
                               product: _productsProvider.productData,
+                              weight: _productsProvider.getProductWeight(),
                               salePrice:
                                   _productsProvider.getProductSalePrice(),
                               price: _productsProvider.getProductPrice()),

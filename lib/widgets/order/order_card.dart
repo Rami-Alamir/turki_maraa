@@ -24,7 +24,7 @@ class OrderCard extends StatelessWidget {
         onTap: () => Navigator.pushNamed(context, '/OrderDetails',
             arguments: order.refNo),
         child: Container(
-            height: 250,
+            constraints: BoxConstraints(minHeight: 250),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.bottomRight,
@@ -57,7 +57,7 @@ class OrderCard extends StatelessWidget {
                     borderRadius: BorderRadius.all(const Radius.circular(8)),
                     child: Container(
                       width: SizeConfig.screenWidth,
-                      height: 175,
+                      constraints: BoxConstraints(minHeight: 175),
                       color: Theme.of(context).colorScheme.secondary,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8.0),

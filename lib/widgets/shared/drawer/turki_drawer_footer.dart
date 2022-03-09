@@ -1,17 +1,21 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:math' as math;
 
 class TurkiDrawerFooter extends StatelessWidget {
-  final String _phoneUrl = 'tel:+966920002974';
   final bool ltr;
 
   const TurkiDrawerFooter({required this.ltr});
 
   @override
   Widget build(BuildContext context) {
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(10, 30, 0, 0),
       child: Row(
@@ -19,7 +23,11 @@ class TurkiDrawerFooter extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              _makePhoneCall(_phoneUrl);
+              _makePhoneCall(
+                _addressProvider.isoCountryCode == "AE"
+                    ? "tel:+97180050050"
+                    : 'tel:+966920002974',
+              );
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,

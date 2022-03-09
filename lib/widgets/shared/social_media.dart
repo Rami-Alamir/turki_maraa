@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/social_icons_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SocialMedia extends StatelessWidget {
@@ -8,6 +10,9 @@ class SocialMedia extends StatelessWidget {
   const SocialMedia({this.color = const Color.fromRGBO(90, 4, 9, 1.0)});
   @override
   Widget build(BuildContext context) {
+    final _addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -18,7 +23,9 @@ class SocialMedia extends StatelessWidget {
             children: [
               _socialIcon(
                 context: context,
-                url: 'https://www.instagram.com/turki_dbh/',
+                url: _addressProvider.isoCountryCode == "AE"
+                    ? "https://www.instagram.com/turki.dbh/"
+                    : 'https://www.instagram.com/turki_dbh/',
                 icon: SocialIcons.instagram_2,
               ),
               _socialIcon(

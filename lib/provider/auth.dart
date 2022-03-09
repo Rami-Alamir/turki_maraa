@@ -14,7 +14,7 @@ import 'package:new_turki/repository/registration_repository.dart';
 import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/convert_phone.dart';
+import 'package:new_turki/utilities/convert_numbers.dart';
 import 'package:new_turki/utilities/show_dialog.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +57,7 @@ class Auth with ChangeNotifier {
   String get accessToken => _accessToken!;
   int get gender => _gender!;
   String get userPhone =>
-      ConvertPhone.getPhone(keyController.text, phoneController.text);
+      ConvertNumbers.getPhone(keyController.text, phoneController.text);
   bool get isLoading => _isLoading;
 
   set setIsLoading(bool value) {
@@ -100,7 +100,7 @@ class Auth with ChangeNotifier {
     _showDialogIndicator(context);
     try {
       _userPhone =
-          ConvertPhone.getPhone(keyController.text, phoneController.text);
+          ConvertNumbers.getPhone(keyController.text, phoneController.text);
       _userType =
           await RegistrationRepository().sendOTP({"mobile": _userPhone});
       _isNewUser = _userType!.code == "C100";
@@ -129,8 +129,10 @@ class Auth with ChangeNotifier {
       try {
         _response = await RegistrationRepository().verifyOtpCode({
           "mobile": _userPhone,
-          "mobile_verification_code": otpController.text.trim()
+          "mobile_verification_code":
+              ConvertNumbers.convertNumbers(otpController.text.trim())
         });
+        print('user$_userPhone');
         if (_response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(_response.body.toString()));
           _accessToken = _userData!.data!.accessToken;

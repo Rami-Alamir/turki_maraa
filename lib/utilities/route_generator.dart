@@ -3,7 +3,7 @@ import 'package:new_turki/models/discover_data.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/screens/cart/shopping_cart.dart';
 import 'package:new_turki/screens/chat/chat.dart';
-import 'package:new_turki/screens/home/add_new_address.dart';
+import 'package:new_turki/screens/home/select_address.dart';
 import 'package:new_turki/screens/home/discover.dart';
 import 'package:new_turki/screens/home/home.dart';
 import 'package:new_turki/screens/home/products_home.dart';
@@ -21,6 +21,7 @@ import 'package:new_turki/screens/profile/add_gift_card.dart';
 import 'package:new_turki/screens/profile/faq.dart';
 import 'package:new_turki/screens/favourite/favourite.dart';
 import 'package:new_turki/screens/profile/login.dart';
+import 'package:new_turki/screens/profile/my_addresses.dart';
 import 'package:new_turki/screens/profile/notification.dart';
 import 'package:new_turki/screens/profile/personal_information.dart';
 import 'package:new_turki/screens/profile/phone_login.dart';
@@ -46,6 +47,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => NoInternet());
       case '/NewVersion':
         return MaterialPageRoute(builder: (_) => NewVersion());
+      case '/MyAddresses':
+        return MaterialPageRoute(builder: (_) => MyAddresses());
       case '/Home':
         return MaterialPageRoute(
             builder: (_) => Home(
@@ -95,8 +98,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => AddGiftCard());
       case '/ProductsHome':
         return MaterialPageRoute(builder: (_) => ProductsHome(id: args as int));
-      case '/AddNewAddress':
-        return MaterialPageRoute(builder: (_) => AddNewAddress());
+      case '/SelectAddress':
+        return MaterialPageRoute(
+            builder: (_) => SelectAddress(
+                  addressIndex: args as int,
+                ));
       case '/Search':
         return MaterialPageRoute(builder: (_) => Search());
       case '/Discover':

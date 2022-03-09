@@ -23,7 +23,7 @@ class LocationDisabled extends StatelessWidget {
               width: SizeConfig.screenWidth! * .7,
               child: Text(
                 AppLocalizations.of(context)!
-                    .tr("please_allow_access_to_the_location"),
+                    .tr("we_need_your_location_information"),
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
@@ -32,7 +32,8 @@ class LocationDisabled extends StatelessWidget {
               ),
             ),
             RoundedRectangleButton(
-                title: AppLocalizations.of(context)!.tr('go_to_settings'),
+                title: AppLocalizations.of(context)!
+                    .tr('allow_access_to_the_location'),
                 onPressed: () {
                   AppSettings.openAppSettings();
                 })

@@ -27,8 +27,8 @@ class _DiscoverState extends State<Discover> {
         Provider.of<ProductsProvider>(context, listen: false);
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
-    _productsProvider.getDiscoverItem(widget.item.id!, _addressProvider.latLng,
-        _addressProvider.isoCountryCode);
+    _productsProvider.getDiscoverItem(widget.item.id!,
+        _addressProvider.selectedLatLng, _addressProvider.isoCountryCode);
     super.initState();
   }
 
@@ -50,7 +50,7 @@ class _DiscoverState extends State<Discover> {
                   onPressed: () {
                     _productsProvider.getDiscoverItem(
                         widget.item.id!,
-                        _addressProvider.latLng,
+                        _addressProvider.selectedLatLng,
                         _addressProvider.isoCountryCode);
                   },
                 )
@@ -59,7 +59,7 @@ class _DiscoverState extends State<Discover> {
                   onRefresh: () async {
                     await _productsProvider.getDiscoverItem(
                         widget.item.id!,
-                        _addressProvider.latLng,
+                        _addressProvider.selectedLatLng,
                         _addressProvider.isoCountryCode);
                   },
                   child: ListView(

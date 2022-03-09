@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:new_turki/provider/auth.dart';
+import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/firebase_helper.dart';
 import 'package:new_turki/utilities/route_generator.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -31,7 +32,6 @@ class _MyAppState extends State<MyApp> {
     appTheme.setThemeData = widget.theme;
     final auth = Provider.of<Auth>(context, listen: false);
     auth.getUserData(context, widget.token);
-
     super.initState();
   }
 
@@ -40,15 +40,13 @@ class _MyAppState extends State<MyApp> {
     // make status bar transparent
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-
     final appTheme = Provider.of<AppTheme>(context);
-
     //Consumer for change app language only
     return Consumer<AppLanguage>(builder: (ctx, lang, child) {
       return MaterialApp(
-        navigatorObservers: [
-          FirebaseHelper.observer!,
-        ],
+        // navigatorObservers: [
+        //   FirebaseHelper.observer!,
+        // ],
         theme: appTheme.getThemeData,
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [
