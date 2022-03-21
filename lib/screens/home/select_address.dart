@@ -52,6 +52,10 @@ class _SelectAddressState extends State<SelectAddress> {
             height: SizeConfig.screenHeight,
             width: SizeConfig.screenWidth,
             child: GoogleMap(
+              layoutDirection:
+                  AppLocalizations.of(context)!.locale!.languageCode == "ar"
+                      ? TextDirection.rtl
+                      : TextDirection.ltr,
               minMaxZoomPreference: MinMaxZoomPreference.unbounded,
               markers: Set<Marker>.of(
                 <Marker>[
@@ -79,6 +83,8 @@ class _SelectAddressState extends State<SelectAddress> {
               onMapCreated: _onMapCreated,
               onCameraMove: (latLng) {
                 _addressProvider.mapLatLng = latLng.target;
+                //  _addressProvider.printA(latLng.target);
+
                 setState(() {});
               },
               onTap: (latLng) {

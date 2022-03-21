@@ -3,7 +3,6 @@ import 'package:new_turki/models/banners_data.dart';
 import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/home/banners.dart';
 import 'package:new_turki/widgets/shared/logo.dart';
-import 'package:new_turki/widgets/shared/primary_app_bar.dart';
 
 class FoodAppBar extends StatelessWidget {
   final bool changeColor;

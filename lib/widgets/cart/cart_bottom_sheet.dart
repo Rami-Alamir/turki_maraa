@@ -7,7 +7,6 @@ import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/widgets/shared/invoice.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
-import 'promo_code.dart';
 
 class CartBottomSheet extends StatefulWidget {
   final InvoicePreview invoicePreview;
@@ -21,7 +20,7 @@ class CartBottomSheet extends StatefulWidget {
 }
 
 class _CartBottomSheetState extends State<CartBottomSheet> {
-  bool _isExpanded = false;
+  bool _isExpanded = true;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +37,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
         return true;
       },
       child: DraggableScrollableSheet(
-        initialChildSize: 0.5,
-        maxChildSize: 0.75,
+        initialChildSize: 0.25,
+        maxChildSize: 0.5,
         builder: (BuildContext context, ScrollController scrollController) {
           return Container(
             decoration: BoxDecoration(
@@ -80,17 +79,6 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 !_isExpanded
                     ? Column(
                         children: [
-                          PromoCode(
-                            errorMsg: _cart.errorMsg,
-                            promoCodeController: _cart.promoCodeController,
-                            promoIsActive: _cart.promoIsActive,
-                            apply: () {
-                              _cart.checkCoupon(context: context);
-                            },
-                            remove: () {
-                              _cart.removePromoCode();
-                            },
-                          ),
                           Invoice(
                             myCredit: widget.invoicePreview.walletAmountUsed!,
                             total:
@@ -164,23 +152,13 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     fontSize: 16,
                     onPressed: () {
-                      if (widget.invoicePreview.totalAmountAfterDiscount! < 60)
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(
-                          AppLocalizations.of(context)!
-                                  .tr('the_minimum_order_amount_is') +
-                              " $_currency",
-                          textAlign: TextAlign.center,
-                        )));
-                      else
-                        _cart.placeOrder(
-                            context: context,
-                            addressId: _addressProvider.selectedAddress == -1
-                                ? -1
-                                : _addressProvider
-                                    .userAddress!
-                                    .data![_addressProvider.selectedAddress]
-                                    .id!);
+                      _cart.placeOrder(
+                          context: context,
+                          currency: _currency,
+                          addressId: _addressProvider.selectedAddress == -1
+                              ? -1
+                              : _addressProvider.userAddress!
+                                  .data![_addressProvider.selectedAddress].id!);
                     })
               ],
             ),

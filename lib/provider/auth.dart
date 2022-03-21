@@ -153,7 +153,7 @@ class Auth with ChangeNotifier {
             _homeProvider.setLocationServiceStatus = -1;
             _homeProvider.clearDescription();
             _addressProvider.clearDescription();
-            _homeProvider..getHomePageData(true);
+            _homeProvider.getHomePageData(true);
           }
           Navigator.pop(_dialogContext!);
           _isNewUser!

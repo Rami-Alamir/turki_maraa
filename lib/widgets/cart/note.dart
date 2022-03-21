@@ -14,7 +14,7 @@ class Note extends StatelessWidget {
       children: [
         Padding(
           padding:
-              const EdgeInsets.only(right: 15.0, top: 30, left: 15, bottom: 15),
+              const EdgeInsets.only(right: 15.0, top: 15, left: 15, bottom: 15),
           child: Text(
             AppLocalizations.of(context)!.tr('note'),
             style: Theme.of(context)
@@ -39,6 +39,7 @@ class Note extends StatelessWidget {
                 child: TextFormField(
                   textAlignVertical: TextAlignVertical.center,
                   maxLines: 5,
+                  maxLength: 250,
                   keyboardAppearance: Brightness.dark,
                   textAlign: TextAlign.start,
                   cursorColor: Theme.of(context).primaryColor,

@@ -7,6 +7,7 @@ import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
+import '../utilities/get_strings.dart';
 import 'home_provider.dart';
 
 class AddressProvider with ChangeNotifier {
@@ -58,6 +59,15 @@ class AddressProvider with ChangeNotifier {
     _mapLatLng = value;
   }
 
+  printA(latLng) async {
+    print('ffff');
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        latLng.latitude, latLng.longitude,
+        localeIdentifier: 'ar');
+    Placemark place = placemark.first;
+    print(place.toString());
+  }
+
   set isoCountryCode(String value) {
     _isoCountryCode = value;
   }
@@ -82,7 +92,9 @@ class AddressProvider with ChangeNotifier {
 
   void initMapData(String languageCode) async {
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(size: Size(25, 25)), 'assets/images/pin.png')
+            ImageConfiguration(
+                size: Platform.isAndroid ? Size(10, 10) : Size(25, 25)),
+            'assets/images/pin.png')
         .then((onValue) {
       _myMarker = onValue;
       notifyListeners();
@@ -112,16 +124,21 @@ class AddressProvider with ChangeNotifier {
       _showDialogIndicator(_dialogContext);
       var _response;
       try {
+        print('a');
         List<Placemark> placemark = await placemarkFromCoordinates(
             _mapLatLng!.latitude, _mapLatLng!.longitude,
             localeIdentifier: languageCode);
+        print('b');
+        String comment =
+            "${(descriptionController.text.length > 0 ? "${descriptionController.text}" : "${GetStrings().locationDescription(placemark.first)}")}";
+        String address =
+            "${(GetStrings().locationDescription(placemark.first))}";
         _isoCountryCode = placemark.first.isoCountryCode;
+        print(" addddddd ${GetStrings().locationDescription(placemark.first)}");
         _response = await UserRepository().addAddress({
           "country_iso_code": _isoCountryCode,
-          "address":
-              "${Platform.isAndroid ? placemark.first.postalCode : placemark.first.street} - ${placemark.first.subLocality} ",
-          "comment":
-              "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "${Platform.isAndroid ? placemark.first.postalCode : placemark.first.street} - ${placemark.first.subLocality} "} ",
+          "address": address.isEmpty ? "." : address,
+          "comment": comment.isEmpty ? "." : comment,
           "label": "label",
           "is_default": "0",
           "long": "${_mapLatLng!.longitude}",
@@ -134,7 +151,6 @@ class AddressProvider with ChangeNotifier {
           _selectedAddress = (_userAddress?.data?.length ?? 0) - 1;
           Navigator.pop(_dialogContext!);
           Navigator.pop(context);
-
           _homeProvider.setIsLoading = true;
           if (_homeProvider.locationServiceStatus == 0)
             _homeProvider.setLocationServiceStatus = 2;
@@ -150,6 +166,7 @@ class AddressProvider with ChangeNotifier {
                   : "unexpected_error");
         }
       } catch (e) {
+        print('addNewAddress catch');
         print(e.toString());
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
         showSnackBar(context, "unexpected_error");
@@ -172,10 +189,9 @@ class AddressProvider with ChangeNotifier {
       _isoCountryCode = placemark.first.isoCountryCode;
       _response = await UserRepository().updateAddress({
         "country_iso_code": _isoCountryCode,
-        "address":
-            "${Platform.isAndroid ? placemark.first.postalCode : placemark.first.street} - ${placemark.first.subLocality} ",
+        "address": "${GetStrings().locationDescription(placemark.first)}",
         "comment":
-            "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "."} ",
+            "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "${GetStrings().locationDescription(placemark.first)}"}",
         "label": "label",
         "is_default": "0",
         "long": "${_mapLatLng!.longitude}",
@@ -246,12 +262,8 @@ class AddressProvider with ChangeNotifier {
           localeIdentifier: languageCode);
       Placemark place = placemark.first;
       _isoCountryCode = place.isoCountryCode;
-      if (Platform.isAndroid)
-        _addressDescription = "${place.postalCode} - ${place.subLocality}";
-      else
-        _addressDescription = "${place.street} - ${place.subLocality} ";
-      if (_addressDescription == " -  ")
-        _addressDescription = "${place.postalCode} - ${place.name}";
+      _addressDescription = GetStrings().locationDescription(place);
+
       notifyListeners();
     } catch (e) {
       print(e);

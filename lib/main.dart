@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,7 @@ import 'package:new_turki/provider/app_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/provider/favourite_provider.dart';
+import 'package:new_turki/utilities/firebase_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'provider/address_provider.dart';
 import 'provider/app_theme.dart';
@@ -24,7 +26,10 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
   await Firebase.initializeApp();
+  FirebaseInAppMessaging.instance.toString();
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FirebaseHelper();
+
   messaging.getToken().then((token) {
     print("token");
     print(token); // Print the Token in Console

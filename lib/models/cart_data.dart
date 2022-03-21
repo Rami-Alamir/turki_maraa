@@ -8,10 +8,18 @@ class CartData {
 
 class Data {
   Cart? cart;
+  List<MinOrder>? minOrder;
+
   InvoicePreview? invoicePreview;
-  Data({this.cart, this.invoicePreview});
+  Data({this.cart, this.invoicePreview, this.minOrder});
   Data.fromJson(Map<String, dynamic> json) {
     cart = json['cart'] != null ? new Cart.fromJson(json['cart']) : null;
+    if (json['min_order'] != null) {
+      minOrder = <MinOrder>[];
+      json['min_order'].forEach((v) {
+        minOrder!.add(MinOrder.fromJson(v));
+      });
+    }
     invoicePreview = json['invoice-preview'] != null
         ? new InvoicePreview.fromJson(json['invoice-preview'])
         : null;
@@ -286,6 +294,20 @@ class Size {
     data['price'] = this.price;
     data['sale_price'] = this.salePrice;
     return data;
+  }
+}
+
+class MinOrder {
+  int? id;
+  int? countryId;
+  String? minOrder;
+
+  MinOrder({this.id, this.countryId, this.minOrder});
+
+  MinOrder.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    countryId = json['country_id'];
+    minOrder = json['min_order'];
   }
 }
 

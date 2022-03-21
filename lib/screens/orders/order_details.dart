@@ -11,6 +11,7 @@ import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/order/order_details_header.dart';
+import '../../widgets/order/order_note.dart';
 
 class OrderDetails extends StatefulWidget {
   final String? id;
@@ -64,6 +65,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           PaymentMethod(
                               paymentTypeId:
                                   _orders.order.data!.paymentTypeId!),
+                          OrderNote(note: _orders.order.data!.comment!),
                           OrderDetailsCard(
                             order: _orders.order,
                             count: _orders.orderItems(),

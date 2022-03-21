@@ -47,8 +47,8 @@ class CategoryCard extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headline3!
-                    .copyWith(fontSize: title.length < 15 ? 20 : 16),
-                maxLines: 1,
+                    .copyWith(fontSize: title.length < 12 ? 20 : 14),
+                maxLines: title.length < 12 ? 1 : 2,
               ),
             ),
             Container(

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:new_turki/provider/app_language.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/screens/intro/intro.dart';
@@ -23,7 +24,7 @@ class _SplashState extends State<Splash> {
     super.initState();
     final _home = Provider.of<HomeProvider>(context, listen: false);
     _home.checkNewVersion();
-    _home.getHomePageData(true);
+    _home.getHomePageData(true, languageCode: AppLanguage().language);
     _timer = Timer(const Duration(milliseconds: 3000), () {
       navigate();
     });

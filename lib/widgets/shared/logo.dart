@@ -7,8 +7,11 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      type == 2 ? 'assets/images/turki2.png' : 'assets/images/turki.png',
-      height: 29,
+      "assets/images/turki_gold.png",
+
+      //   type == 2 ? 'assets/images/turki2.png' : 'assets/images/turki.png',
+      width: 200,
+      height: 50,
     );
   }
 }

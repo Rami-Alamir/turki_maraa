@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/products.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -45,14 +46,19 @@ class ProductsSection extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                      _isAr
-                                          ? products.data![index].typeAr!
-                                          : products.data![index].typeEn!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1!
-                                          .copyWith(fontSize: 16)),
+                                  Container(
+                                    width: SizeConfig.screenWidth! * 0.66,
+                                    child: AutoSizeText(
+                                        _isAr
+                                            ? products.data![index].typeAr!
+                                            : products.data![index].typeEn!,
+                                        maxFontSize: 16,
+                                        maxLines: 8,
+                                        minFontSize: 10,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1),
+                                  ),
                                   Row(
                                     children: [
                                       InkWell(

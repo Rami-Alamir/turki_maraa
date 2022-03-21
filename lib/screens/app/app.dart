@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/cart_provider.dart';
@@ -26,6 +28,35 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    // if (initialMessage != null) {
+    //   _handleMessage(initialMessage);
+    // }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    // FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+  //
+  // void _handleMessage(RemoteMessage message) {
+  //   print("test FCM");
+  //   print("${message.toString()}");
+  //   print("${message.data['type']}");
+  //   if (message.data['type'] == '/FAQ') {
+  //     Navigator.pushNamed(
+  //       context,
+  //       '/FAQ',
+  //     );
+  //   }
+  // }
+
   // this is static property so other widget throughout the app can access it simply
   static int currentTab = 0;
   int index = 0;
@@ -71,6 +102,8 @@ class AppState extends State<App> {
 
   @override
   void initState() {
+    setupInteractedMessage();
+
     index = widget.index;
     currentTab = widget.index;
     super.initState();
@@ -159,9 +192,11 @@ class AppState extends State<App> {
                                   decoration: BoxDecoration(
                                       color: Colors.red,
                                       shape: BoxShape.circle),
-                                  child: Text(
+                                  child: AutoSizeText(
                                     _cart.cartLength.toString(),
                                     textAlign: TextAlign.center,
+                                    minFontSize: 6,
+                                    maxFontSize: 12,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w500,
@@ -192,18 +227,18 @@ class AppState extends State<App> {
                         final _addressProvider = Provider.of<AddressProvider>(
                             context,
                             listen: false);
-
                         _cart.setIsLoading = true;
                         _cart.setSelectedTime = -1;
                         _cart.setSelectedPayment = -1;
                         _cart.setSelectedDate = -1;
-
                         _cart.getCartData(
                             _auth.accessToken,
                             _addressProvider.selectedLatLng,
                             _addressProvider.isoCountryCode);
                       } else if (index == 1) {
-                        _launchURL('tel:+966920002974');
+                        _launchURL(_addressProvider.isoCountryCode == "AE"
+                            ? "tel:+97180050050"
+                            : 'tel:+966920002974');
                       }
                     }),
               ),

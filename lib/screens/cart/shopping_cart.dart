@@ -20,6 +20,9 @@ import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/cart/note.dart';
+import '../../widgets/cart/promo_code.dart';
+
 class ShoppingCart extends StatefulWidget {
   @override
   _ShoppingCartState createState() => _ShoppingCartState();
@@ -41,6 +44,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
         Provider.of<AddressProvider>(context, listen: false);
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
     if (_auth.isAuth) print(_auth.accessToken);
+    final String _currentLocation = (_addressProvider.addressDescription ??
+        (AppLocalizations.of(context)!.locale!.languageCode == "ar"
+            ? (_homeProvider.currentLocationDescription ??
+                AppLocalizations.of(context)!.tr('current_location'))
+            : (_homeProvider.currentLocationDescription2 ??
+                AppLocalizations.of(context)!.tr('current_location'))));
     return Scaffold(
       appBar: PrimaryAppBar(
         title: AppLocalizations.of(context)!.tr('cart'),
@@ -72,6 +81,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                               child: Stack(
                                 children: [
                                   ListView(
+                                    controller: _cart.scrollController,
                                     physics: const ScrollPhysics(),
                                     children: [
                                       ListView.builder(
@@ -93,11 +103,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                           address: _addressProvider
                                                       .selectedAddress ==
                                                   -1
-                                              ? _addressProvider
-                                                      .addressDescription ??
-                                                  _homeProvider
-                                                      .currentLocationDescription ??
-                                                  ""
+                                              ? _currentLocation
                                               : _addressProvider
                                                   .userAddress!
                                                   .data![_addressProvider
@@ -139,8 +145,19 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                       UseCredit(
                                           credit:
                                               _auth.userData!.data!.wallet!),
-
-                                      // Note(),
+                                      PromoCode(
+                                        errorMsg: _cart.errorMsg,
+                                        promoCodeController:
+                                            _cart.promoCodeController,
+                                        promoIsActive: _cart.promoIsActive,
+                                        apply: () {
+                                          _cart.checkCoupon(context: context);
+                                        },
+                                        remove: () {
+                                          _cart.removePromoCode();
+                                        },
+                                      ),
+                                      Note(),
                                       SizedBox(
                                         height: SizeConfig.screenHeight! * 0.25,
                                       )

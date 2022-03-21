@@ -86,9 +86,9 @@ class PaymentMethod extends StatelessWidget {
                       width: SizeConfig.setWidgetWidth(95, 130, 130),
                       child: Text(
                         AppLocalizations.of(context)!.tr(title),
-                        maxLines: 1,
+                        maxLines: 2,
                         style: Theme.of(context).textTheme.headline5!.copyWith(
-                            fontSize: 12,
+                            fontSize: 11,
                             height: 2,
                             fontWeight: FontWeight.bold,
                             color: selected

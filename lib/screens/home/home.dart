@@ -83,6 +83,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
             LatLng(24.727726176454684, 46.58666208381939) &&
         _homeProvider.latLng != null) {
       _addressProvider.setSelectedLatLng = _homeProvider.latLng!;
+      _addressProvider.mapLatLng = _homeProvider.latLng!;
       _addressProvider.isoCountryCode = _homeProvider.isoCountryCode;
     }
     print(

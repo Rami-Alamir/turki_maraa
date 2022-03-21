@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -49,9 +48,11 @@ class PromoCode extends StatelessWidget {
                   constraints: BoxConstraints(minHeight: 55),
                   width: SizeConfig.screenWidth,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        width: SizeConfig.screenWidth! * 0.75,
+                        width: SizeConfig.screenWidth! * 0.63,
                         child: Form(
                           child: TextFormField(
                             textAlignVertical: TextAlignVertical.center,
@@ -127,15 +128,22 @@ class PromoCode extends StatelessWidget {
                             promoIsActive ? remove() : apply();
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            !promoIsActive
-                                ? AppLocalizations.of(context)!.tr('apply')
-                                : AppLocalizations.of(context)!.tr('remove'),
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(fontSize: 12),
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Container(
+                            height: 50,
+                            width: SizeConfig.screenWidth! / 5.5,
+                            child: Center(
+                              child: Text(
+                                !promoIsActive
+                                    ? AppLocalizations.of(context)!.tr('apply')
+                                    : AppLocalizations.of(context)!
+                                        .tr('remove'),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1!
+                                    .copyWith(fontSize: 12),
+                              ),
+                            ),
                           ),
                         ),
                       )

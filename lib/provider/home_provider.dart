@@ -9,7 +9,7 @@ import 'package:new_turki/repository/home_repository.dart';
 import 'package:new_turki/repository/products_repository.dart';
 import 'package:new_turki/screens/other/new_version.dart' as New;
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'dart:io';
+import 'package:new_turki/utilities/get_strings.dart';
 import 'package:version/version.dart';
 import 'package:new_version/new_version.dart';
 
@@ -29,13 +29,19 @@ class HomeProvider with ChangeNotifier {
   LatLng? _latLng;
   String? _isoCountryCode = 'SA';
   String? _currentLocationDescription = '';
+  String? _currentLocationDescriptionEn = '';
   String? _currentIsoCountryCode = 'SA';
   Location.LocationData? _locationData;
-  String _currentVersion = "5.2.0";
+  String _currentVersion = "5.3.0";
   Location.Location location = Location.Location();
+
+  set currentLocationDescriptionEn(String value) {
+    _currentLocationDescriptionEn = value;
+  }
 
   Location.LocationData get locationData => _locationData!;
   String? get currentLocationDescription => _currentLocationDescription;
+  String? get currentLocationDescription2 => _currentLocationDescriptionEn;
   String get currentVersion => _currentVersion;
   LatLng? get latLng => _latLng;
   BestSeller? get bestSeller => _bestSeller;
@@ -76,23 +82,25 @@ class HomeProvider with ChangeNotifier {
   }
 
   //init latLng
-  Future<void> initLatLng() async {
+  Future<void> initLatLng({String languageCode = "ar"}) async {
     await fetchLocation();
     _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
     _locationServiceStatus = 1;
     // init  isoCountryCode
     List<Placemark> placemark = await placemarkFromCoordinates(
         _latLng!.latitude, _latLng!.longitude,
-        localeIdentifier: "Ar");
+        localeIdentifier: 'ar');
     _currentIsoCountryCode = placemark.first.isoCountryCode;
     _isoCountryCode = placemark.first.isoCountryCode;
     Placemark place = placemark.first;
-    if (Platform.isAndroid)
-      _currentLocationDescription =
-          "${place.postalCode} - ${place.subLocality}";
-    else
-      _currentLocationDescription = "${place.street} - ${place.subLocality} ";
-    print("_currentLocationDescription $_currentLocationDescription");
+    print(place.toString());
+    _currentLocationDescription = GetStrings().locationDescription(place);
+
+    List<Placemark> placemark2 = await placemarkFromCoordinates(
+        _latLng!.latitude, _latLng!.longitude,
+        localeIdentifier: "en");
+    Placemark place2 = placemark2.first;
+    _currentLocationDescriptionEn = GetStrings().locationDescription(place2);
   }
 
   //get all categories
@@ -119,13 +127,15 @@ class HomeProvider with ChangeNotifier {
   //init home page
   Future<void> getHomePageData(bool isCurrent,
       {LatLng latLng = const LatLng(24.727726176454684, 46.58666208381939),
+      String languageCode = "Ar",
       String countryId = "SA",
       bool isLoading = true}) async {
     locationNotAvailable = false;
     _retry = false;
     _isLoading = isLoading;
     try {
-      if (isCurrent && _latLng == null) await initLatLng();
+      if (isCurrent && _latLng == null)
+        await initLatLng(languageCode: languageCode);
       if (isCurrent) {
         _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
         _isoCountryCode = _currentIsoCountryCode;
@@ -168,6 +178,7 @@ class HomeProvider with ChangeNotifier {
     Version currentVersion = Version.parse(_currentVersion);
     Version latestVersion = Version.parse(status!.storeVersion);
     print("currentVersion $currentVersion");
+    print("currentVersion ${status.canUpdate}");
     print("latestVersion $latestVersion");
     if (latestVersion > currentVersion) _canUpdate = true;
   }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
@@ -11,13 +10,16 @@ import 'package:new_turki/repository/order_repository.dart';
 import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/screens/orders/order_success.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../widgets/dialog/message_dialog.dart';
 import 'address_provider.dart';
 
 class CartProvider with ChangeNotifier {
+  ScrollController _scrollController = ScrollController();
   TextEditingController noteController = TextEditingController();
   TextEditingController promoCodeController = TextEditingController();
   bool _isLoading = true;
@@ -37,6 +39,7 @@ class CartProvider with ChangeNotifier {
   String? _isoCountryCode;
   List<DateTime> _deliveryDataTime = [];
 
+  ScrollController get scrollController => _scrollController;
   List<DateTime> get deliveryDataTime => _deliveryDataTime;
   int get cartLength => _cartLength;
   bool get isAuth => _isAuth;
@@ -181,7 +184,6 @@ class CartProvider with ChangeNotifier {
       {bool isLoading = true}) async {
     print(getCartData);
     if (latLng == LatLng(13.271186675142177, 54.353398606181145)) {
-      print('dsadasdasdaszdcasz');
       isLoading = false;
       _retry = false;
       notifyListeners();
@@ -254,90 +256,135 @@ class CartProvider with ChangeNotifier {
 
   //placeOrder
   Future<void> placeOrder(
-      {required BuildContext context, required int addressId}) async {
-    if (_selectedDate == -1) {
-      showSnackBar(context, "please_select_delivery_date");
-      return;
-    }
-    if (_selectedTime == -1) {
-      showSnackBar(context, "please_select_delivery_time");
-      return;
-    }
-    if (_selectedPayment == -1) {
-      showSnackBar(context, "please_choose_payment_method");
-      return;
-    }
-    var _response;
-    _dialogContext = context;
-    _showDialogIndicator(context);
-    try {
-      if (addressId == -1) {
-        final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-        final _addressProvider =
-            Provider.of<AddressProvider>(context, listen: false);
-        var _response = await UserRepository().addAddress({
-          "country_iso_code": _isoCountryCode,
-          "address": "${_homeProvider.currentLocationDescription}",
-          "comment": "${_homeProvider.currentLocationDescription}",
-          "label": "label",
-          "is_default": "0",
-          "long": "${_homeProvider.locationData.longitude}",
-          "lat": "${_homeProvider.locationData.latitude}",
-        }, "Bearer $_authorization");
-        print(_response.body.toString());
+      {required BuildContext context,
+      required String currency,
+      required int addressId}) async {
+    if (_cartData!.data!.invoicePreview!.totalAmountAfterDiscount! <
+        double.parse((_cartData!.data?.minOrder?.first.minOrder) ?? '60'))
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+        AppLocalizations.of(context)!.tr('the_minimum_order_amount_is') +
+            "${_cartData!.data!.minOrder!.first.minOrder} $currency",
+        textAlign: TextAlign.center,
+      )));
+    else {
+      double _offset = calculateOffset();
+      if (_selectedDate == -1) {
+        animateScrollController(context, _offset);
+        return;
+      }
+      if (_selectedTime == -1) {
+        animateScrollController(context, _offset + 135);
+        return;
+      }
+      if (_selectedPayment == -1) {
+        animateScrollController(context, _offset + 235);
+        return;
+      }
+      var _response;
+      _dialogContext = context;
+      _showDialogIndicator(context);
+      try {
+        if (addressId == -1) {
+          final _homeProvider =
+              Provider.of<HomeProvider>(context, listen: false);
+          final _addressProvider =
+              Provider.of<AddressProvider>(context, listen: false);
+          var _response = await UserRepository().addAddress({
+            "country_iso_code": _isoCountryCode,
+            "address": "${_homeProvider.currentLocationDescription}",
+            "comment": "${_homeProvider.currentLocationDescription}",
+            "label": "label",
+            "is_default": "0",
+            "long": "${_homeProvider.locationData.longitude}",
+            "lat": "${_homeProvider.locationData.latitude}",
+          }, "Bearer $_authorization");
+          print(_response.body.toString());
+          if (_response.statusCode == 200) {
+            await _addressProvider.getAddressList("Bearer $_authorization");
+            _addressProvider.setSelectedAddress =
+                (_addressProvider.userAddress?.data?.length ?? 0) - 1;
+            addressId = _addressProvider.userAddress!.data!.last.id!;
+          } else {
+            Navigator.pop(_dialogContext!);
+            throw Exception;
+          }
+        }
+        var format = DateFormat('MM-dd');
+        _response = await OrderRepository().placeOrder({
+          "delivery_date": "${format.format(deliveryDataTime[_selectedDate])}",
+          "delivery_period_id": _selectedTime + 1,
+          "using_wallet": 0,
+          "comment": "${noteController.text}",
+          "payment_type_id": _selectedPayment,
+          "address_id": addressId
+        }, "Bearer $_authorization", _latLng!, _isoCountryCode!);
+        var paymentId = _selectedPayment;
         if (_response.statusCode == 200) {
-          await _addressProvider.getAddressList("Bearer $_authorization");
-          _addressProvider.setSelectedAddress =
-              (_addressProvider.userAddress?.data?.length ?? 0) - 1;
-          addressId = _addressProvider.userAddress!.data!.last.id!;
+          _errorMsg = false;
+          _promoIsActive = false;
+          _selectedPayment = -1;
+          _selectedDate = -1;
+          _selectedTime = -1;
+          _cartData = null;
+          _cartLength = 0;
+          promoCodeController.clear();
+          notifyListeners();
+          Navigator.pop(_dialogContext!);
+          Navigator.of(context, rootNavigator: true).push(
+            MaterialPageRoute(
+                builder: (BuildContext context) => OrderSuccess(
+                      paymentType: paymentId,
+                    )),
+          );
+          if (paymentId > 1) {
+            PaymentARB arb =
+                PaymentARB.fromJson(json.decode(_response.body.toString()));
+            await launch(arb.data!.invoiceURL!, forceSafariVC: true);
+            notifyListeners();
+          } else
+            notifyListeners();
         } else {
           Navigator.pop(_dialogContext!);
-          throw Exception;
+          showSnackBar(context, "unexpected_error");
         }
-      }
-      var format = DateFormat('MM-dd');
-      _response = await OrderRepository().placeOrder({
-        "delivery_date": "${format.format(deliveryDataTime[_selectedDate])}",
-        "delivery_period_id": _selectedTime + 1,
-        "using_wallet": 0,
-        "payment_type_id": _selectedPayment,
-        "address_id": addressId
-      }, "Bearer $_authorization", _latLng!, _isoCountryCode!);
-      var paymentId = _selectedPayment;
-      if (_response.statusCode == 200) {
-        _errorMsg = false;
-        _promoIsActive = false;
-        _selectedPayment = -1;
-        _selectedDate = -1;
-        _selectedTime = -1;
-        _cartData = null;
-        _cartLength = 0;
-        promoCodeController.clear();
-        notifyListeners();
-        Navigator.pop(_dialogContext!);
-        Navigator.of(context, rootNavigator: true).push(
-          MaterialPageRoute(
-              builder: (BuildContext context) => OrderSuccess(
-                    paymentType: paymentId,
-                  )),
-        );
-        if (paymentId > 1) {
-          PaymentARB arb =
-              PaymentARB.fromJson(json.decode(_response.body.toString()));
-          await launch(arb.data!.invoiceURL!, forceSafariVC: true);
-          notifyListeners();
-        } else
-          notifyListeners();
-      } else {
-        Navigator.pop(_dialogContext!);
+      } catch (e) {
+        print('catch');
+        print(e.toString());
         showSnackBar(context, "unexpected_error");
+        Navigator.pop(_dialogContext!);
       }
-    } catch (e) {
-      print('catch');
-      print(e.toString());
-      showSnackBar(context, "unexpected_error");
-      Navigator.pop(_dialogContext!);
     }
+  }
+
+  // used to calculate value of offset
+  double calculateOffset() {
+    double offset = _cartData!.data!.cart!.data!.length *
+        (SizeConfig.screenWidth! < 600 ? 130 : 165);
+    offset += 160;
+    return offset;
+  }
+
+  // animate scrollController to offset
+  void animateScrollController(BuildContext context, double offset) {
+    _scrollController.animateTo(offset,
+        curve: Curves.linear, duration: Duration(milliseconds: 250));
+    String message = AppLocalizations.of(context)!.tr("please_select");
+    if (_selectedDate == -1) {
+      message += AppLocalizations.of(context)!.tr("delivery_date");
+    }
+    if (_selectedTime == -1) {
+      if (message != AppLocalizations.of(context)!.tr("please_select"))
+        message += AppLocalizations.of(context)!.tr("and");
+      message += AppLocalizations.of(context)!.tr("delivery_time");
+    }
+    if (_selectedPayment == -1) {
+      if (message != AppLocalizations.of(context)!.tr("please_select"))
+        message += AppLocalizations.of(context)!.tr("and");
+      message += AppLocalizations.of(context)!.tr("payment_method");
+    }
+
+    _showAlertDialog(context, message);
   }
 
   // show indicator dialog
@@ -349,6 +396,17 @@ class CartProvider with ChangeNotifier {
           _dialogContext = context;
           return IndicatorDialog();
         });
+  }
+
+  // show alert dialog
+  void _showAlertDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return MessageDialog(message: message);
+      },
+    );
   }
 
   // get price

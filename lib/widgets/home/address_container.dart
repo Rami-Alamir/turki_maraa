@@ -7,6 +7,8 @@ import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/add_new_address.dart';
 import 'package:provider/provider.dart';
 
+import 'address_box.dart';
+
 class AddressContainer extends StatefulWidget {
   @override
   _AddressContainerState createState() => _AddressContainerState();
@@ -20,6 +22,12 @@ class _AddressContainerState extends State<AddressContainer> {
     final _homeProvider = Provider.of<HomeProvider>(context);
     final _addressProvider = Provider.of<AddressProvider>(context);
     final List<Data>? _addressList = _addressProvider.userAddress?.data;
+    final String _currentLocation = (_addressProvider.addressDescription ??
+        (AppLocalizations.of(context)!.locale!.languageCode == "ar"
+            ? (_homeProvider.currentLocationDescription ??
+                AppLocalizations.of(context)!.tr('current_location'))
+            : (_homeProvider.currentLocationDescription2 ??
+                AppLocalizations.of(context)!.tr('current_location'))));
     return AnimatedContainer(
       duration: Duration(microseconds: 1),
       child: InkWell(
@@ -100,9 +108,14 @@ class _AddressContainerState extends State<AddressContainer> {
                                                       .addressDescription ??
                                                   AppLocalizations.of(context)!
                                                       .tr("choose")
-                                          : _addressProvider
-                                                  .addressDescription ??
-                                              AppLocalizations.of(context)!
+                                          : (_addressProvider.addressDescription ??
+                                                          "")
+                                                      .trim()
+                                                      .length >
+                                                  0
+                                              ? _addressProvider
+                                                  .addressDescription!
+                                              : AppLocalizations.of(context)!
                                                   .tr('current_location'),
                                       divider: true),
                                 )),
@@ -175,82 +188,24 @@ class _AddressContainerState extends State<AddressContainer> {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(7)),
-                        color: Theme.of(context).backgroundColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondaryVariant
-                                .withOpacity(0.3),
-                            blurRadius: 6,
-                            spreadRadius: 0.5,
-                          )
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: SizeConfig.screenWidth! - 120,
-                              child: Text(
-                                  (_homeProvider.locationServiceStatus == 0 ||
-                                              _homeProvider.locationServiceStatus ==
-                                                  2) &&
-                                          _addressProvider.selectedAddress == -1
-                                      ? _addressProvider.addressDescription
-                                                  ?.trim()
-                                                  .length ==
-                                              0
-                                          ? AppLocalizations.of(context)!
-                                              .tr("choose")
-                                          : _addressProvider.addressDescription ??
-                                              AppLocalizations.of(context)!
-                                                  .tr('choose')
-                                      : _homeProvider.selectedOrderType == 0
-                                          ? _addressProvider.selectedAddress ==
-                                                  -1
-                                              ? _addressProvider.addressDescription ??
-                                                  (_homeProvider
-                                                          .currentLocationDescription ??
-                                                      AppLocalizations.of(context)!
-                                                          .tr(
-                                                              'current_location'))
-                                              : _addressList![_addressProvider.selectedAddress]
-                                                  .comment!
-                                          : AppLocalizations.of(context)!
-                                              .tr('soon'),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline1!
-                                      .copyWith(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal)),
-                            ),
-                            Icon(
-                              _selected
-                                  ? Icons.keyboard_arrow_up_rounded
-                                  : Icons.keyboard_arrow_down_rounded,
-                              color:
-                                  Theme.of(context).textTheme.subtitle2!.color,
-                              size: 35,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              AddressBox(
+                title: (_homeProvider.locationServiceStatus == 0 ||
+                            _homeProvider.locationServiceStatus == 2) &&
+                        _addressProvider.selectedAddress == -1
+                    ? _addressProvider.addressDescription?.trim().length == 0
+                        ? AppLocalizations.of(context)!.tr("choose")
+                        : _addressProvider.addressDescription ??
+                            AppLocalizations.of(context)!.tr('choose')
+                    : _addressProvider.selectedAddress == -1
+                        ? _currentLocation.trim() == ""
+                            ? AppLocalizations.of(context)!
+                                .tr('current_location')
+                            : _currentLocation
+                        : _addressList![_addressProvider.selectedAddress]
+                            .comment!,
+                selected: _selected,
+                isPickup: _homeProvider.selectedOrderType == 1,
+              )
             ],
           ),
         ),
