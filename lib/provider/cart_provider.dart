@@ -290,10 +290,11 @@ class CartProvider with ChangeNotifier {
               Provider.of<HomeProvider>(context, listen: false);
           final _addressProvider =
               Provider.of<AddressProvider>(context, listen: false);
+          final address = "${_homeProvider.currentLocationDescription}";
           var _response = await UserRepository().addAddress({
             "country_iso_code": _isoCountryCode,
-            "address": "${_homeProvider.currentLocationDescription}",
-            "comment": "${_homeProvider.currentLocationDescription}",
+            "address": address.isEmpty ? ".." : address,
+            "comment": address.isEmpty ? ".." : address,
             "label": "label",
             "is_default": "0",
             "long": "${_homeProvider.locationData.longitude}",

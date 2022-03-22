@@ -321,6 +321,45 @@ class Auth with ChangeNotifier {
     }
   }
 
+  // update user data
+  Future<void> addUserName(BuildContext context) async {
+    _dialogContext = context;
+    if (usernameController.text.length > 0 ||
+        ageController.text.length > 0 ||
+        emailController.text.length > 0) {
+      _showDialogIndicator(_dialogContext);
+      try {
+        _response = await UserRepository().updateInfo({
+          if (usernameController.text.trim().length > 0)
+            "name": usernameController.text,
+        }, "Bearer $_accessToken");
+        if (_response.statusCode == 200) {
+          _userData = UserData.fromJson(json.decode(_response.body.toString()));
+          _userData!.data!.accessToken = _accessToken;
+          initTextController(context);
+          Navigator.pop(_dialogContext!);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => App(index: 4)),
+              ModalRoute.withName('/'));
+        } else {
+          Navigator.pop(_dialogContext!);
+          showSnackBar(context, "please_enter_your_name");
+        }
+      } catch (e) {
+        print('catch add username');
+        print(e.toString());
+        if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
+        showSnackBar(context, "unexpected_error");
+        // AlertController.show(
+        //     "",
+        //     AppLocalizations.of(context)!.tr("unexpected_error"),
+        //     TypeAlert.error);
+      }
+    }
+  }
+
   void initCountyCode(value) {
     keyController.text = value;
   }

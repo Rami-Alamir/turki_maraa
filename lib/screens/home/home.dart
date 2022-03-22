@@ -86,8 +86,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       _addressProvider.mapLatLng = _homeProvider.latLng!;
       _addressProvider.isoCountryCode = _homeProvider.isoCountryCode;
     }
-    print(
-        "_homeProvider.locationServiceStatus  ${_homeProvider.locationServiceStatus}");
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: CategoryAppBar(

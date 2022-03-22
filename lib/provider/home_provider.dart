@@ -32,7 +32,7 @@ class HomeProvider with ChangeNotifier {
   String? _currentLocationDescriptionEn = '';
   String? _currentIsoCountryCode = 'SA';
   Location.LocationData? _locationData;
-  String _currentVersion = "5.3.0";
+  String _currentVersion = "5.3.2";
   Location.Location location = Location.Location();
 
   set currentLocationDescriptionEn(String value) {
@@ -83,24 +83,27 @@ class HomeProvider with ChangeNotifier {
 
   //init latLng
   Future<void> initLatLng({String languageCode = "ar"}) async {
-    await fetchLocation();
-    _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
-    _locationServiceStatus = 1;
-    // init  isoCountryCode
-    List<Placemark> placemark = await placemarkFromCoordinates(
-        _latLng!.latitude, _latLng!.longitude,
-        localeIdentifier: 'ar');
-    _currentIsoCountryCode = placemark.first.isoCountryCode;
-    _isoCountryCode = placemark.first.isoCountryCode;
-    Placemark place = placemark.first;
-    print(place.toString());
-    _currentLocationDescription = GetStrings().locationDescription(place);
-
-    List<Placemark> placemark2 = await placemarkFromCoordinates(
-        _latLng!.latitude, _latLng!.longitude,
-        localeIdentifier: "en");
-    Placemark place2 = placemark2.first;
-    _currentLocationDescriptionEn = GetStrings().locationDescription(place2);
+    try {
+      await fetchLocation();
+      _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
+      _locationServiceStatus = 1;
+      // init  isoCountryCode
+      List<Placemark> placemark = await placemarkFromCoordinates(
+          _latLng!.latitude, _latLng!.longitude,
+          localeIdentifier: 'ar');
+      _currentIsoCountryCode = placemark.first.isoCountryCode;
+      _isoCountryCode = placemark.first.isoCountryCode;
+      Placemark place = placemark.first;
+      print(place.toString());
+      _currentLocationDescription = GetStrings().locationDescription(place);
+      List<Placemark> placemark2 = await placemarkFromCoordinates(
+          _latLng!.latitude, _latLng!.longitude,
+          localeIdentifier: "en");
+      Placemark place2 = placemark2.first;
+      _currentLocationDescriptionEn = GetStrings().locationDescription(place2);
+    } catch (e) {
+      print('eeee: ${e.toString()}');
+    }
   }
 
   //get all categories
@@ -150,6 +153,7 @@ class HomeProvider with ChangeNotifier {
         ]);
       }
     } catch (e) {
+      print("error zeft :${e.toString()}");
       locationNotAvailable = true;
       _retry = true;
     }

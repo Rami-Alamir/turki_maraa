@@ -48,7 +48,7 @@ class _UsernameState extends State<Username> {
               RectangleTextField(
                 controller: _auth.usernameController,
                 padding: EdgeInsets.all(20),
-                maxLength: 30,
+                maxLength: 25,
                 hint: AppLocalizations.of(context)!.tr('name'),
               ),
               RoundedRectangleButton(
@@ -56,12 +56,7 @@ class _UsernameState extends State<Username> {
                   title: AppLocalizations.of(context)!.tr('next'),
                   onPressed: () async {
                     FocusScope.of(context).requestFocus(FocusNode());
-                    await _auth.updateUser(context);
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => App(index: 4)),
-                        ModalRoute.withName('/'));
+                    await _auth.addUserName(context);
                   }),
             ],
           ),
