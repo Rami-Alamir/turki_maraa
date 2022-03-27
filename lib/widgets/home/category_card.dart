@@ -29,6 +29,8 @@ class CategoryCard extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.bottomLeft,
             end: Alignment.topLeft,
+            // begin: Alignment.topCenter,
+            // end: Alignment.bottomCenter,
             colors: [
               color,
               color2,
@@ -44,10 +46,11 @@ class CategoryCard extends StatelessWidget {
                   top: 40.0, right: 20, left: 20, bottom: 0),
               child: AutoSizeText(
                 title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(fontSize: title.length < 12 ? 20 : 14),
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.headline3!.color),
+                textScaleFactor: 1.47,
+                maxFontSize: 20,
+                minFontSize: 12,
                 maxLines: title.length < 12 ? 1 : 2,
               ),
             ),

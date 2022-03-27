@@ -32,7 +32,7 @@ class HomeProvider with ChangeNotifier {
   String? _currentLocationDescriptionEn = '';
   String? _currentIsoCountryCode = 'SA';
   Location.LocationData? _locationData;
-  String _currentVersion = "5.3.2";
+  String _currentVersion = "5.3.4";
   Location.Location location = Location.Location();
 
   set currentLocationDescriptionEn(String value) {
@@ -205,7 +205,13 @@ class HomeProvider with ChangeNotifier {
         return;
       }
     }
-    _locationData = await location.getLocation().timeout(Duration(seconds: 7));
+    try {
+      _locationData =
+          await location.getLocation().timeout(Duration(seconds: 22));
+    } catch (e) {
+      print("_locationData");
+      print(e.toString());
+    }
   }
 
   // show new version page

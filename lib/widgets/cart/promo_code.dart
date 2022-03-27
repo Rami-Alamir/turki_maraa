@@ -40,12 +40,14 @@ class PromoCode extends StatelessWidget {
                 .colorScheme
                 .secondaryVariant
                 .withOpacity(0.14),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(const Radius.circular(6.5))),
+            shape: const RoundedRectangleBorder(
+                borderRadius:
+                    const BorderRadius.all(const Radius.circular(6.5))),
             child: ClipRRect(
-                borderRadius: BorderRadius.all(const Radius.circular(6.5)),
+                borderRadius:
+                    const BorderRadius.all(const Radius.circular(6.5)),
                 child: Container(
-                  constraints: BoxConstraints(minHeight: 55),
+                  constraints: const BoxConstraints(minHeight: 55),
                   width: SizeConfig.screenWidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,23 +88,23 @@ class PromoCode extends StatelessWidget {
                                 fillColor:
                                     Theme.of(context).colorScheme.secondary,
                                 filled: true,
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
+                                border: const OutlineInputBorder(
+                                    borderSide: const BorderSide(
                                         color: Colors.transparent, width: 1)),
-                                errorStyle: TextStyle(fontSize: 12),
-                                errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
+                                errorStyle: const TextStyle(fontSize: 12),
+                                errorBorder: const OutlineInputBorder(
+                                    borderSide: const BorderSide(
                                         color: Colors.red, width: 1)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
+                                focusedBorder: const OutlineInputBorder(
+                                    borderSide: const BorderSide(
                                   color: Colors.transparent,
                                 )),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
+                                enabledBorder: const OutlineInputBorder(
+                                    borderSide: const BorderSide(
                                   color: Colors.transparent,
                                 )),
-                                disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                disabledBorder: const OutlineInputBorder(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                   ),
                                 ),

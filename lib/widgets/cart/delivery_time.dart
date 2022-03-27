@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -62,7 +61,7 @@ class DeliveryTime extends StatelessWidget {
             color: selected
                 ? Theme.of(context).primaryColor
                 : Theme.of(context).colorScheme.primaryVariant,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

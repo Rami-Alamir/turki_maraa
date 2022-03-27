@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -17,8 +16,11 @@ class LocationDisabled extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset('assets/images/not_supported.png',
-                width: 250, height: 250),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset('assets/images/location_p.png',
+                  width: 180, height: 180),
+            ),
             SizedBox(
               width: SizeConfig.screenWidth! * .7,
               child: Text(

@@ -42,8 +42,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
         builder: (BuildContext context, ScrollController scrollController) {
           return Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              borderRadius: const BorderRadius.only(
+                  topLeft: const Radius.circular(20),
+                  topRight: const Radius.circular(20)),
               color: Theme.of(context).colorScheme.secondary,
               boxShadow: [
                 BoxShadow(
@@ -53,7 +54,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                       .withOpacity(0.4),
                   spreadRadius: 8,
                   blurRadius: 12,
-                  offset: Offset(0, 5), // changes position of shadow
+                  offset: const Offset(0, 5), // changes position of shadow
                 ),
               ],
             ),
@@ -69,7 +70,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                         height: 4,
                         width: 40,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderRadius:
+                              const BorderRadius.all(const Radius.circular(20)),
                           color: Theme.of(context).colorScheme.secondaryVariant,
                         ),
                       ),
@@ -149,7 +151,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                       ),
                 RoundedRectangleButton(
                     title: AppLocalizations.of(context)!.tr('place_order'),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     fontSize: 16,
                     onPressed: () {
                       _cart.placeOrder(

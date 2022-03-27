@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:new_turki/provider/cart_provider.dart';
@@ -12,7 +11,7 @@ class DeliveryDate extends StatelessWidget {
   const DeliveryDate({required this.deliveryDataTime});
   @override
   Widget build(BuildContext context) {
-    var format =
+    DateFormat format =
         DateFormat.E(AppLocalizations.of(context)!.locale!.languageCode);
 
     return Column(

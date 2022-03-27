@@ -19,7 +19,7 @@ import 'package:new_turki/widgets/shared/primary_app_bar.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
-
+import '../../widgets/cart/delivery_periods.dart';
 import '../../widgets/cart/note.dart';
 import '../../widgets/cart/promo_code.dart';
 
@@ -112,35 +112,40 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                       DeliveryDate(
                                           deliveryDataTime:
                                               _cart.deliveryDataTime),
-                                      DeliveryTime(
-                                        deliveryTime: [
-                                          DeliveryDateTime(
-                                              title:
-                                                  AppLocalizations.of(context)!
-                                                      .tr('morning'),
-                                              subtitle: ''),
-                                          DeliveryDateTime(
-                                              title:
-                                                  AppLocalizations.of(context)!
-                                                      .tr('noon'),
-                                              subtitle: ''),
-                                          DeliveryDateTime(
-                                              title:
-                                                  AppLocalizations.of(context)!
-                                                      .tr('afternoon'),
-                                              subtitle: ''),
-                                          DeliveryDateTime(
-                                              title:
-                                                  AppLocalizations.of(context)!
-                                                      .tr('sunset'),
-                                              subtitle: ''),
-                                          DeliveryDateTime(
-                                              title:
-                                                  AppLocalizations.of(context)!
-                                                      .tr('midnight'),
-                                              subtitle: ''),
-                                        ],
-                                      ),
+                                      _cart.isoCountryCode == 'AE'
+                                          ? DeliveryTime(
+                                              deliveryTime: [
+                                                DeliveryDateTime(
+                                                    title: AppLocalizations.of(
+                                                            context)!
+                                                        .tr('morning'),
+                                                    subtitle: ''),
+                                                DeliveryDateTime(
+                                                    title: AppLocalizations.of(
+                                                            context)!
+                                                        .tr('noon'),
+                                                    subtitle: ''),
+                                                DeliveryDateTime(
+                                                    title: AppLocalizations.of(
+                                                            context)!
+                                                        .tr('afternoon'),
+                                                    subtitle: ''),
+                                                DeliveryDateTime(
+                                                    title: AppLocalizations.of(
+                                                            context)!
+                                                        .tr('sunset'),
+                                                    subtitle: ''),
+                                                DeliveryDateTime(
+                                                    title: AppLocalizations.of(
+                                                            context)!
+                                                        .tr('midnight'),
+                                                    subtitle: ''),
+                                              ],
+                                            )
+                                          : DeliveryPeriods(
+                                              deliveryTime:
+                                                  _cart.deliveryPeriod,
+                                            ),
                                       PaymentMethod(),
                                       UseCredit(
                                           credit:

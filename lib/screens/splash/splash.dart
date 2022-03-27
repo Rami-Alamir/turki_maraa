@@ -25,7 +25,7 @@ class _SplashState extends State<Splash> {
     final _home = Provider.of<HomeProvider>(context, listen: false);
     _home.checkNewVersion();
     _home.getHomePageData(true, languageCode: AppLanguage().language);
-    _timer = Timer(const Duration(milliseconds: 3000), () {
+    _timer = Timer(const Duration(milliseconds: 4670), () {
       navigate();
     });
   }
@@ -46,8 +46,9 @@ class _SplashState extends State<Splash> {
         height: SizeConfig.screenHeight,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/splash.gif"),
-            fit: BoxFit.cover,
+            image: AssetImage("assets/images/ramadan_splash.gif"),
+            //fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
         child: Row(

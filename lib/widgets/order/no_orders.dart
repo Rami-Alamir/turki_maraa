@@ -16,14 +16,15 @@ class NoOrders extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.network(
-                'https://cdn.dribbble.com/users/1168645/screenshots/3152485/no-orders_2x.png',
-                width: 250,
-                height: 250),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Image.asset('assets/images/no_orders.png',
+                  width: 220, height: 220),
+            ),
             Text(
               AppLocalizations.of(context)!.tr('order_now'),
               style:
-                  Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12),
+                  Theme.of(context).textTheme.headline6!.copyWith(fontSize: 16),
             ),
           ],
         ),

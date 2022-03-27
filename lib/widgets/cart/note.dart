@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -54,20 +53,20 @@ class Note extends StatelessWidget {
                       counterText: "",
                       fillColor: Colors.transparent,
                       filled: true,
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Colors.transparent, width: 0)),
-                      errorStyle: TextStyle(fontSize: 12),
-                      errorBorder: OutlineInputBorder(
+                      errorStyle: const TextStyle(fontSize: 12),
+                      errorBorder: const OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Colors.transparent, width: 0)),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Colors.transparent, width: 0)),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Colors.transparent, width: 0)),
-                      disabledBorder: OutlineInputBorder(
+                      disabledBorder: const OutlineInputBorder(
                         borderSide: const BorderSide(
                             color: Colors.transparent, width: 0),
                       ),

@@ -38,7 +38,6 @@ class PaymentMethod extends StatelessWidget {
   Widget _item(BuildContext context, int selectedValue, String title,
       String subtitle, IconData icon) {
     final _cartProvider = Provider.of<CartProvider>(context, listen: false);
-
     final bool selected = _cartProvider.selectedPayment == selectedValue;
     return InkWell(
       onTap: () {
@@ -89,7 +88,7 @@ class PaymentMethod extends StatelessWidget {
                         maxLines: 2,
                         style: Theme.of(context).textTheme.headline5!.copyWith(
                             fontSize: 11,
-                            height: 2,
+                            height: 1.5,
                             fontWeight: FontWeight.bold,
                             color: selected
                                 ? Colors.white

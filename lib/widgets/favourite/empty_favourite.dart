@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -8,7 +7,7 @@ class EmptyFavourite extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: SizeConfig.screenHeight! / 7,
+        top: SizeConfig.screenHeight! / 5.5,
       ),
       child: Container(
         width: SizeConfig.screenWidth,
@@ -17,14 +16,14 @@ class EmptyFavourite extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(50.0),
+              padding: const EdgeInsets.all(30.0),
               child: Image.asset('assets/images/wishlist.png',
-                  width: 200, height: 0200),
+                  width: 220, height: 220),
             ),
             Text(
               AppLocalizations.of(context)!.tr('empty_favourite'),
               style:
-                  Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12),
+                  Theme.of(context).textTheme.headline6!.copyWith(fontSize: 16),
             ),
           ],
         ),

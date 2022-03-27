@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -14,8 +13,11 @@ class NotSupportedArea extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset('assets/images/not_supported.png',
-                width: 250, height: 250),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset('assets/images/not_supported.png',
+                  width: 200, height: 200),
+            ),
             SizedBox(
               width: SizeConfig.screenWidth! * .7,
               child: Text(
@@ -24,7 +26,7 @@ class NotSupportedArea extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headline6!
-                    .copyWith(fontSize: 12, height: 2),
+                    .copyWith(fontSize: 16, height: 2),
               ),
             ),
           ],

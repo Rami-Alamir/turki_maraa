@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:new_turki/models/cart_data.dart';
 import 'package:new_turki/models/payment_arb.dart';
 import 'package:new_turki/provider/home_provider.dart';
+import 'package:new_turki/repository/booking_repository.dart';
 import 'package:new_turki/repository/cart_repository.dart';
 import 'package:new_turki/repository/order_repository.dart';
 import 'package:new_turki/repository/user_repository.dart';
@@ -14,7 +15,7 @@ import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import '../models/delivery_period.dart';
 import '../widgets/dialog/message_dialog.dart';
 import 'address_provider.dart';
 
@@ -38,7 +39,10 @@ class CartProvider with ChangeNotifier {
   LatLng? _latLng;
   String? _isoCountryCode;
   List<DateTime> _deliveryDataTime = [];
+  DeliveryPeriod? _deliveryPeriod;
 
+  DeliveryPeriod get deliveryPeriod => _deliveryPeriod!;
+  String get isoCountryCode => _isoCountryCode!;
   ScrollController get scrollController => _scrollController;
   List<DateTime> get deliveryDataTime => _deliveryDataTime;
   int get cartLength => _cartLength;
@@ -182,7 +186,7 @@ class CartProvider with ChangeNotifier {
   //getCartData
   Future<void> getCartData(String token, LatLng latLng, String countryId,
       {bool isLoading = true}) async {
-    print(getCartData);
+    print('getCartData');
     if (latLng == LatLng(13.271186675142177, 54.353398606181145)) {
       isLoading = false;
       _retry = false;
@@ -197,12 +201,11 @@ class CartProvider with ChangeNotifier {
       try {
         _cartData = await CartRepository()
             .getCartList("Bearer $token", latLng, countryId);
+        _deliveryPeriod = await BookingRepository().getDeliveryPeriods();
         cartItems();
-
         if ((_cartData?.data?.cart?.data?.length ?? 0) > 0) if (_cartData!
                 .data!.cart!.data![0].appliedDiscountCode !=
             null) {
-          print('${_cartData!.data!.cart!.data![0].appliedDiscountCode}');
           promoCodeController.text =
               _cartData!.data!.cart!.data![0].appliedDiscountCode!;
           _errorMsg = false;
@@ -311,10 +314,12 @@ class CartProvider with ChangeNotifier {
             throw Exception;
           }
         }
-        var format = DateFormat('MM-dd');
+        DateFormat format = DateFormat('MM-dd');
         _response = await OrderRepository().placeOrder({
           "delivery_date": "${format.format(deliveryDataTime[_selectedDate])}",
-          "delivery_period_id": _selectedTime + 1,
+          "delivery_period_id": _isoCountryCode == 'AE'
+              ? (_selectedTime + 1)
+              : _deliveryPeriod!.data![_selectedTime].id,
           "using_wallet": 0,
           "comment": "${noteController.text}",
           "payment_type_id": _selectedPayment,
@@ -346,7 +351,9 @@ class CartProvider with ChangeNotifier {
           } else
             notifyListeners();
         } else {
+          _cartLength = 0;
           Navigator.pop(_dialogContext!);
+          notifyListeners();
           showSnackBar(context, "unexpected_error");
         }
       } catch (e) {
@@ -452,7 +459,6 @@ class CartProvider with ChangeNotifier {
 
   void initDateTimeList() {
     DateTime dt = DateTime.now();
-
     for (int i = 0; i < 21; i++) {
       _deliveryDataTime.add(DateTime(dt.year, dt.month, (dt.day + i)));
     }

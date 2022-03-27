@@ -111,7 +111,7 @@ class HelpCard extends StatelessWidget {
 
   //used to share app url
   Future<void> _share(BuildContext context) async {
-    Share.share('https://turki.turkieshop.com/system//shareit/b5ef3',
+    Share.share('https://bit.ly/3tB2qdu',
         subject: AppLocalizations.of(context)!.tr('turki_app'));
   }
 }

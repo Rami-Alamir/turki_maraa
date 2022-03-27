@@ -11,6 +11,22 @@ class CategoriesG4 extends StatelessWidget {
   const CategoriesG4({required this.categoriesList});
   @override
   Widget build(BuildContext context) {
+    // List<Color> list = [
+    //   Theme.of(context).primaryColor,
+    //   Color.fromRGBO(200, 173, 88, 0.9),
+    //   Color.fromRGBO(51, 79, 45, 1),
+    //   Color.fromRGBO(3, 25, 4, 1),
+    //   Color.fromRGBO(101, 1, 1, 1),
+    //   Color.fromRGBO(200, 173, 88, 1),
+    // ];
+    // List<Color> list2 = [
+    //   Theme.of(context).primaryColor.withOpacity(0.9),
+    //   Color.fromRGBO(200, 173, 88, 0.9),
+    //   Color.fromRGBO(51, 79, 45, 0.97),
+    //   Color.fromRGBO(3, 25, 4, 0.9),
+    //   Color.fromRGBO(101, 1, 1, 0.9),
+    //   Color.fromRGBO(212, 175, 55, 1),
+    // ];
     return StaggeredGridView.countBuilder(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         shrinkWrap: true,
@@ -29,6 +45,8 @@ class CategoriesG4 extends StatelessWidget {
                 : categoriesList[index].titleEn!,
             color: HexColor(categoriesList[index].backgroundColor1!),
             color2: HexColor(categoriesList[index].backgroundColor2!),
+            // color: list[index],
+            // color2: list2[index],
           );
         },
         staggeredTileBuilder: (index) {
