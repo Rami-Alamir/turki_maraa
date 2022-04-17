@@ -13,6 +13,8 @@ import 'package:new_turki/widgets/home/extras_list.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/home/without_extra.dart';
+
 class ProductDetails extends StatefulWidget {
   final int id;
   const ProductDetails({required this.id});
@@ -135,6 +137,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 },
                               ),
                             ),
+                          WithoutExtra(product: _productsProvider.productData),
                           SizedBox(height: 60)
                         ],
                       ),

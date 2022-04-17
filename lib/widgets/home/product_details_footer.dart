@@ -109,6 +109,13 @@ class ProductDetailsFooter extends StatelessWidget {
                               "${_productsProvider.selectedShalwata ? (_productsProvider.productData.data?.shalwata!.id!.toString()) : "0"}",
                           productId:
                               '${_productsProvider.productData.data!.id}',
+                          iskarashah:
+                              '${_productsProvider.withoutTripe ? "1" : "0"}',
+                          isRas: '${_productsProvider.withoutHead ? "1" : "0"}',
+                          isLyh:
+                              '${_productsProvider.withoutTailFat ? "1" : "0"}',
+                          iskwar3:
+                              '${_productsProvider.withoutTrotters ? "1" : "0"}',
                           isoCountryCode: _addressProvider.isoCountryCode,
                           latLng: _addressProvider.selectedLatLng);
                     } else

@@ -83,13 +83,8 @@ final classicTheme = ThemeData(
           fontWeight: FontWeight.normal,
           color: Color.fromRGBO(150, 122, 89, 1),
           fontSize: 12),
-
-      // headline2: TextStyle(
-      //     fontWeight: FontWeight.normal,
-      //     color: Color.fromRGBO(150, 122, 89, 1),
-      //     height: 1.40,
-      //     fontSize: 18),
-
+      headline2: TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black, fontSize: 14),
       headline6: TextStyle(
         fontWeight: FontWeight.w600,
         color: Colors.black,
@@ -154,20 +149,16 @@ final lightTheme = ThemeData(
         fontSize: 20),
     headline3: TextStyle(
         fontSize: 20, color: Colors.white, fontWeight: FontWeight.w500),
-
     headline4: TextStyle(
         color: Colors.black, fontWeight: FontWeight.w600, fontSize: 12),
     headline5: TextStyle(
         fontWeight: FontWeight.normal,
         color: Color.fromRGBO(87, 87, 87, 1),
         fontSize: 12),
-
-    // headline2: TextStyle(
-    //     fontWeight: FontWeight.normal,
-    //     color: Color.fromRGBO(87, 87, 87, 1),
-    //     height: 1.40,
-    //     fontSize: 18),
-
+    headline2: TextStyle(
+        fontWeight: FontWeight.normal,
+        color: Color.fromRGBO(87, 87, 87, 0.5),
+        fontSize: 14),
     headline6: TextStyle(
       fontWeight: FontWeight.w600,
       color: Colors.black,
@@ -238,12 +229,8 @@ final darkTheme = ThemeData(
           fontWeight: FontWeight.normal,
           color: Color.fromRGBO(87, 87, 87, 1),
           fontSize: 12),
-
-      // headline2: TextStyle(
-      //     fontWeight: FontWeight.normal,
-      //     color: Color.fromRGBO(87, 87, 87, 1),
-      //     height: 1.40,
-      //     fontSize: 18),
+      headline2: TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.white, fontSize: 14),
       headline6: TextStyle(
         fontWeight: FontWeight.w600,
         color: Colors.white,

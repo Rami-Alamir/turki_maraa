@@ -2,9 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
+import '../../utilities/firebase_helper.dart';
+
 class CategoryCard extends StatelessWidget {
   final int categoryId;
   final String title;
+  final String titelAr;
+  final String titelEn;
   final String image;
   final Color color;
   final Color color2;
@@ -17,12 +21,18 @@ class CategoryCard extends StatelessWidget {
     required this.color,
     required this.color2,
     required this.categoryId,
+    required this.titelAr,
+    required this.titelEn,
   });
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          Navigator.pushNamed(context, "/ProductsHome", arguments: categoryId),
+      onTap: () {
+        Navigator.pushNamed(context, "/ProductsHome", arguments: categoryId);
+        FirebaseHelper.analytics!
+            .logEvent(name: 'Categories', parameters: {"name": titelAr});
+        FirebaseHelper.analytics!.logEvent(name: titelEn, parameters: null);
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(12)),

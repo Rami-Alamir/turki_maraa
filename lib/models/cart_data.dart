@@ -6,13 +6,32 @@ class CartData {
   }
 }
 
+class NotIncludedDates {
+  int? id;
+  String? deliveryDate;
+
+  NotIncludedDates({this.id, this.deliveryDate});
+
+  NotIncludedDates.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    deliveryDate = json['delivery_date'];
+  }
+}
+
 class Data {
   Cart? cart;
   List<MinOrder>? minOrder;
+  List<NotIncludedDates>? notIncludedDates;
 
   InvoicePreview? invoicePreview;
-  Data({this.cart, this.invoicePreview, this.minOrder});
+  Data({this.cart, this.invoicePreview, this.notIncludedDates, this.minOrder});
   Data.fromJson(Map<String, dynamic> json) {
+    if (json['not_included_dates'] != null) {
+      notIncludedDates = <NotIncludedDates>[];
+      json['not_included_dates'].forEach((v) {
+        notIncludedDates!.add(NotIncludedDates.fromJson(v));
+      });
+    }
     cart = json['cart'] != null ? new Cart.fromJson(json['cart']) : null;
     if (json['min_order'] != null) {
       minOrder = <MinOrder>[];
@@ -60,12 +79,20 @@ class ItemData {
   Size? size;
   Shalwata? cut;
   Shalwata? shalwata;
+  bool? isKwar3;
+  bool? isRas;
+  bool? isLyh;
+  bool? isKarashah;
 
   ItemData(
       {this.id,
       this.comment,
       this.appliedDiscountCode,
       this.shalwataId,
+      this.isKwar3,
+      this.isRas,
+      this.isLyh,
+      this.isKarashah,
       this.preparationId,
       this.sizeId,
       this.cutId,
@@ -86,6 +113,10 @@ class ItemData {
     shalwataId = json['shalwata_id'] ?? 0;
     preparationId = json['preparation_id'];
     sizeId = json['size_id'];
+    isKwar3 = json['is_kwar3'] ?? false;
+    isRas = json['is_Ras'] ?? false;
+    isLyh = json['is_lyh'] ?? false;
+    isKarashah = json['is_karashah'] ?? false;
     cutId = json['cut_id'];
     isShalwata = json['is_shalwata'];
     productId = json['product_id'];

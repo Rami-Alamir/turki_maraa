@@ -72,6 +72,7 @@ class FavouriteProvider with ChangeNotifier {
       {required BuildContext context,
       required String authorization,
       required String id,
+      bool withStatus = true,
       bool withDialog = true}) async {
     var _response;
 
@@ -85,8 +86,7 @@ class FavouriteProvider with ChangeNotifier {
         _productsProvider.setIsFavourite2 = true;
 
         getFavouriteData(authorization);
-      } else
-        showSnackBar(context, "unexpected_error");
+      } else if (withStatus) showSnackBar(context, "unexpected_error");
     } catch (e) {
       print('catch');
       print(e.toString());

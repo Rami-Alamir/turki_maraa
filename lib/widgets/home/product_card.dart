@@ -7,6 +7,8 @@ import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:provider/provider.dart';
 
+import '../../utilities/firebase_helper.dart';
+
 class ProductCard extends StatelessWidget {
   final ProductData product;
 
@@ -29,8 +31,13 @@ class ProductCard extends StatelessWidget {
         width: SizeConfig.setWidgetWidth(136, 150, 150),
         height: SizeConfig.setWidgetWidth(136, 150, 150),
         child: InkWell(
-          onTap: () => Navigator.pushNamed(context, "/ProductDetails",
-              arguments: product.id),
+          onTap: () {
+            FirebaseHelper.analytics!.logEvent(
+                name: 'Product', parameters: {"name": product.nameAr});
+
+            Navigator.pushNamed(context, "/ProductDetails",
+                arguments: product.id);
+          },
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           child: Column(

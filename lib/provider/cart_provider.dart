@@ -4,10 +4,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:new_turki/models/cart_data.dart';
 import 'package:new_turki/models/payment_arb.dart';
+import 'package:new_turki/models/tamara_data.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/repository/booking_repository.dart';
 import 'package:new_turki/repository/cart_repository.dart';
 import 'package:new_turki/repository/order_repository.dart';
+import 'package:new_turki/repository/tamara_repository.dart';
 import 'package:new_turki/repository/user_repository.dart';
 import 'package:new_turki/screens/orders/order_success.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -16,6 +18,9 @@ import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/delivery_period.dart';
+import '../models/tamara_payment.dart';
+import '../screens/cart/tamara_checkout_page.dart';
+import '../utilities/get_strings.dart';
 import '../widgets/dialog/message_dialog.dart';
 import 'address_provider.dart';
 
@@ -36,11 +41,13 @@ class CartProvider with ChangeNotifier {
   int _cartLength = 0;
   bool _isAuth = false;
   BuildContext? _dialogContext;
+  TamaraData? _tamaraData;
   LatLng? _latLng;
   String? _isoCountryCode;
   List<DateTime> _deliveryDataTime = [];
   DeliveryPeriod? _deliveryPeriod;
 
+  TamaraData? get tamaraData => _tamaraData;
   DeliveryPeriod get deliveryPeriod => _deliveryPeriod!;
   String get isoCountryCode => _isoCountryCode!;
   ScrollController get scrollController => _scrollController;
@@ -106,6 +113,10 @@ class CartProvider with ChangeNotifier {
     String sizeId = '',
     String cutId = '',
     String isShalwata = "0",
+    String isRas = "0",
+    String isLyh = "0",
+    String iskarashah = "0",
+    String iskwar3 = "0",
   }) async {
     var _response;
     _dialogContext = context;
@@ -117,6 +128,10 @@ class CartProvider with ChangeNotifier {
         "preparation_id": "$preparationId",
         "size_id": "$sizeId",
         "cut_id": "$cutId",
+        "is_Ras": isRas,
+        "is_lyh": isLyh,
+        "is_karashah": iskarashah,
+        "is_kwar3": iskwar3,
         "is_shalwata": "$isShalwata",
         "comment": "",
         "applied_discount_code": ""
@@ -186,7 +201,6 @@ class CartProvider with ChangeNotifier {
   //getCartData
   Future<void> getCartData(String token, LatLng latLng, String countryId,
       {bool isLoading = true}) async {
-    print('getCartData');
     if (latLng == LatLng(13.271186675142177, 54.353398606181145)) {
       isLoading = false;
       _retry = false;
@@ -199,9 +213,11 @@ class CartProvider with ChangeNotifier {
       _isoCountryCode = countryId;
       _retry = false;
       try {
-        _cartData = await CartRepository()
-            .getCartList("Bearer $token", latLng, countryId);
-        _deliveryPeriod = await BookingRepository().getDeliveryPeriods();
+        await Future.wait([
+          getDeliveryPeriods(),
+          getCart(_latLng!, _isoCountryCode!, _authorization!)
+        ]);
+        await getTamaraData();
         cartItems();
         if ((_cartData?.data?.cart?.data?.length ?? 0) > 0) if (_cartData!
                 .data!.cart!.data![0].appliedDiscountCode !=
@@ -218,6 +234,36 @@ class CartProvider with ChangeNotifier {
       }
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  // get tamara status
+  Future<void> getTamaraData() async {
+    try {
+      _tamaraData = null;
+      _tamaraData = await TamaraRepository().getTamaraStatus(
+          _isoCountryCode!,
+          GetStrings().getCurrency('en', _isoCountryCode!),
+          _cartData!.data!.invoicePreview!.totalAmountAfterDiscount!
+              .toString());
+    } catch (e) {}
+  }
+
+  Future<void> getCart(
+      LatLng latLng, String isoCountryCode, String token) async {
+    try {
+      _cartData = await CartRepository()
+          .getCartList("Bearer $token", latLng, isoCountryCode);
+    } catch (e) {
+      _retry = true;
+    }
+  }
+
+  Future<void> getDeliveryPeriods() async {
+    try {
+      _deliveryPeriod = await BookingRepository().getDeliveryPeriods();
+    } catch (e) {
+      _retry = true;
     }
   }
 
@@ -298,7 +344,7 @@ class CartProvider with ChangeNotifier {
             "country_iso_code": _isoCountryCode,
             "address": address.isEmpty ? ".." : address,
             "comment": address.isEmpty ? ".." : address,
-            "label": "label",
+            "label": address,
             "is_default": "0",
             "long": "${_homeProvider.locationData.longitude}",
             "lat": "${_homeProvider.locationData.latitude}",
@@ -321,7 +367,10 @@ class CartProvider with ChangeNotifier {
               ? (_selectedTime + 1)
               : _deliveryPeriod!.data![_selectedTime].id,
           "using_wallet": 0,
-          "comment": "${noteController.text}",
+          if (_selectedPayment == 4)
+            "tamara_payment_name": "PAY_BY_INSTALMENTS",
+          if (_selectedPayment == 4) "no_instalments": 3,
+          "comment": " ${noteController.text}",
           "payment_type_id": _selectedPayment,
           "address_id": addressId
         }, "Bearer $_authorization", _latLng!, _isoCountryCode!);
@@ -335,18 +384,30 @@ class CartProvider with ChangeNotifier {
           _cartData = null;
           _cartLength = 0;
           promoCodeController.clear();
+          noteController.clear();
           notifyListeners();
           Navigator.pop(_dialogContext!);
-          Navigator.of(context, rootNavigator: true).push(
-            MaterialPageRoute(
-                builder: (BuildContext context) => OrderSuccess(
-                      paymentType: paymentId,
-                    )),
-          );
-          if (paymentId > 1) {
+          if (paymentId != 4)
+            Navigator.of(context, rootNavigator: true).push(
+              MaterialPageRoute(
+                  builder: (BuildContext context) => OrderSuccess(
+                        paymentType: paymentId,
+                      )),
+            );
+          if (paymentId == 2) {
             PaymentARB arb =
                 PaymentARB.fromJson(json.decode(_response.body.toString()));
             await launch(arb.data!.invoiceURL!, forceSafariVC: true);
+            notifyListeners();
+          } else if (paymentId == 4) {
+            TamaraPayment tamara =
+                TamaraPayment.fromJson(json.decode(_response.body.toString()));
+            // Navigator.pushNamed(context, '/TamaraCheckoutPage',
+            //     arguments: tamara.data!.checkoutUrl!);
+            Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                builder: (BuildContext context) => TamaraCheckoutPage(
+                    checkoutUrl: tamara.data!.checkoutUrl!)));
+            // await launch(tamara.data!.checkoutUrl!, forceSafariVC: true);
             notifyListeners();
           } else
             notifyListeners();

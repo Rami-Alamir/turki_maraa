@@ -8,6 +8,8 @@ import 'package:new_turki/widgets/shared/invoice.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
 
+import '../../utilities/firebase_helper.dart';
+
 class CartBottomSheet extends StatefulWidget {
   final InvoicePreview invoicePreview;
 
@@ -155,6 +157,14 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     fontSize: 16,
                     onPressed: () {
+                      FirebaseHelper.analytics!
+                          .logEvent(name: 'Purchase', parameters: {
+                        "paymentMethod": _cart.selectedPayment == 4
+                            ? "Tamara"
+                            : _cart.selectedPayment == 1
+                                ? "COD"
+                                : "Online payment"
+                      });
                       _cart.placeOrder(
                           context: context,
                           currency: _currency,

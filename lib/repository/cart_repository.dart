@@ -8,8 +8,10 @@ class CartRepository {
   //add to cart
   Future<int> addToCart(
       body, String authorization, LatLng latLng, String countryId) async {
+    print('body.toString()');
+    print(body.toString());
     final response = await _helper.post2(
-        "carts/add-to-cart?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
+        "carts/add-to-cart-v2?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
         body,
         authorization: authorization);
     return response;

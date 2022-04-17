@@ -21,6 +21,8 @@ class _AddressContainerState extends State<AddressContainer> {
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
     final _addressProvider = Provider.of<AddressProvider>(context);
+    print("_addressProvider.selectedAddress.toString()" +
+        _addressProvider.selectedAddress.toString());
     final List<Data>? _addressList = _addressProvider.userAddress?.data;
     final String _currentLocation = (_addressProvider.addressDescription ??
         (AppLocalizations.of(context)!.locale!.languageCode == "ar"
@@ -166,7 +168,7 @@ class _AddressContainerState extends State<AddressContainer> {
                                       },
                                       child: addressRow(
                                           _homeProvider.selectedOrderType == 0
-                                              ? _addressList![index].comment!
+                                              ? _addressList![index].label!
                                               : AppLocalizations.of(context)!
                                                   .tr('soon'),
                                           divider: index !=
@@ -202,7 +204,7 @@ class _AddressContainerState extends State<AddressContainer> {
                                 .tr('current_location')
                             : _currentLocation
                         : _addressList![_addressProvider.selectedAddress]
-                            .comment!,
+                            .label!,
                 selected: _selected,
                 isPickup: _homeProvider.selectedOrderType == 1,
               )

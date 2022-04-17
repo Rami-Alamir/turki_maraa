@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:new_turki/models/user_data.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -23,6 +24,7 @@ class ProfileState extends StatelessWidget {
               children: [
                 _stateItem(
                     context: context,
+                    icon: 'assets/images/profile_icons/orders.svg',
                     routeName: "/Orders",
                     value: orders * 1.0,
                     title: 'orders'),
@@ -31,6 +33,8 @@ class ProfileState extends StatelessWidget {
                 ),
                 _stateItem(
                     context: context,
+                    icon: 'assets/images/profile_icons/points.svg',
+
                     //routeName: "/UserPoints",
                     value: double.parse(user.data!.points!),
                     title: 'my_points'),
@@ -39,6 +43,7 @@ class ProfileState extends StatelessWidget {
                 ),
                 _stateItem(
                     context: context,
+                    icon: 'assets/images/profile_icons/wallet6.svg',
                     // routeName: "/UserWallet",
                     value: double.parse(user.data!.wallet!),
                     title: 'credit'),
@@ -58,6 +63,7 @@ class ProfileState extends StatelessWidget {
       {required BuildContext context,
       String routeName = '',
       required String title,
+      required String icon,
       required double value}) {
     return InkWell(
       //     onTap: () => Navigator.pushNamed(context, routeName, arguments: true),
@@ -71,8 +77,22 @@ class ProfileState extends StatelessWidget {
         children: [
           Text(convertDouble(value),
               style: Theme.of(context).textTheme.headline6),
-          Text(AppLocalizations.of(context)!.tr(title),
-              style: Theme.of(context).textTheme.subtitle2),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 5, 0),
+                  child: SvgPicture.asset(icon),
+                ),
+                Text(AppLocalizations.of(context)!.tr(title),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2!
+                        .copyWith(fontSize: 13)),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -82,9 +102,9 @@ class ProfileState extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
-        height: 40,
+        height: 50,
         color: Theme.of(context).colorScheme.secondaryVariant,
-        width: 1,
+        width: 0.2,
       ),
     );
   }

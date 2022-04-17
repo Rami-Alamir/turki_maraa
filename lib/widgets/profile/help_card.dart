@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/address_provider.dart';
-import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
+import 'package:new_turki/widgets/profile/logout_row.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'call_card.dart';
 import 'profile_row.dart';
 
 class HelpCard extends StatelessWidget {
@@ -53,46 +53,29 @@ class HelpCard extends StatelessWidget {
                                 "whatsapp://send?phone=$phone&text=${Uri.parse(' ')}";
                           _launchURL(url);
                         },
-                        icon: TURKIICONS.whatssapp_outline_1,
+                        icon:
+                            'assets/images/profile_icons/whatsapp-colored.svg',
                         title: 'contact_whatsApp'),
                     ProfileRow(
-                        onTap: () {
-                          _launchURL(_addressProvider.isoCountryCode == "AE"
-                              ? "tel:+97180050050"
-                              : 'tel:+966920002974');
-                        },
-                        icon: TURKIICONS.call_calling,
-                        title: 'contact_support'),
-                    ProfileRow(
                         onTap: () => Navigator.pushNamed(context, '/FAQ'),
-                        icon: TURKIICONS.messages,
+                        icon: 'assets/images/profile_icons/questions.svg',
                         title: 'faq'),
                     ProfileRow(
                         onTap: () => Navigator.pushNamed(context, '/About'),
-                        icon: TURKIICONS.info_circle,
+                        icon: 'assets/images/profile_icons/about.svg',
                         title: 'about'),
                     ProfileRow(
                         onTap: () {
                           _share(context);
                         },
-                        withDivider: isAuth,
-                        icon: TURKIICONS.share4_1,
+                        withDivider: false,
+                        icon: 'assets/images/profile_icons/share-colored.svg',
                         title: 'share'),
-                    Visibility(
-                      visible: isAuth,
-                      child: ProfileRow(
-                          onTap: () {
-                            final _auth =
-                                Provider.of<Auth>(context, listen: false);
-                            _auth.logOut(context);
-                          },
-                          withDivider: false,
-                          icon: TURKIICONS.logout,
-                          title: 'log_out'),
-                    ),
                   ],
                 ),
               )),
+          CallCard(),
+          LogOutRow(isAuth: isAuth)
         ]);
   }
 

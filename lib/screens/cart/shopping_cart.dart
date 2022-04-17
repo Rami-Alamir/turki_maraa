@@ -110,6 +110,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                                       .selectedAddress]
                                                   .address!),
                                       DeliveryDate(
+                                          notIncludedDates: _cart.cartData!
+                                              .data!.notIncludedDates!,
                                           deliveryDataTime:
                                               _cart.deliveryDataTime),
                                       _cart.isoCountryCode == 'AE'
@@ -146,7 +148,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                               deliveryTime:
                                                   _cart.deliveryPeriod,
                                             ),
-                                      PaymentMethod(),
+                                      PaymentMethod(
+                                        withTamara: true,
+                                      ),
                                       UseCredit(
                                           credit:
                                               _auth.userData!.data!.wallet!),

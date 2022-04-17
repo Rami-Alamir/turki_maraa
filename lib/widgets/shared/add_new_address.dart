@@ -3,6 +3,7 @@ import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:provider/provider.dart';
+import '../../screens/home/select_address.dart';
 import 'rounded_rectangle_button.dart';
 
 class AddNewAddress extends StatelessWidget {
@@ -16,7 +17,9 @@ class AddNewAddress extends StatelessWidget {
         if (!_auth.isAuth && _homeProvider.locationServiceStatus == 1)
           Navigator.of(context, rootNavigator: true).pushNamed('/Login');
         else
-          Navigator.pushNamed(context, '/SelectAddress', arguments: -100);
+          Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  SelectAddress(addressIndex: -100)));
 
         // final _auth = Provider.of<Auth>(context, listen: false);
         // if (_auth.isAuth) {

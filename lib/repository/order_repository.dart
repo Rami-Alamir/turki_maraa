@@ -17,6 +17,7 @@ class OrderRepository {
         "orders/add-order?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
         json.encode(body),
         authorization: authorization);
+    print(response.toString());
     return response;
   }
 

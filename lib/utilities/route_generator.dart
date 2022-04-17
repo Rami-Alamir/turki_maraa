@@ -33,6 +33,9 @@ import 'package:new_turki/screens/profile/verify_phone.dart';
 import 'package:new_turki/screens/profile/wallet.dart';
 import 'package:new_turki/screens/splash/splash.dart';
 
+import '../screens/cart/tamara_checkout_page.dart';
+import '../screens/orders/order_status.dart';
+
 class RouteGenerator {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
@@ -61,6 +64,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Profile());
       case '/Orders':
         return MaterialPageRoute(builder: (_) => Orders(back: args as bool));
+      case '/OrderStatus':
+        return MaterialPageRoute(
+            builder: (_) => OrderStatus(status: args as bool));
       case '/OrderDetails':
         return MaterialPageRoute(
             builder: (_) => OrderDetails(id: args as String));
@@ -98,6 +104,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => AddGiftCard());
       case '/ProductsHome':
         return MaterialPageRoute(builder: (_) => ProductsHome(id: args as int));
+      case '/TamaraCheckoutPage':
+        return MaterialPageRoute(
+            builder: (_) => TamaraCheckoutPage(checkoutUrl: args as String));
       case '/SelectAddress':
         return MaterialPageRoute(
             builder: (_) => SelectAddress(

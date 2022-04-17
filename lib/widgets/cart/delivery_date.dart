@@ -5,10 +5,13 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/cart_data.dart';
+
 class DeliveryDate extends StatelessWidget {
   final List<DateTime> deliveryDataTime;
-
-  const DeliveryDate({required this.deliveryDataTime});
+  final List<NotIncludedDates> notIncludedDates;
+  const DeliveryDate(
+      {required this.deliveryDataTime, required this.notIncludedDates});
   @override
   Widget build(BuildContext context) {
     DateFormat format =
@@ -31,31 +34,45 @@ class DeliveryDate extends StatelessWidget {
           width: SizeConfig.screenWidth,
           height: 122,
           child: ListView.builder(
-              padding: EdgeInsets.all(0),
+              padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               physics: const ScrollPhysics(),
               itemCount: deliveryDataTime.length,
               itemBuilder: (BuildContext ctxt, int index) {
-                return Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                      index == 0 ? 10 : 3.0, 15, 10, 0),
-                  child: _item(
-                    context,
-                    index,
-                    deliveryDataTime[index].day.toString(),
-                    deliveryDataTime[index].day == DateTime.now().day
-                        ? AppLocalizations.of(context)!.tr('today')
-                        : deliveryDataTime[index].day ==
-                                (DateTime.now().day + 1)
-                            ? AppLocalizations.of(context)!.tr('tomorrow')
-                            : format.format(deliveryDataTime[index]),
+                return Visibility(
+                  visible: checkDate(notIncludedDates,
+                      deliveryDataTime[index].toString().substring(0, 11)),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(3.0, 15, 10, 0),
+                    child: _item(
+                      context,
+                      index,
+                      deliveryDataTime[index].day.toString(),
+                      deliveryDataTime[index].day == DateTime.now().day
+                          ? AppLocalizations.of(context)!.tr('today')
+                          : deliveryDataTime[index].day ==
+                                  (DateTime.now().day + 1)
+                              ? AppLocalizations.of(context)!.tr('tomorrow')
+                              : format.format(deliveryDataTime[index]),
+                    ),
                   ),
                 );
               }),
         ),
       ],
     );
+  }
+
+  bool checkDate(List<NotIncludedDates> notIncludedDates, String date) {
+    bool status = true;
+    print('checkDate');
+    print(date);
+    for (int i = 0; i < notIncludedDates.length; i++) {
+      print(notIncludedDates[i].deliveryDate);
+      if (date.trim() == notIncludedDates[i].deliveryDate!.trim()) return false;
+    }
+    return status;
   }
 
   Widget _item(

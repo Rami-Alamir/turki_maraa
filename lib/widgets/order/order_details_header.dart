@@ -17,9 +17,11 @@ class OrderDetailsHeader extends StatelessWidget {
 
     final int timeZoneInHours = DateTime.now().timeZoneOffset.inHours;
     return MainCard(
-      height: 235,
+      height: 160,
+      // height: 235,
       child: Container(
-        constraints: BoxConstraints(minHeight: 150),
+        constraints: BoxConstraints(minHeight: 120),
+        // constraints: BoxConstraints(minHeight: 150),
         width: SizeConfig.screenWidth!,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,7 +114,7 @@ class OrderDetailsHeader extends StatelessWidget {
                 )
               ],
             ),
-            OrderTracking(statusCode: order.orderState!.code!),
+            //   OrderTracking(statusCode: order.orderState!.code!),
           ],
         ),
       ),

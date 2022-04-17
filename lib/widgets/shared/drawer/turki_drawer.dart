@@ -13,6 +13,7 @@ import 'package:new_turki/widgets/shared/drawer/turki_drawer_footer.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../utilities/firebase_helper.dart';
 import '../social_media.dart';
 import 'drawer_row.dart';
 import '../user_data_header.dart';
@@ -64,6 +65,9 @@ class TurkiDrawer extends StatelessWidget {
                   ),
                   DrawerRow(
                     onTap: () {
+                      FirebaseHelper.analytics!
+                          .logEvent(name: 'Favourite', parameters: null);
+                      _appProvider.navigateTo(context, '/FAQ');
                       _appProvider.navigateTo(context, '/Favourite');
                     },
                     icon: TURKIICONS.cart_favourite,
@@ -78,6 +82,8 @@ class TurkiDrawer extends StatelessWidget {
                   // ),
                   DrawerRow(
                     onTap: () {
+                      FirebaseHelper.analytics!
+                          .logEvent(name: 'FAQ', parameters: null);
                       _appProvider.navigateTo(context, '/FAQ');
                     },
                     icon: TURKIICONS.messages,
@@ -85,6 +91,9 @@ class TurkiDrawer extends StatelessWidget {
                   ),
                   DrawerRow(
                     onTap: () {
+                      FirebaseHelper.analytics!
+                          .logEvent(name: 'About', parameters: null);
+
                       _appProvider.navigateTo(context, '/About');
                     },
                     icon: TURKIICONS.info_circle,
@@ -117,6 +126,8 @@ class TurkiDrawer extends StatelessWidget {
                   ),
                   DrawerRow(
                     onTap: () {
+                      FirebaseHelper.analytics!
+                          .logEvent(name: 'Share', parameters: null);
                       _share(context);
                     },
                     icon: TURKIICONS.share4_1,
@@ -133,6 +144,8 @@ class TurkiDrawer extends StatelessWidget {
                     visible: _theme.themeName != 'light',
                     child: DrawerRow(
                       onTap: () {
+                        FirebaseHelper.analytics!.logEvent(
+                            name: 'Theme', parameters: {"name": "Light mode"});
                         _theme.changeTheme('light');
                       },
                       icon: TURKIICONS.lightmode,
@@ -143,6 +156,9 @@ class TurkiDrawer extends StatelessWidget {
                     visible: _theme.themeName != 'classic',
                     child: DrawerRow(
                       onTap: () {
+                        FirebaseHelper.analytics!.logEvent(
+                            name: 'Theme',
+                            parameters: {"name": "Classic mode"});
                         _theme.changeTheme('classic');
                       },
                       icon: RA7ICONS.brightness,
@@ -153,6 +169,8 @@ class TurkiDrawer extends StatelessWidget {
                     visible: _theme.themeName != 'dark',
                     child: DrawerRow(
                       onTap: () {
+                        FirebaseHelper.analytics!.logEvent(
+                            name: 'Theme', parameters: {"name": "Dark mode"});
                         _theme.changeTheme('dark');
                       },
                       icon: TURKIICONS.darkmode,

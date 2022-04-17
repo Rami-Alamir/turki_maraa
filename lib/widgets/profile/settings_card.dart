@@ -3,11 +3,10 @@ import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/app_language.dart';
 import 'package:new_turki/provider/app_theme.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:provider/provider.dart';
+import '../../utilities/firebase_helper.dart';
 import 'profile_row.dart';
 
 class SettingsCard extends StatelessWidget {
@@ -47,35 +46,44 @@ class SettingsCard extends StatelessWidget {
                               _addressProvider.selectedLatLng);
                           _language.changeLanguage();
                         },
-                        icon: TURKIICONS.language,
+                        icon: 'assets/images/profile_icons/language-color.svg',
                         title: 'language'),
                     Visibility(
                       visible: _theme.themeName != 'light',
                       child: ProfileRow(
                           onTap: () {
+                            FirebaseHelper.analytics!.logEvent(
+                                name: 'Theme',
+                                parameters: {"name": "Light mode"});
                             _theme.changeTheme('light');
                           },
-                          icon: TURKIICONS.lightmode,
+                          icon: 'assets/images/profile_icons/light.svg',
                           title: 'light_mode'),
                     ),
                     Visibility(
                       visible: _theme.themeName != 'classic',
                       child: ProfileRow(
                           onTap: () {
+                            FirebaseHelper.analytics!.logEvent(
+                                name: 'Theme',
+                                parameters: {"name": "Classic mode"});
                             _theme.changeTheme('classic');
                           },
                           withDivider: _theme.themeName != 'dark',
-                          icon: RA7ICONS.brightness,
+                          icon: 'assets/images/profile_icons/Classic-Mode.svg',
                           title: 'classic_mode'),
                     ),
                     Visibility(
                       visible: _theme.themeName != 'dark',
                       child: ProfileRow(
                           onTap: () {
+                            FirebaseHelper.analytics!.logEvent(
+                                name: 'Theme',
+                                parameters: {"name": "Dark mode"});
                             _theme.changeTheme('dark');
                           },
                           withDivider: false,
-                          icon: TURKIICONS.darkmode,
+                          icon: 'assets/images/profile_icons/dark-mode.svg',
                           title: 'dark_mode'),
                     ),
                   ],

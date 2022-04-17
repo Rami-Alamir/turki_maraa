@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'profile_row.dart';
 
@@ -20,15 +19,15 @@ class PersonalInfoCard extends StatelessWidget {
                 ProfileRow(
                     onTap: () =>
                         Navigator.pushNamed(context, '/PersonalInformation'),
-                    icon: TURKIICONS.user6_1,
+                    icon: 'assets/images/profile_icons/user.svg',
                     title: 'personal_information'),
                 ProfileRow(
                     onTap: () => Navigator.pushNamed(context, '/MyAddresses'),
-                    icon: TURKIICONS.home_location_white,
+                    icon: 'assets/images/profile_icons/my-addresses.svg',
                     title: 'my_addresses'),
                 ProfileRow(
                     onTap: () => Navigator.pushNamed(context, '/Favourite'),
-                    icon: TURKIICONS.cart_favourite_2,
+                    icon: 'assets/images/profile_icons/favorites.svg',
                     withDivider: false,
                     title: 'favorite'),
               ],

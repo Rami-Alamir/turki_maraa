@@ -28,6 +28,13 @@ class UserRepository {
     return response;
   }
 
+  //delete  Address
+  Future<dynamic> deleteAddress(String authorization, String id) async {
+    final response = await _helper.post3("customers/delete-address/$id", {},
+        authorization: authorization);
+    return response;
+  }
+
   //get address list
   Future<UserAddress> getAddressList(String authorization) async {
     final response = await _helper.get("customers/get-addresses",

@@ -23,6 +23,8 @@ class CategoriesLarge extends StatelessWidget {
             title: AppLocalizations.of(context)!.locale == Locale("ar")
                 ? categoriesList[index].titleAr!
                 : categoriesList[index].titleEn!,
+            titelAr: categoriesList[index].titleAr!,
+            titelEn: categoriesList[index].titleEn!,
             color: HexColor(categoriesList[index].backgroundColor1!),
             color2: HexColor(categoriesList[index].backgroundColor2!),
           );

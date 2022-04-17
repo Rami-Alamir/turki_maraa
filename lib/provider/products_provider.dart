@@ -20,6 +20,10 @@ class ProductsProvider with ChangeNotifier {
   int _selectedChopping = -1;
   bool _selectedShalwata = false;
   bool _foodsRetry = false;
+  bool _withoutTrotters = false;
+  bool _withoutHead = false;
+  bool _withoutTailFat = false;
+  bool _withoutTripe = false;
   bool _discoverRetry = false;
   var _bannersList = [];
   BannersData? _bannersData;
@@ -46,6 +50,31 @@ class ProductsProvider with ChangeNotifier {
   int get selectedChopping => _selectedChopping;
   bool get selectedShalwata => _selectedShalwata;
   DiscoverItem.DiscoverItem get discoverItem => _discoverItem!;
+
+  bool get withoutHead => _withoutHead;
+  bool get withoutTailFat => _withoutTailFat;
+  bool get withoutTripe => _withoutTripe;
+  bool get withoutTrotters => _withoutTrotters;
+
+  set withoutTrotters(bool value) {
+    _withoutTrotters = value;
+    notifyListeners();
+  }
+
+  set withoutHead(bool value) {
+    _withoutHead = value;
+    notifyListeners();
+  }
+
+  set withoutTailFat(bool value) {
+    _withoutTailFat = value;
+    notifyListeners();
+  }
+
+  set withoutTripe(bool value) {
+    _withoutTripe = value;
+    notifyListeners();
+  }
 
   set setProductIsLoading(bool value) {
     _productIsLoading = value;
@@ -166,6 +195,12 @@ class ProductsProvider with ChangeNotifier {
     _selectedSize = -1;
     _selectedChopping = -1;
     _selectedPackaging = -1;
+    _withoutHead = false;
+    _withoutTrotters = false;
+    _withoutTripe = false;
+    _withoutTailFat = false;
+    _withoutHead = false;
+    _withoutHead = false;
     _selectedShalwata = false;
   }
 

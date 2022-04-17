@@ -6,6 +6,7 @@ import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:provider/provider.dart';
+import '../../provider/auth.dart';
 
 class AddressCard extends StatelessWidget {
   final Data userAddress;
@@ -23,7 +24,29 @@ class AddressCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(25.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20),
+                child: Container(
+                  width: SizeConfig.screenWidth! * 0.95,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: SizeConfig.screenWidth! * 0.72,
+                        child: Text(
+                          userAddress.label ?? "",
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(fontSize: 14),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   width: SizeConfig.screenWidth! * 0.95,
                   child: Column(
@@ -44,7 +67,7 @@ class AddressCard extends StatelessWidget {
                           Container(
                             width: SizeConfig.screenWidth! * 0.72,
                             child: Text(
-                              userAddress.comment ?? "",
+                              userAddress.address ?? "",
                               style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
@@ -58,7 +81,7 @@ class AddressCard extends StatelessWidget {
                             Container(
                               width: SizeConfig.screenWidth! * 0.72,
                               child: Text(
-                                userAddress.address ?? "",
+                                userAddress.comment ?? "",
                                 style: Theme.of(context).textTheme.headline5,
                               ),
                             ),
@@ -97,7 +120,7 @@ class AddressCard extends StatelessWidget {
                                   .showSnackBar(SnackBar(
                                       content: Text(
                                 AppLocalizations.of(context)!.tr(
-                                    'the_address_used_as_a_delivery_address_cannot_be_changed'),
+                                    'the_address_used_as_a_delivery_address_cannot_be_edited'),
                                 textAlign: TextAlign.center,
                               )));
                             else
@@ -105,18 +128,39 @@ class AddressCard extends StatelessWidget {
                                   arguments: index);
                           },
                         ),
-                        // Container(
-                        //   width: 1,
-                        //   color: Theme.of(context)
-                        //       .colorScheme
-                        //       .secondaryVariant
-                        //       .withOpacity(0.15),
-                        // ),
-                        // item(
-                        //   context: context,
-                        //   title: AppLocalizations.of(context)!.tr('remove'),
-                        //   onTap: () {},
-                        // ),
+                        Container(
+                          width: 1,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondaryVariant
+                              .withOpacity(0.15),
+                        ),
+                        item(
+                            context: context,
+                            title: AppLocalizations.of(context)!.tr('remove'),
+                            onTap: () {
+                              final _addressProvider =
+                                  Provider.of<AddressProvider>(context,
+                                      listen: false);
+
+                              if (index == _addressProvider.selectedAddress)
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        content: Text(
+                                  AppLocalizations.of(context)!.tr(
+                                      'the_address_used_as_a_delivery_address_cannot_be_deleted'),
+                                  textAlign: TextAlign.center,
+                                )));
+                              else {
+                                final _auth =
+                                    Provider.of<Auth>(context, listen: false);
+                                _addressProvider.deleteAddress(
+                                    context,
+                                    _auth.accessToken,
+                                    _addressProvider
+                                        .userAddress!.data![index].id!);
+                              }
+                            }),
                       ],
                     ),
                   )
@@ -136,9 +180,7 @@ class AddressCard extends StatelessWidget {
         onTap();
       },
       child: Container(
-        //  width: SizeConfig.screenWidth! / 2 - 15,
-        width: SizeConfig.screenWidth! - 30,
-
+        width: SizeConfig.screenWidth! / 2 - 15,
         child: Text(
           title,
           textAlign: TextAlign.center,

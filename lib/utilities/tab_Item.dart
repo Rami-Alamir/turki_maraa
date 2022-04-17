@@ -32,6 +32,9 @@ import 'package:new_turki/screens/profile/username.dart';
 import 'package:new_turki/screens/profile/verify_phone.dart';
 import 'package:new_turki/screens/profile/wallet.dart';
 
+import '../screens/cart/tamara_checkout_page.dart';
+import '../screens/orders/order_status.dart';
+
 class TabItem {
   final GlobalKey<NavigatorState> key = GlobalKey<NavigatorState>();
   int _index = 0;
@@ -102,6 +105,13 @@ class TabItem {
               return MaterialPageRoute(builder: (_) => Login());
             case '/PhoneLogin':
               return MaterialPageRoute(builder: (_) => PhoneLogin());
+            case '/OrderStatus':
+              return MaterialPageRoute(
+                  builder: (_) => OrderStatus(status: args as bool));
+            case '/TamaraCheckoutPage':
+              return MaterialPageRoute(
+                  builder: (_) =>
+                      TamaraCheckoutPage(checkoutUrl: args as String));
             case '/VerifyPhone':
               return MaterialPageRoute(builder: (_) => VerifyPhone());
             case '/Username':

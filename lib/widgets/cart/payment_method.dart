@@ -3,9 +3,13 @@ import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
+import 'package:new_turki/widgets/cart/tamara_card.dart';
 import 'package:provider/provider.dart';
 
 class PaymentMethod extends StatelessWidget {
+  final bool withTamara;
+
+  const PaymentMethod({required this.withTamara});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,6 +35,7 @@ class PaymentMethod extends StatelessWidget {
                 TURKIICONS.cart_online_uncolored)
           ],
         ),
+        TamaraCard()
       ],
     );
   }

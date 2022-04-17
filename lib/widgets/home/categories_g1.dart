@@ -16,6 +16,8 @@ class CategoriesG1 extends StatelessWidget {
       title: AppLocalizations.of(context)!.locale == Locale("ar")
           ? categoryData.titleAr!
           : categoryData.titleEn!,
+      titelAr: categoryData.titleAr!,
+      titelEn: categoryData.titleEn!,
       color: HexColor(categoryData.backgroundColor1!),
       color2: HexColor(categoryData.backgroundColor2!),
     );

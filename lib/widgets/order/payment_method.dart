@@ -37,13 +37,22 @@ class PaymentMethod extends StatelessWidget {
               // ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0),
-                child: Text(
-                    AppLocalizations.of(context)!
-                        .tr(paymentTypeId == 1 ? "cod" : "online_payment"),
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                        )),
+                child: paymentTypeId == 4
+                    ? Image.asset(
+                        AppLocalizations.of(context)!.locale!.languageCode ==
+                                'ar'
+                            ? "assets/images/tamara_ar.png"
+                            : "assets/images/tamara_en.png",
+                        width: 70,
+                        height: 40,
+                      )
+                    : Text(
+                        AppLocalizations.of(context)!
+                            .tr(paymentTypeId == 1 ? "cod" : "online_payment"),
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                            )),
               ),
             ],
           )),

@@ -71,15 +71,18 @@ class OrderDetailsRow extends StatelessWidget {
                       child: Container(
                         width: SizeConfig.screenWidth! * .6,
                         child: AutoSizeText(
-                          _isAr
-                              ? "${item.size?.nameAr ?? ""} ${item.cut?.nameAr ?? ""} ${item.preparation?.nameAr ?? ""} ${item.shalwata?.nameAr ?? ""}"
-                              : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""} ${item.preparation?.nameEn ?? ""} ${item.shalwata?.nameEn ?? ""}",
+                          (_isAr
+                                  ? "${item.size?.nameAr ?? ""} ${item.cut?.nameAr ?? ""} ${item.preparation?.nameAr ?? ""} ${item.shalwata?.nameAr ?? ""}"
+                                  : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""} ${item.preparation?.nameEn ?? ""} ${item.shalwata?.nameEn ?? ""}") +
+                              "${item.isLyh! ? AppLocalizations.of(context)!.tr('without_tail_fat') : ""} " +
+                              "${item.isRas! ? AppLocalizations.of(context)!.tr('without_head') : ""} " +
+                              "${item.isKwar3! ? AppLocalizations.of(context)!.tr('without_trotters') : ""} " +
+                              "${item.isKarashah! ? AppLocalizations.of(context)!.tr('without_tripe') : ""} ",
                           style: Theme.of(context)
                               .textTheme
                               .headline4!
                               .copyWith(
                                   fontSize: 12, fontWeight: FontWeight.w400),
-                          maxLines: 2,
                         ),
                       ),
                     ),

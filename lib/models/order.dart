@@ -123,6 +123,7 @@ class Products {
   String? salePrice;
   bool? isActive;
   bool? isShalwata;
+
   int? isDelivered;
   int? isPickedUp;
   int? categoryId;
@@ -157,6 +158,7 @@ class Products {
     descriptionAr = json['description_ar'];
     descriptionEn = json['description_en'];
     weight = json['weight'];
+
     calories = json['calories'];
     noRating = json['no_rating'];
     noSale = json['no_sale'];
@@ -260,7 +262,10 @@ class OrderProducts {
   Preparation? cut;
   Shalwata? shalwata;
   Product? product;
-
+  bool? isKwar3;
+  bool? isRas;
+  bool? isLyh;
+  bool? isKarashah;
   OrderProducts(
       {this.id,
       this.quantity,
@@ -268,11 +273,19 @@ class OrderProducts {
       this.preparation,
       this.size,
       this.cut,
+      this.isKwar3,
+      this.isRas,
+      this.isKarashah,
+      this.isLyh,
       this.shalwata,
       this.product});
 
   OrderProducts.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    isKwar3 = json['is_kwar3'] ?? false;
+    isRas = json['is_Ras'] ?? false;
+    isLyh = json['is_lyh'] ?? false;
+    isKarashah = json['is_karashah'] ?? false;
     quantity = json['quantity'];
     totalPrice = json['total_price'];
     preparation = json['preparation'] != null
@@ -312,6 +325,7 @@ class Product {
     id = json['id'];
     nameAr = json['name_ar'];
     nameEn = json['name_en'];
+
     descriptionAr = json['description_ar'];
     descriptionEn = json['description_en'];
     price = json['price'];

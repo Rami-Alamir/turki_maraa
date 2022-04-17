@@ -32,6 +32,11 @@ class Data {
   List<Extra>? sizes;
   List<Extra>? packaging;
   List<Extra>? chopping;
+  bool? isAvailable;
+  bool? isKwar3;
+  bool? isRas;
+  bool? isLyh;
+  bool? isKarashah;
 
   Data(
       {this.id,
@@ -42,12 +47,17 @@ class Data {
       this.weight,
       this.calories,
       this.noRating,
+      this.isKwar3,
+      this.isRas,
+      this.isLyh,
+      this.isKarashah,
       this.category,
       this.subCategory,
       this.isPickedUp,
       this.descriptionAr,
       this.descriptionEn,
       this.isDelivered,
+      this.isAvailable,
       this.isShalwata,
       this.shalwata,
       this.isActive,
@@ -63,6 +73,11 @@ class Data {
     price = json['price'] ?? '';
     salePrice = json['sale price'] ?? '0.0';
     weight = json['weight'] ?? '';
+    isAvailable = json['is_available'];
+    isKwar3 = json['is_kwar3'];
+    isRas = json['is_Ras'];
+    isLyh = json['is_lyh'];
+    isKarashah = json['is_karashah'];
     descriptionAr = json['description_ar'] ?? '';
     descriptionEn = json['description_en'] ?? '';
     calories = json['calories'] ?? '';

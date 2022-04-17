@@ -37,11 +37,14 @@ class _BannersState extends State<BannersSlider> {
                   builder: (BuildContext context) {
                     return InkWell(
                       onTap: () {
-                        // if (item.type != null)
-                        //   Navigator.pushNamed(context, item.redirectMobileUrl!,
-                        //       arguments: item.productId);
-                        // else
-                        //   _launchURL(item.redirectUrl.toString());
+                        try {
+                          if (item.type == "2")
+                            Navigator.pushNamed(
+                                context, item.redirectMobileUrl!,
+                                arguments: item.productId);
+                          else if (item.type == "1")
+                            _launchURL(item.redirectUrl.toString());
+                        } catch (e) {}
                       },
                       child: Container(
                         height: 250,

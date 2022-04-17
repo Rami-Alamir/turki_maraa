@@ -12,6 +12,7 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/get_strings.dart';
 import 'package:version/version.dart';
 import 'package:new_version/new_version.dart';
+import '../utilities/firebase_helper.dart';
 
 class HomeProvider with ChangeNotifier {
   bool _canUpdate = false;
@@ -32,7 +33,7 @@ class HomeProvider with ChangeNotifier {
   String? _currentLocationDescriptionEn = '';
   String? _currentIsoCountryCode = 'SA';
   Location.LocationData? _locationData;
-  String _currentVersion = "5.3.4";
+  String _currentVersion = "5.6.0";
   Location.Location location = Location.Location();
 
   set currentLocationDescriptionEn(String value) {
@@ -94,6 +95,7 @@ class HomeProvider with ChangeNotifier {
       _currentIsoCountryCode = placemark.first.isoCountryCode;
       _isoCountryCode = placemark.first.isoCountryCode;
       Placemark place = placemark.first;
+
       print(place.toString());
       _currentLocationDescription = GetStrings().locationDescription(place);
       List<Placemark> placemark2 = await placemarkFromCoordinates(
@@ -101,6 +103,8 @@ class HomeProvider with ChangeNotifier {
           localeIdentifier: "en");
       Placemark place2 = placemark2.first;
       _currentLocationDescriptionEn = GetStrings().locationDescription(place2);
+      FirebaseHelper.analytics!
+          .logEvent(name: place2.locality!, parameters: null);
     } catch (e) {
       print('eeee: ${e.toString()}');
     }

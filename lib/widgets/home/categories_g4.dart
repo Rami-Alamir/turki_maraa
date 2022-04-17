@@ -40,9 +40,12 @@ class CategoriesG4 extends StatelessWidget {
             categoryId: categoriesList[index].id!,
             scaleFactor: index % 2 == 0 ? 1.8 : 1.1,
             image: categoriesList[index].imageUrl!,
+
             title: AppLocalizations.of(context)!.locale == Locale("ar")
                 ? categoriesList[index].titleAr!
                 : categoriesList[index].titleEn!,
+            titelAr: categoriesList[index].titleAr!,
+            titelEn: categoriesList[index].titleEn!,
             color: HexColor(categoriesList[index].backgroundColor1!),
             color2: HexColor(categoriesList[index].backgroundColor2!),
             // color: list[index],

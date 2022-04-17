@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,9 +11,9 @@ import 'home_provider.dart';
 
 class AddressProvider with ChangeNotifier {
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController addressNameController = TextEditingController();
   BitmapDescriptor? _myMarker;
   String? _addressDescription;
-  //LatLng? _latLng;
   LatLng? _selectedLatLng;
   LatLng? _mapLatLng;
   bool? _initMap = false;
@@ -59,13 +58,12 @@ class AddressProvider with ChangeNotifier {
     _mapLatLng = value;
   }
 
-  printA(latLng) async {
-    print('ffff');
+  Future<String> description(String language) async {
     List<Placemark> placemark = await placemarkFromCoordinates(
-        latLng.latitude, latLng.longitude,
-        localeIdentifier: 'ar');
-    Placemark place = placemark.first;
-    print(place.toString());
+        _mapLatLng!.latitude, _mapLatLng!.longitude,
+        localeIdentifier: language);
+    notifyListeners();
+    return GetStrings().locationDescription(placemark.first);
   }
 
   set isoCountryCode(String value) {
@@ -92,14 +90,12 @@ class AddressProvider with ChangeNotifier {
 
   void initMapData(String languageCode) async {
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(
-                size: Platform.isAndroid ? Size(10, 10) : Size(25, 25)),
-            'assets/images/pin.png')
-        .then((onValue) {
+      ImageConfiguration(size: Size(25, 25)),
+      'assets/images/pin.png',
+    ).then((onValue) {
       _myMarker = onValue;
       notifyListeners();
     });
-    //getAddressFromLatLng(languageCode, _selectedLatLng!);
   }
 
   // add new address
@@ -134,12 +130,14 @@ class AddressProvider with ChangeNotifier {
         String address =
             "${(GetStrings().locationDescription(placemark.first))}";
         _isoCountryCode = placemark.first.isoCountryCode;
-        print(" addddddd ${GetStrings().locationDescription(placemark.first)}");
+        print(" ${GetStrings().locationDescription(placemark.first)}");
         _response = await UserRepository().addAddress({
           "country_iso_code": _isoCountryCode,
           "address": address.isEmpty ? "." : address,
           "comment": comment.isEmpty ? "." : comment,
-          "label": "label",
+          "label": addressNameController.text.isNotEmpty
+              ? addressNameController.text
+              : comment,
           "is_default": "0",
           "long": "${_mapLatLng!.longitude}",
           "lat": "${_mapLatLng!.latitude}",
@@ -187,12 +185,16 @@ class AddressProvider with ChangeNotifier {
           _mapLatLng!.latitude, _mapLatLng!.longitude,
           localeIdentifier: languageCode);
       _isoCountryCode = placemark.first.isoCountryCode;
+      String address = "${GetStrings().locationDescription(placemark.first)}";
+      String comment =
+          "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "${GetStrings().locationDescription(placemark.first)}"}";
       _response = await UserRepository().updateAddress({
         "country_iso_code": _isoCountryCode,
-        "address": "${GetStrings().locationDescription(placemark.first)}",
-        "comment":
-            "${descriptionController.text.length > 0 ? "${descriptionController.text}" : "${GetStrings().locationDescription(placemark.first)}"}",
-        "label": "label",
+        "address": address,
+        "comment": comment,
+        "label": addressNameController.text.isNotEmpty
+            ? addressNameController.text
+            : comment,
         "is_default": "0",
         "long": "${_mapLatLng!.longitude}",
         "lat": "${_mapLatLng!.latitude}",
@@ -230,6 +232,50 @@ class AddressProvider with ChangeNotifier {
       if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
       showSnackBar(context, "unexpected_error");
     }
+  }
+
+  //delete address
+  Future<void> deleteAddress(
+      BuildContext context, String accessToken, int addressId) async {
+    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    _dialogContext = context;
+    _showDialogIndicator(_dialogContext);
+    var _response;
+    try {
+      _response = await UserRepository()
+          .deleteAddress("Bearer $accessToken", "$addressId");
+      print("_response" + _response.body.toString());
+      if (_response.statusCode == 200) {
+        int _currentLength = _userAddress!.data!.length;
+        await getAddressList("Bearer $accessToken");
+        if (_userAddress!.data!.length < (_currentLength - 1)) {
+          _selectedAddress = (_userAddress?.data?.length ?? 0) - 1;
+          _selectedLatLng = LatLng(
+              double.parse(_userAddress!.data![_selectedAddress].lat!),
+              double.parse(_userAddress!.data![_selectedAddress].long!));
+          _isoCountryCode =
+              _userAddress!.data![_selectedAddress].countryIosCode;
+          _homeProvider.setIsLoading = true;
+          notifyListeners();
+
+          if (_homeProvider.locationServiceStatus == 0)
+            _homeProvider.setLocationServiceStatus = 2;
+          _homeProvider.getHomePageData(false,
+              latLng: _mapLatLng!, countryId: _isoCountryCode!);
+        } else {
+          _selectedAddress = (_userAddress?.data?.length ?? 0) - 1;
+        }
+        Navigator.pop(_dialogContext!);
+      } else {
+        Navigator.pop(_dialogContext!);
+        showSnackBar(context, "unexpected_error");
+      }
+    } catch (e) {
+      print(e.toString());
+      if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
+      showSnackBar(context, "unexpected_error");
+    }
+    notifyListeners();
   }
 
   // show indicator dialog

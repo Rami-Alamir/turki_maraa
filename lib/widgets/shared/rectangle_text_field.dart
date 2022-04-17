@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
@@ -48,6 +47,7 @@ class RectangleTextField extends StatelessWidget {
     return Padding(
       padding: padding ?? EdgeInsets.all(0),
       child: Container(
+        color: Colors.transparent,
         width: customWidth ?? SizeConfig.screenWidth,
         child: TextFormField(
           enabled: enable,
