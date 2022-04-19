@@ -33,6 +33,7 @@
   "faq": "FAQ",
   "my_addresses": "My addresses",
   "about" : "About",
+  "about2" : "About",
   "contact_whatsApp": "Contact us via WhatsApp",
   "share" : "Share",
   "language" : "العربية",
@@ -198,10 +199,17 @@
   "additional_notes": "Additional notes",
   "address_name_hint": "Example: Home, Work, Family home,...",
   "payment_failed" :"Payment failed",
+  "medical_examination": "Medical Examination",
+  "slaughter": "Slaughter",
+  "delivery2":"Delivery",
   "payment_failed_description" :"We could not process the payment, please try again",
   "without" : "Without",
   "without_trotters" : "Without trotters",
   "without_head" : "Without head",
   "without_tail_fat" : "Without tail fat",
-  "without_tripe" : "Without tripe"
+  "without_tripe" : "Without tripe",
+  "our_vision": "Our vision",
+  "our_value" : "Our value",
+  "our_goal": "Our goal",
+  "our_services": "Our services"
 }

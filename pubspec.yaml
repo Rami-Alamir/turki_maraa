@@ -93,6 +93,17 @@ flutter:
     - assets/images/not_supported.png
     - assets/images/success.gif
     - assets/images/empty_cart.png
+    - assets/images/about.png
+    - assets/images/profile_icons/wrapping.svg
+    - assets/images/profile_icons/questions-Maraa.svg
+    - assets/images/profile_icons/quality.svg
+    - assets/images/profile_icons/zabh.svg
+    - assets/images/profile_icons/cut.svg
+    - assets/images/profile_icons/delivery.svg
+    - assets/images/profile_icons/medical-check.svg
+    - assets/images/profile_icons/vision.svg
+    - assets/images/profile_icons/goal.svg
+    - assets/images/profile_icons/value.svg
     - assets/images/profile_icons/Classic-Mode.svg
     - assets/images/profile_icons/dark-mode.svg
     - assets/images/profile_icons/light.svg

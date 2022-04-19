@@ -14,10 +14,10 @@ class _FaqRowState extends State<FaqRow> {
   bool _selected = false;
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-        duration: const Duration(microseconds: 1),
-        child: MainCard(
-          height: 60,
+    return Column(
+      children: [
+        MainCard(
+          height: 65,
           padding:
               const EdgeInsets.only(top: 2.5, bottom: 0, right: 10, left: 10),
           child: Column(
@@ -36,33 +36,39 @@ class _FaqRowState extends State<FaqRow> {
                   widget.question,
                   style: Theme.of(context)
                       .textTheme
-                      .headline1!
+                      .subtitle1!
                       .copyWith(fontSize: 12, fontWeight: FontWeight.w600),
                 ),
                 trailing: Icon(
-                  _selected ? Icons.remove : Icons.add,
+                  _selected
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
                   size: 20,
-                  color: Theme.of(context).textTheme.headline6!.color,
+                  color: Theme.of(context)
+                      .textTheme
+                      .headline6!
+                      .color!
+                      .withOpacity(0.5),
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 15),
               ),
-              Visibility(
-                visible: _selected,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      right: 15, bottom: 20, left: 15, top: 5),
-                  child: Text(
-                    widget.answer,
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2!
-                        .copyWith(fontSize: 14),
-                  ),
-                ),
-              ),
             ],
           ),
-        ));
+        ),
+        Visibility(
+          visible: _selected,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(right: 20, bottom: 20, left: 20, top: 5),
+            child: Text(
+              widget.answer,
+              textAlign: TextAlign.start,
+              style:
+                  Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

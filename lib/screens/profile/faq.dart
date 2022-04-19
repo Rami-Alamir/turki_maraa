@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:new_turki/models/faq_data.dart';
 import 'package:new_turki/models/qa.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
@@ -34,11 +35,8 @@ class FaqState extends State<Faq> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 25.0, bottom: 10),
-                  child: Icon(
-                    Icons.help_outline,
-                    color: Theme.of(context).primaryColor,
-                    size: 60,
-                  ),
+                  child: SvgPicture.asset(
+                      'assets/images/profile_icons/questions-Maraa.svg'),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -47,7 +45,7 @@ class FaqState extends State<Faq> {
                     style: Theme.of(context)
                         .textTheme
                         .headline1!
-                        .copyWith(fontSize: 16),
+                        .copyWith(fontSize: 14),
                   ),
                 )
               ],

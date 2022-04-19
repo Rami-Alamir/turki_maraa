@@ -1,4 +1,5 @@
 {
+  "app_name": "تركي للذبائح",
   "home": "الرئيسية",
   "support": "مساعدة",
   "cart": "السلة",
@@ -34,6 +35,7 @@
   "faq": "الأسئلة الشائعة",
   "my_addresses": "عناويني",
   "about" : "عن تركي للذبائح",
+  "about2" : "عن",
   "contact_whatsApp": "تواصل معنا عبر الواتس اب",
   "share" : "مشاركة التطبيق",
   "language" : "English",
@@ -204,6 +206,12 @@
   "without_trotters": "بدون كوارع",
   "without_head": "بدون راس",
   "without_tail_fat": "بدون لية",
-  "without_tripe": "بدون كرشة"
-
+  "without_tripe": "بدون كرشة",
+  "our_vision": "رؤيتنا",
+  "our_services": "خدماتنا",
+  "our_value": "قيمنا",
+  "our_goal": "هدفنا",
+  "medical_examination": "الفحص الطبي",
+  "slaughter": "الذبح",
+  "delivery2": "التوصيل"
 }

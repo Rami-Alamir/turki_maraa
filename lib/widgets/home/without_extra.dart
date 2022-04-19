@@ -15,9 +15,9 @@ class WithoutExtra extends StatelessWidget {
   Widget build(BuildContext context) {
     final _productProvider = Provider.of<ProductsProvider>(context);
     return Visibility(
-      visible: (product.data!.isLyh! &&
-          product.data!.isKarashah! &&
-          product.data!.isKwar3! &&
+      visible: (product.data!.isLyh! ||
+          product.data!.isKarashah! ||
+          product.data!.isKwar3! ||
           product.data!.isRas!),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
