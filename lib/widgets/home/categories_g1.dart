@@ -10,16 +10,19 @@ class CategoriesG1 extends StatelessWidget {
   const CategoriesG1({required this.categoryData});
   @override
   Widget build(BuildContext context) {
-    return CategoryCardG1(
-      categoryId: categoryData.id!,
-      image: categoryData.imageUrl!,
-      title: AppLocalizations.of(context)!.locale == Locale("ar")
-          ? categoryData.titleAr!
-          : categoryData.titleEn!,
-      titelAr: categoryData.titleAr!,
-      titelEn: categoryData.titleEn!,
-      color: HexColor(categoryData.backgroundColor1!),
-      color2: HexColor(categoryData.backgroundColor2!),
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: CategoryCardG1(
+        categoryId: categoryData.id!,
+        image: categoryData.imageUrl!,
+        title: AppLocalizations.of(context)!.locale == Locale("ar")
+            ? categoryData.titleAr!
+            : categoryData.titleEn!,
+        titelAr: categoryData.titleAr!,
+        titelEn: categoryData.titleEn!,
+        color: HexColor(categoryData.backgroundColor1!),
+        color2: HexColor(categoryData.backgroundColor2!),
+      ),
     );
   }
 }

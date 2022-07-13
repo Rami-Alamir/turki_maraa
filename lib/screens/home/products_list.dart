@@ -40,6 +40,11 @@ class _ProductsListState extends State<ProductsList> {
                   padding: EdgeInsetsDirectional.fromSTEB(
                       index % 2 == 0 ? 10 : 0, 0, index % 2 != 0 ? 10 : 00, 0),
                   child: ProductCardLarge(
+                    categoryId: _productsProvider
+                        .productsList
+                        .data![widget.data['index']]
+                        .products![index]
+                        .categoryId!,
                     id: _productsProvider.productsList
                         .data![widget.data['index']].products![index].id!,
                     nameAr: _productsProvider.productsList

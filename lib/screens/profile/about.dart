@@ -82,6 +82,7 @@ class _AboutState extends State<About> {
                 title: AppLocalizations.of(context)!.tr('our_services'),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     width: SizeConfig.screenWidth! / 1.6,
@@ -184,7 +185,7 @@ class _AboutState extends State<About> {
   Widget aboutRow(String title, String image,
       {mainAxisAlignment = MainAxisAlignment.start}) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 15, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 15, 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: mainAxisAlignment,

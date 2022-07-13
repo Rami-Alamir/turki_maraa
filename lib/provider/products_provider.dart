@@ -13,13 +13,14 @@ import 'package:new_turki/utilities/app_localizations.dart';
 class ProductsProvider with ChangeNotifier {
   bool _productIsLoading = true;
   bool _productIsRetry = false;
-  bool _foodsIsLoading = true;
+  bool _productsHomeIsLoading = true;
   bool _discoverIsLoading = true;
+  int _selectedDay = -1;
   int _selectedSize = -1;
   int _selectedPackaging = -1;
   int _selectedChopping = -1;
   bool _selectedShalwata = false;
-  bool _foodsRetry = false;
+  bool _productsHomeRetry = false;
   bool _withoutTrotters = false;
   bool _withoutHead = false;
   bool _withoutTailFat = false;
@@ -32,17 +33,26 @@ class ProductsProvider with ChangeNotifier {
   DiscoverData? _discoverData;
   bool _isFavourite = false;
   DiscoverItem.DiscoverItem? _discoverItem;
+  List<Extra> _days = [
+    Extra(nameAr: 'اليوم الأول', nameEn: 'First day'),
+    Extra(nameAr: 'اليوم الثاني', nameEn: 'Second day'),
+    Extra(nameAr: 'اليوم الثالث', nameEn: 'Third day'),
+    Extra(nameAr: 'اليوم الرابع', nameEn: 'Fourth day'),
+  ];
+
+  List<Extra> get days => _days;
 
   BannersData? get bannersData => _bannersData;
   bool get isFavourite => _isFavourite;
   bool get productIsRetry => _productIsRetry;
   bool get productIsLoading => _productIsLoading;
+  int get selectedDay => _selectedDay;
   int get selectedSize => _selectedSize;
   bool get discoverIsLoading => _discoverIsLoading;
   bool get discoverRetry => _discoverRetry;
-  bool get foodsIsLoading => _foodsIsLoading;
+  bool get productsHomeIsLoading => _productsHomeIsLoading;
   get bannersList => _bannersList;
-  bool get foodsRetry => _foodsRetry;
+  bool get productsHomeRetry => _productsHomeRetry;
   Product get productData => _productData!;
   Products get productsList => _productsList!;
   DiscoverData? get discoverData => _discoverData;
@@ -92,6 +102,15 @@ class ProductsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  set setSelectedDay(int value) {
+    _selectedDay = value;
+    if (value == 0) {
+      _selectedChopping = -1;
+      _selectedPackaging = -1;
+    }
+    notifyListeners();
+  }
+
   set setSelectedPackaging(int value) {
     _selectedPackaging = value;
     notifyListeners();
@@ -112,16 +131,16 @@ class ProductsProvider with ChangeNotifier {
   }
 
   void disposeFood() {
-    _foodsIsLoading = true;
+    _productsHomeIsLoading = true;
     _discoverData = null;
     _bannersList.clear();
-    _foodsRetry = false;
+    _productsHomeRetry = false;
   }
 
-  Future<void> getFoodsPageData(int id, LatLng latLng, String countryId,
+  Future<void> getProductsHomePageData(int id, LatLng latLng, String countryId,
       {bool isLoading = true}) async {
-    _foodsRetry = false;
-    _foodsIsLoading = isLoading;
+    _productsHomeRetry = false;
+    _productsHomeIsLoading = isLoading;
     try {
       await Future.wait([
         getDiscoverList(id, latLng, countryId),
@@ -129,9 +148,9 @@ class ProductsProvider with ChangeNotifier {
         _getProducts("$id", latLng, countryId),
       ]);
     } catch (e) {
-      _foodsRetry = true;
+      _productsHomeRetry = true;
     }
-    _foodsIsLoading = false;
+    _productsHomeIsLoading = false;
     notifyListeners();
   }
 
@@ -156,7 +175,7 @@ class ProductsProvider with ChangeNotifier {
     } catch (e) {
       print(e.toString());
       print("getBanners");
-      _foodsRetry = true;
+      _productsHomeRetry = true;
     }
   }
 
@@ -166,7 +185,7 @@ class ProductsProvider with ChangeNotifier {
       _productsList =
           await ProductsRepository().getProductsList(id, latLng, countryId);
     } catch (e) {
-      _foodsRetry = true;
+      _productsHomeRetry = true;
       print("_getProducts");
 
       print(e.toString() + "rami");
@@ -194,13 +213,12 @@ class ProductsProvider with ChangeNotifier {
   void initExtras() {
     _selectedSize = -1;
     _selectedChopping = -1;
+    _selectedDay = -1;
     _selectedPackaging = -1;
     _withoutHead = false;
     _withoutTrotters = false;
     _withoutTripe = false;
     _withoutTailFat = false;
-    _withoutHead = false;
-    _withoutHead = false;
     _selectedShalwata = false;
   }
 

@@ -33,12 +33,8 @@ class HomeProvider with ChangeNotifier {
   String? _currentLocationDescriptionEn = '';
   String? _currentIsoCountryCode = 'SA';
   Location.LocationData? _locationData;
-  String _currentVersion = "5.6.1";
+  String _currentVersion = "5.7.7";
   Location.Location location = Location.Location();
-
-  set currentLocationDescriptionEn(String value) {
-    _currentLocationDescriptionEn = value;
-  }
 
   Location.LocationData get locationData => _locationData!;
   String? get currentLocationDescription => _currentLocationDescription;
@@ -61,6 +57,10 @@ class HomeProvider with ChangeNotifier {
   void clearDescription() {
     _latLng = null;
     _currentLocationDescription = null;
+  }
+
+  set currentLocationDescriptionEn(String value) {
+    _currentLocationDescriptionEn = value;
   }
 
   set setIsLoading(bool value) {
@@ -157,7 +157,7 @@ class HomeProvider with ChangeNotifier {
         ]);
       }
     } catch (e) {
-      print("error zeft :${e.toString()}");
+      print("error  :${e.toString()}");
       locationNotAvailable = true;
       _retry = true;
     }
@@ -178,17 +178,23 @@ class HomeProvider with ChangeNotifier {
 
   // check version to show update page
   Future<void> checkNewVersion() async {
+    print('checkNewVersioncheckNewVersion');
     final newVersion = NewVersion(
       iOSId: 'com.digishapes.turkieshop',
       androidId: 'com.digishapes.turkieshop',
     );
-    final status = await newVersion.getVersionStatus();
-    Version currentVersion = Version.parse(_currentVersion);
-    Version latestVersion = Version.parse(status!.storeVersion);
-    print("currentVersion $currentVersion");
-    print("currentVersion ${status.canUpdate}");
-    print("latestVersion $latestVersion");
-    if (latestVersion > currentVersion) _canUpdate = true;
+    try {
+      final status = await newVersion.getVersionStatus();
+      print('dddd');
+      Version currentVersion = Version.parse(_currentVersion);
+      Version latestVersion = Version.parse(status!.storeVersion);
+      print("currentVersion $currentVersion");
+      print("canUpdate ${status.canUpdate}");
+      print("latestVersion $latestVersion");
+      if (latestVersion > currentVersion) _canUpdate = true;
+    } catch (e) {
+      print('verror: $e');
+    }
   }
 
   Future<void> fetchLocation() async {

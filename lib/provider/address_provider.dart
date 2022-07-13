@@ -131,13 +131,14 @@ class AddressProvider with ChangeNotifier {
             "${(GetStrings().locationDescription(placemark.first))}";
         _isoCountryCode = placemark.first.isoCountryCode;
         print(" ${GetStrings().locationDescription(placemark.first)}");
+        String _label = addressNameController.text.isNotEmpty
+            ? addressNameController.text
+            : comment;
         _response = await UserRepository().addAddress({
           "country_iso_code": _isoCountryCode,
           "address": address.isEmpty ? "." : address,
           "comment": comment.isEmpty ? "." : comment,
-          "label": addressNameController.text.isNotEmpty
-              ? addressNameController.text
-              : comment,
+          "label": _label.isEmpty ? "." : _label,
           "is_default": "0",
           "long": "${_mapLatLng!.longitude}",
           "lat": "${_mapLatLng!.latitude}",

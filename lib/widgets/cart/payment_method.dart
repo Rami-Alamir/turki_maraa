@@ -29,10 +29,20 @@ class PaymentMethod extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            _item(context, 1, 'cod', 'cod_description',
-                TURKIICONS.cart_cash_uncolored),
-            _item(context, 2, 'online_payment', 'online_payment_description',
-                TURKIICONS.cart_online_uncolored)
+            _item(
+                context,
+                1,
+                'cod',
+                'cod_description',
+                TURKIICONS.cart_cash_uncolored,
+                EdgeInsetsDirectional.fromSTEB(15.0, 10, 15, 10)),
+            _item(
+                context,
+                2,
+                'online_payment',
+                'online_payment_description',
+                TURKIICONS.cart_online_uncolored,
+                EdgeInsetsDirectional.fromSTEB(0.0, 10, 15, 10))
           ],
         ),
         TamaraCard()
@@ -41,7 +51,7 @@ class PaymentMethod extends StatelessWidget {
   }
 
   Widget _item(BuildContext context, int selectedValue, String title,
-      String subtitle, IconData icon) {
+      String subtitle, IconData icon, EdgeInsetsDirectional padding) {
     final _cartProvider = Provider.of<CartProvider>(context, listen: false);
     final bool selected = _cartProvider.selectedPayment == selectedValue;
     return InkWell(
@@ -49,9 +59,10 @@ class PaymentMethod extends StatelessWidget {
         _cartProvider.setSelectedPayment = selectedValue;
       },
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(15.0, 10, 0, 10),
+        padding: padding,
         child: Container(
-            width: SizeConfig.setWidgetWidth(162, 200, 200),
+            width: SizeConfig.setWidgetWidth(
+                SizeConfig.screenWidth! / 2 - 22.5, 200, 200),
             padding: const EdgeInsets.all(3.0),
             constraints: const BoxConstraints(
               minHeight: 92,

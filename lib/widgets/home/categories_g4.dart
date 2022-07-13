@@ -38,9 +38,8 @@ class CategoriesG4 extends StatelessWidget {
         itemBuilder: (context, index) {
           return CategoryCard(
             categoryId: categoriesList[index].id!,
-            scaleFactor: index % 2 == 0 ? 1.8 : 1.1,
+            scaleFactor: index % 2 == 0 ? 1.6 : 1.36,
             image: categoriesList[index].imageUrl!,
-
             title: AppLocalizations.of(context)!.locale == Locale("ar")
                 ? categoriesList[index].titleAr!
                 : categoriesList[index].titleEn!,
@@ -53,7 +52,7 @@ class CategoriesG4 extends StatelessWidget {
           );
         },
         staggeredTileBuilder: (index) {
-          return StaggeredTile.count(1, index % 2 == 0 ? 1.6 : 1.1);
+          return StaggeredTile.count(1, index % 2 == 0 ? 1.45 : 1.1);
         });
   }
 }

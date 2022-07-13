@@ -63,6 +63,16 @@ class _OrderDetailsState extends State<OrderDetails> {
                               address: _orders
                                   .order.data!.selectedAddress!.address!),
                           PaymentMethod(
+                              paymentName: (_orders
+                                              .order
+                                              .data
+                                              ?.orderProducts?[0]
+                                              .product!
+                                              .categoryId ??
+                                          0) ==
+                                      34
+                                  ? "prepaid"
+                                  : "cod",
                               paymentTypeId:
                                   _orders.order.data!.paymentTypeId!),
                           OrderNote(note: _orders.order.data!.comment!),

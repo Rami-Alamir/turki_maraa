@@ -4,7 +4,7 @@ import 'package:new_turki/provider/products_provider.dart';
 import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/home/discover_section.dart';
 import 'package:new_turki/widgets/home/food_appbar.dart';
-import 'package:new_turki/widgets/home/products_section.dart';
+import 'package:new_turki/widgets/home/products_list_sections.dart';
 import 'package:new_turki/widgets/shared/primary_app_bar.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
@@ -28,7 +28,7 @@ class _ProductsHomeState extends State<ProductsHome> {
         Provider.of<AddressProvider>(context, listen: false);
     final _productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
-    _productsProvider.getFoodsPageData(widget.id,
+    _productsProvider.getProductsHomePageData(widget.id,
         _addressProvider.selectedLatLng, _addressProvider.isoCountryCode);
     super.initState();
   }
@@ -60,16 +60,16 @@ class _ProductsHomeState extends State<ProductsHome> {
               ),
             )
           : null,
-      body: _productsProvider.foodsIsLoading
+      body: _productsProvider.productsHomeIsLoading
           ? SpinkitIndicator(
               padding: EdgeInsets.only(top: 60),
             )
-          : _productsProvider.foodsRetry
+          : _productsProvider.productsHomeRetry
               ? Retry(
                   padding: EdgeInsets.only(top: 60),
                   onPressed: () {
                     _productsProvider.setProductIsLoading = true;
-                    _productsProvider.getFoodsPageData(
+                    _productsProvider.getProductsHomePageData(
                         widget.id,
                         _addressProvider.selectedLatLng,
                         _addressProvider.isoCountryCode);
@@ -79,7 +79,7 @@ class _ProductsHomeState extends State<ProductsHome> {
                   color: Theme.of(context).primaryColor,
                   backgroundColor: Theme.of(context).backgroundColor,
                   onRefresh: () async {
-                    await _productsProvider.getFoodsPageData(
+                    await _productsProvider.getProductsHomePageData(
                         widget.id,
                         _addressProvider.selectedLatLng,
                         _addressProvider.isoCountryCode,
@@ -100,7 +100,7 @@ class _ProductsHomeState extends State<ProductsHome> {
                           ),
                         // // HtmlSection(),
                         SliverToBoxAdapter(
-                            child: ProductsSection(
+                            child: ProductsListSections(
                                 products: _productsProvider.productsList)),
                       ])),
     );

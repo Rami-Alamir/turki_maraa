@@ -29,7 +29,8 @@ class TamaraCard extends StatelessWidget {
               constraints: BoxConstraints(
                 minHeight: 80,
                 minWidth: SizeConfig.setWidgetWidth(180, 200, 200),
-                maxWidth: SizeConfig.setWidgetWidth(340, 400, 400),
+                maxWidth: SizeConfig.setWidgetWidth(
+                    SizeConfig.screenWidth! - 30, 400, 400),
               ),
               decoration: BoxDecoration(
                   color: _selected

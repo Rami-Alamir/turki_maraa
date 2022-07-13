@@ -19,8 +19,10 @@ import 'package:new_turki/widgets/shared/primary_app_bar.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/adha/day_of_sacrifice.dart';
 import '../../widgets/cart/delivery_periods.dart';
 import '../../widgets/cart/note.dart';
+import '../../widgets/cart/payment_method2.dart';
 import '../../widgets/cart/promo_code.dart';
 
 class ShoppingCart extends StatefulWidget {
@@ -109,48 +111,69 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                                   .data![_addressProvider
                                                       .selectedAddress]
                                                   .address!),
-                                      DeliveryDate(
-                                          notIncludedDates: _cart.cartData!
-                                              .data!.notIncludedDates!,
-                                          deliveryDataTime:
-                                              _cart.deliveryDataTime),
+                                      _cart.isAdhia
+                                          ? DayOfSacrifice(
+                                              notIncludedDates: _cart.cartData!
+                                                  .data!.notIncludedDates!,
+                                              deliveryDataTime:
+                                                  _cart.deliveryDataTime)
+                                          : DeliveryDate(
+                                              notIncludedDates: _cart.cartData!
+                                                  .data!.notIncludedDates!,
+                                              deliveryDataTime:
+                                                  _cart.deliveryDataTime),
                                       _cart.isoCountryCode == 'AE'
-                                          ? DeliveryTime(
-                                              deliveryTime: [
-                                                DeliveryDateTime(
-                                                    title: AppLocalizations.of(
-                                                            context)!
-                                                        .tr('morning'),
-                                                    subtitle: ''),
-                                                DeliveryDateTime(
-                                                    title: AppLocalizations.of(
-                                                            context)!
-                                                        .tr('noon'),
-                                                    subtitle: ''),
-                                                DeliveryDateTime(
-                                                    title: AppLocalizations.of(
-                                                            context)!
-                                                        .tr('afternoon'),
-                                                    subtitle: ''),
-                                                DeliveryDateTime(
-                                                    title: AppLocalizations.of(
-                                                            context)!
-                                                        .tr('sunset'),
-                                                    subtitle: ''),
-                                                DeliveryDateTime(
-                                                    title: AppLocalizations.of(
-                                                            context)!
-                                                        .tr('midnight'),
-                                                    subtitle: ''),
-                                              ],
+                                          ? Visibility(
+                                              visible: !_cart.isAdhia,
+                                              child: DeliveryTime(
+                                                deliveryTime: [
+                                                  DeliveryDateTime(
+                                                      title:
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .tr('morning'),
+                                                      subtitle: ''),
+                                                  DeliveryDateTime(
+                                                      title:
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .tr('noon'),
+                                                      subtitle: ''),
+                                                  DeliveryDateTime(
+                                                      title:
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .tr('afternoon'),
+                                                      subtitle: ''),
+                                                  DeliveryDateTime(
+                                                      title:
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .tr('sunset'),
+                                                      subtitle: ''),
+                                                  DeliveryDateTime(
+                                                      title:
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .tr('midnight'),
+                                                      subtitle: ''),
+                                                ],
+                                              ),
                                             )
-                                          : DeliveryPeriods(
-                                              deliveryTime:
-                                                  _cart.deliveryPeriod,
+                                          : Visibility(
+                                              visible: !_cart.isAdhia,
+                                              child: DeliveryPeriods(
+                                                deliveryTime:
+                                                    _cart.deliveryPeriod,
+                                              ),
                                             ),
-                                      PaymentMethod(
-                                        withTamara: true,
-                                      ),
+                                      !_cart.isAdhia
+                                          ? PaymentMethod(
+                                              withTamara: true,
+                                            )
+                                          : PaymentMethod2(
+                                              withTamara: true,
+                                            ),
                                       UseCredit(
                                           credit:
                                               _auth.userData!.data!.wallet!),

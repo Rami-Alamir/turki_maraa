@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/models/best_seller.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'best_product_card.dart';
+import 'package:new_turki/widgets/home/product_card.dart';
+import '../../models/products.dart';
 
 class BestSellerSection extends StatelessWidget {
   final BestSeller products;
@@ -43,18 +44,27 @@ class BestSellerSection extends StatelessWidget {
                   Container(
                     height: 200,
                     child: ListView.builder(
-                        padding: EdgeInsets.all(0),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 2.5),
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         physics: const ScrollPhysics(),
                         itemCount: products.data!.length,
                         itemBuilder: (BuildContext ctxt, int index) {
-                          return Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                index == 0 ? 10 : 3.0, 0, 0, 0),
-                            child:
-                                BestProductCard(product: products.data![index]),
-                          );
+                          return ProductCard(
+                              product: ProductData(
+                            id: products.data![index].id,
+                            nameAr: products.data![index].nameAr,
+                            nameEn: products.data![index].nameEn,
+                            categoryId: -1,
+                            productImages: <ProductImages>[
+                              ProductImages(
+                                  imageUrl: products
+                                      .data![index].images!.first.imageUrl)
+                            ],
+                            price: products.data![index].price,
+                            salePrice: products.data![index].salePrice,
+                          ));
                         }),
                   ),
                 ],

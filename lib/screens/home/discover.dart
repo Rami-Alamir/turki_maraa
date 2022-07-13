@@ -98,6 +98,7 @@ class _DiscoverState extends State<Discover> {
                                   index % 2 != 0 ? 10 : 00,
                                   0),
                               child: ProductCardLarge(
+                                categoryId: -1,
                                 id: _productsProvider
                                     .discoverItem.data!.products![index].id!,
                                 image: _productsProvider

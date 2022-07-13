@@ -46,7 +46,7 @@ class CartProvider with ChangeNotifier {
   String? _isoCountryCode;
   List<DateTime> _deliveryDataTime = [];
   DeliveryPeriod? _deliveryPeriod;
-
+  bool _isAdhia = false;
   TamaraData? get tamaraData => _tamaraData;
   DeliveryPeriod get deliveryPeriod => _deliveryPeriod!;
   String get isoCountryCode => _isoCountryCode!;
@@ -63,6 +63,8 @@ class CartProvider with ChangeNotifier {
   bool get useCredit => _useCredit;
   bool get errorMsg => _errorMsg;
   bool get promoIsActive => _promoIsActive;
+
+  bool get isAdhia => _isAdhia;
 
   set cartLength(int value) {
     _cartLength = value;
@@ -254,6 +256,7 @@ class CartProvider with ChangeNotifier {
     try {
       _cartData = await CartRepository()
           .getCartList("Bearer $token", latLng, isoCountryCode);
+      _checkIsAdhia();
     } catch (e) {
       _retry = true;
     }
@@ -308,6 +311,25 @@ class CartProvider with ChangeNotifier {
       {required BuildContext context,
       required String currency,
       required int addressId}) async {
+    if (isAdhia) {
+      if (!_checkAdhiaOrder()) {
+        _showAlertDialog(
+            context,
+            AppLocalizations.of(context)!.tr(
+                'it_is_not_possible_to_add_other_items_with_the_sacrifice_items'));
+
+        return;
+      }
+      if (!_checkAdhiaOrderExtra()) {
+        _showAlertDialog(
+            context,
+            AppLocalizations.of(context)!.tr(
+                'we_apologize_the_specified_cutting_packaging_not_available_first_day'));
+
+        return;
+      }
+    }
+
     if (_cartData!.data!.invoicePreview!.totalAmountAfterDiscount! <
         double.parse((_cartData!.data?.minOrder?.first.minOrder) ?? '60'))
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -322,7 +344,7 @@ class CartProvider with ChangeNotifier {
         animateScrollController(context, _offset);
         return;
       }
-      if (_selectedTime == -1) {
+      if (_selectedTime == -1 && !isAdhia) {
         animateScrollController(context, _offset + 135);
         return;
       }
@@ -344,7 +366,7 @@ class CartProvider with ChangeNotifier {
             "country_iso_code": _isoCountryCode,
             "address": address.isEmpty ? ".." : address,
             "comment": address.isEmpty ? ".." : address,
-            "label": address,
+            "label": address.isEmpty ? ".." : address,
             "is_default": "0",
             "long": "${_homeProvider.locationData.longitude}",
             "lat": "${_homeProvider.locationData.latitude}",
@@ -361,11 +383,21 @@ class CartProvider with ChangeNotifier {
           }
         }
         DateFormat format = DateFormat('MM-dd');
+        final List<String> _date = [
+          "07-09",
+          "07-10",
+          "07-11",
+          "07-12",
+        ];
         _response = await OrderRepository().placeOrder({
-          "delivery_date": "${format.format(deliveryDataTime[_selectedDate])}",
+          "delivery_date": _isAdhia
+              ? _date[_selectedDate]
+              : "${format.format(deliveryDataTime[_selectedDate])}",
           "delivery_period_id": _isoCountryCode == 'AE'
               ? (_selectedTime + 1)
-              : _deliveryPeriod!.data![_selectedTime].id,
+              : _isAdhia
+                  ? 5
+                  : _deliveryPeriod!.data![_selectedTime].id,
           "using_wallet": 0,
           if (_selectedPayment == 4)
             "tamara_payment_name": "PAY_BY_INSTALMENTS",
@@ -374,7 +406,26 @@ class CartProvider with ChangeNotifier {
           "payment_type_id": _selectedPayment,
           "address_id": addressId
         }, "Bearer $_authorization", _latLng!, _isoCountryCode!);
+        print('bbb');
+        print({
+          "delivery_date": _isAdhia
+              ? _date[_selectedDate]
+              : "${format.format(deliveryDataTime[_selectedDate])}",
+          "delivery_period_id": _isoCountryCode == 'AE'
+              ? (_selectedTime + 1)
+              : _isAdhia
+                  ? 5
+                  : _deliveryPeriod!.data![_selectedTime].id,
+          "using_wallet": 0,
+          if (_selectedPayment == 4)
+            "tamara_payment_name": "PAY_BY_INSTALMENTS",
+          if (_selectedPayment == 4) "no_instalments": 3,
+          "comment": " ${noteController.text}",
+          "payment_type_id": _selectedPayment,
+          "address_id": addressId
+        });
         var paymentId = _selectedPayment;
+        print("order res: ${_response.toString()}");
         if (_response.statusCode == 200) {
           _errorMsg = false;
           _promoIsActive = false;
@@ -440,9 +491,10 @@ class CartProvider with ChangeNotifier {
         curve: Curves.linear, duration: Duration(milliseconds: 250));
     String message = AppLocalizations.of(context)!.tr("please_select");
     if (_selectedDate == -1) {
-      message += AppLocalizations.of(context)!.tr("delivery_date");
+      message += AppLocalizations.of(context)!
+          .tr(_isAdhia ? "day_of_sacrifice" : "delivery_date");
     }
-    if (_selectedTime == -1) {
+    if (_selectedTime == -1 && !_isAdhia) {
       if (message != AppLocalizations.of(context)!.tr("please_select"))
         message += AppLocalizations.of(context)!.tr("and");
       message += AppLocalizations.of(context)!.tr("delivery_time");
@@ -523,5 +575,39 @@ class CartProvider with ChangeNotifier {
     for (int i = 0; i < 21; i++) {
       _deliveryDataTime.add(DateTime(dt.year, dt.month, (dt.day + i)));
     }
+  }
+
+  void _checkIsAdhia() {
+    _isAdhia = false;
+    for (int i = 0; i < ((_cartData?.data?.cart?.data?.length) ?? 0); i++) {
+      if (_cartData!.data!.cart!.data![i].product!.categoryId! == 34) {
+        _isAdhia = true;
+        break;
+      }
+    }
+  }
+
+  bool _checkAdhiaOrder() {
+    bool valid = true;
+    for (int i = 0; i < ((_cartData?.data?.cart?.data?.length) ?? 0); i++) {
+      if (_cartData!.data!.cart!.data![i].product!.categoryId! != 34) {
+        valid = false;
+        break;
+      }
+    }
+    return valid;
+  }
+
+  bool _checkAdhiaOrderExtra() {
+    bool valid = true;
+    if (_selectedDate == 0)
+      for (int i = 0; i < ((_cartData?.data?.cart?.data?.length) ?? 0); i++) {
+        if (_cartData!.data!.cart!.data![i].preparation!.id != 11 ||
+            _cartData!.data!.cart!.data![i].cut!.id != 5) {
+          valid = false;
+          break;
+        }
+      }
+    return valid;
   }
 }

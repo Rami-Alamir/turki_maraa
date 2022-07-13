@@ -14,6 +14,7 @@ class CartRepository {
         "carts/add-to-cart-v2?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
         body,
         authorization: authorization);
+    print(response.toString());
     return response;
   }
 

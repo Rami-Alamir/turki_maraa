@@ -4,6 +4,7 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/order/item_column.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
+import '../../utilities/convert_days.dart';
 import 'order_tracking.dart';
 
 class OrderDetailsHeader extends StatelessWidget {
@@ -62,17 +63,35 @@ class OrderDetailsHeader extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   ItemColumn(
-                                      title: 'delivery_date',
-                                      value: '${order.deliveryDate}',
+                                      title: (order.orderProducts?[0].product
+                                                      ?.categoryId ??
+                                                  0) !=
+                                              34
+                                          ? 'delivery_date'
+                                          : "day_of_sacrifice",
+                                      value: (order.orderProducts?[0].product
+                                                      ?.categoryId ??
+                                                  0) !=
+                                              34
+                                          ? '${order.deliveryDate}'
+                                          : AppLocalizations.of(context)!.tr(
+                                              ConvertDays.convertDay(
+                                                  order.deliveryDate!)),
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start),
-                                  ItemColumn(
-                                      title: 'delivery_time',
-                                      value: _isAr
-                                          ? '${order.deliveryPeriod?.nameAr}'
-                                          : '${order.deliveryPeriod?.nameEn}',
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end),
+                                  Visibility(
+                                    visible: (order.orderProducts?[0].product
+                                                ?.categoryId ??
+                                            0) !=
+                                        34,
+                                    child: ItemColumn(
+                                        title: 'delivery_time',
+                                        value: _isAr
+                                            ? '${order.deliveryPeriod?.nameAr}'
+                                            : '${order.deliveryPeriod?.nameEn}',
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end),
+                                  ),
                                 ],
                               ),
                             )),

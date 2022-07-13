@@ -12,6 +12,7 @@ class ProductsRepository {
       String categoryId, LatLng latLng, String countryId) async {
     print("getProductsList");
     print(categoryId);
+
     final response = await _helper.get(
         "products/by-category/$categoryId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
     Products? products;
@@ -34,6 +35,7 @@ class ProductsRepository {
     try {
       response = await _helper.get(
           "products/getProduct/$productId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
+      print("getProductData ");
 
       print(response.toString());
       product = Product.fromJson(response);

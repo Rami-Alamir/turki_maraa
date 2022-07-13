@@ -21,7 +21,7 @@ class SearchRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
       child: InkWell(
         onTap: () =>
-            Navigator.pushNamed(context, '/ProductDetails', arguments: item.id),
+            Navigator.pushNamed(context, "/ProductDetails", arguments: item.id),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

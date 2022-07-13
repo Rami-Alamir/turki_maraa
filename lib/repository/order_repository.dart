@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:new_turki/models/order.dart';
 import 'package:new_turki/models/orders_data.dart';
@@ -17,6 +16,8 @@ class OrderRepository {
         "orders/add-order?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
         json.encode(body),
         authorization: authorization);
+    print("placeOrderResponse");
+
     print(response.toString());
     return response;
   }

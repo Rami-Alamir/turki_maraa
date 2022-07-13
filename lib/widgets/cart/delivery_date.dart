@@ -16,7 +16,11 @@ class DeliveryDate extends StatelessWidget {
   Widget build(BuildContext context) {
     DateFormat format =
         DateFormat.E(AppLocalizations.of(context)!.locale!.languageCode);
-
+    List<NotIncludedDates> list = notIncludedDates;
+    list.add(NotIncludedDates(id: 2222222, deliveryDate: '2022-07-09'));
+    list.add(NotIncludedDates(id: 3333333, deliveryDate: '2022-07-10'));
+    list.add(NotIncludedDates(id: 4444444, deliveryDate: '2022-07-11'));
+    list.add(NotIncludedDates(id: 5555555, deliveryDate: '2022-07-12'));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -41,7 +45,7 @@ class DeliveryDate extends StatelessWidget {
               itemCount: deliveryDataTime.length,
               itemBuilder: (BuildContext ctxt, int index) {
                 return Visibility(
-                  visible: checkDate(notIncludedDates,
+                  visible: checkDate(list,
                       deliveryDataTime[index].toString().substring(0, 11)),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(3.0, 15, 10, 0),

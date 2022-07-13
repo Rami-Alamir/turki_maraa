@@ -309,10 +309,12 @@ class Product {
   String? descriptionEn;
   String? price;
   String? salePrice;
+  int? categoryId;
   List<ProductImages>? productImages;
 
   Product(
       {this.id,
+      this.categoryId,
       this.nameAr,
       this.nameEn,
       this.descriptionAr,
@@ -323,6 +325,7 @@ class Product {
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    categoryId = json['category_id'];
     nameAr = json['name_ar'];
     nameEn = json['name_en'];
 

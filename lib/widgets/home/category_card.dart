@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
 import '../../utilities/firebase_helper.dart';
@@ -48,25 +49,36 @@ class CategoryCard extends StatelessWidget {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 40.0, right: 20, left: 20, bottom: 0),
-              child: AutoSizeText(
-                title,
-                style: TextStyle(
-                    color: Theme.of(context).textTheme.headline3!.color),
-                textScaleFactor: 1.47,
-                maxFontSize: 20,
-                minFontSize: 12,
-                maxLines: title.length < 12 ? 1 : 2,
+              padding: EdgeInsets.only(bottom: scaleFactor > 1.4 ? 38.0 : 10),
+              child: Container(
+                constraints: BoxConstraints(
+                    minWidth: 70 + (title.length > 7 ? 0 : title.length * 6)),
+                width: SizeConfig.screenWidth! / 2 - 20,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20.0, right: 20, left: 20, bottom: 0),
+                  child: AutoSizeText(
+                    title,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).textTheme.headline3!.color),
+                    maxFontSize: 16,
+                    minFontSize: 8,
+                    overflow: TextOverflow.visible,
+                    maxLines: 1,
+                  ),
+                ),
               ),
             ),
             Container(
               constraints: BoxConstraints(
-                maxHeight: (133 * scaleFactor) - 31,
+                maxHeight: (133 * scaleFactor) - 42,
                 maxWidth: (SizeConfig.screenWidth! / 2) - 18,
               ),
               child: Row(
@@ -80,7 +92,8 @@ class CategoryCard extends StatelessWidget {
                       height: (133 * scaleFactor) - 31,
                       child: Image.network(
                         image,
-                        fit: BoxFit.contain,
+                        // child: Image.asset(
+                        //   'assets/images/rr.png',
                         width: (SizeConfig.screenWidth! / 2) - 18,
                       ),
                     ),

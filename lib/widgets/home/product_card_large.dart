@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/get_strings.dart';
-import 'package:new_turki/utilities/size_config.dart';
 import 'package:provider/provider.dart';
+
+import '../../utilities/size_config.dart';
 
 class ProductCardLarge extends StatelessWidget {
   final int id;
+  final int categoryId;
   final String image;
   final String nameAr;
   final String nameEn;
@@ -16,6 +18,7 @@ class ProductCardLarge extends StatelessWidget {
   const ProductCardLarge(
       {required this.image,
       required this.id,
+      required this.categoryId,
       required this.nameAr,
       required this.nameEn,
       required this.price,

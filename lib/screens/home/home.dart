@@ -5,8 +5,8 @@ import 'package:new_turki/provider/app_language.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/home/address_container.dart';
-import 'package:new_turki/widgets/home/best_seller_section.dart';
 import 'package:new_turki/widgets/home/categories_group.dart';
 import 'package:new_turki/widgets/home/category_app_bar.dart';
 import 'package:new_turki/widgets/home/location_disabled.dart';
@@ -14,6 +14,9 @@ import 'package:new_turki/widgets/home/order_type.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
+import '../../utilities/size_config.dart';
+import '../../utilities/size_config.dart';
+import '../../widgets/home/best_seller_section.dart';
 
 class Home extends StatefulWidget {
   final GlobalKey<ScaffoldState> parentScaffoldStateKey;
@@ -72,6 +75,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
     _homeProvider.showNewVersion(context);
+    print('${SizeConfig.screenWidth!}');
+    print('${SizeConfig.screenHeight!}');
+
     double _statusBarHeight = MediaQuery.of(context).padding.top;
     final _appLanguage = Provider.of<AppLanguage>(context);
     final _addressProvider = Provider.of<AddressProvider>(context);
@@ -164,8 +170,15 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                           CategoriesGroup(
                                               categoryData:
                                                   _homeProvider.categoryData),
-                                          BestSellerSection(
-                                            products: _homeProvider.bestSeller!,
+                                          Visibility(
+                                            visible: (_homeProvider.categoryData
+                                                        .data?.length ??
+                                                    0) >
+                                                0,
+                                            child: BestSellerSection(
+                                              products:
+                                                  _homeProvider.bestSeller!,
+                                            ),
                                           )
                                         ],
                                       ),

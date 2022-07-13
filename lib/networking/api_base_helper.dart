@@ -20,6 +20,7 @@ class ApiBaseHelper {
   Future<dynamic> get(String url, {String authorization = " "}) async {
     headers['authorization'] = authorization;
     var uri = Uri.parse(_baseUrl + url);
+    print(uri);
     var responseJson;
     try {
       var response = await http.get(uri, headers: headers);

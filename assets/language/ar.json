@@ -213,5 +213,18 @@
   "our_goal": "هدفنا",
   "medical_examination": "الفحص الطبي",
   "slaughter": "الذبح",
-  "delivery2": "التوصيل"
+  "delivery2": "التوصيل",
+  "similar_products" : "منتجات مشابهة",
+  "This_product_is_currently_out_of_stock": "هذا المنتج غير متوفر حاليا بالمخزون",
+  "first_day": "اليوم الأول",
+  "second_day": "اليوم الثاني",
+  "third_day": "اليوم الثالث",
+  "fourth_day": "اليوم الرابع",
+  "choose_the_day_of_sacrifice": "اختر يوم الأضحية",
+  "it_is_not_possible_to_add_other_items_with_the_sacrifice_items": "لايمكن اضافة اصناف أخرى مع اصناف الأضحيه",
+  "we_apologize_the_specified_cutting_packaging_not_available_first_day": "نعتذر منك, التقطيع أو التغليف المحدد غير متاح باليوم الأول و الثاني",
+  "prepaid":"دفع مسبق",
+  "prepaid_description": "دفع مسبق قبل العيد",
+  "please_choose_the_day_of_sacrifice": "الرجاء اختيار يوم الأضحية",
+  "day_of_sacrifice": "يوم الأضحية"
 }

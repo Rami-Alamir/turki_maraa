@@ -1,128 +1,101 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:new_turki/models/products.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
-
 import 'product_card.dart';
+import 'package:new_turki/models/products.dart';
 
 class ProductsSection extends StatelessWidget {
-  final Products products;
+  final Products? products;
+  final int id;
 
-  const ProductsSection({required this.products});
+  const ProductsSection({this.products, required this.id});
 
   @override
   Widget build(BuildContext context) {
-    final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
-    return Container(
-      constraints: BoxConstraints(
-          minHeight: SizeConfig.screenHeight!,
-          maxWidth: SizeConfig.screenWidth!),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: SizeConfig.screenWidth,
-            child: ListView.builder(
-                padding: EdgeInsets.all(0),
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                physics: const ScrollPhysics(),
-                itemCount: products.data!.length,
-                itemBuilder: (BuildContext ctxt, int index) {
-                  return Visibility(
-                    visible: products.data![index].products!.length > 0,
-                    child: Container(
-                      width: SizeConfig.screenWidth,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: SizeConfig.screenWidth,
+          child: Visibility(
+            visible: (products?.data?.length ?? 0) > 0,
+            child: Container(
+              width: SizeConfig.screenWidth,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: SizeConfig.screenWidth,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 30, right: 20, left: 20, bottom: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: SizeConfig.screenWidth,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    width: SizeConfig.screenWidth! * 0.66,
-                                    child: AutoSizeText(
-                                        _isAr
-                                            ? products.data![index].typeAr!
-                                            : products.data![index].typeEn!,
-                                        maxFontSize: 16,
-                                        maxLines: 8,
-                                        minFontSize: 10,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1),
-                                  ),
-                                  Row(
-                                    children: [
-                                      InkWell(
-                                        onTap: () => Navigator.pushNamed(
-                                            context, '/ProductsList',
-                                            arguments: {
-                                              "title": _isAr
-                                                  ? products
-                                                      .data![index].typeAr!
-                                                  : products
-                                                      .data![index].typeEn!,
-                                              "index": index
-                                            }),
-                                        splashColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        child: Text(
-                                            AppLocalizations.of(context)!
-                                                .tr('view_all'),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .copyWith(fontSize: 10)),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 15,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1!
-                                            .color,
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 200,
-                            child: ListView.builder(
-                                padding: EdgeInsets.all(0),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                physics: const ScrollPhysics(),
-                                itemCount:
-                                    products.data![index].products!.length,
-                                itemBuilder: (BuildContext ctxt, int index2) {
-                                  return Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        index2 == 0 ? 10 : 3.0, 0, 0, 0),
-                                    child: ProductCard(
-                                        product: products
-                                            .data![index].products![index2]),
-                                  );
-                                }),
-                          ),
+                          Text(
+                              AppLocalizations.of(context)!
+                                  .tr('similar_products'),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  ?.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
-                  );
-                }),
+                  ),
+                  Container(
+                    height: 220,
+                    child: Container(
+                      height: 220,
+                      child: ListView.builder(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        physics: const ScrollPhysics(),
+                        itemCount: products?.data?.length ?? 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListView.builder(
+                              padding: EdgeInsets.all(0),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              physics: const ScrollPhysics(),
+                              itemCount:
+                                  products?.data?[index].products?.length ?? 0,
+                              itemBuilder: (BuildContext ctxt, int index2) {
+                                return Visibility(
+                                  visible: products!
+                                          .data![index].products![index2].id !=
+                                      id,
+                                  child: ProductCard(
+                                      product: ProductData(
+                                    id: products!
+                                        .data![index].products![index2].id,
+                                    nameAr: products!
+                                        .data![index].products![index2].nameAr,
+                                    nameEn: products!
+                                        .data![index].products![index2].nameEn,
+                                    productImages: products!.data![index]
+                                        .products![index2].productImages!,
+                                    price: products!
+                                        .data![index].products![index2].price,
+                                    salePrice: products!.data![index]
+                                        .products![index2].salePrice,
+                                  )),
+                                );
+                              });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

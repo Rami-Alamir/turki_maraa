@@ -9,11 +9,13 @@ class ExtrasList extends StatelessWidget {
   final List<Extra> tags;
   final Function onTap;
   final int selected;
+  final int? rid;
   ExtrasList({
     required this.title,
     required this.tags,
     required this.onTap,
     required this.selected,
+    this.rid = 0,
   });
 
   @override
@@ -47,15 +49,19 @@ class ExtrasList extends StatelessWidget {
 
   List<Widget> getTags(BuildContext context) {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
+
     List<Widget> tagsList = [];
+    print('rid $rid');
     for (int i = 0; i < tags.length; i++)
-      tagsList.add(ExtraTag(
-        selected: selected == i,
-        onTap: () {
-          onTap(i);
-        },
-        title: _isAr ? tags[i].nameAr : tags[i].nameEn,
-      ));
+      if (rid == 0 || rid == tags[i].id)
+        tagsList.add(ExtraTag(
+          selected: selected == i,
+          onTap: () {
+            onTap(i);
+          },
+          title: _isAr ? tags[i].nameAr : tags[i].nameEn,
+        ));
+
     return tagsList;
   }
 }

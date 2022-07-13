@@ -6,7 +6,6 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:provider/provider.dart';
-
 import '../../utilities/firebase_helper.dart';
 
 class ProductCard extends StatelessWidget {
@@ -34,7 +33,6 @@ class ProductCard extends StatelessWidget {
           onTap: () {
             FirebaseHelper.analytics!.logEvent(
                 name: 'Product', parameters: {"name": product.nameAr});
-
             Navigator.pushNamed(context, "/ProductDetails",
                 arguments: product.id);
           },

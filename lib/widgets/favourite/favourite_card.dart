@@ -56,8 +56,8 @@ class FavouriteCard extends StatelessWidget {
         child: InkWell(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
-          onTap: () => Navigator.pushNamed(context, '/ProductDetails',
-              arguments: data.product!.id!),
+          onTap: () => Navigator.pushNamed(context, "/ProductDetails",
+              arguments: data.product!.id),
           child: MainCard(
             padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 3),
             height: 125,

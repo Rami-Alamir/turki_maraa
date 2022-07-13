@@ -54,13 +54,17 @@ class CategoryCardG1 extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     top: 40.0, right: 20, left: 20, bottom: 0),
                 child: Container(
-                  width: SizeConfig.screenWidth! - 230,
+                  width: SizeConfig.screenWidth! - 280,
                   child: AutoSizeText(
                     title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(fontSize: title.length < 20 ? 20 : 16),
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).textTheme.headline3!.color),
+                    maxFontSize: 18,
+                    minFontSize: 8,
+                    overflow: TextOverflow.visible,
                     maxLines: 1,
                   ),
                 ),
@@ -71,11 +75,13 @@ class CategoryCardG1 extends StatelessWidget {
                   borderRadius: const BorderRadius.only(
                       bottomRight: Radius.circular(20.0),
                       bottomLeft: Radius.circular(20.0)),
-                  child: Image.network(
-                    image,
-                    fit: BoxFit.contain,
-                    height: 170,
-                    width: 140,
+                  child: Container(
+                    child: Image.network(
+                      image,
+                      fit: BoxFit.cover,
+                      height: 300,
+                      width: 190,
+                    ),
                   ),
                 ),
               ),

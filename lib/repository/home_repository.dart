@@ -17,6 +17,7 @@ class HomeRepository {
     CategoryData? categoryData;
     try {
       categoryData = CategoryData.fromJson(response);
+      print(response.toString());
     } catch (e) {
       print(e.toString());
     }
@@ -44,6 +45,8 @@ class HomeRepository {
   Future<DiscoverData> getDiscover(
       int categoryId, LatLng latLng, String countryId) async {
     print("getDiscover");
+    print(
+        "${"filters/by-category/$categoryId?active=1&longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId"}");
     final response = await _helper.get(
         "filters/by-category/$categoryId?active=1&longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
     DiscoverData? discoverItem;

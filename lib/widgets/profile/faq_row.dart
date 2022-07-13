@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 
 class FaqRow extends StatefulWidget {
@@ -60,11 +61,20 @@ class _FaqRowState extends State<FaqRow> {
           child: Padding(
             padding:
                 const EdgeInsets.only(right: 20, bottom: 20, left: 20, top: 5),
-            child: Text(
-              widget.answer,
-              textAlign: TextAlign.start,
-              style:
-                  Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: SizeConfig.screenWidth! - 50,
+                  child: Text(
+                    widget.answer,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2!
+                        .copyWith(fontSize: 14),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

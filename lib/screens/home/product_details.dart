@@ -12,7 +12,8 @@ import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/home/extras_list.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
-
+import '../../widgets/adha/extras_list_adha_days.dart';
+import '../../widgets/home/not_available.dart';
 import '../../widgets/home/without_extra.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -79,6 +80,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                             imgList:
                                 _productsProvider.productData.data!.images!,
                           ),
+                          Visibility(
+                              visible: !_productsProvider
+                                  .productData.data!.isActive!,
+                              child: NotAvailable()),
                           ProductDescription(
                               isFavourite: _productsProvider.isFavourite,
                               product: _productsProvider.productData,
@@ -87,9 +92,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   _productsProvider.getProductSalePrice(),
                               price: _productsProvider.getProductPrice()),
                           Visibility(
+                            visible: _productsProvider.productData.data!
+                                    .subCategory!.categoryId ==
+                                34,
+                            child: ExtrasListAdhaDays(
+                              title: AppLocalizations.of(context)!
+                                  .tr('choose_the_day_of_sacrifice'),
+                              tags: _productsProvider.days,
+                              onTap: (value) {
+                                print("vvv$value");
+                                _productsProvider.setSelectedDay = value;
+                              },
+                              selected: _productsProvider.selectedDay,
+                            ),
+                          ),
+                          Visibility(
                             visible: _productsProvider
-                                    .productData.data!.sizes!.length >
-                                1,
+                                        .productData.data!.sizes!.length >
+                                    1 &&
+                                _productsProvider.productData.data!.isActive!,
                             child: ExtrasList(
                               title: AppLocalizations.of(context)!.tr('size'),
                               tags: _productsProvider.productData.data!.sizes!,
@@ -102,32 +123,47 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 10.0),
-                            child: ExtrasList(
-                              title:
-                                  AppLocalizations.of(context)!.tr('chopping'),
-                              tags:
-                                  _productsProvider.productData.data!.chopping!,
-                              selected: _productsProvider.selectedChopping,
-                              onTap: (value) {
-                                _productsProvider.setSelectedChopping = value;
-                              },
+                            child: Visibility(
+                              visible:
+                                  _productsProvider.productData.data!.isActive!,
+                              child: ExtrasList(
+                                rid: _productsProvider.selectedDay == 0 ? 5 : 0,
+                                title: AppLocalizations.of(context)!
+                                    .tr('chopping'),
+                                tags: _productsProvider
+                                    .productData.data!.chopping!,
+                                selected: _productsProvider.selectedChopping,
+                                onTap: (value) {
+                                  _productsProvider.setSelectedChopping = value;
+                                },
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: ExtrasList(
-                              title:
-                                  AppLocalizations.of(context)!.tr('packaging'),
-                              tags: _productsProvider
-                                  .productData.data!.packaging!,
-                              selected: _productsProvider.selectedPackaging,
-                              onTap: (value) {
-                                _productsProvider.setSelectedPackaging = value;
-                              },
+                          Visibility(
+                            visible:
+                                _productsProvider.productData.data!.isActive!,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: ExtrasList(
+                                rid:
+                                    _productsProvider.selectedDay == 0 ? 11 : 0,
+                                title: AppLocalizations.of(context)!
+                                    .tr('packaging'),
+                                tags: _productsProvider
+                                    .productData.data!.packaging!,
+                                selected: _productsProvider.selectedPackaging,
+                                onTap: (value) {
+                                  _productsProvider.setSelectedPackaging =
+                                      value;
+                                },
+                              ),
                             ),
                           ),
-                          if (_productsProvider.productData.data!.isShalwata!)
-                            Padding(
+                          Visibility(
+                            visible: _productsProvider
+                                    .productData.data!.isShalwata! &&
+                                _productsProvider.productData.data!.isActive!,
+                            child: Padding(
                               padding: const EdgeInsets.only(top: 10.0),
                               child: ShalwataExtra(
                                 selected: _productsProvider.selectedShalwata,
@@ -137,7 +173,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 },
                               ),
                             ),
-                          WithoutExtra(product: _productsProvider.productData),
+                          ),
+                          Visibility(
+                              visible:
+                                  _productsProvider.productData.data!.isActive!,
+                              child: WithoutExtra(
+                                  product: _productsProvider.productData)),
                           SizedBox(height: 60)
                         ],
                       ),
@@ -157,7 +198,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ],
                 ),
       bottomSheet: !_productsProvider.productIsLoading &&
-              !_productsProvider.productIsRetry
+              !_productsProvider.productIsRetry &&
+              _productsProvider.productData.data!.isActive!
           ? ProductDetailsFooter(
               count: _count,
               subtract: () {

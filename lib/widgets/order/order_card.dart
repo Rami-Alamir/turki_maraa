@@ -236,7 +236,11 @@ class OrderCard extends StatelessWidget {
                                                           context)!
                                                       .tr(order.paymentTypeId ==
                                                               1
-                                                          ? "cod"
+                                                          ? order.products![0]
+                                                                      .categoryId ==
+                                                                  34
+                                                              ? "prepaid"
+                                                              : "cod"
                                                           : "online_payment"),
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start),

@@ -140,12 +140,12 @@ class CartCard extends StatelessWidget {
                                     (_language
                                             ? "${item.size?.nameAr ?? ""} ${item.cut?.nameAr ?? ""}"
                                                 " ${item.preparation?.nameAr ?? ""} ${item.isShalwata == 1 ? "مع شلوطة" : ""}"
-                                            : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""} "
+                                            : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""}"
                                                 "${item.preparation?.nameEn ?? ""} ${item.isShalwata == 1 ? "with shalwata" : ""}") +
-                                        "${item.isLyh! ? AppLocalizations.of(context)!.tr('without_tail_fat') : ""} " +
-                                        "${item.isRas! ? AppLocalizations.of(context)!.tr('without_head') : ""} " +
-                                        "${item.isKwar3! ? AppLocalizations.of(context)!.tr('without_trotters') : ""} " +
-                                        "${item.isKarashah! ? AppLocalizations.of(context)!.tr('without_tripe') : ""} ",
+                                        "${item.isLyh! ? AppLocalizations.of(context)!.tr('without_tail_fat') + " " : ""}" +
+                                        "${item.isRas! ? AppLocalizations.of(context)!.tr('without_head') + " " : ""}" +
+                                        "${item.isKwar3! ? AppLocalizations.of(context)!.tr('without_trotters') + " " : ""}" +
+                                        "${item.isKarashah! ? AppLocalizations.of(context)!.tr('without_tripe') : ""}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline5!

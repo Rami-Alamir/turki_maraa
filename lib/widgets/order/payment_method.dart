@@ -4,8 +4,9 @@ import 'package:new_turki/widgets/shared/main_card.dart';
 
 class PaymentMethod extends StatelessWidget {
   final int paymentTypeId;
+  final String paymentName;
 
-  const PaymentMethod({this.paymentTypeId = 2});
+  const PaymentMethod({this.paymentTypeId = 2, this.paymentName = "cod"});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,8 +48,9 @@ class PaymentMethod extends StatelessWidget {
                         height: 40,
                       )
                     : Text(
-                        AppLocalizations.of(context)!
-                            .tr(paymentTypeId == 1 ? "cod" : "online_payment"),
+                        AppLocalizations.of(context)!.tr(paymentTypeId == 1
+                            ? paymentName
+                            : "online_payment"),
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,

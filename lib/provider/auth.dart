@@ -324,9 +324,7 @@ class Auth with ChangeNotifier {
   // update user data
   Future<void> addUserName(BuildContext context) async {
     _dialogContext = context;
-    if (usernameController.text.length > 0 ||
-        ageController.text.length > 0 ||
-        emailController.text.length > 0) {
+    if (usernameController.text.length > 0) {
       _showDialogIndicator(_dialogContext);
       try {
         _response = await UserRepository().updateInfo({
