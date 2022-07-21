@@ -8,6 +8,8 @@ import 'package:new_turki/widgets/profile/rounded_picker_button.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/profile/delete_row.dart';
+
 class PersonalInformation extends StatefulWidget {
   @override
   _PersonalInformationState createState() => _PersonalInformationState();
@@ -46,8 +48,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   radius: 60,
                   backgroundColor: Theme.of(context).primaryColor,
                   child: Text(
-                      ((_auth.userData!.data!.name)?.length ?? 0) > 0
-                          ? (_auth.userData!.data!.name!).substring(0, 1)
+                      ((_auth.userData?.data?.name)?.length ?? 0) > 0
+                          ? (_auth.userData?.data?.name ?? " ").substring(0, 1)
                           : "",
                       style: TextStyle(
                         fontSize: 20,
@@ -83,9 +85,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
               fontSize: 16,
               title: AppLocalizations.of(context)!.tr('update'),
               onPressed: () async {
-                RegExp regex =
-                    RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
-
+                RegExp regex = RegExp(
+                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
                 if (!regex.hasMatch(_auth.emailController.text) &&
                     _auth.emailController.text.length > 0)
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -96,7 +97,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 else
                   await _auth.updateUser(context);
               },
-            )
+            ),
+            DeleteRow()
           ],
         ),
       ),

@@ -47,11 +47,11 @@ class _PhoneLoginState extends State<PhoneLogin> {
               PhoneNumber(),
               RoundedRectangleButton(
                   padding: EdgeInsets.only(top: 20, right: 20, left: 20),
-                  title: _auth.start == 0 || _auth.start == 59
+                  title: _auth.start == 0 || _auth.start == 30
                       ? AppLocalizations.of(context)!.tr('next')
                       : _auth.start.toString(),
                   onPressed: () async {
-                    if (_auth.start == 59 || _auth.start == 0) {
+                    if (_auth.start == 30 || _auth.start == 0) {
                       if (_auth.formKey!.currentState!.validate()) {
                         _auth.startTimer();
                         await _auth.sendOTP(context);

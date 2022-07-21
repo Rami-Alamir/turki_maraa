@@ -60,7 +60,7 @@ class ProductCardLarge extends StatelessWidget {
                           width: 160,
                           height: 160,
                           fit: BoxFit.cover,
-                          placeholder: 'assets/images/turki_gold.png',
+                          placeholder: 'assets/images/placeholder.png',
                           image: image,
                         ),
                       )),

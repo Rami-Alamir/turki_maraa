@@ -12,6 +12,13 @@ class UserRepository {
     return response;
   }
 
+  //delete user account
+  Future<int> deleteUserAccount(String authorization) async {
+    final statusCode = await _helper.delete("customers/delete-customer",
+        authorization: authorization);
+    return statusCode;
+  }
+
   // add Address Info
   Future<dynamic> addAddress(body, String authorization) async {
     print(body.toString());

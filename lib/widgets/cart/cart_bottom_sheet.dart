@@ -7,7 +7,6 @@ import 'package:new_turki/utilities/get_strings.dart';
 import 'package:new_turki/widgets/shared/invoice.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
-
 import '../../utilities/firebase_helper.dart';
 
 class CartBottomSheet extends StatefulWidget {

@@ -31,7 +31,7 @@ class Auth with ChangeNotifier {
   TextEditingController genderController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   //used in send otp (login)
-  int _start = 59;
+  int _start = 30;
   //used to hide dialog indicator
   BuildContext? _dialogContext;
   String? _userPhone;
@@ -67,7 +67,7 @@ class Auth with ChangeNotifier {
 
   //used to restrict resend otp
   void startTimer() {
-    _start = 59;
+    _start = 30;
     const oneSec = const Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
@@ -80,7 +80,7 @@ class Auth with ChangeNotifier {
         notifyListeners();
       },
     );
-    _start = 59;
+    _start = 30;
     notifyListeners();
   }
 
@@ -101,12 +101,19 @@ class Auth with ChangeNotifier {
     try {
       _userPhone =
           ConvertNumbers.getPhone(keyController.text, phoneController.text);
-      _userType =
+      var response =
           await RegistrationRepository().sendOTP({"mobile": _userPhone});
-      _isNewUser = _userType!.code == "C100";
-
-      Navigator.pop(_dialogContext!);
-      Navigator.pushNamed(context, "/VerifyPhone");
+      if (response.statusCode == 200) {
+        _userType = UserType.fromJson(json.decode(response.body.toString()));
+        _isNewUser = _userType!.code == "C100";
+        print("_isNewUser $_isNewUser");
+        Navigator.pop(_dialogContext!);
+        Navigator.pushNamed(context, "/VerifyPhone");
+      } else if (response.statusCode == 401) {
+        Navigator.pop(_dialogContext!);
+        showSnackBar(
+            context, "sorry_you_can_not_log_in_after_deleting_your_account");
+      }
     } catch (e) {
       print(e.toString());
       showSnackBar(context, "unexpected_error");
@@ -234,23 +241,47 @@ class Auth with ChangeNotifier {
   // logout
   void logOut(BuildContext context) async {
     await _initPrefs();
+    ShowConfirmDialog()
+        .confirmDialog(context, "Are_you_sure_you_want_to_log_out", () {
+      logOutAction(context);
+    });
+  }
+
+  // delete user account
+  void deleteAccount(BuildContext context) async {
+    await _initPrefs();
+    _dialogContext = context;
+    ShowConfirmDialog().confirmDialog(
+        context, "are_you_sure_you_want_to_delete_the_account", () async {
+      _showDialogIndicator(_dialogContext);
+      int statusCode =
+          await UserRepository().deleteUserAccount("Bearer $_accessToken");
+      print('statusCode $statusCode');
+      if (statusCode == 200) {
+        Navigator.of(context).pop();
+        Navigator.pop(_dialogContext!);
+        logOutAction(context);
+      } else {
+        Navigator.pop(_dialogContext!);
+        showSnackBar(context, "unexpected_error");
+      }
+    });
+  }
+
+  void logOutAction(BuildContext context) {
     final _addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
     final _cartProvider = Provider.of<CartProvider>(context, listen: false);
     _cartProvider.cartLength = 0;
     _addressProvider.setSelectedAddress = -1;
     _addressProvider.setUserAddress = UserAddress();
-    ShowConfirmDialog()
-        .confirmDialog(context, "Are_you_sure_you_want_to_log_out", () {
-      _userData = null;
-      _isAuth = false;
-      _gender = -1;
-      _accessToken = "";
-      _prefs!.remove("accessToken");
-      notifyListeners();
-    });
+    _isAuth = false;
+    _userData = null;
+    _gender = -1;
+    _accessToken = "";
+    _prefs!.remove("accessToken");
+    notifyListeners();
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-
     if (_homeProvider.locationServiceStatus == 2) {
       _homeProvider.setLocationServiceStatus = 0;
       _homeProvider.clearDescription();

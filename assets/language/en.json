@@ -224,5 +224,8 @@
   "prepaid":"pre-paid",
   "prepaid_description": "prepaid payment before Eid Al-Adha",
   "please_choose_the_day_of_sacrifice": "Please choose the day of sacrifice",
-  "day_of_sacrifice": "day of sacrifice"
+  "day_of_sacrifice": "day of sacrifice",
+  "delete_account": "Delete account",
+  "are_you_sure_you_want_to_delete_the_account": "Are you sure you want to delete the account",
+  "sorry_you_can_not_log_in_after_deleting_your_account": "Sorry, you can't log in after deleting your account"
 }

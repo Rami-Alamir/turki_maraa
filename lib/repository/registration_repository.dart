@@ -5,15 +5,11 @@ class RegistrationRepository {
   ApiBaseHelper _helper = ApiBaseHelper();
 
   //send otp
-  Future<UserType> sendOTP(body) async {
-    UserType? _userType;
-    final response = await _helper.post("sendOtpCode", body);
-    try {
-      _userType = UserType.fromJson(response);
-    } catch (e) {
-      print(e.toString());
-    }
-    return _userType!;
+  Future<dynamic> sendOTP(body) async {
+    print('sendOtpCode');
+    final response = await _helper.post3("sendOtpCode", body);
+    print(response.toString());
+    return response!;
   }
 
   //verify Otp Code

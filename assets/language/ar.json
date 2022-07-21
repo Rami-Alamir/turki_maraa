@@ -226,5 +226,9 @@
   "prepaid":"دفع مسبق",
   "prepaid_description": "دفع مسبق قبل العيد",
   "please_choose_the_day_of_sacrifice": "الرجاء اختيار يوم الأضحية",
-  "day_of_sacrifice": "يوم الأضحية"
+  "day_of_sacrifice": "يوم الأضحية",
+  "delete_account": "حذف الحساب",
+  "are_you_sure_you_want_to_delete_the_account": "هل أنت متأكد أنك تريد حذف الحساب؟",
+  "sorry_you_can_not_log_in_after_deleting_your_account": "نعتذر منك, لا يمكنك تسجيل الدخول بعد حذف الحساب"
+
 }

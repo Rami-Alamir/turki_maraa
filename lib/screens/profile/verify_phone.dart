@@ -101,7 +101,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                             style: Theme.of(context).textTheme.headline5),
                         InkWell(
                           onTap: () async {
-                            if (_auth.start == 59 || _auth.start == 0) {
+                            if (_auth.start == 30 || _auth.start == 0) {
                               _auth.startTimer();
                               await _auth.sendOTP(context);
                             }
