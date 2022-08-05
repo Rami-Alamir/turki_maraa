@@ -50,7 +50,7 @@ class SearchRow extends StatelessWidget {
                             child: Container(
                               color: Theme.of(context)
                                   .colorScheme
-                                  .secondaryVariant,
+                                  .secondaryContainer,
                               width: 60,
                               height: 60,
                               child: ClipRRect(
@@ -126,7 +126,7 @@ class SearchRow extends StatelessWidget {
             Divider(
               color: Theme.of(context)
                   .colorScheme
-                  .secondaryVariant
+                  .secondaryContainer
                   .withOpacity(0.3),
             )
           ],

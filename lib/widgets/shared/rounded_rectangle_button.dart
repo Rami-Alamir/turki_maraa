@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class RoundedRectangleButton extends StatelessWidget {
   final String title;
-  final Function onPressed;
+  final Function? onPressed;
   final double fontSize;
   final double width;
   final double height;
   final EdgeInsets padding;
-  final Color color;
+  final Color? color;
   final Color fontColor;
 
   const RoundedRectangleButton({
@@ -17,24 +17,28 @@ class RoundedRectangleButton extends StatelessWidget {
     this.width = 320,
     this.padding = const EdgeInsets.all(25.0),
     this.height = 55,
-    this.color = const Color.fromRGBO(118, 24, 14, 1.0),
+    this.color,
     this.fontColor = Colors.white,
   });
 
   @override
   Widget build(BuildContext context) {
+    Color _color = Theme.of(context).primaryColor;
+
     return Padding(
       padding: padding,
       child: RawMaterialButton(
         constraints: BoxConstraints.tight(Size(width, height)),
-        onPressed: () {
-          onPressed();
-        },
+        onPressed: onPressed == null
+            ? null
+            : () {
+                onPressed!();
+              },
         elevation: 00.0,
-        splashColor: color,
+        splashColor: color ?? _color,
         focusElevation: 0,
-        highlightColor: color,
-        fillColor: color,
+        highlightColor: color ?? _color,
+        fillColor: onPressed == null ? Colors.grey : color ?? _color,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(const Radius.circular(5))),
         child: Text(

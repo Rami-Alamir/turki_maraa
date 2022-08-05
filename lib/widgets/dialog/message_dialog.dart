@@ -1,53 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:provider/provider.dart';
 
+import '../../../utilities/app_localizations.dart';
 import '../shared/rounded_rectangle_button.dart';
 
 class MessageDialog extends StatelessWidget {
   final String message;
+  final String image;
 
-  const MessageDialog({required this.message});
+  const MessageDialog({required this.message, required this.image});
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+      backgroundColor: Theme.of(context).splashColor,
       elevation: 0,
-      content: Container(
-        width: 350,
-        constraints: BoxConstraints(minHeight: 180, maxWidth: 350),
-        decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: Theme.of(context).backgroundColor,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 30),
-              child: Container(
-                width: 220,
-                child: Text(
-                  message,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                      height: 1.4, fontSize: 14, fontWeight: FontWeight.w600),
-                ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/warning.png',
+                width: 80,
+                height: 80,
               ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
             ),
-            RoundedRectangleButton(
-                title: AppLocalizations.of(context)!.tr('ok'),
-                fontSize: 14,
-                height: 42,
-                width: 200,
-                padding: EdgeInsets.only(top: 15),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                }),
-          ],
-        ),
+          ),
+          RoundedRectangleButton(
+              title: AppLocalizations.of(context)!.tr('confirm'),
+              fontSize: 14,
+              height: 42,
+              padding: const EdgeInsets.only(top: 15),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+        ],
       ),
     );
   }

@@ -5,8 +5,8 @@ import '../../utilities/firebase_helper.dart';
 class CategoryCardG3 extends StatelessWidget {
   final int categoryId;
   final String title;
-  final String titelAr;
-  final String titelEn;
+  final String titleAr;
+  final String titleEn;
   final String image;
   final Color color;
   final Color color2;
@@ -14,8 +14,8 @@ class CategoryCardG3 extends StatelessWidget {
 
   const CategoryCardG3({
     required this.title,
-    required this.titelAr,
-    required this.titelEn,
+    required this.titleAr,
+    required this.titleEn,
     required this.scaleFactor,
     required this.image,
     required this.color,
@@ -28,8 +28,8 @@ class CategoryCardG3 extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, "/ProductsHome", arguments: categoryId);
         FirebaseHelper.analytics!
-            .logEvent(name: 'Categories', parameters: {"name": titelAr});
-        FirebaseHelper.analytics!.logEvent(name: titelEn, parameters: null);
+            .logEvent(name: 'Categories', parameters: {"name": titleAr});
+        FirebaseHelper.analytics!.logEvent(name: titleEn, parameters: null);
       },
       child: Container(
         decoration: BoxDecoration(

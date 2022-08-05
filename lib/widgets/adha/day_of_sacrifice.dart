@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:new_turki/provider/cart_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:provider/provider.dart';
-
 import '../../models/cart_data.dart';
 
 class DayOfSacrifice extends StatelessWidget {
@@ -26,8 +24,6 @@ class DayOfSacrifice extends StatelessWidget {
       "2022-07-11",
       "2022-07-12",
     ];
-    DateFormat format =
-        DateFormat.E(AppLocalizations.of(context)!.locale!.languageCode);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +93,7 @@ class DayOfSacrifice extends StatelessWidget {
         decoration: BoxDecoration(
             color: selected
                 ? Theme.of(context).primaryColor
-                : Theme.of(context).colorScheme.primaryVariant,
+                : Theme.of(context).colorScheme.primaryContainer,
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

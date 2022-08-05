@@ -17,7 +17,7 @@ class ExtraTag extends StatelessWidget {
             constraints: BoxConstraints(minHeight: 40),
             decoration: BoxDecoration(
               color: !selected
-                  ? Theme.of(context).colorScheme.secondaryVariant
+                  ? Theme.of(context).colorScheme.secondaryContainer
                   : Theme.of(context).primaryColor,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.all(Radius.circular(5)),

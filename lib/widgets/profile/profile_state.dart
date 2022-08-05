@@ -103,7 +103,7 @@ class ProfileState extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Container(
         height: 50,
-        color: Theme.of(context).colorScheme.secondaryVariant,
+        color: Theme.of(context).colorScheme.secondaryContainer,
         width: 0.2,
       ),
     );

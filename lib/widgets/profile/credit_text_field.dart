@@ -41,7 +41,8 @@ class CreditTextField extends StatelessWidget {
                   ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.secondaryVariant),
+                        color:
+                            Theme.of(context).colorScheme.secondaryContainer),
                   ),
                 ),
               ),

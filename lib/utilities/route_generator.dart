@@ -3,7 +3,7 @@ import 'package:new_turki/models/discover_data.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/screens/cart/shopping_cart.dart';
 import 'package:new_turki/screens/chat/chat.dart';
-import 'package:new_turki/screens/home/select_address.dart';
+import 'package:new_turki/screens/map/gms_map.dart';
 import 'package:new_turki/screens/home/discover.dart';
 import 'package:new_turki/screens/home/home.dart';
 import 'package:new_turki/screens/home/products_home.dart';
@@ -34,6 +34,7 @@ import 'package:new_turki/screens/profile/wallet.dart';
 import 'package:new_turki/screens/splash/splash.dart';
 
 import '../screens/cart/tamara_checkout_page.dart';
+import '../screens/map/hms_map.dart';
 import '../screens/orders/order_status.dart';
 
 class RouteGenerator {
@@ -107,9 +108,14 @@ class RouteGenerator {
       case '/TamaraCheckoutPage':
         return MaterialPageRoute(
             builder: (_) => TamaraCheckoutPage(checkoutUrl: args as String));
-      case '/SelectAddress':
+      case '/GMSMap':
         return MaterialPageRoute(
-            builder: (_) => SelectAddress(
+            builder: (_) => GMSMap(
+                  addressIndex: args as int,
+                ));
+      case '/HMSMap':
+        return MaterialPageRoute(
+            builder: (_) => HMSMap(
                   addressIndex: args as int,
                 ));
       case '/Search':

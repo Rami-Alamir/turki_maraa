@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/utilities/app_localizations.dart';

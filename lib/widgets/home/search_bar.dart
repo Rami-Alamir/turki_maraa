@@ -58,7 +58,7 @@ class SearchBar extends StatelessWidget {
                   borderSide: BorderSide(
                       color: Theme.of(context)
                           .colorScheme
-                          .secondaryVariant
+                          .secondaryContainer
                           .withOpacity(0.35),
                       width: 1)),
               focusedBorder: OutlineInputBorder(
@@ -69,7 +69,7 @@ class SearchBar extends StatelessWidget {
                     width: 1.8,
                     color: Theme.of(context)
                         .colorScheme
-                        .secondaryVariant
+                        .secondaryContainer
                         .withOpacity(0.35),
                   )),
               focusColor: Colors.transparent,

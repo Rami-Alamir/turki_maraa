@@ -74,21 +74,28 @@ class _AddressContainerState extends State<AddressContainer> {
                                             0),
                                 child: InkWell(
                                   onTap: () {
-                                    _addressProvider.setSelectedAddress = -1;
-                                    _selected = false;
-                                    final _homeProvider =
-                                        Provider.of<HomeProvider>(context,
-                                            listen: false);
-                                    _homeProvider.setIsLoading = true;
+                                    if (_addressProvider.selectedAddress !=
+                                        -1) {
+                                      _addressProvider.setSelectedAddress = -1;
+                                      final _homeProvider =
+                                          Provider.of<HomeProvider>(context,
+                                              listen: false);
+                                      _homeProvider.setIsLoading = true;
+                                      _selected = false;
 
-                                    _homeProvider.getHomePageData(true,
-                                        latLng: _homeProvider.latLng!,
-                                        countryId: _homeProvider
-                                            .currentIsoCountryCode);
-                                    _addressProvider.isoCountryCode =
-                                        _homeProvider.currentIsoCountryCode;
-                                    _addressProvider.setSelectedLatLng =
-                                        _homeProvider.latLng!;
+                                      _homeProvider.getHomePageData(true,
+                                          latLng: _homeProvider.latLng!,
+                                          countryId: _homeProvider
+                                              .currentIsoCountryCode);
+                                      _addressProvider.isoCountryCode =
+                                          _homeProvider.currentIsoCountryCode;
+                                      _addressProvider.setSelectedLatLng =
+                                          _homeProvider.latLng!;
+                                    } else {
+                                      setState(() {
+                                        _selected = false;
+                                      });
+                                    }
                                   },
                                   child: addressRow(
                                       (_homeProvider.locationServiceStatus ==
@@ -234,7 +241,7 @@ class _AddressContainerState extends State<AddressContainer> {
                 height: 2,
                 color: Theme.of(context)
                     .colorScheme
-                    .secondaryVariant
+                    .secondaryContainer
                     .withOpacity(0.3),
               )
             : Padding(

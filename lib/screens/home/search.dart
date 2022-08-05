@@ -26,10 +26,10 @@ class _SearchState extends State<Search> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Text(AppLocalizations.of(context)!.tr('search'),
-                      style: TextStyle(
-                          color: Color.fromRGBO(90, 4, 9, 1),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .copyWith(fontSize: 20, fontWeight: FontWeight.w700)),
                 ),
                 InkWell(
                   onTap: () => Navigator.pop(context),

@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:new_turki/models/product.dart';
-import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/dots_indicator.dart';
-import 'circle_icon.dart';
 
 class ProductHeader extends StatefulWidget {
   final List<Images> imgList;

@@ -15,7 +15,6 @@ import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:provider/provider.dart';
 import '../../utilities/size_config.dart';
-import '../../utilities/size_config.dart';
 import '../../widgets/home/best_seller_section.dart';
 
 class Home extends StatefulWidget {
@@ -129,7 +128,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                     padding: EdgeInsets.only(
                                       top: _homeProvider.canPickup
                                           ? 230.0 - _statusBarHeight
-                                          : 100,
+                                          : 150,
                                     ),
                                     child: RefreshIndicator(
                                       color: Theme.of(context).primaryColor,

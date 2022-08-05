@@ -48,7 +48,7 @@ class _IntroState extends State<Intro> {
           child: DotsIndicator(
             index: mSelectedPosition,
             count: IntroList.introData.length,
-            accentColor: Color.fromRGBO(132, 15, 15, 0.1),
+            accentColor: const Color.fromRGBO(132, 15, 15, 0.1),
           ),
         ),
         IntroFooter(

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/auth.dart';
@@ -48,15 +47,15 @@ class _LoginState extends State<Login> {
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
+                      padding: const EdgeInsets.only(top: 40.0),
                       child: Container(
                         alignment: Alignment.center, // This is needed
                         width: 200,
-                        height: 150,
+                        height: 250,
                         child: Image.asset(
-                          'assets/images/turki.png',
+                          'assets/images/turki_icon.png',
                           width: 200,
-                          height: 150,
+                          height: 250,
                           fit: BoxFit.contain,
                         ),
                       ),

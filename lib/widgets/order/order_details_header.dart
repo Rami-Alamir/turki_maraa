@@ -5,7 +5,6 @@ import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/order/item_column.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import '../../utilities/convert_days.dart';
-import 'order_tracking.dart';
 
 class OrderDetailsHeader extends StatelessWidget {
   final Data order;

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../provider/address_provider.dart';
 import '../../utilities/app_localizations.dart';
 import '../../utilities/size_config.dart';
@@ -57,11 +56,11 @@ class CallCard extends StatelessWidget {
         ));
   }
 
-  //used to make calls
+//used to make calls, whatsapp
   Future<void> _launchURL(String url) async {
     try {
-      if (await canLaunch(url)) {
-        await launch(url);
+      if (await canLaunchUrlString(url)) {
+        await launchUrlString(url);
       } else {
         throw 'Could not launch $url';
       }

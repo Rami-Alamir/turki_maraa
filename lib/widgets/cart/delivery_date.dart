@@ -97,7 +97,7 @@ class DeliveryDate extends StatelessWidget {
         decoration: BoxDecoration(
             color: selected
                 ? Theme.of(context).primaryColor
-                : Theme.of(context).colorScheme.primaryVariant,
+                : Theme.of(context).colorScheme.primaryContainer,
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

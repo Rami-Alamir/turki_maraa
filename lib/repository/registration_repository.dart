@@ -1,4 +1,3 @@
-import 'package:new_turki/models/user_type.dart';
 import 'package:new_turki/networking/api_base_helper.dart';
 
 class RegistrationRepository {

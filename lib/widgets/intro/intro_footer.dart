@@ -25,10 +25,9 @@ class IntroFooter extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   changeIntroStatus();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => App()),
-                  );
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => App()),
+                      (Route<dynamic> route) => false);
                 },
                 child: Text(
                   AppLocalizations.of(context)!.tr('skip'),
@@ -43,15 +42,14 @@ class IntroFooter extends StatelessWidget {
             IconButton(
               icon: Icon(
                 Icons.arrow_forward_ios,
-                color: Color.fromRGBO(132, 15, 15, 1),
+                color: const Color.fromRGBO(132, 15, 15, 1),
               ),
               onPressed: () {
                 changeIntroStatus();
                 mSelectedPosition + 1 == IntroList.introData.length
-                    ? Navigator.push(
-                        context,
+                    ? Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => App()),
-                      )
+                        (Route<dynamic> route) => false)
                     : next();
               },
             )

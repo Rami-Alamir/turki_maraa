@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'dart:math' as math;
 
 class TurkiDrawerFooter extends StatelessWidget {
@@ -68,11 +68,16 @@ class TurkiDrawerFooter extends StatelessWidget {
     );
   }
 
+  //used to make calls
   Future<void> _makePhoneCall(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    try {
+      if (await canLaunchUrlString(url)) {
+        await launchUrlString(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

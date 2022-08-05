@@ -25,7 +25,7 @@ class AddressBox extends StatelessWidget {
                 BoxShadow(
                   color: Theme.of(context)
                       .colorScheme
-                      .secondaryVariant
+                      .secondaryContainer
                       .withOpacity(0.3),
                   blurRadius: 6,
                   spreadRadius: 0.5,
@@ -38,63 +38,29 @@ class AddressBox extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                      width: SizeConfig.screenWidth! - 120,
-                      child: RichText(
-                        text: TextSpan(
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1!
-                              .copyWith(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
-                          children: <InlineSpan>[
-                            WidgetSpan(
-                              child: Visibility(
-                                visible: AppLocalizations.of(context)!
-                                        .locale!
-                                        .languageCode !=
-                                    "ar",
-                                child: Icon(
-                                  Icons.place,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .headline4!
-                                      .color!,
-                                  size: 17.5,
-                                ),
-                              ),
+                      width: SizeConfig.screenWidth! - 110,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.place,
+                            color: Theme.of(context).primaryColor,
+                            size: 17.5,
+                          ),
+                          Container(
+                            width: SizeConfig.screenWidth! - 130,
+                            child: Text(
+                              "${(AppLocalizations.of(context)!.tr(isPickup ? "pick_up_from" : 'delivery_to') + " ")} ${isPickup ? AppLocalizations.of(context)!.tr('soon') : title}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal),
                             ),
-                            WidgetSpan(
-                              child: Text(
-                                AppLocalizations.of(context)!.tr(isPickup
-                                        ? "pick_up_from"
-                                        : 'delivery_to') +
-                                    " ",
-                                style: Theme.of(context).textTheme.headline4!,
-                              ),
-                            ),
-                            WidgetSpan(
-                              child: Visibility(
-                                visible: AppLocalizations.of(context)!
-                                        .locale!
-                                        .languageCode ==
-                                    "ar",
-                                child: Icon(
-                                  Icons.place,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .headline4!
-                                      .color!,
-                                  size: 17.5,
-                                ),
-                              ),
-                            ),
-                            TextSpan(
-                              text: isPickup
-                                  ? AppLocalizations.of(context)!.tr('soon')
-                                  : title,
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       )),
                   Icon(
                     selected

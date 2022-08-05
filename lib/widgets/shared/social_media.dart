@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/utilities/social_icons_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SocialMedia extends StatelessWidget {
   final Color color;
@@ -66,8 +66,8 @@ class SocialMedia extends StatelessWidget {
   //used to lunch social media
   Future<void> _launchURL(String url) async {
     try {
-      if (await canLaunch(url)) {
-        await launch(url);
+      if (await canLaunchUrlString(url)) {
+        await launchUrlString(url);
       } else {
         throw 'Could not launch $url';
       }

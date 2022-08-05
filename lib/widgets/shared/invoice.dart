@@ -46,7 +46,7 @@ class Invoice extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
-              AppLocalizations.of(context)!.tr('order_total'),
+              AppLocalizations.of(context)!.tr('order_summary'),
               style:
                   Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
             ),

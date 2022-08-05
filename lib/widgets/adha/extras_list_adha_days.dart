@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:new_turki/models/product.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
@@ -56,7 +55,7 @@ class ExtrasListAdhaDays extends StatelessWidget {
     final bool _isAr = AppLocalizations.of(context)!.locale == Locale('ar');
     final List<int> _date = [9, 10, 11, 12];
     var currentDate = DateTime.now().day;
-    print("curent $currentDate");
+    print(" $currentDate");
     List<Widget> tagsList = [];
     print('rid $rid');
     for (int i = 0; i < tags.length; i++)

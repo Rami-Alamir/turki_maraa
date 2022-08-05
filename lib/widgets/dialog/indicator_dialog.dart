@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
+import '../shared/spinkit_indicator.dart';
 
 class IndicatorDialog extends StatelessWidget {
   @override

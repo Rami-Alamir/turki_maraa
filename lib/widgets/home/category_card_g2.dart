@@ -10,12 +10,12 @@ class CategoryCardG2 extends StatelessWidget {
   final Color color;
   final Color color2;
   final double scaleFactor;
-  final String titelAr;
-  final String titelEn;
+  final String titleAr;
+  final String titleEn;
   const CategoryCardG2({
     required this.title,
-    required this.titelAr,
-    required this.titelEn,
+    required this.titleAr,
+    required this.titleEn,
     required this.scaleFactor,
     required this.image,
     required this.color,
@@ -28,8 +28,8 @@ class CategoryCardG2 extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, "/ProductsHome", arguments: categoryId);
         FirebaseHelper.analytics!
-            .logEvent(name: 'Categories', parameters: {"name": titelAr});
-        FirebaseHelper.analytics!.logEvent(name: titelEn, parameters: null);
+            .logEvent(name: 'Categories', parameters: {"name": titleAr});
+        FirebaseHelper.analytics!.logEvent(name: titleEn, parameters: null);
       },
       child: Container(
         decoration: BoxDecoration(

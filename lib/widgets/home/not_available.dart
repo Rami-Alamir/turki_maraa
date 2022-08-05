@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 
-import '../../utilities/size_config.dart';
-
 class NotAvailable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

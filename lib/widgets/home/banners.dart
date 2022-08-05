@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/models/banners_data.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/dots_indicator.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class BannersSlider extends StatefulWidget {
   final BannersData bannersData;
@@ -87,8 +87,8 @@ class _BannersState extends State<BannersSlider> {
 //used to lunch url
   Future<void> _launchURL(String url) async {
     try {
-      if (await canLaunch(url)) {
-        await launch(url);
+      if (await canLaunchUrlString(url)) {
+        await launchUrlString(url);
       } else {
         throw 'Could not launch $url';
       }

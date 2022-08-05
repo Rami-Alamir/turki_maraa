@@ -38,7 +38,7 @@ class PromoCode extends StatelessWidget {
             elevation: 3,
             shadowColor: Theme.of(context)
                 .colorScheme
-                .secondaryVariant
+                .secondaryContainer
                 .withOpacity(0.14),
             shape: const RoundedRectangleBorder(
                 borderRadius:

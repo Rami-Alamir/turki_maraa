@@ -7,6 +7,7 @@ import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:provider/provider.dart';
 import '../../provider/auth.dart';
+import '../../provider/home_provider.dart';
 
 class AddressCard extends StatelessWidget {
   final Data userAddress;
@@ -98,7 +99,7 @@ class AddressCard extends StatelessWidget {
                     height: 1,
                     color: Theme.of(context)
                         .colorScheme
-                        .secondaryVariant
+                        .secondaryContainer
                         .withOpacity(0.15),
                   ),
                   Container(
@@ -123,16 +124,25 @@ class AddressCard extends StatelessWidget {
                                     'the_address_used_as_a_delivery_address_cannot_be_edited'),
                                 textAlign: TextAlign.center,
                               )));
-                            else
-                              Navigator.pushNamed(context, '/SelectAddress',
-                                  arguments: index);
+                            else {
+                              final _homeProvider = Provider.of<HomeProvider>(
+                                  context,
+                                  listen: false);
+
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushNamed(
+                                      _homeProvider.isHms
+                                          ? '/HMSMap'
+                                          : '/GMSMap',
+                                      arguments: index);
+                            }
                           },
                         ),
                         Container(
                           width: 1,
                           color: Theme.of(context)
                               .colorScheme
-                              .secondaryVariant
+                              .secondaryContainer
                               .withOpacity(0.15),
                         ),
                         item(

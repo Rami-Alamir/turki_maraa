@@ -16,7 +16,7 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../models/delivery_period.dart';
 import '../models/tamara_payment.dart';
 import '../screens/cart/tamara_checkout_page.dart';
@@ -448,7 +448,7 @@ class CartProvider with ChangeNotifier {
           if (paymentId == 2) {
             PaymentARB arb =
                 PaymentARB.fromJson(json.decode(_response.body.toString()));
-            await launch(arb.data!.invoiceURL!, forceSafariVC: true);
+            await launchUrlString(arb.data!.invoiceURL!);
             notifyListeners();
           } else if (paymentId == 4) {
             TamaraPayment tamara =
@@ -525,7 +525,10 @@ class CartProvider with ChangeNotifier {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return MessageDialog(message: message);
+        return MessageDialog(
+          message: message,
+          image: 'assets/images/warning.png',
+        );
       },
     );
   }

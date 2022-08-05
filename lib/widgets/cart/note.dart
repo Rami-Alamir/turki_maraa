@@ -32,7 +32,7 @@ class Note extends StatelessWidget {
                   borderRadius: const BorderRadius.all(
                     Radius.circular(10),
                   ),
-                  color: Theme.of(context).colorScheme.primaryVariant,
+                  color: Theme.of(context).colorScheme.primaryContainer,
                 ),
                 width: SizeConfig.screenWidth! - 20,
                 child: TextFormField(

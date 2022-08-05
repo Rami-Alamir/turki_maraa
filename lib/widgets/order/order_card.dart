@@ -43,7 +43,7 @@ class OrderCard extends StatelessWidget {
                 BoxShadow(
                   color: Theme.of(context)
                       .colorScheme
-                      .secondaryVariant
+                      .secondaryContainer
                       .withOpacity(0.15),
                   spreadRadius: 0.5,
                   blurRadius: 11,

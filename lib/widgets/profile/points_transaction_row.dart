@@ -17,7 +17,7 @@ class PointTransactionRow extends StatelessWidget {
         color: Colors.transparent,
         elevation: 500,
         shadowColor:
-            Theme.of(context).colorScheme.secondaryVariant.withOpacity(0.14),
+            Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         child: ClipRRect(
             borderRadius: BorderRadius.all(const Radius.circular(5)),

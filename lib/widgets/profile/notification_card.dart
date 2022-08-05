@@ -25,7 +25,7 @@ class NotificationCard extends StatelessWidget {
               BoxShadow(
                 color: Theme.of(context)
                     .colorScheme
-                    .secondaryVariant
+                    .secondaryContainer
                     .withOpacity(0.14),
                 spreadRadius: 0.5,
                 blurRadius: 11,

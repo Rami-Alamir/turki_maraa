@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:new_turki/provider/auth.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +46,8 @@ class PinCodeFields extends StatelessWidget {
                   fieldHeight: 50,
                   fieldWidth: 50,
                   errorBorderColor: Theme.of(context).primaryColor,
-                  inactiveColor: Theme.of(context).colorScheme.secondaryVariant,
+                  inactiveColor:
+                      Theme.of(context).colorScheme.secondaryContainer,
                   activeColor: Theme.of(context).primaryColor,
                   inactiveFillColor: Theme.of(context).backgroundColor,
                   selectedFillColor: Theme.of(context).backgroundColor,

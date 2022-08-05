@@ -73,7 +73,7 @@ class OrderType extends StatelessWidget {
               border: Border.all(
                   color: selected
                       ? Colors.white
-                      : Theme.of(context).colorScheme.secondaryVariant,
+                      : Theme.of(context).colorScheme.secondaryContainer,
                   width: selected ? 1 : 0.8)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -86,7 +86,7 @@ class OrderType extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Theme.of(context)
                             .colorScheme
-                            .primaryVariant
+                            .primaryContainer
                             .withOpacity(0.16),
                         borderRadius: BorderRadius.all(Radius.circular(25))),
                     child: Icon(

@@ -241,18 +241,17 @@ class Auth with ChangeNotifier {
   // logout
   void logOut(BuildContext context) async {
     await _initPrefs();
-    ShowConfirmDialog()
-        .confirmDialog(context, "Are_you_sure_you_want_to_log_out", () {
+    ShowConfirmDialog().confirmDialog(context, () {
       logOutAction(context);
-    });
+    }, "Are_you_sure_you_want_to_log_out", "log_out",
+        icon: 'assets/images/profile_icons/logout-colored.svg');
   }
 
   // delete user account
   void deleteAccount(BuildContext context) async {
     await _initPrefs();
     _dialogContext = context;
-    ShowConfirmDialog().confirmDialog(
-        context, "are_you_sure_you_want_to_delete_the_account", () async {
+    ShowConfirmDialog().confirmDialog(context, () async {
       _showDialogIndicator(_dialogContext);
       int statusCode =
           await UserRepository().deleteUserAccount("Bearer $_accessToken");
@@ -265,7 +264,8 @@ class Auth with ChangeNotifier {
         Navigator.pop(_dialogContext!);
         showSnackBar(context, "unexpected_error");
       }
-    });
+    }, "are_you_sure_you_want_to_delete_the_account", "delete_account",
+        icon: 'assets/images/profile_icons/delete-account.svg');
   }
 
   void logOutAction(BuildContext context) {

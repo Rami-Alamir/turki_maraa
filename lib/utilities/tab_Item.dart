@@ -3,7 +3,7 @@ import 'package:new_turki/models/discover_data.dart';
 import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/screens/cart/shopping_cart.dart';
 import 'package:new_turki/screens/chat/chat.dart';
-import 'package:new_turki/screens/home/select_address.dart';
+import 'package:new_turki/screens/map/gms_map.dart';
 import 'package:new_turki/screens/home/discover.dart';
 import 'package:new_turki/screens/home/home.dart';
 import 'package:new_turki/screens/home/products_home.dart';
@@ -33,6 +33,7 @@ import 'package:new_turki/screens/profile/verify_phone.dart';
 import 'package:new_turki/screens/profile/wallet.dart';
 
 import '../screens/cart/tamara_checkout_page.dart';
+import '../screens/map/hms_map.dart';
 import '../screens/orders/order_status.dart';
 
 class TabItem {
@@ -140,9 +141,14 @@ class TabItem {
             case '/ProductsHome':
               return MaterialPageRoute(
                   builder: (_) => ProductsHome(id: args as int));
-            case '/SelectAddress':
+            case '/GMSMap':
               return MaterialPageRoute(
-                  builder: (_) => SelectAddress(
+                  builder: (_) => GMSMap(
+                        addressIndex: args as int,
+                      ));
+            case '/HMSMap':
+              return MaterialPageRoute(
+                  builder: (_) => HMSMap(
                         addressIndex: args as int,
                       ));
             case '/Search':

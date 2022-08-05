@@ -1,11 +1,9 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class NewVersion extends StatelessWidget {
   @override
@@ -75,11 +73,16 @@ class NewVersion extends StatelessWidget {
     );
   }
 
+  //used to make calls, whatsapp
   _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    try {
+      if (await canLaunchUrlString(url)) {
+        await launchUrlString(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

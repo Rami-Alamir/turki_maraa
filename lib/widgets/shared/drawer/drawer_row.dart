@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 
 class DrawerRow extends StatelessWidget {
-  final IconData icon;
+  final String icon;
+  final bool isSvg;
   final String title;
   final Function onTap;
   const DrawerRow(
-      {required this.icon, required this.title, required this.onTap});
+      {required this.icon,
+      required this.title,
+      required this.onTap,
+      this.isSvg = true});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
       child: InkWell(
         onTap: () {
           onTap();
@@ -22,10 +27,11 @@ class DrawerRow extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 15, 0),
-              child: Icon(
-                icon,
-                color: Theme.of(context).textTheme.headline4!.color,
-              ),
+              child: isSvg
+                  ? SvgPicture.asset(
+                      icon,
+                    )
+                  : Image.asset(icon, width: 20, height: 20),
             ),
             Text(AppLocalizations.of(context)!.tr(title),
                 style: Theme.of(context).textTheme.headline4),

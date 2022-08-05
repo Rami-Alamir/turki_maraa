@@ -1,11 +1,8 @@
 import "package:auto_size_text/auto_size_text.dart";
 import 'package:flutter/material.dart';
 import 'package:new_turki/models/points_data.dart';
-import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/show_dialog.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:provider/provider.dart';
 
 class PointsCard extends StatelessWidget {
   final PointsData pointsData;
@@ -18,13 +15,7 @@ class PointsCard extends StatelessWidget {
       width: 130,
       height: 130,
       child: InkWell(
-        onTap: () {
-          ShowConfirmDialog().confirmDialog(
-              context, "are_you_sure_you_want_to_redeem_points", () {
-            final auth = Provider.of<Auth>(context, listen: false);
-            auth.redeemPoints(context, int.parse(pointsData.price));
-          });
-        },
+        onTap: () {},
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

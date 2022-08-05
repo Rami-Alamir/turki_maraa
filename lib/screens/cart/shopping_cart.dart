@@ -196,6 +196,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                     ],
                                   ),
                                   CartBottomSheet(
+                                    total: _cart.cartData!.data!.invoicePreview!
+                                        .totalAmountAfterDiscount!,
+                                    min: double.parse(_cart.cartData!.data!
+                                            .minOrder!.first.minOrder ??
+                                        "60"),
                                     invoicePreview:
                                         _cart.cartData!.data!.invoicePreview!,
                                   )

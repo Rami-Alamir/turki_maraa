@@ -11,15 +11,15 @@ import 'package:provider/provider.dart';
 
 import '../../widgets/shared/rounded_rectangle_button.dart';
 
-class SelectAddress extends StatefulWidget {
+class GMSMap extends StatefulWidget {
   final int addressIndex;
 
-  const SelectAddress({this.addressIndex = -100});
+  const GMSMap({this.addressIndex = -100});
   @override
-  _SelectAddressState createState() => _SelectAddressState();
+  _GMSMapState createState() => _GMSMapState();
 }
 
-class _SelectAddressState extends State<SelectAddress> {
+class _GMSMapState extends State<GMSMap> {
   GoogleMapController? _controller;
   Location? _location;
   Data? _userAddress;

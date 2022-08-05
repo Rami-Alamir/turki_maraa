@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/provider/auth.dart';
-import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/widgets/shared/rectangle_text_field.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';

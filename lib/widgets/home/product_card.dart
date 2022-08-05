@@ -58,12 +58,17 @@ class ProductCard extends StatelessWidget {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
                             // child: Image.asset("assets/images/img.png",
-                            child: Image.network(
-                              '${((product.productImages?.length ?? 0) > 0) ? product.productImages![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
-                              width: SizeConfig.setWidgetWidth(136, 150, 150),
-                              height: SizeConfig.setWidgetWidth(136, 150, 150),
-                              fit: BoxFit.cover,
-                            )),
+                            child: FadeInImage(
+                                placeholderFit: BoxFit.contain,
+                                image: NetworkImage(
+                                  '${((product.productImages?.length ?? 0) > 0) ? product.productImages![0].imageUrl : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112"}',
+                                ),
+                                width: SizeConfig.setWidgetWidth(136, 150, 150),
+                                height:
+                                    SizeConfig.setWidgetWidth(136, 150, 150),
+                                fit: BoxFit.cover,
+                                placeholder: AssetImage(
+                                    'assets/images/placeholder.png'))),
                       ),
                     ),
                   ),

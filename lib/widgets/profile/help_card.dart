@@ -7,7 +7,7 @@ import 'package:new_turki/widgets/profile/logout_row.dart';
 import 'package:new_turki/widgets/shared/main_card.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'call_card.dart';
 import 'profile_row.dart';
 
@@ -82,8 +82,8 @@ class HelpCard extends StatelessWidget {
   //used to make calls, whatsapp
   Future<void> _launchURL(String url) async {
     try {
-      if (await canLaunch(url)) {
-        await launch(url);
+      if (await canLaunchUrlString(url)) {
+        await launchUrlString(url);
       } else {
         throw 'Could not launch $url';
       }

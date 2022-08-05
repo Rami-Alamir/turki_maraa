@@ -6,13 +6,11 @@ import 'package:new_turki/provider/app_language.dart';
 import 'package:new_turki/provider/app_provider.dart';
 import 'package:new_turki/provider/app_theme.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/r_a7_i_c_o_n_s_icons.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import 'package:new_turki/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import 'package:new_turki/widgets/shared/drawer/turki_drawer_footer.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../../utilities/firebase_helper.dart';
 import '../social_media.dart';
 import 'drawer_row.dart';
@@ -60,7 +58,8 @@ class TurkiDrawer extends StatelessWidget {
                     onTap: () {
                       _appProvider.hideDrawer();
                     },
-                    icon: TURKIICONS.tabnav_home,
+                    isSvg: false,
+                    icon: 'assets/images/turki_icon_small.png',
                     title: 'home',
                   ),
                   DrawerRow(
@@ -70,7 +69,7 @@ class TurkiDrawer extends StatelessWidget {
                       _appProvider.navigateTo(context, '/FAQ');
                       _appProvider.navigateTo(context, '/Favourite');
                     },
-                    icon: TURKIICONS.cart_favourite,
+                    icon: 'assets/images/profile_icons/favorites.svg',
                     title: 'favorite',
                   ),
                   // DrawerRow(
@@ -86,7 +85,7 @@ class TurkiDrawer extends StatelessWidget {
                           .logEvent(name: 'FAQ', parameters: null);
                       _appProvider.navigateTo(context, '/FAQ');
                     },
-                    icon: TURKIICONS.messages,
+                    icon: 'assets/images/profile_icons/questions.svg',
                     title: 'faq',
                   ),
                   DrawerRow(
@@ -96,7 +95,7 @@ class TurkiDrawer extends StatelessWidget {
 
                       _appProvider.navigateTo(context, '/About');
                     },
-                    icon: TURKIICONS.info_circle,
+                    icon: 'assets/images/profile_icons/about.svg',
                     title: 'about',
                   ),
                   Divider(
@@ -121,7 +120,7 @@ class TurkiDrawer extends StatelessWidget {
                             "whatsapp://send?phone=$phone&text=${Uri.parse(' ')}";
                       _launchURL(url);
                     },
-                    icon: TURKIICONS.whatssapp_outline_1,
+                    icon: 'assets/images/profile_icons/whatsapp-colored.svg',
                     title: 'contact_whatsApp',
                   ),
                   DrawerRow(
@@ -130,14 +129,14 @@ class TurkiDrawer extends StatelessWidget {
                           .logEvent(name: 'Share', parameters: null);
                       _share(context);
                     },
-                    icon: TURKIICONS.share4_1,
+                    icon: 'assets/images/profile_icons/share-colored.svg',
                     title: 'share',
                   ),
                   DrawerRow(
                     onTap: () {
                       _language.changeLanguage();
                     },
-                    icon: TURKIICONS.language,
+                    icon: 'assets/images/profile_icons/language-color.svg',
                     title: 'language',
                   ),
                   Visibility(
@@ -148,7 +147,7 @@ class TurkiDrawer extends StatelessWidget {
                             name: 'Theme', parameters: {"name": "Light mode"});
                         _theme.changeTheme('light');
                       },
-                      icon: TURKIICONS.lightmode,
+                      icon: 'assets/images/profile_icons/light.svg',
                       title: 'light_mode',
                     ),
                   ),
@@ -161,7 +160,7 @@ class TurkiDrawer extends StatelessWidget {
                             parameters: {"name": "Classic mode"});
                         _theme.changeTheme('classic');
                       },
-                      icon: RA7ICONS.brightness,
+                      icon: 'assets/images/profile_icons/Classic-Mode.svg',
                       title: 'classic_mode',
                     ),
                   ),
@@ -173,7 +172,7 @@ class TurkiDrawer extends StatelessWidget {
                             name: 'Theme', parameters: {"name": "Dark mode"});
                         _theme.changeTheme('dark');
                       },
-                      icon: TURKIICONS.darkmode,
+                      icon: 'assets/images/profile_icons/dark-mode.svg',
                       title: 'dark_mode',
                     ),
                   ),
@@ -191,11 +190,11 @@ class TurkiDrawer extends StatelessWidget {
     );
   }
 
-  //used to make calls, whatsapp
+//used to make calls, whatsapp
   Future<void> _launchURL(String url) async {
     try {
-      if (await canLaunch(url)) {
-        await launch(url);
+      if (await canLaunchUrlString(url)) {
+        await launchUrlString(url);
       } else {
         throw 'Could not launch $url';
       }

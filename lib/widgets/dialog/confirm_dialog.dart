@@ -1,49 +1,113 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/utilities/app_localizations.dart';
+import 'package:flutter_svg/svg.dart';
+import '../../../utilities/app_localizations.dart';
 
 class ConfirmDialog extends StatelessWidget {
-  final String msg;
   final String confirmText;
   final String cancelText;
   final Function confirmAction;
+  final String message;
+  final String title;
+  final String? icon;
 
   const ConfirmDialog({
-    required this.msg,
     this.confirmText = 'yes',
     this.cancelText = 'cancel',
     required this.confirmAction,
+    required this.message,
+    required this.title,
+    this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: Theme.of(context).backgroundColor,
-      content: Text(
-        AppLocalizations.of(context)!.tr(msg),
-        style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
-      ),
-      actions: <Widget>[
-        TextButton(
-          child: Text(
-            AppLocalizations.of(context)!.tr(cancelText),
-            style:
-                Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 12),
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
-        TextButton(
-          child: Text(
-            AppLocalizations.of(context)!.tr(confirmText),
-            style:
-                Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 12),
-          ),
-          onPressed: () async {
-            Navigator.pop(context);
-
-            await confirmAction();
+    return Container(
+      width: 100,
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15.0))),
+        backgroundColor: Theme.of(context).backgroundColor,
+        contentPadding: const EdgeInsets.all(0),
+        content: Builder(
+          builder: (context) {
+            return Container(
+              constraints: BoxConstraints(maxWidth: 500, minWidth: 300),
+              height: icon != null ? 140 : 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(12, 25, 10, 20),
+                    child: icon != null
+                        ? SvgPicture.asset(
+                            icon!,
+                            height: 45,
+                            width: 45,
+                            fit: BoxFit.fill,
+                          )
+                        : Container(),
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.tr(title),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(fontSize: 14, height: 1),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      AppLocalizations.of(context)!.tr(message),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2!
+                          .copyWith(fontSize: 14),
+                    ),
+                  ),
+                ],
+              ),
+            );
           },
-        )
-      ],
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    AppLocalizations.of(context)!.tr(cancelText),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(fontSize: 12),
+                  ),
+                ),
+                Container(
+                    width: 2,
+                    height: 25,
+                    color: Theme.of(context).colorScheme.secondaryContainer),
+                TextButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    await confirmAction();
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.tr(confirmText),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

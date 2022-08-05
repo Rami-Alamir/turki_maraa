@@ -24,8 +24,8 @@ class CategoriesG2 extends StatelessWidget {
           return CategoryCard(
             categoryId: categoriesList[index].id!,
             scaleFactor: 1.8,
-            titelAr: categoriesList[index].titleAr!,
-            titelEn: categoriesList[index].titleEn!,
+            titleAr: categoriesList[index].titleAr!,
+            titleEn: categoriesList[index].titleEn!,
             image: categoriesList[index].imageUrl!,
             title: AppLocalizations.of(context)!.locale == Locale("ar")
                 ? categoriesList[index].titleAr!

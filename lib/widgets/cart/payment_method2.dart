@@ -70,7 +70,7 @@ class PaymentMethod2 extends StatelessWidget {
             decoration: BoxDecoration(
                 color: selected
                     ? Theme.of(context).primaryColor
-                    : Theme.of(context).colorScheme.primaryVariant,
+                    : Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: const BorderRadius.all(Radius.circular(10))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,

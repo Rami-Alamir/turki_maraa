@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -11,8 +12,13 @@ import 'package:new_turki/screens/other/new_version.dart' as New;
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/get_strings.dart';
 import 'package:version/version.dart';
-import 'package:new_version/new_version.dart';
+import '../repository/version_repository.dart';
+import '../utilities/HMS_latlng_converter.dart';
 import '../utilities/firebase_helper.dart';
+import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
+import 'package:huawei_location/location/fused_location_provider_client.dart';
+import 'package:huawei_location/location/hwlocation.dart';
+import 'package:huawei_location/location/location_request.dart';
 
 class HomeProvider with ChangeNotifier {
   bool _canUpdate = false;
@@ -33,8 +39,10 @@ class HomeProvider with ChangeNotifier {
   String? _currentLocationDescriptionEn = '';
   String? _currentIsoCountryCode = 'SA';
   Location.LocationData? _locationData;
-  String _currentVersion = "5.8.0";
+  String _currentVersion = "5.9.0";
   Location.Location location = Location.Location();
+  HWLocation? _hwlocation;
+  bool isHms = false;
 
   Location.LocationData get locationData => _locationData!;
   String? get currentLocationDescription => _currentLocationDescription;
@@ -86,7 +94,9 @@ class HomeProvider with ChangeNotifier {
   Future<void> initLatLng({String languageCode = "ar"}) async {
     try {
       await fetchLocation();
-      _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
+      _latLng = isHms
+          ? HMSLatLngConverter().convertToGMSLatLng(_hwlocation!)
+          : LatLng(_locationData!.latitude!, _locationData!.longitude!);
       _locationServiceStatus = 1;
       // init  isoCountryCode
       List<Placemark> placemark = await placemarkFromCoordinates(
@@ -95,7 +105,6 @@ class HomeProvider with ChangeNotifier {
       _currentIsoCountryCode = placemark.first.isoCountryCode;
       _isoCountryCode = placemark.first.isoCountryCode;
       Placemark place = placemark.first;
-
       print(place.toString());
       _currentLocationDescription = GetStrings().locationDescription(place);
       List<Placemark> placemark2 = await placemarkFromCoordinates(
@@ -144,7 +153,9 @@ class HomeProvider with ChangeNotifier {
       if (isCurrent && _latLng == null)
         await initLatLng(languageCode: languageCode);
       if (isCurrent) {
-        _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
+        _latLng = isHms
+            ? HMSLatLngConverter().convertToGMSLatLng(_hwlocation!)
+            : LatLng(_locationData!.latitude!, _locationData!.longitude!);
         _isoCountryCode = _currentIsoCountryCode;
         await Future.wait([
           getCategories(_latLng!, _isoCountryCode!),
@@ -176,25 +187,19 @@ class HomeProvider with ChangeNotifier {
     )));
   }
 
-  // check version to show update page
+  // check if app have new version to show update page
   Future<void> checkNewVersion() async {
-    print('checkNewVersioncheckNewVersion');
-    final newVersion = NewVersion(
-      iOSId: 'com.digishapes.turkieshop',
-      androidId: 'com.digishapes.turkieshop',
-    );
-    try {
-      final status = await newVersion.getVersionStatus();
-      print('dddd');
-      Version currentVersion = Version.parse(_currentVersion);
-      Version latestVersion = Version.parse(status!.storeVersion);
-      print("currentVersion $currentVersion");
-      print("canUpdate ${status.canUpdate}");
-      print("latestVersion $latestVersion");
-      if (latestVersion > currentVersion) _canUpdate = true;
-    } catch (e) {
-      print('verror: $e');
-    }
+    // final versionData =
+    //     await VersionRepository().getLatestAppVersion(Platform.isIOS ? 1 : 2);
+    //for HMS VERSION
+    final versionData = await VersionRepository().getLatestAppVersion(3);
+    Version currentVersion = Version.parse(_currentVersion);
+    Version latestVersion =
+        Version.parse(versionData.data?.value ?? _currentVersion);
+    print("currentVersion $currentVersion");
+    print("latestVersion $latestVersion");
+    if (latestVersion > currentVersion) _canUpdate = true;
+    // _canUpdate = true;
   }
 
   Future<void> fetchLocation() async {
@@ -215,9 +220,26 @@ class HomeProvider with ChangeNotifier {
         return;
       }
     }
+    if (Platform.isAndroid)
+      try {
+        HmsApiAvailability hmsApiAvailability = HmsApiAvailability();
+        final int resultCode = await hmsApiAvailability.isHMSAvailable();
+        isHms = resultCode == 0 || resultCode == 2;
+        print('resultCode $resultCode');
+      } catch (e) {
+        print('dd ${e.toString()}');
+      }
+    print('isHms $isHms');
     try {
-      _locationData =
-          await location.getLocation().timeout(Duration(seconds: 22));
+      if (isHms) {
+        FusedLocationProviderClient locationService =
+            FusedLocationProviderClient();
+        LocationRequest locationRequest = LocationRequest();
+        _hwlocation =
+            await locationService.getLastLocationWithAddress(locationRequest);
+      } else
+        _locationData =
+            await location.getLocation().timeout(Duration(seconds: 22));
     } catch (e) {
       print("_locationData");
       print(e.toString());

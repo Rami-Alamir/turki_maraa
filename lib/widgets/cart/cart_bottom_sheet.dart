@@ -8,12 +8,16 @@ import 'package:new_turki/widgets/shared/invoice.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
 import '../../utilities/firebase_helper.dart';
+import 'min_value_Indicator.dart';
 
 class CartBottomSheet extends StatefulWidget {
   final InvoicePreview invoicePreview;
-
+  final double total;
+  final double min;
   const CartBottomSheet({
     required this.invoicePreview,
+    required this.total,
+    required this.min,
   });
 
   @override
@@ -38,7 +42,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
         return true;
       },
       child: DraggableScrollableSheet(
-        initialChildSize: 0.25,
+        initialChildSize: widget.min > widget.total ? 0.35 : 0.25,
         maxChildSize: 0.5,
         builder: (BuildContext context, ScrollController scrollController) {
           return Container(
@@ -51,7 +55,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 BoxShadow(
                   color: Theme.of(context)
                       .colorScheme
-                      .secondaryVariant
+                      .secondaryContainer
                       .withOpacity(0.4),
                   spreadRadius: 8,
                   blurRadius: 12,
@@ -73,7 +77,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                         decoration: BoxDecoration(
                           borderRadius:
                               const BorderRadius.all(const Radius.circular(20)),
-                          color: Theme.of(context).colorScheme.secondaryVariant,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
                         ),
                       ),
                     ),
@@ -83,18 +88,19 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     ? Column(
                         children: [
                           Invoice(
-                            myCredit: widget.invoicePreview.walletAmountUsed!,
-                            total:
-                                widget.invoicePreview.totalAmountAfterDiscount!,
-                            subtotal: widget.invoicePreview.orderSubtotal!,
-                            shipping: widget.invoicePreview.deliveryFee!,
-                            discountVoucher:
-                                widget.invoicePreview.discountApplied!,
-                            vat:
-                                _addressProvider.isoCountryCode.toUpperCase() ==
-                                        "AE"
-                                    ? "vat_ae"
-                                    : 'vat_sa',
+                            myCredit: _cart.cartData!.data!.invoicePreview!
+                                .walletAmountUsed!,
+                            total: _cart.cartData!.data!.invoicePreview!
+                                .totalAmountAfterDiscount!,
+                            subtotal: _cart
+                                .cartData!.data!.invoicePreview!.orderSubtotal!,
+                            shipping: _cart
+                                .cartData!.data!.invoicePreview!.deliveryFee!,
+                            discountVoucher: _cart.cartData!.data!
+                                .invoicePreview!.discountApplied!,
+                            vat: _cart.isoCountryCode.toUpperCase() == "AE"
+                                ? "vat_ae"
+                                : 'vat_sa',
                           ),
                         ],
                       )
@@ -119,7 +125,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 5.0),
                                   child: Text(
-                                    '${formatDecimal(widget.invoicePreview.totalAmountAfterDiscount!)} $_currency',
+                                    '${formatDecimal(_cart.cartData!.data!.invoicePreview!.totalAmountAfterDiscount!)} $_currency',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline1!
@@ -128,6 +134,13 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 ),
                               ],
                             ),
+                          ),
+                          Visibility(
+                            visible: widget.min > widget.total,
+                            child: MinValueIndicator(
+                                total: widget.total,
+                                min: widget.min,
+                                currency: _currency),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0, bottom: 8),
@@ -155,23 +168,28 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     fontSize: 16,
-                    onPressed: () {
-                      FirebaseHelper.analytics!
-                          .logEvent(name: 'Purchase', parameters: {
-                        "paymentMethod": _cart.selectedPayment == 4
-                            ? "Tamara"
-                            : _cart.selectedPayment == 1
-                                ? "COD"
-                                : "Online payment"
-                      });
-                      _cart.placeOrder(
-                          context: context,
-                          currency: _currency,
-                          addressId: _addressProvider.selectedAddress == -1
-                              ? -1
-                              : _addressProvider.userAddress!
-                                  .data![_addressProvider.selectedAddress].id!);
-                    })
+                    onPressed: widget.total >= widget.min
+                        ? () {
+                            FirebaseHelper.analytics!
+                                .logEvent(name: 'Purchase', parameters: {
+                              "paymentMethod": _cart.selectedPayment == 4
+                                  ? "Tamara"
+                                  : _cart.selectedPayment == 1
+                                      ? "COD"
+                                      : "Online payment"
+                            });
+                            _cart.placeOrder(
+                                context: context,
+                                currency: _currency,
+                                addressId: _addressProvider.selectedAddress ==
+                                        -1
+                                    ? -1
+                                    : _addressProvider
+                                        .userAddress!
+                                        .data![_addressProvider.selectedAddress]
+                                        .id!);
+                          }
+                        : null)
               ],
             ),
           );
