@@ -73,9 +73,9 @@ class _DiscoverState extends State<Discover> {
                                 _productsProvider.discoverItem.data!.subImage!,
                             title: _isAr
                                 ? _productsProvider
-                                    .discoverItem.data!.descriptionAr!
+                                    .discoverItem.data?.descriptionAr
                                 : _productsProvider
-                                    .discoverItem.data!.descriptionEn!),
+                                    .discoverItem.data?.descriptionEn),
                       ),
                       GridView.builder(
                           shrinkWrap: true,

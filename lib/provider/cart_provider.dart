@@ -317,7 +317,6 @@ class CartProvider with ChangeNotifier {
             context,
             AppLocalizations.of(context)!.tr(
                 'it_is_not_possible_to_add_other_items_with_the_sacrifice_items'));
-
         return;
       }
       if (!_checkAdhiaOrderExtra()) {
@@ -325,11 +324,9 @@ class CartProvider with ChangeNotifier {
             context,
             AppLocalizations.of(context)!.tr(
                 'we_apologize_the_specified_cutting_packaging_not_available_first_day'));
-
         return;
       }
     }
-
     if (_cartData!.data!.invoicePreview!.totalAmountAfterDiscount! <
         double.parse((_cartData!.data?.minOrder?.first.minOrder) ?? '60'))
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

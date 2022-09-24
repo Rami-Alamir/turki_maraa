@@ -99,7 +99,8 @@ class ProductsListSections extends StatelessWidget {
                           Container(
                             height: 200,
                             child: ListView.builder(
-                                padding: EdgeInsets.all(0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 10, 0),
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
                                 physics: const ScrollPhysics(),
@@ -108,7 +109,7 @@ class ProductsListSections extends StatelessWidget {
                                 itemBuilder: (BuildContext ctxt, int index2) {
                                   return Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        index2 == 0 ? 10 : 3.0, 0, 0, 0),
+                                        3.0, 0, 0, 0),
                                     child: ProductCard(
                                         product: products
                                             .data![index].products![index2]),

@@ -13,8 +13,8 @@ import 'package:new_turki/widgets/home/location_disabled.dart';
 import 'package:new_turki/widgets/home/order_type.dart';
 import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
+import 'package:new_turki/widgets/shared/whatsapp.dart';
 import 'package:provider/provider.dart';
-import '../../utilities/size_config.dart';
 import '../../widgets/home/best_seller_section.dart';
 
 class Home extends StatefulWidget {
@@ -93,6 +93,10 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
     return Scaffold(
         extendBodyBehindAppBar: true,
+        floatingActionButton: Visibility(
+            visible: (!_homeProvider.isLoading && !_homeProvider.retry) ||
+                _homeProvider.locationServiceStatus == 0,
+            child: Whatsapp()),
         appBar: CategoryAppBar(
           parentScaffoldKey: widget.parentScaffoldStateKey,
         ),

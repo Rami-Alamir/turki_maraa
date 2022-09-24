@@ -32,9 +32,7 @@ import 'package:new_turki/screens/profile/username.dart';
 import 'package:new_turki/screens/profile/verify_phone.dart';
 import 'package:new_turki/screens/profile/wallet.dart';
 import 'package:new_turki/screens/splash/splash.dart';
-
 import '../screens/cart/tamara_checkout_page.dart';
-import '../screens/map/hms_map.dart';
 import '../screens/orders/order_status.dart';
 
 class RouteGenerator {
@@ -115,7 +113,7 @@ class RouteGenerator {
                 ));
       case '/HMSMap':
         return MaterialPageRoute(
-            builder: (_) => HMSMap(
+            builder: (_) => GMSMap(
                   addressIndex: args as int,
                 ));
       case '/Search':

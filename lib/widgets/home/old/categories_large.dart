@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/hex_color.dart';
-import 'category_card_g1.dart';
 import 'package:new_turki/models/category_data.dart';
+
+import 'category_card_g1.dart';
 
 class CategoriesLarge extends StatelessWidget {
   final List<Data> categoriesList;

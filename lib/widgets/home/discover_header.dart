@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/size_config.dart';
 
 class DiscoverHeader extends StatelessWidget {
-  final String title;
+  final String? title;
   final String image;
 
-  const DiscoverHeader({required this.title, required this.image});
+  const DiscoverHeader({this.title, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class DiscoverHeader extends StatelessWidget {
             child: Container(
               width: 250,
               child: Text(
-                title,
+                title ?? "",
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

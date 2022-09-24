@@ -10,10 +10,11 @@ class DotsIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.center, children: _buildDotsRow());
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: _buildDotsRow(context));
   }
 
-  List<Widget> _buildDotsRow() {
+  List<Widget> _buildDotsRow(BuildContext context) {
     List<Widget> dots = []; // this will hold Rows according to available lines
     for (int i = 0; i < count; i++) {
       dots.add(Padding(
@@ -22,7 +23,7 @@ class DotsIndicator extends StatelessWidget {
           height: 4,
           width: i == index ? 30 : 8,
           decoration: BoxDecoration(
-            color: i == index ? Color.fromRGBO(97, 20, 12, 1.0) : accentColor,
+            color: i == index ? Theme.of(context).primaryColor : accentColor,
             shape: BoxShape.rectangle,
             borderRadius: const BorderRadius.all(Radius.circular(0.75)),
           ),

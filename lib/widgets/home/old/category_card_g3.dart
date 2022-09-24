@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/utilities/size_config.dart';
 
-import '../../utilities/firebase_helper.dart';
+import '../../../utilities/firebase_helper.dart';
 
-class CategoryCardG2 extends StatelessWidget {
+class CategoryCardG3 extends StatelessWidget {
   final int categoryId;
   final String title;
+  final String titleAr;
+  final String titleEn;
   final String image;
   final Color color;
   final Color color2;
   final double scaleFactor;
-  final String titleAr;
-  final String titleEn;
-  const CategoryCardG2({
+
+  const CategoryCardG3({
     required this.title,
     required this.titleAr,
     required this.titleEn,
@@ -48,29 +48,25 @@ class CategoryCardG2 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 40.0, right: 20, left: 20, bottom: 0),
-              child: Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(fontSize: title.length < 15 ? 20 : 16),
-                maxLines: 1,
-              ),
+              padding: EdgeInsets.only(
+                  top: scaleFactor == 0.8 ? 10 : 40.0,
+                  right: 20,
+                  left: 20,
+                  bottom: 0),
+              child: Text(title, style: Theme.of(context).textTheme.headline3),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       bottomRight: Radius.circular(20.0),
                       bottomLeft: Radius.circular(20.0)),
                   child: Image.network(
                     image,
                     fit: BoxFit.contain,
-                    height: (133 * scaleFactor) - 21,
-                    width: (SizeConfig.screenWidth! / 2) - 18,
+                    height: scaleFactor == 0.8 ? 100 : 180,
+                    width: scaleFactor == 0.8 ? 100 : 150,
                   ),
                 ),
               ],

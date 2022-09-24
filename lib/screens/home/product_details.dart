@@ -27,6 +27,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   int _count = 1;
   @override
   void initState() {
+    print("id is #${widget.id}");
     final _productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
     final _addressProvider =

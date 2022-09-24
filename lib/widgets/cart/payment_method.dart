@@ -83,7 +83,7 @@ class PaymentMethod extends StatelessWidget {
                     width: 45,
                     decoration: BoxDecoration(
                         color: selected
-                            ? Color.fromRGBO(90, 4, 9, 1)
+                            ? Theme.of(context).primaryColor
                             : Colors.white,
                         shape: BoxShape.circle),
                     child: Icon(

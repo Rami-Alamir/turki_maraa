@@ -38,10 +38,6 @@ class DiscoverCard extends StatelessWidget {
             Container(
               height: 90,
               width: 165,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.25),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
               child: Center(
                 child: Container(
                   width: 140.0,
@@ -55,7 +51,7 @@ class DiscoverCard extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
-                          fontSize: 16),
+                          fontSize: 20),
                     ),
                   ),
                 ),

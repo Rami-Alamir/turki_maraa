@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,7 +8,6 @@ import 'package:new_turki/widgets/dialog/indicator_dialog.dart';
 import 'package:provider/provider.dart';
 import '../utilities/get_strings.dart';
 import 'home_provider.dart';
-import 'package:huawei_map/map.dart' as HMS;
 
 class AddressProvider with ChangeNotifier {
   TextEditingController descriptionController = TextEditingController();
@@ -20,14 +17,12 @@ class AddressProvider with ChangeNotifier {
   LatLng? _selectedLatLng;
   LatLng? _mapLatLng;
   bool? _initMap = false;
-  HMS.BitmapDescriptor? _hmsMarker;
   UserAddress? _userAddress;
   BuildContext? _dialogContext;
   int _selectedAddress = -1;
   String? _isoCountryCode = 'SA';
   int get selectedAddress => _selectedAddress;
   bool get initMap => _initMap!;
-  HMS.BitmapDescriptor? get hmsMarker => _hmsMarker;
   UserAddress? get userAddress => _userAddress;
   LatLng get selectedLatLng =>
       _selectedLatLng ?? LatLng(24.727726176454684, 46.58666208381939);
@@ -94,13 +89,6 @@ class AddressProvider with ChangeNotifier {
   }
 
   void initMapData(String languageCode) async {
-    if (Platform.isAndroid)
-      HMS.BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(25, 25)),
-        'assets/images/pin.png',
-      ).then((onValue) {
-        _hmsMarker = onValue;
-      });
     BitmapDescriptor.fromAssetImage(
       ImageConfiguration(size: Size(25, 25)),
       'assets/images/pin.png',

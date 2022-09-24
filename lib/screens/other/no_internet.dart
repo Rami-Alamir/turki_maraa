@@ -4,6 +4,10 @@ import 'package:new_turki/screens/app/app.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/shared/rounded_rectangle_button.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/app_language.dart';
+import '../../provider/home_provider.dart';
 
 class NoInternet extends StatelessWidget {
   @override
@@ -36,6 +40,9 @@ class NoInternet extends StatelessWidget {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        final _home = Provider.of<HomeProvider>(context, listen: false);
+        _home.checkNewVersion();
+        _home.getHomePageData(true, languageCode: AppLanguage().language);
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => App()),
             (Route<dynamic> route) => false);

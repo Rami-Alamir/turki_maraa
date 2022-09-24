@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:new_turki/utilities/size_config.dart';
-import '../../utilities/firebase_helper.dart';
+import '../../../utilities/firebase_helper.dart';
 
 class CategoryCard extends StatelessWidget {
   final int categoryId;

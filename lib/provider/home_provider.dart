@@ -13,12 +13,7 @@ import 'package:new_turki/utilities/app_localizations.dart';
 import 'package:new_turki/utilities/get_strings.dart';
 import 'package:version/version.dart';
 import '../repository/version_repository.dart';
-import '../utilities/HMS_latlng_converter.dart';
 import '../utilities/firebase_helper.dart';
-import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
-import 'package:huawei_location/location/fused_location_provider_client.dart';
-import 'package:huawei_location/location/hwlocation.dart';
-import 'package:huawei_location/location/location_request.dart';
 
 class HomeProvider with ChangeNotifier {
   bool _canUpdate = false;
@@ -39,9 +34,8 @@ class HomeProvider with ChangeNotifier {
   String? _currentLocationDescriptionEn = '';
   String? _currentIsoCountryCode = 'SA';
   Location.LocationData? _locationData;
-  String _currentVersion = "5.9.0";
+  String _currentVersion = "5.11.0";
   Location.Location location = Location.Location();
-  HWLocation? _hwlocation;
   bool isHms = false;
 
   Location.LocationData get locationData => _locationData!;
@@ -94,9 +88,7 @@ class HomeProvider with ChangeNotifier {
   Future<void> initLatLng({String languageCode = "ar"}) async {
     try {
       await fetchLocation();
-      _latLng = isHms
-          ? HMSLatLngConverter().convertToGMSLatLng(_hwlocation!)
-          : LatLng(_locationData!.latitude!, _locationData!.longitude!);
+      _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
       _locationServiceStatus = 1;
       // init  isoCountryCode
       List<Placemark> placemark = await placemarkFromCoordinates(
@@ -153,9 +145,7 @@ class HomeProvider with ChangeNotifier {
       if (isCurrent && _latLng == null)
         await initLatLng(languageCode: languageCode);
       if (isCurrent) {
-        _latLng = isHms
-            ? HMSLatLngConverter().convertToGMSLatLng(_hwlocation!)
-            : LatLng(_locationData!.latitude!, _locationData!.longitude!);
+        _latLng = LatLng(_locationData!.latitude!, _locationData!.longitude!);
         _isoCountryCode = _currentIsoCountryCode;
         await Future.wait([
           getCategories(_latLng!, _isoCountryCode!),
@@ -189,17 +179,15 @@ class HomeProvider with ChangeNotifier {
 
   // check if app have new version to show update page
   Future<void> checkNewVersion() async {
-    // final versionData =
-    //     await VersionRepository().getLatestAppVersion(Platform.isIOS ? 1 : 2);
-    //for HMS VERSION
-    final versionData = await VersionRepository().getLatestAppVersion(3);
+    var versionData =
+        await VersionRepository().getLatestAppVersion(Platform.isIOS ? 1 : 2);
+    if (isHms) versionData = await VersionRepository().getLatestAppVersion(3);
     Version currentVersion = Version.parse(_currentVersion);
     Version latestVersion =
         Version.parse(versionData.data?.value ?? _currentVersion);
     print("currentVersion $currentVersion");
     print("latestVersion $latestVersion");
     if (latestVersion > currentVersion) _canUpdate = true;
-    // _canUpdate = true;
   }
 
   Future<void> fetchLocation() async {
@@ -220,26 +208,10 @@ class HomeProvider with ChangeNotifier {
         return;
       }
     }
-    if (Platform.isAndroid)
-      try {
-        HmsApiAvailability hmsApiAvailability = HmsApiAvailability();
-        final int resultCode = await hmsApiAvailability.isHMSAvailable();
-        isHms = resultCode == 0 || resultCode == 2;
-        print('resultCode $resultCode');
-      } catch (e) {
-        print('dd ${e.toString()}');
-      }
-    print('isHms $isHms');
+
     try {
-      if (isHms) {
-        FusedLocationProviderClient locationService =
-            FusedLocationProviderClient();
-        LocationRequest locationRequest = LocationRequest();
-        _hwlocation =
-            await locationService.getLastLocationWithAddress(locationRequest);
-      } else
-        _locationData =
-            await location.getLocation().timeout(Duration(seconds: 22));
+      _locationData =
+          await location.getLocation().timeout(Duration(seconds: 22));
     } catch (e) {
       print("_locationData");
       print(e.toString());

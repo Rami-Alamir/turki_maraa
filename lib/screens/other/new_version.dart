@@ -62,8 +62,8 @@ class NewVersion extends StatelessWidget {
                         : "https://play.google.com/store/apps/details?id=com.digishapes.turkieshop&hl=ar&gl=US");
                   },
                   fontSize: 24,
-                  fontColor: Color.fromRGBO(236, 204, 120, 1),
-                  color: Color.fromRGBO(90, 4, 20, 1),
+                  fontColor: const Color.fromRGBO(236, 204, 120, 1),
+                  color: const Color.fromRGBO(90, 4, 20, 1),
                 ),
               ),
             )

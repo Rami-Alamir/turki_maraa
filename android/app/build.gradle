@@ -25,7 +25,6 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-apply plugin: 'com.huawei.agconnect'
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
@@ -34,7 +33,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -44,9 +43,9 @@ android {
         applicationId "com.digishapes.turkieshop"
         multiDexEnabled true
         minSdkVersion 23
-        targetSdkVersion 31
-        versionCode 7000525
-        versionName "5.7.7"
+        targetSdkVersion 33
+        versionCode 7000527
+        versionName "5.10.0"
     }
 
     signingConfigs {
@@ -74,8 +73,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.google.firebase:firebase-messaging:23.0.7'
+    implementation 'com.google.firebase:firebase-messaging:23.0.8'
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.huawei.agconnect:agconnect-core:1.5.2.300'
-    implementation 'com.huawei.hms:base:6.4.0.302'
 }

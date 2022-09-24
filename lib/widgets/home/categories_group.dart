@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/models/category_data.dart';
-import 'categories_g1.dart';
-import 'categories_g2.dart';
-import 'categories_g3.dart';
-import 'categories_g4.dart';
-import 'categories_large.dart';
+import 'package:new_turki/widgets/home/categories_large2.dart';
 import 'not_supported_area.dart';
 
 class CategoriesGroup extends StatelessWidget {
@@ -18,27 +13,33 @@ class CategoriesGroup extends StatelessWidget {
   }
 }
 
+// Widget categoriesGroup(int length, categoryData) {
+//   if (SizeConfig.screenWidth! > 590)
+//     return length == 0
+//         ? NotSupportedArea()
+//         : CategoriesLarge(categoriesList: categoryData.data!);
+//   else
+//     switch (length) {
+//       case 0:
+//         return Padding(
+//           padding: EdgeInsets.only(top: 50.0),
+//           child: NotSupportedArea(),
+//         );
+//       case 1:
+//         return CategoriesG1(
+//           categoryData: categoryData.data![0],
+//         );
+//       case 2:
+//         return CategoriesG2(categoriesList: categoryData.data!);
+//       case 3:
+//         return CategoriesG3(categoriesList: categoryData.data!);
+//       default:
+//         return CategoriesLarge2(categoriesList: categoryData.data!);
+//       // return CategoriesG4(categoriesList: categoryData.data!);
+//     }
+// }
 Widget categoriesGroup(int length, categoryData) {
-  if (SizeConfig.screenWidth! > 590)
-    return length == 0
-        ? NotSupportedArea()
-        : CategoriesLarge(categoriesList: categoryData.data!);
-  else
-    switch (length) {
-      case 0:
-        return Padding(
-          padding: EdgeInsets.only(top: 50.0),
-          child: NotSupportedArea(),
-        );
-      case 1:
-        return CategoriesG1(
-          categoryData: categoryData.data![0],
-        );
-      case 2:
-        return CategoriesG2(categoriesList: categoryData.data!);
-      case 3:
-        return CategoriesG3(categoriesList: categoryData.data!);
-      default:
-        return CategoriesG4(categoriesList: categoryData.data!);
-    }
+  return length == 0
+      ? NotSupportedArea()
+      : CategoriesLarge2(categoriesList: categoryData.data!);
 }
