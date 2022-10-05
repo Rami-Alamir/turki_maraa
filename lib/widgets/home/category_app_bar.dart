@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 
 class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> parentScaffoldKey;
+  final bool back;
   const CategoryAppBar({
     required this.parentScaffoldKey,
+    this.back = false,
   });
   @override
   Widget build(BuildContext context) {
@@ -27,8 +29,8 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
                 "assets/images/turki_gold.png",
                 colorBlendMode: BlendMode.dstATop,
                 fit: BoxFit.contain,
-                width: 200,
-                height: 50,
+                width: 150,
+                height: 32,
               ),
             ),
             centerTitle: true,
@@ -36,15 +38,17 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               icon: Icon(
-                  AppLocalizations.of(context)!.locale == Locale("ar")
-                      ? TURKIICONS.menu_right_1
-                      : TURKIICONS.menu_left_1,
+                  back
+                      ? Icons.arrow_back_ios
+                      : AppLocalizations.of(context)!.locale == Locale("ar")
+                          ? TURKIICONS.menu_right_1
+                          : TURKIICONS.menu_left_1,
                   color: Theme.of(context).backgroundColor ==
                           Color.fromRGBO(243, 224, 177, 1)
                       ? Color.fromRGBO(243, 224, 177, 1)
                       : Colors.white),
               onPressed: () {
-                appProvider.showDrawer();
+                back ? Navigator.of(context).pop() : appProvider.showDrawer();
               },
             ),
             elevation: 0,

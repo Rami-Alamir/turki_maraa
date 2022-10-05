@@ -66,7 +66,6 @@ class TurkiDrawer extends StatelessWidget {
                     onTap: () {
                       FirebaseHelper.analytics!
                           .logEvent(name: 'Favourite', parameters: null);
-                      _appProvider.navigateTo(context, '/FAQ');
                       _appProvider.navigateTo(context, '/Favourite');
                     },
                     icon: 'assets/images/profile_icons/favorites.svg',

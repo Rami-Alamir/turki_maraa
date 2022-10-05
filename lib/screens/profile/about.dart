@@ -39,7 +39,7 @@ class _AboutState extends State<About> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 28.0),
+                      padding: const EdgeInsets.only(top: 1.0),
                       child: Image.asset(
                         "assets/images/turki_icon.png",
                         width: 120,

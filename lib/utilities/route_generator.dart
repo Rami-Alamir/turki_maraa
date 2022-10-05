@@ -33,6 +33,7 @@ import 'package:new_turki/screens/profile/verify_phone.dart';
 import 'package:new_turki/screens/profile/wallet.dart';
 import 'package:new_turki/screens/splash/splash.dart';
 import '../screens/cart/tamara_checkout_page.dart';
+import '../screens/home/home_categories.dart';
 import '../screens/orders/order_status.dart';
 
 class RouteGenerator {
@@ -54,6 +55,11 @@ class RouteGenerator {
       case '/Home':
         return MaterialPageRoute(
             builder: (_) => Home(
+                  parentScaffoldStateKey: args as GlobalKey<ScaffoldState>,
+                ));
+      case '/HomeCategories':
+        return MaterialPageRoute(
+            builder: (_) => HomeCategories(
                   parentScaffoldStateKey: args as GlobalKey<ScaffoldState>,
                 ));
       case '/ProductDetails':

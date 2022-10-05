@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:new_turki/provider/address_provider.dart';
 import 'package:new_turki/provider/app_language.dart';
-import 'package:new_turki/provider/auth.dart';
 import 'package:new_turki/provider/home_provider.dart';
 import 'package:new_turki/utilities/app_localizations.dart';
-import 'package:new_turki/utilities/size_config.dart';
 import 'package:new_turki/widgets/home/address_container.dart';
-import 'package:new_turki/widgets/home/almaraa_card.dart';
+import 'package:new_turki/widgets/home/categories_group.dart';
 import 'package:new_turki/widgets/home/category_app_bar.dart';
 import 'package:new_turki/widgets/home/location_disabled.dart';
 import 'package:new_turki/widgets/home/order_type.dart';
@@ -15,43 +13,23 @@ import 'package:new_turki/widgets/shared/retry.dart';
 import 'package:new_turki/widgets/shared/spinkit_indicator.dart';
 import 'package:new_turki/widgets/shared/whatsapp.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/home/best_seller_section.dart';
 
-class Home extends StatefulWidget {
+class HomeCategories extends StatefulWidget {
   final GlobalKey<ScaffoldState> parentScaffoldStateKey;
 
-  const Home({required this.parentScaffoldStateKey});
+  const HomeCategories({required this.parentScaffoldStateKey});
   @override
-  _HomeState createState() => _HomeState();
+  _HomeCategoriesState createState() => _HomeCategoriesState();
 }
 
-class _HomeState extends State<Home> with WidgetsBindingObserver {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    final _auth = Provider.of<Auth>(context, listen: false);
-    final _addressProvider =
-        Provider.of<AddressProvider>(context, listen: false);
-    _addressProvider
-        .getAddressList(_auth.isAuth ? "Bearer ${_auth.accessToken}" : "");
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    if (state == AppLifecycleState.resumed &&
-        _homeProvider.locationServiceStatus == 0) {
-      print("rami:" + AppLifecycleState.values.first.toString());
-      _homeProvider.getHomePageData(true);
-    }
-  }
-
+class _HomeCategoriesState extends State<HomeCategories>
+    with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context);
     _homeProvider.showNewVersion(context);
-    print('${SizeConfig.screenWidth!}');
-    print('${SizeConfig.screenHeight!}');
+
     double _statusBarHeight = MediaQuery.of(context).padding.top;
     final _appLanguage = Provider.of<AppLanguage>(context);
     final _addressProvider = Provider.of<AddressProvider>(context);
@@ -73,6 +51,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                 _homeProvider.locationServiceStatus == 0,
             child: Whatsapp()),
         appBar: CategoryAppBar(
+          back: true,
           parentScaffoldKey: widget.parentScaffoldStateKey,
         ),
         body: Stack(
@@ -137,17 +116,27 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                                       0) >
                                                   0,
                                               child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .tr('shops'),
+                                                  AppLocalizations.of(context)!.tr(
+                                                      'what_would_you_want_today'),
                                                   textAlign: TextAlign.start,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .subtitle1),
                                             ),
                                           ),
-                                          AlmaraaCard(
-                                              appKey: widget
-                                                  .parentScaffoldStateKey),
+                                          CategoriesGroup(
+                                              categoryData:
+                                                  _homeProvider.categoryData),
+                                          Visibility(
+                                            visible: (_homeProvider.categoryData
+                                                        .data?.length ??
+                                                    0) >
+                                                0,
+                                            child: BestSellerSection(
+                                              products:
+                                                  _homeProvider.bestSeller!,
+                                            ),
+                                          )
                                         ],
                                       ),
                                     ),

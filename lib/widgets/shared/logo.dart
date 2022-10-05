@@ -10,8 +10,8 @@ class Logo extends StatelessWidget {
       "assets/images/turki_gold.png",
 
       //   type == 2 ? 'assets/images/turki2.png' : 'assets/images/turki.png',
-      width: 200,
-      height: 50,
+      width: 150,
+      height: 32,
     );
   }
 }

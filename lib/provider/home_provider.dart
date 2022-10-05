@@ -34,7 +34,7 @@ class HomeProvider with ChangeNotifier {
   String? _currentLocationDescriptionEn = '';
   String? _currentIsoCountryCode = 'SA';
   Location.LocationData? _locationData;
-  String _currentVersion = "5.11.0";
+  String _currentVersion = "5.12.0";
   Location.Location location = Location.Location();
   bool isHms = false;
 
