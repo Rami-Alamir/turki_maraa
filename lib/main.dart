@@ -1,23 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:new_turki/provider/app_provider.dart';
-import 'package:new_turki/provider/auth.dart';
-import 'package:new_turki/provider/cart_provider.dart';
-import 'package:new_turki/provider/favourite_provider.dart';
-import 'package:new_turki/utilities/firebase_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'provider/address_provider.dart';
-import 'provider/app_theme.dart';
-import 'provider/home_provider.dart';
-import 'provider/orders_provider.dart';
-import 'provider/products_provider.dart';
-import 'provider/search_provider.dart';
-import 'screens/app/my_app.dart';
 import 'package:provider/provider.dart';
-import 'provider/app_language.dart';
+import 'core/service/firebase_helper.dart';
+import 'core/utilities/providers_list.dart';
+import 'presentation/screens/app/my_app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,48 +13,19 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  // init firebase
   await Firebase.initializeApp();
-  FirebaseInAppMessaging.instance.toString();
-  final FirebaseMessaging messaging = FirebaseMessaging.instance;
   FirebaseHelper();
 
-  messaging.getToken().then((token) {
-    print("token");
-    print(token); // Print the Token in Console
-  });
-  messaging.getAPNSToken().then((value) => print("token is $value"));
-  messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-
   //get user preference
-  SharedPreferences _prefs = await SharedPreferences.getInstance();
-  String? _language = _prefs.getString('language_code');
-  String _theme = _prefs.getString('theme') ?? 'light';
-  String _accessToken = _prefs.getString('accessToken') ?? '';
-  Locale _locale = Locale(_language ?? 'ar');
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<Auth>(create: (context) => Auth()),
-    ChangeNotifierProvider<HomeProvider>(create: (context) => HomeProvider()),
-    ChangeNotifierProvider<ProductsProvider>(
-        create: (context) => ProductsProvider()),
-    ChangeNotifierProvider<AppLanguage>(create: (context) => AppLanguage()),
-    ChangeNotifierProvider<AppTheme>(create: (context) => AppTheme()),
-    ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),
-    ChangeNotifierProvider<AddressProvider>(
-        create: (context) => AddressProvider()),
-    ChangeNotifierProvider<CartProvider>(create: (context) => CartProvider()),
-    ChangeNotifierProvider<SearchProvider>(
-        create: (context) => SearchProvider()),
-    ChangeNotifierProvider<FavouriteProvider>(
-        create: (context) => FavouriteProvider()),
-    ChangeNotifierProvider<OrdersProvider>(
-        create: (context) => OrdersProvider()),
-  ], child: MyApp(locale: _locale, theme: _theme, token: _accessToken)));
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? language = prefs.getString('language_code');
+  String theme = prefs.getString('theme') ?? 'light';
+  String accessToken = prefs.getString('accessToken') ?? '';
+  Locale locale = Locale(language ?? 'ar');
+
+  runApp(MultiProvider(
+      providers: ProvidersList.providersList(),
+      child: MyApp(locale: locale, theme: theme, token: accessToken)));
 }

@@ -1,64 +1,46 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:new_turki/models/best_seller.dart';
-import 'package:new_turki/models/product.dart';
-import 'package:new_turki/models/products.dart';
-import 'package:new_turki/networking/api_base_helper.dart';
+import '../models/best_seller.dart';
+import '../models/product_details.dart';
+import '../models/product.dart';
+import '../core/service/networking/api_base_helper.dart';
 
 class ProductsRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = ApiBaseHelper();
 
   //get Products list
-  Future<Products> getProductsList(
+  Future<Product> getProductsList(
       String categoryId, LatLng latLng, String countryId) async {
-    print("getProductsList");
-    print(categoryId);
-
     final response = await _helper.get(
         "products/by-category/$categoryId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
-    Products? products;
+    Product? products;
     try {
-      products = Products.fromJson(response);
-    } catch (e) {
-      print(e.toString());
-    }
+      products = Product.fromJson(response);
+    } catch (_) {}
     return products!;
   }
 
   //get Product data
-  Future<Product> getProduct(
+  Future<ProductDetails> getProduct(
       String productId, LatLng latLng, String countryId) async {
-    print("getProductData ");
-    print(
-        "products/getProduct/$productId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
-    final response;
-    Product? product;
+    final Map<String, dynamic> response;
+    ProductDetails? product;
     try {
       response = await _helper.get(
           "products/getProduct/$productId?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
-      print("getProductData ");
-
-      print(response.toString());
-      product = Product.fromJson(response);
-    } catch (e) {
-      print(e.toString());
-    }
+      product = ProductDetails.fromJson(response);
+    } catch (_) {}
     return product!;
   }
 
   //get Best Seller
   Future<BestSeller> getBestSeller(LatLng latLng, String countryId) async {
-    print("getBestSeller");
-    final response;
+    final Map<String, dynamic> response;
     BestSeller? bestSeller;
     try {
       response = await _helper.get(
           "products/best-seller?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
-      print(response.toString());
       bestSeller = BestSeller.fromJson(response);
-    } catch (e) {
-      print('getBestSeller error');
-      print(e.toString());
-    }
+    } catch (_) {}
     return bestSeller!;
   }
 }

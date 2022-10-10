@@ -1,14 +1,13 @@
-import 'package:new_turki/models/user_address.dart';
-import 'package:new_turki/networking/api_base_helper.dart';
+import '../models/user_address.dart';
+import '../core/service/networking/api_base_helper.dart';
 
 class UserRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = ApiBaseHelper();
 
   //update user personal Info
   Future<dynamic> updateInfo(body, String authorization) async {
     final response = await _helper.post3("customers/edit-profile", body,
         authorization: authorization);
-    print(body);
     return response;
   }
 
@@ -21,7 +20,6 @@ class UserRepository {
 
   // add Address Info
   Future<dynamic> addAddress(body, String authorization) async {
-    print(body.toString());
     final response = await _helper.post3("customers/add-address", body,
         authorization: authorization);
     return response;
@@ -29,7 +27,6 @@ class UserRepository {
 
   //update  Address Info
   Future<dynamic> updateAddress(body, String authorization, String id) async {
-    print(body.toString());
     final response = await _helper.post3("customers/edit-address/$id", body,
         authorization: authorization);
     return response;
@@ -49,9 +46,7 @@ class UserRepository {
     UserAddress? userAddress;
     try {
       userAddress = UserAddress.fromJson(response);
-    } catch (e) {
-      print(e.toString());
-    }
+    } catch (_) {}
     return userAddress!;
   }
 }

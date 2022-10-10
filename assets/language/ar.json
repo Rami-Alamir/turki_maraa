@@ -176,7 +176,9 @@
   "please_select_pack" : "الرجاء اختيار التغليف",
   "please_select" : "الرجاء اختيار ",
   "show_more": "المزيد",
+  "You_may_also_like": "قد يعجبك أيضا",
   "show_less": "اخفاء",
+  "your_location_is_being_determined": "جاري تحديد موقعك",
   "please_allow_access_to_the_location": "الرجاء السماح بالوصول إلى الموقع",
   "go_to_settings" : "الذهاب للاعدادات",
   "today": "اليوم",
@@ -200,6 +202,7 @@
   "the_address_used_as_a_delivery_address_cannot_be_deleted" : "لا يمكن حذف العنوان المستخدم كعنوان توصيل",
   "allow_access_to_the_location" : "السماح بالوصول بالموقع",
   "delivery_to" : "التوصيل ل",
+  "we_were_unable_to_determine_your_current_location": "لم نتمكن من تحديد موقعك الحالي الرجاء اختيار العنوان او اضافة عنوان جديد لنتمكن من عرض المنتجات المتاحة بمنطقتك.",
   "we_need_your_location_information": "نحتاج معلومات موقعك لإظهار المنتجات المتاحة بمنطقتك ومنحك أفضل تجربة تسوق",
   "choose_delivery_location": "اختر موقع التوصيل",
   "confirm_location" : "تأكيد الموقع",
@@ -237,6 +240,7 @@
   "day_of_sacrifice": "يوم الأضحية",
   "delete_account": "حذف الحساب",
   "are_you_sure_you_want_to_delete_the_account": "هل أنت متأكد أنك تريد حذف الحساب؟",
-  "sorry_you_can_not_log_in_after_deleting_your_account": "نعتذر منك, لا يمكنك تسجيل الدخول بعد حذف الحساب"
-
+  "sorry_you_can_not_log_in_after_deleting_your_account": "نعتذر منك, لا يمكنك تسجيل الدخول بعد حذف الحساب",
+  "delete_address": "حذف العنوان",
+  "are_you_sure_you_want_to_delete_the_address": "هل أنت متأكد أنك تريد حذف العنوان؟"
 }

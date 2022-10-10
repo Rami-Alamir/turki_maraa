@@ -1,20 +1,17 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:new_turki/models/cart_data.dart';
-import 'package:new_turki/networking/api_base_helper.dart';
+import '../models/cart_data.dart';
+import '../core/service/networking/api_base_helper.dart';
 
 class CartRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = ApiBaseHelper();
 
   //add to cart
   Future<int> addToCart(
       body, String authorization, LatLng latLng, String countryId) async {
-    print('body.toString()');
-    print(body.toString());
     final response = await _helper.post2(
         "carts/add-to-cart-v2?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
         body,
         authorization: authorization);
-    print(response.toString());
     return response;
   }
 
@@ -40,17 +37,13 @@ class CartRepository {
   //get cart list
   Future<CartData> getCartList(
       String authorization, LatLng latLng, String countryId) async {
-    print(
-        "carts?page=1&per_page=500&longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
     final response = await _helper.get(
         "carts?page=1&per_page=500&longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
         authorization: authorization);
     CartData? cartData;
     try {
       cartData = CartData.fromJson(response);
-    } catch (e) {
-      print(e.toString());
-    }
+    } catch (_) {}
     return cartData!;
   }
 

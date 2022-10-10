@@ -1,25 +1,25 @@
-import 'package:new_turki/models/favourite.dart';
-import 'package:new_turki/networking/api_base_helper.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../models/favourite.dart';
+import '../core/service/networking/api_base_helper.dart';
 
 class FavouriteRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = ApiBaseHelper();
 
   //get Favourite list
-  Future<Favourite> getFavouriteList(String authorization) async {
-    final response = await _helper.get("wishlists?page=1&per_page=100",
+  Future<Favourite> getFavouriteList(
+      String authorization, LatLng latLng, String countryId) async {
+    final response = await _helper.get(
+        "wishlists?page=1&per_page=50&longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
         authorization: authorization);
     Favourite? favourite;
     try {
       favourite = Favourite.fromJson(response);
-    } catch (e) {
-      print(e.toString());
-    }
+    } catch (_) {}
     return favourite!;
   }
 
   //delete From Favourite
   Future<int> deleteFromFavourite(String id, String authorization) async {
-    print("wishlists/remove-from-wishlist/$id");
     final response = await _helper.delete("wishlists/remove-from-wishlist/$id",
         authorization: authorization);
     return response;

@@ -17,7 +17,6 @@ class Data {
   int? id;
   String? titleAr;
   String? titleEn;
-
   String? image;
 
   Data({

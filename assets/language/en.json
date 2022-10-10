@@ -9,6 +9,9 @@
   "profile" : "Profile",
   "orders" : "Orders",
   "login" : "Login",
+  "You_may_also_like" : "You may also like",
+  "your_location_is_being_determined" : "Your location is being determined",
+  "we_were_unable_to_determine_your_current_location": "We were unable to determine your current location. Please choose the address or add a new address to be able to view the products available in your area.",
   "order_details": "Order details",
   "delivery_address": "Delivery Address",
   "tamara_desc": "Divide it in installments without fees",
@@ -234,6 +237,8 @@
   "please_choose_the_day_of_sacrifice": "Please choose the day of sacrifice",
   "day_of_sacrifice": "day of sacrifice",
   "delete_account": "Delete account",
+  "delete_address": "Delete address",
   "are_you_sure_you_want_to_delete_the_account": "Are you sure you want to delete the account",
-  "sorry_you_can_not_log_in_after_deleting_your_account": "Sorry, you can't log in after deleting your account"
+  "sorry_you_can_not_log_in_after_deleting_your_account": "Sorry, you can't log in after deleting your account",
+  "are_you_sure_you_want_to_delete_the_address": "Are you sure you want to delete the address?"
 }

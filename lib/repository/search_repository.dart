@@ -1,9 +1,9 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:new_turki/models/search_data.dart';
-import 'package:new_turki/networking/api_base_helper.dart';
+import '../models/search_data.dart';
+import '../core/service/networking/api_base_helper.dart';
 
 class SearchRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = ApiBaseHelper();
 
   //get search result list
   Future<List<SearchData>> getSearchResultList(

@@ -1,14 +1,18 @@
+import 'package:turki_dabayeh/models/images.dart';
+
 class SearchData {
   int? id;
+  int? categoryId;
   String? nameAr;
   String? nameEn;
   String? price;
   String? salePrice;
 
-  List<ProductImages>? productImages;
+  List<Images>? productImages;
 
   SearchData(
       {this.id,
+      this.categoryId,
       this.nameAr,
       this.nameEn,
       this.price,
@@ -17,29 +21,18 @@ class SearchData {
 
   SearchData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    categoryId = json['category_id'];
     nameAr = json['name_ar'];
     nameEn = json['name_en'];
-
     price = json['price'] ?? "";
     salePrice = json['sale_price'] ?? "";
-
     if (json['product_images'] != null) {
-      productImages = <ProductImages>[];
+      productImages = <Images>[];
       json['product_images'].forEach((v) {
-        productImages!.add(new ProductImages.fromJson(v));
+        productImages!.add(Images.fromJson(v));
       });
     }
   }
 }
 
-class ProductImages {
-  String? imageUrl;
 
-  ProductImages({
-    this.imageUrl,
-  });
-
-  ProductImages.fromJson(Map<String, dynamic> json) {
-    imageUrl = json['image_url'];
-  }
-}

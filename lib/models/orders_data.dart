@@ -1,3 +1,6 @@
+import 'order.dart';
+import 'product.dart';
+
 class OrdersData {
   List<Data>? data;
 
@@ -7,7 +10,7 @@ class OrdersData {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
@@ -92,174 +95,25 @@ class Data {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     orderState = json['order_state'] != null
-        ? new OrderState.fromJson(json['order_state'])
+        ? OrderState.fromJson(json['order_state'])
         : null;
     if (json['products'] != null) {
       products = <Products>[];
       json['products'].forEach((v) {
-        products!.add(new Products.fromJson(v));
+        products!.add(Products.fromJson(v));
       });
     }
     deliveryPeriod = json['delivery_period'] != null
-        ? new DeliveryPeriod.fromJson(json['delivery_period'])
+        ? DeliveryPeriod.fromJson(json['delivery_period'])
         : null;
     deliveryDate = json['delivery_date'];
-  }
-}
-
-class OrderState {
-  int? code;
-  String? stateEn;
-  String? stateAr;
-  String? customerStateEn;
-  String? customerStateAr;
-  int? isActive;
-
-  OrderState({
-    this.code,
-    this.stateEn,
-    this.stateAr,
-    this.customerStateEn,
-    this.customerStateAr,
-    this.isActive,
-  });
-
-  OrderState.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    stateEn = json['state_en'];
-    stateAr = json['state_ar'];
-    customerStateEn = json['customer_state_en'];
-    customerStateAr = json['customer_state_ar'];
-    isActive = json['is_active'];
-  }
-}
-
-class Products {
-  int? id;
-  String? nameAr;
-  String? nameEn;
-  String? descriptionAr;
-  String? descriptionEn;
-  String? weight;
-  String? calories;
-  int? noRating;
-  int? noSale;
-  String? price;
-  String? salePrice;
-  bool? isActive;
-  bool? isShalwata;
-  int? isDelivered;
-  int? isPickedUp;
-  int? categoryId;
-  int? subCategoryId;
-  List<ProductImages>? productImages;
-
-  Products({
-    this.id,
-    this.nameAr,
-    this.nameEn,
-    this.descriptionAr,
-    this.descriptionEn,
-    this.weight,
-    this.calories,
-    this.noRating,
-    this.noSale,
-    this.price,
-    this.salePrice,
-    this.isActive,
-    this.isShalwata,
-    this.isDelivered,
-    this.isPickedUp,
-    this.categoryId,
-    this.subCategoryId,
-    this.productImages,
-  });
-
-  Products.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    nameAr = json['name_ar'];
-    nameEn = json['name_en'];
-    descriptionAr = json['description_ar'];
-    descriptionEn = json['description_en'];
-    weight = json['weight'];
-    calories = json['calories'];
-    noRating = json['no_rating'];
-    noSale = json['no_sale'];
-    price = json['price'];
-    salePrice = json['sale_price'];
-    isActive = json['is_active'];
-    isShalwata = json['is_shalwata'];
-    isDelivered = json['is_delivered'];
-    isPickedUp = json['is_picked_up'];
-    categoryId = json['category_id'];
-    subCategoryId = json['sub_category_id'];
-    if (json['product_images'] != null) {
-      productImages = <ProductImages>[];
-      json['product_images'].forEach((v) {
-        productImages!.add(new ProductImages.fromJson(v));
-      });
-    }
-  }
-}
-
-class ProductImages {
-  int? id;
-  int? productId;
-  int? isDefault;
-
-  String? imageUrl;
-  String? thumbnailUrl;
-
-  ProductImages(
-      {this.id,
-      this.productId,
-      this.isDefault,
-      this.imageUrl,
-      this.thumbnailUrl});
-
-  ProductImages.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    productId = json['product_id'];
-    isDefault = json['is_default'];
-
-    imageUrl = json['image_url'];
-    thumbnailUrl = json['thumbnail_url'];
-  }
-}
-
-class DeliveryPeriod {
-  int? id;
-  String? nameAr;
-  String? nameEn;
-  int? isActive;
-  String? timeHhmm;
-  String? createdAt;
-  String? updatedAt;
-
-  DeliveryPeriod(
-      {this.id,
-      this.nameAr,
-      this.nameEn,
-      this.isActive,
-      this.timeHhmm,
-      this.createdAt,
-      this.updatedAt});
-
-  DeliveryPeriod.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    nameAr = json['name_ar'];
-    nameEn = json['name_en'];
-    isActive = json['is_active'];
-    timeHhmm = json['time_hhmm'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 }
 
 class OrderProducts {
   int? id;
   int? quantity;
-  Product? product;
+  ProductData? product;
 
   OrderProducts({this.id, this.quantity, this.product});
 
@@ -267,27 +121,6 @@ class OrderProducts {
     id = json['id'];
     quantity = json['quantity'];
     product =
-        json['product'] != null ? Product.fromJson(json['product']) : null;
-  }
-}
-
-class Product {
-  int? id;
-  String? nameAr;
-  String? nameEn;
-  List<ProductImages>? productImages;
-
-  Product({this.id, this.nameAr, this.nameEn, this.productImages});
-
-  Product.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    nameAr = json['name_ar'];
-    nameEn = json['name_en'];
-    if (json['product_images'] != null) {
-      productImages = <ProductImages>[];
-      json['product_images'].forEach((v) {
-        productImages!.add(new ProductImages.fromJson(v));
-      });
-    }
+        json['product'] != null ? ProductData.fromJson(json['product']) : null;
   }
 }

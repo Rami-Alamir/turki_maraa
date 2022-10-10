@@ -1,243 +1,160 @@
+import 'category.dart';
+import 'extra.dart';
+import 'images.dart';
+
 class Product {
-  Data? data;
-  String? description;
-  Product({this.data, this.description});
+  List<Data>? data;
+
+  Product({this.data});
 
   Product.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    description = json['description'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(Data.fromJson(v));
+      });
+    }
   }
 }
 
 class Data {
+  String? typeAr;
+  String? typeEn;
+  String? imageUrl;
+  Category? category;
+  List<ProductData>? products;
+
+  Data({this.typeAr, this.typeEn, this.imageUrl, this.category, this.products});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    typeAr = json['type_ar'] ?? "";
+    typeEn = json['type_en'] ?? "";
+    imageUrl = json['image_url'] ?? "";
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
+    if (json['products'] != null) {
+      products = <ProductData>[];
+      json['products'].forEach((v) {
+        products!.add(ProductData.fromJson(v));
+      });
+    }
+  }
+}
+
+class ProductData {
   int? id;
   String? nameAr;
   String? nameEn;
-  String? price;
-  String? salePrice;
+  String? description;
   String? weight;
   String? calories;
-  String? descriptionAr;
-  bool isFavourite = false;
-  String? descriptionEn;
   double? noRating;
-  Category? category;
-  SubCategory? subCategory;
-  int? isPickedUp;
-  int? isDelivered;
-  bool? isShalwata;
-  Extra? shalwata;
+  String? image;
+  List<Tags>? tags;
+  double? price;
+  double? salePrice = 0.0;
   bool? isActive;
-  List<Images>? images;
-  List<Extra>? sizes;
-  List<Extra>? packaging;
-  List<Extra>? chopping;
-  bool? isAvailable;
-  bool? isKwar3;
-  bool? isRas;
-  bool? isLyh;
-  bool? isKarashah;
+  bool? isShalwata;
+  int? isDelivered;
+  int? isPickedUp;
+  int? categoryId;
+  int? subCategoryId;
+  String? descriptionAr;
+  String? descriptionEn;
+  List<Images>? productImages;
+  ExtraData? shalwata;
+  List<ProductPaymentTypes>? productPaymentTypes;
 
-  Data(
+  ProductData(
       {this.id,
       this.nameAr,
       this.nameEn,
-      this.price,
-      this.salePrice,
+      this.description,
       this.weight,
       this.calories,
       this.noRating,
-      this.isKwar3,
-      this.isRas,
-      this.isLyh,
-      this.isKarashah,
-      this.category,
-      this.subCategory,
+      this.tags,
+      this.image,
+      this.price,
+      this.salePrice,
+      this.isActive,
+      this.isShalwata,
+      this.isDelivered,
       this.isPickedUp,
+      this.categoryId,
+      this.subCategoryId,
       this.descriptionAr,
       this.descriptionEn,
-      this.isDelivered,
-      this.isAvailable,
-      this.isShalwata,
       this.shalwata,
-      this.isActive,
-      this.images,
-      this.sizes,
-      this.packaging,
-      this.chopping});
+      this.productPaymentTypes,
+      this.productImages});
 
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    nameAr = json['name_ar'] ?? '';
-    nameEn = json['name_en'] ?? '';
-    price = json['price'] ?? '';
-    salePrice = json['sale price'] ?? '0.0';
-    weight = json['weight'] ?? '';
-    isAvailable = json['is_available'];
-    isKwar3 = json['is_kwar3'];
-    isRas = json['is_Ras'];
-    isLyh = json['is_lyh'];
-    isKarashah = json['is_karashah'];
-    descriptionAr = json['description_ar'] ?? '';
-    descriptionEn = json['description_en'] ?? '';
-    calories = json['calories'] ?? '';
-    noRating = (json['no_rating'] ?? 5.0) * 1.0;
-    category = json['category'] != null
-        ? new Category.fromJson(json['category'])
-        : null;
-    subCategory = json['sub_category'] != null
-        ? new SubCategory.fromJson(json['sub_category'])
-        : null;
-    isPickedUp = json['is_picked_up'] ?? 0;
-    isDelivered = json['is_delivered'] ?? 0;
-    isShalwata = json['is_shalwata'] ?? false;
-    shalwata =
-        json['shalwata'] != null ? new Extra.fromJson(json['shalwata']) : null;
-    isActive = json['is_active'] ?? 1;
-
-    if (json['images'] != null) {
-      images = <Images>[];
-      json['images'].forEach((v) {
-        images!.add(Images.fromJson(v));
-      });
-    }
-    if (json['sizes'] != null) {
-      sizes = <Extra>[];
-      json['sizes'].forEach((v) {
-        sizes!.add(Extra.fromJson(v));
-      });
-    }
-    if (json['cuts'] != null) {
-      chopping = <Extra>[];
-      json['cuts'].forEach((v) {
-        chopping!.add(Extra.fromJson(v));
-      });
-    }
-    if (json['preparations'] != null) {
-      packaging = <Extra>[];
-      json['preparations'].forEach((v) {
-        packaging!.add(Extra.fromJson(v));
-      });
-    }
-  }
-}
-
-class Extra {
-  int? id;
-  String? nameAr;
-  String? nameEn;
-  String? price;
-  String? salePrice;
-  String? weight;
-
-  Extra({
-    this.id,
-    this.nameAr,
-    this.nameEn,
-    this.price,
-    this.salePrice,
-    this.weight,
-  });
-  factory Extra.fromJson(Map<String, dynamic> json) => Extra(
-        id: json["id"] ?? 0,
-        nameAr: json["name_ar"] ?? "",
-        nameEn: json["name_en"] ?? "",
-        price: json["price"] ?? "",
-        salePrice: json["sale_price"] ?? "0.0",
-        weight: json["weight"] ?? "",
-      );
-}
-
-class Category {
-  int? id;
-  String? typeAr;
-  String? typeEn;
-  String? description;
-  String? imageUrl;
-  String? thumbnailUrl;
-
-  Category(
-      {this.id,
-      this.typeAr,
-      this.typeEn,
-      this.description,
-      this.imageUrl,
-      this.thumbnailUrl});
-
-  Category.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    typeAr = json['type_ar'] ?? "";
-    typeEn = json['type_en'] ?? "";
-    description = json['description'] ?? "";
-    imageUrl = json['image_url'] ?? "";
-    thumbnailUrl = json['thumbnail_url'] ?? "";
-  }
-}
-
-class SubCategory {
-  int? id;
-  int? categoryId;
-  String? typeAr;
-  String? typeEn;
-  String? description;
-  String? imageUrl;
-  String? thumbnailUrl;
-
-  SubCategory(
-      {this.id,
-      this.categoryId,
-      this.typeAr,
-      this.typeEn,
-      this.description,
-      this.imageUrl,
-      this.thumbnailUrl});
-
-  SubCategory.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    categoryId = json['category_id'];
-    typeAr = json['type_ar'] ?? "";
-    typeEn = json['type_en'] ?? "";
-    description = json['description'] ?? "";
-    imageUrl = json['image_url'] ?? "";
-    thumbnailUrl = json['thumbnail_url'] ?? "";
-  }
-}
-
-class Shalwata {
-  int? id;
-  String? nameAr;
-  String? nameEn;
-  String? price;
-
-  Shalwata({this.id, this.nameAr, this.nameEn, this.price});
-
-  Shalwata.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
+  ProductData.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? "";
     nameAr = json['name_ar'] ?? "";
     nameEn = json['name_en'] ?? "";
-    price = json['price'] ?? "";
+    description = json['description'] ?? "";
+    weight = json['weight'] ?? "";
+    calories = json['calories'] ?? "";
+    noRating = (json['no_rating'] ?? 0.0) * 1.0;
+    image = json['image'] ?? "";
+    price = double.parse(json['price'] ?? "0.0");
+    salePrice = double.parse(json['sale_price'] ?? "0.0");
+    isActive = json['is_active'] ?? "";
+    isShalwata = json['is_shalwata'] ?? "";
+    isDelivered = json['is_delivered'] ?? "";
+    isPickedUp = json['is_picked_up'] ?? "";
+    categoryId = json['category_id'] ?? "";
+    subCategoryId = json['sub_category_id'] ?? "";
+    if (json['product_images'] != null) {
+      productImages = <Images>[];
+      json['product_images'].forEach((v) {
+        productImages!.add(Images.fromJson(v));
+      });
+    }
+    descriptionAr = json['description_ar'];
+    descriptionEn = json['description_en'];
+    shalwata =
+        json['shalwata'] != null ? ExtraData.fromJson(json['shalwata']) : null;
+    if (json['product_payment_types'] != null) {
+      productPaymentTypes = <ProductPaymentTypes>[];
+      json['product_payment_types'].forEach((v) {
+        productPaymentTypes!.add(ProductPaymentTypes.fromJson(v));
+      });
+    }
+    if (json['tags'] != null) {
+      tags = <Tags>[];
+      json['tags'].forEach((v) {
+        tags!.add(Tags.fromJson(v));
+      });
+    }
   }
 }
 
-class Images {
+class ProductPaymentTypes {
   int? id;
-  int? productId;
-  int? isDefault;
-  String? imageUrl;
-  String? thumbnailUrl;
+  String? nameAr;
+  String? nameEn;
 
-  Images(
-      {this.id,
-      this.productId,
-      this.isDefault,
-      this.imageUrl,
-      this.thumbnailUrl});
+  ProductPaymentTypes({this.id, this.nameAr, this.nameEn});
 
-  Images.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    productId = json['product_id'] ?? 0;
-    isDefault = json['is_default'] ?? 0;
-    imageUrl = json['image_url'] ?? '';
-    thumbnailUrl = json['thumbnail_url'] ?? "";
+  ProductPaymentTypes.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nameAr = json['name_ar'];
+    nameEn = json['name_en'];
+  }
+}
+
+class Tags {
+  String? nameAr;
+  String? nameEn;
+  String? color;
+
+  Tags({this.nameAr, this.nameEn, this.color});
+
+  Tags.fromJson(Map<String, dynamic> json) {
+    nameAr = json['name_ar'];
+    nameEn = json['name_en'];
+    color = json['color'];
   }
 }

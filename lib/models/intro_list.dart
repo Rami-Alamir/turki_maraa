@@ -1,4 +1,4 @@
-import 'package:new_turki/models/intro_data.dart';
+import 'intro_data.dart';
 
 class IntroList {
   static List<IntroData> introData = [

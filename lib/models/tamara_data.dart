@@ -1,24 +1,15 @@
 class TamaraData {
-  bool? success;
   List<Data>? data;
-  String? message;
-  String? description;
-  int? code;
 
-  TamaraData(
-      {this.success, this.data, this.message, this.description, this.code});
+  TamaraData({this.data});
 
   TamaraData.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
-    message = json['message'];
-    description = json['description'];
-    code = json['code'];
   }
 }
 
@@ -42,16 +33,14 @@ class Data {
     name = json['name'];
     description = json['description'];
     descriptionAr = json['description_ar'];
-    minLimit = json['min_limit'] != null
-        ? new MinLimit.fromJson(json['min_limit'])
-        : null;
-    maxLimit = json['max_limit'] != null
-        ? new MinLimit.fromJson(json['max_limit'])
-        : null;
+    minLimit =
+        json['min_limit'] != null ? MinLimit.fromJson(json['min_limit']) : null;
+    maxLimit =
+        json['max_limit'] != null ? MinLimit.fromJson(json['max_limit']) : null;
     if (json['supported_instalments'] != null) {
       supportedInstalments = <SupportedInstalments>[];
       json['supported_instalments'].forEach((v) {
-        supportedInstalments!.add(new SupportedInstalments.fromJson(v));
+        supportedInstalments!.add(SupportedInstalments.fromJson(v));
       });
     }
   }
@@ -78,11 +67,9 @@ class SupportedInstalments {
 
   SupportedInstalments.fromJson(Map<String, dynamic> json) {
     instalments = json['instalments'];
-    minLimit = json['min_limit'] != null
-        ? new MinLimit.fromJson(json['min_limit'])
-        : null;
-    maxLimit = json['max_limit'] != null
-        ? new MinLimit.fromJson(json['max_limit'])
-        : null;
+    minLimit =
+        json['min_limit'] != null ? MinLimit.fromJson(json['min_limit']) : null;
+    maxLimit =
+        json['max_limit'] != null ? MinLimit.fromJson(json['max_limit']) : null;
   }
 }
