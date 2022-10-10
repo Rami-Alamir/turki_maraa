@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:huawei_location/huawei_location.dart';
-import 'package:location/location.dart' as location_service;
-import '../core/service/firebase_helper.dart';
-import '../core/utilities/hms_latlng_converter.dart';
-import '../core/utilities/get_strings.dart';
 import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
+import 'package:huawei_location/huawei_location.dart';
+import 'dart:async';
+import 'package:location/location.dart' as location_service;
+import '/../core/service/firebase_helper.dart';
+import '/../core/utilities/get_strings.dart';
+import '/../core/utilities/hms_latlng_converter.dart';
 
 class LocationProvider with ChangeNotifier {
   LatLng? _latLng;

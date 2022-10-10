@@ -1,5 +1,5 @@
-import 'package:turki_dabayeh/models/extra.dart';
-import 'package:turki_dabayeh/models/product.dart';
+import 'extra.dart';
+import 'product.dart';
 
 class Order {
   Data? data;

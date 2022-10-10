@@ -1,4 +1,4 @@
-import 'package:turki_dabayeh/models/images.dart';
+import 'images.dart';
 
 class SearchData {
   int? id;
@@ -34,5 +34,3 @@ class SearchData {
     }
   }
 }
-
-
