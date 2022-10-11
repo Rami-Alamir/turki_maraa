@@ -11,7 +11,7 @@ class OrderRepository {
   Future<dynamic> placeOrder(
       body, String authorization, LatLng latLng, String countryId) async {
     final response = await _helper.post4(
-        "orders/add-order?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId&app=1",
+        "orders/add-order?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
         json.encode(body),
         authorization: authorization);
     return response;
