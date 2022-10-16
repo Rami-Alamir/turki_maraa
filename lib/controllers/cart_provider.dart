@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import '../core/constants/fixed_assets.dart';
 import '/../core/service/firebase_helper.dart';
 import '/../core/utilities/app_localizations.dart';
 import '/../core/utilities/calculate_helper.dart';
@@ -446,7 +447,7 @@ class CartProvider with ChangeNotifier {
       builder: (BuildContext context) {
         return MessageDialog(
           message: message,
-          image: 'assets/images/warning.png',
+          image: FixedAssets.warning,
         );
       },
     );

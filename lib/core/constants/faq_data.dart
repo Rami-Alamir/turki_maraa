@@ -1,4 +1,4 @@
-import 'qa.dart';
+import '../../models/qa.dart';
 
 class FAQData {
   static List<Question> faqListAr = [

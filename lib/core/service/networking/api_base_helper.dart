@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../../constants/constants.dart';
 import 'app_exception.dart';
 
 class ApiBaseHelper {
-  final String _baseUrl = 'https://almaraacompany.com/turki-api/api/v1/';
+  final String _baseUrl = KConstants.baseUrl;
   String authorization = "";
   Map<String, String> headers = {
     "Accept": "application/json",

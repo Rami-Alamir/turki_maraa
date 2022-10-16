@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import '../core/constants/fixed_assets.dart';
+import '../core/constants/route_constants.dart';
 import '../models/user_data.dart';
 import '../models/user_type.dart';
 import '../repository/registration_repository.dart';
@@ -104,7 +106,7 @@ class Auth with ChangeNotifier {
         _isNewUser = _userType!.code == "C100";
         Navigator.pop(_dialogContext!);
         // ignore: use_build_context_synchronously
-        if (navigate) Navigator.pushNamed(context, "/VerifyPhone");
+        if (navigate) Navigator.pushNamed(context, verifyPhone);
       } else if (response.statusCode == 401) {
         Navigator.pop(_dialogContext!);
         // ignore: use_build_context_synchronously
@@ -147,7 +149,7 @@ class Auth with ChangeNotifier {
           _isNewUser!
               // ignore: use_build_context_synchronously
               ? Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/Username', (Route<dynamic> route) => false)
+                  username, (Route<dynamic> route) => false)
               // ignore: use_build_context_synchronously
               : Navigator.pushAndRemoveUntil(
                   context,
@@ -216,7 +218,7 @@ class Auth with ChangeNotifier {
         ShowSnackBar().show(context, "unexpected_error");
       }
     }, "are_you_sure_you_want_to_delete_the_account", "delete_account",
-        icon: 'assets/images/profile_icons/delete-account.svg');
+        icon: FixedAssets.deleteAccount);
   }
 
   // logout
@@ -225,8 +227,7 @@ class Auth with ChangeNotifier {
     // ignore: use_build_context_synchronously
     ShowConfirmDialog().confirmDialog(context, () {
       logOutAction(context);
-    }, "Are_you_sure_you_want_to_log_out", "log_out",
-        icon: 'assets/images/profile_icons/logout-colored.svg');
+    }, "Are_you_sure_you_want_to_log_out", "log_out", icon: FixedAssets.logout);
   }
 
   // logout action

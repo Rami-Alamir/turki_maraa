@@ -32,6 +32,7 @@ import '../../presentation/screens/profile/login.dart';
 import '../../presentation/screens/profile/notification.dart';
 import '../../presentation/screens/profile/points.dart';
 import '../../presentation/screens/profile/wallet.dart';
+import '../constants/route_constants.dart';
 import '../service/firebase_helper.dart';
 
 class TabItem {
@@ -72,93 +73,94 @@ class TabItem {
               value: settings.name!.substring(1).isEmpty
                   ? 'Splash'
                   : settings.name!.substring(1));
+
           switch (settings.name) {
             case '/':
               return MaterialPageRoute(builder: (_) => _page);
-            case '/App':
+            case app:
               return MaterialPageRoute(builder: (_) => const App());
-            case '/NoInternet':
+            case noInternet:
               return MaterialPageRoute(builder: (_) => const NoInternet());
-            case '/NewVersion':
+            case newVersion:
               return MaterialPageRoute(builder: (_) => const NewVersion());
-            case '/MyAddresses':
+            case myAddresses:
               return MaterialPageRoute(builder: (_) => const MyAddresses());
-            case '/Home':
+            case home:
               return MaterialPageRoute(
                   builder: (_) => Home(
                         parentScaffoldStateKey:
                             args as GlobalKey<ScaffoldState>,
                       ));
-            case '/HomeCategories':
-              return MaterialPageRoute(builder: (_) => const HomeCategories());
-            case '/ProductDetails':
+            case productDetails:
               return MaterialPageRoute(
                   builder: (_) =>
                       ProductDetails(data: args as Map<String, dynamic>));
-            case '/Profile':
+            case homeCategories:
+              return MaterialPageRoute(builder: (_) => const HomeCategories());
+            case profile:
               return MaterialPageRoute(builder: (_) => const Profile());
-            case '/Orders':
+            case userPoints:
+              return MaterialPageRoute(builder: (_) => const UserPoints());
+            case userWallet:
+              return MaterialPageRoute(builder: (_) => const UserWallet());
+            case addCredit:
+              return MaterialPageRoute(builder: (_) => const AddCredit());
+            case addGiftCard:
+              return MaterialPageRoute(builder: (_) => const AddGiftCard());
+            case orders:
               return MaterialPageRoute(
                   builder: (_) => Orders(back: args as bool));
-            case '/OrderDetails':
-              return MaterialPageRoute(
-                  builder: (_) => OrderDetails(id: args as String));
-            case '/OrderStatus':
-              return MaterialPageRoute(
-                  builder: (_) => OrderStatus(status: args as bool));
-            case '/Cart':
-              return MaterialPageRoute(builder: (_) => const ShoppingCart());
-            case '/Login':
-              return MaterialPageRoute(builder: (_) => const Login());
-            case '/PhoneLogin':
-              return MaterialPageRoute(builder: (_) => const PhoneLogin());
-            case '/VerifyPhone':
-              return MaterialPageRoute(builder: (_) => const VerifyPhone());
-            case '/Username':
-              return MaterialPageRoute(builder: (_) => const Username());
-            case '/Favourite':
-              return MaterialPageRoute(builder: (_) => const Favourite());
-            case '/FAQ':
-              return MaterialPageRoute(builder: (_) => const Faq());
-            case '/About':
-              return MaterialPageRoute(builder: (_) => const About());
-            case '/Notifications':
+            case notifications:
               return MaterialPageRoute(
                   builder: (_) => const UserNotification());
-            case '/UserPoints':
-              return MaterialPageRoute(builder: (_) => const UserPoints());
-            case '/Policies':
+            case orderDetails:
+              return MaterialPageRoute(
+                  builder: (_) => OrderDetails(id: args as String));
+            case cart:
+              return MaterialPageRoute(builder: (_) => const ShoppingCart());
+            case login:
+              return MaterialPageRoute(builder: (_) => const Login());
+            case phoneLogin:
+              return MaterialPageRoute(builder: (_) => const PhoneLogin());
+            case verifyPhone:
+              return MaterialPageRoute(builder: (_) => const VerifyPhone());
+            case username:
+              return MaterialPageRoute(builder: (_) => const Username());
+            case favourite:
+              return MaterialPageRoute(builder: (_) => const Favourite());
+            case fAQ:
+              return MaterialPageRoute(builder: (_) => const Faq());
+            case about:
+              return MaterialPageRoute(builder: (_) => const About());
+            case orderStatus:
+              return MaterialPageRoute(
+                  builder: (_) => OrderStatus(status: args as bool));
+            case policies:
               return MaterialPageRoute(
                   builder: (_) =>
                       Policies(policiesData: args as Map<String, String>));
-            case '/AddCredit':
-              return MaterialPageRoute(builder: (_) => const AddCredit());
-            case '/AddGiftCard':
-              return MaterialPageRoute(builder: (_) => const AddGiftCard());
-            case '/UserWallet':
-              return MaterialPageRoute(builder: (_) => const UserWallet());
-            case '/PersonalInformation':
+            case personalInformation:
               return MaterialPageRoute(
                   builder: (_) => const PersonalInformation());
-            case '/ProductsHome':
+            case productsHome:
               return MaterialPageRoute(
                   builder: (_) => ProductsHome(id: args as int));
-            case '/GMSMap':
-              return MaterialPageRoute(
-                  builder: (_) => GMSMap(
-                        addressIndex: args as int,
-                      ));
-            case '/HMSMap':
+            case hmsMap:
               return MaterialPageRoute(
                   builder: (_) => HMSMap(
                         addressIndex: args as int,
                       ));
-            case '/Search':
+            case gmsMap:
+              return MaterialPageRoute(
+                  builder: (_) => GMSMap(
+                        addressIndex: args as int,
+                      ));
+            case search:
               return MaterialPageRoute(builder: (_) => const Search());
-            case '/Discover':
+            case discover:
               return MaterialPageRoute(
                   builder: (_) => Discover(item: args as Data));
-            case '/ProductsList':
+            case productsList:
               return MaterialPageRoute(
                   builder: (_) =>
                       ProductsList(data: args as Map<String, dynamic>));

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/constants.dart';
+
 Color primaryColor = const Color.fromRGBO(118, 24, 14, 1.0);
 
 final ThemeData lightTheme = ThemeData(
   splashColor: Colors.white,
   primaryColor: primaryColor,
-  fontFamily: 'Turki',
+  fontFamily: KConstants.fontFamily,
   canvasColor: Colors.transparent,
   backgroundColor: const Color.fromRGBO(250, 250, 250, 1),
   scaffoldBackgroundColor: const Color.fromRGBO(250, 250, 250, 1),
@@ -66,7 +68,7 @@ final ThemeData lightTheme = ThemeData(
   ),
   snackBarTheme: const SnackBarThemeData(
       contentTextStyle: TextStyle(
-    fontFamily: 'Turki',
+    fontFamily: KConstants.fontFamily,
     color: Colors.white,
   )),
   colorScheme: ColorScheme.fromSwatch().copyWith(

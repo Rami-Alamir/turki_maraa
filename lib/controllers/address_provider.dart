@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import '../core/constants/fixed_assets.dart';
 import '/../core/utilities/get_strings.dart';
 import '/../core/utilities/show_snack_bar.dart';
 import '/../models/user_address.dart';
@@ -208,7 +209,7 @@ class AddressProvider with ChangeNotifier {
       }
       notifyListeners();
     }, "are_you_sure_you_want_to_delete_the_address", "delete_address",
-        icon: 'assets/images/profile_icons/home-location.svg');
+        icon: FixedAssets.deleteAddress);
   }
 
   // show indicator dialog
@@ -226,14 +227,14 @@ class AddressProvider with ChangeNotifier {
     if (Platform.isAndroid) {
       hms.BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(25, 25)),
-        'assets/images/pin.png',
+        FixedAssets.mapPin,
       ).then((onValue) {
         _hmsMarker = onValue;
       });
     }
     BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(size: Size(20, 20)),
-      'assets/images/pin.png',
+      FixedAssets.mapPin,
     ).then((onValue) {
       _myMarker = onValue;
       notifyListeners();

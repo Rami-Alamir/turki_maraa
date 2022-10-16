@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/constants.dart';
+
 final ThemeData nationalDayTheme = ThemeData(
   splashColor: Colors.white,
   primaryColor: const Color.fromRGBO(35, 98, 4, 1.0),
-  fontFamily: 'Turki',
+  fontFamily: KConstants.fontFamily,
   canvasColor: Colors.transparent,
   backgroundColor: const Color.fromRGBO(250, 250, 250, 1),
   scaffoldBackgroundColor: const Color.fromRGBO(250, 250, 250, 1),
@@ -66,7 +68,7 @@ final ThemeData nationalDayTheme = ThemeData(
   ),
   snackBarTheme: const SnackBarThemeData(
       contentTextStyle: TextStyle(
-    fontFamily: 'Turki',
+    fontFamily: KConstants.fontFamily,
     color: Colors.white,
   )),
   colorScheme: ColorScheme.fromSwatch().copyWith(

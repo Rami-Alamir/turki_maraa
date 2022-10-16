@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../core/utilities/theme/classic_theme.dart';
 import '../core/utilities/theme/dark_theme.dart';
 import '../core/utilities/theme/light_theme.dart';
@@ -29,6 +28,9 @@ class AppTheme with ChangeNotifier {
         _theme = classicTheme;
         _themeName = 'classic';
         break;
+      default:
+        _theme = lightTheme;
+        _themeName = 'light';
     }
   }
 
