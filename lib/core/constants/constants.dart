@@ -24,7 +24,7 @@ class KConstants {
   static const String playStore =
       "market://details?id=com.digishapes.turkieshop";
   static const String appGallery =
-      "https://appgallery.huawei.com/app/C102802029";
+      "https://appgallery.cloud.huawei.com/marketshare/app/C102802029";
   //Social Media
   static const String instagramUae = "https://www.instagram.com/almaraa_uae/";
   static const String instagramKsa = "https://www.instagram.com/almaraa_ksa/";

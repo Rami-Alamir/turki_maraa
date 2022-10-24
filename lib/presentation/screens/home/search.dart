@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../controllers/search_provider.dart';
+import '../../../core/utilities/app_localizations.dart';
+import '../../widgets/home/search_bar.dart';
+import '../../widgets/home/search_row.dart';
+
+class Search extends StatelessWidget {
+  const Search({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final SearchProvider searchProvider = Provider.of<SearchProvider>(context);
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: ListView(
+          padding: const EdgeInsets.only(top: 60),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(AppLocalizations.of(context)!.tr('search'),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .copyWith(fontSize: 20, fontWeight: FontWeight.w700)),
+                ),
+                InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10.0, right: 30, left: 30, bottom: 20),
+                    child: Text('X',
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                            fontWeight: FontWeight.bold, fontSize: 16)),
+                  ),
+                ),
+              ],
+            ),
+            SearchBar(
+              controller: searchProvider.searchController,
+              autoFocus: true,
+            ),
+            ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: searchProvider.searchData.length > 10
+                    ? 10
+                    : searchProvider.searchData.length,
+                padding: const EdgeInsets.all(0),
+                itemBuilder: (BuildContext ctxt, int index) {
+                  return SearchRow(
+                    item: searchProvider.searchData[index],
+                  );
+                })
+          ],
+        ),
+      ),
+    );
+  }
+}
