@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../core/service/service_locator.dart';
 import '../models/search_data.dart';
 import '../repository/search_repository.dart';
 
@@ -29,7 +30,7 @@ class SearchProvider with ChangeNotifier {
   //search result
   Future<void> getSearchResultList() async {
     try {
-      _searchData = await SearchRepository().getSearchResultList(
+      _searchData = await sl<SearchRepository>().getSearchResultList(
           searchController.text, _latLng!, _isoCountryCode!);
     } catch (_) {
       _searchData = [];

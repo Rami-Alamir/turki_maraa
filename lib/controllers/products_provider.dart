@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../core/service/service_locator.dart';
 import '../models/banners_data.dart';
 import '../models/discover_data.dart';
 import '../models/discover_item.dart' as discover_item;
@@ -143,18 +144,18 @@ class ProductsProvider with ChangeNotifier {
   Future<void> _getDiscoverList(int categoryId) async {
     _discoverData = null;
     try {
-      _discoverData = await HomeRepository()
+      _discoverData = await sl<HomeRepository>()
           .getDiscover(categoryId, _latLng!, _isoCountryCode!);
-    } catch (e) {
+    } catch (_) {
       //  _foodsRetry = true;
     }
   }
 
   Future<void> _getBanners(int categoryId) async {
     try {
-      _bannersData = await HomeRepository()
+      _bannersData = await sl<HomeRepository>()
           .getBannersList(categoryId, _latLng!, _isoCountryCode!);
-    } catch (e) {
+    } catch (_) {
       _foodsRetry = true;
     }
   }
@@ -162,9 +163,9 @@ class ProductsProvider with ChangeNotifier {
   // get Products
   Future<void> _getProducts(String id) async {
     try {
-      _productsList = await ProductsRepository()
+      _productsList = await sl<ProductsRepository>()
           .getProductsList(id, _latLng!, _isoCountryCode!);
-    } catch (e) {
+    } catch (_) {
       _foodsRetry = true;
     }
   }
@@ -174,7 +175,7 @@ class ProductsProvider with ChangeNotifier {
     try {
       Product products = Product();
       _similarProductsList.insert(index, products);
-      _similarProductsList[index] = await ProductsRepository()
+      _similarProductsList[index] = await sl<ProductsRepository>()
           .getProductsList(id, _latLng!, _isoCountryCode!);
       notifyListeners();
     } catch (_) {}
@@ -189,11 +190,11 @@ class ProductsProvider with ChangeNotifier {
       if (isNew) {
         _productData.insert(index, ProductDetails());
       }
-      product =
-          await ProductsRepository().getProduct(id, _latLng!, _isoCountryCode!);
+      product = await sl<ProductsRepository>()
+          .getProduct(id, _latLng!, _isoCountryCode!);
       _productData[index] = product;
       if (_productData[index].data!.sizes!.length == 1) _selectedSize = 0;
-    } catch (e) {
+    } catch (_) {
       _productIsRetry[index] = true;
     }
     _productIsLoading[index] = false;
@@ -217,9 +218,9 @@ class ProductsProvider with ChangeNotifier {
     _discoverIsLoading = true;
     _discoverRetry = false;
     try {
-      _discoverItem = await HomeRepository()
+      _discoverItem = await sl<HomeRepository>()
           .getDiscoverItem(id, _latLng!, _isoCountryCode!);
-    } catch (e) {
+    } catch (_) {
       _discoverRetry = true;
     }
     _discoverIsLoading = false;

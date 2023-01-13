@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as location_service;
+import 'package:version/version.dart';
+import '../core/service/service_locator.dart';
 import '../models/banners_data.dart';
 import '../models/best_seller.dart';
 import '../models/category_data.dart';
@@ -10,7 +12,6 @@ import '../repository/home_repository.dart';
 import '../repository/products_repository.dart';
 import '../repository/version_repository.dart';
 import '../presentation/screens/other/new_version.dart' as new_version;
-import 'package:version/version.dart';
 
 class HomeProvider with ChangeNotifier {
   bool _canUpdate = false;
@@ -91,9 +92,9 @@ class HomeProvider with ChangeNotifier {
   //get all categories
   Future<void> _getCategories() async {
     try {
-      _categoryData =
-          await HomeRepository().getCategoriesList(_latLng!, _isoCountryCode!);
-    } catch (e) {
+      _categoryData = await sl<HomeRepository>()
+          .getCategoriesList(_latLng!, _isoCountryCode!);
+    } catch (_) {
       _retry = true;
     }
   }
@@ -101,9 +102,9 @@ class HomeProvider with ChangeNotifier {
   //get Best Seller
   Future<void> _getBestSeller() async {
     try {
-      _bestSeller =
-          await ProductsRepository().getBestSeller(_latLng!, _isoCountryCode!);
-    } catch (e) {
+      _bestSeller = await sl<ProductsRepository>()
+          .getBestSeller(_latLng!, _isoCountryCode!);
+    } catch (_) {
       _retry = true;
     }
   }
@@ -121,7 +122,7 @@ class HomeProvider with ChangeNotifier {
           _getBestSeller(),
         ]);
       }
-    } catch (e) {
+    } catch (_) {
       _retry = true;
     }
     _isLoading = false;
@@ -133,7 +134,7 @@ class HomeProvider with ChangeNotifier {
   // check if app have new version to show update page
   Future<void> checkNewVersion() async {
     final versionData =
-        await VersionRepository().getLatestAppVersion(Platform.isIOS
+        await sl<VersionRepository>().getLatestAppVersion(Platform.isIOS
             ? 1
             : _isHMS!
                 ? 3

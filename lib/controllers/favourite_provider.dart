@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'products_provider.dart';
 import '../models/favourite.dart';
 import '../repository/favourite_repository.dart';
 import '../core/utilities/show_snack_bar.dart';
-import 'package:provider/provider.dart';
+import '../core/service/service_locator.dart';
 import '../presentation/widgets/dialog/indicator_dialog.dart';
-import 'products_provider.dart';
 
 class FavouriteProvider with ChangeNotifier {
   TextEditingController noteController = TextEditingController();
@@ -59,7 +60,7 @@ class FavouriteProvider with ChangeNotifier {
       _isLoading = isLoading;
       _retry = false;
       try {
-        _favourite = await FavouriteRepository().getFavouriteList(
+        _favourite = await sl<FavouriteRepository>().getFavouriteList(
             "Bearer ${_accessToken!}", _latLng!, _isoCountryCode!);
       } catch (e) {
         _retry = true;
@@ -80,7 +81,7 @@ class FavouriteProvider with ChangeNotifier {
     _dialogContext = context;
     _showDialogIndicator(context);
     try {
-      response = await FavouriteRepository()
+      response = await sl<FavouriteRepository>()
           .deleteFromFavourite(id, "Bearer ${_accessToken!}");
       if (response == 200) {
         final productsProvider =
@@ -106,7 +107,7 @@ class FavouriteProvider with ChangeNotifier {
     _dialogContext = context;
     if (withDialog) _showDialogIndicator(context);
     try {
-      response = await FavouriteRepository()
+      response = await sl<FavouriteRepository>()
           .addFavourite(id, "Bearer ${_accessToken!}");
       if (response == 200) {
         final productsProvider =

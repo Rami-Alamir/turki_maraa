@@ -8,7 +8,6 @@ import '../core/service/networking/api_base_helper.dart';
 class HomeRepository {
   final ApiBaseHelper _helper = ApiBaseHelper();
 
-  //get Categories list
   Future<CategoryData> getCategoriesList(
       LatLng latLng, String countryId) async {
     final response = await _helper.get(
@@ -20,7 +19,6 @@ class HomeRepository {
     return categoryData!;
   }
 
-  //get Banners list
   Future<BannersData> getBannersList(
       int categoryId, LatLng latLng, String countryId) async {
     final response = await _helper.get(
@@ -32,7 +30,6 @@ class HomeRepository {
     return bannersData!;
   }
 
-  //get Discover data
   Future<DiscoverData> getDiscover(
       int categoryId, LatLng latLng, String countryId) async {
     final response = await _helper.get(
@@ -44,7 +41,6 @@ class HomeRepository {
     return discoverItem!;
   }
 
-  //get Discover item data
   Future<DiscoverItem> getDiscoverItem(
       int id, LatLng latLng, String countryId) async {
     final response = await _helper.get(

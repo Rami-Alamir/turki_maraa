@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../core/service/service_locator.dart';
 import '../models/order.dart';
 import '../models/orders_data.dart';
 import '../repository/order_repository.dart';
@@ -54,8 +55,8 @@ class OrdersProvider with ChangeNotifier {
       _retry = false;
       try {
         _ordersData =
-            await OrderRepository().getOrdersList("Bearer $_accessToken");
-      } catch (e) {
+            await sl<OrderRepository>().getOrdersList("Bearer $_accessToken");
+      } catch (_) {
         _retry = true;
       }
       _isLoading = false;
@@ -68,11 +69,11 @@ class OrdersProvider with ChangeNotifier {
     _isLoading2 = true;
     _retry2 = false;
     try {
-      _order = await OrderRepository().getOrderData(
+      _order = await sl<OrderRepository>().getOrderData(
           id,
           ""
           "Bearer $_accessToken");
-    } catch (e) {
+    } catch (_) {
       _retry2 = true;
     }
     _isLoading2 = false;

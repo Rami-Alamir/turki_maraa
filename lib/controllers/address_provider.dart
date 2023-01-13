@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:huawei_map/map.dart' as hms;
+import 'package:http/http.dart' as http;
+import 'location_provider.dart';
 import '../core/constants/fixed_assets.dart';
+import '../core/service/service_locator.dart';
 import '/../core/utilities/get_strings.dart';
 import '/../core/utilities/show_snack_bar.dart';
+import '/../core/utilities/app_localizations.dart';
+import '/../core/utilities/show_dialog.dart';
 import '/../models/user_address.dart';
 import '/../presentation/widgets/dialog/indicator_dialog.dart';
 import '/../repository/user_repository.dart';
-import '/../core/utilities/app_localizations.dart';
-import '/../core/utilities/show_dialog.dart';
-import 'location_provider.dart';
-import 'package:huawei_map/map.dart' as hms;
-import 'package:http/http.dart' as http;
 
 class AddressProvider with ChangeNotifier {
   TextEditingController descriptionController = TextEditingController();
@@ -66,7 +67,8 @@ class AddressProvider with ChangeNotifier {
   Future<void> getAddressList() async {
     if (_isAuth ?? false) {
       try {
-        _userAddress = await UserRepository().getAddressList(_authorization!);
+        _userAddress =
+            await sl<UserRepository>().getAddressList(_authorization!);
       } catch (_) {}
     }
   }
@@ -91,7 +93,7 @@ class AddressProvider with ChangeNotifier {
           : GetStrings().locationDescription(placemark.first);
       String countryCode = placemark.first.isoCountryCode!;
       if (_isAuth ?? false) {
-        response = await UserRepository().addAddress({
+        response = await sl<UserRepository>().addAddress({
           "country_iso_code": isoCountryCode ?? countryCode,
           "address": address,
           "comment": comment,
@@ -135,7 +137,7 @@ class AddressProvider with ChangeNotifier {
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
       }
-    } catch (e) {
+    } catch (_) {
       if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
       ShowSnackBar().show(context, "unexpected_error");
     }
@@ -156,7 +158,7 @@ class AddressProvider with ChangeNotifier {
       String comment = descriptionController.text.isNotEmpty
           ? descriptionController.text
           : GetStrings().locationDescription(placemark.first);
-      response = await UserRepository().updateAddress({
+      response = await sl<UserRepository>().updateAddress({
         "country_iso_code": placemark.first.isoCountryCode,
         "address": address,
         "comment": comment,
@@ -179,7 +181,7 @@ class AddressProvider with ChangeNotifier {
         ShowSnackBar().show(context,
             response == 400 ? "region_not_supported" : "unexpected_error");
       }
-    } catch (e) {
+    } catch (_) {
       if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
       ShowSnackBar().show(context, "unexpected_error");
     }
@@ -192,8 +194,8 @@ class AddressProvider with ChangeNotifier {
       _showDialogIndicator(_dialogContext);
       http.Response response;
       try {
-        response =
-            await UserRepository().deleteAddress(_authorization!, "$addressId");
+        response = await sl<UserRepository>()
+            .deleteAddress(_authorization!, "$addressId");
         if (response.statusCode == 200) {
           await getAddressList();
           notifyListeners();
@@ -203,7 +205,7 @@ class AddressProvider with ChangeNotifier {
           // ignore: use_build_context_synchronously
           ShowSnackBar().show(context, "unexpected_error");
         }
-      } catch (e) {
+      } catch (_) {
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
         ShowSnackBar().show(context, "unexpected_error");
       }

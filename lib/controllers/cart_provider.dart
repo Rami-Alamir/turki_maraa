@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import '../core/service/service_locator.dart';
 import '../models/user_data.dart';
 import 'address_provider.dart';
 import '../core/utilities/dialog_helper.dart';
@@ -147,7 +148,7 @@ class CartProvider with ChangeNotifier {
     int response;
     DialogHelper().showIndicatorDialog(context);
     try {
-      response = await CartRepository().addToCart({
+      response = await sl<CartRepository>().addToCart({
         "product_id": productId,
         "quantity": quantity,
         "preparation_id": preparationId,
@@ -179,7 +180,7 @@ class CartProvider with ChangeNotifier {
     HapticFeedback.heavyImpact();
     DialogHelper().showIndicatorDialog(context);
     try {
-      int response = await CartRepository().updateCartItem({
+      int response = await sl<CartRepository>().updateCartItem({
         "quantity": quantity,
         "comment": "",
       }, _authorization!, productId, _latLng!, _isoCountryCode!);
@@ -198,7 +199,7 @@ class CartProvider with ChangeNotifier {
     HapticFeedback.vibrate();
     DialogHelper().showIndicatorDialog(context);
     try {
-      int response = await CartRepository().deleteCartItem(
+      int response = await sl<CartRepository>().deleteCartItem(
           _authorization!, productId, _latLng!, _isoCountryCode!);
       if (response == 200) {
         await getCartData();
@@ -240,7 +241,7 @@ class CartProvider with ChangeNotifier {
   Future<void> getTamaraData() async {
     try {
       _tamaraData = null;
-      _tamaraData = await TamaraRepository().getTamaraStatus(
+      _tamaraData = await sl<TamaraRepository>().getTamaraStatus(
           _isoCountryCode!,
           GetStrings().getCurrency('en', _isoCountryCode!),
           _cartData!.data!.invoicePreview!.totalAmountAfterDiscount!
@@ -250,7 +251,7 @@ class CartProvider with ChangeNotifier {
 
   Future<void> getCart() async {
     try {
-      _cartData = await CartRepository()
+      _cartData = await sl<CartRepository>()
           .getCartList(_authorization!, _latLng!, _isoCountryCode!);
     } catch (_) {
       _requestStatus = RequestStatus.error;
@@ -259,7 +260,7 @@ class CartProvider with ChangeNotifier {
 
   Future<void> getDeliveryPeriods() async {
     try {
-      _deliveryPeriod = await BookingRepository().getDeliveryPeriods();
+      _deliveryPeriod = await sl<BookingRepository>().getDeliveryPeriods();
     } catch (_) {
       _requestStatus = RequestStatus.error;
     }
@@ -273,7 +274,7 @@ class CartProvider with ChangeNotifier {
     HapticFeedback.heavyImpact();
 
     try {
-      response = await CartRepository().checkCoupon(
+      response = await sl<CartRepository>().checkCoupon(
           _latLng!,
           _isoCountryCode!,
           {
@@ -309,7 +310,7 @@ class CartProvider with ChangeNotifier {
           addressId = addressProvider.userAddress!.data!.last.id!;
         }
         DateFormat format = DateFormat('MM-dd');
-        response = await OrderRepository().placeOrder({
+        response = await sl<OrderRepository>().placeOrder({
           "delivery_date": format.format(deliveryDataTime[_selectedDate]),
           "delivery_period_id": _isoCountryCode == 'AE'
               ? (_selectedTime + 1)

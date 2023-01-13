@@ -5,7 +5,6 @@ import '../core/service/networking/api_base_helper.dart';
 class SearchRepository {
   final ApiBaseHelper _helper = ApiBaseHelper();
 
-  //get search result list
   Future<List<SearchData>> getSearchResultList(
       String key, LatLng latLng, String countryId) async {
     final response = await _helper.get(

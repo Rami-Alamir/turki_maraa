@@ -7,7 +7,6 @@ import '../core/service/networking/api_base_helper.dart';
 class ProductsRepository {
   final ApiBaseHelper _helper = ApiBaseHelper();
 
-  //get Products list
   Future<Product> getProductsList(
       String categoryId, LatLng latLng, String countryId) async {
     final response = await _helper.get(
@@ -19,7 +18,6 @@ class ProductsRepository {
     return products!;
   }
 
-  //get Product data
   Future<ProductDetails> getProduct(
       String productId, LatLng latLng, String countryId) async {
     final Map<String, dynamic> response;
@@ -32,7 +30,6 @@ class ProductsRepository {
     return product!;
   }
 
-  //get Best Seller
   Future<BestSeller> getBestSeller(LatLng latLng, String countryId) async {
     final Map<String, dynamic> response;
     BestSeller? bestSeller;

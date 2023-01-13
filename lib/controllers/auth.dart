@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../core/constants/fixed_assets.dart';
 import '../core/constants/route_constants.dart';
+import '../core/service/service_locator.dart';
 import '../models/user_data.dart';
 import '../models/user_type.dart';
 import '../repository/registration_repository.dart';
@@ -100,7 +101,7 @@ class Auth with ChangeNotifier {
       _userPhone =
           ConvertNumbers.getPhone(keyController.text, phoneController.text);
       var response =
-          await RegistrationRepository().sendOTP({"mobile": _userPhone});
+          await sl<RegistrationRepository>().sendOTP({"mobile": _userPhone});
       if (response.statusCode == 200) {
         _userType = UserType.fromJson(json.decode(response.body.toString()));
         _isNewUser = _userType!.code == "C100";
@@ -113,7 +114,7 @@ class Auth with ChangeNotifier {
         ShowSnackBar().show(
             context, "sorry_you_can_not_log_in_after_deleting_your_account");
       }
-    } catch (e) {
+    } catch (_) {
       ShowSnackBar().show(context, "unexpected_error");
       Navigator.pop(_dialogContext!);
     }
@@ -133,7 +134,7 @@ class Auth with ChangeNotifier {
       _logoVisibility = true;
       _showDialogIndicator(_dialogContext);
       try {
-        _response = await RegistrationRepository().verifyOtpCode({
+        _response = await sl<RegistrationRepository>().verifyOtpCode({
           "mobile": _userPhone,
           "mobile_verification_code":
               ConvertNumbers.convertNumbers(otpController.text.trim())
@@ -165,7 +166,7 @@ class Auth with ChangeNotifier {
                   ? "unexpected_error"
                   : 'invalid_activation_code');
         }
-      } catch (e) {
+      } catch (_) {
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
         ShowSnackBar().show(
             context,
@@ -182,14 +183,14 @@ class Auth with ChangeNotifier {
     if (token.isNotEmpty) {
       http.Response response;
       try {
-        response = await RegistrationRepository().login("Bearer $token");
+        response = await sl<RegistrationRepository>().login("Bearer $token");
         if (response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(response.body.toString()));
           _userData!.data!.accessToken = token;
           _accessToken = token;
           _isAuth = true;
         }
-      } catch (e) {
+      } catch (_) {
         _retry = true;
       }
     }
@@ -268,7 +269,7 @@ class Auth with ChangeNotifier {
           ShowSnackBar().show(context, "unexpected_error");
         }
         notifyListeners();
-      } catch (e) {
+      } catch (_) {
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
         ShowSnackBar().show(context, "unexpected_error");
       }

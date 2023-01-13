@@ -11,35 +11,30 @@ class UserRepository {
     return response;
   }
 
-  //delete user account
   Future<int> deleteUserAccount(String authorization) async {
     final statusCode = await _helper.delete("customers/delete-customer",
         authorization: authorization);
     return statusCode;
   }
 
-  // add Address Info
   Future<dynamic> addAddress(body, String authorization) async {
     final response = await _helper.post3("customers/add-address", body,
         authorization: authorization);
     return response;
   }
 
-  //update  Address Info
   Future<dynamic> updateAddress(body, String authorization, String id) async {
     final response = await _helper.post3("customers/edit-address/$id", body,
         authorization: authorization);
     return response;
   }
 
-  //delete  Address
   Future<dynamic> deleteAddress(String authorization, String id) async {
     final response = await _helper.post3("customers/delete-address/$id", {},
         authorization: authorization);
     return response;
   }
 
-  //get address list
   Future<UserAddress> getAddressList(String authorization) async {
     final response = await _helper.get("customers/get-addresses",
         authorization: authorization);

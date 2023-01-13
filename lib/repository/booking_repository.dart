@@ -4,7 +4,6 @@ import '../models/delivery_period.dart';
 class BookingRepository {
   final ApiBaseHelper _helper = ApiBaseHelper();
 
-  //get Delivery periods
   Future<DeliveryPeriod> getDeliveryPeriods() async {
     final response = await _helper.get("delivery-period");
     DeliveryPeriod? deliveryPeriod;
