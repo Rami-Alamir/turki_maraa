@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import '../../../controllers/cart_provider.dart';
+import '../../../core/constants/route_constants.dart';
+
+class TabbyCheckoutPage extends StatelessWidget {
+  final TabbySession session;
+
+  const TabbyCheckoutPage({Key? key, required this.session}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: SafeArea(
+          child: TabbyWebView(
+            webUrl: session.availableProducts.installments!.webUrl,
+            onResult: (WebViewResult resultCode) {
+              print("onResult");
+              print(resultCode.name);
+              if (resultCode.name == "close") {
+                final CartProvider cartProvider =
+                    Provider.of<CartProvider>(context, listen: false);
+                cartProvider.clearCart();
+                Navigator.pushReplacementNamed(context, orderStatus,
+                    arguments: false);
+              }
+              print(session.paymentId.toString());
+              print(resultCode.index.toString());
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}

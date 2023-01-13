@@ -1,6 +1,7 @@
-import 'intro_data.dart';
+import '../../models/intro_data.dart';
 
 class IntroList {
+  IntroList._();
   static List<IntroData> introData = [
     IntroData(
         'assets/images/q1.png',

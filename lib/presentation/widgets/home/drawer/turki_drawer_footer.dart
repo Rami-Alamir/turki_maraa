@@ -28,8 +28,8 @@ class TurkiDrawerFooter extends StatelessWidget {
             onTap: () {
               FirebaseHelper().pushAnalyticsEvent(name: "contact_support");
               _launchURL(locationProvider.isoCountryCode == "AE"
-                  ? "tel:${KConstants.uaePhone}"
-                  : 'tel:${KConstants.ksaPhone}');
+                  ? "tel:${Constants.uaePhone}"
+                  : 'tel:${Constants.ksaPhone}');
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,

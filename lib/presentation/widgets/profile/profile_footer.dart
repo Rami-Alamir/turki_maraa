@@ -21,9 +21,9 @@ class ProfileFooter extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const TextBtn(
-                  title: 'privacy_policy', url: KConstants.privacyPolicy),
+                  title: 'privacy_policy', url: Constants.privacyPolicy),
               Text(' |    ', textAlign: TextAlign.center, style: textStyle),
-              const TextBtn(title: 'terms_of_use', url: KConstants.terms),
+              const TextBtn(title: 'terms_of_use', url: Constants.terms),
             ],
           ),
           Visibility(

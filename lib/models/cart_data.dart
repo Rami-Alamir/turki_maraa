@@ -10,16 +10,6 @@ class CartData {
   }
 }
 
-class NotIncludedDates {
-  String? deliveryDate;
-
-  NotIncludedDates({this.deliveryDate});
-
-  NotIncludedDates.fromJson(Map<String, dynamic> json) {
-    deliveryDate = json['delivery_date'];
-  }
-}
-
 class Data {
   Cart? cart;
   List<MinOrder>? minOrder;
@@ -49,9 +39,7 @@ class Data {
 class Cart {
   List<ItemData>? data;
   int? total;
-
   Cart({this.data, this.total});
-
   Cart.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       data = <ItemData>[];
@@ -67,14 +55,9 @@ class ItemData {
   int? id;
   String? comment;
   String? appliedDiscountCode;
-  int? shalwataId;
-  int? preparationId;
-  int? sizeId;
-  int? cutId;
   int? isShalwata;
   int? productId;
   int? quantity;
-  int? customerId;
   ProductData? product;
   ExtraData? preparation;
   ExtraData? size;
@@ -89,18 +72,13 @@ class ItemData {
       {this.id,
       this.comment,
       this.appliedDiscountCode,
-      this.shalwataId,
       this.isKwar3,
       this.isRas,
       this.isLyh,
       this.isKarashah,
-      this.preparationId,
-      this.sizeId,
-      this.cutId,
       this.isShalwata,
       this.productId,
       this.quantity,
-      this.customerId,
       this.product,
       this.preparation,
       this.size,
@@ -111,18 +89,13 @@ class ItemData {
     id = json['id'];
     comment = json['comment'];
     appliedDiscountCode = json['applied_discount_code'];
-    shalwataId = json['shalwata_id'] ?? 0;
-    preparationId = json['preparation_id'];
-    sizeId = json['size_id'];
     isKwar3 = json['is_kwar3'] ?? false;
     isRas = json['is_Ras'] ?? false;
     isLyh = json['is_lyh'] ?? false;
     isKarashah = json['is_karashah'] ?? false;
-    cutId = json['cut_id'];
     isShalwata = json['is_shalwata'];
     productId = json['product_id'];
     quantity = json['quantity'];
-    customerId = json['customer_id'];
     product =
         json['product'] != null ? ProductData.fromJson(json['product']) : null;
     preparation = json['preparation'] != null
@@ -144,5 +117,15 @@ class MinOrder {
   MinOrder.fromJson(Map<String, dynamic> json) {
     countryId = json['country_id'];
     minOrder = json['min_order'];
+  }
+}
+
+class NotIncludedDates {
+  String? deliveryDate;
+
+  NotIncludedDates({this.deliveryDate});
+
+  NotIncludedDates.fromJson(Map<String, dynamic> json) {
+    deliveryDate = json['delivery_date'];
   }
 }

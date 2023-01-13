@@ -1,38 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../controllers/cart_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 
-class PromoCode extends StatelessWidget {
-  final bool promoIsActive;
-  final TextEditingController promoCodeController;
-  final Function apply;
-  final Function remove;
-  final bool errorMsg;
-  const PromoCode(
-      {Key? key,
-      required this.promoCodeController,
-      required this.apply,
-      required this.remove,
-      required this.promoIsActive,
-      required this.errorMsg})
-      : super(key: key);
+class PromoCode extends StatefulWidget {
+  const PromoCode({Key? key}) : super(key: key);
 
   @override
+  State<PromoCode> createState() => _PromoCodeState();
+}
+
+class _PromoCodeState extends State<PromoCode> {
+  @override
   Widget build(BuildContext context) {
+    final CartProvider cart = Provider.of<CartProvider>(context);
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 15),
+            padding: const EdgeInsets.only(bottom: 10, right: 5, left: 5),
             child: Text(
               AppLocalizations.of(context)!.tr('promo_code'),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(fontWeight: FontWeight.bold, fontSize: 12),
+              style:
+                  Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
             ),
           ),
           Card(
@@ -69,15 +65,15 @@ class PromoCode extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             keyboardAppearance: Brightness.dark,
                             textAlign: TextAlign.start,
-                            enabled: !promoIsActive,
+                            enabled: !cart.promoIsActive,
                             cursorColor: Theme.of(context).primaryColor,
-                            controller: promoCodeController,
+                            controller: cart.promoCodeController,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!
                                 .copyWith(
                                     fontSize: 16,
-                                    fontWeight: promoIsActive
+                                    fontWeight: cart.promoIsActive
                                         ? FontWeight.bold
                                         : FontWeight.normal),
                             textInputAction: TextInputAction.done,
@@ -130,10 +126,20 @@ class PromoCode extends StatelessWidget {
                       ),
                       InkWell(
                         splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () {
-                          if (promoCodeController.text.isNotEmpty) {
-                            promoIsActive ? remove() : apply();
+                        onTap: () async {
+                          if (cart.promoCodeController.text.isNotEmpty) {
+                            if (cart.promoIsActive) {
+                              cart.removePromoCode();
+                            } else {
+                              bool status =
+                                  await cart.checkCoupon(context: context);
+                              if (!mounted) return;
+                              Navigator.of(context, rootNavigator: true).pop();
+                              if (!status) {
+                                ShowSnackBar()
+                                    .show(context, "unexpected_error");
+                              }
+                            }
                           }
                         },
                         child: Padding(
@@ -143,7 +149,7 @@ class PromoCode extends StatelessWidget {
                             width: SizeConfig.screenWidth! / 5.5,
                             child: Center(
                               child: Text(
-                                !promoIsActive
+                                !cart.promoIsActive
                                     ? AppLocalizations.of(context)!.tr('apply')
                                     : AppLocalizations.of(context)!
                                         .tr('remove'),
@@ -161,7 +167,7 @@ class PromoCode extends StatelessWidget {
                 )),
           ),
           Visibility(
-            visible: errorMsg,
+            visible: cart.errorMsg,
             child: Text(
               "    ${AppLocalizations.of(context)!.tr('invalid_discount_code')}",
               style: Theme.of(context)

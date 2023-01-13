@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/shared/rounded_rectangle_button.dart';
-import 'package:provider/provider.dart';
 
 class OrderSuccess extends StatefulWidget {
   final int paymentType;
@@ -31,30 +31,28 @@ class OrderSuccessState extends State<OrderSuccess> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                  top: SizeConfig.screenHeight! / 4, bottom: 30),
-              child: Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                          colors: [
-                            Colors.green.withOpacity(1),
-                            Colors.green.withOpacity(0.8),
-                          ])),
-                  child: Icon(
-                    Icons.check,
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    size: 90,
-                  )),
-            ),
+            Container(
+                width: 150,
+                height: 150,
+                margin: EdgeInsets.only(
+                    top: SizeConfig.screenHeight! / 4, bottom: 30),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [
+                          Colors.green.withOpacity(1),
+                          Colors.green.withOpacity(0.8),
+                        ])),
+                child: Icon(
+                  Icons.check,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  size: 90,
+                )),
             Text(
               AppLocalizations.of(context)!.tr('order_successful'),
-              style: Theme.of(context).textTheme.headline1!,
+              style: Theme.of(context).textTheme.headline1,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 40),

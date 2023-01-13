@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import '../../../models/delivery_period.dart';
+import 'package:provider/provider.dart';
+import 'delivery_periods_item.dart';
+import '../../../controllers/cart_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import 'delivery_periods_item.dart';
 
 class DeliveryPeriods extends StatelessWidget {
-  final DeliveryPeriod deliveryTime;
-
-  const DeliveryPeriods({Key? key, required this.deliveryTime})
-      : super(key: key);
+  const DeliveryPeriods({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final CartProvider cart = Provider.of<CartProvider>(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,10 +18,8 @@ class DeliveryPeriods extends StatelessWidget {
           padding: const EdgeInsets.only(right: 15.0, top: 15, left: 15),
           child: Text(
             AppLocalizations.of(context)!.tr('delivery_time'),
-            style: Theme.of(context)
-                .textTheme
-                .headline1!
-                .copyWith(fontWeight: FontWeight.bold, fontSize: 14),
+            style:
+                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
           ),
         ),
         SizedBox(
@@ -32,7 +30,7 @@ class DeliveryPeriods extends StatelessWidget {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               physics: const ScrollPhysics(),
-              itemCount: deliveryTime.data!.length,
+              itemCount: cart.deliveryPeriod.data!.length,
               itemBuilder: (BuildContext ctxt, int index) {
                 return Padding(
                   padding:
@@ -40,8 +38,8 @@ class DeliveryPeriods extends StatelessWidget {
                   child: DeliveryPeriodsItem(
                     title: AppLocalizations.of(context)!.locale!.languageCode ==
                             'ar'
-                        ? deliveryTime.data![index].nameAr!
-                        : deliveryTime.data![index].nameEn!,
+                        ? cart.deliveryPeriod.data![index].nameAr!
+                        : cart.deliveryPeriod.data![index].nameEn!,
                     selectedValue: index,
                   ),
                 );

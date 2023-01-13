@@ -71,10 +71,10 @@ class NewVersion extends StatelessWidget {
                     final locationProvider =
                         Provider.of<LocationProvider>(context, listen: false);
                     await _launchURL(Platform.isIOS
-                        ? KConstants.appStore
+                        ? Constants.appStore
                         : locationProvider.isHms
-                            ? KConstants.appGallery
-                            : KConstants.playStore);
+                            ? Constants.appGallery
+                            : Constants.playStore);
                   },
                   fontSize: 24,
                   fontColor: const Color.fromRGBO(236, 204, 120, 1),
@@ -91,10 +91,8 @@ class NewVersion extends StatelessWidget {
   Future _launchURL(String url) async {
     try {
       if (await canLaunchUrlString(url)) {
-        await launchUrlString(url);
+        await launchUrlString(url, mode: LaunchMode.externalApplication);
       }
-    } catch (e) {
-      print(e.toString());
-    }
+    } catch (_) {}
   }
 }

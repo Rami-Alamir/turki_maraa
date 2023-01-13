@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -6,7 +7,6 @@ import '../../widgets/order/order_card.dart';
 import '../../widgets/shared/empty_list.dart';
 import '../../widgets/shared/not_auth.dart';
 import '../../widgets/shared/primary_app_bar.dart';
-import 'package:provider/provider.dart';
 import '../../widgets/shared/retry.dart';
 import '../../widgets/shared/spinkit_indicator.dart';
 

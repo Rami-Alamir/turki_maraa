@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'rounded_rectangle_button.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import 'rounded_rectangle_button.dart';
 
 class NotAuth extends StatelessWidget {
   const NotAuth({Key? key}) : super(key: key);

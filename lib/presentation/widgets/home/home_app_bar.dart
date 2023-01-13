@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../controllers/app_provider.dart';
+import '../../../controllers/drawer_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
@@ -18,8 +18,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppProvider appProvider =
-        Provider.of<AppProvider>(context, listen: false);
+    final DrawerProvider appProvider =
+        Provider.of<DrawerProvider>(context, listen: false);
     return PreferredSize(
       preferredSize: preferredSize,
       child: Column(

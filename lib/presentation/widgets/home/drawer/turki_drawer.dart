@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:provider/provider.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../../controllers/app_language.dart';
-import '../../../../controllers/app_provider.dart';
+import '../../../../controllers/drawer_provider.dart';
 import '../../../../controllers/app_theme.dart';
 import '../../../../controllers/location_provider.dart';
 import '../../../../core/constants/constants.dart';
@@ -24,7 +24,7 @@ class TurkiDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppProvider appProvider = Provider.of<AppProvider>(context);
+    final DrawerProvider appProvider = Provider.of<DrawerProvider>(context);
     final AppTheme theme = Provider.of<AppTheme>(context);
     final AppLanguage language = Provider.of<AppLanguage>(context);
 
@@ -105,8 +105,8 @@ class TurkiDrawer extends StatelessWidget {
                       FirebaseHelper()
                           .pushAnalyticsEvent(name: "contact_via_whatsApp");
                       String phone = locationProvider.isoCountryCode == "AE"
-                          ? KConstants.uaeWhats
-                          : KConstants.ksaWhats;
+                          ? Constants.uaeWhats
+                          : Constants.ksaWhats;
                       String url;
                       if (Platform.isIOS) {
                         url = "whatsapp://wa.me/$phone/?text=${Uri.parse(' ')}";
@@ -202,7 +202,7 @@ class TurkiDrawer extends StatelessWidget {
 
   //used to share app url
   Future<void> _share(BuildContext context) async {
-    Share.share(KConstants.shareUrl,
+    Share.share(Constants.shareUrl,
         subject: AppLocalizations.of(context)!.tr('turki_app'));
   }
 }

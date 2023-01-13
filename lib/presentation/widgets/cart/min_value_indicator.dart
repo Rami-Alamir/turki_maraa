@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turki_dabayh/core/utilities/format_helper.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 
@@ -27,7 +28,8 @@ class MinValueIndicator extends StatelessWidget {
               style: Theme.of(context).textTheme.headline4,
               children: <TextSpan>[
                 TextSpan(
-                    text: ' ${(min - total).toStringAsFixed(2)} $currency ',
+                    text:
+                        ' ${FormatHelper().formatDecimalAndRemoveTrailingZeros(min - total)} $currency ',
                     style: Theme.of(context).textTheme.headline4!.copyWith(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
@@ -37,38 +39,34 @@ class MinValueIndicator extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(5, 15, 5, 5),
-            child: Container(
-              width: SizeConfig.screenWidth! - 40,
-              height: 7,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: const BorderRadius.all(Radius.circular(2)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.4),
-                    spreadRadius: 2,
-                    blurRadius: 1,
-                    offset: const Offset(50, 5), // changes position of shadow
+          Container(
+            width: SizeConfig.screenWidth! - 40,
+            height: 7,
+            margin: const EdgeInsetsDirectional.fromSTEB(5, 15, 5, 5),
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: const BorderRadius.all(Radius.circular(2)),
+              boxShadow: [
+                BoxShadow(
+                  color:
+                      Theme.of(context).colorScheme.secondary.withOpacity(0.4),
+                  spreadRadius: 2,
+                  blurRadius: 1,
+                  offset: const Offset(50, 5), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: (SizeConfig.screenWidth! - 50) * (total / min),
+                  height: 7,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(2)),
                   ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: (SizeConfig.screenWidth! - 50) * (total / min),
-                    height: 7,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(2)),
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           )
         ],

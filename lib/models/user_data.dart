@@ -20,17 +20,18 @@ class Data {
   String? gender;
   int? id;
   String? accessToken;
+  String? createdAt;
 
-  Data({
-    this.mobile,
-    this.id,
-    this.name,
-    this.wallet,
-    this.gender,
-    this.email,
-    this.age,
-    this.accessToken,
-  });
+  Data(
+      {this.mobile,
+      this.id,
+      this.name,
+      this.wallet,
+      this.gender,
+      this.email,
+      this.age,
+      this.accessToken,
+      this.createdAt});
 
   Data.fromJson(Map<String, dynamic> json) {
     mobile = json['mobile'] ?? "";
@@ -42,5 +43,6 @@ class Data {
     points = (json['loyalty_points'] ?? "0").toString();
     id = json['id'];
     accessToken = json['access_token'] ?? "";
+    createdAt = json['created_at'] ?? "2022-11-26T10:52:54.000000Z";
   }
 }

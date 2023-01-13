@@ -1,5 +1,6 @@
 import "package:auto_size_text/auto_size_text.dart";
 import 'package:flutter/material.dart';
+import 'package:turki_dabayh/core/utilities/format_helper.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../models/product.dart';
@@ -156,7 +157,9 @@ class ProductCard extends StatelessWidget {
                             child: Row(
                               children: [
                                 AutoSizeText(
-                                  price.toString(),
+                                  FormatHelper()
+                                      .formatDecimalAndRemoveTrailingZeros(
+                                          price),
                                   textAlign: TextAlign.start,
                                   style: Theme.of(context)
                                       .textTheme
@@ -192,7 +195,9 @@ class ProductCard extends StatelessWidget {
                             child: Row(
                               children: [
                                 AutoSizeText(
-                                  salePrice.toString(),
+                                  FormatHelper()
+                                      .formatDecimalAndRemoveTrailingZeros(
+                                          salePrice),
                                   textAlign: TextAlign.start,
                                   style: Theme.of(context)
                                       .textTheme

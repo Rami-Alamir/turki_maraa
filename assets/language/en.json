@@ -14,7 +14,8 @@
   "we_were_unable_to_determine_your_current_location": "We were unable to determine your current location. Please choose the address or add a new address to be able to view the products available in your area.",
   "order_details": "Order details",
   "delivery_address": "Delivery Address",
-  "tamara_desc": "Divide it in installments without fees",
+  "tamara_desc": "Divide it in 3 installments without fees",
+  "tabby_desc": "Divide it in 4 installments without fees",
   "remaining" : "Remaining",
   "order_summary": "Order summary",
   "min_charge_order" : "to minimum charge for order",
@@ -66,7 +67,7 @@
   "transaction_details": "Transaction details",
   "point": "Point",
   "canceled": "Canceled",
-  "yes" : "yes",
+  "yes" : "Yes",
   "cancel" : "Cancel",
   "are_you_sure_you_want_to_redeem_points": "Are you sure you want to redeem points?",
   "your_points_balance_is_not_enough": "Your points balance is not enough",
@@ -240,5 +241,6 @@
   "delete_address": "Delete address",
   "are_you_sure_you_want_to_delete_the_account": "Are you sure you want to delete the account",
   "sorry_you_can_not_log_in_after_deleting_your_account": "Sorry, you can't log in after deleting your account",
-  "are_you_sure_you_want_to_delete_the_address": "Are you sure you want to delete the address?"
+  "are_you_sure_you_want_to_delete_the_address": "Are you sure you want to delete the address?",
+  "rate_the_app": "Rate the app"
 }

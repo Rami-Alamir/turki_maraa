@@ -29,8 +29,8 @@ class CallCard extends StatelessWidget {
                   Provider.of<LocationProvider>(context, listen: false);
               FirebaseHelper().pushAnalyticsEvent(name: "contact_support");
               _launchURL(locationProvider.isoCountryCode == "AE"
-                  ? "tel:${KConstants.uaePhone}"
-                  : 'tel:${KConstants.ksaPhone}');
+                  ? "tel:${Constants.uaePhone}"
+                  : 'tel:${Constants.ksaPhone}');
             },
             child: Row(
               children: [

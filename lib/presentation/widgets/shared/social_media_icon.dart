@@ -36,7 +36,7 @@ class SocialMediaIcon extends StatelessWidget {
   Future<void> _launchURL(String url) async {
     try {
       if (await canLaunchUrlString(url)) {
-        await launchUrlString(url);
+        await launchUrlString(url, mode: LaunchMode.externalApplication);
       } else {
         throw 'Could not launch $url';
       }

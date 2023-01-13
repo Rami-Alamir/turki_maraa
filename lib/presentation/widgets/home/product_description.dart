@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+import '../../../core/utilities/format_helper.dart';
 import '../../../models/product_details.dart';
 import '../../../controllers/favourite_provider.dart';
 import '../../../controllers/location_provider.dart';
@@ -111,7 +112,8 @@ class ProductDescription extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 3, left: 5, right: 5),
                       child: Text(
-                        price.toString(),
+                        FormatHelper()
+                            .formatDecimalAndRemoveTrailingZeros(price),
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             color: salePrice > 0.0 && salePrice < price
@@ -133,7 +135,7 @@ class ProductDescription extends StatelessWidget {
                     Visibility(
                       visible: salePrice > 0 && salePrice < price,
                       child: Text(
-                        '${formatDecimal(salePrice)} ',
+                        '${FormatHelper().formatDecimalAndRemoveTrailingZeros(salePrice)} ',
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontSize: 16,

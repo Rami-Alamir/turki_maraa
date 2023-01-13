@@ -1,4 +1,5 @@
-class KConstants {
+class Constants {
+  Constants._();
   static const String baseUrl = 'https://almaraacompany.com/turki-api/api/v1/';
   static const String fontFamily = "Turki";
   static const String shareUrl = 'https://bit.ly/3tB2qdu';
@@ -24,7 +25,8 @@ class KConstants {
   static const String playStore =
       "market://details?id=com.digishapes.turkieshop";
   static const String appGallery =
-      "https://appgallery.cloud.huawei.com/marketshare/app/C102802029";
+      // "https://appgallery.cloud.huawei.com/marketshare/app/C102802029";
+      "https://appgallery.huawei.com/app/C102802029";
   //Social Media
   static const String instagramUae = "https://www.instagram.com/almaraa_uae/";
   static const String instagramKsa = "https://www.instagram.com/almaraa_ksa/";

@@ -19,67 +19,62 @@ class Note extends StatelessWidget {
               const EdgeInsets.only(right: 15.0, top: 15, left: 15, bottom: 15),
           child: Text(
             AppLocalizations.of(context)!.tr('note'),
-            style: Theme.of(context)
-                .textTheme
-                .headline1!
-                .copyWith(fontWeight: FontWeight.bold, fontSize: 14),
+            style:
+                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
           ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 15),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                  color: Theme.of(context).colorScheme.primaryContainer,
+            Container(
+              margin: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 15),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
                 ),
-                width: SizeConfig.screenWidth! - 30,
-                child: TextFormField(
-                  textAlignVertical: TextAlignVertical.center,
-                  maxLines: 5,
-                  maxLength: 250,
-                  keyboardAppearance: Brightness.dark,
-                  textAlign: TextAlign.start,
-                  cursorColor: Theme.of(context).primaryColor,
-                  controller: cartProvider.noteController,
-                  onChanged: (value) {},
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(fontSize: 16),
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                      counterText: "",
-                      fillColor: Colors.transparent,
-                      filled: true,
-                      border: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0)),
-                      errorStyle: const TextStyle(fontSize: 12),
-                      errorBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0)),
-                      focusedBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0)),
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0)),
-                      disabledBorder: const OutlineInputBorder(
+                color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              width: SizeConfig.screenWidth! - 30,
+              child: TextFormField(
+                textAlignVertical: TextAlignVertical.center,
+                maxLines: 5,
+                maxLength: 250,
+                keyboardAppearance: Brightness.dark,
+                textAlign: TextAlign.start,
+                cursorColor: Theme.of(context).primaryColor,
+                controller: cartProvider.noteController,
+                onChanged: (value) {},
+                style: Theme.of(context)
+                    .textTheme
+                    .headline2!
+                    .copyWith(fontSize: 16),
+                textInputAction: TextInputAction.done,
+                decoration: InputDecoration(
+                    counterText: "",
+                    fillColor: Colors.transparent,
+                    filled: true,
+                    border: const OutlineInputBorder(
                         borderSide:
-                            BorderSide(color: Colors.transparent, width: 0),
-                      ),
-                      hintText: AppLocalizations.of(context)!.tr("note_hint"),
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .subtitle2!
-                          .copyWith(
-                              fontSize: 14, fontWeight: FontWeight.normal)),
-                ),
+                            BorderSide(color: Colors.transparent, width: 0)),
+                    errorStyle: const TextStyle(fontSize: 12),
+                    errorBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.transparent, width: 0)),
+                    focusedBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.transparent, width: 0)),
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.transparent, width: 0)),
+                    disabledBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.transparent, width: 0),
+                    ),
+                    hintText: AppLocalizations.of(context)!.tr("note_hint"),
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .subtitle2!
+                        .copyWith(fontWeight: FontWeight.normal)),
               ),
             )
           ],

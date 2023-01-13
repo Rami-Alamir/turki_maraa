@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
-class AppProvider with ChangeNotifier {
+class DrawerProvider with ChangeNotifier {
   final advancedDrawerController = AdvancedDrawerController();
   final bool _disabledGestures = true;
 

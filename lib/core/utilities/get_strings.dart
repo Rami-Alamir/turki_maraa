@@ -29,6 +29,25 @@ class GetStrings {
     return currency;
   }
 
+  String getPaymentName(int paymentId) {
+    String paymentName = "";
+    switch (paymentId) {
+      case 1:
+        paymentName = "COD";
+        break;
+      case 2:
+        paymentName = "Online payment";
+        break;
+      case 4:
+        paymentName = "Tamara";
+        break;
+      case 7:
+        paymentName = "Tabby";
+        break;
+    }
+    return paymentName;
+  }
+
   String getCountryKey(String countryCode) {
     String countryKey = "+966";
     switch (countryCode) {

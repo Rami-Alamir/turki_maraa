@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tamara_sdk/tamara_sdk.dart';
-
 import '../../../core/constants/constants.dart';
 import '../../../core/constants/route_constants.dart';
 
@@ -21,9 +20,9 @@ class TamaraCheckoutPage extends StatelessWidget {
               Expanded(
                   child: TamaraCheckout(
                 checkoutUrl,
-                KConstants.checkoutSuccess,
-                KConstants.checkoutFailure,
-                KConstants.checkoutCancel,
+                Constants.checkoutSuccess,
+                Constants.checkoutFailure,
+                Constants.checkoutCancel,
                 onPaymentSuccess: () {
                   Navigator.pushReplacementNamed(context, orderStatus,
                       arguments: true);

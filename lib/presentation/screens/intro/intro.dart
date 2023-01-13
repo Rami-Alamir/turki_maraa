@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../models/intro_list.dart';
+import '../../../core/constants/intro_list.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../widgets/intro/intro_card.dart';
 import '../../widgets/intro/intro_footer.dart';

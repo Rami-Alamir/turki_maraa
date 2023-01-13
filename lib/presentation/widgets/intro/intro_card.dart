@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import '../../../models/intro_list.dart';
+import '../../../core/constants/intro_list.dart';
 import '../../../controllers/app_language.dart';
 import '../../../core/utilities/size_config.dart';
 import 'package:provider/provider.dart';

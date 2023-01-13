@@ -31,7 +31,7 @@ class SearchProvider with ChangeNotifier {
     try {
       _searchData = await SearchRepository().getSearchResultList(
           searchController.text, _latLng!, _isoCountryCode!);
-    } catch (e) {
+    } catch (_) {
       _searchData = [];
     }
     notifyListeners();

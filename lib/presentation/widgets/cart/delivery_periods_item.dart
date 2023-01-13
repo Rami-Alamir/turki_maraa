@@ -19,7 +19,6 @@ class DeliveryPeriodsItem extends StatelessWidget {
         cartProvider.setSelectedTime = selectedValue;
       },
       splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       child: Container(
         padding: const EdgeInsets.all(3.0),
         height: 20,

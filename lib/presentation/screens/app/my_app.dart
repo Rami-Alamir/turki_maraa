@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../../controllers/app_language.dart';
@@ -6,7 +7,6 @@ import '../../../core/service/firebase_helper.dart';
 import '../../../controllers/app_theme.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/utilities/app_localizations.dart';
-import 'package:provider/provider.dart';
 import '../../../core/utilities/route_generator.dart';
 
 //App Widget tree

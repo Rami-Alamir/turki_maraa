@@ -4,7 +4,7 @@ import '../../constants/constants.dart';
 import 'app_exception.dart';
 
 class ApiBaseHelper {
-  final String _baseUrl = KConstants.baseUrl;
+  final String _baseUrl = Constants.baseUrl;
   String authorization = "";
   Map<String, String> headers = {
     "Accept": "application/json",

@@ -1,6 +1,7 @@
 import '../../models/qa.dart';
 
 class FAQData {
+  FAQData._();
   static List<Question> faqListAr = [
     Question(
         question: 'ماهي انواع الذبائح ؟',

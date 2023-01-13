@@ -27,7 +27,7 @@ class HomeProvider with ChangeNotifier {
   String? _isoCountryCode;
   bool? _isHMS = false;
   location_service.LocationData? _locationData;
-  final String _currentVersion = "5.13.1";
+  final String _currentVersion = "5.14.0";
   location_service.Location location = location_service.Location();
   BannersData? _bannersData;
 

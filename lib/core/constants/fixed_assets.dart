@@ -1,4 +1,5 @@
 class FixedAssets {
+  FixedAssets._();
   static const String splash = "assets/images/splash.gif";
   static const String about = 'assets/images/about.png';
   static const String placeholder = 'assets/images/placeholder.png';
@@ -10,6 +11,7 @@ class FixedAssets {
   static const String emptyFavourite = 'assets/images/wishlist.png';
   static const String noOrders = 'assets/images/no_orders.png';
   static const String logo = 'assets/images/turki_icon.png';
+  static const String tabby = "assets/images/tabby.png";
   static const String tamaraAr = "assets/images/tamara_ar.png";
   static const String tamaraEn = "assets/images/tamara_en.png";
   static const String turkiCar = 'assets/images/turki_car.png';
@@ -24,6 +26,7 @@ class FixedAssets {
   static const String dark = 'assets/images/profile_icons/dark-mode.svg';
   static const String classic = 'assets/images/profile_icons/Classic-Mode.svg';
   static const String light = 'assets/images/profile_icons/light.svg';
+  static const String rate = 'assets/images/profile_icons/rate.svg';
   static const String orders = 'assets/images/profile_icons/orders.svg';
   static const String points = "assets/images/profile_icons/points.svg";
   static const String wallet = 'assets/images/profile_icons/wallet6.svg';

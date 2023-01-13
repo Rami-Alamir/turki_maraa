@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../models/intro_list.dart';
+import '../../../core/constants/intro_list.dart';
 import '../../screens/app/app.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';

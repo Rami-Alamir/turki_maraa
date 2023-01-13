@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
@@ -7,7 +9,6 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../widgets/profile/profile_row.dart';
 import 'package:provider/provider.dart';
-import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/service/firebase_helper.dart';
@@ -46,8 +47,8 @@ class HelpCard extends StatelessWidget {
                           FirebaseHelper()
                               .pushAnalyticsEvent(name: "contact_via_whatsApp");
                           String phone = locationProvider.isoCountryCode == "AE"
-                              ? KConstants.uaeWhats
-                              : KConstants.ksaWhats;
+                              ? Constants.uaeWhats
+                              : Constants.ksaWhats;
                           String url;
                           if (Platform.isIOS) {
                             url =
@@ -58,6 +59,7 @@ class HelpCard extends StatelessWidget {
                           }
                           _launchURL(url);
                         },
+                        withArrow: false,
                         icon: FixedAssets.whatsapp,
                         title: 'contact_whatsApp'),
                     ProfileRow(
@@ -73,9 +75,30 @@ class HelpCard extends StatelessWidget {
                           FirebaseHelper().pushAnalyticsEvent(name: "share");
                           _share(context);
                         },
-                        withDivider: false,
+                        withArrow: false,
                         icon: FixedAssets.share,
                         title: 'share'),
+                    ProfileRow(
+                        onTap: () {
+                          FirebaseHelper().pushAnalyticsEvent(
+                              name: "app_rate",
+                              value: Platform.isIOS
+                                  ? "Apple Store"
+                                  : locationProvider.isHms
+                                      ? "AppGallery"
+                                      : "Google Play");
+                          if (locationProvider.isHms) {
+                          } else {
+                            final InAppReview inAppReview =
+                                InAppReview.instance;
+                            inAppReview.openStoreListing(
+                                appStoreId: 'id1115628569');
+                          }
+                        },
+                        withArrow: false,
+                        withDivider: false,
+                        icon: FixedAssets.rate,
+                        title: 'rate_the_app'),
                   ],
                 ),
               )),
@@ -90,12 +113,15 @@ class HelpCard extends StatelessWidget {
       } else {
         throw 'Could not launch $url';
       }
-    } catch (_) {}
+    } catch (e) {
+      print(e.toString());
+      print('rami');
+    }
   }
 
   //used to share app url
   Future<void> _share(BuildContext context) async {
-    Share.share(KConstants.shareUrl,
+    Share.share(Constants.shareUrl,
         subject: AppLocalizations.of(context)!.tr('turki_app'));
   }
 }

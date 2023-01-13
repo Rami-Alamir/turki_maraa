@@ -90,7 +90,7 @@ class SplashState extends State<Splash> {
     } on SocketException catch (_) {
       internetStatus = false;
     }
-    // ignore: use_build_context_synchronously
+    if (!mounted) return;
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
             builder: (context) => intro

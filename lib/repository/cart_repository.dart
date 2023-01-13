@@ -5,7 +5,6 @@ import '../core/service/networking/api_base_helper.dart';
 class CartRepository {
   final ApiBaseHelper _helper = ApiBaseHelper();
 
-  //add to cart
   Future<int> addToCart(
       body, String authorization, LatLng latLng, String countryId) async {
     final response = await _helper.post2(
@@ -15,7 +14,6 @@ class CartRepository {
     return response;
   }
 
-  //update cart
   Future<int> updateCartItem(body, String authorization, String id,
       LatLng latLng, String countryId) async {
     final response = await _helper.post2(
@@ -25,7 +23,6 @@ class CartRepository {
     return response;
   }
 
-  //delete cart item
   Future<int> deleteCartItem(
       String authorization, String id, LatLng latLng, String countryId) async {
     final response = await _helper.delete(
@@ -34,7 +31,6 @@ class CartRepository {
     return response;
   }
 
-  //get cart list
   Future<CartData> getCartList(
       String authorization, LatLng latLng, String countryId) async {
     final response = await _helper.get(
@@ -47,7 +43,6 @@ class CartRepository {
     return cartData!;
   }
 
-  //check coupon
   Future<int> checkCoupon(
       LatLng latLng, String countryId, body, String authorization) async {
     final response = await _helper.post2(

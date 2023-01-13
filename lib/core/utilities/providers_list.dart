@@ -1,5 +1,5 @@
 import 'package:provider/provider.dart';
-import '../../controllers/app_provider.dart';
+import '../../controllers/drawer_provider.dart';
 import '../../controllers/auth.dart';
 import '../../controllers/address_provider.dart';
 import '../../controllers/app_language.dart';
@@ -17,7 +17,8 @@ class ProvidersList {
   static providersList() {
     return [
       ChangeNotifierProvider<Auth>(create: (context) => Auth()),
-      ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),
+      ChangeNotifierProvider<DrawerProvider>(
+          create: (context) => DrawerProvider()),
       ChangeNotifierProvider<LocationProvider>(
           create: (context) => LocationProvider()),
       ChangeNotifierProxyProvider<Auth, UserProvider>(
@@ -64,6 +65,7 @@ class ProvidersList {
                 auth.accessToken,
                 auth.isAuth,
                 location.latLng,
+                auth.userData,
                 location.isoCountryCode,
                 location.currentLocationDescriptionAr,
                 location.currentLocationDescriptionEn)),

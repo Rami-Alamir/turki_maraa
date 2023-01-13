@@ -28,8 +28,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: title != null
             ? Text(
                 title!,
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor, fontSize: 16),
+                style: Theme.of(context).textTheme.subtitle1,
               )
             : const Logo(),
         centerTitle: true,

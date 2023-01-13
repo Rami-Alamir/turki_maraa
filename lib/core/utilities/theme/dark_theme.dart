@@ -7,10 +7,11 @@ Color primaryColor = const Color.fromRGBO(118, 24, 14, 1.0);
 final ThemeData darkTheme = ThemeData(
     splashColor: primaryColor,
     primaryColor: primaryColor,
-    fontFamily: KConstants.fontFamily,
+    fontFamily: Constants.fontFamily,
     canvasColor: Colors.transparent,
     backgroundColor: Colors.black,
     scaffoldBackgroundColor: Colors.black,
+    highlightColor: Colors.transparent,
     textTheme: const TextTheme(
       subtitle1: TextStyle(
           fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
@@ -66,7 +67,7 @@ final ThemeData darkTheme = ThemeData(
     ),
     snackBarTheme: const SnackBarThemeData(
         contentTextStyle: TextStyle(
-      fontFamily: KConstants.fontFamily,
+      fontFamily: Constants.fontFamily,
       color: Colors.white,
     )),
     colorScheme: ColorScheme.fromSwatch().copyWith(

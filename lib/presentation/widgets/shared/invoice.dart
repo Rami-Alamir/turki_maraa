@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/format_helper.dart';
 import '../../../core/utilities/get_strings.dart';
 import 'package:provider/provider.dart';
 import 'invoice_row.dart';
@@ -55,20 +56,24 @@ class Invoice extends StatelessWidget {
           InvoiceRow(
               fontColor: Theme.of(context).textTheme.headline4!.color!,
               title: 'order_total',
-              value: '${formatDecimal(subtotal)} $currencyStr'),
+              value:
+                  '${FormatHelper().formatDecimalAndRemoveTrailingZeros(subtotal)} $currencyStr'),
           InvoiceRow(
               fontColor: Theme.of(context).textTheme.headline4!.color!,
               title: 'delivery_fees',
-              value: '$shipping $currencyStr'),
+              value:
+                  '${FormatHelper().formatDecimalAndRemoveTrailingZeros(shipping)} $currencyStr'),
           InvoiceRow(
             title: 'discount',
-            value: '-${formatDecimal(discountVoucher)} $currencyStr',
+            value:
+                '-${FormatHelper().formatDecimalAndRemoveTrailingZeros(discountVoucher)} $currencyStr',
             visible: discountVoucher > 0,
             fontColor: Colors.green,
           ),
           InvoiceRow(
             title: 'credit2',
-            value: '-${formatDecimal(myCredit)} $currencyStr',
+            value:
+                '-${FormatHelper().formatDecimalAndRemoveTrailingZeros(myCredit)} $currencyStr',
             visible: myCredit > 0,
             fontColor: Colors.green,
           ),
@@ -103,7 +108,7 @@ class Invoice extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
-                    '${formatDecimal(total)} $currencyStr',
+                    '${FormatHelper().formatDecimalAndRemoveTrailingZeros(total)} $currencyStr',
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1!
@@ -127,9 +132,5 @@ class Invoice extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  formatDecimal(double value) {
-    return value.toStringAsFixed(2);
   }
 }

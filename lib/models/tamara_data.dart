@@ -48,13 +48,11 @@ class Data {
 
 class MinLimit {
   int? amount;
-  String? currency;
 
-  MinLimit({this.amount, this.currency});
+  MinLimit({this.amount});
 
   MinLimit.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
-    currency = json['currency'];
   }
 }
 

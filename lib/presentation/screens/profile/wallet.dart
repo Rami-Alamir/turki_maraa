@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/profile/wallet_header.dart';
 import '../../widgets/shared/primary_app_bar.dart';
+import '../../../core/utilities/app_localizations.dart';
 
 class UserWallet extends StatefulWidget {
   const UserWallet({Key? key}) : super(key: key);

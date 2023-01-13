@@ -19,8 +19,8 @@ class Whatsapp extends StatelessWidget {
             Provider.of<LocationProvider>(context, listen: false);
         FirebaseHelper().pushAnalyticsEvent(name: "contact_via_whatsApp");
         String phone = locationProvider.isoCountryCode == "AE"
-            ? KConstants.uaeWhats
-            : KConstants.ksaWhats;
+            ? Constants.uaeWhats
+            : Constants.ksaWhats;
         String url;
         if (Platform.isIOS) {
           url = "whatsapp://wa.me/$phone/?text=${Uri.parse(' ')}";

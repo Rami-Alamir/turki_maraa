@@ -1,6 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:provider/provider.dart';
+import '../cart/shopping_cart.dart';
+import '../home/home.dart';
+import '../orders/orders.dart';
+import '../profile/profile.dart';
+import '../../widgets/home/drawer/turki_drawer.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/constants.dart';
@@ -9,13 +16,6 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import '../../../core/utilities/tab_item.dart';
-import 'package:provider/provider.dart';
-import '../../widgets/home/drawer/turki_drawer.dart';
-import '../cart/shopping_cart.dart';
-import '../home/home.dart';
-import '../orders/orders.dart';
-import '../profile/profile.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 //used to build all in one bottom nav bar
 class App extends StatefulWidget {
@@ -45,10 +45,13 @@ class AppState extends State<App> {
   }
 
   void _handleMessage(RemoteMessage message) {
-    Navigator.pushNamed(
-      context,
-      message.data['type'],
-    );
+    if (message.data['type'] == "url") {
+      _launchURL(message.data["url"]);
+    }
+    // Navigator.pushNamed(
+    //   context,
+    //   message.data['type'],
+    // );
   }
 
   // this is static property so other widget throughout the app can access it simply
@@ -96,6 +99,7 @@ class AppState extends State<App> {
 
   @override
   void initState() {
+    // FirebaseHelper().handleMessage();
     setupInteractedMessage();
     index = widget.index;
     currentTab = widget.index;
@@ -201,17 +205,16 @@ class AppState extends State<App> {
                       _selectTab(index);
                     }
                     if (index == 2 && cart.isAuth) {
-                      cart.setIsLoading = true;
                       cart.initSomeValues();
-                      cart.getCartData();
+                      cart.getCartData(isLoading: true);
                     } else if (index == 1) {
                       final LocationProvider locationProvider =
                           Provider.of<LocationProvider>(context, listen: false);
                       FirebaseHelper()
                           .pushAnalyticsEvent(name: "contact_support");
                       _launchURL(locationProvider.isoCountryCode == "AE"
-                          ? "tel:${KConstants.uaePhone}"
-                          : "tel:${KConstants.ksaPhone}");
+                          ? "tel:${Constants.uaePhone}"
+                          : "tel:${Constants.ksaPhone}");
                     }
                   }),
             )),
@@ -219,11 +222,11 @@ class AppState extends State<App> {
     );
   }
 
-  //used to make calls, whatsapp
+  //used to make calls, whatsapp,...
   Future<void> _launchURL(String url) async {
     try {
       if (await canLaunchUrlString(url)) {
-        await launchUrlString(url);
+        await launchUrlString(url, mode: LaunchMode.externalApplication);
       } else {
         throw 'Could not launch $url';
       }

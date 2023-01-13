@@ -8,7 +8,7 @@ import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
 import '../shared/rounded_rectangle_button.dart';
 
-class ProductDetailsFooter extends StatelessWidget {
+class ProductDetailsFooter extends StatefulWidget {
   final int count;
   final int index;
   final Function add;
@@ -21,7 +21,11 @@ class ProductDetailsFooter extends StatelessWidget {
       required this.add,
       required this.subtract})
       : super(key: key);
+  @override
+  State<ProductDetailsFooter> createState() => _ProductDetailsFooterState();
+}
 
+class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,7 +41,7 @@ class ProductDetailsFooter extends StatelessWidget {
                 RoundedRectangleButton(
                   padding: const EdgeInsets.all(0),
                   onPressed: () {
-                    subtract();
+                    widget.subtract();
                   },
                   width: 40,
                   height: 40,
@@ -47,7 +51,7 @@ class ProductDetailsFooter extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "$count",
+                    "${widget.count}",
                     style: Theme.of(context)
                         .textTheme
                         .headline1
@@ -56,7 +60,7 @@ class ProductDetailsFooter extends StatelessWidget {
                 ),
                 RoundedRectangleButton(
                   onPressed: () {
-                    add();
+                    widget.add();
                   },
                   padding: const EdgeInsets.all(0),
                   width: 40,
@@ -65,22 +69,22 @@ class ProductDetailsFooter extends StatelessWidget {
                   title: '+',
                 ),
                 RoundedRectangleButton(
-                  onPressed: () {
+                  onPressed: () async {
                     final ProductsProvider productsProvider =
                         Provider.of<ProductsProvider>(context, listen: false);
                     final CartProvider cartProvider =
                         Provider.of<CartProvider>(context, listen: false);
                     if (cartProvider.isAuth) {
-                      if ((productsProvider
-                                      .productData[index].data?.sizes?.length ??
+                      if ((productsProvider.productData[widget.index].data
+                                      ?.sizes?.length ??
                                   0) >
                               0 &&
                           productsProvider.selectedSize == -1) {
                         ShowSnackBar().show(context, "please_select_size");
                         return;
                       }
-                      if ((productsProvider.productData[index].data?.chopping
-                                      ?.length ??
+                      if ((productsProvider.productData[widget.index].data
+                                      ?.chopping?.length ??
                                   0) >
                               0 &&
                           productsProvider.selectedChopping == -1) {
@@ -88,32 +92,36 @@ class ProductDetailsFooter extends StatelessWidget {
 
                         return;
                       }
-                      if ((productsProvider.productData[index].data?.packaging
-                                      ?.length ??
+                      if ((productsProvider.productData[widget.index].data
+                                      ?.packaging?.length ??
                                   0) >
                               0 &&
                           productsProvider.selectedPackaging == -1) {
                         ShowSnackBar().show(context, "please_select_pack");
                         return;
                       }
-                      cartProvider.addToCart(
+                      bool status = await cartProvider.addToCart(
                         context: context,
-                        quantity: '$count',
+                        quantity: '${widget.count}',
                         sizeId:
-                            "${productsProvider.selectedSize > -1 ? (productsProvider.productData[index].data?.sizes?[productsProvider.selectedSize].id!.toString()) : ""}",
+                            "${productsProvider.selectedSize > -1 ? (productsProvider.productData[widget.index].data?.sizes?[productsProvider.selectedSize].id!.toString()) : ""}",
                         preparationId:
-                            "${productsProvider.selectedPackaging > -1 ? (productsProvider.productData[index].data?.packaging?[productsProvider.selectedPackaging].id!.toString()) : ""}",
+                            "${productsProvider.selectedPackaging > -1 ? (productsProvider.productData[widget.index].data?.packaging?[productsProvider.selectedPackaging].id!.toString()) : ""}",
                         cutId:
-                            "${productsProvider.selectedChopping > -1 ? (productsProvider.productData[index].data?.chopping?[productsProvider.selectedChopping].id!.toString()) : ""}",
+                            "${productsProvider.selectedChopping > -1 ? (productsProvider.productData[widget.index].data?.chopping?[productsProvider.selectedChopping].id!.toString()) : ""}",
                         isShalwata:
-                            "${productsProvider.selectedShalwata ? (productsProvider.productData[index].data?.shalwata!.id!.toString()) : "0"}",
+                            "${productsProvider.selectedShalwata ? (productsProvider.productData[widget.index].data?.shalwata!.id!.toString()) : "0"}",
                         productId:
-                            '${productsProvider.productData[index].data!.id}',
+                            '${productsProvider.productData[widget.index].data!.id}',
                         iskarashah: productsProvider.withoutTripe ? "1" : "0",
                         isRas: productsProvider.withoutHead ? "1" : "0",
                         isLyh: productsProvider.withoutTailFat ? "1" : "0",
                         iskwar3: productsProvider.withoutTrotters ? "1" : "0",
                       );
+                      if (!mounted) return;
+                      Navigator.of(context, rootNavigator: true).pop();
+                      ShowSnackBar().show(context,
+                          status ? "product_added_cart" : "unexpected_error");
                     } else {
                       Navigator.of(context, rootNavigator: true)
                           .pushNamed(login);

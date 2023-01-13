@@ -7,8 +7,9 @@ Color primaryColor = const Color.fromRGBO(118, 24, 14, 1.0);
 final ThemeData classicTheme = ThemeData(
     splashColor: Colors.white,
     primaryColor: primaryColor,
-    fontFamily: KConstants.fontFamily,
+    fontFamily: Constants.fontFamily,
     canvasColor: Colors.transparent,
+    highlightColor: Colors.transparent,
     //backgroundColor: Color.fromRGBO(243, 224, 177, 1),
     backgroundColor: const Color.fromRGBO(209, 178, 147, 1),
     scaffoldBackgroundColor: const Color.fromRGBO(209, 178, 147, 1),
@@ -68,7 +69,7 @@ final ThemeData classicTheme = ThemeData(
     ),
     snackBarTheme: const SnackBarThemeData(
         contentTextStyle: TextStyle(
-      fontFamily: KConstants.fontFamily,
+      fontFamily: Constants.fontFamily,
       color: Colors.white,
     )),
     colorScheme: ColorScheme.fromSwatch().copyWith(

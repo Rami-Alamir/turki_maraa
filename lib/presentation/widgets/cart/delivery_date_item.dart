@@ -24,7 +24,6 @@ class DeliveryDateItem extends StatelessWidget {
         cartProvider.setSelectedDate = selectedValue;
       },
       splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       child: Container(
         width: 80,
         padding: const EdgeInsets.all(3.0),

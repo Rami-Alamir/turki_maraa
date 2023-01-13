@@ -44,6 +44,7 @@ class SettingsCard extends StatelessWidget {
                                   .languageCode);
                           language.changeLanguage();
                         },
+                        withArrow: false,
                         icon: FixedAssets.language,
                         title: 'language'),
                     Visibility(
@@ -54,6 +55,7 @@ class SettingsCard extends StatelessWidget {
                                 name: 'change_app_theme', value: 'light');
                             theme.changeTheme('light');
                           },
+                          withArrow: false,
                           icon: FixedAssets.light,
                           title: 'light_mode'),
                     ),
@@ -65,6 +67,7 @@ class SettingsCard extends StatelessWidget {
                                 name: 'change_app_theme', value: 'classic');
                             theme.changeTheme('classic');
                           },
+                          withArrow: false,
                           withDivider: theme.themeName != 'dark',
                           icon: FixedAssets.classic,
                           title: 'classic_mode'),
@@ -77,6 +80,7 @@ class SettingsCard extends StatelessWidget {
                                 name: 'change_app_theme', value: 'dark');
                             theme.changeTheme('dark');
                           },
+                          withArrow: false,
                           withDivider: false,
                           icon: FixedAssets.dark,
                           title: 'dark_mode'),

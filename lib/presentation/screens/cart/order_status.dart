@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/shared/rounded_rectangle_button.dart';
 
 class OrderStatus extends StatelessWidget {
   final bool status;
@@ -15,6 +15,7 @@ class OrderStatus extends StatelessWidget {
     final OrdersProvider orders =
         Provider.of<OrdersProvider>(context, listen: false);
     orders.getOrdersList();
+
     return Scaffold(
       body: SizedBox(
         width: SizeConfig.screenWidth,

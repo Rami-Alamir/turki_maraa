@@ -26,20 +26,20 @@ class SocialMedia extends StatelessWidget {
                 SocialMediaIcon(
                   name: "instagram",
                   url: locationProvider.isoCountryCode == "AE"
-                      ? KConstants.instagramUae
-                      : KConstants.instagramKsa,
+                      ? Constants.instagramUae
+                      : Constants.instagramKsa,
                   icon: SocialIcons.instagram,
                   color: color,
                 ),
                 SocialMediaIcon(
                   name: "snapchat",
-                  url: KConstants.snapchat,
+                  url: Constants.snapchat,
                   icon: SocialIcons.snapchat,
                   color: color,
                 ),
                 SocialMediaIcon(
                   name: "twitter",
-                  url: KConstants.twitter,
+                  url: Constants.twitter,
                   icon: SocialIcons.twitter,
                   color: color,
                 ),

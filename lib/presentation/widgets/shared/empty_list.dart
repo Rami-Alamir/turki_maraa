@@ -8,6 +8,7 @@ class EmptyList extends StatelessWidget {
 
   const EmptyList({Key? key, this.title = "", required this.image})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -33,8 +34,8 @@ class EmptyList extends StatelessWidget {
                 AppLocalizations.of(context)!.tr(title),
                 style: Theme.of(context)
                     .textTheme
-                    .headline6!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+                    .headline1!
+                    .copyWith(fontSize: 14),
               ),
             ),
           ],

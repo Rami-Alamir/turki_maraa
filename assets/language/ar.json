@@ -10,7 +10,8 @@
   "profile": "حسابي",
   "orders": "طلباتي",
   "order_details": "تفاصيل الطلب",
-  "tamara_desc": "قسمها على دفعات بدون رسوم",
+  "tamara_desc": "قسمها على ٣ دفعات بدون رسوم",
+  "tabby_desc": "قسمها على ٤ دفعات بدون رسوم",
   "delivery_address": "عنوان التوصيل",
   "remaining" : "متبقي",
   "order_summary": "ملخص الطلب",
@@ -242,5 +243,6 @@
   "are_you_sure_you_want_to_delete_the_account": "هل أنت متأكد أنك تريد حذف الحساب؟",
   "sorry_you_can_not_log_in_after_deleting_your_account": "نعتذر منك, لا يمكنك تسجيل الدخول بعد حذف الحساب",
   "delete_address": "حذف العنوان",
-  "are_you_sure_you_want_to_delete_the_address": "هل أنت متأكد أنك تريد حذف العنوان؟"
+  "are_you_sure_you_want_to_delete_the_address": "هل أنت متأكد أنك تريد حذف العنوان؟",
+  "rate_the_app": "قيم التطبيق"
 }

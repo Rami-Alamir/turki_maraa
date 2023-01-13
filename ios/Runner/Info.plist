@@ -20,6 +20,10 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSCameraUsageDescription</key>
+    <string>This allows Tabby to take a photo</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This allows Tabby to select a photo</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
