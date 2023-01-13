@@ -14,6 +14,7 @@ import '../../../core/utilities/format_helper.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/service/firebase_helper.dart';
+import '../../../core/service/service_locator.dart';
 
 class CartBottomSheet extends StatefulWidget {
   const CartBottomSheet({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
         double.parse(cart.cartData!.data!.minOrder!.first.minOrder ?? "60");
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
-    String currency = GetStrings().getCurrency(
+    String currency = sl<GetStrings>().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         locationProvider.isoCountryCode!);
     return NotificationListener<DraggableScrollableNotification>(
@@ -123,7 +124,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 5.0),
                                   child: Text(
-                                    '${FormatHelper().formatDecimalAndRemoveTrailingZeros(cart.cartData!.data!.invoicePreview!.totalAmountAfterDiscount!)} $currency',
+                                    '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(cart.cartData!.data!.invoicePreview!.totalAmountAfterDiscount!)} $currency',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline1!
@@ -171,7 +172,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                                     listen: false);
                             FirebaseHelper().pushAnalyticsEvent(
                                 name: "purchase",
-                                value: GetStrings()
+                                value: sl<GetStrings>()
                                     .getPaymentName(cart.selectedPayment));
 
                             int statusCode = await cart.placeOrder(
@@ -207,7 +208,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
       Navigator.of(context, rootNavigator: true).pop();
       switch (statusCode) {
         case 0:
-          ShowSnackBar().show(context, "unexpected_error");
+          sl<ShowSnackBar>().show(context, "unexpected_error");
           break;
         case 1:
           Navigator.of(context, rootNavigator: true)

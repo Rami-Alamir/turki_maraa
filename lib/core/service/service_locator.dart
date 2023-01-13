@@ -1,4 +1,14 @@
 import 'package:get_it/get_it.dart';
+import '../utilities/calculate_helper.dart';
+import '../utilities/dialog_helper.dart';
+import '../utilities/format_helper.dart';
+import '../utilities/get_color_by_status.dart';
+import '../utilities/get_strings.dart';
+import '../utilities/hms_latlng_converter.dart';
+import '../utilities/locals_values.dart';
+import '../utilities/show_snack_bar.dart';
+import '../utilities/size_config.dart';
+import 'networking/api_base_helper.dart';
 import '../../repository/booking_repository.dart';
 import '../../repository/cart_repository.dart';
 import '../../repository/favourite_repository.dart';
@@ -28,5 +38,15 @@ class ServiceLocator {
     sl.registerLazySingleton(() => TamaraRepository());
     sl.registerLazySingleton(() => UserRepository());
     sl.registerLazySingleton(() => VersionRepository());
+    sl.registerLazySingleton(() => ApiBaseHelper());
+    sl.registerLazySingleton(() => CalculateHelper());
+    sl.registerLazySingleton(() => DialogHelper());
+    sl.registerLazySingleton(() => FormatHelper());
+    sl.registerLazySingleton(() => GetColorByStatus());
+    sl.registerLazySingleton(() => GetStrings());
+    sl.registerLazySingleton(() => LocalsValues());
+    sl.registerLazySingleton(() => HMSLatLngConverter());
+    sl.registerLazySingleton(() => ShowSnackBar());
+    sl.registerLazySingleton(() => SizeConfig());
   }
 }

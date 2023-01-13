@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../models/user_address.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -49,8 +50,9 @@ class GMSMapState extends State<GMSMap> {
             WidgetsBinding.instance.window.locales;
         String localsIsoCountryCode = systemLocales.first.countryCode ?? "SA";
         String isoCountryCode =
-            LocalsValues().getCountryCode(localsIsoCountryCode);
-        addressProvider.mapLatLng = LocalsValues().getGMSLatLng(isoCountryCode);
+            sl<LocalsValues>().getCountryCode(localsIsoCountryCode);
+        addressProvider.mapLatLng =
+            sl<LocalsValues>().getGMSLatLng(isoCountryCode);
       }
     }
     super.initState();

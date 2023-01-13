@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../shared/rounded_rectangle_button.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/products_provider.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
-import '../shared/rounded_rectangle_button.dart';
 
 class ProductDetailsFooter extends StatefulWidget {
   final int count;
@@ -80,7 +81,7 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                                   0) >
                               0 &&
                           productsProvider.selectedSize == -1) {
-                        ShowSnackBar().show(context, "please_select_size");
+                        sl<ShowSnackBar>().show(context, "please_select_size");
                         return;
                       }
                       if ((productsProvider.productData[widget.index].data
@@ -88,7 +89,7 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                                   0) >
                               0 &&
                           productsProvider.selectedChopping == -1) {
-                        ShowSnackBar().show(context, "please_select_cut");
+                        sl<ShowSnackBar>().show(context, "please_select_cut");
 
                         return;
                       }
@@ -97,7 +98,7 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                                   0) >
                               0 &&
                           productsProvider.selectedPackaging == -1) {
-                        ShowSnackBar().show(context, "please_select_pack");
+                        sl<ShowSnackBar>().show(context, "please_select_pack");
                         return;
                       }
                       bool status = await cartProvider.addToCart(
@@ -120,7 +121,7 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                       );
                       if (!mounted) return;
                       Navigator.of(context, rootNavigator: true).pop();
-                      ShowSnackBar().show(context,
+                      sl<ShowSnackBar>().show(context,
                           status ? "product_added_cart" : "unexpected_error");
                     } else {
                       Navigator.of(context, rootNavigator: true)

@@ -87,10 +87,10 @@ class AddressProvider with ChangeNotifier {
           latLng?.latitude ?? _mapLatLng!.latitude,
           latLng?.longitude ?? _mapLatLng!.longitude,
           localeIdentifier: languageCode);
-      String address = GetStrings().locationDescription(placemark.first);
+      String address = sl<GetStrings>().locationDescription(placemark.first);
       String comment = descriptionController.text.isNotEmpty
           ? descriptionController.text
-          : GetStrings().locationDescription(placemark.first);
+          : sl<GetStrings>().locationDescription(placemark.first);
       String countryCode = placemark.first.isoCountryCode!;
       if (_isAuth ?? false) {
         response = await sl<UserRepository>().addAddress({
@@ -123,7 +123,7 @@ class AddressProvider with ChangeNotifier {
         } else {
           if (latLng == null) Navigator.pop(_dialogContext!);
           // ignore: use_build_context_synchronously
-          ShowSnackBar().show(
+          sl<ShowSnackBar>().show(
               context,
               response.statusCode == 400
                   ? "region_not_supported"
@@ -139,7 +139,7 @@ class AddressProvider with ChangeNotifier {
       }
     } catch (_) {
       if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-      ShowSnackBar().show(context, "unexpected_error");
+      sl<ShowSnackBar>().show(context, "unexpected_error");
     }
   }
 
@@ -154,10 +154,10 @@ class AddressProvider with ChangeNotifier {
       List<Placemark> placemark = await placemarkFromCoordinates(
           _mapLatLng!.latitude, _mapLatLng!.longitude,
           localeIdentifier: languageCode);
-      String address = GetStrings().locationDescription(placemark.first);
+      String address = sl<GetStrings>().locationDescription(placemark.first);
       String comment = descriptionController.text.isNotEmpty
           ? descriptionController.text
-          : GetStrings().locationDescription(placemark.first);
+          : sl<GetStrings>().locationDescription(placemark.first);
       response = await sl<UserRepository>().updateAddress({
         "country_iso_code": placemark.first.isoCountryCode,
         "address": address,
@@ -178,12 +178,12 @@ class AddressProvider with ChangeNotifier {
       } else {
         Navigator.pop(_dialogContext!);
         // ignore: use_build_context_synchronously
-        ShowSnackBar().show(context,
+        sl<ShowSnackBar>().show(context,
             response == 400 ? "region_not_supported" : "unexpected_error");
       }
     } catch (_) {
       if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-      ShowSnackBar().show(context, "unexpected_error");
+      sl<ShowSnackBar>().show(context, "unexpected_error");
     }
   }
 
@@ -203,11 +203,11 @@ class AddressProvider with ChangeNotifier {
         } else {
           Navigator.pop(_dialogContext!);
           // ignore: use_build_context_synchronously
-          ShowSnackBar().show(context, "unexpected_error");
+          sl<ShowSnackBar>().show(context, "unexpected_error");
         }
       } catch (_) {
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-        ShowSnackBar().show(context, "unexpected_error");
+        sl<ShowSnackBar>().show(context, "unexpected_error");
       }
       notifyListeners();
     }, "are_you_sure_you_want_to_delete_the_address", "delete_address",
@@ -248,6 +248,6 @@ class AddressProvider with ChangeNotifier {
         _mapLatLng!.latitude, _mapLatLng!.longitude,
         localeIdentifier: language);
     notifyListeners();
-    return GetStrings().locationDescription(placemark.first);
+    return sl<GetStrings>().locationDescription(placemark.first);
   }
 }

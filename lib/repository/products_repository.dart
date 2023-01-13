@@ -3,9 +3,10 @@ import '../models/best_seller.dart';
 import '../models/product_details.dart';
 import '../models/product.dart';
 import '../core/service/networking/api_base_helper.dart';
+import '../core/service/service_locator.dart';
 
 class ProductsRepository {
-  final ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = sl<ApiBaseHelper>();
 
   Future<Product> getProductsList(
       String categoryId, LatLng latLng, String countryId) async {

@@ -4,9 +4,10 @@ import '../models/category_data.dart';
 import '../models/discover_data.dart';
 import '../models/discover_item.dart';
 import '../core/service/networking/api_base_helper.dart';
+import '../core/service/service_locator.dart';
 
 class HomeRepository {
-  final ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = sl<ApiBaseHelper>();
 
   Future<CategoryData> getCategoriesList(
       LatLng latLng, String countryId) async {

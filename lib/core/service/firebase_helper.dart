@@ -18,9 +18,11 @@ class FirebaseHelper {
     messaging = FirebaseMessaging.instance;
     fiam!.toString();
     messaging!.getToken().then((token) {
-      print("token is $token");
+      // print("token is $token");
     });
-    messaging!.getAPNSToken().then((value) => print("token is $value"));
+    messaging!.getAPNSToken().then((value) {
+      // print("token is $value");
+    });
     messaging!.requestPermission(
       alert: true,
       announcement: false,

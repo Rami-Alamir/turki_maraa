@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
@@ -13,7 +14,7 @@ class WalletHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
-    String currency = GetStrings().getCurrency(
+    String currency = sl<GetStrings>().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         locationProvider.isoCountryCode!);
     return Column(

@@ -91,8 +91,8 @@ class FavouriteProvider with ChangeNotifier {
         if (index > -1) _favourite!.dataT!.data!.removeAt(index);
         getFavouriteData(isLoading: isLoading);
       }
-    } catch (e) {
-      ShowSnackBar().show(context, "unexpected_error");
+    } catch (_) {
+      sl<ShowSnackBar>().show(context, "unexpected_error");
     }
     Navigator.pop(_dialogContext!);
     notifyListeners();
@@ -117,10 +117,10 @@ class FavouriteProvider with ChangeNotifier {
         getFavouriteData();
       } else {
         // ignore: use_build_context_synchronously
-        ShowSnackBar().show(context, "unexpected_error");
+        sl<ShowSnackBar>().show(context, "unexpected_error");
       }
-    } catch (e) {
-      ShowSnackBar().show(context, "unexpected_error");
+    } catch (_) {
+      sl<ShowSnackBar>().show(context, "unexpected_error");
     }
     if (withDialog) {
       Navigator.pop(_dialogContext!);

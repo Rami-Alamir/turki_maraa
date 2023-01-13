@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../controllers/cart_provider.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
@@ -61,7 +62,7 @@ class DeliveryAddress extends StatelessWidget {
     final CartProvider cartProvider = Provider.of<CartProvider>(context);
     String address;
     if (addressProvider.selectedAddress == -1) {
-      address = GetStrings().currentLocation(
+      address = sl<GetStrings>().currentLocation(
           context,
           cartProvider.currentLocationDescriptionAr,
           cartProvider.currentLocationDescriptionEn);

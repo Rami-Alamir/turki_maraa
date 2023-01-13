@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../models/search_data.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
@@ -15,7 +16,7 @@ class SearchRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
-    String currency = GetStrings().getCurrency(
+    String currency = sl<GetStrings>().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         locationProvider.isoCountryCode!);
     return Padding(

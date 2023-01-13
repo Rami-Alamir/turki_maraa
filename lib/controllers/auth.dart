@@ -111,11 +111,11 @@ class Auth with ChangeNotifier {
       } else if (response.statusCode == 401) {
         Navigator.pop(_dialogContext!);
         // ignore: use_build_context_synchronously
-        ShowSnackBar().show(
+        sl<ShowSnackBar>().show(
             context, "sorry_you_can_not_log_in_after_deleting_your_account");
       }
     } catch (_) {
-      ShowSnackBar().show(context, "unexpected_error");
+      sl<ShowSnackBar>().show(context, "unexpected_error");
       Navigator.pop(_dialogContext!);
     }
   }
@@ -129,7 +129,7 @@ class Auth with ChangeNotifier {
   Future<void> verifyOTP(BuildContext context) async {
     _dialogContext = context;
     if (otpController.text.length < 4) {
-      ShowSnackBar().show(context, 'please_enter_otp');
+      sl<ShowSnackBar>().show(context, 'please_enter_otp');
     } else {
       _logoVisibility = true;
       _showDialogIndicator(_dialogContext);
@@ -160,7 +160,7 @@ class Auth with ChangeNotifier {
         } else {
           Navigator.pop(_dialogContext!);
           // ignore: use_build_context_synchronously
-          ShowSnackBar().show(
+          sl<ShowSnackBar>().show(
               context,
               _response.statusCode != 400
                   ? "unexpected_error"
@@ -168,7 +168,7 @@ class Auth with ChangeNotifier {
         }
       } catch (_) {
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-        ShowSnackBar().show(
+        sl<ShowSnackBar>().show(
             context,
             _response.statusCode == 400
                 ? "unexpected_error"
@@ -216,7 +216,7 @@ class Auth with ChangeNotifier {
       } else {
         Navigator.pop(_dialogContext!);
         // ignore: use_build_context_synchronously
-        ShowSnackBar().show(context, "unexpected_error");
+        sl<ShowSnackBar>().show(context, "unexpected_error");
       }
     }, "are_you_sure_you_want_to_delete_the_account", "delete_account",
         icon: FixedAssets.deleteAccount);
@@ -266,15 +266,15 @@ class Auth with ChangeNotifier {
         } else {
           Navigator.pop(_dialogContext!);
           // ignore: use_build_context_synchronously
-          ShowSnackBar().show(context, "unexpected_error");
+          sl<ShowSnackBar>().show(context, "unexpected_error");
         }
         notifyListeners();
       } catch (_) {
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-        ShowSnackBar().show(context, "unexpected_error");
+        sl<ShowSnackBar>().show(context, "unexpected_error");
       }
     } else {
-      ShowSnackBar().show(context, "please_enter_your_name");
+      sl<ShowSnackBar>().show(context, "please_enter_your_name");
     }
   }
 

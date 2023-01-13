@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GetSColorByStatus {
+class GetColorByStatus {
   Color statusColor(int code) {
     switch (code) {
       case 4000:

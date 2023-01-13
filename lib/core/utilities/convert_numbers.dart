@@ -1,4 +1,5 @@
 class ConvertNumbers {
+  ConvertNumbers._();
   static String getPhone(String key, String phone) {
     String newPhone = key;
     newPhone += phone.length == 10

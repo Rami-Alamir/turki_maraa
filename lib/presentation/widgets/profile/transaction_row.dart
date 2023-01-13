@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../models/wallet.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
@@ -15,7 +16,7 @@ class TransactionRow extends StatelessWidget {
     final Color color = status ? Colors.green : Colors.red;
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
-    String currency = GetStrings().getCurrency(
+    String currency = sl<GetStrings>().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         locationProvider.isoCountryCode!);
     return Padding(

@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-enum DeviceScreenType { mobile, tablet, desktop }
+import 'enum/device_screen_type.dart';
 
 class SizeConfig {
   static MediaQueryData? _mediaQuery;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../models/order.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
@@ -14,7 +15,7 @@ class OrderDetailsCard extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final String currency = GetStrings().getCurrency(
+    final String currency = sl<GetStrings>().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         (order.data!.refNo!.substring(0, 2)));
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
@@ -102,7 +103,7 @@ class AddressBox extends StatelessWidget {
         case 0:
           return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${AppLocalizations.of(context)!.tr('choose')}");
         case 1:
-          return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${GetStrings().currentLocation(context, locationProvider.currentLocationDescriptionAr, locationProvider.currentLocationDescriptionEn)}");
+          return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${sl<GetStrings>().currentLocation(context, locationProvider.currentLocationDescriptionAr, locationProvider.currentLocationDescriptionEn)}");
 
         default:
           return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${AppLocalizations.of(context)!.tr('choose')}");

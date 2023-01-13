@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/cart_provider.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
@@ -136,7 +137,7 @@ class _PromoCodeState extends State<PromoCode> {
                               if (!mounted) return;
                               Navigator.of(context, rootNavigator: true).pop();
                               if (!status) {
-                                ShowSnackBar()
+                                sl<ShowSnackBar>()
                                     .show(context, "unexpected_error");
                               }
                             }

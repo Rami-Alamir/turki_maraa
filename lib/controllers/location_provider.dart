@@ -6,6 +6,7 @@ import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
 import 'package:huawei_location/huawei_location.dart';
 import 'dart:async';
 import 'package:location/location.dart' as location_service;
+import '../core/service/service_locator.dart';
 import '/../core/service/firebase_helper.dart';
 import '/../core/utilities/get_strings.dart';
 import '/../core/utilities/hms_latlng_converter.dart';
@@ -37,7 +38,7 @@ class LocationProvider with ChangeNotifier {
       await fetchLocation();
       if (_locationServiceStatus != 0 && _locationServiceStatus != 2) {
         _currentLocationLatLng = isHms
-            ? HMSLatLngConverter().convertToGMSLatLng(_hwlocation!)
+            ? sl<HMSLatLngConverter>().convertToGMSLatLng(_hwlocation!)
             : LatLng(_locationData!.latitude!, _locationData!.longitude!);
         _latLng = _currentLocationLatLng;
         _locationServiceStatus = 1;
@@ -49,7 +50,8 @@ class LocationProvider with ChangeNotifier {
         _currentLocationIsoCountryCode = placemark.first.isoCountryCode;
         _isoCountryCode = _currentLocationIsoCountryCode;
         Placemark place = placemark.first;
-        _currentLocationDescriptionAr = GetStrings().locationDescription(place);
+        _currentLocationDescriptionAr =
+            sl<GetStrings>().locationDescription(place);
         List<Placemark> placemark2 = await placemarkFromCoordinates(
             _latLng!.latitude, _latLng!.longitude,
             localeIdentifier: "en");
@@ -59,10 +61,10 @@ class LocationProvider with ChangeNotifier {
         FirebaseHelper()
             .pushAnalyticsEvent(name: "city", value: place2.locality);
         _currentLocationDescriptionEn =
-            GetStrings().locationDescription(place2);
+            sl<GetStrings>().locationDescription(place2);
       }
       notifyListeners();
-    } catch (e) {
+    } catch (_) {
       _locationServiceStatus = 2;
     }
   }

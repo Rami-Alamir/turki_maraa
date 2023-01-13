@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
+import '../../../core/service/service_locator.dart';
 import '../cart/shopping_cart.dart';
 import '../home/home.dart';
 import '../orders/orders.dart';
@@ -109,7 +110,7 @@ class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     final CartProvider cart = Provider.of<CartProvider>(context);
-    SizeConfig().init(context);
+    sl<SizeConfig>().init(context);
     // WillPopScope handle android back button
     return WillPopScope(
       onWillPop: () async {

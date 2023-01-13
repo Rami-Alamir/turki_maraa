@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+import 'circle_icon.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/format_helper.dart';
 import '../../../models/product_details.dart';
 import '../../../controllers/favourite_provider.dart';
@@ -8,7 +10,6 @@ import '../../../controllers/location_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
-import 'circle_icon.dart';
 
 class ProductDescription extends StatelessWidget {
   final ProductDetails product;
@@ -30,7 +31,7 @@ class ProductDescription extends StatelessWidget {
         AppLocalizations.of(context)!.locale == const Locale('ar');
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
-    String currency = GetStrings().getCurrency(
+    String currency = sl<GetStrings>().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         locationProvider.isoCountryCode!);
     return Column(
@@ -112,7 +113,7 @@ class ProductDescription extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 3, left: 5, right: 5),
                       child: Text(
-                        FormatHelper()
+                        sl<FormatHelper>()
                             .formatDecimalAndRemoveTrailingZeros(price),
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
@@ -135,7 +136,7 @@ class ProductDescription extends StatelessWidget {
                     Visibility(
                       visible: salePrice > 0 && salePrice < price,
                       child: Text(
-                        '${FormatHelper().formatDecimalAndRemoveTrailingZeros(salePrice)} ',
+                        '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(salePrice)} ',
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontSize: 16,

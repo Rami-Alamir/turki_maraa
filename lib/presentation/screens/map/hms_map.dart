@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart' as gms;
 import 'package:huawei_map/channel/huaweiMapInitializer.dart';
 import 'package:location/location.dart' as location_service;
 import 'package:huawei_map/map.dart' as hms;
+import '../../../core/service/service_locator.dart';
 import '../../../models/user_address.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../core/utilities/hms_latlng_converter.dart';
@@ -29,7 +30,7 @@ class HMSMapState extends State<HMSMap> {
   Data? _userAddress;
   bool _showBottomSheet = false;
   String _addressDescription = '';
-  final HMSLatLngConverter _hmsLatLngConverter = HMSLatLngConverter();
+  final HMSLatLngConverter _hmsLatLngConverter = sl<HMSLatLngConverter>();
   @override
   void initState() {
     HuaweiMapInitializer.initializeMap();
@@ -52,8 +53,9 @@ class HMSMapState extends State<HMSMap> {
             WidgetsBinding.instance.window.locales;
         String localsIsoCountryCode = systemLocales.first.countryCode ?? "SA";
         String isoCountryCode =
-            LocalsValues().getCountryCode(localsIsoCountryCode);
-        addressProvider.mapLatLng = LocalsValues().getGMSLatLng(isoCountryCode);
+            sl<LocalsValues>().getCountryCode(localsIsoCountryCode);
+        addressProvider.mapLatLng =
+            sl<LocalsValues>().getGMSLatLng(isoCountryCode);
       }
     }
     super.initState();

@@ -3,9 +3,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/order.dart';
 import '../models/orders_data.dart';
 import '../core/service/networking/api_base_helper.dart';
+import '../core/service/service_locator.dart';
 
 class OrderRepository {
-  final ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = sl<ApiBaseHelper>();
 
   Future<dynamic> placeOrder(
       body, String authorization, LatLng latLng, String countryId) async {

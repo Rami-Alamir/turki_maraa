@@ -1,8 +1,9 @@
 import '../models/tamara_data.dart';
 import '../core/service/networking/api_base_helper.dart';
+import '../core/service/service_locator.dart';
 
 class TamaraRepository {
-  final ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = sl<ApiBaseHelper>();
 
   Future<TamaraData> getTamaraStatus(
       String countryIsoCode, String currencyCode, String orderValue) async {

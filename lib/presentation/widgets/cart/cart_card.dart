@@ -12,6 +12,7 @@ import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/firebase_helper.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/calculate_helper.dart';
 import '../../../core/utilities/format_helper.dart';
 
@@ -36,7 +37,7 @@ class _CartCardState extends State<CartCard> {
         Provider.of<CartProvider>(context, listen: false);
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
-    String currency = GetStrings().getCurrency(
+    String currency = sl<GetStrings>().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         locationProvider.isoCountryCode!);
     return InkWell(
@@ -221,7 +222,7 @@ class _CartCardState extends State<CartCard> {
                                 ],
                               ),
                               Text(
-                                  "${FormatHelper().formatDecimalAndRemoveTrailingZeros((CalculateHelper().getCartItemTotalPrice(cartProvider.cartData!.data!.cart!.data![widget.index]) * widget.item.quantity!))} $currency",
+                                  "${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros((sl<CalculateHelper>().getCartItemTotalPrice(cartProvider.cartData!.data!.cart!.data![widget.index]) * widget.item.quantity!))} $currency",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline1!
@@ -266,7 +267,7 @@ class _CartCardState extends State<CartCard> {
     if (!mounted) return;
     Navigator.of(context, rootNavigator: true).pop();
     if (!status) {
-      ShowSnackBar().show(context, "unexpected_error");
+      sl<ShowSnackBar>().show(context, "unexpected_error");
     }
   }
 }

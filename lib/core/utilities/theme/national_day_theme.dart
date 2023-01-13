@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../constants/constants.dart';
 
 final ThemeData nationalDayTheme = ThemeData(

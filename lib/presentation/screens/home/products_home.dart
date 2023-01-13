@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../../controllers/products_provider.dart';
-import '../../../core/constants/route_constants.dart';
-import '../../../core/utilities/r_a7_i_c_o_n_s_icons.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/home/products_list_section.dart';
 import '../../widgets/shared/retry.dart';
 import '../../widgets/shared/spinkit_indicator.dart';
 import '../../widgets/home/discover_section.dart';
 import '../../widgets/home/food_appbar.dart';
 import '../../widgets/shared/primary_app_bar.dart';
-import 'package:provider/provider.dart';
+import '../../../controllers/products_provider.dart';
+import '../../../core/constants/route_constants.dart';
+import '../../../core/utilities/r_a7_i_c_o_n_s_icons.dart';
 
 class ProductsHome extends StatefulWidget {
   final int id;

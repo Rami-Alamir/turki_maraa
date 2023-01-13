@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'invoice_row.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/format_helper.dart';
 import '../../../core/utilities/get_strings.dart';
-import 'package:provider/provider.dart';
-import 'invoice_row.dart';
 
 class Invoice extends StatelessWidget {
   final double subtotal;
@@ -32,7 +33,7 @@ class Invoice extends StatelessWidget {
         Provider.of<LocationProvider>(context, listen: false);
     String currencyStr = currency.isNotEmpty
         ? currency
-        : GetStrings().getCurrency(
+        : sl<GetStrings>().getCurrency(
             AppLocalizations.of(context)!.locale!.languageCode,
             locationProvider.isoCountryCode!);
     String vatStr = vat.isNotEmpty
@@ -57,23 +58,23 @@ class Invoice extends StatelessWidget {
               fontColor: Theme.of(context).textTheme.headline4!.color!,
               title: 'order_total',
               value:
-                  '${FormatHelper().formatDecimalAndRemoveTrailingZeros(subtotal)} $currencyStr'),
+                  '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(subtotal)} $currencyStr'),
           InvoiceRow(
               fontColor: Theme.of(context).textTheme.headline4!.color!,
               title: 'delivery_fees',
               value:
-                  '${FormatHelper().formatDecimalAndRemoveTrailingZeros(shipping)} $currencyStr'),
+                  '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(shipping)} $currencyStr'),
           InvoiceRow(
             title: 'discount',
             value:
-                '-${FormatHelper().formatDecimalAndRemoveTrailingZeros(discountVoucher)} $currencyStr',
+                '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(discountVoucher)} $currencyStr',
             visible: discountVoucher > 0,
             fontColor: Colors.green,
           ),
           InvoiceRow(
             title: 'credit2',
             value:
-                '-${FormatHelper().formatDecimalAndRemoveTrailingZeros(myCredit)} $currencyStr',
+                '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(myCredit)} $currencyStr',
             visible: myCredit > 0,
             fontColor: Colors.green,
           ),
@@ -108,7 +109,7 @@ class Invoice extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
-                    '${FormatHelper().formatDecimalAndRemoveTrailingZeros(total)} $currencyStr',
+                    '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(total)} $currencyStr',
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1!

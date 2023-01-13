@@ -1,15 +1,16 @@
 import "package:auto_size_text/auto_size_text.dart";
 import 'package:flutter/material.dart';
-import 'package:turki_dabayh/core/utilities/format_helper.dart';
+import 'package:provider/provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../models/product.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/service/firebase_helper.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
-import 'package:provider/provider.dart';
+import '../../../core/utilities/format_helper.dart';
 
 class ProductCard extends StatelessWidget {
   final int? index;
@@ -44,7 +45,7 @@ class ProductCard extends StatelessWidget {
     final bool haveSalePrice = salePrice > 0 && salePrice != price;
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
-    String currency = GetStrings().getCurrency(
+    String currency = sl<GetStrings>().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         locationProvider.isoCountryCode!);
     final int factor = (SizeConfig.screenWidth! ~/ 180);
@@ -157,7 +158,7 @@ class ProductCard extends StatelessWidget {
                             child: Row(
                               children: [
                                 AutoSizeText(
-                                  FormatHelper()
+                                  sl<FormatHelper>()
                                       .formatDecimalAndRemoveTrailingZeros(
                                           price),
                                   textAlign: TextAlign.start,
@@ -195,7 +196,7 @@ class ProductCard extends StatelessWidget {
                             child: Row(
                               children: [
                                 AutoSizeText(
-                                  FormatHelper()
+                                  sl<FormatHelper>()
                                       .formatDecimalAndRemoveTrailingZeros(
                                           salePrice),
                                   textAlign: TextAlign.start,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/intro_list.dart';
-import '../../../core/utilities/size_config.dart';
 import '../../widgets/intro/intro_card.dart';
 import '../../widgets/intro/intro_footer.dart';
 import '../../widgets/intro/intro_language.dart';
 import '../../widgets/shared/dots_indicator.dart';
+import '../../../core/constants/intro_list.dart';
+import '../../../core/utilities/enum/device_screen_type.dart';
+import '../../../core/utilities/size_config.dart';
 
 class Intro extends StatefulWidget {
   const Intro({Key? key}) : super(key: key);

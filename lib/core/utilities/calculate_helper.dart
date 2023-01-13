@@ -1,5 +1,5 @@
-import '../../models/cart_data.dart';
 import 'size_config.dart';
+import '../../models/cart_data.dart';
 
 class CalculateHelper {
   // used to calculate value of offset in shopping cart
@@ -9,7 +9,6 @@ class CalculateHelper {
     return offset;
   }
 
-  // get cart item total price
   double getCartItemTotalPrice(ItemData data) {
     double price = 0.0;
     if (data.size == null) {

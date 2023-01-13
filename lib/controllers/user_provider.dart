@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../models/user_data.dart';
 import '../repository/user_repository.dart';
+import '../core/service/service_locator.dart';
 import '../core/utilities/get_strings.dart';
 import '../core/utilities/show_snack_bar.dart';
 import '../presentation/widgets/dialog/indicator_dialog.dart';
@@ -53,22 +54,23 @@ class UserProvider with ChangeNotifier {
           initTextController(context: context);
           if (showMsg) {
             // ignore: use_build_context_synchronously
-            ShowSnackBar().show(context, 'data_has_been_updated_successfully');
+            sl<ShowSnackBar>()
+                .show(context, 'data_has_been_updated_successfully');
           }
           Navigator.pop(_dialogContext!);
         } else {
           Navigator.pop(_dialogContext!);
 
           // ignore: use_build_context_synchronously
-          ShowSnackBar().show(
+          sl<ShowSnackBar>().show(
               context,
               response.statusCode == 400 && showMsg
                   ? "email_is_used_please_enter_different_email"
                   : "unexpected_error");
         }
-      } catch (e) {
+      } catch (_) {
         if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-        ShowSnackBar().show(context, "unexpected_error");
+        sl<ShowSnackBar>().show(context, "unexpected_error");
       }
       notifyListeners();
     }
@@ -76,7 +78,7 @@ class UserProvider with ChangeNotifier {
 
   void setGender(int value, BuildContext context) {
     _gender = value;
-    genderController.text = GetStrings().getGender(context, value);
+    genderController.text = sl<GetStrings>().getGender(context, value);
     notifyListeners();
   }
 
@@ -85,7 +87,7 @@ class UserProvider with ChangeNotifier {
     usernameController.text = _userData?.data?.name ?? "";
     try {
       if (context != null) {
-        genderController.text = GetStrings()
+        genderController.text = sl<GetStrings>()
             .getGender(context, int.parse((_userData?.data?.gender ?? "-1")));
       } else {
         genderController.text = '';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../models/orders_data.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
@@ -323,7 +324,7 @@ class OrderCard extends StatelessWidget {
                                         fontSize: 10,
                                         fontWeight: FontWeight.w600)),
                                 Text(
-                                    "${order.totalAmountAfterDiscount} ${GetStrings().getCurrency(isAr ? "ar" : "En", (order.refNo!.substring(0, 2)))}",
+                                    "${order.totalAmountAfterDiscount} ${sl<GetStrings>().getCurrency(isAr ? "ar" : "En", (order.refNo!.substring(0, 2)))}",
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,

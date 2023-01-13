@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/locals_values.dart';
@@ -30,9 +31,9 @@ class LoginState extends State<Login> {
     String localsIsoCountryCode = systemLocales.first.countryCode ?? "SA";
     _isoCountryCode = locationProvider.isoCountryCode != null
         ? locationProvider.isoCountryCode!
-        : LocalsValues().getCountryCode(localsIsoCountryCode);
+        : sl<LocalsValues>().getCountryCode(localsIsoCountryCode);
     auth.setIsoCountryCode = _isoCountryCode;
-    auth.initCountyCode(GetStrings().getCountryKey(_isoCountryCode));
+    auth.initCountyCode(sl<GetStrings>().getCountryKey(_isoCountryCode));
     super.initState();
   }
 

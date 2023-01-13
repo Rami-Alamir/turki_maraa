@@ -1,9 +1,10 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/cart_data.dart';
 import '../core/service/networking/api_base_helper.dart';
+import '../core/service/service_locator.dart';
 
 class CartRepository {
-  final ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = sl<ApiBaseHelper>();
 
   Future<int> addToCart(
       body, String authorization, LatLng latLng, String countryId) async {

@@ -146,7 +146,7 @@ class CartProvider with ChangeNotifier {
     String iskwar3 = "0",
   }) async {
     int response;
-    DialogHelper().showIndicatorDialog(context);
+    sl<DialogHelper>().showIndicatorDialog(context);
     try {
       response = await sl<CartRepository>().addToCart({
         "product_id": productId,
@@ -178,7 +178,7 @@ class CartProvider with ChangeNotifier {
     required String quantity,
   }) async {
     HapticFeedback.heavyImpact();
-    DialogHelper().showIndicatorDialog(context);
+    sl<DialogHelper>().showIndicatorDialog(context);
     try {
       int response = await sl<CartRepository>().updateCartItem({
         "quantity": quantity,
@@ -197,7 +197,7 @@ class CartProvider with ChangeNotifier {
     required String productId,
   }) async {
     HapticFeedback.vibrate();
-    DialogHelper().showIndicatorDialog(context);
+    sl<DialogHelper>().showIndicatorDialog(context);
     try {
       int response = await sl<CartRepository>().deleteCartItem(
           _authorization!, productId, _latLng!, _isoCountryCode!);
@@ -220,8 +220,8 @@ class CartProvider with ChangeNotifier {
       try {
         await Future.wait([getDeliveryPeriods(), getCart()]);
         await getTamaraData();
-        _cartLength =
-            CalculateHelper().calculateCartLength(_cartData?.data?.cart?.data);
+        _cartLength = sl<CalculateHelper>()
+            .calculateCartLength(_cartData?.data?.cart?.data);
         if ((_cartData?.data?.cart?.data?.length ?? 0) > 0) {
           if (_cartData!.data!.cart!.data![0].appliedDiscountCode != null) {
             promoCodeController.text =
@@ -243,7 +243,7 @@ class CartProvider with ChangeNotifier {
       _tamaraData = null;
       _tamaraData = await sl<TamaraRepository>().getTamaraStatus(
           _isoCountryCode!,
-          GetStrings().getCurrency('en', _isoCountryCode!),
+          sl<GetStrings>().getCurrency('en', _isoCountryCode!),
           _cartData!.data!.invoicePreview!.totalAmountAfterDiscount!
               .toString());
     } catch (_) {}
@@ -270,7 +270,7 @@ class CartProvider with ChangeNotifier {
     _errorMsg = false;
     _promoIsActive = true;
     int response;
-    DialogHelper().showIndicatorDialog(context);
+    sl<DialogHelper>().showIndicatorDialog(context);
     HapticFeedback.heavyImpact();
 
     try {
@@ -414,8 +414,8 @@ class CartProvider with ChangeNotifier {
 
   // check required data to move screen controller to required fields
   bool checkRequiredData(BuildContext context) {
-    double offset =
-        CalculateHelper().calculateOffset(_cartData!.data!.cart!.data!.length);
+    double offset = sl<CalculateHelper>()
+        .calculateOffset(_cartData!.data!.cart!.data!.length);
     if (_selectedDate == -1) {
       animateScrollController(context, offset);
       return false;
@@ -428,7 +428,7 @@ class CartProvider with ChangeNotifier {
       animateScrollController(context, offset + 235);
       return false;
     }
-    DialogHelper().showIndicatorDialog(context);
+    sl<DialogHelper>().showIndicatorDialog(context);
     return true;
   }
 
@@ -452,7 +452,7 @@ class CartProvider with ChangeNotifier {
       }
       message += AppLocalizations.of(context)!.tr("payment_method");
     }
-    DialogHelper().show(
+    sl<DialogHelper>().show(
         context,
         MessageDialog(
           message: message,

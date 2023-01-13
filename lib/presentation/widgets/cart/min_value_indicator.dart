@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turki_dabayh/core/utilities/format_helper.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 
@@ -29,7 +30,7 @@ class MinValueIndicator extends StatelessWidget {
               children: <TextSpan>[
                 TextSpan(
                     text:
-                        ' ${FormatHelper().formatDecimalAndRemoveTrailingZeros(min - total)} $currency ',
+                        ' ${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(min - total)} $currency ',
                     style: Theme.of(context).textTheme.headline4!.copyWith(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
