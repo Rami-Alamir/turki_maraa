@@ -211,21 +211,23 @@ class CartBottomSheetState extends State<CartBottomSheet> {
           sl<ShowSnackBar>().show(context, "unexpected_error");
           break;
         case 1:
+          cartProvider.clearCart();
           Navigator.of(context, rootNavigator: true)
-              .pushNamed(orderSuccess, arguments: statusCode);
+              .pushNamed(orderStatus, arguments: true);
           break;
         case 2:
+          cartProvider.clearCart();
           Navigator.of(context, rootNavigator: true)
-              .pushNamed(orderSuccess, arguments: statusCode);
+              .pushNamed(orderStatus, arguments: true);
           launchUrlString(cartProvider.arb.data!.invoiceURL!);
           break;
         case 4:
+          cartProvider.clearCart();
           Navigator.of(context, rootNavigator: true).pushNamed(
               tamaraCheckoutPage,
               arguments: cartProvider.tamara.data!.checkoutUrl!);
           break;
         case 7:
-          if (!mounted) return;
           Navigator.of(context, rootNavigator: true)
               .pushNamed(tabbyCheckoutPage, arguments: cartProvider.session);
           break;

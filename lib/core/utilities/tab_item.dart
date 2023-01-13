@@ -5,7 +5,6 @@ import '../service/firebase_helper.dart';
 import '../../models/discover_data.dart';
 import '../../presentation/screens/app/app.dart';
 import '../../presentation/screens/cart/tabby_checkout_page.dart';
-import '../../presentation/screens/cart/order_success.dart';
 import '../../presentation/screens/cart/shopping_cart.dart';
 import '../../presentation/screens/cart/tamara_checkout_page.dart';
 import '../../presentation/screens/home/discover.dart';
@@ -139,11 +138,6 @@ class TabItem {
             case orderStatus:
               return MaterialPageRoute(
                   builder: (_) => OrderStatus(status: args as bool));
-            case orderSuccess:
-              return MaterialPageRoute(
-                  builder: (_) => OrderSuccess(
-                        paymentType: args as int,
-                      ));
             case tamaraCheckoutPage:
               return MaterialPageRoute(
                   builder: (_) => TamaraCheckoutPage(

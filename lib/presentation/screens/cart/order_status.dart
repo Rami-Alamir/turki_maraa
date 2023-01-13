@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
+import '../../../controllers/cart_provider.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 
-class OrderStatus extends StatelessWidget {
+class OrderStatus extends StatefulWidget {
   final bool status;
 
   const OrderStatus({Key? key, required this.status}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<OrderStatus> createState() => _OrderStatusState();
+}
+
+class _OrderStatusState extends State<OrderStatus> {
+  late bool status;
+  late int paymentId;
+  @override
+  void initState() {
+    status = widget.status;
     final OrdersProvider orders =
         Provider.of<OrdersProvider>(context, listen: false);
     orders.getOrdersList();
+    final CartProvider cartProvider =
+        Provider.of<CartProvider>(context, listen: false);
+    paymentId = cartProvider.selectedPayment;
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
         width: SizeConfig.screenWidth,
@@ -56,8 +72,11 @@ class OrderStatus extends StatelessWidget {
               child: SizedBox(
                 width: 250,
                 child: Text(
-                  AppLocalizations.of(context)!.tr(
-                      status ? "thank_order" : "payment_failed_description"),
+                  AppLocalizations.of(context)!.tr(status
+                      ? (paymentId == 2
+                          ? "the_order_has_been_sent_and_the_payment_is_being_verified"
+                          : "thank_order")
+                      : "payment_failed_description"),
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme

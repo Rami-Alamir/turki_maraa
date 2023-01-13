@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/service/service_locator.dart';
+import '../../../core/utilities/format_helper.dart';
 import '../../../models/order.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
@@ -94,7 +96,7 @@ class OrderDetailsRow extends StatelessWidget {
                       child: SizedBox(
                         width: SizeConfig.screenWidth! * .64,
                         child: AutoSizeText(
-                          '${item.totalPrice!} $currency',
+                          '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(double.parse(item.totalPrice!))} $currency',
                           textAlign: TextAlign.end,
                           style: Theme.of(context)
                               .textTheme

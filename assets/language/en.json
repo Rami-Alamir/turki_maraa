@@ -17,6 +17,8 @@
   "tamara_desc": "Divide it in 3 installments without fees",
   "tabby_desc": "Divide it in 4 installments without fees",
   "remaining" : "Remaining",
+  "tamara": "Tamara",
+  "tabby": "Tabby",
   "order_summary": "Order summary",
   "min_charge_order" : "to minimum charge for order",
   "promo_code": "Promo Code",

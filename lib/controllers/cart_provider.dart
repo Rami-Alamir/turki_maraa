@@ -6,13 +6,13 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
-import '../core/service/service_locator.dart';
-import '../models/user_data.dart';
 import 'address_provider.dart';
-import '../core/utilities/dialog_helper.dart';
+import '../models/user_data.dart';
 import '../core/constants/fixed_assets.dart';
-import '../core/utilities/enum/request_status.dart';
 import '../core/service/firebase_helper.dart';
+import '../core/service/service_locator.dart';
+import '../core/utilities/dialog_helper.dart';
+import '../core/utilities/enum/request_status.dart';
 import '../core/utilities/app_localizations.dart';
 import '../core/utilities/calculate_helper.dart';
 import '../core/utilities/get_strings.dart';
@@ -27,6 +27,7 @@ import '../repository/booking_repository.dart';
 import '../repository/cart_repository.dart';
 import '../repository/order_repository.dart';
 import '../repository/tamara_repository.dart';
+import '../repository/payment_repository.dart';
 
 class CartProvider with ChangeNotifier {
   final ScrollController _scrollController = ScrollController();
@@ -410,6 +411,16 @@ class CartProvider with ChangeNotifier {
       ));
     }
     return orderItems;
+  }
+
+  Future<void> updateTabbyPaymentStatus() async {
+    try {
+      await sl<PaymentRepository>().updateOrderPayment({
+        "payment_ref": orderRef.data!.paymentRef!,
+        "order_ref": orderRef.data!.orderRef,
+        "paid": 1,
+      }, _authorization!);
+    } catch (_) {}
   }
 
   // check required data to move screen controller to required fields

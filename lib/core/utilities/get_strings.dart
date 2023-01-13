@@ -33,16 +33,16 @@ class GetStrings {
     String paymentName = "";
     switch (paymentId) {
       case 1:
-        paymentName = "COD";
+        paymentName = "cod";
         break;
       case 2:
-        paymentName = "Online payment";
+        paymentName = "online_payment";
         break;
       case 4:
-        paymentName = "Tamara";
+        paymentName = "tamara";
         break;
       case 7:
-        paymentName = "Tabby";
+        paymentName = "tabby";
         break;
     }
     return paymentName;

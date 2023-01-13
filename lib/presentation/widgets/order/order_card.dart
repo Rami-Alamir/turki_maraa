@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'item_column.dart';
+import '../../../models/orders_data.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
-import '../../../models/orders_data.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
-import 'item_column.dart';
 
 class OrderCard extends StatelessWidget {
   final Data order;
@@ -237,10 +237,9 @@ class OrderCard extends StatelessWidget {
                                                   title: 'payment_method',
                                                   value: AppLocalizations.of(
                                                           context)!
-                                                      .tr(order.paymentTypeId ==
-                                                              1
-                                                          ? "cod"
-                                                          : "online_payment"),
+                                                      .tr(sl<GetStrings>()
+                                                          .getPaymentName(order
+                                                              .paymentTypeId!)),
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start),
                                               ItemColumn(

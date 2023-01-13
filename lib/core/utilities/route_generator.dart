@@ -5,7 +5,6 @@ import '../constants/route_constants.dart';
 import '../service/firebase_helper.dart';
 import '../../models/discover_data.dart';
 import '../../presentation/screens/app/app.dart';
-import '../../presentation/screens/cart/order_success.dart';
 import '../../presentation/screens/cart/shopping_cart.dart';
 import '../../presentation/screens/cart/tamara_checkout_page.dart';
 import '../../presentation/screens/home/discover.dart';
@@ -126,11 +125,6 @@ class RouteGenerator {
                 ));
       case search:
         return MaterialPageRoute(builder: (_) => const Search());
-      case orderSuccess:
-        return MaterialPageRoute(
-            builder: (_) => OrderSuccess(
-                  paymentType: args as int,
-                ));
       case tamaraCheckoutPage:
         return MaterialPageRoute(
             builder: (_) => TamaraCheckoutPage(
