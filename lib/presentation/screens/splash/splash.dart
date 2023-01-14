@@ -1,16 +1,15 @@
-import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
-import '../../screens/app/app.dart';
-import '../../screens/other/no_internet.dart';
+import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import 'package:provider/provider.dart';
-import '../intro/intro.dart';
+import '../../../core/service/service_locator.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -21,10 +20,12 @@ class Splash extends StatefulWidget {
 
 class SplashState extends State<Splash> {
   Timer? _timer;
+  late ConnectivityResult connectivityResult;
 
   @override
   void initState() {
     super.initState();
+    checkConnectivity();
     final LocationProvider location =
         Provider.of<LocationProvider>(context, listen: false);
     final HomeProvider home = Provider.of<HomeProvider>(context, listen: false);
@@ -44,7 +45,7 @@ class SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+    sl<SizeConfig>().init(context);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(105, 30, 24, 1),
       body: Container(
@@ -77,27 +78,23 @@ class SplashState extends State<Splash> {
     );
   }
 
-  // navigate to if new user(intro) else (home)
   void navigate() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool intro = prefs.getBool('intro') ?? true;
-    bool internetStatus = true;
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        internetStatus = true;
-      }
-    } on SocketException catch (_) {
-      internetStatus = false;
-    }
+    bool introStatus = prefs.getBool('intro') ?? true;
     if (!mounted) return;
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (context) => intro
-                ? const Intro()
-                : internetStatus
-                    ? const App()
-                    : const NoInternet()),
-        (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        introStatus
+            ? intro
+            : connectivityResult != ConnectivityResult.none
+                ? app
+                : noInternet,
+        (route) => false);
+  }
+
+  // Check internet connection
+  Future<void> checkConnectivity() async {
+    try {
+      connectivityResult = await Connectivity().checkConnectivity();
+    } catch (_) {}
   }
 }

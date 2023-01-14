@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
-import '../../../core/service/service_locator.dart';
 import '../cart/shopping_cart.dart';
 import '../home/home.dart';
 import '../orders/orders.dart';
@@ -13,6 +12,7 @@ import '../../../controllers/cart_provider.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/service/firebase_helper.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
@@ -28,33 +28,6 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-  Future<void> setupInteractedMessage() async {
-    // Get any messages which caused the application to open from
-    // a terminated state.
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
-
-    // If the message also contains a data property with a "type" of "chat",
-    // navigate to a chat screen
-    if (initialMessage != null) {
-      _handleMessage(initialMessage);
-    }
-
-    // Also handle any interaction when the app is in the background via a
-    // Stream listener
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
-  }
-
-  void _handleMessage(RemoteMessage message) {
-    if (message.data['type'] == "url") {
-      _launchURL(message.data["url"]);
-    }
-    // Navigator.pushNamed(
-    //   context,
-    //   message.data['type'],
-    // );
-  }
-
   // this is static property so other widget throughout the app can access it simply
   static int currentTab = 0;
   int index = 0;
@@ -80,20 +53,19 @@ class AppState extends State<App> {
         page: const Profile(),
       ),
     ];
-
     // indexing is necessary for proper functionality of determining which tab is active
     tabs.asMap().forEach((index, details) {
       details.setIndex(index);
     });
   }
 
-  // sets current tab index and update state
+  //set current tab index and update state
   void _selectTab(int index) {
     if (index == currentTab) {
-      // pop to first route  if the user taps on the active tab
+      //pop to first route if the user taps on the active tab
       tabs[index].key.currentState?.popUntil((route) => route.isFirst);
     } else {
-      // update the state  in order to repaint
+      //update the state  in order to repaint
       setState(() => currentTab = index);
     }
   }
@@ -223,7 +195,31 @@ class AppState extends State<App> {
     );
   }
 
-  //used to make calls, whatsapp,...
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    if (message.data['type'] == "url") {
+      _launchURL(message.data["url"]);
+    }
+    // Navigator.pushNamed(
+    //   context,
+    //   message.data['type'],
+    // );
+  }
+
+  //used to make calls
   Future<void> _launchURL(String url) async {
     try {
       if (await canLaunchUrlString(url)) {

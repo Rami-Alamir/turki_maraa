@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../../../models/order.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
+import '../../../core/service/firebase_helper.dart';
 import '../../../core/utilities/format_helper.dart';
-import '../../../models/order.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../../core/service/firebase_helper.dart';
 
 class OrderDetailsRow extends StatelessWidget {
   final String currency;

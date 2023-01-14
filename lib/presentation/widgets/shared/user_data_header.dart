@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../screens/profile/login.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/user_provider.dart';
-import '../../screens/profile/login.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/r_a7_i_c_o_n_s_icons.dart';
 
@@ -39,7 +39,7 @@ class UserDataHeader extends StatelessWidget {
                       children: [
                         Text(
                           user.userData?.data?.name ?? "",
-                          style: Theme.of(context).textTheme.subtitle1!,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                         Directionality(
                           textDirection: TextDirection.ltr,

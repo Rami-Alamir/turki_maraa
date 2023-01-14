@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import '../../presentation/screens/cart/tabby_checkout_page.dart';
+import '../../presentation/screens/intro/intro.dart';
 import '../constants/route_constants.dart';
 import '../service/firebase_helper.dart';
 import '../../models/discover_data.dart';
@@ -123,6 +124,8 @@ class RouteGenerator {
             builder: (_) => GMSMap(
                   addressIndex: args as int,
                 ));
+      case intro:
+        return MaterialPageRoute(builder: (_) => const Intro());
       case search:
         return MaterialPageRoute(builder: (_) => const Search());
       case tamaraCheckoutPage:

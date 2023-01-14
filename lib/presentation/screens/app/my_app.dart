@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../../controllers/app_language.dart';
-import '../../../core/service/firebase_helper.dart';
 import '../../../controllers/app_theme.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/route_generator.dart';
+import '../../../core/service/firebase_helper.dart';
 
 //App Widget tree
 class MyApp extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'social_media_icon.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/utilities/social_icons_icons.dart';
-import 'social_media_icon.dart';
 
 class SocialMedia extends StatelessWidget {
   final Color? color;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'rectangle_text_field.dart';
+import 'rounded_rectangle_button.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import 'rectangle_text_field.dart';
-import 'rounded_rectangle_button.dart';
 
 class MapBottomSheet extends StatelessWidget {
   final int addressIndex;
@@ -24,6 +24,7 @@ class MapBottomSheet extends StatelessWidget {
         Provider.of<AddressProvider>(context);
     return InkWell(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      splashColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
@@ -53,8 +54,7 @@ class MapBottomSheet extends StatelessWidget {
                       addressDescription,
                       maxLines: 2,
                       textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
-                          fontSize: 14, fontWeight: FontWeight.normal),
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                   ),
                   Text(

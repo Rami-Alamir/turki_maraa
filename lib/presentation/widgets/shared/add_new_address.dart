@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'rounded_rectangle_button.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
-import 'rounded_rectangle_button.dart';
 
 class AddNewAddress extends StatelessWidget {
   const AddNewAddress({Key? key}) : super(key: key);
@@ -18,6 +18,7 @@ class AddNewAddress extends StatelessWidget {
             locationProvider.isHms ? hmsMap : gmsMap,
             arguments: -100);
       },
+      splashColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Row(

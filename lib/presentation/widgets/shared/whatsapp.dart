@@ -1,11 +1,11 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/constants.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-import '../../../controllers/location_provider.dart';
 import '../../../core/service/firebase_helper.dart';
+import '../../../controllers/location_provider.dart';
 
 class Whatsapp extends StatelessWidget {
   const Whatsapp({Key? key}) : super(key: key);
