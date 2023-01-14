@@ -60,4 +60,6 @@ class FixedAssets {
   static const String logout = 'assets/images/profile_icons/logout-colored.svg';
   static const String deleteAddress =
       'assets/images/profile_icons/home-location.svg';
+  //lottie
+  static const String logoLottie = "assets/lottie/logo.json";
 }

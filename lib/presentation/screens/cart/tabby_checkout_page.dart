@@ -25,15 +25,15 @@ class _TabbyCheckoutPageState extends State<TabbyCheckoutPage> {
               final CartProvider cartProvider =
                   Provider.of<CartProvider>(context, listen: false);
               cartProvider.clearCart();
-              if (resultCode.name == "close") {
-                Navigator.pushReplacementNamed(context, orderStatus,
-                    arguments: false);
-              } else {
+              if (resultCode.name == "authorized") {
                 await cartProvider.updateTabbyPaymentStatus();
-                // print(session.paymentId.toString());
+                // print(widget.session.paymentId.toString());
                 if (!mounted) return;
                 Navigator.pushReplacementNamed(context, orderStatus,
                     arguments: true);
+              } else {
+                Navigator.pushReplacementNamed(context, orderStatus,
+                    arguments: false);
               }
             },
           ),

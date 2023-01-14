@@ -1,12 +1,10 @@
 // ignore_for_file: constant_identifier_names
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class TURKIICONS {
   TURKIICONS._();
-
   static const _kFontFam = 'TURKIICONS';
   static const String? _kFontPkg = null;
 
@@ -242,4 +240,8 @@ class TURKIICONS {
       IconData(0xe872, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData c1 =
       IconData(0xe873, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData search2 =
+      IconData(0xe874, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData search =
+      IconData(0xe875, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

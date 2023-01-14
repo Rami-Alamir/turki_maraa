@@ -113,9 +113,7 @@ class HelpCard extends StatelessWidget {
       } else {
         throw 'Could not launch $url';
       }
-    } catch (e) {
-      print(e.toString());
-      print('rami');
+    } catch (_) {
     }
   }
 

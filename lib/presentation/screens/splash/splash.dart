@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';
@@ -47,35 +48,48 @@ class SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     sl<SizeConfig>().init(context);
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(105, 30, 24, 1),
-      body: Container(
-        width: SizeConfig.screenWidth,
-        height: SizeConfig.screenHeight,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(FixedAssets.splash),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
-              child: InkWell(
-                onTap: navigate,
-                child: Text(
-                  AppLocalizations.of(context)!.tr('skip'),
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
+        backgroundColor: const Color.fromRGBO(105, 30, 24, 1),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(30, 30, 30, 0),
+                child: InkWell(
+                  onTap: navigate,
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  child: Text(
+                              AppLocalizations.of(context)!.tr('skip'),
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                  ),
                 ),
+              )
+            ],
+          ),
+        ],
+      ),
+      body: Container(
+            width: SizeConfig.screenWidth,
+            height: SizeConfig.screenHeight,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(FixedAssets.background),
+                fit: BoxFit.cover,
               ),
-            )
-          ],
+            ),
+        child: Center(
+          child: Lottie.asset(FixedAssets.logoLottie,
+              height: 450, width: 450, fit: BoxFit.contain),
         ),
       ),
     );
+
   }
 
   void navigate() async {
