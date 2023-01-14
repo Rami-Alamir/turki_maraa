@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:turki_dabayh/core/utilities/enum/request_status.dart';
 import '../../widgets/order/delivery_address.dart';
 import '../../widgets/order/order_details_card.dart';
 import '../../widgets/order/order_details_header.dart';
 import '../../widgets/order/order_note.dart';
 import '../../widgets/order/payment_method.dart';
+import '../../widgets/shared/retry.dart';
+import '../../widgets/shared/spinkit_indicator.dart';
 import '../../widgets/shared/not_auth.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
-import 'package:provider/provider.dart';
-import '../../widgets/shared/retry.dart';
-import '../../widgets/shared/spinkit_indicator.dart';
+
 
 class OrderDetails extends StatefulWidget {
   final String? id;
@@ -38,13 +40,12 @@ class OrderDetailsState extends State<OrderDetails> {
           title: AppLocalizations.of(context)!.tr('order_details')),
       body: !orders.isAuth
           ? const NotAuth()
-          : orders.isLoading2
+          : orders.requestStatus2 == RequestStatus.isLoading
               ? const SpinkitIndicator()
-              : orders.retry2
+              :  orders.requestStatus2 == RequestStatus.error
                   ? Retry(
                       onPressed: () {
-                        orders.setIsLoading2 = true;
-                        orders.getOrderData(widget.id!);
+                        orders.getOrderData(widget.id!,notify: true);
                       },
                     )
                   : RefreshIndicator(

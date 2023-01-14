@@ -27,7 +27,6 @@ class SearchProvider with ChangeNotifier {
     }
   }
 
-  //search result
   Future<void> getSearchResultList() async {
     try {
       _searchData = await sl<SearchRepository>().getSearchResultList(

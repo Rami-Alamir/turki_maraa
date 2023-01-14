@@ -1,82 +1,76 @@
 import 'package:flutter/material.dart';
 import '../core/service/service_locator.dart';
+import '../core/utilities/enum/request_status.dart';
 import '../models/order.dart';
 import '../models/orders_data.dart';
 import '../repository/order_repository.dart';
 
 class OrdersProvider with ChangeNotifier {
-  bool? _isLoading;
-  bool _retry = false;
   bool _isAuth = false;
-  bool _isLoading2 = true;
-  bool _retry2 = false;
   OrdersData? _ordersData;
   Order? _order;
   String? _accessToken;
+   RequestStatus _requestStatus = RequestStatus.isLoading;
+   RequestStatus _requestStatus2 = RequestStatus.isLoading;
 
   OrdersData? get ordersData => _ordersData;
   Order get order => _order!;
-  bool get retry => _retry;
-  bool get retry2 => _retry2;
-  bool get isLoading => _isLoading == true;
-  bool get isLoading2 => _isLoading2;
   bool get isAuth => _isAuth;
 
-  set setIsLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
+  RequestStatus get requestStatus => _requestStatus;
 
-  set setIsLoading2(bool value) {
-    _isLoading2 = value;
-    notifyListeners();
-  }
+  RequestStatus get requestStatus2 => _requestStatus2;
 
   void updateOrderProvider(String accessToken, bool isAuth) {
     _accessToken = accessToken;
     _isAuth = isAuth;
     if (_isAuth &&
-        _ordersData == null &&
-        (_isLoading == false || _isLoading == null)) {
+        _ordersData == null) {
       notifyListeners();
       getOrdersList();
     } else if (!_isAuth) {
       _ordersData = null;
       _order = null;
-      _isLoading = false;
+      _requestStatus= RequestStatus.completed;
       notifyListeners();
     }
   }
 
-  //get orders list Data
-  Future<void> getOrdersList() async {
+  Future<void> getOrdersList({bool notify = false}) async {
+    print('getOrdersList');
     if (_isAuth) {
-      _isLoading = true;
-      _retry = false;
+      _requestStatus= RequestStatus.isLoading;
+      if(notify){
+        notifyListeners();
+      }
       try {
         _ordersData =
             await sl<OrderRepository>().getOrdersList("Bearer $_accessToken");
+        print('ddd');
+        _requestStatus= RequestStatus.completed;
       } catch (_) {
-        _retry = true;
+        _requestStatus= RequestStatus.error;
       }
-      _isLoading = false;
       notifyListeners();
     }
   }
 
-  //get order Data
-  Future<void> getOrderData(String id) async {
-    _isLoading2 = true;
-    _retry2 = false;
+  Future<void> getOrderData(String id,{bool notify = false}) async {
+    print(_accessToken);
+    _requestStatus2= RequestStatus.isLoading;
+    if(notify){
+      notifyListeners();
+    }
     try {
       _order = await sl<OrderRepository>().getOrderData(
           id,
           ""
           "Bearer $_accessToken");
+      _requestStatus2= RequestStatus.completed;
+
     } catch (_) {
-      _retry2 = true;
+      _requestStatus2= RequestStatus.error;
     }
-    _isLoading2 = false;
     notifyListeners();
   }
 

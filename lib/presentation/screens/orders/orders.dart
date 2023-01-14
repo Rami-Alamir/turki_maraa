@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/enum/request_status.dart';
 import '../../widgets/order/order_card.dart';
 import '../../widgets/shared/empty_list.dart';
 import '../../widgets/shared/not_auth.dart';
@@ -18,20 +19,21 @@ class Orders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OrdersProvider orders = Provider.of<OrdersProvider>(context);
+    print("orders.requestStatus.name");
+    print(orders.requestStatus.name);
     return Scaffold(
         appBar: PrimaryAppBar(
           title: AppLocalizations.of(context)!.tr('orders'),
           back: back!,
         ),
-        body: orders.isLoading
-            ? const SpinkitIndicator()
+        body: orders.requestStatus== RequestStatus.isLoading
+        ? const SpinkitIndicator()
             : !orders.isAuth
                 ? const NotAuth()
-                : orders.retry
+                :orders.requestStatus== RequestStatus.error
                     ? Retry(
                         onPressed: () {
-                          orders.setIsLoading = true;
-                          orders.getOrdersList();
+                          orders.getOrdersList(notify: true);
                         },
                       )
                     : RefreshIndicator(
