@@ -94,18 +94,23 @@ class OrderDetailsRow extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: SizedBox(
-                        width: SizeConfig.screenWidth! * .64,
-                        child: AutoSizeText(
-                          '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(double.parse(item.totalPrice!))} $currency',
-                          textAlign: TextAlign.end,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(
-                                  fontSize: 12,
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w600),
-                          maxLines: 2,
+                        width: SizeConfig.screenWidth! -128,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            AutoSizeText(
+                              '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(double.parse(item.totalPrice!))} $currency',
+                              textAlign: TextAlign.end,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(
+                                      fontSize: 12,
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.w600),
+                              maxLines: 2,
+                            ),
+                          ],
                         ),
                       ),
                     ),

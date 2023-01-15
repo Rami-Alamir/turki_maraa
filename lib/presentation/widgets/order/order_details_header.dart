@@ -49,7 +49,7 @@ class OrderDetailsHeader extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                          width: SizeConfig.screenWidth! * .9 - 15,
+                          width: SizeConfig.screenWidth! -50,
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
@@ -73,7 +73,7 @@ class OrderDetailsHeader extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: SizedBox(
-                          width: SizeConfig.screenWidth! * .9 - 15,
+                          width: SizeConfig.screenWidth! - 50,
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
