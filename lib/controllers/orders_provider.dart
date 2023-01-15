@@ -10,15 +10,13 @@ class OrdersProvider with ChangeNotifier {
   OrdersData? _ordersData;
   Order? _order;
   String? _accessToken;
-   RequestStatus _requestStatus = RequestStatus.isLoading;
-   RequestStatus _requestStatus2 = RequestStatus.isLoading;
+  RequestStatus _requestStatus = RequestStatus.isLoading;
+  RequestStatus _requestStatus2 = RequestStatus.isLoading;
 
   OrdersData? get ordersData => _ordersData;
   Order get order => _order!;
   bool get isAuth => _isAuth;
-
   RequestStatus get requestStatus => _requestStatus;
-
   RequestStatus get requestStatus2 => _requestStatus2;
 
   void updateOrderProvider(String accessToken, bool isAuth) {
@@ -46,7 +44,6 @@ class OrdersProvider with ChangeNotifier {
       try {
         _ordersData =
             await sl<OrderRepository>().getOrdersList("Bearer $_accessToken");
-        print('ddd');
         _requestStatus= RequestStatus.completed;
       } catch (_) {
         _requestStatus= RequestStatus.error;
@@ -56,7 +53,6 @@ class OrdersProvider with ChangeNotifier {
   }
 
   Future<void> getOrderData(String id,{bool notify = false}) async {
-    print(_accessToken);
     _requestStatus2= RequestStatus.isLoading;
     if(notify){
       notifyListeners();

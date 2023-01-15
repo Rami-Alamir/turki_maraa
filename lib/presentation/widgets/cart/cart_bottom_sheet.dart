@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import 'package:turki_dabayh/core/utilities/enum/device_screen_type.dart';
+import 'package:turki_dabayh/core/utilities/size_config.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'min_value_indicator.dart';
 import '../shared/invoice.dart';
@@ -45,7 +47,8 @@ class CartBottomSheetState extends State<CartBottomSheet> {
         return true;
       },
       child: DraggableScrollableSheet(
-        initialChildSize: min > total ? 0.35 : 0.25,
+        initialChildSize: min > total ? 0.35 :SizeConfig.deviceScreenType ==DeviceScreenType.mobile?0.25: 0.15,
+        minChildSize: SizeConfig.deviceScreenType ==DeviceScreenType.mobile?0.25: 0.15,
         maxChildSize: 0.5,
         builder: (BuildContext context, ScrollController scrollController) {
           return Container(
