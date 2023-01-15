@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
-import 'circle_icon.dart';
-import '../../../core/service/service_locator.dart';
-import '../../../core/utilities/format_helper.dart';
-import '../../../models/product_details.dart';
+
 import '../../../controllers/favourite_provider.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../controllers/products_provider.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/format_helper.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../../models/product_details.dart';
+import 'circle_icon.dart';
 
-class ProductDescription extends StatelessWidget {
+class ProductDescription extends StatefulWidget {
   final ProductDetails product;
   final double price;
   final double salePrice;
@@ -24,6 +26,19 @@ class ProductDescription extends StatelessWidget {
     required this.salePrice,
     required this.isFavourite,
   }) : super(key: key);
+
+  @override
+  State<ProductDescription> createState() => _ProductDescriptionState();
+}
+
+class _ProductDescriptionState extends State<ProductDescription> {
+  late ProductDetails product;
+
+  @override
+  void initState() {
+    product = widget.product;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,24 +90,31 @@ class ProductDescription extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0),
                     child: CircleIcon(
-                        icon: isFavourite
+                        icon: widget.isFavourite
                             ? Icons.favorite
                             : Icons.favorite_border_outlined,
-                        onTap: () {
+                        onTap: () async {
                           final favourite = Provider.of<FavouriteProvider>(
                               context,
                               listen: false);
                           if (favourite.isAuth) {
-                            if (isFavourite) {
-                              favourite.deleteFromFavourite(
+                            if (widget.isFavourite) {
+                              bool status = await favourite.deleteFromFavourite(
                                   context: context,
+                                  productName: product.data!.nameAr!,
                                   id: favourite
                                       .getFavouriteId(
                                           int.parse('${product.data!.id!}'))
                                       .toString());
+                              if (!mounted) return;
+                              action(context, status, false);
                             } else {
-                              favourite.addToFavourite(
-                                  context: context, id: '${product.data!.id!}');
+                              bool status = await favourite.addToFavourite(
+                                  productName: product.data!.nameAr!,
+                                  context: context,
+                                  id: '${product.data!.id!}');
+                              if (!mounted) return;
+                              action(context, status, true);
                             }
                           }
                         },
@@ -114,10 +136,11 @@ class ProductDescription extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 3, left: 5, right: 5),
                       child: Text(
                         sl<FormatHelper>()
-                            .formatDecimalAndRemoveTrailingZeros(price),
+                            .formatDecimalAndRemoveTrailingZeros(widget.price),
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: salePrice > 0.0 && salePrice < price
+                            color: widget.salePrice > 0.0 &&
+                                    widget.salePrice < widget.price
                                 ? Theme.of(context)
                                     .textTheme
                                     .headline6!
@@ -125,18 +148,20 @@ class ProductDescription extends StatelessWidget {
                                     .withOpacity(0.4)
                                 : Theme.of(context).textTheme.subtitle1!.color,
                             decorationThickness: 2,
-                            decoration: salePrice > 0.0 && salePrice < price
+                            decoration: widget.salePrice > 0.0 &&
+                                    widget.salePrice < widget.price
                                 ? TextDecoration.lineThrough
                                 : TextDecoration.none,
-                            fontSize: salePrice > 0 ? 14 : 16,
+                            fontSize: widget.salePrice > 0 ? 14 : 16,
                             fontWeight: FontWeight.bold),
                         maxLines: 1,
                       ),
                     ),
                     Visibility(
-                      visible: salePrice > 0 && salePrice < price,
+                      visible: widget.salePrice > 0 &&
+                          widget.salePrice < widget.price,
                       child: Text(
-                        '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(salePrice)} ',
+                        '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(widget.salePrice)} ',
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontSize: 16,
@@ -197,7 +222,12 @@ class ProductDescription extends StatelessWidget {
     );
   }
 
-  formatDecimal(double value) {
-    return value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 3);
+  void action(BuildContext context, bool status, bool isFavourite) {
+    Navigator.of(context, rootNavigator: true).pop();
+    if (status) {
+      final productsProvider =
+          Provider.of<ProductsProvider>(context, listen: false);
+      productsProvider.setIsFavourite2 = isFavourite;
+    }
   }
 }

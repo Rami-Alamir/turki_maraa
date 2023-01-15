@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turki_dabayh/core/utilities/enum/request_status.dart';
 import '../../../controllers/favourite_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -29,13 +30,12 @@ class Favourite extends StatelessWidget {
                   title: 'empty_favourite',
                   image: FixedAssets.emptyFavourite,
                 )
-              : favourite.isLoading
+              : favourite.requestStatus ==RequestStatus.isLoading
                   ? const SpinkitIndicator()
-                  : favourite.retry
+                  : favourite.requestStatus ==RequestStatus.error
                       ? Retry(
                           onPressed: () {
-                            favourite.setIsLoading = true;
-                            favourite.getFavouriteData();
+                            favourite.getFavouriteList(notify: true);
                           },
                         )
                       : RefreshIndicator(
@@ -43,7 +43,7 @@ class Favourite extends StatelessWidget {
                           backgroundColor:
                               Theme.of(context).colorScheme.secondary,
                           onRefresh: () async {
-                            await favourite.getFavouriteData();
+                            await favourite.getFavouriteList();
                           },
                           child: ((favourite.favourite?.dataT?.data?.length) ??
                                       0) ==

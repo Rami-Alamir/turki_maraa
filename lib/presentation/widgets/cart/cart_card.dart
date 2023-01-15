@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../shared/main_card.dart';
-import '../shared/rounded_rectangle_button.dart';
-import '../../../models/cart_data.dart';
-import '../../../controllers/location_provider.dart';
+
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/favourite_provider.dart';
-import '../../../core/utilities/app_localizations.dart';
-import '../../../core/utilities/get_strings.dart';
-import '../../../core/utilities/size_config.dart';
-import '../../../core/utilities/show_snack_bar.dart';
+import '../../../controllers/location_provider.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/firebase_helper.dart';
 import '../../../core/service/service_locator.dart';
+import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/calculate_helper.dart';
 import '../../../core/utilities/format_helper.dart';
+import '../../../core/utilities/get_strings.dart';
+import '../../../core/utilities/show_snack_bar.dart';
+import '../../../core/utilities/size_config.dart';
+import '../../../models/cart_data.dart';
+import '../shared/main_card.dart';
+import '../shared/rounded_rectangle_button.dart';
 
 class CartCard extends StatefulWidget {
   final ItemData item;
@@ -66,6 +67,7 @@ class _CartCardState extends State<CartCard> {
               favourite.addToFavourite(
                   context: context,
                   withDialog: false,
+                  productName: widget.item.product!.nameAr!,
                   id: '${widget.item.product!.id!}');
               delete(context, cartProvider);
             }
