@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import '../../../models/order.dart';
+import 'package:provider/provider.dart';
+
+import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../../models/order.dart';
 import '../../widgets/shared/main_card.dart';
 import 'item_column.dart';
 
 class OrderDetailsHeader extends StatelessWidget {
-  final Data order;
-
-  const OrderDetailsHeader({Key? key, required this.order}) : super(key: key);
+  const OrderDetailsHeader({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
+    Data order = ordersProvider.order.data!;
     final bool isAr =
         AppLocalizations.of(context)!.locale == const Locale('ar');
     final DateTime date = DateTime.parse(order.createdAt!.substring(0, 19));
@@ -33,7 +36,7 @@ class OrderDetailsHeader extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headline1!
-                        .copyWith(fontWeight: FontWeight.bold, fontSize: 14),
+                        .copyWith(fontSize: 14),
                   ),
                 ),
               ],
@@ -49,7 +52,7 @@ class OrderDetailsHeader extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                          width: SizeConfig.screenWidth! -50,
+                          width: SizeConfig.screenWidth! - 50,
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),

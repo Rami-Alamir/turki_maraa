@@ -94,7 +94,7 @@ class OrderDetailsRow extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: SizedBox(
-                        width: SizeConfig.screenWidth! -128,
+                        width: SizeConfig.screenWidth! - 128,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [

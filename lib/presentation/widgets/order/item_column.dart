@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/utilities/app_localizations.dart';
 
 class ItemColumn extends StatelessWidget {
@@ -22,7 +23,6 @@ class ItemColumn extends StatelessWidget {
           AppLocalizations.of(context)!.tr(title),
           style: Theme.of(context).textTheme.headline5!.copyWith(
                 fontWeight: FontWeight.w500,
-                fontSize: 12,
               ),
         ),
         Text(

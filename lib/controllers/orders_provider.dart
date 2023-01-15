@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../core/service/service_locator.dart';
 import '../core/utilities/enum/request_status.dart';
 import '../models/order.dart';
@@ -22,39 +23,37 @@ class OrdersProvider with ChangeNotifier {
   void updateOrderProvider(String accessToken, bool isAuth) {
     _accessToken = accessToken;
     _isAuth = isAuth;
-    if (_isAuth &&
-        _ordersData == null) {
+    if (_isAuth && _ordersData == null) {
       notifyListeners();
       getOrdersList();
     } else if (!_isAuth) {
       _ordersData = null;
       _order = null;
-      _requestStatus= RequestStatus.completed;
+      _requestStatus = RequestStatus.completed;
       notifyListeners();
     }
   }
 
   Future<void> getOrdersList({bool notify = false}) async {
-    print('getOrdersList');
     if (_isAuth) {
-      _requestStatus= RequestStatus.isLoading;
-      if(notify){
+      _requestStatus = RequestStatus.isLoading;
+      if (notify) {
         notifyListeners();
       }
       try {
         _ordersData =
             await sl<OrderRepository>().getOrdersList("Bearer $_accessToken");
-        _requestStatus= RequestStatus.completed;
+        _requestStatus = RequestStatus.completed;
       } catch (_) {
-        _requestStatus= RequestStatus.error;
+        _requestStatus = RequestStatus.error;
       }
       notifyListeners();
     }
   }
 
-  Future<void> getOrderData(String id,{bool notify = false}) async {
-    _requestStatus2= RequestStatus.isLoading;
-    if(notify){
+  Future<void> getOrderData(String id, {bool notify = false}) async {
+    _requestStatus2 = RequestStatus.isLoading;
+    if (notify) {
       notifyListeners();
     }
     try {
@@ -62,10 +61,9 @@ class OrdersProvider with ChangeNotifier {
           id,
           ""
           "Bearer $_accessToken");
-      _requestStatus2= RequestStatus.completed;
-
+      _requestStatus2 = RequestStatus.completed;
     } catch (_) {
-      _requestStatus2= RequestStatus.error;
+      _requestStatus2 = RequestStatus.error;
     }
     notifyListeners();
   }

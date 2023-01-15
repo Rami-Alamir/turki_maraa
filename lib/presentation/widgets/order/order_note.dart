@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../widgets/shared/main_card.dart';
 
 class OrderNote extends StatelessWidget {
-  final String note;
-
-  const OrderNote({Key? key, required this.note}) : super(key: key);
+  const OrderNote({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
+    final String note = ordersProvider.order.data?.comment ?? " ";
     return Visibility(
       visible: note.isNotEmpty,
       child: Column(
@@ -18,10 +21,8 @@ class OrderNote extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
             child: Text(
               AppLocalizations.of(context)!.tr('note'),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(fontWeight: FontWeight.bold, fontSize: 12),
+              style:
+                  Theme.of(context).textTheme.headline1!.copyWith(fontSize: 12),
             ),
           ),
           MainCard(

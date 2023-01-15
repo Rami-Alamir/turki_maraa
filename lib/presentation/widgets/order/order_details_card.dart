@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../controllers/orders_provider.dart';
 import '../../../core/service/service_locator.dart';
-import '../../../models/order.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
+import '../../../models/order.dart';
 import '../../widgets/order/order_details_row.dart';
 import '../../widgets/shared/invoice.dart';
 import '../../widgets/shared/main_card.dart';
 
 class OrderDetailsCard extends StatelessWidget {
-  final Order order;
-  final int count;
-
-  const OrderDetailsCard({Key? key, required this.order, required this.count})
-      : super(key: key);
+  const OrderDetailsCard({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
+    final Order order = ordersProvider.order;
     final String currency = sl<GetStrings>().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         (order.data!.refNo!.substring(0, 2)));
@@ -23,10 +24,7 @@ class OrderDetailsCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
         child: Text(
           AppLocalizations.of(context)!.tr('order_details'),
-          style: Theme.of(context)
-              .textTheme
-              .headline1!
-              .copyWith(fontWeight: FontWeight.bold, fontSize: 12),
+          style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 12),
         ),
       ),
       MainCard(
@@ -36,9 +34,8 @@ class OrderDetailsCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 15.0, top: 20, bottom: 10),
               child: Text(
-                "${AppLocalizations.of(context)!.tr('items')} ($count)",
+                "${AppLocalizations.of(context)!.tr('items')} (${ordersProvider.orderItems()})",
                 style: Theme.of(context).textTheme.headline1!.copyWith(
-                      fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
               ),
