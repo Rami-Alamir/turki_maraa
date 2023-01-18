@@ -6,12 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:huawei_map/map.dart' as hms;
 import 'package:http/http.dart' as http;
 import 'location_provider.dart';
+import '../core/utilities/dialog_helper.dart';
 import '../core/constants/fixed_assets.dart';
 import '../core/service/service_locator.dart';
 import '/../core/utilities/get_strings.dart';
 import '/../core/utilities/show_snack_bar.dart';
 import '/../core/utilities/app_localizations.dart';
-import '/../core/utilities/show_dialog.dart';
 import '/../models/user_address.dart';
 import '/../presentation/widgets/dialog/indicator_dialog.dart';
 import '/../repository/user_repository.dart';
@@ -54,7 +54,6 @@ class AddressProvider with ChangeNotifier {
   void updateAddressProvider(bool isAuth, String accessToken) {
     _isAuth = isAuth;
     _authorization = "Bearer $accessToken";
-
     if (_isAuth == true && _userAddress == null) {
       getAddressList();
     } else if (_isAuth == false) {
@@ -63,7 +62,6 @@ class AddressProvider with ChangeNotifier {
     }
   }
 
-  // user address list
   Future<void> getAddressList() async {
     if (_isAuth ?? false) {
       try {
@@ -73,7 +71,6 @@ class AddressProvider with ChangeNotifier {
     }
   }
 
-  // add new address
   Future<void> addNewAddress(BuildContext context,
       {LatLng? latLng, String? isoCountryCode}) async {
     String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
@@ -143,7 +140,6 @@ class AddressProvider with ChangeNotifier {
     }
   }
 
-  //update address
   Future<void> updateAddress(BuildContext context, int addressId) async {
     String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
     _dialogContext = context;
@@ -187,31 +183,26 @@ class AddressProvider with ChangeNotifier {
     }
   }
 
-  //delete address
-  Future<void> deleteAddress(BuildContext context, int addressId) async {
-    ShowConfirmDialog().confirmDialog(context, () async {
-      _dialogContext = context;
-      _showDialogIndicator(_dialogContext);
-      http.Response response;
+  Future<int> deleteAddress(
+      BuildContext context, int addressId, int index) async {
+    if (index == _selectedAddress) {
+      sl<ShowSnackBar>().show(
+          context, "the_address_used_as_a_delivery_address_cannot_be_deleted");
+      return 1;
+    } else {
       try {
-        response = await sl<UserRepository>()
-            .deleteAddress(_authorization!, "$addressId");
+        sl<DialogHelper>().showIndicatorDialog(context);
+        var response =
+            await UserRepository().deleteAddress(_authorization!, "$addressId");
         if (response.statusCode == 200) {
           await getAddressList();
-          notifyListeners();
-          Navigator.pop(_dialogContext!);
-        } else {
-          Navigator.pop(_dialogContext!);
-          // ignore: use_build_context_synchronously
-          sl<ShowSnackBar>().show(context, "unexpected_error");
         }
       } catch (_) {
-        if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-        sl<ShowSnackBar>().show(context, "unexpected_error");
+        return 0;
       }
       notifyListeners();
-    }, "are_you_sure_you_want_to_delete_the_address", "delete_address",
-        icon: FixedAssets.deleteAddress);
+      return 2;
+    }
   }
 
   // show indicator dialog
