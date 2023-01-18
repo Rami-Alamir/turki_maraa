@@ -3,6 +3,7 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/profile/points_header.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 
+//This feature will be active soon
 class UserPoints extends StatefulWidget {
   const UserPoints({Key? key}) : super(key: key);
 
