@@ -3,7 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/constants/fixed_assets.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/dialog_helper.dart';
+import '../dialog/confirm_dialog.dart';
 
 class LogOutRow extends StatelessWidget {
   const LogOutRow({Key? key}) : super(key: key);
@@ -18,7 +21,16 @@ class LogOutRow extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         onTap: () {
-          auth.logOut(context);
+          sl<DialogHelper>().show(
+              context,
+              ConfirmDialog(
+                confirmAction: () async {
+                  await auth.logOut(context);
+                },
+                message: 'Are_you_sure_you_want_to_log_out',
+                title: 'log_out',
+                icon: FixedAssets.logout,
+              ));
         },
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20.0, top: 20.0),

@@ -140,7 +140,7 @@ class VerifyPhoneState extends State<VerifyPhone> {
                         vertical: 15, horizontal: 15),
                     title: AppLocalizations.of(context)!.tr('next'),
                     onPressed: () async {
-                      int statusCode = await auth.verifyOTP(context);
+                      final int statusCode = await auth.verifyOTP(context);
                       if (!mounted) return;
                       show(context, statusCode, auth.isNewUser);
                     },

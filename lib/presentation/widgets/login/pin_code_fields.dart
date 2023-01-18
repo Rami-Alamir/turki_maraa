@@ -3,10 +3,18 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/constants/fixed_assets.dart';
+import '../../../core/constants/route_constants.dart';
+import '../../../core/service/service_locator.dart';
+import '../../../core/utilities/show_snack_bar.dart';
 
-class PinCodeFields extends StatelessWidget {
+class PinCodeFields extends StatefulWidget {
   const PinCodeFields({Key? key}) : super(key: key);
 
+  @override
+  State<PinCodeFields> createState() => _PinCodeFieldsState();
+}
+
+class _PinCodeFieldsState extends State<PinCodeFields> {
   @override
   Widget build(BuildContext context) {
     final Auth auth = Provider.of<Auth>(context);
@@ -69,7 +77,21 @@ class PinCodeFields extends StatelessWidget {
                   )
                 ],
                 onCompleted: (v) async {
-                  await auth.verifyOTP(context);
+                  int statusCode = await auth.verifyOTP(context);
+                  if (!mounted) return;
+                  Navigator.of(context).pop();
+                  if (statusCode == 200) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        auth.isNewUser ? username : app,
+                        ModalRoute.withName('/'));
+                  } else {
+                    sl<ShowSnackBar>().show(
+                        context,
+                        statusCode == 400
+                            ? 'invalid_activation_code'
+                            : 'unexpected_error');
+                  }
                 },
                 onChanged: (value) {
                   auth.otpController.text = value;
