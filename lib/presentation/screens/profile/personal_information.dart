@@ -1,10 +1,12 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import '../../../controllers/user_provider.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/show_snack_bar.dart';
 import '../../widgets/profile/delete_row.dart';
+import '../../widgets/profile/personal_info_item.dart';
 import '../../widgets/shared/primary_app_bar.dart';
-import '../../widgets/shared/rectangle_text_field.dart';
 import '../../widgets/profile/gender_picker.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
@@ -28,11 +30,7 @@ class PersonalInformationState extends State<PersonalInformation> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-    if (userProvider.genderController.text.contains("maleString") ||
-        userProvider.genderController.text.contains("femaleString")) {
-      userProvider.genderController.text =
-          AppLocalizations.of(context)!.tr(userProvider.genderController.text);
-    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: const PrimaryAppBar(
@@ -71,15 +69,15 @@ class PersonalInformationState extends State<PersonalInformation> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _item(
+                  PersonalInfoItem(
                       title: 'name',
                       textEditingController: userProvider.usernameController),
-                  _item(
+                  PersonalInfoItem(
                       title: 'email',
                       textEditingController: userProvider.emailController),
                   GenderPicker(
                       textEditingController: userProvider.genderController),
-                  _item(
+                  PersonalInfoItem(
                       title: 'age',
                       textEditingController: userProvider.ageController,
                       textInputType: TextInputType.number),
@@ -95,7 +93,6 @@ class PersonalInformationState extends State<PersonalInformation> {
               onPressed: () async {
                 RegExp regex =
                     RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
-
                 if (!regex.hasMatch(userProvider.emailController.text) &&
                     userProvider.emailController.text.isNotEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -104,7 +101,9 @@ class PersonalInformationState extends State<PersonalInformation> {
                     textAlign: TextAlign.center,
                   )));
                 } else {
-                  await userProvider.updateUser(context);
+                  final int statusCode = await userProvider.updateUser(context);
+                  if (!mounted) return;
+                  show(context, statusCode);
                 }
               },
             ),
@@ -115,27 +114,27 @@ class PersonalInformationState extends State<PersonalInformation> {
     );
   }
 
-  Widget _item(
-      {required String title,
-      required TextEditingController textEditingController,
-      TextInputType textInputType = TextInputType.text}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20.0, bottom: 10),
-          child: Text(AppLocalizations.of(context)!.tr(title),
-              textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
-                  fontSize: 12, fontWeight: FontWeight.w700, height: 1)),
-        ),
-        RectangleTextField(
-          controller: textEditingController,
-          maxLength: 30,
-          textInputType: textInputType,
-        ),
-      ],
-    );
+  void show(BuildContext context, int statusCode) {
+    switch (statusCode) {
+      case 1:
+        sl<ShowSnackBar>().show(context, "data_has_been_updated_successfully");
+        break;
+      case 200:
+        FocusScope.of(context).requestFocus(FocusNode());
+        Navigator.of(context, rootNavigator: true).pop();
+        sl<ShowSnackBar>().show(context, "data_has_been_updated_successfully");
+        break;
+      case 400:
+        FocusScope.of(context).requestFocus(FocusNode());
+        Navigator.of(context, rootNavigator: true).pop();
+        sl<ShowSnackBar>()
+            .show(context, "email_is_used_please_enter_different_email");
+        break;
+      default:
+        FocusScope.of(context).requestFocus(FocusNode());
+        Navigator.of(context, rootNavigator: true).pop();
+        sl<ShowSnackBar>().show(context, "unexpected_error");
+        break;
+    }
   }
 }

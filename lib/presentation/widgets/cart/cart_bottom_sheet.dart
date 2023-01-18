@@ -47,8 +47,14 @@ class CartBottomSheetState extends State<CartBottomSheet> {
         return true;
       },
       child: DraggableScrollableSheet(
-        initialChildSize: min > total ? 0.35 :SizeConfig.deviceScreenType ==DeviceScreenType.mobile?0.25: 0.15,
-        minChildSize: SizeConfig.deviceScreenType ==DeviceScreenType.mobile?0.25: 0.15,
+        initialChildSize: min > total
+            ? 0.35
+            : SizeConfig.deviceScreenType == DeviceScreenType.mobile
+                ? 0.25
+                : 0.18,
+        minChildSize: SizeConfig.deviceScreenType == DeviceScreenType.mobile
+            ? 0.25
+            : 0.18,
         maxChildSize: 0.5,
         builder: (BuildContext context, ScrollController scrollController) {
           return Container(

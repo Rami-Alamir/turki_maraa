@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:shake/shake.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
 import '../cart/shopping_cart.dart';
@@ -76,6 +77,20 @@ class AppState extends State<App> {
     setupInteractedMessage();
     index = widget.index;
     currentTab = widget.index;
+    ShakeDetector detector = ShakeDetector.autoStart(
+      onPhoneShake: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Shake!'),
+          ),
+        );
+        // Do stuff on phone shake
+      },
+      minimumShakeCount: 1,
+      shakeSlopTimeMS: 500,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
     super.initState();
   }
 
@@ -100,98 +115,96 @@ class AppState extends State<App> {
         // let system handle back button if we're on the first route
         return isFirstRouteInCurrentTab;
       },
-      child: TurkiDrawer(
-        child: Scaffold(
-            key: _appKey,
-            // indexed stack shows only one child
-            body: Stack(
-              children: [
-                IndexedStack(
-                  index: currentTab,
-                  children: tabs.map((e) => e.page).toList(),
-                ),
-                // DropdownAlert()
-              ],
-            ),
-            bottomNavigationBar: Theme(
-              data: Theme.of(context).copyWith(
-                  canvasColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent),
-              child: BottomNavigationBar(
-                  backgroundColor: Theme.of(context).backgroundColor,
-                  type: BottomNavigationBarType.fixed,
-                  iconSize: 25,
-                  showUnselectedLabels: true,
-                  elevation: 5,
-                  currentIndex: index,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: const Icon(TURKIICONS.tabnav_home),
-                      label: AppLocalizations.of(context)!.tr('home'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: const Icon(TURKIICONS.c1),
-                      label: AppLocalizations.of(context)!.tr('support'),
-                    ),
-                    BottomNavigationBarItem(
-                      label: AppLocalizations.of(context)!.tr('cart'),
-                      icon: Stack(clipBehavior: Clip.none, children: <Widget>[
-                        const Icon(TURKIICONS.cart),
-                        Positioned(
-                            // draw a red marble
-                            top: -5.0,
-                            left: -8.0,
-                            child: Visibility(
-                              visible: cart.cartLength > 0,
-                              child: Container(
-                                width: 15,
-                                height: 15,
-                                decoration: const BoxDecoration(
-                                    color: Colors.red, shape: BoxShape.circle),
-                                child: AutoSizeText(
-                                  cart.cartLength.toString(),
-                                  textAlign: TextAlign.center,
-                                  minFontSize: 6,
-                                  maxFontSize: 12,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12),
-                                ),
+      child: Scaffold(
+          key: _appKey,
+          // indexed stack shows only one child
+          body: Stack(
+            children: [
+              IndexedStack(
+                index: currentTab,
+                children: tabs.map((e) => e.page).toList(),
+              ),
+              // DropdownAlert()
+            ],
+          ),
+          bottomNavigationBar: Theme(
+            data: Theme.of(context).copyWith(
+                canvasColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent),
+            child: BottomNavigationBar(
+                backgroundColor: Theme.of(context).backgroundColor,
+                type: BottomNavigationBarType.fixed,
+                iconSize: 25,
+                showUnselectedLabels: true,
+                elevation: 5,
+                currentIndex: index,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: const Icon(TURKIICONS.tabnav_home),
+                    label: AppLocalizations.of(context)!.tr('home'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: const Icon(TURKIICONS.c1),
+                    label: AppLocalizations.of(context)!.tr('support'),
+                  ),
+                  BottomNavigationBarItem(
+                    label: AppLocalizations.of(context)!.tr('cart'),
+                    icon: Stack(clipBehavior: Clip.none, children: <Widget>[
+                      const Icon(TURKIICONS.cart),
+                      Positioned(
+                          // draw a red marble
+                          top: -5.0,
+                          left: -8.0,
+                          child: Visibility(
+                            visible: cart.cartLength > 0,
+                            child: Container(
+                              width: 15,
+                              height: 15,
+                              decoration: const BoxDecoration(
+                                  color: Colors.red, shape: BoxShape.circle),
+                              child: AutoSizeText(
+                                cart.cartLength.toString(),
+                                textAlign: TextAlign.center,
+                                minFontSize: 6,
+                                maxFontSize: 12,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12),
                               ),
-                            ))
-                      ]),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: const Icon(TURKIICONS.tabnav_myorders),
-                      label: AppLocalizations.of(context)!.tr('orders'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: const Icon(TURKIICONS.tabnav_user),
-                      label: AppLocalizations.of(context)!.tr('profile'),
-                    ),
-                  ],
-                  onTap: (index) {
-                    if (index != 1) {
-                      this.index = index;
-                      _selectTab(index);
-                    }
-                    if (index == 2 && cart.isAuth) {
-                      cart.initSomeValues();
-                      cart.getCartData(isLoading: true);
-                    } else if (index == 1) {
-                      final LocationProvider locationProvider =
-                          Provider.of<LocationProvider>(context, listen: false);
-                      FirebaseHelper()
-                          .pushAnalyticsEvent(name: "contact_support");
-                      _launchURL(locationProvider.isoCountryCode == "AE"
-                          ? "tel:${Constants.uaePhone}"
-                          : "tel:${Constants.ksaPhone}");
-                    }
-                  }),
-            )),
-      ),
+                            ),
+                          ))
+                    ]),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: const Icon(TURKIICONS.tabnav_myorders),
+                    label: AppLocalizations.of(context)!.tr('orders'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: const Icon(TURKIICONS.tabnav_user),
+                    label: AppLocalizations.of(context)!.tr('profile'),
+                  ),
+                ],
+                onTap: (index) {
+                  if (index != 1) {
+                    this.index = index;
+                    _selectTab(index);
+                  }
+                  if (index == 2 && cart.isAuth) {
+                    cart.initSomeValues();
+                    cart.getCartData(isLoading: true);
+                  } else if (index == 1) {
+                    final LocationProvider locationProvider =
+                        Provider.of<LocationProvider>(context, listen: false);
+                    FirebaseHelper()
+                        .pushAnalyticsEvent(name: "contact_support");
+                    _launchURL(locationProvider.isoCountryCode == "AE"
+                        ? "tel:${Constants.uaePhone}"
+                        : "tel:${Constants.ksaPhone}");
+                  }
+                }),
+          )),
     );
   }
 
