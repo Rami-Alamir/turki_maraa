@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turki_dabayh/core/utilities/format_helper.dart';
 import 'item_column.dart';
 import '../../../models/orders_data.dart';
 import '../../../core/constants/route_constants.dart';
@@ -84,8 +85,7 @@ class OrderCard extends StatelessWidget {
                                             .colorScheme
                                             .secondary,
                                         child: Image.network(
-                                          (order.orderProducts?.length ?? 0) >
-                                                  0
+                                          (order.orderProducts?.length ?? 0) > 0
                                               ? order
                                                       .orderProducts!
                                                       .first
@@ -113,8 +113,7 @@ class OrderCard extends StatelessWidget {
                                     horizontal: 8.0, vertical: 2),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       children: [
@@ -144,12 +143,12 @@ class OrderCard extends StatelessWidget {
                                           shrinkWrap: true,
                                           physics:
                                               const NeverScrollableScrollPhysics(),
-                                          itemCount: (order.orderProducts
-                                                          ?.length ??
-                                                      0) >
-                                                  2
-                                              ? 2
-                                              : order.orderProducts?.length,
+                                          itemCount:
+                                              (order.orderProducts?.length ??
+                                                          0) >
+                                                      2
+                                                  ? 2
+                                                  : order.orderProducts?.length,
                                           itemBuilder:
                                               (BuildContext ctxt, int index) {
                                             return Padding(
@@ -164,9 +163,8 @@ class OrderCard extends StatelessWidget {
                                                       .copyWith(
                                                           height: 1,
                                                           fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight
-                                                                  .normal)),
+                                                          fontWeight: FontWeight
+                                                              .normal)),
                                             );
                                           }),
                                     ),
@@ -218,12 +216,10 @@ class OrderCard extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(
-                                      width:
-                                          SizeConfig.screenWidth! - 50,
+                                      width: SizeConfig.screenWidth! - 50,
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8.0),
@@ -243,8 +239,7 @@ class OrderCard extends StatelessWidget {
                                             ItemColumn(
                                                 title: 'order_status',
                                                 value: isAr
-                                                    ? order
-                                                        .orderState!.stateAr!
+                                                    ? order.orderState!.stateAr!
                                                     : order
                                                         .orderState!.stateEn!,
                                                 crossAxisAlignment:
@@ -254,18 +249,15 @@ class OrderCard extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.only(top: 20.0),
+                                      padding: const EdgeInsets.only(top: 20.0),
                                       child: SizedBox(
-                                        width:
-                                                                                    SizeConfig.screenWidth! - 50,
+                                        width: SizeConfig.screenWidth! - 50,
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 8.0),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               ItemColumn(
                                                   title: 'order_date',
@@ -278,8 +270,7 @@ class OrderCard extends StatelessWidget {
                                                       .toString()
                                                       .substring(0, 10),
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start),
+                                                      CrossAxisAlignment.start),
                                               ItemColumn(
                                                   title: 'order_type',
                                                   value: AppLocalizations.of(
@@ -321,7 +312,7 @@ class OrderCard extends StatelessWidget {
                                       fontSize: 10,
                                       fontWeight: FontWeight.w600)),
                               Text(
-                                  "${order.totalAmountAfterDiscount} ${sl<GetStrings>().getCurrency(isAr ? "ar" : "En", (order.refNo!.substring(0, 2)))}",
+                                  "${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(double.parse(order.totalAmountAfterDiscount!))} ${sl<GetStrings>().getCurrency(isAr ? "ar" : "En", (order.refNo!.substring(0, 2)))}",
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,

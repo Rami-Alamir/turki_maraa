@@ -32,6 +32,7 @@ class OrderRepository {
     Order? orderData;
     try {
       orderData = Order.fromJson(response);
+      print(response.toString());
     } catch (_) {}
     return orderData!;
   }
