@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:turki_dabayh/core/utilities/format_helper.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../models/search_data.dart';
@@ -103,9 +104,11 @@ class SearchRow extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              double.parse(item.salePrice!) > 0.0
-                                  ? item.salePrice!
-                                  : item.price!,
+                              sl<FormatHelper>()
+                                  .formatDecimalAndRemoveTrailingZeros(
+                                      double.parse(item.salePrice!) > 0.0
+                                          ? double.parse(item.salePrice!)
+                                          : double.parse(item.price!)),
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme

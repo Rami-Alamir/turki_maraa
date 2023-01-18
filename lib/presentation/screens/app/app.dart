@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shake/shake.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/dialog/gift_dialog.dart';
 import '../cart/shopping_cart.dart';
 import '../home/home.dart';
 import '../orders/orders.dart';
@@ -18,6 +19,7 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import '../../../core/utilities/tab_item.dart';
+import '../../../core/utilities/dialog_helper.dart';
 
 //used to build all in one bottom nav bar
 class App extends StatefulWidget {
@@ -79,25 +81,15 @@ class AppState extends State<App> {
     currentTab = widget.index;
     detector = ShakeDetector.autoStart(
       onPhoneShake: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Shake!'),
-          ),
-        );
-        // Do stuff on phone shake
+        sl<DialogHelper>().show(context, const GiftDialog());
+        // detector.stopListening();
       },
       minimumShakeCount: 1,
       shakeSlopTimeMS: 500,
       shakeCountResetTime: 3000,
-      shakeThresholdGravity: 2.7,
+      shakeThresholdGravity: 3,
     );
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    detector.stopListening();
-    super.dispose();
   }
 
   @override

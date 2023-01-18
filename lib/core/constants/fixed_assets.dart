@@ -62,4 +62,6 @@ class FixedAssets {
       'assets/images/profile_icons/home-location.svg';
   //lottie
   static const String logoLottie = "assets/lottie/logo.json";
+  static const String congratulations = "assets/lottie/congratulations.json";
+  static const String gift = "assets/lottie/gift.json";
 }
