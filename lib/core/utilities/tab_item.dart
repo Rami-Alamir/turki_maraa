@@ -26,7 +26,7 @@ import '../../presentation/screens/profile/personal_information.dart';
 import '../../presentation/screens/profile/phone_login.dart';
 import '../../presentation/screens/profile/policies.dart';
 import '../../presentation/screens/profile/profile.dart';
-import '../../presentation/screens/profile/username.dart';
+import '../../presentation/screens/login/username.dart';
 import '../../presentation/screens/profile/verify_phone.dart';
 import '../../presentation/screens/cart/order_status.dart';
 import '../../presentation/screens/home/home_categories.dart';

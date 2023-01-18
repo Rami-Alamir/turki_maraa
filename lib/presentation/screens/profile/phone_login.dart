@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/profile/phone_number.dart';
+import '../../widgets/login/phone_number.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
 import 'package:provider/provider.dart';
 

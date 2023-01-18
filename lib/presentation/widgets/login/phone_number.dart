@@ -31,7 +31,7 @@ class PhoneNumber extends StatelessWidget {
                   }, // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
                   initialSelection: isoCountryCode,
                   favorite: const ['+966', 'SA'],
-                  countryFilter: const ['SA', 'AE', 'BH', 'KW', 'QA', 'OM'],
+                  countryFilter: const ['SA', 'AE'],
                   textStyle: Theme.of(context).textTheme.headline4!.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
