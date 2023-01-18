@@ -17,8 +17,10 @@ class AboutText extends StatelessWidget {
           width: SizeConfig.screenWidth! - 40,
           child: Text(
             title,
-            style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                fontSize: 14, height: 1.5, fontWeight: FontWeight.normal),
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2!
+                .copyWith(height: 1.5, fontWeight: FontWeight.normal),
           ),
         ),
       ),

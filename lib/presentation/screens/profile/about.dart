@@ -23,33 +23,32 @@ class About extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Container(
-                width: SizeConfig.screenWidth,
-                height: 190,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(FixedAssets.background),
-                    fit: BoxFit.fill,
-                  ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Container(
+              width: SizeConfig.screenWidth,
+              margin:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
+              height: 190,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(FixedAssets.background),
+                  fit: BoxFit.fill,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 0.0, bottom: 10),
-                      child: Image.asset(
-                        FixedAssets.logo,
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.contain,
-                      ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0.0, bottom: 10),
+                    child: Image.asset(
+                      FixedAssets.logo,
+                      width: 150,
+                      height: 150,
+                      fit: BoxFit.contain,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -72,7 +71,7 @@ class About extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .subtitle1!
-                          .copyWith(fontSize: 16, height: 1.5),
+                          .copyWith(height: 1.5),
                     ),
                   ],
                 ),
@@ -137,9 +136,7 @@ class About extends StatelessWidget {
                       child: Text(
                         isAr ? AboutData.aboutAr[5] : AboutData.aboutEn[5],
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            fontSize: 14,
-                            height: 1.5,
-                            fontWeight: FontWeight.normal),
+                            height: 1.5, fontWeight: FontWeight.normal),
                       ),
                     ),
                   ),
@@ -158,7 +155,7 @@ class About extends StatelessWidget {
             ],
           ),
           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsets.only(right: 10.0, left: 10, bottom: 30),
               child: Wrap(
                 children: const [
                   ServicesItem(image: FixedAssets.zabh, title: 'slaughter'),
