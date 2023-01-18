@@ -55,10 +55,7 @@ class FaqRowState extends State<FaqRow> {
                   child: Text(
                     widget.answer,
                     textAlign: TextAlign.start,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2!
-                        .copyWith(fontSize: 14),
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                 ),
               ),

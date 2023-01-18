@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../screens/profile/login.dart';
+import '../../screens/login/login.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/user_provider.dart';
 import '../../../core/utilities/app_localizations.dart';

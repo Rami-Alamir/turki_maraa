@@ -4,12 +4,12 @@ import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
+import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/locals_values.dart';
 import '../../../core/utilities/size_config.dart';
-import 'phone_login.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -48,10 +48,7 @@ class LoginState extends State<Login> {
           backgroundColor: Colors.transparent,
         ),
         body: GestureDetector(
-          onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => const PhoneLogin())),
+          onTap: () => Navigator.pushNamed(context, phoneLogin),
           child: Container(
             width: SizeConfig.screenWidth,
             height: SizeConfig.screenHeight,
@@ -65,18 +62,16 @@ class LoginState extends State<Login> {
               children: [
                 Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 40.0),
-                      child: Container(
-                        alignment: Alignment.center, // This is needed
+                    Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.only(top: 40.0),
+                      width: 200,
+                      height: 250,
+                      child: Image.asset(
+                        FixedAssets.logo,
                         width: 200,
-                        height: 250,
-                        child: Image.asset(
-                          FixedAssets.logo,
-                          width: 200,
-                          height: 200,
-                          fit: BoxFit.contain,
-                        ),
+                        height: 200,
+                        fit: BoxFit.contain,
                       ),
                     ),
                   ],
@@ -100,12 +95,8 @@ class LoginState extends State<Login> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 100),
                           child: InkWell(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const PhoneLogin()),
-                            ),
+                            onTap: () =>
+                                Navigator.pushNamed(context, phoneLogin),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -120,10 +111,6 @@ class LoginState extends State<Login> {
                                       countryFilter: const [
                                         'SA',
                                         'AE',
-                                        'BH',
-                                        'KW',
-                                        'QA',
-                                        'OM'
                                       ],
                                       textStyle: Theme.of(context)
                                           .textTheme

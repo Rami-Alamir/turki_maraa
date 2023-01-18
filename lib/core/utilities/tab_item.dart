@@ -34,7 +34,7 @@ import '../../presentation/screens/map/gms_map.dart';
 import '../../presentation/screens/map/hms_map.dart';
 import '../../presentation/screens/profile/add_credit.dart';
 import '../../presentation/screens/profile/add_gift_card.dart';
-import '../../presentation/screens/profile/login.dart';
+import '../../presentation/screens/login/login.dart';
 import '../../presentation/screens/profile/notification.dart';
 import '../../presentation/screens/profile/points.dart';
 import '../../presentation/screens/profile/wallet.dart';
