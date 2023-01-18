@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../core/constants/fixed_assets.dart';
-import '../core/constants/route_constants.dart';
 import '../core/service/service_locator.dart';
+import '../core/utilities/dialog_helper.dart';
 import '../models/user_data.dart';
 import '../models/user_type.dart';
-import '../repository/registration_repository.dart';
+import '../repository/login_repository.dart';
 import '../repository/user_repository.dart';
 import '../presentation/screens/app/app.dart';
 import '../core/service/firebase_helper.dart';
@@ -24,6 +25,7 @@ class Auth with ChangeNotifier {
   TextEditingController phoneController = TextEditingController();
   TextEditingController otpController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
+  FlutterSecureStorage? _localStorage;
 
   //used in send otp (login)
   int _start = 30;
@@ -35,7 +37,6 @@ class Auth with ChangeNotifier {
   //new or old user
   UserType? _userType;
   UserData? _userData;
-  late http.Response _response;
   bool? _isAuth = false;
   String? _accessToken;
   SharedPreferences? _prefs;
@@ -93,86 +94,54 @@ class Auth with ChangeNotifier {
     notifyListeners();
   }
 
-  // send otp to user
-  Future<void> sendOTP(BuildContext context, {bool navigate = true}) async {
-    _dialogContext = context;
-    _showDialogIndicator(context);
+  Future<int> sendOTP(BuildContext context, {bool navigate = true}) async {
+    sl<DialogHelper>().showIndicatorDialog(context);
     try {
       _userPhone =
           ConvertNumbers.getPhone(keyController.text, phoneController.text);
       var response =
-          await sl<RegistrationRepository>().sendOTP({"mobile": _userPhone});
+          await sl<LoginRepository>().sendOTP({"mobile": _userPhone});
       if (response.statusCode == 200) {
         _userType = UserType.fromJson(json.decode(response.body.toString()));
         _isNewUser = _userType!.code == "C100";
-        Navigator.pop(_dialogContext!);
-        // ignore: use_build_context_synchronously
-        if (navigate) Navigator.pushNamed(context, verifyPhone);
-      } else if (response.statusCode == 401) {
-        Navigator.pop(_dialogContext!);
-        // ignore: use_build_context_synchronously
-        sl<ShowSnackBar>().show(
-            context, "sorry_you_can_not_log_in_after_deleting_your_account");
+      } else {
+        _start = 0;
       }
+      return response.statusCode;
     } catch (_) {
-      sl<ShowSnackBar>().show(context, "unexpected_error");
-      Navigator.pop(_dialogContext!);
+      _start = 0;
+      return 0;
     }
   }
 
-  // init Shared Preferences
   Future<void> _initPrefs() async {
     _prefs = _prefs ?? await SharedPreferences.getInstance();
   }
 
   // verify otp and login
-  Future<void> verifyOTP(BuildContext context) async {
-    _dialogContext = context;
+  Future<int> verifyOTP(BuildContext context) async {
     if (otpController.text.length < 4) {
-      sl<ShowSnackBar>().show(context, 'please_enter_otp');
+      return 1;
     } else {
-      _logoVisibility = true;
-      _showDialogIndicator(_dialogContext);
+      sl<DialogHelper>().showIndicatorDialog(context);
       try {
-        _response = await sl<RegistrationRepository>().verifyOtpCode({
+        var response = await sl<LoginRepository>().verifyOtpCode({
           "mobile": _userPhone,
           "mobile_verification_code":
               ConvertNumbers.convertNumbers(otpController.text.trim())
         });
-        if (_response.statusCode == 200) {
-          _userData = UserData.fromJson(json.decode(_response.body.toString()));
+        if (response.statusCode == 200) {
+          _userData = UserData.fromJson(json.decode(response.body.toString()));
           _accessToken = _userData!.data!.accessToken;
           FirebaseHelper().pushAnalyticsEvent(name: "login");
-          await _initPrefs();
-          _prefs!.setString("accessToken", _accessToken!);
+          _initLocalStorage();
+          await _localStorage!.write(key: "accessToken", value: _accessToken!);
           _isAuth = true;
-          Navigator.pop(_dialogContext!);
-          _isNewUser!
-              // ignore: use_build_context_synchronously
-              ? Navigator.of(context).pushNamedAndRemoveUntil(
-                  username, (Route<dynamic> route) => false)
-              // ignore: use_build_context_synchronously
-              : Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => const App(index: 4)),
-                  ModalRoute.withName('/'));
-        } else {
-          Navigator.pop(_dialogContext!);
-          // ignore: use_build_context_synchronously
-          sl<ShowSnackBar>().show(
-              context,
-              _response.statusCode != 400
-                  ? "unexpected_error"
-                  : 'invalid_activation_code');
+          notifyListeners();
         }
+        return response.statusCode;
       } catch (_) {
-        if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-        sl<ShowSnackBar>().show(
-            context,
-            _response.statusCode == 400
-                ? "unexpected_error"
-                : 'invalid_activation_code');
+        return 0;
       }
     }
   }
@@ -183,7 +152,7 @@ class Auth with ChangeNotifier {
     if (token.isNotEmpty) {
       http.Response response;
       try {
-        response = await sl<RegistrationRepository>().login("Bearer $token");
+        response = await sl<LoginRepository>().login("Bearer $token");
         if (response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(response.body.toString()));
           _userData!.data!.accessToken = token;
@@ -224,7 +193,7 @@ class Auth with ChangeNotifier {
 
   // logout
   void logOut(BuildContext context) async {
-    await _initPrefs();
+    _initLocalStorage();
     // ignore: use_build_context_synchronously
     ShowConfirmDialog().confirmDialog(context, () {
       logOutAction(context);
@@ -236,7 +205,7 @@ class Auth with ChangeNotifier {
     _userData = null;
     _isAuth = false;
     _accessToken = "";
-    _prefs!.remove("accessToken");
+    await _localStorage!.delete(key: "accessToken");
     final locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
     locationProvider.initDataAfterLogout();
@@ -291,5 +260,10 @@ class Auth with ChangeNotifier {
 
   void initCountyCode(value) {
     keyController.text = value;
+  }
+
+  // init local storage
+  void _initLocalStorage() {
+    _localStorage = _localStorage ?? const FlutterSecureStorage();
   }
 }

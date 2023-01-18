@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
@@ -27,9 +28,10 @@ Future<void> main() async {
 
   //get user preference
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  FlutterSecureStorage localStorage = const FlutterSecureStorage();
+  String accessToken = await localStorage.read(key: 'accessToken') ?? "";
   String? language = prefs.getString('language_code');
   String theme = prefs.getString('theme') ?? 'light';
-  String accessToken = prefs.getString('accessToken') ?? '';
   Locale locale = Locale(language ?? 'ar');
 
   runApp(MultiProvider(

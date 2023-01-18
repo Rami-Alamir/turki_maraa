@@ -16,7 +16,7 @@ import '../../repository/home_repository.dart';
 import '../../repository/order_repository.dart';
 import '../../repository/payment_repository.dart';
 import '../../repository/products_repository.dart';
-import '../../repository/registration_repository.dart';
+import '../../repository/login_repository.dart';
 import '../../repository/search_repository.dart';
 import '../../repository/tamara_repository.dart';
 import '../../repository/user_repository.dart';
@@ -33,7 +33,7 @@ class ServiceLocator {
     sl.registerLazySingleton(() => OrderRepository());
     sl.registerLazySingleton(() => PaymentRepository());
     sl.registerLazySingleton(() => ProductsRepository());
-    sl.registerLazySingleton(() => RegistrationRepository());
+    sl.registerLazySingleton(() => LoginRepository());
     sl.registerLazySingleton(() => SearchRepository());
     sl.registerLazySingleton(() => TamaraRepository());
     sl.registerLazySingleton(() => UserRepository());

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../controllers/auth.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
-
+import '../../../controllers/auth.dart';
 import '../../../core/constants/fixed_assets.dart';
 
 class PinCodeFields extends StatelessWidget {
@@ -12,7 +11,6 @@ class PinCodeFields extends StatelessWidget {
   Widget build(BuildContext context) {
     final Auth auth = Provider.of<Auth>(context);
     TextEditingController otpController = TextEditingController();
-
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Padding(

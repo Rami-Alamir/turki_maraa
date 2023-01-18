@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:turki_dabayh/core/constants/route_constants.dart';
 import '../../../controllers/auth.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../widgets/login/phone_number.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
@@ -57,12 +60,27 @@ class PhoneLoginState extends State<PhoneLogin> {
                     if (auth.start == 30 || auth.start == 0) {
                       if (auth.formKey!.currentState!.validate()) {
                         auth.startTimer();
-                        await auth.sendOTP(context);
+                        final int statusCode = await auth.sendOTP(context);
+                        if (!mounted) return;
+                        show(context, statusCode);
                       }
                     }
                   }),
             ],
           ),
         ));
+  }
+
+  void show(BuildContext context, int statusCode) {
+    Navigator.of(context).pop();
+    if (statusCode == 200) {
+      Navigator.pushNamed(context, verifyPhone);
+    } else {
+      sl<ShowSnackBar>().show(
+          context,
+          statusCode == 401
+              ? "sorry_you_can_not_log_in_after_deleting_your_account"
+              : "unexpected_error");
+    }
   }
 }

@@ -1,7 +1,7 @@
 import '../core/service/networking/api_base_helper.dart';
 import '../core/service/service_locator.dart';
 
-class RegistrationRepository {
+class LoginRepository {
   final ApiBaseHelper _helper = sl<ApiBaseHelper>();
 
   Future<dynamic> sendOTP(body) async {
