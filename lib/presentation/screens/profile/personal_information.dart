@@ -75,8 +75,7 @@ class PersonalInformationState extends State<PersonalInformation> {
                   PersonalInfoItem(
                       title: 'email',
                       textEditingController: userProvider.emailController),
-                  GenderPicker(
-                      textEditingController: userProvider.genderController),
+                  const GenderPicker(),
                   PersonalInfoItem(
                       title: 'age',
                       textEditingController: userProvider.ageController,
@@ -115,26 +114,18 @@ class PersonalInformationState extends State<PersonalInformation> {
   }
 
   void show(BuildContext context, int statusCode) {
-    switch (statusCode) {
-      case 1:
-        sl<ShowSnackBar>().show(context, "data_has_been_updated_successfully");
-        break;
-      case 200:
-        FocusScope.of(context).requestFocus(FocusNode());
-        Navigator.of(context, rootNavigator: true).pop();
-        sl<ShowSnackBar>().show(context, "data_has_been_updated_successfully");
-        break;
-      case 400:
-        FocusScope.of(context).requestFocus(FocusNode());
-        Navigator.of(context, rootNavigator: true).pop();
-        sl<ShowSnackBar>()
-            .show(context, "email_is_used_please_enter_different_email");
-        break;
-      default:
-        FocusScope.of(context).requestFocus(FocusNode());
-        Navigator.of(context, rootNavigator: true).pop();
-        sl<ShowSnackBar>().show(context, "unexpected_error");
-        break;
+    if (statusCode == 1) {
+      sl<ShowSnackBar>().show(context, "data_has_been_updated_successfully");
+    } else {
+      FocusScope.of(context).requestFocus(FocusNode());
+      Navigator.of(context, rootNavigator: true).pop();
+      sl<ShowSnackBar>().show(
+          context,
+          statusCode == 200
+              ? "data_has_been_updated_successfully"
+              : statusCode == 400
+                  ? "email_is_used_please_enter_different_email"
+                  : "unexpected_error");
     }
   }
 }

@@ -7,12 +7,14 @@ import '../../../core/utilities/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class GenderPicker extends StatelessWidget {
-  final TextEditingController textEditingController;
-
-  const GenderPicker({Key? key, required this.textEditingController})
-      : super(key: key);
+  const GenderPicker({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    if (userProvider.genderController.text.isEmpty &&
+        userProvider.gender != -1) {
+      userProvider.initGenderController(context: context);
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +33,7 @@ class GenderPicker extends StatelessWidget {
             showPicker(context);
           },
           child: RectangleTextField(
-            controller: textEditingController,
+            controller: userProvider.genderController,
             enable: false,
           ),
         )

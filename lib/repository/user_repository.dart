@@ -5,7 +5,6 @@ import '../core/service/service_locator.dart';
 class UserRepository {
   final ApiBaseHelper _helper = sl<ApiBaseHelper>();
 
-  //update user personal Info
   Future<dynamic> updateInfo(body, String authorization) async {
     final response = await _helper.post3("customers/edit-profile", body,
         authorization: authorization);

@@ -66,13 +66,14 @@ class UserProvider with ChangeNotifier {
     ageController.text = (_userData?.data?.age ?? "");
     usernameController.text = _userData?.data?.name ?? "";
     emailController.text = _userData?.data?.email ?? "";
+    initGenderController(context: context);
+  }
+
+  void initGenderController({BuildContext? context}) {
     try {
       if (context != null) {
         genderController.text = sl<GetStrings>()
             .getGender(context, int.parse((_userData?.data?.gender ?? "-1")));
-      } else {
-        genderController.text = '';
-        _gender = -1;
       }
     } catch (_) {
       genderController.text = "";
