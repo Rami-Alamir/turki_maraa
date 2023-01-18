@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
-import '../../../controllers/home_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/profile/call_card.dart';
 import '../../widgets/profile/help_card.dart';
@@ -11,7 +11,6 @@ import '../../widgets/profile/profile_header.dart';
 import '../../widgets/profile/settings_card.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/social_media.dart';
-import 'package:provider/provider.dart';
 import '../../widgets/shared/spinkit_indicator.dart';
 
 class Profile extends StatefulWidget {
@@ -25,8 +24,6 @@ class ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final Auth auth = Provider.of<Auth>(context);
-    final HomeProvider homeProvider =
-        Provider.of<HomeProvider>(context, listen: false);
 
     return Scaffold(
       appBar: PrimaryAppBar(
@@ -50,20 +47,16 @@ class ProfileState extends State<Profile> {
             : ListView(
                 padding: EdgeInsets.zero,
                 children: [
-                  ProfileHeader(
-                    isAuth: auth.isAuth,
-                  ),
-                  PersonalInfoCard(isAuth: auth.isAuth),
+                  const ProfileHeader(),
+                  const PersonalInfoCard(),
                   const SettingsCard(),
-                  HelpCard(isAuth: auth.isAuth),
+                  const HelpCard(),
                   const CallCard(),
-                  LogOutRow(isAuth: auth.isAuth),
+                  const LogOutRow(),
                   SocialMedia(
                     color: Theme.of(context).colorScheme.secondaryContainer,
                   ),
-                  ProfileFooter(
-                    version: homeProvider.currentVersion,
-                  )
+                  const ProfileFooter()
                 ],
               ),
       ),

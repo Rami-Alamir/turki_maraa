@@ -6,19 +6,18 @@ import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 
 class LogOutRow extends StatelessWidget {
-  final bool isAuth;
-
-  const LogOutRow({Key? key, required this.isAuth}) : super(key: key);
+  const LogOutRow({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Auth auth = Provider.of<Auth>(context);
+
     return Visibility(
-      visible: isAuth,
+      visible: auth.isAuth,
       child: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         onTap: () {
-          final Auth auth = Provider.of<Auth>(context, listen: false);
           auth.logOut(context);
         },
         child: Padding(
@@ -34,7 +33,6 @@ class LogOutRow extends StatelessWidget {
               ),
               Text(AppLocalizations.of(context)!.tr('log_out'),
                   style: Theme.of(context).textTheme.headline4!.copyWith(
-                        fontSize: 12,
                         color: Colors.red,
                         fontWeight: FontWeight.bold,
                       )),

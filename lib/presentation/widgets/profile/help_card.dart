@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:share_plus/share_plus.dart';
@@ -7,17 +9,13 @@ import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/profile/profile_row.dart';
-import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/service/firebase_helper.dart';
+import '../../widgets/profile/profile_row.dart';
 import '../shared/main_card.dart';
 
 class HelpCard extends StatelessWidget {
-  final bool isAuth;
-
-  const HelpCard({Key? key, required this.isAuth}) : super(key: key);
+  const HelpCard({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final LocationProvider locationProvider =
@@ -113,8 +111,7 @@ class HelpCard extends StatelessWidget {
       } else {
         throw 'Could not launch $url';
       }
-    } catch (_) {
-    }
+    } catch (_) {}
   }
 
   //used to share app url

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../controllers/auth.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../widgets/profile/profile_row.dart';
 import '../shared/main_card.dart';
 
 class PersonalInfoCard extends StatelessWidget {
-  final bool isAuth;
-
-  const PersonalInfoCard({Key? key, required this.isAuth}) : super(key: key);
+  const PersonalInfoCard({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final Auth auth = Provider.of<Auth>(context);
+
     return Visibility(
-      visible: isAuth,
+      visible: auth.isAuth,
       child: MainCard(
           padding: const EdgeInsets.only(bottom: 1, right: 7, left: 7),
           child: Padding(

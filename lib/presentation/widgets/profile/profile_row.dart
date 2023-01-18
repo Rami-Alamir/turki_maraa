@@ -24,7 +24,6 @@ class ProfileRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: InkWell(
         splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         onTap: () {
           onTap();
         },

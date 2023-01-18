@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../controllers/app_language.dart';
 import '../../../controllers/app_theme.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../../core/service/firebase_helper.dart';
 import '../../widgets/profile/profile_row.dart';
 import '../../widgets/shared/main_card.dart';
-import 'package:provider/provider.dart';
-import '../../../core/service/firebase_helper.dart';
 
 class SettingsCard extends StatelessWidget {
   const SettingsCard({Key? key}) : super(key: key);

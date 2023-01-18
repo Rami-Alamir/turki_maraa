@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../screens/login/login.dart';
+import '../../../core/constants/route_constants.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/user_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -69,12 +69,7 @@ class UserDataHeader extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextButton(
-                          onPressed: () =>
-                              Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const Login()),
-                          ),
+                          onPressed: () => Navigator.pushNamed(context, login),
                           child: Text(
                             AppLocalizations.of(context)!.tr('login'),
                             style: Theme.of(context).textTheme.subtitle1,
