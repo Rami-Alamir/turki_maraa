@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 
+//This feature will be active soon
 class UserNotification extends StatelessWidget {
   const UserNotification({Key? key}) : super(key: key);
 

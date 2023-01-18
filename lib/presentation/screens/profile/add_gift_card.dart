@@ -4,6 +4,7 @@ import '../../widgets/profile/gift_card.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/rectangle_text_field.dart';
 
+//This feature will be active soon
 class AddGiftCard extends StatelessWidget {
   const AddGiftCard({Key? key}) : super(key: key);
 
