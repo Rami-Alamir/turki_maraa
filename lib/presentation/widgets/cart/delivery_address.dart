@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../controllers/cart_provider.dart';
+import '../../../controllers/location_provider.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
@@ -56,16 +57,22 @@ class DeliveryAddress extends StatelessWidget {
     );
   }
 
-  String getAddress(context) {
+  String getAddress(BuildContext context) {
     final AddressProvider addressProvider =
-        Provider.of<AddressProvider>(context);
-    final CartProvider cartProvider = Provider.of<CartProvider>(context);
+        Provider.of<AddressProvider>(context, listen: false);
+    final CartProvider cartProvider =
+        Provider.of<CartProvider>(context, listen: false);
+    final LocationProvider locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
     String address;
+
     if (addressProvider.selectedAddress == -1) {
       address = sl<GetStrings>().currentLocation(
           context,
           cartProvider.currentLocationDescriptionAr,
           cartProvider.currentLocationDescriptionEn);
+    } else if (addressProvider.selectedAddress == -2) {
+      address = locationProvider.selectedLocationDescription;
     } else {
       address = addressProvider
           .userAddress!.data![addressProvider.selectedAddress].label!;

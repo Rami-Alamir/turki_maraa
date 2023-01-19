@@ -183,11 +183,12 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                                 name: "purchase",
                                 value: sl<GetStrings>()
                                     .getPaymentName(cart.selectedPayment));
-
                             int statusCode = await cart.placeOrder(
                                 context: context,
                                 currency: currency,
-                                addressId: addressProvider.selectedAddress == -1
+                                addressId: addressProvider.selectedAddress ==
+                                            -1 ||
+                                        addressProvider.selectedAddress == -2
                                     ? -1
                                     : addressProvider
                                         .userAddress!

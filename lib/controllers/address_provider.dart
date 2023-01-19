@@ -56,7 +56,9 @@ class AddressProvider with ChangeNotifier {
       getAddressList();
     } else if (_isAuth == false) {
       _userAddress = null;
-      _selectedAddress = -1;
+      if (_selectedAddress != -1) {
+        _selectedAddress = -2;
+      }
     }
   }
 
@@ -113,75 +115,6 @@ class AddressProvider with ChangeNotifier {
     return 0;
   }
 
-  // Future<void> addNewAddress(BuildContext context,
-  //     {LatLng? latLng, String? isoCountryCode}) async {
-  //   String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
-  //   _dialogContext = context;
-  //   if (latLng == null && (_isAuth ?? false)) {
-  //     _showDialogIndicator(_dialogContext);
-  //   }
-  //   http.Response response;
-  //   try {
-  //     List<Placemark> placemark = await placemarkFromCoordinates(
-  //         latLng?.latitude ?? _mapLatLng!.latitude,
-  //         latLng?.longitude ?? _mapLatLng!.longitude,
-  //         localeIdentifier: languageCode);
-  //     String address = sl<GetStrings>().locationDescription(placemark.first);
-  //     String comment = descriptionController.text.isNotEmpty
-  //         ? descriptionController.text
-  //         : sl<GetStrings>().locationDescription(placemark.first);
-  //     String countryCode = placemark.first.isoCountryCode!;
-  //     if (_isAuth ?? false) {
-  //       response = await sl<UserRepository>().addAddress({
-  //         "country_iso_code": isoCountryCode ?? countryCode,
-  //         "address": address,
-  //         "comment": comment,
-  //         "label": addressNameController.text.isNotEmpty
-  //             ? addressNameController.text
-  //             : comment,
-  //         "is_default": "0",
-  //         "long": "${latLng?.longitude ?? _mapLatLng!.longitude}",
-  //         "lat": "${latLng?.latitude ?? _mapLatLng!.latitude}",
-  //       }, _authorization!);
-  //       if (response.statusCode == 200) {
-  //         _selectedAddress = _userAddress!.data!.length;
-  //         await getAddressList();
-  //         final locationProvider =
-  //             // ignore: use_build_context_synchronously
-  //             Provider.of<LocationProvider>(context, listen: false);
-  //         locationProvider.updateLocationData(
-  //             _userAddress!.data![_selectedAddress].countryIosCode!,
-  //             LatLng(double.parse(_userAddress!.data![_selectedAddress].lat!),
-  //                 double.parse(_userAddress!.data![_selectedAddress].long!)));
-  //         if (latLng == null) {
-  //           notifyListeners();
-  //           Navigator.pop(_dialogContext!);
-  //           // ignore: use_build_context_synchronously
-  //           Navigator.pop(context);
-  //         }
-  //       } else {
-  //         if (latLng == null) Navigator.pop(_dialogContext!);
-  //         // ignore: use_build_context_synchronously
-  //         sl<ShowSnackBar>().show(
-  //             context,
-  //             response.statusCode == 400
-  //                 ? "region_not_supported"
-  //                 : "unexpected_error");
-  //       }
-  //     } else {
-  //       final locationProvider =
-  //           // ignore: use_build_context_synchronously
-  //           Provider.of<LocationProvider>(context, listen: false);
-  //       locationProvider.updateLocationData(countryCode, _mapLatLng!);
-  //       // ignore: use_build_context_synchronously
-  //       Navigator.pop(context);
-  //     }
-  //   } catch (_) {
-  //     if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-  //     sl<ShowSnackBar>().show(context, "unexpected_error");
-  //   }
-  // }
-
   Future<int> updateAddress(BuildContext context, int addressId) async {
     String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
     sl<DialogHelper>().showIndicatorDialog(context);
@@ -212,49 +145,6 @@ class AddressProvider with ChangeNotifier {
     } catch (_) {}
     return 0;
   }
-
-  // Future<void> updateAddress(BuildContext context, int addressId) async {
-  //   String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
-  //   _dialogContext = context;
-  //   _showDialogIndicator(_dialogContext);
-  //   // ignore: prefer_typing_uninitialized_variables
-  //   var response;
-  //   try {
-  //     List<Placemark> placemark = await placemarkFromCoordinates(
-  //         _mapLatLng!.latitude, _mapLatLng!.longitude,
-  //         localeIdentifier: languageCode);
-  //     String address = sl<GetStrings>().locationDescription(placemark.first);
-  //     String comment = descriptionController.text.isNotEmpty
-  //         ? descriptionController.text
-  //         : sl<GetStrings>().locationDescription(placemark.first);
-  //     response = await sl<UserRepository>().updateAddress({
-  //       "country_iso_code": placemark.first.isoCountryCode,
-  //       "address": address,
-  //       "comment": comment,
-  //       "label": addressNameController.text.isNotEmpty
-  //           ? addressNameController.text
-  //           : comment,
-  //       "is_default": "0",
-  //       "long": "${_mapLatLng!.longitude}",
-  //       "lat": "${_mapLatLng!.latitude}",
-  //     }, _authorization!, "$addressId");
-  //     if (response.statusCode == 200) {
-  //       await getAddressList();
-  //       notifyListeners();
-  //       Navigator.pop(_dialogContext!);
-  //       // ignore: use_build_context_synchronously
-  //       Navigator.pop(context);
-  //     } else {
-  //       Navigator.pop(_dialogContext!);
-  //       // ignore: use_build_context_synchronously
-  //       sl<ShowSnackBar>().show(context,
-  //           response == 400 ? "region_not_supported" : "unexpected_error");
-  //     }
-  //   } catch (_) {
-  //     if (Navigator.canPop(_dialogContext!)) Navigator.pop(_dialogContext!);
-  //     sl<ShowSnackBar>().show(context, "unexpected_error");
-  //   }
-  // }
 
   Future<int> deleteAddress(
       BuildContext context, int addressId, int index) async {

@@ -16,7 +16,7 @@ class GiftDialog extends StatelessWidget {
     final Auth auth = Provider.of<Auth>(context);
 
     final String name =
-        auth.isAuth ? " تهانينا, ${user.userData?.data?.name}" : "";
+        auth.isAuth ? " تهانينا, ${user.userData?.data?.name}" : "تهانينا";
     return SizedBox(
       width: 100,
       child: AlertDialog(

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'address_row.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../widgets/home/address_box.dart';
 import '../../widgets/shared/add_new_address.dart';
-import 'package:provider/provider.dart';
 import '../../../models/user_address.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
-import 'address_row.dart';
 
 class AddressContainer extends StatefulWidget {
   final Color? color;
@@ -149,15 +149,17 @@ class AddressContainerState extends State<AddressContainer> {
                                                                         .lat!),
                                                                 double.parse(
                                                                     address
-                                                                        .long!)));
+                                                                        .long!)),
+                                                            address:
+                                                                address.label!);
                                                   },
-                                                  selected: addressProvider
-                                                          .selectedAddress ==
-                                                      index,
                                                   title: addressProvider
                                                       .userAddress!
                                                       .data![index]
                                                       .label!,
+                                                  selected: addressProvider
+                                                          .selectedAddress ==
+                                                      index,
                                                 );
                                               }),
                                         ],

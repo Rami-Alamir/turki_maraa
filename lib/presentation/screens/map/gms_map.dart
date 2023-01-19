@@ -39,6 +39,7 @@ class GMSMapState extends State<GMSMap> {
       _userAddress = addressProvider.userAddress!.data![widget.addressIndex];
       addressProvider.mapLatLng = LatLng(
           double.parse(_userAddress!.lat!), double.parse(_userAddress!.long!));
+      addressProvider.addressNameController.text = _userAddress!.label!;
       addressProvider.descriptionController.text = _userAddress!.comment!;
     } else {
       final LocationProvider locationProvider =

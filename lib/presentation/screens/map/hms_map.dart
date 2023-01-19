@@ -42,6 +42,7 @@ class HMSMapState extends State<HMSMap> {
       _userAddress = addressProvider.userAddress!.data![widget.addressIndex];
       addressProvider.mapLatLng = gms.LatLng(
           double.parse(_userAddress!.lat!), double.parse(_userAddress!.long!));
+      addressProvider.addressNameController.text = _userAddress!.label!;
       addressProvider.descriptionController.text = _userAddress!.comment!;
     } else {
       final LocationProvider locationProvider =

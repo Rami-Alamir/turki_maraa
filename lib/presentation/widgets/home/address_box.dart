@@ -18,8 +18,6 @@ class AddressBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context);
-    final AddressProvider addressProvider =
-        Provider.of<AddressProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -60,8 +58,7 @@ class AddressBox extends StatelessWidget {
                           SizedBox(
                             width: SizeConfig.screenWidth! - 130,
                             child: Text(
-                              locationName(context, locationProvider,
-                                  addressProvider, isPickup),
+                              locationName(context, locationProvider, isPickup),
                               style: Theme.of(context)
                                   .textTheme
                                   .headline1!
@@ -89,12 +86,14 @@ class AddressBox extends StatelessWidget {
   }
 
   String locationName(
-      BuildContext context, locationProvider, addressProvider, bool isPickup) {
+      BuildContext context, LocationProvider locationProvider, bool isPickup) {
     int locationServiceStatus = locationProvider.locationServiceStatus;
     if (isPickup) {
-      return "${("${AppLocalizations.of(context)!.tr("pick_up_from")} ")} ${AppLocalizations.of(context)!.tr('soon')}";
+      return AppLocalizations.of(context)!.tr('soon');
     }
-
+    final AddressProvider addressProvider =
+        Provider.of<AddressProvider>(context);
+    print("addressProvider.selectedAddress ${addressProvider.selectedAddress}");
     if (addressProvider.selectedAddress == -1) {
       switch (locationServiceStatus) {
         case -1:
@@ -104,13 +103,13 @@ class AddressBox extends StatelessWidget {
           return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${AppLocalizations.of(context)!.tr('choose')}");
         case 1:
           return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${sl<GetStrings>().currentLocation(context, locationProvider.currentLocationDescriptionAr, locationProvider.currentLocationDescriptionEn)}");
-
         default:
           return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${AppLocalizations.of(context)!.tr('choose')}");
       }
     } else {
-      return addressProvider
-          .userAddress!.data![addressProvider.selectedAddress].label;
+      print(
+          "locationProvider.selectedLocationDescription; ${locationProvider.selectedLocationDescription}");
+      return locationProvider.selectedLocationDescription;
     }
   }
 }
