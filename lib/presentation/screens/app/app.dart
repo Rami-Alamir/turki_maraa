@@ -134,7 +134,7 @@ class AppState extends State<App> {
               child: BottomNavigationBar(
                   backgroundColor: Theme.of(context).backgroundColor,
                   type: BottomNavigationBarType.fixed,
-                  iconSize: 25,
+                  iconSize: 24,
                   showUnselectedLabels: true,
                   elevation: 5,
                   currentIndex: index,

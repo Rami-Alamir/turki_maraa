@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:turki_dabayh/core/constants/fixed_assets.dart';
+import 'package:provider/provider.dart';
+import '../../../controllers/auth.dart';
+import '../../../controllers/user_provider.dart';
+import '../../../core/constants/fixed_assets.dart';
 
 class GiftDialog extends StatelessWidget {
   const GiftDialog({
@@ -9,6 +12,11 @@ class GiftDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider user = Provider.of<UserProvider>(context);
+    final Auth auth = Provider.of<Auth>(context);
+
+    final String name =
+        auth.isAuth ? " تهانينا, ${user.userData?.data?.name}" : "";
     return SizedBox(
       width: 100,
       child: AlertDialog(
@@ -31,7 +39,7 @@ class GiftDialog extends StatelessWidget {
                         width: 200, height: 200),
                   ),
                   Text(
-                    "مبروك",
+                    name,
                     style: Theme.of(context)
                         .textTheme
                         .headline1!

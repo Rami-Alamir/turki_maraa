@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as gms;
 import 'package:huawei_map/channel/huaweiMapInitializer.dart';
 import 'package:location/location.dart' as location_service;
@@ -12,7 +13,6 @@ import '../../../core/utilities/size_config.dart';
 import '../../widgets/shared/map_bottom_sheet.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
-import 'package:provider/provider.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/utilities/locals_values.dart';
 

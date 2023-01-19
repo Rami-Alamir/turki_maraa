@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'rectangle_text_field.dart';
 import 'rounded_rectangle_button.dart';
+import '../../../core/service/service_locator.dart';
+import '../../../core/utilities/show_snack_bar.dart';
+import '../../../controllers/location_provider.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../../models/user_address.dart';
 
-class MapBottomSheet extends StatelessWidget {
+class MapBottomSheet extends StatefulWidget {
   final int addressIndex;
   final int userAddressId;
   final String addressDescription;
@@ -17,7 +22,11 @@ class MapBottomSheet extends StatelessWidget {
       required this.userAddressId,
       required this.addressDescription})
       : super(key: key);
+  @override
+  State<MapBottomSheet> createState() => _MapBottomSheetState();
+}
 
+class _MapBottomSheetState extends State<MapBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final AddressProvider addressProvider =
@@ -51,7 +60,7 @@ class MapBottomSheet extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      addressDescription,
+                      widget.addressDescription,
                       maxLines: 2,
                       textAlign: TextAlign.start,
                       style: Theme.of(context).textTheme.headline2,
@@ -101,10 +110,59 @@ class MapBottomSheet extends StatelessWidget {
                 padding: const EdgeInsets.all(5),
                 onPressed: () async {
                   FocusScope.of(context).requestFocus(FocusNode());
-                  if (addressIndex == -100) {
-                    await addressProvider.addNewAddress(context);
+                  if (widget.addressIndex == -100) {
+                    int statusCode =
+                        await addressProvider.addNewAddress(context);
+                    if (!mounted) return;
+                    Navigator.of(context).pop();
+                    final locationProvider =
+                        Provider.of<LocationProvider>(context, listen: false);
+                    switch (statusCode) {
+                      case 200:
+                        final Data address = addressProvider.userAddress!
+                            .data![addressProvider.selectedAddress];
+                        locationProvider.updateLocationData(
+                            address.countryIosCode!,
+                            LatLng(double.parse(address.lat!),
+                                double.parse(address.long!)),
+                            address: address.address!);
+                        Navigator.of(context).pop();
+                        break;
+                      // 1 mean user not auth and will use address without add it on server
+                      case 1:
+                        locationProvider.updateLocationData(
+                            addressProvider.mapCountryCode!,
+                            addressProvider.mapLatLng,
+                            language: AppLocalizations.of(context)!
+                                .locale!
+                                .languageCode,
+                            setSelected: true);
+                        break;
+                      default:
+                        sl<ShowSnackBar>().show(
+                            context,
+                            statusCode == 400
+                                ? "region_not_supported"
+                                : "unexpected_error");
+                        break;
+                    }
                   } else {
-                    await addressProvider.updateAddress(context, userAddressId);
+                    int statusCode = await addressProvider.updateAddress(
+                        context, widget.userAddressId);
+                    if (!mounted) return;
+                    Navigator.of(context).pop();
+                    switch (statusCode) {
+                      case 200:
+                        Navigator.of(context).pop();
+                        break;
+                      default:
+                        sl<ShowSnackBar>().show(
+                            context,
+                            statusCode == 400
+                                ? "region_not_supported"
+                                : "unexpected_error");
+                        break;
+                    }
                   }
                 },
               ),

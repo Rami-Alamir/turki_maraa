@@ -16,6 +16,7 @@ class LocationProvider with ChangeNotifier {
   LatLng? _currentLocationLatLng;
   location_service.LocationData? _locationData;
   HWLocation? _hwlocation;
+  String _selectedLocationDescription = '';
 
   //used to determine location service status
   int _locationServiceStatus = -1;
@@ -31,9 +32,9 @@ class LocationProvider with ChangeNotifier {
   String? get currentLocationDescriptionAr => _currentLocationDescriptionAr;
   String? get currentLocationDescriptionEn => _currentLocationDescriptionEn;
   int get locationServiceStatus => _locationServiceStatus;
+  String get selectedLocationDescription => _selectedLocationDescription;
 
-  // int LatLng and location description
-  Future<void> initLatLng({String languageCode = "ar"}) async {
+  Future<void> initLatLng() async {
     try {
       await fetchLocation();
       if (_locationServiceStatus != 0 && _locationServiceStatus != 2) {
@@ -41,6 +42,7 @@ class LocationProvider with ChangeNotifier {
             ? sl<HMSLatLngConverter>().convertToGMSLatLng(_hwlocation!)
             : LatLng(_locationData!.latitude!, _locationData!.longitude!);
         _latLng = _currentLocationLatLng;
+        //1 mean location fetched successfully
         _locationServiceStatus = 1;
 
         /// init isoCountryCode
@@ -63,13 +65,12 @@ class LocationProvider with ChangeNotifier {
         _currentLocationDescriptionEn =
             sl<GetStrings>().locationDescription(place2);
       }
-      notifyListeners();
     } catch (_) {
       _locationServiceStatus = 2;
     }
+    notifyListeners();
   }
 
-  // get current location
   Future<void> fetchLocation() async {
     if (_locationServiceStatus != -1) {
       _locationServiceStatus = -1;
@@ -112,7 +113,9 @@ class LocationProvider with ChangeNotifier {
         _locationData =
             await _location.getLocation().timeout(const Duration(seconds: 15));
       }
-    } catch (_) {}
+    } catch (_) {
+      _locationServiceStatus = 2;
+    }
     //when app cannot get LatLng data and location service is enabled
     if (isHms) {
       if (_hwlocation == null) {
@@ -124,23 +127,41 @@ class LocationProvider with ChangeNotifier {
   }
 
   //update current Location Data
-  void updateLocationData(String isoCountryCode, LatLng latLng) {
+  void updateLocationData(String isoCountryCode, LatLng latLng,
+      {bool setSelected = false, String? language, String address = ''}) {
     _isoCountryCode = isoCountryCode;
     _latLng = latLng;
+    if (setSelected) {
+      _setSelectedLocationDescription(language!);
+    } else {
+      _selectedLocationDescription = address;
+    }
     notifyListeners();
   }
 
   //used when user select current location
-  void selectCurrentLocation() {
+  void selectCurrentLocation(String language) {
     _latLng = _currentLocationLatLng;
     _isoCountryCode = _currentLocationIsoCountryCode;
+    _selectedLocationDescription = (language == "ar"
+        ? _currentLocationDescriptionAr!
+        : _currentLocationDescriptionEn!);
+    notifyListeners();
+  }
+
+  Future<void> _setSelectedLocationDescription(String language) async {
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        _latLng!.latitude, _latLng!.longitude,
+        localeIdentifier: language);
+    Placemark place = placemark.first;
+    _selectedLocationDescription = sl<GetStrings>().locationDescription(place);
     notifyListeners();
   }
 
   //used when user logout
   void initDataAfterLogout() {
     if (_locationServiceStatus == 1 || _currentLocationLatLng != null) {
-      selectCurrentLocation();
+      selectCurrentLocation('ar');
     } else {
       _latLng = null;
       _currentLocationLatLng = null;

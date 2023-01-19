@@ -94,7 +94,11 @@ class AddressContainerState extends State<AddressContainer> {
                                                     addressProvider
                                                         .selectedAddress = -1;
                                                     locationProvider
-                                                        .selectCurrentLocation();
+                                                        .selectCurrentLocation(
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .locale!
+                                                                .languageCode);
                                                     _selected = !_selected;
                                                   },
                                                   selected: addressProvider
