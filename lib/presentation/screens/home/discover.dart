@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../controllers/discover_provider.dart';
 import '../../../models/discover_data.dart';
-import '../../../controllers/products_provider.dart';
+import '../../../core/utilities/enum/request_status.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/home/product_card.dart';
 import '../../widgets/shared/retry.dart';
@@ -21,16 +22,16 @@ class Discover extends StatefulWidget {
 class DiscoverState extends State<Discover> {
   @override
   void initState() {
-    final ProductsProvider productsProvider =
-        Provider.of<ProductsProvider>(context, listen: false);
-    productsProvider.getDiscoverItem(widget.item.id!);
+    final DiscoverProvider discoverProvider =
+        Provider.of<DiscoverProvider>(context, listen: false);
+    discoverProvider.getDiscoverItem(widget.item.id!);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ProductsProvider productsProvider =
-        Provider.of<ProductsProvider>(context);
+    final DiscoverProvider discoverProvider =
+        Provider.of<DiscoverProvider>(context);
     final bool isAr =
         AppLocalizations.of(context)!.locale == const Locale('ar');
     return Scaffold(
@@ -38,33 +39,33 @@ class DiscoverState extends State<Discover> {
         title: isAr ? widget.item.titleAr : widget.item.titleEn,
         back: true,
       ),
-      body: productsProvider.discoverIsLoading
+      body: discoverProvider.requestStatus == RequestStatus.isLoading
           ? const SpinkitIndicator()
-          : productsProvider.discoverRetry
+          : discoverProvider.requestStatus == RequestStatus.error
               ? Retry(
                   onPressed: () {
-                    productsProvider.getDiscoverItem(widget.item.id!);
+                    discoverProvider.getDiscoverItem(widget.item.id!);
                   },
                 )
               : RefreshIndicator(
                   color: Theme.of(context).primaryColor,
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   onRefresh: () async {
-                    await productsProvider.getDiscoverItem(widget.item.id!);
+                    await discoverProvider.getDiscoverItem(widget.item.id!);
                   },
                   child: ListView(
                     children: [
                       Visibility(
-                        visible: productsProvider
-                            .discoverItem.data!.subImage!.isNotEmpty,
+                        visible: discoverProvider
+                            .discoverItem!.data!.subImage!.isNotEmpty,
                         child: DiscoverHeader(
                             image:
-                                productsProvider.discoverItem.data!.subImage!,
+                                discoverProvider.discoverItem!.data!.subImage!,
                             title: isAr
-                                ? productsProvider
-                                    .discoverItem.data!.descriptionAr!
-                                : productsProvider
-                                    .discoverItem.data!.descriptionEn!),
+                                ? discoverProvider
+                                    .discoverItem!.data!.descriptionAr!
+                                : discoverProvider
+                                    .discoverItem!.data!.descriptionEn!),
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
@@ -76,7 +77,7 @@ class DiscoverState extends State<Discover> {
                               children: [
                                 for (int i = 0;
                                     i <
-                                        ((productsProvider.discoverItem.data
+                                        ((discoverProvider.discoverItem!.data
                                                 ?.products?.length) ??
                                             0);
                                     i++)
@@ -84,25 +85,25 @@ class DiscoverState extends State<Discover> {
                                     padding: const EdgeInsets.only(bottom: 8.0),
                                     child: ProductCard(
                                       isLarge: true,
-                                      id: productsProvider
-                                          .discoverItem.data!.products![i].id!,
-                                      image: productsProvider
-                                              .discoverItem
+                                      id: discoverProvider
+                                          .discoverItem!.data!.products![i].id!,
+                                      image: discoverProvider
+                                              .discoverItem!
                                               .data
                                               ?.products![i]
                                               .productImages
                                               ?.first
                                               .imageUrl ??
                                           "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
-                                      nameAr: productsProvider.discoverItem
+                                      nameAr: discoverProvider.discoverItem!
                                           .data!.products![i].nameAr!,
-                                      nameEn: productsProvider.discoverItem
+                                      nameEn: discoverProvider.discoverItem!
                                           .data!.products![i].nameEn!,
-                                      price: productsProvider.discoverItem.data!
-                                          .products![i].price!,
-                                      salePrice: productsProvider.discoverItem
+                                      price: discoverProvider.discoverItem!
+                                          .data!.products![i].price!,
+                                      salePrice: discoverProvider.discoverItem!
                                           .data!.products![i].salePrice!,
-                                      categoryId: productsProvider.discoverItem
+                                      categoryId: discoverProvider.discoverItem!
                                           .data!.products![i].categoryId!,
                                     ),
                                   ),

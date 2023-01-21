@@ -44,7 +44,7 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
         ),
         constraints: const BoxConstraints(maxHeight: 360),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
@@ -78,7 +78,7 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
               ),
             ),
             RectangleTextField(
-              customWidth: SizeConfig.screenWidth! * 0.9,
+              customWidth: SizeConfig.screenWidth! - 40,
               hint: AppLocalizations.of(context)!.tr('address_name_hint'),
               maxLength: 40,
               controller: addressProvider.addressNameController,
@@ -95,7 +95,7 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
               ),
             ),
             RectangleTextField(
-              customWidth: SizeConfig.screenWidth! * 0.9,
+              customWidth: SizeConfig.screenWidth! - 40,
               maxLength: 80,
               maxLines: 2,
               hint: AppLocalizations.of(context)!.tr('additional_notes'),
@@ -106,8 +106,8 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
               child: RoundedRectangleButton(
                 title: AppLocalizations.of(context)!.tr('confirm'),
                 fontSize: 16.0,
-                width: SizeConfig.screenWidth! * 0.9,
-                padding: const EdgeInsets.all(5),
+                width: SizeConfig.screenWidth! - 40,
+                padding: const EdgeInsets.all(10),
                 onPressed: () async {
                   FocusScope.of(context).requestFocus(FocusNode());
                   if (widget.addressIndex == -100) {
