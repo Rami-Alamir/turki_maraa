@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
-
 import '../../../controllers/favourite_provider.dart';
+import '../../../controllers/product_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/firebase_helper.dart';
@@ -188,6 +188,7 @@ class _FavouriteCardState extends State<FavouriteCard> {
   Future<void> deleteFromFavourite() async {
     final FavouriteProvider favourite =
         Provider.of<FavouriteProvider>(context, listen: false);
+
     await favourite.deleteFromFavourite(
         context: context,
         notify: false,

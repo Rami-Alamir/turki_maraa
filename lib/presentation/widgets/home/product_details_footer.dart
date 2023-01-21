@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../shared/rounded_rectangle_button.dart';
+import '../../../controllers/product_provider.dart';
 import '../../../controllers/cart_provider.dart';
-import '../../../controllers/products_provider.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -71,33 +71,33 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                 ),
                 RoundedRectangleButton(
                   onPressed: () async {
-                    final ProductsProvider productsProvider =
-                        Provider.of<ProductsProvider>(context, listen: false);
+                    final ProductProvider productProvider =
+                        Provider.of<ProductProvider>(context, listen: false);
                     final CartProvider cartProvider =
                         Provider.of<CartProvider>(context, listen: false);
                     if (cartProvider.isAuth) {
-                      if ((productsProvider.productData[widget.index].data
-                                      ?.sizes?.length ??
+                      if ((productProvider.productData[widget.index].data?.sizes
+                                      ?.length ??
                                   0) >
                               0 &&
-                          productsProvider.selectedSize == -1) {
+                          productProvider.selectedSize == -1) {
                         sl<ShowSnackBar>().show(context, "please_select_size");
                         return;
                       }
-                      if ((productsProvider.productData[widget.index].data
+                      if ((productProvider.productData[widget.index].data
                                       ?.chopping?.length ??
                                   0) >
                               0 &&
-                          productsProvider.selectedChopping == -1) {
+                          productProvider.selectedChopping == -1) {
                         sl<ShowSnackBar>().show(context, "please_select_cut");
 
                         return;
                       }
-                      if ((productsProvider.productData[widget.index].data
+                      if ((productProvider.productData[widget.index].data
                                       ?.packaging?.length ??
                                   0) >
                               0 &&
-                          productsProvider.selectedPackaging == -1) {
+                          productProvider.selectedPackaging == -1) {
                         sl<ShowSnackBar>().show(context, "please_select_pack");
                         return;
                       }
@@ -105,19 +105,19 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                         context: context,
                         quantity: '${widget.count}',
                         sizeId:
-                            "${productsProvider.selectedSize > -1 ? (productsProvider.productData[widget.index].data?.sizes?[productsProvider.selectedSize].id!.toString()) : ""}",
+                            "${productProvider.selectedSize > -1 ? (productProvider.productData[widget.index].data?.sizes?[productProvider.selectedSize].id!.toString()) : ""}",
                         preparationId:
-                            "${productsProvider.selectedPackaging > -1 ? (productsProvider.productData[widget.index].data?.packaging?[productsProvider.selectedPackaging].id!.toString()) : ""}",
+                            "${productProvider.selectedPackaging > -1 ? (productProvider.productData[widget.index].data?.packaging?[productProvider.selectedPackaging].id!.toString()) : ""}",
                         cutId:
-                            "${productsProvider.selectedChopping > -1 ? (productsProvider.productData[widget.index].data?.chopping?[productsProvider.selectedChopping].id!.toString()) : ""}",
+                            "${productProvider.selectedChopping > -1 ? (productProvider.productData[widget.index].data?.chopping?[productProvider.selectedChopping].id!.toString()) : ""}",
                         isShalwata:
-                            "${productsProvider.selectedShalwata ? (productsProvider.productData[widget.index].data?.shalwata!.id!.toString()) : "0"}",
+                            "${productProvider.selectedShalwata ? (productProvider.productData[widget.index].data?.shalwata!.id!.toString()) : "0"}",
                         productId:
-                            '${productsProvider.productData[widget.index].data!.id}',
-                        iskarashah: productsProvider.withoutTripe ? "1" : "0",
-                        isRas: productsProvider.withoutHead ? "1" : "0",
-                        isLyh: productsProvider.withoutTailFat ? "1" : "0",
-                        iskwar3: productsProvider.withoutTrotters ? "1" : "0",
+                            '${productProvider.productData[widget.index].data!.id}',
+                        iskarashah: productProvider.withoutTripe ? "1" : "0",
+                        isRas: productProvider.withoutHead ? "1" : "0",
+                        isLyh: productProvider.withoutTailFat ? "1" : "0",
+                        iskwar3: productProvider.withoutTrotters ? "1" : "0",
                       );
                       if (!mounted) return;
                       Navigator.of(context, rootNavigator: true).pop();

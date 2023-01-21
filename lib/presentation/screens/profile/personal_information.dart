@@ -90,8 +90,8 @@ class PersonalInformationState extends State<PersonalInformation> {
               fontSize: 16,
               title: AppLocalizations.of(context)!.tr('update'),
               onPressed: () async {
-                RegExp regex =
-                    RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
+                RegExp regex = RegExp(
+                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
                 if (!regex.hasMatch(userProvider.emailController.text) &&
                     userProvider.emailController.text.isNotEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(

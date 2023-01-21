@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../core/utilities/enum/request_status.dart';
 import '../../../controllers/favourite_provider.dart';
-import '../../../controllers/products_provider.dart';
+import '../../../controllers/product_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/home/circle_icon.dart';
 import '../../widgets/home/not_available.dart';
@@ -9,7 +11,6 @@ import '../../widgets/home/product_information.dart';
 import '../../widgets/home/product_description.dart';
 import '../../widgets/home/product_header.dart';
 import '../../widgets/home/extras_list.dart';
-import 'package:provider/provider.dart';
 import '../../widgets/home/shalwata_extra.dart';
 import '../../widgets/home/similar_products_section.dart';
 import '../../widgets/home/without_extra.dart';
@@ -31,39 +32,47 @@ class ProductDetailsState extends State<ProductDetails> {
 
   @override
   void initState() {
-    final ProductsProvider productsProvider =
-        Provider.of<ProductsProvider>(context, listen: false);
-    _index = productsProvider.productData.length;
-    _similarIndex = productsProvider.similarProductsList.length;
-    productsProvider.initLoading(_index);
-    productsProvider.initExtras();
-    productsProvider.getProductData(
-        widget.data['id'].toString(), _index!, true);
+    final ProductProvider productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+    _index = productProvider.productData.length;
+    _similarIndex = productProvider.similarProductsList.length;
+    productProvider.initLoading(_index);
+    productProvider.initExtras();
+    productProvider.getProductData(widget.data['id'].toString(), _index!, true);
+    productProvider.getSimilarProducts(
+        _similarIndex!, widget.data['categoryId'].toString());
     final FavouriteProvider favourite =
         Provider.of<FavouriteProvider>(context, listen: false);
-    productsProvider.getSimilarProducts(
-        _similarIndex!, widget.data['categoryId'].toString());
-    productsProvider.setIsFavourite = false;
-    productsProvider.setIsFavourite = favourite.isFavourite(widget.data['id']);
+    productProvider.setIsFavourite = favourite.isFavourite(widget.data['id']);
     super.initState();
   }
 
   @override
+  void didUpdateWidget(covariant ProductDetails oldWidget) {
+    final FavouriteProvider favourite =
+        Provider.of<FavouriteProvider>(context, listen: false);
+    final ProductProvider productProvider =
+        Provider.of<ProductProvider>(context);
+    productProvider.setIsFavourite = favourite.isFavourite(widget.data['id']);
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final ProductsProvider productsProvider =
-        Provider.of<ProductsProvider>(context);
+    final ProductProvider productProvider =
+        Provider.of<ProductProvider>(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: productsProvider.productIsLoading[_index!]
+      body: productProvider.requestStatus[_index!] == RequestStatus.isLoading
           ? const SpinkitIndicator(
               padding: EdgeInsets.only(top: 60),
             )
-          : productsProvider.productIsRetry[_index!]
+          : productProvider.requestStatus[_index!] == RequestStatus.error
               ? Retry(
                   padding: const EdgeInsets.only(top: 60),
                   onPressed: () {
-                    productsProvider.setProductIsLoading(true, _index!);
-                    productsProvider.getProductData(
+                    productProvider.setProductIsLoading(_index!);
+                    productProvider.getProductData(
                         widget.data['id'].toString(), _index!, false);
                   },
                 )
@@ -73,96 +82,96 @@ class ProductDetailsState extends State<ProductDetails> {
                       color: Theme.of(context).primaryColor,
                       backgroundColor: Theme.of(context).colorScheme.secondary,
                       onRefresh: () async {
-                        await productsProvider.getProductData(
+                        await productProvider.getProductData(
                             widget.data['id'].toString(), _index!, false);
                       },
                       child: ListView(
                         padding: EdgeInsets.zero,
                         children: [
                           ProductHeader(
-                            imgList: productsProvider
+                            imgList: productProvider
                                 .productData[_index!].data!.images!,
                           ),
                           Visibility(
-                              visible: !productsProvider
+                              visible: !productProvider
                                   .productData[_index!].data!.isActive!,
                               child: const NotAvailable()),
                           ProductDescription(
-                              isFavourite: productsProvider.isFavourite,
-                              product: productsProvider.productData[_index!],
+                              isFavourite: productProvider.isFavourite,
+                              product: productProvider.productData[_index!],
                               salePrice:
-                                  productsProvider.getProductSalePrice(_index!),
-                              price: productsProvider.getProductPrice(_index!)),
+                                  productProvider.getProductSalePrice(_index!),
+                              price: productProvider.getProductPrice(_index!)),
                           ProductInformation(
-                            product: productsProvider.productData[_index!],
-                            weight: productsProvider.getProductWeight(_index!),
+                            product: productProvider.productData[_index!],
+                            weight: productProvider.getProductWeight(_index!),
                           ),
                           Visibility(
-                            visible: productsProvider
+                            visible: productProvider
                                     .productData[_index!].data!.sizes!.length >
                                 1,
                             child: ExtrasList(
                               title: AppLocalizations.of(context)!.tr('size'),
-                              tags: productsProvider
+                              tags: productProvider
                                   .productData[_index!].data!.sizes!,
                               onTap: (value) {
-                                productsProvider.setSelectedSize = value;
+                                productProvider.setSelectedSize = value;
                               },
-                              selected: productsProvider.selectedSize,
+                              selected: productProvider.selectedSize,
                             ),
                           ),
                           ExtrasList(
                             title: AppLocalizations.of(context)!.tr('chopping'),
-                            tags: productsProvider
+                            tags: productProvider
                                 .productData[_index!].data!.chopping!,
-                            selected: productsProvider.selectedChopping,
+                            selected: productProvider.selectedChopping,
                             onTap: (value) {
-                              productsProvider.setSelectedChopping = value;
+                              productProvider.setSelectedChopping = value;
                             },
                           ),
                           ExtrasList(
                             title:
                                 AppLocalizations.of(context)!.tr('packaging'),
-                            tags: productsProvider
+                            tags: productProvider
                                 .productData[_index!].data!.packaging!,
-                            selected: productsProvider.selectedPackaging,
+                            selected: productProvider.selectedPackaging,
                             onTap: (value) {
-                              productsProvider.setSelectedPackaging = value;
+                              productProvider.setSelectedPackaging = value;
                             },
                           ),
-                          if (productsProvider
+                          if (productProvider
                               .productData[_index!].data!.isShalwata!)
                             ShalwataExtra(
-                              selected: productsProvider.selectedShalwata,
+                              selected: productProvider.selectedShalwata,
                               onTap: (value) {
-                                productsProvider.setSelectedShalwata = value;
+                                productProvider.setSelectedShalwata = value;
                               },
                             ),
                           Visibility(
-                              visible: productsProvider
+                              visible: productProvider
                                   .productData[_index!].data!.isActive!,
                               child: WithoutExtra(
                                   product:
-                                      productsProvider.productData[_index!])),
+                                      productProvider.productData[_index!])),
                           Visibility(
                             visible:
-                                productsProvider.similarProductsList.length >
+                                productProvider.similarProductsList.length >
                                         _similarIndex!
-                                    ? productsProvider
+                                    ? productProvider
                                             .similarProductsList[_similarIndex!]
                                             .data
                                             ?.isNotEmpty ??
                                         false
                                     : false,
                             child: SimilarProductsSection(
-                              products: productsProvider
+                              products: productProvider
                                   .similarProductsList[_similarIndex!],
-                              subCategoryId: productsProvider
+                              subCategoryId: productProvider
                                   .productData[_similarIndex!]
                                   .data!
                                   .subCategory!
                                   .id!,
-                              productId: productsProvider
+                              productId: productProvider
                                   .productData[_similarIndex!].data!.id!,
                             ),
                           ),
@@ -184,24 +193,24 @@ class ProductDetailsState extends State<ProductDetails> {
                                 8.0, 0, 0, 0))),
                   ],
                 ),
-      bottomSheet: !productsProvider.productIsLoading[_index!] &&
-              !productsProvider.productIsRetry[_index!] &&
-              productsProvider.productData[_index!].data!.isActive!
-          ? ProductDetailsFooter(
-              count: _count,
-              index: _index!,
-              subtract: () {
-                setState(() {
-                  _count = _count == 1 ? _count : _count - 1;
-                });
-              },
-              add: () {
-                setState(() {
-                  _count += 1;
-                });
-              },
-            )
-          : Container(),
+      bottomSheet:
+          productProvider.requestStatus[_index!] == RequestStatus.completed &&
+                  productProvider.productData[_index!].data!.isActive!
+              ? ProductDetailsFooter(
+                  count: _count,
+                  index: _index!,
+                  subtract: () {
+                    setState(() {
+                      _count = _count == 1 ? _count : _count - 1;
+                    });
+                  },
+                  add: () {
+                    setState(() {
+                      _count += 1;
+                    });
+                  },
+                )
+              : Container(),
     );
   }
 }

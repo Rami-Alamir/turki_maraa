@@ -9,6 +9,7 @@ import '../../controllers/favourite_provider.dart';
 import '../../controllers/home_provider.dart';
 import '../../controllers/location_provider.dart';
 import '../../controllers/orders_provider.dart';
+import '../../controllers/product_provider.dart';
 import '../../controllers/products_provider.dart';
 import '../../controllers/search_provider.dart';
 import '../../controllers/user_provider.dart';
@@ -51,6 +52,13 @@ class ProvidersList {
             )),
       ChangeNotifierProxyProvider<LocationProvider, ProductsProvider>(
           create: (context) => ProductsProvider(),
+          update: (_, location, product) => product!
+            ..updateLocation(
+              location.latLng,
+              location.isoCountryCode,
+            )),
+      ChangeNotifierProxyProvider<LocationProvider, ProductProvider>(
+          create: (context) => ProductProvider(),
           update: (_, location, product) => product!
             ..updateLocation(
               location.latLng,

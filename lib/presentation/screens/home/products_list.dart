@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../controllers/products_provider.dart';
 import '../../widgets/home/product_card.dart';
 import '../../widgets/shared/primary_app_bar.dart';
-import 'package:provider/provider.dart';
 
 class ProductsList extends StatelessWidget {
   final Map<String, dynamic> data;

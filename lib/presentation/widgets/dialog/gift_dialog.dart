@@ -49,7 +49,7 @@ class GiftDialog extends StatelessWidget {
                     padding:
                         const EdgeInsets.only(top: 8.0, right: 20, left: 20),
                     child: Text(
-                      "لقد ربحت خصم ١٠٠ ريال عند شرائك بقيمة ٩٩٩ أو اكثر باستخدام الكود s100",
+                      "لقد ربحت خصم ٢٠٠ ريال عند شرائك أي ذبيحة باستخدام الكود z200",
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme

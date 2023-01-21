@@ -1,3 +1,4 @@
+import '../../models/product_details.dart';
 import 'size_config.dart';
 import '../../models/cart_data.dart';
 
@@ -36,5 +37,71 @@ class CalculateHelper {
       cartLength += list![i]!.quantity!;
     }
     return cartLength;
+  }
+
+  double getProductPrice(
+      {required ProductDetails productData,
+      required int selectedSize,
+      required int selectedPackaging,
+      required int selectedChopping,
+      required bool selectedShalwata}) {
+    double price = double.parse(productData.data!.price!);
+    if (selectedSize >= 0) {
+      price = double.parse(productData.data!.sizes![selectedSize].price!);
+    }
+    if (selectedPackaging >= 0) {
+      price +=
+          double.parse(productData.data!.packaging![selectedPackaging].price!);
+    }
+    if (selectedChopping >= 0) {
+      price +=
+          double.parse(productData.data!.chopping![selectedChopping].price!);
+    }
+    if (selectedShalwata) {
+      price += double.parse(productData.data!.shalwata!.price!);
+    }
+    return price;
+  }
+
+  double getProductSalePrice(
+      {required ProductDetails productData,
+      required int selectedSize,
+      required int selectedPackaging,
+      required int selectedChopping,
+      required bool selectedShalwata}) {
+    double price = double.parse(productData.data!.salePrice!);
+    if (selectedSize >= 0) {
+      if (double.parse(productData.data!.sizes![selectedSize].salePrice!) > 0) {
+        price = double.parse(productData.data!.sizes![selectedSize].salePrice!);
+      } else {
+        price = double.parse(productData.data!.sizes![selectedSize].price!);
+      }
+    }
+    if (selectedPackaging >= 0) {
+      if (double.parse(
+              productData.data!.packaging![selectedPackaging].salePrice!) >
+          0) {
+        price += double.parse(
+            productData.data!.packaging![selectedPackaging].salePrice!);
+      } else {
+        price += double.parse(
+            productData.data!.packaging![selectedPackaging].price!);
+      }
+    }
+    if (selectedChopping >= 0) {
+      if (double.parse(
+              productData.data!.chopping![selectedChopping].salePrice!) >
+          0) {
+        price += double.parse(
+            productData.data!.chopping![selectedChopping].salePrice!);
+      } else {
+        price +=
+            double.parse(productData.data!.chopping![selectedChopping].price!);
+      }
+    }
+    if (selectedShalwata) {
+      price += double.parse(productData.data!.shalwata!.price!);
+    }
+    return price;
   }
 }

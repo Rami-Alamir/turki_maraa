@@ -1,7 +1,8 @@
-import '../../../controllers/products_provider.dart';
-import '../../../models/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../controllers/product_provider.dart';
+import '../../../models/product_details.dart';
+
 import '../../../core/utilities/app_localizations.dart';
 import 'extra_tag.dart';
 
@@ -14,8 +15,8 @@ class WithoutExtra extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProductsProvider productProvider =
-        Provider.of<ProductsProvider>(context);
+    final ProductProvider productProvider =
+        Provider.of<ProductProvider>(context);
     return Visibility(
       visible: (product.data!.isLyh! ||
           product.data!.isKarashah! ||

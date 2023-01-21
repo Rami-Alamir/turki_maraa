@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
-
 import '../../../controllers/favourite_provider.dart';
 import '../../../controllers/location_provider.dart';
-import '../../../controllers/products_provider.dart';
+import '../../../controllers/product_provider.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/format_helper.dart';
@@ -218,6 +217,13 @@ class _ProductDescriptionState extends State<ProductDescription> {
                     .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
               )),
         ),
+        // TabbyPresentationSnippet(
+        //   price: (widget.price / 4).toString(),
+        //   currency: locationProvider.isoCountryCode == 'SA'
+        //       ? Currency.sar
+        //       : Currency.aed,
+        //   lang: isAr ? Lang.ar : Lang.en,
+        // ),
       ],
     );
   }
@@ -225,9 +231,9 @@ class _ProductDescriptionState extends State<ProductDescription> {
   void action(BuildContext context, bool status, bool isFavourite) {
     Navigator.of(context, rootNavigator: true).pop();
     if (status) {
-      final productsProvider =
-          Provider.of<ProductsProvider>(context, listen: false);
-      productsProvider.setIsFavourite2 = isFavourite;
+      final productProvider =
+          Provider.of<ProductProvider>(context, listen: false);
+      productProvider.setIsFavouriteWithNotify = isFavourite;
     }
   }
 }

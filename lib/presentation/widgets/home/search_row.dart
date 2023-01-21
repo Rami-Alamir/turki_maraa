@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:turki_dabayh/core/utilities/format_helper.dart';
+import 'package:provider/provider.dart';
+import '../../../models/search_data.dart';
+import '../../../core/utilities/format_helper.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
-import '../../../models/search_data.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
-import 'package:provider/provider.dart';
 import '../../../controllers/location_provider.dart';
 
 class SearchRow extends StatelessWidget {

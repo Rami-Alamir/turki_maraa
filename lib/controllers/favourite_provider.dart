@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../core/service/firebase_helper.dart';
 import '../core/service/service_locator.dart';
 import '../core/utilities/dialog_helper.dart';

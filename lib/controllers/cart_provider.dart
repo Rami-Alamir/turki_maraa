@@ -360,10 +360,12 @@ class CartProvider with ChangeNotifier {
           _cartData!.data!.invoicePreview!.totalAmountAfterDiscount!.toString(),
       currency: _isoCountryCode == "SA" ? Currency.sar : Currency.aed,
       buyer: Buyer(
-        email: 'card.success@tabby.ai',
-        phone: "500000001",
-        // phone: _userData!.data!.mobile!.substring(4),
-        name: _userData!.data!.name!,
+        // email: 'card.success@tabby.ai',
+        email:
+            '${_userData?.data?.name ?? "user"}${_userData?.data?.id}@gmail.com',
+        // phone: "500000001",
+        phone: _userData!.data!.mobile!.substring(4),
+        name: _userData?.data?.name ?? "user",
         dob: '2019-08-24',
       ),
       buyerHistory: BuyerHistory(
@@ -374,7 +376,7 @@ class CartProvider with ChangeNotifier {
       shippingAddress: ShippingAddress(
         city: _isoCountryCode!,
         address: (selectedAddress ?? " "),
-        zip: 'string',
+        zip: '12345',
       ),
       order:
           Order(referenceId: orderRef.data!.orderRef!, items: _getOrderItems()),

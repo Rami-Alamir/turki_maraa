@@ -18,7 +18,6 @@ class CircleIcon extends StatelessWidget {
         onTap();
       },
       splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       child: Container(
         width: 45,
         height: 45,

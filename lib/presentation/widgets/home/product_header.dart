@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../shared/dots_indicator.dart';
 import '../../../models/images.dart';
 import '../../../core/utilities/size_config.dart';
-import '../shared/dots_indicator.dart';
 
 class ProductHeader extends StatefulWidget {
   final List<Images> imgList;

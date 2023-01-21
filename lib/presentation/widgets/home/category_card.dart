@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:turki_dabayh/core/utilities/size_config.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/firebase_helper.dart';
 
@@ -53,22 +54,25 @@ class CategoryCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(
                     top: 20.0, right: 20, left: 20, bottom: 0),
-                child: AutoSizeText(
-                  title,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        // color: const Color.fromRGBO(199, 154, 72, 1),
-                      ),
-                  maxFontSize: 18,
-                  minFontSize: 8,
-                  overflow: TextOverflow.visible,
-                  maxLines: 1,
+                child: SizedBox(
+                  width: SizeConfig.screenWidth! - 195,
+                  child: AutoSizeText(
+                    title,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                          fontSize: 18, height: 1.5,
+                          fontWeight: FontWeight.w500,
+                          // color: const Color.fromRGBO(199, 154, 72, 1),
+                        ),
+                    maxFontSize: 18,
+                    minFontSize: 8,
+                    overflow: TextOverflow.visible,
+                    maxLines: 2,
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(5.0, 5, 5, 5),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 5, 5),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                       bottomRight: Radius.circular(20.0),
