@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../controllers/favourite_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
