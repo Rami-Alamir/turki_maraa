@@ -44,7 +44,7 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
         ),
         constraints: const BoxConstraints(maxHeight: 360),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(

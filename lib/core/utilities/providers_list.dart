@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import '../../controllers/discover_provider.dart';
 import '../../controllers/drawer_provider.dart';
 import '../../controllers/auth.dart';
 import '../../controllers/address_provider.dart';
@@ -60,6 +61,13 @@ class ProvidersList {
       ChangeNotifierProxyProvider<LocationProvider, ProductProvider>(
           create: (context) => ProductProvider(),
           update: (_, location, product) => product!
+            ..updateLocation(
+              location.latLng,
+              location.isoCountryCode,
+            )),
+      ChangeNotifierProxyProvider<LocationProvider, DiscoverProvider>(
+          create: (context) => DiscoverProvider(),
+          update: (_, location, discover) => discover!
             ..updateLocation(
               location.latLng,
               location.isoCountryCode,

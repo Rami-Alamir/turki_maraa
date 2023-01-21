@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../models/discover_data.dart';
 import '../../../controllers/products_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -7,7 +8,6 @@ import '../../widgets/shared/retry.dart';
 import '../../widgets/shared/spinkit_indicator.dart';
 import '../../widgets/home/discover_header.dart';
 import '../../widgets/shared/primary_app_bar.dart';
-import 'package:provider/provider.dart';
 
 class Discover extends StatefulWidget {
   final Data item;
