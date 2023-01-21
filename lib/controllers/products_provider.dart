@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../core/service/service_locator.dart';
+import '../core/utilities/enum/request_status.dart';
 import '../models/banners_data.dart';
 import '../models/discover_data.dart';
 import '../models/product.dart';
@@ -9,8 +10,7 @@ import '../repository/home_repository.dart';
 import '../repository/products_repository.dart';
 
 class ProductsProvider with ChangeNotifier {
-  bool _foodsIsLoading = true;
-  bool _foodsRetry = false;
+  RequestStatus _requestStatus = RequestStatus.isLoading;
   final _bannersList = [];
   BannersData? _bannersData;
   Product? _productsList;
@@ -18,32 +18,28 @@ class ProductsProvider with ChangeNotifier {
   LatLng? _latLng;
   String? _isoCountryCode;
   BannersData? get bannersData => _bannersData;
-  bool get foodsIsLoading => _foodsIsLoading;
   get bannersList => _bannersList;
-  bool get foodsRetry => _foodsRetry;
   Product get productsList => _productsList!;
   DiscoverData? get discoverData => _discoverData;
+  RequestStatus get requestStatus => _requestStatus;
 
   void disposeFood() {
-    _foodsIsLoading = true;
     _discoverData = null;
     _bannersList.clear();
-    _foodsRetry = false;
   }
 
   Future<void> getFoodsPageData(int id, {bool isLoading = true}) async {
-    _foodsRetry = false;
-    _foodsIsLoading = isLoading;
+    _requestStatus = RequestStatus.isLoading;
     try {
       await Future.wait([
         _getDiscoverList(id),
         _getBanners(id),
         _getProducts("$id"),
       ]);
-    } catch (e) {
-      _foodsRetry = true;
+      _requestStatus = RequestStatus.completed;
+    } catch (_) {
+      _requestStatus = RequestStatus.error;
     }
-    _foodsIsLoading = false;
     notifyListeners();
   }
 
@@ -52,9 +48,7 @@ class ProductsProvider with ChangeNotifier {
     try {
       _discoverData = await sl<HomeRepository>()
           .getDiscover(categoryId, _latLng!, _isoCountryCode!);
-    } catch (_) {
-      //  _foodsRetry = true;
-    }
+    } catch (_) {}
   }
 
   Future<void> _getBanners(int categoryId) async {
@@ -62,17 +56,16 @@ class ProductsProvider with ChangeNotifier {
       _bannersData = await sl<HomeRepository>()
           .getBannersList(categoryId, _latLng!, _isoCountryCode!);
     } catch (_) {
-      _foodsRetry = true;
+      _requestStatus = RequestStatus.error;
     }
   }
 
-  // get Products
   Future<void> _getProducts(String id) async {
     try {
       _productsList = await sl<ProductsRepository>()
           .getProductsList(id, _latLng!, _isoCountryCode!);
     } catch (_) {
-      _foodsRetry = true;
+      _requestStatus = RequestStatus.error;
     }
   }
 

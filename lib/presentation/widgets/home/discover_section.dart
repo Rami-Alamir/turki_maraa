@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import '../../../models/discover_data.dart';
+import 'package:provider/provider.dart';
+import '../../../controllers/products_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import 'discover_card.dart';
 
 class DiscoverSection extends StatelessWidget {
-  final DiscoverData discoverList;
-  const DiscoverSection({Key? key, required this.discoverList})
-      : super(key: key);
+  const DiscoverSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ProductsProvider productsProvider =
+        Provider.of<ProductsProvider>(context);
     return SliverToBoxAdapter(
       child: Visibility(
-        visible: (discoverList.data?.length ?? 0) > 0,
+        visible: (productsProvider.discoverData!.data?.length ?? 0) > 0,
         child: Column(
           children: [
             Row(
@@ -38,13 +39,13 @@ class DiscoverSection extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   physics: const ScrollPhysics(),
-                  itemCount: discoverList.data!.length,
+                  itemCount: productsProvider.discoverData!.data!.length,
                   itemBuilder: (BuildContext ctxt, int index) {
                     return Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
                           index == 0 ? 8 : 3.0, 0, 8, 0),
                       child: DiscoverCard(
-                        item: discoverList.data![index],
+                        item: productsProvider.discoverData!.data![index],
                       ),
                     );
                   }),

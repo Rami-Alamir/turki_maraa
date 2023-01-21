@@ -7,7 +7,6 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/home/circle_icon.dart';
 import '../../widgets/home/product_details_footer.dart';
 import '../../widgets/home/product_details_list.dart';
-
 import '../../widgets/shared/page_builder.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -57,6 +56,7 @@ class ProductDetailsState extends State<ProductDetails> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: PageBuilder(
+        padding: const EdgeInsets.only(top: 60),
         requestStatus: productProvider.requestStatus[_index!],
         onError: () {
           productProvider.setProductIsLoading(_index!);

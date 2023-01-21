@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
@@ -7,7 +8,6 @@ import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../widgets/login/pin_code_fields.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
-import 'package:provider/provider.dart';
 
 class VerifyPhone extends StatefulWidget {
   const VerifyPhone({Key? key}) : super(key: key);

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/home/products_list_section.dart';
-import '../../widgets/shared/retry.dart';
-import '../../widgets/shared/spinkit_indicator.dart';
-import '../../widgets/home/discover_section.dart';
-import '../../widgets/home/food_appbar.dart';
+import '../../widgets/home/products_home_body.dart';
+import '../../widgets/shared/page_builder.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../../controllers/products_provider.dart';
 import '../../../core/constants/route_constants.dart';
@@ -58,41 +55,18 @@ class ProductsHomeState extends State<ProductsHome> {
               ),
             )
           : null,
-      body: productsProvider.foodsIsLoading
-          ? const SpinkitIndicator(
-              padding: EdgeInsets.only(top: 60),
-            )
-          : productsProvider.foodsRetry
-              ? Retry(
-                  padding: const EdgeInsets.only(top: 60),
-                  onPressed: () {
-                    productsProvider.getFoodsPageData(widget.id);
-                  },
-                )
-              : RefreshIndicator(
-                  color: Theme.of(context).primaryColor,
-                  backgroundColor: Theme.of(context).backgroundColor,
-                  onRefresh: () async {
-                    await productsProvider.getFoodsPageData(widget.id,
-                        isLoading: false);
-                  },
-                  child: CustomScrollView(
-                      controller: _scrollController,
-                      slivers: <Widget>[
-                        if ((productsProvider.bannersData?.data?.length ?? 0) >
-                            0)
-                          FoodAppBar(
-                            changeColor: _changeColor,
-                            bannersData: productsProvider.bannersData!,
-                          ),
-                        if (productsProvider.discoverData != null)
-                          DiscoverSection(
-                            discoverList: productsProvider.discoverData!,
-                          ),
-                        SliverToBoxAdapter(
-                            child: ProductsListSection(
-                                products: productsProvider.productsList)),
-                      ])),
+      body: PageBuilder(
+        padding: const EdgeInsets.only(top: 60),
+        requestStatus: productsProvider.requestStatus,
+        onError: () {
+          productsProvider.getFoodsPageData(widget.id);
+        },
+        child: ProductsHomeBody(
+          id: widget.id,
+          scrollController: _scrollController,
+          changeColor: _changeColor,
+        ),
+      ),
     );
   }
 }

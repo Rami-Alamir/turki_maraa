@@ -1,13 +1,21 @@
-import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/constants/fixed_assets.dart';
-import '../../screens/app/app.dart';
+import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
 
-class NoInternet extends StatelessWidget {
+class NoInternet extends StatefulWidget {
   const NoInternet({Key? key}) : super(key: key);
+
+  @override
+  State<NoInternet> createState() => _NoInternetState();
+}
+
+class _NoInternetState extends State<NoInternet> {
+  late ConnectivityResult connectivityResult;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +34,9 @@ class NoInternet extends StatelessWidget {
             padding: EdgeInsets.only(top: SizeConfig.screenHeight! / 5),
             child: RoundedRectangleButton(
                 title: AppLocalizations.of(context)!.tr('try_again'),
-                onPressed: () {
-                  navigate(context);
+                onPressed: () async {
+                  await checkConnectivity();
+                  navigate();
                 }),
           )
         ],
@@ -35,15 +44,23 @@ class NoInternet extends StatelessWidget {
     );
   }
 
-  void navigate(BuildContext context) async {
+  // Check internet connection
+  Future<void> checkConnectivity() async {
     try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        // ignore: use_build_context_synchronously
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const App()),
-            (Route<dynamic> route) => false);
-      }
-    } on SocketException catch (_) {}
+      connectivityResult = await Connectivity().checkConnectivity();
+    } catch (_) {}
+  }
+
+  void navigate() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool introStatus = prefs.getBool('intro') ?? true;
+    if (!mounted) return;
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        introStatus
+            ? intro
+            : connectivityResult != ConnectivityResult.none
+                ? app
+                : noInternet,
+        (route) => false);
   }
 }
