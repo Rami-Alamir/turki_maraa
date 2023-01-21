@@ -20,7 +20,7 @@ class ProductInformationItem extends StatelessWidget {
     return Visibility(
       visible: value.isNotEmpty,
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
         child: Row(
           children: [
             Container(
