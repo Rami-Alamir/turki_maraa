@@ -18,7 +18,6 @@ class ExtraTag extends StatelessWidget {
         onTap();
       },
       splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Container(
