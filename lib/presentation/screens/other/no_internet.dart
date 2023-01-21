@@ -1,6 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../controllers/home_provider.dart';
+import '../../../controllers/location_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -36,7 +39,9 @@ class _NoInternetState extends State<NoInternet> {
                 title: AppLocalizations.of(context)!.tr('try_again'),
                 onPressed: () async {
                   await checkConnectivity();
-                  navigate();
+                  if (connectivityResult != ConnectivityResult.none) {
+                    await navigate();
+                  }
                 }),
           )
         ],
@@ -51,16 +56,17 @@ class _NoInternetState extends State<NoInternet> {
     } catch (_) {}
   }
 
-  void navigate() async {
+  Future<void> navigate() async {
+    final LocationProvider location =
+        Provider.of<LocationProvider>(context, listen: false);
+    final HomeProvider home = Provider.of<HomeProvider>(context, listen: false);
+    location.initLatLng();
+    home.checkNewVersion();
+    await home.getHomePageData(notify: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool introStatus = prefs.getBool('intro') ?? true;
     if (!mounted) return;
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        introStatus
-            ? intro
-            : connectivityResult != ConnectivityResult.none
-                ? app
-                : noInternet,
-        (route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(introStatus ? intro : app, (route) => false);
   }
 }
