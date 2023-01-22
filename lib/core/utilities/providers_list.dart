@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import 'package:turki_dabayh/controllers/app_provider.dart';
 import '../../controllers/discover_provider.dart';
 import '../../controllers/drawer_provider.dart';
 import '../../controllers/auth.dart';
@@ -44,6 +45,9 @@ class ProvidersList {
                 location.currentLocationDescriptionAr,
                 location.currentLocationDescriptionEn,
                 location.isHms)),
+      ChangeNotifierProxyProvider<LocationProvider, AppProvider>(
+          create: (context) => AppProvider(),
+          update: (_, location, app) => app!..updateProvider(location.isHms)),
       ChangeNotifierProxyProvider<LocationProvider, SearchProvider>(
           create: (context) => SearchProvider(),
           update: (_, location, search) => search!
