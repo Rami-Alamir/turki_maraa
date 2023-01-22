@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:turki_dabayh/core/utilities/size_config.dart';
+import '../../../core/constants/fixed_assets.dart';
+import '../../../core/utilities/size_config.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/firebase_helper.dart';
 
@@ -32,61 +33,68 @@ class CategoryCard extends StatelessWidget {
         FirebaseHelper.analytics!.logEvent(name: titleEn, parameters: null);
       },
       splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
-        child: Container(
-          height: 120,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
-            gradient: LinearGradient(
-                begin: Alignment.bottomLeft,
-                end: Alignment.topLeft,
-                colors: [
-                  color,
-                  color2,
-                ]),
+      child: Container(
+        height: 120,
+        margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+        // decoration: BoxDecoration(
+        //   borderRadius: const BorderRadius.all(Radius.circular(12)),
+        //   gradient: LinearGradient(
+        //       begin: Alignment.bottomLeft,
+        //       end: Alignment.topLeft,
+        //       colors: [
+        //         color,
+        //         color2,
+        //       ]),
+        // ),
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          image: DecorationImage(
+            image: AssetImage(Theme.of(context).backgroundColor == Colors.black
+                ? FixedAssets.backgroundDark
+                : FixedAssets.background),
+            fit: BoxFit.cover,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 20.0, right: 20, left: 20, bottom: 0),
-                child: SizedBox(
-                  width: SizeConfig.screenWidth! - 195,
-                  child: AutoSizeText(
-                    title,
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
-                          fontSize: 18, height: 1.5,
-                          fontWeight: FontWeight.w500,
-                          // color: const Color.fromRGBO(199, 154, 72, 1),
-                        ),
-                    maxFontSize: 18,
-                    minFontSize: 8,
-                    overflow: TextOverflow.visible,
-                    maxLines: 2,
-                  ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 20.0, right: 20, left: 20, bottom: 0),
+              child: SizedBox(
+                width: SizeConfig.screenWidth! - 195,
+                child: AutoSizeText(
+                  title,
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                        fontSize: 18, height: 1.5,
+                        fontWeight: FontWeight.w500,
+                        // color: const Color.fromRGBO(199, 154, 72, 1),
+                      ),
+                  maxFontSize: 18,
+                  minFontSize: 8,
+                  overflow: TextOverflow.visible,
+                  maxLines: 2,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 5, 5),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      bottomRight: Radius.circular(20.0),
-                      bottomLeft: Radius.circular(20.0)),
-                  child: Image.network(
-                    image,
-                    fit: BoxFit.contain,
-                    height: 120,
-                    width: 120,
-                  ),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 5, 5),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    bottomRight: Radius.circular(20.0),
+                    bottomLeft: Radius.circular(20.0)),
+                child: Image.network(
+                  image,
+                  fit: BoxFit.contain,
+                  height: 120,
+                  width: 120,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

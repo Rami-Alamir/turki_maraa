@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../controllers/app_provider.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';
@@ -62,6 +63,9 @@ class _NoInternetState extends State<NoInternet> {
     final LocationProvider location =
         Provider.of<LocationProvider>(context, listen: false);
     final HomeProvider home = Provider.of<HomeProvider>(context, listen: false);
+    final AppProvider appProvider =
+        Provider.of<AppProvider>(context, listen: false);
+
     await location.initLatLng();
     if (!mounted) return;
     final Auth auth = Provider.of<Auth>(context, listen: false);
@@ -69,7 +73,7 @@ class _NoInternetState extends State<NoInternet> {
     String accessToken = await localStorage.read(key: 'accessToken') ?? "";
     if (!mounted) return;
     auth.getUserData(context, accessToken);
-    home.checkNewVersion();
+    appProvider.checkNewVersion();
     home.getHomePageData(notify: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool introStatus = prefs.getBool('intro') ?? true;

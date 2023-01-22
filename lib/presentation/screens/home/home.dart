@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../controllers/app_provider.dart';
 import '../../widgets/home/address_container.dart';
 import '../../widgets/home/almaraa_card.dart';
 import '../../widgets/home/location_disabled.dart';
 import '../../widgets/shared/retry.dart';
 import '../../widgets/shared/spinkit_indicator.dart';
 import '../../widgets/home/home_app_bar.dart';
-import '../../widgets/home/order_type.dart';
 import '../../widgets/shared/whatsapp.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../core/utilities/enum/request_status.dart';
 
 class Home extends StatefulWidget {
   final GlobalKey<ScaffoldState> parentScaffoldStateKey;
@@ -48,9 +49,9 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
     final HomeProvider homeProvider = Provider.of<HomeProvider>(context);
-    homeProvider.showNewVersion(context);
+    final AppProvider appProvider = Provider.of<AppProvider>(context);
+    appProvider.showNewVersion(context);
     // used to init map marker
     final AddressProvider addressProvider =
         Provider.of<AddressProvider>(context);
@@ -58,59 +59,50 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
       addressProvider.initMapMarker();
     }
     return Scaffold(
-      extendBodyBehindAppBar: true,
       floatingActionButton: const Whatsapp(),
       appBar: HomeAppBar(
         parentScaffoldKey: widget.parentScaffoldStateKey,
       ),
+      extendBodyBehindAppBar: true,
       body: Stack(children: [
         (homeProvider.locationServiceStatus == 0 ||
                     homeProvider.locationServiceStatus == 2) &&
                 homeProvider.latLng == null
             ? LocationDisabled(
                 locationStatus: homeProvider.locationServiceStatus)
-            : homeProvider.isLoading || homeProvider.latLng == null
+            : homeProvider.requestStatus == RequestStatus.isLoading ||
+                    homeProvider.latLng == null
                 ? const SpinkitIndicator(
-                    padding: EdgeInsets.only(top: 170),
+                    padding: EdgeInsets.only(top: 200),
                   )
-                : homeProvider.retry
+                : homeProvider.requestStatus == RequestStatus.error
                     ? Retry(
-                        padding: const EdgeInsets.only(top: 170),
+                        padding: const EdgeInsets.only(top: 200),
                         onPressed: () {
                           homeProvider.setIsLoading = true;
                           homeProvider.getHomePageData();
                         },
                       )
-                    : RefreshIndicator(
-                        color: Theme.of(context).primaryColor,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        onRefresh: () async {
-                          await homeProvider.getHomePageData(isLoading: false);
-                        },
-                        child: ListView(
-                          children: const [
-                            Padding(
-                              padding: EdgeInsets.only(top: 189),
-                              child: AlmaraaCard(),
-                            ),
-                          ],
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 250),
+                        child: RefreshIndicator(
+                          color: Theme.of(context).primaryColor,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                          onRefresh: () async {
+                            await homeProvider.getHomePageData();
+                          },
+                          child: ListView(
+                            padding: const EdgeInsets.only(top: 20),
+                            children: const [
+                              AlmaraaCard(),
+                            ],
+                          ),
                         ),
                       ),
-        Positioned(
-          top: 55 + statusBarHeight,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Visibility(
-                visible: homeProvider.canPickup,
-                child: OrderType(
-                  visible: homeProvider.canPickup,
-                ),
-              ),
-              const AddressContainer(),
-            ],
-          ),
+        const Positioned(
+          top: 200,
+          child: AddressContainer(),
         ),
       ]),
     );

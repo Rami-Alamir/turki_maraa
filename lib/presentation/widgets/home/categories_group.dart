@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../models/category_data.dart';
+import 'package:provider/provider.dart';
+import '../../../controllers/home_provider.dart';
 import 'categories.dart';
 import 'not_supported_area.dart';
 
 class CategoriesGroup extends StatelessWidget {
-  final CategoryData? categoryData;
-
-  const CategoriesGroup({Key? key, required this.categoryData})
-      : super(key: key);
+  const CategoriesGroup({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return categoriesGroup(categoryData?.data?.length ?? 0, categoryData);
+    final HomeProvider homeProvider = Provider.of<HomeProvider>(context);
+
+    return categoriesGroup(homeProvider.categoryData?.data?.length ?? 0,
+        homeProvider.categoryData);
   }
 }
 

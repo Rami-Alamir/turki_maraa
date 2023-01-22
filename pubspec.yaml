@@ -69,6 +69,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/splash2.gif
+    - assets/images/background_dark.png
     - assets/images/splash.gif
     - assets/images/whatsapp.png
     - assets/images/ww1.png

@@ -93,7 +93,6 @@ class AddressBox extends StatelessWidget {
     }
     final AddressProvider addressProvider =
         Provider.of<AddressProvider>(context);
-    print("addressProvider.selectedAddress ${addressProvider.selectedAddress}");
     if (addressProvider.selectedAddress == -1) {
       switch (locationServiceStatus) {
         case -1:
@@ -107,8 +106,6 @@ class AddressBox extends StatelessWidget {
           return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${AppLocalizations.of(context)!.tr('choose')}");
       }
     } else {
-      print(
-          "locationProvider.selectedLocationDescription; ${locationProvider.selectedLocationDescription}");
       return locationProvider.selectedLocationDescription;
     }
   }

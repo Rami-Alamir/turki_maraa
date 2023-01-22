@@ -1,23 +1,18 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as location_service;
-import 'package:version/version.dart';
 import '../core/service/service_locator.dart';
+import '../core/utilities/enum/request_status.dart';
 import '../models/banners_data.dart';
 import '../models/best_seller.dart';
 import '../models/category_data.dart';
 import '../repository/home_repository.dart';
 import '../repository/products_repository.dart';
-import '../repository/version_repository.dart';
-import '../presentation/screens/other/new_version.dart' as new_version;
 
 class HomeProvider with ChangeNotifier {
-  bool _canUpdate = false;
+  RequestStatus _requestStatus = RequestStatus.isLoading;
   final bool _canPickup = true;
-  bool _isLoading = true;
-  bool _retry = false;
   final bool _areaStatus = false;
   int _selectedOrderType = 0;
   //used to determine location service status
@@ -28,9 +23,20 @@ class HomeProvider with ChangeNotifier {
   String? _isoCountryCode;
   bool? _isHMS = false;
   location_service.LocationData? _locationData;
-  final String _currentVersion = "5.14.0";
   location_service.Location location = location_service.Location();
   BannersData? _bannersData;
+
+  location_service.LocationData get locationData => _locationData!;
+  LatLng? get latLng => _latLng;
+  int get selectedOrderType => _selectedOrderType;
+  BestSeller? get bestSeller => _bestSeller;
+  bool get canPickup => _canPickup;
+  bool get areaStatus => _areaStatus;
+  CategoryData? get categoryData => _categoryData;
+  int get locationServiceStatus => _locationServiceStatus;
+  String get isoCountryCode => _isoCountryCode!;
+  BannersData? get bannersData => _bannersData;
+  RequestStatus get requestStatus => _requestStatus;
 
   // update location data
   Future<void> updateLocation(
@@ -42,9 +48,7 @@ class HomeProvider with ChangeNotifier {
       bool isHMS) async {
     _locationServiceStatus = locationServiceStatus ?? 2;
     _isHMS = isHMS;
-    if (_isHMS ?? false) {
-      checkNewVersion();
-    }
+
     if (latLng != null) {
       _isoCountryCode = isoCountryCode;
       if (latLng != _latLng) {
@@ -55,7 +59,7 @@ class HomeProvider with ChangeNotifier {
       }
     } else {
       if (_locationServiceStatus != 0 || _locationServiceStatus != 2) {
-        _isLoading = true;
+        _requestStatus = RequestStatus.isLoading;
       }
       _latLng = latLng;
       _isoCountryCode = isoCountryCode;
@@ -63,24 +67,8 @@ class HomeProvider with ChangeNotifier {
     }
   }
 
-  location_service.LocationData get locationData => _locationData!;
-  LatLng? get latLng => _latLng;
-  int get selectedOrderType => _selectedOrderType;
-  String get currentVersion => _currentVersion;
-  BestSeller? get bestSeller => _bestSeller;
-  bool get canPickup => _canPickup;
-  bool get isLoading => _isLoading;
-  bool get retry => _retry;
-  bool get areaStatus => _areaStatus;
-  CategoryData? get categoryData => _categoryData;
-  int get locationServiceStatus => _locationServiceStatus;
-  String get isoCountryCode => _isoCountryCode!;
-  bool get canUpdate => _canUpdate;
-  BannersData? get bannersData => _bannersData;
-
   set setIsLoading(bool value) {
-    _isLoading = value;
-    _retry = false;
+    _requestStatus = RequestStatus.isLoading;
     notifyListeners();
   }
 
@@ -95,7 +83,7 @@ class HomeProvider with ChangeNotifier {
       _categoryData = await sl<HomeRepository>()
           .getCategoriesList(_latLng!, _isoCountryCode!);
     } catch (_) {
-      _retry = true;
+      _requestStatus = RequestStatus.error;
     }
   }
 
@@ -105,61 +93,29 @@ class HomeProvider with ChangeNotifier {
       _bestSeller = await sl<ProductsRepository>()
           .getBestSeller(_latLng!, _isoCountryCode!);
     } catch (_) {
-      _retry = true;
+      _requestStatus = RequestStatus.error;
     }
   }
 
   //init home page
-  Future<void> getHomePageData(
-      {bool isLoading = true, bool notify = true}) async {
-    _retry = false;
+  Future<void> getHomePageData({bool notify = true}) async {
+    _requestStatus = RequestStatus.isLoading;
     try {
       if (_latLng != null && _isoCountryCode != null) {
-        _isLoading = isLoading;
-        notifyListeners();
+        if (notify) {
+          notifyListeners();
+        }
         await Future.wait([
           _getCategories(),
           _getBestSeller(),
         ]);
       }
+      _requestStatus = RequestStatus.completed;
     } catch (_) {
-      _retry = true;
+      _requestStatus = RequestStatus.error;
     }
-    _isLoading = false;
     if (notify) {
       notifyListeners();
-    }
-  }
-
-  // check if app have new version to show update page
-  Future<void> checkNewVersion() async {
-    final versionData =
-        await sl<VersionRepository>().getLatestAppVersion(Platform.isIOS
-            ? 1
-            : _isHMS!
-                ? 3
-                : 2);
-
-    Version currentVersion = Version.parse(_currentVersion);
-    Version latestVersion =
-        Version.parse(versionData.data?.value ?? _currentVersion);
-    if (latestVersion > currentVersion) _canUpdate = true;
-  }
-
-  // show new version page
-  void showNewVersion(BuildContext context) async {
-    if (_canUpdate) {
-      _canUpdate = false;
-      await Future.delayed(const Duration(milliseconds: 1500), () {
-        Navigator.of(
-          context,
-          rootNavigator: true,
-        ).pushAndRemoveUntil(
-            MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    const new_version.NewVersion()),
-            ModalRoute.withName('/'));
-      });
     }
   }
 }

@@ -4,6 +4,7 @@ class FixedAssets {
   static const String about = 'assets/images/about.png';
   static const String placeholder = 'assets/images/placeholder.png';
   static const String background = "assets/images/ww1.png";
+  static const String backgroundDark = "assets/images/background_dark.png";
   static const String loginBackground = "assets/images/t1.gif";
   static const String noInternet = 'assets/images/no_internet.gif';
   static const String mapPin = "assets/images/pin.png";

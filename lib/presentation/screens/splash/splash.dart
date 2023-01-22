@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../controllers/app_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
@@ -30,8 +31,10 @@ class SplashState extends State<Splash> {
     final LocationProvider location =
         Provider.of<LocationProvider>(context, listen: false);
     final HomeProvider home = Provider.of<HomeProvider>(context, listen: false);
+    final AppProvider appProvider =
+        Provider.of<AppProvider>(context, listen: false);
     location.initLatLng();
-    home.checkNewVersion();
+    appProvider.checkNewVersion();
     home.getHomePageData(notify: false);
     _timer = Timer(const Duration(milliseconds: 3000), () {
       navigate();
@@ -48,7 +51,7 @@ class SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     sl<SizeConfig>().init(context);
     return Scaffold(
-        backgroundColor: const Color.fromRGBO(105, 30, 24, 1),
+      backgroundColor: const Color.fromRGBO(105, 30, 24, 1),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
@@ -65,7 +68,7 @@ class SplashState extends State<Splash> {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   child: Text(
-                              AppLocalizations.of(context)!.tr('skip'),
+                    AppLocalizations.of(context)!.tr('skip'),
                     style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
@@ -75,21 +78,20 @@ class SplashState extends State<Splash> {
         ],
       ),
       body: Container(
-            width: SizeConfig.screenWidth,
-            height: SizeConfig.screenHeight,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(FixedAssets.background),
-                fit: BoxFit.cover,
-              ),
-            ),
+        width: SizeConfig.screenWidth,
+        height: SizeConfig.screenHeight,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(FixedAssets.background),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: Lottie.asset(FixedAssets.logoLottie,
               height: 450, width: 450, fit: BoxFit.contain),
         ),
       ),
     );
-
   }
 
   void navigate() async {

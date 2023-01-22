@@ -13,7 +13,6 @@ class AlmaraaCard extends StatelessWidget {
         Navigator.pushNamed(context, homeCategories);
       },
       splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
         child: Column(
@@ -22,7 +21,7 @@ class AlmaraaCard extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 180,
+                  height: SizeConfig.setWidgetHeight(180, 320, 320),
                   width: SizeConfig.screenWidth,
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -51,8 +50,8 @@ class AlmaraaCard extends StatelessWidget {
                       child: Image.network(
                         "https://almaraacompany.com/turki-app/image/almaraa_logo.png",
                         fit: BoxFit.fill,
-                        width: 50,
-                        height: 50,
+                        width: SizeConfig.setWidgetWidth(50, 75, 75),
+                        height: SizeConfig.setWidgetHeight(50, 75, 75),
                       ),
                     ),
                   ),

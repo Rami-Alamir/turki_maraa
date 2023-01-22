@@ -36,7 +36,7 @@ class OrderTypeItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                   color: selected
-                      ? Colors.white
+                      ? const Color.fromRGBO(219, 189, 109, 1)
                       : Theme.of(context).colorScheme.secondaryContainer,
                   width: selected ? 1 : 0.8)),
           child: Row(
@@ -57,7 +57,7 @@ class OrderTypeItem extends StatelessWidget {
                     child: Icon(
                       icon,
                       size: 17.5,
-                      color: Colors.white.withOpacity(selected ? 1 : 0.5),
+                      color: Color.fromRGBO(219, 189, 109, selected ? 1 : 0.5),
                     )),
               ),
               Padding(
@@ -71,8 +71,10 @@ class OrderTypeItem extends StatelessWidget {
                     maxFontSize: 12,
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontSize: 12,
-                        color: Colors.white.withOpacity(selected ? 1 : 0.5),
-                        fontWeight: FontWeight.normal),
+                        color:
+                            Color.fromRGBO(219, 189, 109, selected ? 1 : 0.5),
+                        fontWeight: FontWeight.normal,
+                        height: 2.5),
                   ),
                 ),
               ),

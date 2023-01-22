@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../../controllers/address_provider.dart';
+import '../../../controllers/app_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/enum/request_status.dart';
 import '../../widgets/home/address_container.dart';
 import '../../widgets/home/categories_group.dart';
 import '../../widgets/home/location_disabled.dart';
 import '../../widgets/shared/retry.dart';
 import '../../widgets/shared/spinkit_indicator.dart';
 import '../../widgets/home/home_app_bar.dart';
-import '../../widgets/home/order_type.dart';
 import '../../widgets/home/products_section2.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/shared/whatsapp.dart';
@@ -22,9 +23,9 @@ class HomeCategories extends StatefulWidget {
 class HomeCategoriesState extends State<HomeCategories> {
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
     final HomeProvider homeProvider = Provider.of<HomeProvider>(context);
-    homeProvider.showNewVersion(context);
+    final AppProvider appProvider = Provider.of<AppProvider>(context);
+    appProvider.showNewVersion(context);
     // used to init map marker
     final AddressProvider addressProvider =
         Provider.of<AddressProvider>(context);
@@ -44,79 +45,69 @@ class HomeCategoriesState extends State<HomeCategories> {
                 homeProvider.latLng == null
             ? LocationDisabled(
                 locationStatus: homeProvider.locationServiceStatus)
-            : homeProvider.isLoading || homeProvider.latLng == null
+            : homeProvider.requestStatus == RequestStatus.isLoading ||
+                    homeProvider.latLng == null
                 ? const SpinkitIndicator(
-                    padding: EdgeInsets.only(top: 170),
+                    padding: EdgeInsets.only(top: 200),
                   )
-                : homeProvider.retry
+                : homeProvider.requestStatus == RequestStatus.error
                     ? Retry(
-                        padding: const EdgeInsets.only(top: 170),
+                        padding: const EdgeInsets.only(top: 200),
                         onPressed: () {
-                          homeProvider.setIsLoading = true;
                           homeProvider.getHomePageData();
                         },
                       )
-                    : RefreshIndicator(
-                        color: Theme.of(context).primaryColor,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        onRefresh: () async {
-                          await homeProvider.getHomePageData(isLoading: false);
-                        },
-                        child: ListView(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 20, left: 20, top: 189),
-                              child: Visibility(
-                                visible:
-                                    (homeProvider.categoryData?.data?.length ??
-                                            0) >
-                                        0,
-                                child: Text(
-                                    AppLocalizations.of(context)!
-                                        .tr('what_would_you_want_today'),
-                                    textAlign: TextAlign.start,
-                                    style:
-                                        Theme.of(context).textTheme.subtitle1),
-                              ),
-                            ),
-                            CategoriesGroup(
-                                categoryData: homeProvider.categoryData),
-                            Visibility(
-                              visible:
-                                  ((homeProvider.categoryData?.data?.length) ??
-                                          0) !=
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 220.0),
+                        child: RefreshIndicator(
+                          color: Theme.of(context).primaryColor,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                          onRefresh: () async {
+                            await homeProvider.getHomePageData(notify: false);
+                          },
+                          child: ListView(
+                            padding: EdgeInsets.zero,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 20, left: 20, top: 65),
+                                child: Visibility(
+                                  visible: (homeProvider
+                                              .categoryData?.data?.length ??
+                                          0) >
                                       0,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: ProductsSection2(
-                                  title: AppLocalizations.of(context)!
-                                      .tr('most_wanted'),
-                                  products: homeProvider.bestSeller,
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .tr('what_would_you_want_today'),
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1),
                                 ),
                               ),
-                            )
-                          ],
+                              const CategoriesGroup(),
+                              Visibility(
+                                visible: ((homeProvider
+                                            .categoryData?.data?.length) ??
+                                        0) !=
+                                    0,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: ProductsSection2(
+                                    title: AppLocalizations.of(context)!
+                                        .tr('most_wanted'),
+                                    products: homeProvider.bestSeller,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-        Positioned(
-          top: 55 + statusBarHeight,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Visibility(
-                visible: homeProvider.canPickup,
-                child: OrderType(
-                  visible: homeProvider.canPickup,
-                  // color: const Color.fromRGBO(99, 58, 163, 1.0),
-                ),
-              ),
-              const AddressContainer(
-                  // color: Color.fromRGBO(99, 58, 163, 1.0),
-                  ),
-            ],
-          ),
+        const Positioned(
+          top: 200,
+          child: AddressContainer(),
         ),
       ]),
     );

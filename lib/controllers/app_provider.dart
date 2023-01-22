@@ -9,10 +9,13 @@ import '../presentation/screens/other/new_version.dart' as new_version;
 class AppProvider with ChangeNotifier {
   bool _canUpdate = false;
   bool? _isHMS = false;
-  final String _currentVersion = "5.14.0";
+  final String _currentVersion = "5.15.0";
 
   Future<void> updateProvider(bool isHMS) async {
     _isHMS = isHMS;
+    if (_isHMS ?? false) {
+      checkNewVersion();
+    }
   }
 
   String get currentVersion => _currentVersion;

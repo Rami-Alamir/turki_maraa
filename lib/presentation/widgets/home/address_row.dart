@@ -20,7 +20,6 @@ class AddressRow extends StatelessWidget {
           onTap();
         },
         splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
