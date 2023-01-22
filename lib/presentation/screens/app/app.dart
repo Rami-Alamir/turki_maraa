@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:shake/shake.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/dialog/gift_dialog.dart';
 import '../cart/shopping_cart.dart';
 import '../home/home.dart';
 import '../orders/orders.dart';
 import '../profile/profile.dart';
+import '../../widgets/dialog/gift_dialog.dart';
 import '../../widgets/home/drawer/turki_drawer.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/location_provider.dart';
@@ -125,7 +125,6 @@ class AppState extends State<App> {
                   index: currentTab,
                   children: tabs.map((e) => e.page).toList(),
                 ),
-                // DropdownAlert()
               ],
             ),
             bottomNavigationBar: Theme(
