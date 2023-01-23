@@ -1,5 +1,6 @@
 class Constants {
   Constants._();
+  static const String appVersion = "5.15.0";
   static const String baseUrl = 'https://almaraacompany.com/turki-api/api/v1/';
   static const String fontFamily = "Turki";
   static const String shareUrl = 'https://bit.ly/3tB2qdu';

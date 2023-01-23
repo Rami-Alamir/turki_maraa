@@ -4,6 +4,7 @@ import 'order_type.dart';
 import '../../../controllers/drawer_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
+import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 
@@ -23,11 +24,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     final DrawerProvider appProvider =
         Provider.of<DrawerProvider>(context, listen: false);
     final HomeProvider homeProvider = Provider.of<HomeProvider>(context);
-
     return PreferredSize(
       preferredSize: preferredSize,
       child: Container(
-        height: 200,
+        height: SizeConfig.homeAppBarHeight,
         decoration: BoxDecoration(
           color: Colors.transparent,
           image: DecorationImage(
@@ -87,5 +87,5 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(200);
+  Size get preferredSize => Size.fromHeight(SizeConfig.homeAppBarHeight);
 }

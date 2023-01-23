@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:turki_dabayh/core/utilities/size_config.dart';
 import '../../../controllers/app_provider.dart';
 import '../../widgets/home/address_container.dart';
 import '../../widgets/home/almaraa_card.dart';
@@ -51,7 +52,7 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final HomeProvider homeProvider = Provider.of<HomeProvider>(context);
     final AppProvider appProvider = Provider.of<AppProvider>(context);
-    appProvider.showNewVersion(context);
+    appProvider.showAlert(context);
     // used to init map marker
     final AddressProvider addressProvider =
         Provider.of<AddressProvider>(context);
@@ -72,19 +73,21 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
                 locationStatus: homeProvider.locationServiceStatus)
             : homeProvider.requestStatus == RequestStatus.isLoading ||
                     homeProvider.latLng == null
-                ? const SpinkitIndicator(
-                    padding: EdgeInsets.only(top: 200),
+                ? SpinkitIndicator(
+                    padding: EdgeInsets.only(top: SizeConfig.homeAppBarHeight),
                   )
                 : homeProvider.requestStatus == RequestStatus.error
                     ? Retry(
-                        padding: const EdgeInsets.only(top: 200),
+                        padding:
+                            EdgeInsets.only(top: SizeConfig.homeAppBarHeight),
                         onPressed: () {
                           homeProvider.setIsLoading = true;
                           homeProvider.getHomePageData();
                         },
                       )
                     : Padding(
-                        padding: const EdgeInsets.only(top: 250),
+                        padding: EdgeInsets.only(
+                            top: SizeConfig.homeAppBarHeight + 50),
                         child: RefreshIndicator(
                           color: Theme.of(context).primaryColor,
                           backgroundColor:
@@ -100,9 +103,9 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
-        const Positioned(
-          top: 200,
-          child: AddressContainer(),
+        Positioned(
+          top: SizeConfig.homeAppBarHeight,
+          child: const AddressContainer(),
         ),
       ]),
     );

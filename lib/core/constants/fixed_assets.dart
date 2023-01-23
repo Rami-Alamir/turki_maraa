@@ -65,4 +65,5 @@ class FixedAssets {
   static const String logoLottie = "assets/lottie/logo.json";
   static const String congratulations = "assets/lottie/congratulations.json";
   static const String gift = "assets/lottie/gift.json";
+  static const String spin = "assets/lottie/spin.json";
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:turki_dabayh/controllers/app_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/constants.dart';
@@ -15,6 +16,7 @@ class NewVersion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppProvider appProvider = Provider.of<AppProvider>(context);
     return Scaffold(
       body: Container(
         width: SizeConfig.screenWidth,
@@ -70,11 +72,12 @@ class NewVersion extends StatelessWidget {
                         value: Platform.isIOS ? "ios" : "android");
                     final locationProvider =
                         Provider.of<LocationProvider>(context, listen: false);
-                    await _launchURL(Platform.isIOS
-                        ? Constants.appStore
-                        : locationProvider.isHms
-                            ? Constants.appGallery
-                            : Constants.playStore);
+                    await _launchURL(appProvider.url ??
+                        (Platform.isIOS
+                            ? Constants.appStore
+                            : locationProvider.isHms
+                                ? Constants.appGallery
+                                : Constants.playStore));
                   },
                   fontSize: 24,
                   fontColor: const Color.fromRGBO(236, 204, 120, 1),

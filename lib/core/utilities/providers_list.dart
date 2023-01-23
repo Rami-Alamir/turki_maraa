@@ -47,7 +47,8 @@ class ProvidersList {
                 location.isHms)),
       ChangeNotifierProxyProvider<LocationProvider, AppProvider>(
           create: (context) => AppProvider(),
-          update: (_, location, app) => app!..updateProvider(location.isHms)),
+          update: (_, location, app) =>
+              app!..updateProvider(location.isHms, location.isoCountryCode)),
       ChangeNotifierProxyProvider<LocationProvider, SearchProvider>(
           create: (context) => SearchProvider(),
           update: (_, location, search) => search!

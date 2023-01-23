@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../controllers/app_provider.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/utilities/app_localizations.dart';
 import 'text_button.dart';
@@ -10,8 +8,6 @@ class ProfileFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppProvider appProvider =
-        Provider.of<AppProvider>(context, listen: false);
     final TextStyle textStyle =
         Theme.of(context).textTheme.headline5!.copyWith(fontSize: 10);
     return Padding(
@@ -28,10 +24,8 @@ class ProfileFooter extends StatelessWidget {
               const TextBtn(title: 'terms_of_use', url: Constants.terms),
             ],
           ),
-          Visibility(
-              visible: appProvider.currentVersion.isNotEmpty,
-              child: Text('V${appProvider.currentVersion}',
-                  textAlign: TextAlign.center, style: textStyle)),
+          Text('V${Constants.appVersion}',
+              textAlign: TextAlign.center, style: textStyle),
           const SizedBox(height: 15),
           Text(AppLocalizations.of(context)!.tr('all_rights_reserved'),
               textAlign: TextAlign.center, style: textStyle),

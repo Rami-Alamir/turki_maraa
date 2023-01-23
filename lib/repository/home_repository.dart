@@ -11,8 +11,11 @@ class HomeRepository {
 
   Future<CategoryData> getCategoriesList(
       LatLng latLng, String countryId) async {
+    print(
+        "categories/categories-app?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
     final response = await _helper.get(
         "categories/categories-app?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
+
     CategoryData? categoryData;
     try {
       categoryData = CategoryData.fromJson(response);

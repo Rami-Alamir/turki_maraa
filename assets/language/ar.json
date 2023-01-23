@@ -246,5 +246,7 @@
   "sorry_you_can_not_log_in_after_deleting_your_account": "نعتذر منك, لا يمكنك تسجيل الدخول بعد حذف الحساب",
   "delete_address": "حذف العنوان",
   "are_you_sure_you_want_to_delete_the_address": "هل أنت متأكد أنك تريد حذف العنوان؟",
-  "rate_the_app": "قيم التطبيق"
+  "rate_the_app": "قيم التطبيق",
+  "you_are_exhausted_today": "لقد استنفذت محاولاتك اليوم",
+  "try_tomorrow_and_try_every_day_and_win": "جرب بكرة ولك كل يوم محاولة وفالك الفوز"
 }

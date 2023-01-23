@@ -73,7 +73,7 @@ class _NoInternetState extends State<NoInternet> {
     String accessToken = await localStorage.read(key: 'accessToken') ?? "";
     if (!mounted) return;
     auth.getUserData(context, accessToken);
-    appProvider.checkNewVersion();
+    appProvider.getData();
     home.getHomePageData(notify: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool introStatus = prefs.getBool('intro') ?? true;

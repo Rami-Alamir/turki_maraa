@@ -52,11 +52,11 @@ class PaymentMethod extends StatelessWidget {
                     : FixedAssets.tamaraEn,
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 15, 10),
               ),
-              const PaymentInstallmentItem(
-                  selectedValue: 7,
-                  title: 'tabby_desc',
-                  logo: FixedAssets.tabby,
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 5, 0, 10))
+              // const PaymentInstallmentItem(
+              //     selectedValue: 7,
+              //     title: 'tabby_desc',
+              //     logo: FixedAssets.tabby,
+              //     padding: EdgeInsetsDirectional.fromSTEB(0.0, 5, 0, 10))
             ],
           ),
         ),

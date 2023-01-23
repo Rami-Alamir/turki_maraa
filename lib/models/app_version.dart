@@ -11,11 +11,15 @@ class AppVersion {
 class Data {
   int? id;
   String? value;
+  String? url;
+  String? urlAe;
 
-  Data({this.id, this.value});
+  Data({this.id, this.value, this.url, this.urlAe});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     value = json['value'];
+    url = json['url'];
+    urlAe = json['url2'];
   }
 }

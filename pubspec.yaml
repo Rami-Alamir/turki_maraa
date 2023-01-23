@@ -141,6 +141,7 @@ flutter:
     - assets/lottie/logo.json
     - assets/lottie/congratulations.json
     - assets/lottie/gift.json
+    - assets/lottie/spin.json
 
   fonts:
     - family: Turki

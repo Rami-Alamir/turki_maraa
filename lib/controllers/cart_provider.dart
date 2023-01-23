@@ -361,8 +361,7 @@ class CartProvider with ChangeNotifier {
       currency: _isoCountryCode == "SA" ? Currency.sar : Currency.aed,
       buyer: Buyer(
         // email: 'card.success@tabby.ai',
-        email:
-            '${_userData?.data?.name ?? "user"}${_userData?.data?.id}@gmail.com',
+        email: '${_userData?.data?.email ?? "user"}',
         // phone: "500000001",
         phone: _userData!.data!.mobile!.substring(4),
         name: _userData?.data?.name ?? "user",

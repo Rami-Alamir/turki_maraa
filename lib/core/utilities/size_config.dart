@@ -8,6 +8,8 @@ class SizeConfig {
   static double? safeAreaHorizontal;
   static double? safeAreaVertical;
   static DeviceScreenType? deviceScreenType;
+  static double statusBarHeight = 50;
+  static double homeAppBarHeight = 200;
 
   void init(BuildContext context, {bool init = false}) {
     if (_mediaQuery == null || init) {
@@ -19,6 +21,11 @@ class SizeConfig {
       safeAreaVertical = (_mediaQuery?.padding.top ?? 0.0) +
           (_mediaQuery?.padding.bottom ?? 0.0);
       deviceScreenType = getDeviceScreenType();
+      statusBarHeight = MediaQuery.of(context).padding.top;
+      homeAppBarHeight = statusBarHeight + 153;
+      if (homeAppBarHeight < 200) {
+        homeAppBarHeight = 200;
+      }
     }
   }
 

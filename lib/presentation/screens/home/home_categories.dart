@@ -4,6 +4,7 @@ import '../../../controllers/app_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/enum/request_status.dart';
+import '../../../core/utilities/size_config.dart';
 import '../../widgets/home/address_container.dart';
 import '../../widgets/home/categories_group.dart';
 import '../../widgets/home/location_disabled.dart';
@@ -25,7 +26,7 @@ class HomeCategoriesState extends State<HomeCategories> {
   Widget build(BuildContext context) {
     final HomeProvider homeProvider = Provider.of<HomeProvider>(context);
     final AppProvider appProvider = Provider.of<AppProvider>(context);
-    appProvider.showNewVersion(context);
+    appProvider.showAlert(context);
     // used to init map marker
     final AddressProvider addressProvider =
         Provider.of<AddressProvider>(context);
@@ -47,18 +48,20 @@ class HomeCategoriesState extends State<HomeCategories> {
                 locationStatus: homeProvider.locationServiceStatus)
             : homeProvider.requestStatus == RequestStatus.isLoading ||
                     homeProvider.latLng == null
-                ? const SpinkitIndicator(
-                    padding: EdgeInsets.only(top: 200),
+                ? SpinkitIndicator(
+                    padding: EdgeInsets.only(top: SizeConfig.homeAppBarHeight),
                   )
                 : homeProvider.requestStatus == RequestStatus.error
                     ? Retry(
-                        padding: const EdgeInsets.only(top: 200),
+                        padding:
+                            EdgeInsets.only(top: SizeConfig.homeAppBarHeight),
                         onPressed: () {
                           homeProvider.getHomePageData();
                         },
                       )
                     : Padding(
-                        padding: const EdgeInsets.only(top: 220.0),
+                        padding: EdgeInsets.only(
+                            top: SizeConfig.homeAppBarHeight + 20),
                         child: RefreshIndicator(
                           color: Theme.of(context).primaryColor,
                           backgroundColor:
@@ -105,9 +108,9 @@ class HomeCategoriesState extends State<HomeCategories> {
                           ),
                         ),
                       ),
-        const Positioned(
-          top: 200,
-          child: AddressContainer(),
+        Positioned(
+          top: SizeConfig.homeAppBarHeight,
+          child: const AddressContainer(),
         ),
       ]),
     );

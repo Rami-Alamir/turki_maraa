@@ -34,7 +34,7 @@ class SplashState extends State<Splash> {
     final AppProvider appProvider =
         Provider.of<AppProvider>(context, listen: false);
     location.initLatLng();
-    appProvider.checkNewVersion();
+    appProvider.getData();
     home.getHomePageData(notify: false);
     _timer = Timer(const Duration(milliseconds: 3000), () {
       navigate();
