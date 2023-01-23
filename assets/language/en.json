@@ -245,6 +245,6 @@
   "sorry_you_can_not_log_in_after_deleting_your_account": "Sorry, you can't log in after deleting your account",
   "are_you_sure_you_want_to_delete_the_address": "Are you sure you want to delete the address?",
   "rate_the_app": "Rate the app",
-  "you_are_exhausted_today": "You are exhausted today",
-  "try_tomorrow_and_try_every_day_and_win": "Try tomorrow and try every day and win"
+  "you_are_exhausted_today": "You are exhausted all your attempts today",
+  "try_tomorrow_and_try_every_day_and_win": "Try tomorrow,try every day and win"
 }
