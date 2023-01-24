@@ -166,6 +166,8 @@ class CartProvider with ChangeNotifier {
       _cartLength += response == 200 ? int.parse(quantity) : 0;
       if (response == 200) {
         await getCartData();
+      } else {
+        return false;
       }
       return true;
     } catch (_) {}

@@ -73,7 +73,7 @@ class Data {
     nameAr = json['name_ar'] ?? '';
     nameEn = json['name_en'] ?? '';
     price = json['price'] ?? '';
-    salePrice = json['sale price'] ?? '0.0';
+    salePrice = json['sale_price'] ?? '0.0';
     weight = json['weight'] ?? '';
     isAvailable = json['is_available'];
     isKwar3 = json['is_kwar3'];
@@ -122,7 +122,6 @@ class Data {
     }
   }
 }
-
 
 class SubCategory {
   int? id;
