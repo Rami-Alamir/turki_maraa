@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
-import 'package:turki_dabayh/core/utilities/enum/device_screen_type.dart';
-import 'package:turki_dabayh/core/utilities/size_config.dart';
+import '../../../core/utilities/enum/device_screen_type.dart';
+import '../../../core/utilities/size_config.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'min_value_indicator.dart';
 import '../shared/invoice.dart';
@@ -67,7 +67,10 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                   color: Theme.of(context)
                       .colorScheme
                       .secondaryContainer
-                      .withOpacity(0.4),
+                      .withOpacity(
+                          Theme.of(context).backgroundColor == Colors.black
+                              ? 0
+                              : 0.4),
                   spreadRadius: 8,
                   blurRadius: 12,
                   offset: const Offset(0, 5), // changes position of shadow

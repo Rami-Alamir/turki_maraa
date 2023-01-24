@@ -20,6 +20,7 @@ class ProductsHomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProductsProvider productsProvider =
         Provider.of<ProductsProvider>(context);
+
     return RefreshIndicator(
       color: Theme.of(context).primaryColor,
       backgroundColor: Theme.of(context).backgroundColor,

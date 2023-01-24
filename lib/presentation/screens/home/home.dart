@@ -93,7 +93,7 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
                           backgroundColor:
                               Theme.of(context).colorScheme.secondary,
                           onRefresh: () async {
-                            await homeProvider.getHomePageData();
+                            await homeProvider.getHomePageData(notify: false);
                           },
                           child: ListView(
                             padding: const EdgeInsets.only(top: 20),

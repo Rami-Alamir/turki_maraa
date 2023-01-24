@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/utilities/enum/request_status.dart';
-import '../../../controllers/favourite_provider.dart';
-import '../../../controllers/product_provider.dart';
-import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/home/circle_icon.dart';
 import '../../widgets/home/product_details_footer.dart';
 import '../../widgets/home/product_details_list.dart';
 import '../../widgets/shared/page_builder.dart';
+import '../../../core/utilities/enum/request_status.dart';
+import '../../../controllers/favourite_provider.dart';
+import '../../../controllers/product_provider.dart';
+import '../../../core/utilities/app_localizations.dart';
 
 class ProductDetails extends StatefulWidget {
   final Map<String, dynamic> data;

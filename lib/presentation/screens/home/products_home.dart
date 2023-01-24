@@ -59,7 +59,7 @@ class ProductsHomeState extends State<ProductsHome> {
         padding: const EdgeInsets.only(top: 60),
         requestStatus: productsProvider.requestStatus,
         onError: () {
-          productsProvider.getFoodsPageData(widget.id);
+          productsProvider.getFoodsPageData(widget.id, notify: true);
         },
         child: ProductsHomeBody(
           id: widget.id,

@@ -28,8 +28,14 @@ class ProductsProvider with ChangeNotifier {
     _bannersList.clear();
   }
 
-  Future<void> getFoodsPageData(int id, {bool isLoading = true}) async {
-    _requestStatus = RequestStatus.isLoading;
+  Future<void> getFoodsPageData(int id,
+      {bool notify = false, bool isLoading = true}) async {
+    if (isLoading) {
+      _requestStatus = RequestStatus.isLoading;
+    }
+    if (notify) {
+      notifyListeners();
+    }
     try {
       await Future.wait([
         _getDiscoverList(id),

@@ -23,11 +23,13 @@ class SearchRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, productDetails,
-            arguments: <String, dynamic>{
-              "id": item.id,
-              "categoryId": item.categoryId
-            }),
+        onTap: () {
+          Navigator.pushReplacementNamed(context, productDetails,
+              arguments: <String, dynamic>{
+                "id": item.id,
+                "categoryId": item.categoryId
+              });
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
