@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:turki_dabayh/core/utilities/format_helper.dart';
 import 'item_column.dart';
 import '../../../models/orders_data.dart';
 import '../../../core/constants/route_constants.dart';
@@ -7,6 +6,7 @@ import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../../core/utilities/format_helper.dart';
 
 class OrderCard extends StatelessWidget {
   final Data order;

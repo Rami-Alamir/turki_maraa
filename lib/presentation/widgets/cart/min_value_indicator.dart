@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turki_dabayh/core/utilities/format_helper.dart';
+import '../../../core/utilities/format_helper.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';

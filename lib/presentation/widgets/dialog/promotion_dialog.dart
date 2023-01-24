@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:turki_dabayh/presentation/widgets/shared/rounded_rectangle_button.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/app_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/hex_color.dart';

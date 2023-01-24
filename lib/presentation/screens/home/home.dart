@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:turki_dabayh/core/utilities/size_config.dart';
 import '../../../controllers/app_provider.dart';
 import '../../widgets/home/address_container.dart';
 import '../../widgets/home/almaraa_card.dart';
@@ -13,6 +12,7 @@ import '../../../controllers/address_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/utilities/enum/request_status.dart';
+import '../../../core/utilities/size_config.dart';
 
 class Home extends StatefulWidget {
   final GlobalKey<ScaffoldState> parentScaffoldStateKey;

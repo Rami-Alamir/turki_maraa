@@ -61,10 +61,9 @@ class CategoryCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 20.0, right: 20, left: 20, bottom: 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 10, 0),
               child: SizedBox(
-                width: SizeConfig.screenWidth! - 195,
+                width: SizeConfig.screenWidth! - 190,
                 child: AutoSizeText(
                   title,
                   textAlign: TextAlign.start,

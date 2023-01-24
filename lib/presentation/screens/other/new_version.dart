@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:turki_dabayh/controllers/app_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../controllers/app_provider.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/service/firebase_helper.dart';

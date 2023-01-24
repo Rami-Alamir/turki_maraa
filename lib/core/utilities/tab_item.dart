@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
-import 'package:turki_dabayh/presentation/screens/intro/intro.dart';
+import '../../presentation/screens/intro/intro.dart';
 import '../constants/route_constants.dart';
 import '../service/firebase_helper.dart';
 import '../../models/discover_data.dart';

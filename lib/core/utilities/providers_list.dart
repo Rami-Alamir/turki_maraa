@@ -1,5 +1,5 @@
 import 'package:provider/provider.dart';
-import 'package:turki_dabayh/controllers/app_provider.dart';
+import '../../controllers/app_provider.dart';
 import '../../controllers/discover_provider.dart';
 import '../../controllers/drawer_provider.dart';
 import '../../controllers/auth.dart';
