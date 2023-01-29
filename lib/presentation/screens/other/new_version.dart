@@ -72,6 +72,8 @@ class NewVersion extends StatelessWidget {
                         value: Platform.isIOS ? "ios" : "android");
                     final locationProvider =
                         Provider.of<LocationProvider>(context, listen: false);
+                    print("is hms ${locationProvider.isHms}");
+
                     await _launchURL(appProvider.url ??
                         (Platform.isIOS
                             ? Constants.appStore

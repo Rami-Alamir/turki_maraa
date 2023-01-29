@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../controllers/app_provider.dart';
 import '../../../controllers/home_provider.dart';
-import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/enum/request_status.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import '../../widgets/home/address_container.dart';
 import '../../widgets/home/categories_group.dart';
 import '../../widgets/home/location_disabled.dart';
@@ -82,33 +80,13 @@ class HomeCategoriesState extends State<HomeCategories> {
                                               .categoryData?.data?.length ??
                                           0) >
                                       0,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                          AppLocalizations.of(context)!
-                                              .tr('what_would_you_want_today'),
-                                          textAlign: TextAlign.start,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle1),
-                                      InkWell(
-                                        onTap: () => Navigator.pushNamed(
-                                            context, search),
-                                        child: Icon(
-                                          TURKIICONS.search,
-                                          size: 20,
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .subtitle1!
-                                              .color,
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .tr('what_would_you_want_today'),
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1),
                                 ),
                               ),
                               const CategoriesGroup(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/route_constants.dart';
 import 'order_type.dart';
 import '../../../controllers/drawer_provider.dart';
 import '../../../controllers/home_provider.dart';
@@ -75,6 +76,22 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   }
                 },
               ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                    onPressed: () => Navigator.pushNamed(context, search),
+                    icon: Icon(
+                      TURKIICONS.search,
+                      size: 25,
+                      color: Theme.of(context).backgroundColor ==
+                              const Color.fromRGBO(243, 224, 177, 1)
+                          ? const Color.fromRGBO(243, 224, 177, 1)
+                          : const Color.fromRGBO(219, 189, 109, 1),
+                    ),
+                  ),
+                )
+              ],
               elevation: 0,
             ),
             OrderType(

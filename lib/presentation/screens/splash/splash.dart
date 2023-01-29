@@ -23,6 +23,7 @@ class Splash extends StatefulWidget {
 class SplashState extends State<Splash> {
   Timer? _timer;
   late ConnectivityResult connectivityResult;
+  bool internetStatus = true;
 
   @override
   void initState() {
@@ -101,7 +102,7 @@ class SplashState extends State<Splash> {
     Navigator.of(context).pushNamedAndRemoveUntil(
         introStatus
             ? intro
-            : connectivityResult != ConnectivityResult.none
+            : internetStatus
                 ? app
                 : noInternet,
         (route) => false);
@@ -111,6 +112,10 @@ class SplashState extends State<Splash> {
   Future<void> checkConnectivity() async {
     try {
       connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        connectivityResult = await Connectivity().checkConnectivity();
+      }
+      internetStatus = (connectivityResult != ConnectivityResult.none);
     } catch (_) {}
   }
 }

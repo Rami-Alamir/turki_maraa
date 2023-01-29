@@ -41,6 +41,7 @@ class AppProvider with ChangeNotifier {
     _isHMS = isHMS;
     _isoCountryCode = isoCountryCode ?? 'SA';
     if (_isHMS ?? false) {
+      _canUpdate = false;
       _checkNewVersion();
     }
   }
@@ -69,12 +70,16 @@ class AppProvider with ChangeNotifier {
 
   // check if app have new version to show update page
   Future<void> _checkNewVersion() async {
+    print("is hms _checkNewVersion ${_isHMS!}");
+
     final versionData =
         await sl<VersionRepository>().getLatestAppVersion(Platform.isIOS
             ? 1
             : _isHMS!
                 ? 3
                 : 2);
+    print('rami');
+    print(versionData.data!.value.toString());
     Version currentVersion = Version.parse(_currentVersion);
     Version latestVersion =
         Version.parse(versionData.data?.value ?? _currentVersion);

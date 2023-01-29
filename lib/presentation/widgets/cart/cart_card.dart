@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/favourite_provider.dart';
 import '../../../controllers/location_provider.dart';
@@ -111,7 +110,7 @@ class _CartCardState extends State<CartCard> {
           child: MainCard(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -138,7 +137,7 @@ class _CartCardState extends State<CartCard> {
                       margin: const EdgeInsetsDirectional.fromSTEB(
                           10.0, 5.0, 0.0, 0.0),
                       width: SizeConfig.screenWidth! -
-                          SizeConfig.setWidgetWidth(150, 185, 185),
+                          SizeConfig.setWidgetWidth(158, 195, 185),
                       constraints: BoxConstraints(
                           minHeight: SizeConfig.setWidgetWidth(100, 135, 135)),
                       child: Column(

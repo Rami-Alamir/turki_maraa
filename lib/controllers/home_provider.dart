@@ -21,7 +21,6 @@ class HomeProvider with ChangeNotifier {
   BestSeller? _bestSeller;
   LatLng? _latLng;
   String? _isoCountryCode;
-  bool? _isHMS = false;
   location_service.LocationData? _locationData;
   location_service.Location location = location_service.Location();
   BannersData? _bannersData;
@@ -47,8 +46,6 @@ class HomeProvider with ChangeNotifier {
       String? currentLocationDescriptionEn,
       bool isHMS) async {
     _locationServiceStatus = locationServiceStatus ?? 2;
-    _isHMS = isHMS;
-
     if (latLng != null) {
       _isoCountryCode = isoCountryCode;
       if (latLng != _latLng) {
@@ -114,8 +111,6 @@ class HomeProvider with ChangeNotifier {
     } catch (_) {
       _requestStatus = RequestStatus.error;
     }
-    if (notify) {
-      notifyListeners();
-    }
+    notifyListeners();
   }
 }
