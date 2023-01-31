@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import '../../repository/tabby_repository.dart';
 import 'networking/api_base_helper.dart';
 import '../utilities/calculate_helper.dart';
 import '../utilities/dialog_helper.dart';
@@ -38,6 +39,7 @@ class ServiceLocator {
     sl.registerLazySingleton(() => LoginRepository());
     sl.registerLazySingleton(() => SearchRepository());
     sl.registerLazySingleton(() => TamaraRepository());
+    sl.registerLazySingleton(() => TabbyRepository());
     sl.registerLazySingleton(() => UserRepository());
     sl.registerLazySingleton(() => VersionRepository());
     sl.registerLazySingleton(() => ApiBaseHelper());

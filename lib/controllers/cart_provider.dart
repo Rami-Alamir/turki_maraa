@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import '../models/tabby_captures.dart';
+import '../repository/tabby_repository.dart';
 import 'address_provider.dart';
 import '../models/user_data.dart';
 import '../core/constants/fixed_assets.dart';
@@ -58,6 +60,8 @@ class CartProvider with ChangeNotifier {
   late TamaraPayment tamara;
   late PaymentARB arb;
   late OrderRef orderRef;
+  Payment? _mockPayload;
+  TabbyCaptures? tabbyCaptures;
   LatLng? get latLng => _latLng;
   String? get currentLocationDescriptionAr => _currentLocationDescriptionAr;
   String? get currentLocationDescriptionEn => _currentLocationDescriptionEn;
@@ -357,14 +361,13 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> initTabby(Lang language) async {
-    var mockPayload = Payment(
+    _mockPayload = Payment(
       amount:
           _cartData!.data!.invoicePreview!.totalAmountAfterDiscount!.toString(),
       currency: _isoCountryCode == "SA" ? Currency.sar : Currency.aed,
       buyer: Buyer(
-        // email: 'card.success@tabby.ai',
-        email: '${_userData?.data?.email ?? "user"}',
-        // phone: "500000001",
+        email: _userData?.data?.email ??
+            "user${_userData?.data?.id}@turkieshop.com",
         phone: _userData!.data!.mobile!.substring(4),
         name: _userData?.data?.name ?? "user",
         dob: '2019-08-24',
@@ -394,8 +397,21 @@ class CartProvider with ChangeNotifier {
     session = await TabbySDK().createSession(TabbyCheckoutPayload(
       merchantCode: _isoCountryCode == "SA" ? 'TD_APP' : 'TD_APPAE',
       lang: language,
-      payment: mockPayload,
+      payment: _mockPayload!,
     ));
+  }
+
+  //capture tabby payment
+  Future<bool> capturePayment(String id) async {
+    try {
+      tabbyCaptures = await sl<TabbyRepository>().capturePayment({
+        "amount": _mockPayload!.amount,
+      }, _isoCountryCode == "SA" ? 'TD_APP' : 'TD_APPAE', id);
+      await _updateTabbyPaymentStatus();
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   // used in tabby payment
@@ -416,7 +432,7 @@ class CartProvider with ChangeNotifier {
     return orderItems;
   }
 
-  Future<void> updateTabbyPaymentStatus() async {
+  Future<void> _updateTabbyPaymentStatus() async {
     try {
       await sl<PaymentRepository>().updateOrderPayment({
         "payment_ref": orderRef.data!.paymentRef!,

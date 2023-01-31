@@ -18,6 +18,13 @@ class ApiBaseHelper {
     "Authorization": ""
   };
 
+  Map<String, String> tabbyHeader = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Authorization": "Bearer ${Constants.tabbyApiKey}",
+    "X-Merchant-Code": ""
+  };
+
   Future<dynamic> get(String url, {String authorization = " "}) async {
     headers['authorization'] = authorization;
     Uri uri = Uri.parse(_baseUrl + url);
@@ -70,6 +77,20 @@ class ApiBaseHelper {
       response = await http.post(uri, body: body.toString(), headers: headers2);
     } catch (_) {}
     return response;
+  }
+
+  Future<dynamic> post5(
+      {required String url,
+      required body,
+      required String merchantCode}) async {
+    tabbyHeader['X-Merchant-Code'] = merchantCode;
+    Uri uri = Uri.parse(url);
+    dynamic response;
+    try {
+      response =
+          await http.post(uri, body: json.encode(body), headers: tabbyHeader);
+    } catch (_) {}
+    return _returnResponse(response);
   }
 
   Future<int> delete(String url, {String authorization = " "}) async {
