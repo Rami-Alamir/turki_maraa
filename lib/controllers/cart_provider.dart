@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import '../core/constants/constants.dart';
 import '../models/tabby_captures.dart';
 import '../repository/tabby_repository.dart';
 import 'address_provider.dart';
@@ -81,12 +82,14 @@ class CartProvider with ChangeNotifier {
   bool get promoIsActive => _promoIsActive;
   RequestStatus get requestStatus => _requestStatus;
 
+  UserData? get userData => _userData;
+
   set setSelectedDate(int value) {
     _selectedDate = value;
     notifyListeners();
   }
 
-  set usMyCredit(bool value) {
+  set useCredit(bool value) {
     _useCredit = value;
     notifyListeners();
   }
@@ -216,7 +219,7 @@ class CartProvider with ChangeNotifier {
     return false;
   }
 
-  // get cart items, Tamara status and Delivery periods
+  //get cart items, Tamara status and Delivery periods
   Future<void> getCartData({bool isLoading = false}) async {
     if (_isAuth) {
       _requestStatus = RequestStatus.completed;
@@ -322,7 +325,7 @@ class CartProvider with ChangeNotifier {
           "delivery_period_id": _isoCountryCode == 'AE'
               ? (_selectedTime + 1)
               : _deliveryPeriod!.data![_selectedTime].id,
-          "using_wallet": 0,
+          "using_wallet": useCredit ? 1 : 0,
           if (_selectedPayment == 4)
             "tamara_payment_name": "PAY_BY_INSTALMENTS",
           if (_selectedPayment == 4) "no_instalments": 3,
@@ -369,8 +372,8 @@ class CartProvider with ChangeNotifier {
         email: _userData?.data?.email ??
             "user${_userData?.data?.id}@turkieshop.com",
         phone: _userData!.data!.mobile!.substring(4),
-        name: _userData?.data?.name ?? "user",
-        dob: '2019-08-24',
+        name: _userData?.data?.name ?? "user${_userData?.data?.id}",
+        dob: '1995-01-30',
       ),
       buyerHistory: BuyerHistory(
         loyaltyLevel: 0,
@@ -395,7 +398,9 @@ class CartProvider with ChangeNotifier {
       ],
     );
     session = await TabbySDK().createSession(TabbyCheckoutPayload(
-      merchantCode: _isoCountryCode == "SA" ? 'TD_APP' : 'TD_APPAE',
+      merchantCode: _isoCountryCode == "SA"
+          ? Constants.tabbyMerchantCodeSA
+          : Constants.tabbyMerchantCodeAE,
       lang: language,
       payment: _mockPayload!,
     ));
@@ -423,7 +428,8 @@ class CartProvider with ChangeNotifier {
         title: item.product!.nameEn!,
         description: item.product!.nameEn!,
         quantity: item.quantity!,
-        unitPrice: item.product!.salePrice!.toString(),
+        unitPrice:
+            (sl<CalculateHelper>().getCartItemTotalPrice(item)).toString(),
         referenceId: item.product!.id!.toString(),
         productUrl: 'http://example.com',
         category: item.product!.nameEn!,
@@ -502,6 +508,7 @@ class CartProvider with ChangeNotifier {
     _selectedTime = -1;
     _selectedPayment = -1;
     _selectedDate = -1;
+    _useCredit = false;
   }
 
   void clearCart() {

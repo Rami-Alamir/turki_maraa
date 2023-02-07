@@ -49,6 +49,7 @@ class ApiBaseHelper {
   Future<int> post2(String url, Map<String, dynamic> body,
       {String authorization = " "}) async {
     headers['authorization'] = authorization;
+    print('post2');
     Uri uri = Uri.parse(_baseUrl + url);
     dynamic response;
     try {

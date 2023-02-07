@@ -25,6 +25,7 @@ class _TabbyCheckoutPageState extends State<TabbyCheckoutPage> {
               final CartProvider cartProvider =
                   Provider.of<CartProvider>(context, listen: false);
               cartProvider.clearCart();
+              cartProvider.setSelectedPayment = 7;
               final bool status = await cartProvider
                   .capturePayment(widget.session.paymentId.toString());
               if (!mounted) return;

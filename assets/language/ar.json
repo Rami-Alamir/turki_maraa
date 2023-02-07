@@ -28,6 +28,7 @@
   "delivery_fees": "رسوم التوصيل",
   "discount": "الخصم",
   "credit": "المحفظة",
+  "my_credit": "رصيدي",
   "payment_method": "طريقة الدفع",
   "total2": "الإجمالي",
   "vat_sa": "جميع الأسعار تشمل 15% ضريبه القيمة المضافة",
@@ -248,5 +249,6 @@
   "are_you_sure_you_want_to_delete_the_address": "هل أنت متأكد أنك تريد حذف العنوان؟",
   "rate_the_app": "قيم التطبيق",
   "you_are_exhausted_today": "لقد استنفذت محاولاتك اليوم",
-  "try_tomorrow_and_try_every_day_and_win": "جرب بكرة ولك كل يوم محاولة وفالك الفوز"
+  "try_tomorrow_and_try_every_day_and_win": "جرب بكرة ولك كل يوم محاولة وفالك الفوز",
+  "tabby_error": "نأسف، تابي غير قادرة على الموافقة على هذه العملية. الرجاء استخدام طريقة دفع أخرى"
 }

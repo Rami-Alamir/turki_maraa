@@ -33,6 +33,8 @@ class CalculateHelper {
 
   int calculateCartLength(List<ItemData?>? list) {
     int cartLength = 0;
+    print(list.toString());
+
     for (int i = 0; i < ((list?.length) ?? 0); i++) {
       cartLength += list![i]!.quantity!;
     }

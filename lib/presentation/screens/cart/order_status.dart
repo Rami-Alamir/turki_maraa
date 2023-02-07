@@ -32,6 +32,7 @@ class _OrderStatusState extends State<OrderStatus> {
 
   @override
   Widget build(BuildContext context) {
+    print('payment $paymentId');
     return Scaffold(
       body: SizedBox(
         width: SizeConfig.screenWidth,
@@ -76,7 +77,9 @@ class _OrderStatusState extends State<OrderStatus> {
                       ? (paymentId == 2
                           ? "the_order_has_been_sent_and_the_payment_is_being_verified"
                           : "thank_order")
-                      : "payment_failed_description"),
+                      : paymentId == 7
+                          ? "tabby_error"
+                          : "payment_failed_description"),
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme

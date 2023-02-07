@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
-import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import '../../../controllers/favourite_provider.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../controllers/product_provider.dart';
@@ -217,13 +216,6 @@ class _ProductDescriptionState extends State<ProductDescription> {
                     .subtitle1!
                     .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
               )),
-        ),
-        TabbyPresentationSnippet(
-          price: (widget.price).toString(),
-          currency: locationProvider.isoCountryCode == 'SA'
-              ? Currency.sar
-              : Currency.aed,
-          lang: isAr ? Lang.ar : Lang.en,
         ),
       ],
     );

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import 'package:turki_dabayh/core/utilities/dialog_helper.dart';
+import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/enum/device_screen_type.dart';
 import '../../../core/utilities/size_config.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import '../dialog/message_dialog.dart';
 import 'min_value_indicator.dart';
 import '../shared/invoice.dart';
 import '../shared/rounded_rectangle_button.dart';
@@ -40,6 +43,13 @@ class CartBottomSheetState extends State<CartBottomSheet> {
     String currency = sl<GetStrings>().getCurrency(
         AppLocalizations.of(context)!.locale!.languageCode,
         locationProvider.isoCountryCode!);
+    final double credit = cart.useCredit
+        ? double.parse(cart.userData?.data?.wallet ?? "0.0")
+        : 0.0;
+    final usedCredit =
+        credit > cart.cartData!.data!.invoicePreview!.totalAmountAfterDiscount!
+            ? cart.cartData!.data!.invoicePreview!.totalAmountAfterDiscount!
+            : credit;
     return NotificationListener<DraggableScrollableNotification>(
       onNotification: (DraggableScrollableNotification dSNotification) {
         _isExpanded = dSNotification.minExtent == dSNotification.extent;
@@ -99,10 +109,10 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                     ? Column(
                         children: [
                           Invoice(
-                            myCredit: cart.cartData!.data!.invoicePreview!
-                                .walletAmountUsed!,
+                            myCredit: usedCredit,
                             total: cart.cartData!.data!.invoicePreview!
-                                .totalAmountAfterDiscount!,
+                                    .totalAmountAfterDiscount! -
+                                usedCredit,
                             subtotal: cart
                                 .cartData!.data!.invoicePreview!.orderSubtotal!,
                             shipping: cart

@@ -100,12 +100,12 @@ class ProductData {
     image = json['image'] ?? "";
     price = double.parse(json['price'] ?? "0.0");
     salePrice = double.parse(json['sale_price'] ?? "0.0");
-    isActive = json['is_active'] ?? "";
-    isShalwata = json['is_shalwata'] ?? "";
-    isDelivered = json['is_delivered'] ?? "";
-    isPickedUp = json['is_picked_up'] ?? "";
-    categoryId = json['category_id'] ?? "";
-    subCategoryId = json['sub_category_id'] ?? "";
+    isActive = json['is_active'];
+    isShalwata = json['is_shalwata'];
+    isDelivered = json['is_delivered'];
+    isPickedUp = json['is_picked_up'];
+    categoryId = json['category_id'];
+    subCategoryId = json['sub_category_id'];
     if (json['product_images'] != null) {
       productImages = <Images>[];
       json['product_images'].forEach((v) {

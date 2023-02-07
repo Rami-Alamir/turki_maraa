@@ -33,6 +33,7 @@
   "delivery_fees": "Delivery fees",
   "discount": "Discount",
   "credit": "Wallet",
+  "my_credit": "Credit",
   "edit": "Edit",
   "vat_sa": "All prices include 15% VAT",
   "vat_ae": "All prices include 5% VAT",
@@ -246,5 +247,6 @@
   "are_you_sure_you_want_to_delete_the_address": "Are you sure you want to delete the address?",
   "rate_the_app": "Rate the app",
   "you_are_exhausted_today": "You are exhausted all your attempts today",
-  "try_tomorrow_and_try_every_day_and_win": "Try tomorrow,try every day and win"
+  "try_tomorrow_and_try_every_day_and_win": "Try tomorrow,try every day and win",
+  "tabby_error": "Sorry, Tabby is unable to approve this purchase. Please use an alternative payment method for your order."
 }

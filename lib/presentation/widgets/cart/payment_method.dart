@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'payment_installment_item.dart';
 import 'payment_method_item.dart';
+import '../../../presentation/widgets/cart/use_credit.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
@@ -60,6 +61,7 @@ class PaymentMethod extends StatelessWidget {
             ],
           ),
         ),
+        // UseCredit()
       ],
     );
   }
