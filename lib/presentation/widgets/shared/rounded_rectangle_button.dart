@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_colors.dart';
+
 class RoundedRectangleButton extends StatelessWidget {
   final String title;
   final Function? onPressed;
@@ -20,7 +22,7 @@ class RoundedRectangleButton extends StatelessWidget {
     this.padding = const EdgeInsets.all(25.0),
     this.height = 55,
     this.color,
-    this.fontColor = Colors.white,
+    this.fontColor = AppColors.white,
     this.fontHeight = 1,
   }) : super(key: key);
 
@@ -40,13 +42,13 @@ class RoundedRectangleButton extends StatelessWidget {
         splashColor: color ?? primaryColor,
         focusElevation: 0,
         highlightColor: color ?? primaryColor,
-        fillColor: onPressed == null ? Colors.grey : color ?? primaryColor,
+        fillColor: onPressed == null ? AppColors.grey : color ?? primaryColor,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5))),
         child: Text(
           title,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline3?.copyWith(
+          style: Theme.of(context).textTheme.displaySmall?.copyWith(
               fontSize: fontSize, color: fontColor, height: fontHeight),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/location_provider.dart';
@@ -39,7 +38,6 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    final Auth auth = Provider.of<Auth>(context);
     return Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,
@@ -102,28 +100,28 @@ class LoginState extends State<Login> {
                               children: [
                                 Row(
                                   children: [
-                                    CountryCodePicker(
-                                      onChanged: (key) {
-                                        auth.initCountyCode(key.toString());
-                                      }, // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                                      initialSelection: _isoCountryCode,
-                                      favorite: const ['+966', 'SA'],
-                                      countryFilter: const [
-                                        'SA',
-                                        'AE',
-                                      ],
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .headline4!
-                                          .copyWith(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16),
-                                      // flag can be styled with BoxDecoration's `borderRadius` and `shape` fields
-                                      flagDecoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(7),
-                                      ),
-                                    ),
+                                    // CountryCodePicker(
+                                    //   onChanged: (key) {
+                                    //     auth.initCountyCode(key.toString());
+                                    //   }, // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                                    //   initialSelection: _isoCountryCode,
+                                    //   favorite: const ['+966', 'SA'],
+                                    //   countryFilter: const [
+                                    //     'SA',
+                                    //     'AE',
+                                    //   ],
+                                    //   textStyle: Theme.of(context)
+                                    //       .textTheme
+                                    //       .headline4!
+                                    //       .copyWith(
+                                    //           color: Colors.white,
+                                    //           fontWeight: FontWeight.bold,
+                                    //           fontSize: 16),
+                                    //   // flag can be styled with BoxDecoration's `borderRadius` and `shape` fields
+                                    //   flagDecoration: BoxDecoration(
+                                    //     borderRadius: BorderRadius.circular(7),
+                                    //   ),
+                                    // ),
                                     Text(
                                         AppLocalizations.of(context)!.tr(
                                             'enter_your_mobile_number_here'),

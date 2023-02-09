@@ -19,8 +19,10 @@ class Note extends StatelessWidget {
               const EdgeInsets.only(right: 15.0, top: 15, left: 15, bottom: 15),
           child: Text(
             AppLocalizations.of(context)!.tr('note'),
-            style:
-                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 14),
           ),
         ),
         Row(
@@ -46,7 +48,7 @@ class Note extends StatelessWidget {
                 onChanged: (value) {},
                 style: Theme.of(context)
                     .textTheme
-                    .headline2!
+                    .displayMedium!
                     .copyWith(fontSize: 16),
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
@@ -73,7 +75,7 @@ class Note extends StatelessWidget {
                     hintText: AppLocalizations.of(context)!.tr("note_hint"),
                     hintStyle: Theme.of(context)
                         .textTheme
-                        .subtitle2!
+                        .titleSmall!
                         .copyWith(fontWeight: FontWeight.normal)),
               ),
             )

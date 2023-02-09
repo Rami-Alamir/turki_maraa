@@ -44,7 +44,7 @@ class UserPointsState extends State<UserPoints> {
                   textAlign: TextAlign.start,
                   style: Theme.of(context)
                       .textTheme
-                      .headline1!
+                      .displayLarge!
                       .copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -74,7 +74,7 @@ class UserPointsState extends State<UserPoints> {
                   textAlign: TextAlign.start,
                   style: Theme.of(context)
                       .textTheme
-                      .headline1!
+                      .displayLarge!
                       .copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ),

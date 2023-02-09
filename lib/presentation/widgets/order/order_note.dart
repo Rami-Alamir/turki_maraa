@@ -21,8 +21,10 @@ class OrderNote extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
             child: Text(
               AppLocalizations.of(context)!.tr('note'),
-              style:
-                  Theme.of(context).textTheme.headline1!.copyWith(fontSize: 12),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontSize: 12),
             ),
           ),
           MainCard(
@@ -35,10 +37,13 @@ class OrderNote extends StatelessWidget {
                   child: SizedBox(
                     width: SizeConfig.screenWidth! * 0.8,
                     child: Text(note,
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            height: 1.5)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                height: 1.5)),
                   ),
                 ),
               ],

@@ -23,7 +23,7 @@ class SettingsCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
             child: Text(AppLocalizations.of(context)!.tr('settings'),
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                     )),

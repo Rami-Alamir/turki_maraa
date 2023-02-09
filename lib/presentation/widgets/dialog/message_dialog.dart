@@ -38,7 +38,7 @@ class MessageDialog extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
-                  .headline4!
+                  .headlineMedium!
                   .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
             ),
           ),

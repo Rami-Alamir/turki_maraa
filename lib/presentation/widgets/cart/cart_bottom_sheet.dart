@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
-import 'package:turki_dabayh/core/utilities/dialog_helper.dart';
-import '../../../core/constants/fixed_assets.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/enum/device_screen_type.dart';
 import '../../../core/utilities/size_config.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import '../dialog/message_dialog.dart';
 import 'min_value_indicator.dart';
 import '../shared/invoice.dart';
 import '../shared/rounded_rectangle_button.dart';
@@ -77,10 +75,10 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                   color: Theme.of(context)
                       .colorScheme
                       .secondaryContainer
-                      .withOpacity(
-                          Theme.of(context).backgroundColor == Colors.black
-                              ? 0
-                              : 0.4),
+                      .withOpacity(Theme.of(context).colorScheme.background ==
+                              AppColors.black
+                          ? 0
+                          : 0.4),
                   spreadRadius: 8,
                   blurRadius: 12,
                   offset: const Offset(0, 5), // changes position of shadow
@@ -139,7 +137,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                                     AppLocalizations.of(context)!.tr('total'),
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline1!
+                                        .displayLarge!
                                         .copyWith(fontSize: 16),
                                   ),
                                 ),
@@ -149,7 +147,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                                     '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(cart.cartData!.data!.invoicePreview!.totalAmountAfterDiscount!)} $currency',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline1!
+                                        .displayLarge!
                                         .copyWith(fontSize: 16),
                                   ),
                                 ),
@@ -173,7 +171,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                                         : 'vat_sa'),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline1!
+                                    .displayLarge!
                                     .copyWith(
                                       fontSize: 10,
                                     ),

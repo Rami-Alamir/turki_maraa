@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/intro_list.dart';
 import '../../screens/app/app.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -33,16 +34,16 @@ class IntroFooter extends StatelessWidget {
                 },
                 child: Text(
                   AppLocalizations.of(context)!.tr('skip'),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      color: const Color.fromRGBO(118, 24, 14, 1.0)),
+                      color: AppColors.darkRed),
                 ),
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.arrow_forward_ios,
-                  color: Color.fromRGBO(118, 24, 14, 1.0)),
+              icon:
+                  const Icon(Icons.arrow_forward_ios, color: AppColors.darkRed),
               onPressed: () {
                 changeIntroStatus();
                 mSelectedPosition + 1 == IntroList.introData.length

@@ -23,7 +23,10 @@ class TextBtn extends StatelessWidget {
       },
       child: Text(AppLocalizations.of(context)!.tr(title),
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 10)),
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(fontSize: 10)),
     );
   }
 }

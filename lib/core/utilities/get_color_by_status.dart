@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 
 class GetColorByStatus {
   Color statusColor(int code) {
     switch (code) {
       case 4000:
-        return Colors.red;
+        return AppColors.red;
       case 102:
       case 103:
-        return Colors.amber;
+        return AppColors.amber;
       case 14:
       case 200:
-        return Colors.green;
+        return AppColors.green1;
       default:
-        return Colors.grey;
+        return AppColors.grey;
     }
   }
 }

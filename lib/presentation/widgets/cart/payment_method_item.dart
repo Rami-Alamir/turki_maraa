@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/cart_provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 
@@ -51,14 +52,12 @@ class PaymentMethodItem extends StatelessWidget {
                 width: 45,
                 margin: const EdgeInsets.symmetric(horizontal: 8.0),
                 decoration: BoxDecoration(
-                    color: selected
-                        ? const Color.fromRGBO(90, 4, 9, 1)
-                        : Colors.white,
+                    color: selected ? AppColors.darkRed : AppColors.white,
                     shape: BoxShape.circle),
                 child: Icon(
                   icon,
                   size: 40,
-                  color: selected ? Colors.white : Colors.black,
+                  color: selected ? AppColors.white : AppColors.black,
                 ),
               ),
               Column(
@@ -70,26 +69,38 @@ class PaymentMethodItem extends StatelessWidget {
                     child: Text(
                       AppLocalizations.of(context)!.tr(title),
                       maxLines: 2,
-                      style: Theme.of(context).textTheme.headline5!.copyWith(
-                          fontSize: 11,
-                          height: 1.5,
-                          fontWeight: FontWeight.bold,
-                          color: selected
-                              ? Colors.white
-                              : Theme.of(context).textTheme.headline5!.color),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(
+                              fontSize: 11,
+                              height: 1.5,
+                              fontWeight: FontWeight.bold,
+                              color: selected
+                                  ? AppColors.white
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall!
+                                      .color),
                     ),
                   ),
                   SizedBox(
                     width: SizeConfig.setWidgetWidth(90, 120, 120),
                     child: Text(
                       AppLocalizations.of(context)!.tr(subtitle),
-                      style: Theme.of(context).textTheme.headline5!.copyWith(
-                          fontSize: 8,
-                          fontWeight: FontWeight.normal,
-                          height: 2,
-                          color: selected
-                              ? Colors.white
-                              : Theme.of(context).textTheme.headline5!.color),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(
+                              fontSize: 8,
+                              fontWeight: FontWeight.normal,
+                              height: 2,
+                              color: selected
+                                  ? AppColors.white
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall!
+                                      .color),
                     ),
                   ),
                 ],

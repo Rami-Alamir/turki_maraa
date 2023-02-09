@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'item_column.dart';
 import '../../../models/orders_data.dart';
 import '../../../core/constants/route_constants.dart';
@@ -121,7 +122,7 @@ class OrderCard extends StatelessWidget {
                                             "${AppLocalizations.of(context)!.tr('order_id')}: ",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline1!
+                                                .displayLarge!
                                                 .copyWith(
                                                     fontSize: 13,
                                                     fontWeight:
@@ -129,7 +130,7 @@ class OrderCard extends StatelessWidget {
                                         Text(order.refNo!,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline1!
+                                                .displayLarge!
                                                 .copyWith(
                                                     fontSize: 15,
                                                     fontWeight:
@@ -159,7 +160,7 @@ class OrderCard extends StatelessWidget {
                                                   "${order.orderProducts![index].quantity} x ${isAr ? order.products![index].nameAr : order.products![index].nameEn}",
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .headline5!
+                                                      .headlineSmall!
                                                       .copyWith(
                                                           height: 1,
                                                           fontSize: 14,
@@ -308,13 +309,13 @@ class OrderCard extends StatelessWidget {
                               Text(
                                   "${AppLocalizations.of(context)!.tr('total')}: ",
                                   style: const TextStyle(
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                       fontSize: 10,
                                       fontWeight: FontWeight.w600)),
                               Text(
                                   "${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(double.parse(order.totalAmountAfterDiscount!))} ${sl<GetStrings>().getCurrency(isAr ? "ar" : "En", (order.refNo!.substring(0, 2)))}",
                                   style: const TextStyle(
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                       fontSize: 12,
                                       fontWeight: FontWeight.normal)),
                             ],
@@ -375,7 +376,7 @@ class OrderCard extends StatelessWidget {
                         shape: BoxShape.rectangle,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5)),
-                        border: Border.all(color: Colors.white, width: 1),
+                        border: Border.all(color: AppColors.white, width: 1),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -385,7 +386,7 @@ class OrderCard extends StatelessWidget {
                                 fontSize: 10,
                                 fontWeight: FontWeight.normal,
                                 height: 1.75,
-                                color: Colors.white)),
+                                color: AppColors.white)),
                       ),
                     ),
                   )

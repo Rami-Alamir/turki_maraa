@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/app_colors.dart';
 import 'invoice_row.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/service/service_locator.dart';
@@ -50,17 +51,19 @@ class Invoice extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
               AppLocalizations.of(context)!.tr('order_summary'),
-              style:
-                  Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontSize: 14),
             ),
           ),
           InvoiceRow(
-              fontColor: Theme.of(context).textTheme.headline4!.color!,
+              fontColor: Theme.of(context).textTheme.headlineMedium!.color!,
               title: 'order_total',
               value:
                   '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(subtotal)} $currencyStr'),
           InvoiceRow(
-              fontColor: Theme.of(context).textTheme.headline4!.color!,
+              fontColor: Theme.of(context).textTheme.headlineMedium!.color!,
               title: 'delivery_fees',
               value:
                   '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(shipping)} $currencyStr'),
@@ -69,14 +72,14 @@ class Invoice extends StatelessWidget {
             value:
                 '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(discountVoucher)} $currencyStr',
             visible: discountVoucher > 0,
-            fontColor: Colors.green,
+            fontColor: AppColors.green1,
           ),
           InvoiceRow(
             title: 'my_credit',
             value:
                 '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(myCredit)} $currencyStr',
             visible: myCredit > 0,
-            fontColor: Colors.green,
+            fontColor: AppColors.green1,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -84,7 +87,7 @@ class Invoice extends StatelessWidget {
               height: 2,
               color: Theme.of(context)
                   .textTheme
-                  .headline4!
+                  .headlineMedium!
                   .color!
                   .withOpacity(0.35),
               indent: 2,
@@ -102,7 +105,7 @@ class Invoice extends StatelessWidget {
                     AppLocalizations.of(context)!.tr('total'),
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontSize: 14),
                   ),
                 ),
@@ -112,7 +115,7 @@ class Invoice extends StatelessWidget {
                     '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(total)} $currencyStr',
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1!
+                        .titleMedium!
                         .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -124,7 +127,7 @@ class Invoice extends StatelessWidget {
             child: Center(
               child: Text(
                 AppLocalizations.of(context)!.tr(vatStr),
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 10,
                     ),
               ),

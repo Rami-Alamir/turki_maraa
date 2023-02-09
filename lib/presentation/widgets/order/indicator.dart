@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'line.dart';
 
 // used in order_tracking
@@ -40,7 +41,7 @@ class Indicator extends StatelessWidget {
                 ),
                 child: Icon(
                   icon,
-                  color: Colors.white,
+                  color: AppColors.white,
                   size: 16,
                 ), // inner content
               ),
@@ -48,7 +49,7 @@ class Indicator extends StatelessWidget {
             Visibility(
                 visible: withLine,
                 child: Line(
-                    color1: color2 == Colors.grey ? color2 : color,
+                    color1: color2 == AppColors.grey ? color2 : color,
                     color2: color2)),
           ],
         ),
@@ -61,7 +62,7 @@ class Indicator extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
-                  .headline4!
+                  .headlineMedium!
                   .copyWith(fontWeight: FontWeight.normal, fontSize: 10),
             ),
           ),

@@ -33,7 +33,7 @@ class ServicesItem extends StatelessWidget {
               width: 95,
               child: Text(
                 AppLocalizations.of(context)!.tr(title),
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
           ],

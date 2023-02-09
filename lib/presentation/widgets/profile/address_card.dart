@@ -50,7 +50,7 @@ class _AddressCardState extends State<AddressCard> {
                           widget.userAddress.label ?? "",
                           style: Theme.of(context)
                               .textTheme
-                              .subtitle1!
+                              .titleMedium!
                               .copyWith(fontSize: 14),
                         ),
                       ),
@@ -73,15 +73,17 @@ class _AddressCardState extends State<AddressCard> {
                             child: Icon(
                               TURKIICONS.home_location_white,
                               size: 17.5,
-                              color:
-                                  Theme.of(context).textTheme.headline4!.color,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .color,
                             ),
                           ),
                           SizedBox(
                             width: SizeConfig.screenWidth! * 0.72,
                             child: Text(
                               widget.userAddress.address ?? "",
-                              style: Theme.of(context).textTheme.headline4,
+                              style: Theme.of(context).textTheme.headlineMedium,
                             ),
                           ),
                         ],
@@ -95,7 +97,8 @@ class _AddressCardState extends State<AddressCard> {
                               width: SizeConfig.screenWidth! * 0.72,
                               child: Text(
                                 widget.userAddress.comment ?? "",
-                                style: Theme.of(context).textTheme.headline5,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
                               ),
                             ),
                           ],

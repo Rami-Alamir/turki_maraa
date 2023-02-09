@@ -25,7 +25,7 @@ class Search extends StatelessWidget {
                   child: Text(AppLocalizations.of(context)!.tr('search'),
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1!
+                          .titleMedium!
                           .copyWith(fontSize: 20, fontWeight: FontWeight.w700)),
                 ),
                 InkWell(
@@ -34,7 +34,7 @@ class Search extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         top: 10.0, right: 30, left: 30, bottom: 20),
                     child: Text('X',
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             fontWeight: FontWeight.bold, fontSize: 16)),
                   ),
                 ),

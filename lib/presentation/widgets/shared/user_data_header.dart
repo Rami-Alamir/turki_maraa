@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/user_provider.dart';
@@ -27,8 +28,8 @@ class UserDataHeader extends StatelessWidget {
                         (user.userData?.data?.name ?? "").isNotEmpty
                             ? (user.userData?.data?.name ?? "").substring(0, 1)
                             : "",
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.white)),
+                        style: const TextStyle(
+                            fontSize: 20, color: AppColors.white)),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -39,12 +40,12 @@ class UserDataHeader extends StatelessWidget {
                       children: [
                         Text(
                           user.userData?.data?.name ?? "",
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Directionality(
                           textDirection: TextDirection.ltr,
                           child: Text(user.userData?.data?.mobile ?? "",
-                              style: Theme.of(context).textTheme.subtitle2),
+                              style: Theme.of(context).textTheme.titleSmall),
                         )
                       ],
                     ),
@@ -59,7 +60,7 @@ class UserDataHeader extends StatelessWidget {
                       backgroundColor: Theme.of(context).primaryColor,
                       child: const Icon(
                         TURKIICONS.user6,
-                        color: Colors.white,
+                        color: AppColors.white,
                       )),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -74,7 +75,7 @@ class UserDataHeader extends StatelessWidget {
                                   .pushNamed(login),
                           child: Text(
                             AppLocalizations.of(context)!.tr('login'),
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ),
                       ],

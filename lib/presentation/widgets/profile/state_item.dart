@@ -30,7 +30,7 @@ class StateItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(convertDouble(value),
-              style: Theme.of(context).textTheme.headline6),
+              style: Theme.of(context).textTheme.titleLarge),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
@@ -42,7 +42,7 @@ class StateItem extends StatelessWidget {
                 Text(AppLocalizations.of(context)!.tr(title),
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle2!
+                        .titleSmall!
                         .copyWith(fontSize: 13)),
               ],
             ),

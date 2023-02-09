@@ -54,7 +54,7 @@ class _DeleteRowState extends State<DeleteRow> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(AppLocalizations.of(context)!.tr('delete_account'),
-                  style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       )),

@@ -59,7 +59,7 @@ class PointsCard extends StatelessWidget {
                     textAlign: TextAlign.start,
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontSize: 12, fontWeight: FontWeight.w600),
                     minFontSize: 12,
                     maxFontSize: 14,
@@ -73,7 +73,7 @@ class PointsCard extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle2!
+                          .titleSmall!
                           .copyWith(fontSize: 12),
                     )),
               ],

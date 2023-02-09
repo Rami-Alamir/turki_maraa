@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../models/points_tran.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
@@ -10,7 +11,7 @@ class PointTransactionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool status = transaction.after > 0;
-    final Color color = status ? Colors.green : Colors.red;
+    final Color color = status ? AppColors.green1 : AppColors.red;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
@@ -51,7 +52,7 @@ class PointTransactionRow extends StatelessWidget {
                                         transaction.description,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headline1!
+                                            .displayLarge!
                                             .copyWith(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w600),
@@ -68,14 +69,14 @@ class PointTransactionRow extends StatelessWidget {
                                 '${transaction.after}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline1!
+                                    .displayLarge!
                                     .copyWith(fontSize: 14, color: color),
                               ),
                               Text(
                                 AppLocalizations.of(context)!.tr('point'),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline1!
+                                    .displayLarge!
                                     .copyWith(fontSize: 12, color: color),
                               ),
                             ],
@@ -94,7 +95,7 @@ class PointTransactionRow extends StatelessWidget {
                                 transaction.date,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2!
+                                    .titleSmall!
                                     .copyWith(
                                         fontSize: 12,
                                         fontWeight: FontWeight.normal),
@@ -106,7 +107,7 @@ class PointTransactionRow extends StatelessWidget {
                                   transaction.before.toString(),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .subtitle2!
+                                      .titleSmall!
                                       .copyWith(
                                           fontSize: 12,
                                           fontWeight: FontWeight.normal),
@@ -115,7 +116,7 @@ class PointTransactionRow extends StatelessWidget {
                                   AppLocalizations.of(context)!.tr('point'),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .subtitle2!
+                                      .titleSmall!
                                       .copyWith(
                                           fontSize: 10,
                                           fontWeight: FontWeight.normal),

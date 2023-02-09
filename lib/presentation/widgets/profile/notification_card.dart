@@ -61,14 +61,14 @@ class NotificationCard extends StatelessWidget {
                       Text(notificationData.title!,
                           style: Theme.of(context)
                               .textTheme
-                              .headline4!
+                              .headlineMedium!
                               .copyWith(fontSize: 14)),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(notificationData.subtitle!,
                             style: Theme.of(context)
                                 .textTheme
-                                .headline6!
+                                .titleLarge!
                                 .copyWith(
                                     height: 1.45,
                                     fontSize: 14,
@@ -82,7 +82,7 @@ class NotificationCard extends StatelessWidget {
                               textAlign: TextAlign.end,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6!
+                                  .titleLarge!
                                   .copyWith(
                                       fontSize: 10,
                                       fontWeight: FontWeight.w400)),

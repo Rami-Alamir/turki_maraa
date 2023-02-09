@@ -47,7 +47,7 @@ class CallCard extends StatelessWidget {
                       ),
                       Text(AppLocalizations.of(context)!.tr('contact_support'),
                           style:
-                              Theme.of(context).textTheme.headline4!.copyWith(
+                              Theme.of(context).textTheme.headlineMedium!.copyWith(
                                     fontWeight: FontWeight.normal,
                                   )),
                     ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../models/wallet.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -13,7 +14,7 @@ class TransactionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool status = transaction.after! > 0;
-    final Color color = status ? Colors.green : Colors.red;
+    final Color color = status ? AppColors.green : AppColors.red;
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
     String currency = sl<GetStrings>().getCurrency(
@@ -25,7 +26,7 @@ class TransactionRow extends StatelessWidget {
         color: Colors.transparent,
         elevation: 1,
         shadowColor:
-            Theme.of(context).textTheme.headline4!.color!.withOpacity(0.1),
+            Theme.of(context).textTheme.headlineMedium!.color!.withOpacity(0.1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         child: SizedBox(
           width: SizeConfig.screenWidth,
@@ -55,7 +56,7 @@ class TransactionRow extends StatelessWidget {
                               child: Center(
                                 child: Icon(
                                   transaction.iconData,
-                                  color: Colors.white,
+                                  color: AppColors.white,
                                 ),
                               ),
                             ),
@@ -77,7 +78,7 @@ class TransactionRow extends StatelessWidget {
                                             ' ${transaction.description}',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline1!
+                                                .displayLarge!
                                                 .copyWith(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -92,7 +93,7 @@ class TransactionRow extends StatelessWidget {
                                           '${transaction.after!}',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline1!
+                                              .displayLarge!
                                               .copyWith(
                                                   fontSize: 14, color: color),
                                         ),
@@ -100,7 +101,7 @@ class TransactionRow extends StatelessWidget {
                                           currency,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline1!
+                                              .displayLarge!
                                               .copyWith(
                                                   fontSize: 12, color: color),
                                         ),
@@ -121,7 +122,7 @@ class TransactionRow extends StatelessWidget {
                                           transaction.date!,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline4!
+                                              .headlineMedium!
                                               .copyWith(
                                                   fontSize: 12,
                                                   fontWeight:
@@ -137,7 +138,7 @@ class TransactionRow extends StatelessWidget {
                                               transaction.before.toString(),
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .subtitle2!
+                                                  .titleSmall!
                                                   .copyWith(
                                                       fontSize: 12,
                                                       fontWeight:
@@ -147,7 +148,7 @@ class TransactionRow extends StatelessWidget {
                                               currency,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .subtitle2!
+                                                  .titleSmall!
                                                   .copyWith(
                                                       fontSize: 10,
                                                       fontWeight:

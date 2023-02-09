@@ -26,14 +26,14 @@ class InvoiceRow extends StatelessWidget {
           children: <Widget>[
             Text(
               AppLocalizations.of(context)!.tr(title),
-              style: Theme.of(context).textTheme.headline2!.copyWith(
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
                   fontSize: 12, fontWeight: FontWeight.w600, color: fontColor),
             ),
             Text(
               value,
               style: Theme.of(context)
                   .textTheme
-                  .headline6!
+                  .titleLarge!
                   .copyWith(fontSize: 12, color: fontColor),
             ),
           ],

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/login/pin_code_fields.dart';
+import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/login/pin_code_fields.dart';
-import '../../widgets/shared/rounded_rectangle_button.dart';
 
 class VerifyPhone extends StatefulWidget {
   const VerifyPhone({Key? key}) : super(key: key);
@@ -77,14 +77,14 @@ class VerifyPhoneState extends State<VerifyPhone> {
                 ),
                 Text(
                   "${AppLocalizations.of(context)!.tr('you_will_receive_a_text_message_with_a_verification_code_on_the_number')} ",
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       fontSize: 14, height: 2, fontWeight: FontWeight.normal),
                 ),
                 Text(
                   auth.userPhone,
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       fontSize: 14, height: 2, fontWeight: FontWeight.bold),
                 ),
                 const PinCodeFields(),
@@ -100,7 +100,7 @@ class VerifyPhoneState extends State<VerifyPhone> {
                       Text(
                           AppLocalizations.of(context)!
                               .tr('did_you_not_receive_the_activation_code'),
-                          style: Theme.of(context).textTheme.headline5),
+                          style: Theme.of(context).textTheme.headlineSmall),
                       InkWell(
                         onTap: () async {
                           if (auth.start == 30 || auth.start == 0) {
@@ -125,7 +125,7 @@ class VerifyPhoneState extends State<VerifyPhone> {
                                 : "00:${auth.start.toString().padLeft(2, '0')}",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline5!
+                                .headlineSmall!
                                 .copyWith(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w600)),

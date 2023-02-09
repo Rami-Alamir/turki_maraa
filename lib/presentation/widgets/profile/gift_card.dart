@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../shared/main_card.dart';
@@ -34,9 +35,9 @@ class GiftCard extends StatelessWidget {
                       child: Text(AppLocalizations.of(context)!.tr('gift_card'),
                           style: Theme.of(context)
                               .textTheme
-                              .headline1!
+                              .displayLarge!
                               .copyWith(
-                                  color: Colors.white,
+                                  color: AppColors.white,
                                   height: 3,
                                   fontSize: 18))),
                   Padding(
@@ -63,9 +64,9 @@ class GiftCard extends StatelessWidget {
                           textDirection: TextDirection.ltr,
                           style: Theme.of(context)
                               .textTheme
-                              .headline1!
+                              .displayLarge!
                               .copyWith(
-                                  color: Colors.white,
+                                  color: AppColors.white,
                                   fontSize: 18,
                                   height: 2))),
                 ],
@@ -83,9 +84,9 @@ class GiftCard extends StatelessWidget {
                             // "${_auth.cardValue} ${AppLocalizations.of(context)!.tr('sr')}",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline1!
+                                .displayLarge!
                                 .copyWith(
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                     fontSize: 14,
                                     height: 2))),
                   ],

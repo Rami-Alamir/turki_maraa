@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/favourite_provider.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/firebase_helper.dart';
 import '../../../core/service/service_locator.dart';
@@ -72,36 +73,36 @@ class _CartCardState extends State<CartCard> {
             }
           },
           background: Container(
-            color: Colors.green,
+            color: AppColors.green1,
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Row(
                 children: [
-                  const Icon(Icons.favorite, color: Colors.white),
+                  const Icon(Icons.favorite, color: AppColors.white),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2.0),
                     child: Text(
                         AppLocalizations.of(context)!.tr('add_to_favorites'),
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 12)),
+                        style: const TextStyle(
+                            color: AppColors.white, fontSize: 12)),
                   ),
                 ],
               ),
             ),
           ),
           secondaryBackground: Container(
-            color: Colors.red,
+            color: AppColors.red,
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Icon(Icons.delete, color: Colors.white),
+                  const Icon(Icons.delete, color: AppColors.white),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2.0),
                     child: Text(AppLocalizations.of(context)!.tr('remove'),
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 12)),
+                        style: const TextStyle(
+                            color: AppColors.white, fontSize: 12)),
                   ),
                 ],
               ),
@@ -153,7 +154,7 @@ class _CartCardState extends State<CartCard> {
                                       : widget.item.product!.nameEn!,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline1!
+                                      .displayLarge!
                                       .copyWith(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 14)),
@@ -164,8 +165,9 @@ class _CartCardState extends State<CartCard> {
                                     "${language ? "${widget.item.size?.nameAr ?? ""} ${widget.item.cut?.nameAr ?? ""}"
                                         " ${widget.item.preparation?.nameAr ?? ""} ${widget.item.isShalwata == 1 ? "مع شلوطة" : ""}" : "${widget.item.size?.nameEn ?? ""} ${widget.item.cut?.nameEn ?? ""} "
                                         "${widget.item.preparation?.nameEn ?? ""} ${widget.item.isShalwata == 1 ? "with shalwata" : ""}"}${widget.item.isLyh! ? AppLocalizations.of(context)!.tr('without_tail_fat') : ""} ${widget.item.isRas! ? AppLocalizations.of(context)!.tr('without_head') : ""} ${widget.item.isKwar3! ? AppLocalizations.of(context)!.tr('without_trotters') : ""} ${widget.item.isKarashah! ? AppLocalizations.of(context)!.tr('without_tripe') : ""} ",
-                                    style:
-                                        Theme.of(context).textTheme.headline5),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall),
                               ),
                             ],
                           ),
@@ -200,7 +202,7 @@ class _CartCardState extends State<CartCard> {
                                     widget.item.quantity.toString(),
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline1!
+                                        .displayLarge!
                                         .copyWith(fontSize: 16),
                                   ),
                                   RoundedRectangleButton(
@@ -226,7 +228,7 @@ class _CartCardState extends State<CartCard> {
                                   "${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros((sl<CalculateHelper>().getCartItemTotalPrice(cartProvider.cartData!.data!.cart!.data![widget.index]) * widget.item.quantity!))} $currency",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline1!
+                                      .displayLarge!
                                       .copyWith(fontSize: 14)),
                             ],
                           ),

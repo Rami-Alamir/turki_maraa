@@ -34,7 +34,7 @@ class AddNewAddress extends StatelessWidget {
             Text(AppLocalizations.of(context)!.tr('add_new_delivery_address'),
                 style: Theme.of(context)
                     .textTheme
-                    .headline1!
+                    .displayLarge!
                     .copyWith(fontSize: 14, fontWeight: FontWeight.normal)),
           ],
         ),

@@ -24,7 +24,8 @@ class OrderDetailsCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
         child: Text(
           AppLocalizations.of(context)!.tr('order_details'),
-          style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 12),
+          style:
+              Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 12),
         ),
       ),
       MainCard(
@@ -35,7 +36,7 @@ class OrderDetailsCard extends StatelessWidget {
               padding: const EdgeInsets.only(right: 15.0, top: 20, bottom: 10),
               child: Text(
                 "${AppLocalizations.of(context)!.tr('items')} (${ordersProvider.orderItems()})",
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 12,
                     ),
               ),

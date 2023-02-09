@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/format_helper.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -26,12 +27,12 @@ class MinValueIndicator extends StatelessWidget {
           RichText(
             text: TextSpan(
               text: AppLocalizations.of(context)!.tr('remaining'),
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
               children: <TextSpan>[
                 TextSpan(
                     text:
                         ' ${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(min - total)} $currency ',
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 13)),
@@ -45,7 +46,7 @@ class MinValueIndicator extends StatelessWidget {
             height: 7,
             margin: const EdgeInsetsDirectional.fromSTEB(5, 15, 5, 5),
             decoration: BoxDecoration(
-              color: Colors.grey,
+              color: AppColors.grey,
               borderRadius: const BorderRadius.all(Radius.circular(2)),
               boxShadow: [
                 BoxShadow(

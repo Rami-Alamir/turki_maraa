@@ -20,7 +20,8 @@ class AddressCardItem extends StatelessWidget {
         child: Text(
           title,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 12),
+          style:
+              Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 12),
         ),
       ),
     );

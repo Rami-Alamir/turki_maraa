@@ -12,6 +12,7 @@ import '../../widgets/home/drawer/turki_drawer.dart';
 import '../../../controllers/app_provider.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/service/firebase_helper.dart';
 import '../../../core/service/service_locator.dart';
@@ -132,7 +133,7 @@ class AppState extends State<App> {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent),
               child: BottomNavigationBar(
-                  backgroundColor: Theme.of(context).backgroundColor,
+                  backgroundColor: Theme.of(context).colorScheme.background,
                   type: BottomNavigationBarType.fixed,
                   iconSize: 24,
                   showUnselectedLabels: true,
@@ -161,14 +162,15 @@ class AppState extends State<App> {
                                 width: 15,
                                 height: 15,
                                 decoration: const BoxDecoration(
-                                    color: Colors.red, shape: BoxShape.circle),
+                                    color: AppColors.red,
+                                    shape: BoxShape.circle),
                                 child: AutoSizeText(
                                   cart.cartLength.toString(),
                                   textAlign: TextAlign.center,
                                   minFontSize: 6,
                                   maxFontSize: 12,
                                   style: const TextStyle(
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12),
                                 ),

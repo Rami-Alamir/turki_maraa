@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../controllers/cart_provider.dart';
@@ -34,9 +35,9 @@ class UseCredit extends StatelessWidget {
                       value: cartProvider.useCredit,
                       fillColor: MaterialStateProperty.all(
                           Theme.of(context).primaryColor),
-                      checkColor: Colors.white, // color of tick Mark
+                      checkColor: AppColors.white, // color of tick Mark
                       activeColor:
-                          Theme.of(context).textTheme.headline1!.color!,
+                          Theme.of(context).textTheme.displayLarge!.color!,
                       onChanged: (bool? value) {
                         HapticFeedback.heavyImpact();
                         cartProvider.useCredit = value!;
@@ -48,14 +49,14 @@ class UseCredit extends StatelessWidget {
                               AppLocalizations.of(context)!.tr('use_my_credit'),
                           style: Theme.of(context)
                               .textTheme
-                              .headline5!
+                              .headlineSmall!
                               .copyWith(fontSize: 12, height: 3),
                           children: <TextSpan>[
                             TextSpan(
                               text: ' ($credit $currency)',
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline2!
+                                  .displayMedium!
                                   .copyWith(fontSize: 12, height: 3),
                             )
                           ]),

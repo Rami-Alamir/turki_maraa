@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 
@@ -49,8 +50,8 @@ class PointsHeader extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
-                                .headline1!
-                                .copyWith(fontSize: 26, color: Colors.white),
+                                .displayLarge!
+                                .copyWith(fontSize: 26, color: AppColors.white),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -59,8 +60,9 @@ class PointsHeader extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline1!
-                                  .copyWith(fontSize: 14, color: Colors.white),
+                                  .displayLarge!
+                                  .copyWith(
+                                      fontSize: 14, color: AppColors.white),
                             ),
                           ),
                         ],
@@ -74,7 +76,7 @@ class PointsHeader extends StatelessWidget {
                             children: <Widget>[
                               const Icon(
                                 Icons.workspaces_filled,
-                                color: Colors.white,
+                                color: AppColors.white,
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
@@ -83,11 +85,11 @@ class PointsHeader extends StatelessWidget {
                                   textAlign: TextAlign.start,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline1!
+                                      .displayLarge!
                                       .copyWith(
                                           fontWeight: FontWeight.normal,
                                           fontSize: 12,
-                                          color: Colors.white),
+                                          color: AppColors.white),
                                 ),
                               ),
                             ],
@@ -101,11 +103,11 @@ class PointsHeader extends StatelessWidget {
                                 textAlign: TextAlign.start,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline1!
+                                    .displayLarge!
                                     .copyWith(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 10,
-                                        color: Colors.white),
+                                        color: AppColors.white),
                               ),
                             ),
                           ),

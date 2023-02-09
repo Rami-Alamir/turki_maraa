@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/cart_provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 
@@ -65,12 +66,12 @@ class PaymentInstallmentItem extends StatelessWidget {
                 ),
                 Text(
                   AppLocalizations.of(context)!.tr(title),
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontSize: 9,
                       fontWeight: FontWeight.bold,
                       color: selected
-                          ? Colors.white
-                          : Theme.of(context).textTheme.headline5!.color),
+                          ? AppColors.white
+                          : Theme.of(context).textTheme.headlineSmall!.color),
                 ),
               ],
             )),

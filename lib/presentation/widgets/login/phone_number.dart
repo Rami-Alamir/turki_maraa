@@ -1,4 +1,3 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -25,22 +24,22 @@ class PhoneNumber extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CountryCodePicker(
-                  onChanged: (key) {
-                    auth.initCountyCode(key.toString());
-                  }, // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                  initialSelection: isoCountryCode,
-                  favorite: const ['+966', 'SA'],
-                  countryFilter: const ['SA', 'AE'],
-                  textStyle: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16),
-                  // flag can be styled with BoxDecoration's `borderRadius` and `shape` fields
-                  flagDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7),
-                  ),
-                ),
+                // CountryCodePicker(
+                //   onChanged: (key) {
+                //     auth.initCountyCode(key.toString());
+                //   }, // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                //   initialSelection: isoCountryCode,
+                //   favorite: const ['+966', 'SA'],
+                //   countryFilter: const ['SA', 'AE'],
+                //   textStyle: Theme.of(context).textTheme.headline4!.copyWith(
+                //       color: Colors.black,
+                //       fontWeight: FontWeight.bold,
+                //       fontSize: 16),
+                //   // flag can be styled with BoxDecoration's `borderRadius` and `shape` fields
+                //   flagDecoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(7),
+                //   ),
+                // ),
                 PhoneNumberTextfield(
                     formKey: auth.formKey!,
                     width: SizeConfig.screenWidth! * 0.5,

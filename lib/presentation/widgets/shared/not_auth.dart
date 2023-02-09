@@ -28,7 +28,7 @@ class NotAuth extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ),

@@ -35,7 +35,7 @@ class OrderDetailsHeader extends StatelessWidget {
                     '${AppLocalizations.of(context)!.tr("order_id")}: #${order.refNo}',
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontSize: 14),
                   ),
                 ),

@@ -19,8 +19,10 @@ class DeliveryAddress extends StatelessWidget {
           padding: const EdgeInsets.only(right: 15.0, top: 15, left: 15),
           child: Text(
             AppLocalizations.of(context)!.tr('delivery_address'),
-            style:
-                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 14),
           ),
         ),
         Container(
@@ -43,10 +45,11 @@ class DeliveryAddress extends StatelessWidget {
                         getAddress(
                           context,
                         ),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 12,
-                            )),
+                        style:
+                            Theme.of(context).textTheme.displayLarge!.copyWith(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 12,
+                                )),
                   ),
                 ),
               ],

@@ -45,11 +45,13 @@ class ProfileRow extends StatelessWidget {
                         ),
                       ),
                       Text(AppLocalizations.of(context)!.tr(title),
-                          style:
-                              Theme.of(context).textTheme.headline4!.copyWith(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.normal,
-                                  )),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                              )),
                     ],
                   ),
                 ),
@@ -61,7 +63,7 @@ class ProfileRow extends StatelessWidget {
                       Icons.arrow_forward_ios,
                       color: Theme.of(context)
                           .textTheme
-                          .headline4!
+                          .headlineMedium!
                           .color!
                           .withOpacity(0.2),
                       size: 18,

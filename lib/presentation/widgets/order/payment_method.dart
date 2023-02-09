@@ -19,8 +19,10 @@ class PaymentMethod extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
           child: Text(
             AppLocalizations.of(context)!.tr('payment_method'),
-            style:
-                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 12),
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 12),
           ),
         ),
         MainCard(
@@ -56,11 +58,13 @@ class PaymentMethod extends StatelessWidget {
                         : Text(
                             AppLocalizations.of(context)!.tr(
                                 paymentTypeId == 1 ? "cod" : "online_payment"),
-                            style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                    )),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                )),
               ),
             ],
           ),

@@ -20,7 +20,7 @@ class CreditTextField extends StatelessWidget {
                 AppLocalizations.of(context)!.tr('amount'),
                 style: Theme.of(context)
                     .textTheme
-                    .headline4!
+                    .headlineMedium!
                     .copyWith(fontSize: 14),
               ),
             ),
@@ -34,7 +34,7 @@ class CreditTextField extends StatelessWidget {
                     AppLocalizations.of(context)!.tr('sr'),
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1!
+                        .titleMedium!
                         .copyWith(fontSize: 14, height: 2.5),
                   ),
                   focusedBorder: UnderlineInputBorder(

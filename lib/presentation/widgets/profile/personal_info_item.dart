@@ -23,7 +23,7 @@ class PersonalInfoItem extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20.0, bottom: 10),
           child: Text(AppLocalizations.of(context)!.tr(title),
               textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                   fontSize: 12, fontWeight: FontWeight.w700, height: 1)),
         ),
         RectangleTextField(

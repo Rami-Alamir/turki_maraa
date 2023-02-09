@@ -40,7 +40,7 @@ class Faq extends StatelessWidget {
                     AppLocalizations.of(context)!.tr('help_header'),
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontSize: 14),
                   ),
                 )

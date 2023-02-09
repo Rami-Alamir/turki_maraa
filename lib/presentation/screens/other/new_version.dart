@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../controllers/app_provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/service/firebase_helper.dart';
@@ -43,8 +44,8 @@ class NewVersion extends StatelessWidget {
                   top: SizeConfig.screenHeight! * 0.15, bottom: 15),
               child: Text(AppLocalizations.of(context)!.tr('new_update'),
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: const Color.fromRGBO(236, 204, 120, 1),
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: AppColors.gold,
                       fontSize: 16,
                       fontWeight: FontWeight.bold)),
             ),
@@ -52,8 +53,8 @@ class NewVersion extends StatelessWidget {
               width: SizeConfig.screenWidth! * 0.85,
               child: Text(AppLocalizations.of(context)!.tr('new_update_desc'),
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: const Color.fromRGBO(236, 204, 99, 1),
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: AppColors.gold2,
                       height: 1.5,
                       fontSize: 16,
                       fontWeight: FontWeight.w300)),
@@ -72,8 +73,6 @@ class NewVersion extends StatelessWidget {
                         value: Platform.isIOS ? "ios" : "android");
                     final locationProvider =
                         Provider.of<LocationProvider>(context, listen: false);
-                    print("is hms ${locationProvider.isHms}");
-
                     await _launchURL(appProvider.url ??
                         (Platform.isIOS
                             ? Constants.appStore
@@ -82,8 +81,8 @@ class NewVersion extends StatelessWidget {
                                 : Constants.playStore));
                   },
                   fontSize: 24,
-                  fontColor: const Color.fromRGBO(236, 204, 120, 1),
-                  color: const Color.fromRGBO(90, 4, 20, 1),
+                  fontColor: AppColors.gold,
+                  color: AppColors.darkRed,
                 ),
               ),
             )

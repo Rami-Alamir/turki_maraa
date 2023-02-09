@@ -25,7 +25,7 @@ class DeliveryDate extends StatelessWidget {
             AppLocalizations.of(context)!.tr('delivery_date'),
             style: Theme.of(context)
                 .textTheme
-                .headline1!
+                .displayLarge!
                 .copyWith(fontWeight: FontWeight.bold, fontSize: 14),
           ),
         ),

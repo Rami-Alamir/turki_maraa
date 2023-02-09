@@ -36,7 +36,7 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
       splashColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(25.0),
             topLeft: Radius.circular(25.0),
@@ -55,7 +55,7 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
                   Text(
                     AppLocalizations.of(context)!.tr("delivery_address"),
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline4,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -63,7 +63,7 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
                       widget.addressDescription,
                       maxLines: 2,
                       textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.headline2,
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                   ),
                   Text(
@@ -71,7 +71,7 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
                     textAlign: TextAlign.start,
                     style: Theme.of(context)
                         .textTheme
-                        .headline4!
+                        .headlineMedium!
                         .copyWith(height: 2),
                   ),
                 ],
@@ -91,7 +91,7 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
                 AppLocalizations.of(context)!.tr('additional_notes'),
                 maxLines: 2,
                 textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
             RectangleTextField(

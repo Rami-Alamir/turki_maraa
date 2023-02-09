@@ -9,7 +9,7 @@ class ProfileFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle =
-        Theme.of(context).textTheme.headline5!.copyWith(fontSize: 10);
+        Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 10);
     return Padding(
       padding: const EdgeInsets.only(bottom: 50.0),
       child: Column(

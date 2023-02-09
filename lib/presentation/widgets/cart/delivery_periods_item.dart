@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/cart_provider.dart';
+import '../../../core/constants/app_colors.dart';
 
 class DeliveryPeriodsItem extends StatelessWidget {
   final int selectedValue;
@@ -36,12 +37,12 @@ class DeliveryPeriodsItem extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5!.copyWith(
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                     color: selected
-                        ? Colors.white
-                        : Theme.of(context).textTheme.headline5!.color),
+                        ? AppColors.white
+                        : Theme.of(context).textTheme.headlineSmall!.color),
               ),
             ),
           ],

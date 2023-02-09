@@ -1,4 +1,3 @@
-import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';
 import '../../widgets/shared/rectangle_text_field.dart';
@@ -23,7 +22,7 @@ class GenderPicker extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 10.0, top: 15),
           child: Text(AppLocalizations.of(context)!.tr('gender'),
               textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                   )),
@@ -46,9 +45,9 @@ class GenderPicker extends StatelessWidget {
         Provider.of<UserProvider>(context, listen: false);
     userProvider.setGender(0, context);
     Picker(
-        headerColor: Theme.of(context).backgroundColor,
-        containerColor: Theme.of(context).backgroundColor,
-        backgroundColor: Theme.of(context).backgroundColor,
+        headerColor: Theme.of(context).colorScheme.background,
+        containerColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.background,
         adapter: PickerDataAdapter(
           data: [
             PickerItem(
@@ -56,7 +55,7 @@ class GenderPicker extends StatelessWidget {
                   AppLocalizations.of(context)!.tr('maleString'),
                   style: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headlineMedium!
                       .copyWith(height: 2, fontSize: 16),
                 ),
                 value: "0"),
@@ -65,7 +64,7 @@ class GenderPicker extends StatelessWidget {
                   AppLocalizations.of(context)!.tr('femaleString'),
                   style: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headlineMedium!
                       .copyWith(height: 2, fontSize: 16),
                 ),
                 value: "1")
@@ -75,12 +74,12 @@ class GenderPicker extends StatelessWidget {
         confirmText: AppLocalizations.of(context)!.tr('confirm'),
         confirmTextStyle: Theme.of(context)
             .textTheme
-            .subtitle1!
+            .titleMedium!
             .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
         cancelText: AppLocalizations.of(context)!.tr('cancel'),
         cancelTextStyle: Theme.of(context)
             .textTheme
-            .subtitle1!
+            .titleMedium!
             .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
         changeToFirst: false,
         textAlign: TextAlign.left,

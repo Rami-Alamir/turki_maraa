@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'payment_installment_item.dart';
 import 'payment_method_item.dart';
-import '../../../presentation/widgets/cart/use_credit.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
@@ -18,8 +17,10 @@ class PaymentMethod extends StatelessWidget {
               const EdgeInsets.only(right: 15.0, top: 15, left: 15, bottom: 5),
           child: Text(
             AppLocalizations.of(context)!.tr('payment_method'),
-            style:
-                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 14),
           ),
         ),
         Row(

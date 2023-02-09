@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:turki_dabayh/core/constants/app_colors.dart';
 import '../../../controllers/app_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';
@@ -52,7 +53,7 @@ class SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     sl<SizeConfig>().init(context);
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(105, 30, 24, 1),
+      backgroundColor: AppColors.primaryColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
@@ -70,7 +71,8 @@ class SplashState extends State<Splash> {
                   highlightColor: Colors.transparent,
                   child: Text(
                     AppLocalizations.of(context)!.tr('skip'),
-                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                    style:
+                        const TextStyle(color: AppColors.white, fontSize: 18),
                   ),
                 ),
               )

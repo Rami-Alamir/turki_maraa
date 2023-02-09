@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/intro_list.dart';
 import '../../../controllers/app_language.dart';
 import '../../../core/utilities/size_config.dart';
@@ -58,7 +59,7 @@ class IntroCard extends StatelessWidget {
                   maxLines: 4,
                   style: const TextStyle(
                       fontWeight: FontWeight.normal,
-                      color: Color.fromRGBO(87, 87, 87, 1),
+                      color: AppColors.darkGray,
                       height: 1.40),
                 )),
           ],

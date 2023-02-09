@@ -21,8 +21,10 @@ class DeliveryAddress extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
             child: Text(
               AppLocalizations.of(context)!.tr('delivery_address'),
-              style:
-                  Theme.of(context).textTheme.headline1!.copyWith(fontSize: 12),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontSize: 12),
             ),
           ),
           MainCard(
@@ -42,10 +44,13 @@ class DeliveryAddress extends StatelessWidget {
                     child: Text(
                         ordersProvider.order.data!.selectedAddress?.address ??
                             "",
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            height: 1.8)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                height: 1.8)),
                   ),
                 ),
               ],

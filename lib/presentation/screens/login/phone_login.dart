@@ -45,7 +45,7 @@ class PhoneLoginState extends State<PhoneLogin> {
                   AppLocalizations.of(context)!
                       .tr('enter_your_mobile_number_to_activate_the_account'),
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.headline4,
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),
               PhoneNumber(isoCountryCode: auth.isoCountryCode ?? 'SA'),

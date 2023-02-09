@@ -61,7 +61,7 @@ class About extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.tr('about2'),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
                             fontSize: 16,
                             height: 1.5,
                           ),
@@ -70,7 +70,7 @@ class About extends StatelessWidget {
                       " ${AppLocalizations.of(context)!.tr('app_name')}",
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1!
+                          .titleMedium!
                           .copyWith(height: 1.5),
                     ),
                   ],
@@ -117,7 +117,7 @@ class About extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.tr('our_services'),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
                             fontSize: 16,
                             height: 1.5,
                           ),
@@ -135,7 +135,7 @@ class About extends StatelessWidget {
                           vertical: 10, horizontal: 20.0),
                       child: Text(
                         isAr ? AboutData.aboutAr[5] : AboutData.aboutEn[5],
-                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             height: 1.5, fontWeight: FontWeight.normal),
                       ),
                     ),

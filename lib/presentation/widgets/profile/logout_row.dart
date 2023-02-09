@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -44,8 +45,8 @@ class LogOutRow extends StatelessWidget {
                 ),
               ),
               Text(AppLocalizations.of(context)!.tr('log_out'),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Colors.red,
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                        color: AppColors.red,
                         fontWeight: FontWeight.bold,
                       )),
             ],

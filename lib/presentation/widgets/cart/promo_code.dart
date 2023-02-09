@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/cart_provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/show_snack_bar.dart';
@@ -28,8 +29,10 @@ class _PromoCodeState extends State<PromoCode> {
             padding: const EdgeInsets.only(bottom: 10, right: 5, left: 5),
             child: Text(
               AppLocalizations.of(context)!.tr('promo_code'),
-              style:
-                  Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontSize: 14),
             ),
           ),
           Card(
@@ -71,7 +74,7 @@ class _PromoCodeState extends State<PromoCode> {
                             controller: cart.promoCodeController,
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(
                                     fontSize: 16,
                                     fontWeight: cart.promoIsActive
@@ -84,7 +87,7 @@ class _PromoCodeState extends State<PromoCode> {
                                   TURKIICONS.ticket_discount,
                                   color: Theme.of(context)
                                       .textTheme
-                                      .subtitle1!
+                                      .titleMedium!
                                       .color,
                                 ),
                                 counterText: "",
@@ -97,7 +100,7 @@ class _PromoCodeState extends State<PromoCode> {
                                 errorStyle: const TextStyle(fontSize: 12),
                                 errorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.red, width: 1)),
+                                        color: AppColors.red, width: 1)),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Colors.transparent,
@@ -115,7 +118,7 @@ class _PromoCodeState extends State<PromoCode> {
                                     .tr('promo_code'),
                                 hintStyle: Theme.of(context)
                                     .textTheme
-                                    .subtitle2!
+                                    .titleSmall!
                                     .copyWith(
                                         fontSize: 12,
                                         fontWeight: FontWeight.normal)),
@@ -156,7 +159,7 @@ class _PromoCodeState extends State<PromoCode> {
                                         .tr('remove'),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1!
+                                    .titleMedium!
                                     .copyWith(fontSize: 12),
                               ),
                             ),
@@ -173,8 +176,8 @@ class _PromoCodeState extends State<PromoCode> {
               "    ${AppLocalizations.of(context)!.tr('invalid_discount_code')}",
               style: Theme.of(context)
                   .textTheme
-                  .subtitle2!
-                  .copyWith(color: Colors.red, fontSize: 12),
+                  .titleSmall!
+                  .copyWith(color: AppColors.red, fontSize: 12),
             ),
           )
         ],

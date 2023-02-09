@@ -21,13 +21,13 @@ class ItemColumn extends StatelessWidget {
       children: [
         Text(
           AppLocalizations.of(context)!.tr(title),
-          style: Theme.of(context).textTheme.headline5!.copyWith(
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 fontWeight: FontWeight.w500,
               ),
         ),
         Text(
           value,
-          style: Theme.of(context).textTheme.headline5!.copyWith(
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
               height: 1.6,
               fontWeight: FontWeight.bold,
               fontSize: 10,

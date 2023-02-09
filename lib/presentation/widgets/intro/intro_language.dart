@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../controllers/app_language.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/constants/app_colors.dart';
+
 class IntroLanguage extends StatelessWidget {
   const IntroLanguage({Key? key}) : super(key: key);
 
@@ -19,9 +21,8 @@ class IntroLanguage extends StatelessWidget {
             },
             child: Text(
               lang.language == 'ar' ? 'En' : 'العربية',
-              style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: const Color.fromRGBO(118, 24, 14, 1.0)),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  fontWeight: FontWeight.w600, color: AppColors.darkRed),
             ),
           ),
         ],

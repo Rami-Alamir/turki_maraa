@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/orders_provider.dart';
@@ -32,7 +33,6 @@ class _OrderStatusState extends State<OrderStatus> {
 
   @override
   Widget build(BuildContext context) {
-    print('payment $paymentId');
     return Scaffold(
       body: SizedBox(
         width: SizeConfig.screenWidth,
@@ -52,7 +52,7 @@ class _OrderStatusState extends State<OrderStatus> {
                           begin: Alignment.bottomLeft,
                           end: Alignment.topRight,
                           colors: [
-                            status ? Colors.green : Colors.red,
+                            status ? AppColors.green1 : AppColors.red,
                             status
                                 ? Colors.green.withOpacity(0.8)
                                 : Colors.red.withOpacity(0.8),
@@ -66,7 +66,7 @@ class _OrderStatusState extends State<OrderStatus> {
             Text(
               AppLocalizations.of(context)!
                   .tr(status ? "order_successful" : "payment_failed"),
-              style: Theme.of(context).textTheme.headline1!,
+              style: Theme.of(context).textTheme.displayLarge!,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 40),
@@ -83,7 +83,7 @@ class _OrderStatusState extends State<OrderStatus> {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .headline5!
+                      .headlineSmall!
                       .copyWith(fontSize: 14, height: 1.9),
                 ),
               ),

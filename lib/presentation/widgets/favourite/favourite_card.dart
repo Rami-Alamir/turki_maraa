@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import '../../../controllers/favourite_provider.dart';
-import '../../../controllers/product_provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/firebase_helper.dart';
@@ -36,15 +36,15 @@ class _FavouriteCardState extends State<FavouriteCard> {
         await deleteFromFavourite();
       },
       background: Container(
-        color: Colors.red,
+        color: AppColors.red,
         padding: const EdgeInsets.all(15),
         child: Row(
           children: [
-            const Icon(Icons.delete, color: Colors.white),
+            const Icon(Icons.delete, color: AppColors.white),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 2.0),
               child: Text(AppLocalizations.of(context)!.tr('remove'),
-                  style: const TextStyle(color: Colors.white, fontSize: 12)),
+                  style: const TextStyle(color: AppColors.white, fontSize: 12)),
             ),
           ],
         ),
@@ -109,7 +109,8 @@ class _FavouriteCardState extends State<FavouriteCard> {
                                     : widget.data.product!.nameEn!,
                                 minFontSize: 12,
                                 maxFontSize: 14,
-                                style: Theme.of(context).textTheme.headline4),
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium),
                           ),
                           Padding(
                               padding:
@@ -121,7 +122,7 @@ class _FavouriteCardState extends State<FavouriteCard> {
                                 trimLines: 2,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2!
+                                    .titleSmall!
                                     .copyWith(fontSize: 12, height: 1.5),
                                 colorClickableText:
                                     Theme.of(context).primaryColor,
@@ -134,7 +135,7 @@ class _FavouriteCardState extends State<FavouriteCard> {
                                     .tr('show_less'),
                                 moreStyle: Theme.of(context)
                                     .textTheme
-                                    .subtitle1!
+                                    .titleMedium!
                                     .copyWith(
                                         fontSize: 10,
                                         fontWeight: FontWeight.normal),
@@ -157,13 +158,13 @@ class _FavouriteCardState extends State<FavouriteCard> {
                                           .tr('delete'),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline5),
+                                          .headlineSmall),
                                 ),
                                 Text(
                                   '${widget.data.product!.price}',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline1
+                                      .displayLarge
                                       ?.copyWith(
                                         fontSize: 14,
                                         color: Theme.of(context).primaryColor,

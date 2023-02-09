@@ -34,7 +34,7 @@ class EmptyList extends StatelessWidget {
                 AppLocalizations.of(context)!.tr(title),
                 style: Theme.of(context)
                     .textTheme
-                    .headline1!
+                    .displayLarge!
                     .copyWith(fontSize: 14),
               ),
             ),

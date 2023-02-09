@@ -34,7 +34,7 @@ class AboutRow extends StatelessWidget {
             AppLocalizations.of(context)!.tr(title),
             style: Theme.of(context)
                 .textTheme
-                .subtitle1!
+                .titleMedium!
                 .copyWith(fontSize: 14, height: 3, fontWeight: FontWeight.bold),
           ),
         ],
