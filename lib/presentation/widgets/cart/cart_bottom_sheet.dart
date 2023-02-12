@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
-import '../../../core/constants/app_colors.dart';
-import '../../../core/utilities/enum/device_screen_type.dart';
-import '../../../core/utilities/size_config.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'min_value_indicator.dart';
 import '../shared/invoice.dart';
 import '../shared/rounded_rectangle_button.dart';
+import '../../../core/constants/app_colors.dart';
+import '../../../core/utilities/enum/device_screen_type.dart';
+import '../../../core/utilities/size_config.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../controllers/cart_provider.dart';
@@ -181,40 +181,41 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                         ],
                       ),
                 RoundedRectangleButton(
-                    title: AppLocalizations.of(context)!.tr('place_order'),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    fontSize: 16,
-                    onPressed: total >= min
-                        ? () async {
-                            final AddressProvider addressProvider =
-                                Provider.of<AddressProvider>(context,
-                                    listen: false);
-                            FirebaseHelper().pushAnalyticsEvent(
-                                name: "purchase",
-                                value: sl<GetStrings>()
-                                    .getPaymentName(cart.selectedPayment));
-                            int statusCode = await cart.placeOrder(
-                                context: context,
-                                currency: currency,
-                                addressId: addressProvider.selectedAddress ==
-                                            -1 ||
-                                        addressProvider.selectedAddress == -2
-                                    ? -1
-                                    : addressProvider
-                                        .userAddress!
-                                        .data![addressProvider.selectedAddress]
-                                        .id!,
-                                language: AppLocalizations.of(context)!
-                                            .locale!
-                                            .languageCode ==
-                                        "en"
-                                    ? Lang.en
-                                    : Lang.ar);
-                            if (!mounted) return;
-                            await action(context, statusCode, cart);
-                          }
-                        : null)
+                  title: AppLocalizations.of(context)!.tr('place_order'),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  fontSize: 16,
+                  onPressed: total >= min
+                      ? () async {
+                          final AddressProvider addressProvider =
+                              Provider.of<AddressProvider>(context,
+                                  listen: false);
+                          FirebaseHelper().pushAnalyticsEvent(
+                              name: "purchase",
+                              value: sl<GetStrings>()
+                                  .getPaymentName(cart.selectedPayment));
+                          int statusCode = await cart.placeOrder(
+                              context: context,
+                              currency: currency,
+                              addressId: addressProvider.selectedAddress ==
+                                          -1 ||
+                                      addressProvider.selectedAddress == -2
+                                  ? -1
+                                  : addressProvider
+                                      .userAddress!
+                                      .data![addressProvider.selectedAddress]
+                                      .id!,
+                              language: AppLocalizations.of(context)!
+                                          .locale!
+                                          .languageCode ==
+                                      "en"
+                                  ? Lang.en
+                                  : Lang.ar);
+                          if (!mounted) return;
+                          await action(context, statusCode, cart);
+                        }
+                      : null,
+                )
               ],
             ),
           );

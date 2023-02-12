@@ -37,8 +37,9 @@ class NoInternet extends StatelessWidget {
                   ConnectivityResult connectivityResult =
                       await checkConnectivity();
                   if (connectivityResult != ConnectivityResult.none) {
-                    if (context.mounted) return;
-                    await navigate(context);
+                    if (context.mounted) {
+                      await navigate(context);
+                    }
                   }
                 }),
           )
@@ -63,18 +64,19 @@ class NoInternet extends StatelessWidget {
     final AppProvider appProvider =
         Provider.of<AppProvider>(context, listen: false);
     await location.initLatLng();
-    if (context.mounted) return;
-    final Auth auth = Provider.of<Auth>(context, listen: false);
     FlutterSecureStorage localStorage = const FlutterSecureStorage();
     String accessToken = await localStorage.read(key: 'accessToken') ?? "";
-    if (context.mounted) return;
-    auth.getUserData(context, accessToken);
+    if (context.mounted) {
+      final Auth auth = Provider.of<Auth>(context, listen: false);
+      auth.getUserData(context, accessToken);
+    }
     appProvider.getData();
     home.getHomePageData(notify: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool introStatus = prefs.getBool('intro') ?? true;
-    if (context.mounted) return;
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(introStatus ? intro : app, (route) => false);
+    if (context.mounted) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(introStatus ? intro : app, (route) => false);
+    }
   }
 }

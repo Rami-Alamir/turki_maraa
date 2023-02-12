@@ -240,8 +240,7 @@ class CartCard extends StatelessWidget {
       context: context,
       productId: item.id.toString(),
     );
-    if (context.mounted) return;
-    showErrorMessage(context, status);
+    if (context.mounted) showErrorMessage(context, status);
   }
 
   Future<void> update(
@@ -251,8 +250,7 @@ class CartCard extends StatelessWidget {
       productId: item.id.toString(),
       quantity: quantity,
     );
-    if (context.mounted) return;
-    showErrorMessage(context, status);
+    if (context.mounted) showErrorMessage(context, status);
   }
 
   // used to hide indicator dialog and show snack bar with error message

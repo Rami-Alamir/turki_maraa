@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -412,7 +413,7 @@ class CartProvider with ChangeNotifier {
       tabbyCaptures = await sl<TabbyRepository>().capturePayment({
         "amount": _mockPayload!.amount,
       }, _isoCountryCode == "SA" ? 'TD_APP' : 'TD_APPAE', id);
-      await _updateTabbyPaymentStatus();
+      // if (tabbyCaptures.status) await _updateTabbyPaymentStatus();
       return true;
     } catch (_) {
       return false;
@@ -441,11 +442,26 @@ class CartProvider with ChangeNotifier {
   Future<void> _updateTabbyPaymentStatus() async {
     try {
       await sl<PaymentRepository>().updateOrderPayment({
+        "bank_ref": "${tabbyCaptures?.id}",
         "payment_ref": orderRef.data!.paymentRef!,
-        "order_ref": orderRef.data!.orderRef,
-        "paid": 1,
+        "order_ref": "${orderRef.data!.orderRef}",
+        "paid": "1",
+        "sauce": _encryptTabbyPayment()
       }, _authorization!);
-    } catch (_) {}
+    } catch (_) {
+      throw Exception();
+    }
+  }
+
+  String _encryptTabbyPayment() {
+    var bytes = utf8.encode("${json.encode({
+          "bank_ref": "${tabbyCaptures?.id}",
+          "payment_ref": orderRef.data!.paymentRef!,
+          "order_ref": "${orderRef.data!.orderRef}",
+          "paid": "1",
+        })}330b838b-6c2a-450d-8e2e-0cde4c38abb6");
+    final sauce = sha512.convert(bytes);
+    return base64.encode(utf8.encode("$sauce"));
   }
 
   // check required data to move screen controller to required fields

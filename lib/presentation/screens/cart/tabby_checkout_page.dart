@@ -24,9 +24,11 @@ class TabbyCheckoutPage extends StatelessWidget {
               cartProvider.setSelectedPayment = 7;
               final bool status = await cartProvider
                   .capturePayment(session.paymentId.toString());
-              if (context.mounted) return;
-              Navigator.pushReplacementNamed(context, orderStatus,
-                  arguments: resultCode.name == "authorized" ? status : false);
+              if (context.mounted) {
+                Navigator.pushReplacementNamed(context, orderStatus,
+                    arguments:
+                        resultCode.name == "authorized" ? status : false);
+              }
             },
           ),
         ),
