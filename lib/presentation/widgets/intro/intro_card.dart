@@ -42,7 +42,7 @@ class IntroCard extends StatelessWidget {
                   minFontSize: 16,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: AppColors.black,
                     height: 1.40,
                   ),
                 )),

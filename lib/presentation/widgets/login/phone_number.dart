@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../controllers/auth.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +51,7 @@ class PhoneNumber extends StatelessWidget {
               ],
             ),
             Divider(
-              color: Colors.black.withOpacity(0.5),
+              color: AppColors.black.withOpacity(0.5),
               indent: 10,
               endIndent: 15,
               thickness: 1,

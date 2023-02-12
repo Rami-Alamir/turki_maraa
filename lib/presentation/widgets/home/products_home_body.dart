@@ -23,7 +23,7 @@ class ProductsHomeBody extends StatelessWidget {
 
     return RefreshIndicator(
       color: Theme.of(context).primaryColor,
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       onRefresh: () async {
         await productsProvider.getFoodsPageData(id, isLoading: false);
       },

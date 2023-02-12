@@ -33,7 +33,7 @@ class LocationDisabled extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
-                  .headline2!
+                  .displayMedium!
                   .copyWith(fontSize: 14, height: 2),
             ),
           ),

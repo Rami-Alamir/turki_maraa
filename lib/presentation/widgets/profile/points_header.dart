@@ -20,7 +20,7 @@ class PointsHeader extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Card(
         elevation: 8,
-        shadowColor: Colors.grey.withOpacity(0.5),
+        shadowColor: AppColors.grey.withOpacity(0.5),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: ClipRRect(

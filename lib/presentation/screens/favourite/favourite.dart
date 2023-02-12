@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/favourite/favourite_card.dart';
+import '../../widgets/shared/empty_list.dart';
+import '../../widgets/shared/primary_app_bar.dart';
+import '../../../presentation/widgets/shared/page_builder.dart';
 import '../../../controllers/favourite_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../../presentation/widgets/shared/page_builder.dart';
-import '../../widgets/favourite/favourite_card.dart';
-import '../../widgets/shared/empty_list.dart';
-import '../../widgets/shared/primary_app_bar.dart';
 
 class Favourite extends StatelessWidget {
   const Favourite({Key? key}) : super(key: key);

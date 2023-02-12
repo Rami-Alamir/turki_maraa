@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/discover_provider.dart';
-import '../../../models/discover_data.dart';
-import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/shared/page_builder.dart';
 import '../../widgets/home/discover_header.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/home/discover_list.dart';
+import '../../../controllers/discover_provider.dart';
+import '../../../models/discover_data.dart';
+import '../../../core/utilities/app_localizations.dart';
 
 class Discover extends StatefulWidget {
   final Data item;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/product_provider.dart';
 import '../../../models/product_details.dart';
-
 import '../../../core/utilities/app_localizations.dart';
 import 'extra_tag.dart';
 
@@ -31,7 +30,7 @@ class WithoutExtra extends StatelessWidget {
             child: Text(AppLocalizations.of(context)!.tr('without'),
                 style: Theme.of(context)
                     .textTheme
-                    .headline6!
+                    .titleLarge!
                     .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
           ),
           Padding(

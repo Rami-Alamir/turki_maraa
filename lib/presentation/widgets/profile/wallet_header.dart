@@ -32,7 +32,7 @@ class WalletHeader extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontSize: 40),
                   ),
                   Padding(
@@ -42,7 +42,7 @@ class WalletHeader extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .headline1!
+                          .displayLarge!
                           .copyWith(fontSize: 14),
                     ),
                   ),
@@ -51,7 +51,7 @@ class WalletHeader extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.tr('your_current_balance'),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 12, color: Theme.of(context).primaryColor),
               ),
             ],
@@ -80,7 +80,7 @@ class WalletHeader extends StatelessWidget {
       child: Card(
         elevation: 0.3,
         shadowColor:
-            Theme.of(context).textTheme.headline4!.color!.withOpacity(0.6),
+            Theme.of(context).textTheme.headlineMedium!.color!.withOpacity(0.6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         child: SizedBox(
           width: SizeConfig.screenWidth! * 0.45,
@@ -109,10 +109,12 @@ class WalletHeader extends StatelessWidget {
                           Text(
                             AppLocalizations.of(context)!.tr(title),
                             textAlign: TextAlign.center,
-                            style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
-                                      fontSize: 12,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(
+                                  fontSize: 12,
+                                ),
                           ),
                         ],
                       ),

@@ -18,8 +18,6 @@ class SocialMediaIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
       onPressed: () {
         FirebaseHelper().pushAnalyticsEvent(name: "social_media", value: name);
         _launchURL(url);

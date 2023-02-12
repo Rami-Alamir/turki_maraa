@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 
 class PhoneNumberTextfield extends StatelessWidget {
@@ -36,10 +37,10 @@ class PhoneNumberTextfield extends StatelessWidget {
           controller: controller,
           keyboardType: TextInputType.phone,
           maxLength: 10,
-          style: Theme.of(context).textTheme.headline6!.copyWith(
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: AppColors.black,
               height: 1.8),
           validator: (text) {
             if (text!.length < 9) {
@@ -50,10 +51,10 @@ class PhoneNumberTextfield extends StatelessWidget {
           },
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: Theme.of(context).textTheme.headline6!.copyWith(
+            hintStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: Colors.black),
+                color: AppColors.black),
             counterText: "",
             contentPadding: EdgeInsets.zero,
             border: const OutlineInputBorder(

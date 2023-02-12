@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import 'address_row.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -49,7 +50,8 @@ class AddressContainerState extends State<AddressContainer> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(
-                        Theme.of(context).backgroundColor == Colors.black
+                        Theme.of(context).colorScheme.background ==
+                                AppColors.black
                             ? FixedAssets.backgroundDark
                             : FixedAssets.background,
                       ),
@@ -69,7 +71,7 @@ class AddressContainerState extends State<AddressContainer> {
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(7),
                         bottomRight: Radius.circular(7)),
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                   child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),

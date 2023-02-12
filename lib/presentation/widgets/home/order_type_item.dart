@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:turki_dabayh/core/constants/app_colors.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
@@ -36,7 +37,7 @@ class OrderTypeItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                   color: selected
-                      ? const Color.fromRGBO(219, 189, 109, 1)
+                      ? AppColors.yellow2
                       : Theme.of(context).colorScheme.secondaryContainer,
                   width: selected ? 1 : 0.8)),
           child: Row(
@@ -57,7 +58,7 @@ class OrderTypeItem extends StatelessWidget {
                     child: Icon(
                       icon,
                       size: 17.5,
-                      color: Color.fromRGBO(219, 189, 109, selected ? 1 : 0.5),
+                      color: AppColors.yellow2.withOpacity(selected ? 1 : 0.5),
                     )),
               ),
               Padding(
@@ -69,10 +70,10 @@ class OrderTypeItem extends StatelessWidget {
                     maxLines: 2,
                     minFontSize: 8,
                     maxFontSize: 12,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontSize: 12,
                         color:
-                            Color.fromRGBO(219, 189, 109, selected ? 1 : 0.5),
+                            AppColors.yellow2.withOpacity(selected ? 1 : 0.5),
                         fontWeight: FontWeight.normal,
                         height: 2.5),
                   ),

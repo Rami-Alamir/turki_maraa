@@ -28,7 +28,7 @@ class AddressRow extends StatelessWidget {
               child: Text(title,
                   style: Theme.of(context)
                       .textTheme
-                      .headline1!
+                      .displayLarge!
                       .copyWith(fontSize: 14, fontWeight: FontWeight.normal)),
             ),
             divider

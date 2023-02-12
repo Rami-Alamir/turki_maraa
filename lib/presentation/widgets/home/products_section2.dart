@@ -37,7 +37,7 @@ class ProductsSection2 extends StatelessWidget {
                             Text(title,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1!
+                                    .titleMedium!
                                     .copyWith(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold)),

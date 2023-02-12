@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/route_constants.dart';
 import 'order_type.dart';
+import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/route_constants.dart';
 import '../../../controllers/drawer_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
@@ -32,9 +33,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         decoration: BoxDecoration(
           color: Colors.transparent,
           image: DecorationImage(
-            image: AssetImage(Theme.of(context).backgroundColor == Colors.black
-                ? FixedAssets.backgroundDark
-                : FixedAssets.background),
+            image: AssetImage(
+                Theme.of(context).colorScheme.background == AppColors.black
+                    ? FixedAssets.backgroundDark
+                    : FixedAssets.background),
             fit: BoxFit.cover,
           ),
         ),
@@ -64,10 +66,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 const Locale("ar")
                             ? TURKIICONS.menu_right_1
                             : TURKIICONS.menu_left_1,
-                    color: Theme.of(context).backgroundColor ==
-                            const Color.fromRGBO(243, 224, 177, 1)
-                        ? const Color.fromRGBO(243, 224, 177, 1)
-                        : const Color.fromRGBO(219, 189, 109, 1)),
+                    color: Theme.of(context).colorScheme.background ==
+                            AppColors.yellow
+                        ? AppColors.yellow
+                        : AppColors.yellow2),
                 onPressed: () {
                   if (back) {
                     Navigator.of(context).pop();
@@ -84,10 +86,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     icon: Icon(
                       TURKIICONS.search,
                       size: 25,
-                      color: Theme.of(context).backgroundColor ==
-                              const Color.fromRGBO(243, 224, 177, 1)
-                          ? const Color.fromRGBO(243, 224, 177, 1)
-                          : const Color.fromRGBO(219, 189, 109, 1),
+                      color: Theme.of(context).colorScheme.background ==
+                              AppColors.yellow
+                          ? AppColors.yellow
+                          : AppColors.yellow2,
                     ),
                   ),
                 )

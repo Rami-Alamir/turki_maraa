@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_colors.dart';
+
 class ExtraTag extends StatelessWidget {
   final String title;
   final bool selected;
@@ -36,12 +38,18 @@ class ExtraTag extends StatelessWidget {
                 children: [
                   Text(title.toString(),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline4?.copyWith(
-                          color: selected
-                              ? Colors.white
-                              : Theme.of(context).textTheme.headline6!.color,
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(
+                              color: selected
+                                  ? AppColors.white
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .color,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal)),
                 ],
               ),
             )),

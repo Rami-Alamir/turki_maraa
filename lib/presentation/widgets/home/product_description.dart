@@ -68,14 +68,14 @@ class _ProductDescriptionState extends State<ProductDescription> {
                           : product.data!.subCategory?.typeEn ?? "",
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle2!
+                          .titleSmall!
                           .copyWith(fontSize: 14),
                     ),
                     Text(
                       isAr ? product.data!.nameAr! : product.data!.nameEn!,
                       style: Theme.of(context)
                           .textTheme
-                          .headline4!
+                          .headlineMedium!
                           .copyWith(fontSize: 20, height: 1.4),
                     ),
                   ],
@@ -137,22 +137,28 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         sl<FormatHelper>()
                             .formatDecimalAndRemoveTrailingZeros(widget.price),
                         textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: widget.salePrice > 0.0 &&
-                                    widget.salePrice < widget.price
-                                ? Theme.of(context)
-                                    .textTheme
-                                    .headline6!
-                                    .color!
-                                    .withOpacity(0.4)
-                                : Theme.of(context).textTheme.subtitle1!.color,
-                            decorationThickness: 2,
-                            decoration: widget.salePrice > 0.0 &&
-                                    widget.salePrice < widget.price
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
-                            fontSize: widget.salePrice > 0 ? 14 : 16,
-                            fontWeight: FontWeight.bold),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                color: widget.salePrice > 0.0 &&
+                                        widget.salePrice < widget.price
+                                    ? Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .color!
+                                        .withOpacity(0.4)
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .color,
+                                decorationThickness: 2,
+                                decoration: widget.salePrice > 0.0 &&
+                                        widget.salePrice < widget.price
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
+                                fontSize: widget.salePrice > 0 ? 14 : 16,
+                                fontWeight: FontWeight.bold),
                         maxLines: 1,
                       ),
                     ),
@@ -162,18 +168,24 @@ class _ProductDescriptionState extends State<ProductDescription> {
                       child: Text(
                         '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(widget.salePrice)} ',
                         textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            fontSize: 16,
-                            height: 1.4,
-                            fontWeight: FontWeight.bold),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                fontSize: 16,
+                                height: 1.4,
+                                fontWeight: FontWeight.bold),
                       ),
                     ),
                     Text(currency,
                         textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            fontSize: 16,
-                            height: 1.4,
-                            fontWeight: FontWeight.bold)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                fontSize: 16,
+                                height: 1.4,
+                                fontWeight: FontWeight.bold)),
                   ],
                 )),
             Padding(
@@ -183,7 +195,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 AppLocalizations.of(context)!.tr('vat_included'),
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle2!
+                    .titleSmall!
                     .copyWith(fontSize: 12, height: 1.4),
               ),
             ),
@@ -202,7 +214,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 trimLines: 2,
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle2!
+                    .titleSmall!
                     .copyWith(fontSize: 14, height: 1.5),
                 colorClickableText: Theme.of(context).primaryColor,
                 trimMode: TrimMode.Line,
@@ -213,7 +225,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 trimExpandedText: AppLocalizations.of(context)!.tr('show_less'),
                 moreStyle: Theme.of(context)
                     .textTheme
-                    .subtitle1!
+                    .titleMedium!
                     .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
               )),
         ),

@@ -13,11 +13,6 @@ class UserPoints extends StatefulWidget {
 
 class UserPointsState extends State<UserPoints> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PrimaryAppBar(

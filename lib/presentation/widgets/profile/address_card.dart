@@ -15,18 +15,12 @@ import '../../widgets/shared/main_card.dart';
 import '../dialog/confirm_dialog.dart';
 import 'address_card_item.dart';
 
-class AddressCard extends StatefulWidget {
+class AddressCard extends StatelessWidget {
   final Data userAddress;
   final int index;
 
   const AddressCard({Key? key, required this.userAddress, required this.index})
       : super(key: key);
-
-  @override
-  State<AddressCard> createState() => _AddressCardState();
-}
-
-class _AddressCardState extends State<AddressCard> {
   @override
   Widget build(BuildContext context) {
     return MainCard(
@@ -47,7 +41,7 @@ class _AddressCardState extends State<AddressCard> {
                       SizedBox(
                         width: SizeConfig.screenWidth! * 0.72,
                         child: Text(
-                          widget.userAddress.label ?? "",
+                          userAddress.label ?? "",
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
@@ -82,7 +76,7 @@ class _AddressCardState extends State<AddressCard> {
                           SizedBox(
                             width: SizeConfig.screenWidth! * 0.72,
                             child: Text(
-                              widget.userAddress.address ?? "",
+                              userAddress.address ?? "",
                               style: Theme.of(context).textTheme.headlineMedium,
                             ),
                           ),
@@ -96,7 +90,7 @@ class _AddressCardState extends State<AddressCard> {
                             SizedBox(
                               width: SizeConfig.screenWidth! * 0.72,
                               child: Text(
-                                widget.userAddress.comment ?? "",
+                                userAddress.comment ?? "",
                                 style:
                                     Theme.of(context).textTheme.headlineSmall,
                               ),
@@ -129,8 +123,7 @@ class _AddressCardState extends State<AddressCard> {
                             final AddressProvider addressProvider =
                                 Provider.of<AddressProvider>(context,
                                     listen: false);
-                            if (widget.index ==
-                                addressProvider.selectedAddress) {
+                            if (index == addressProvider.selectedAddress) {
                               sl<ShowSnackBar>().show(context,
                                   "the_address_used_as_a_delivery_address_cannot_be_edited");
                             } else {
@@ -140,7 +133,7 @@ class _AddressCardState extends State<AddressCard> {
                               Navigator.of(context, rootNavigator: true)
                                   .pushNamed(
                                       locationProvider.isHms ? hmsMap : gmsMap,
-                                      arguments: widget.index);
+                                      arguments: index);
                             }
                           },
                         ),
@@ -165,9 +158,9 @@ class _AddressCardState extends State<AddressCard> {
                                           await addressProvider.deleteAddress(
                                               context,
                                               addressProvider.userAddress!
-                                                  .data![widget.index].id!,
-                                              widget.index);
-                                      if (!mounted) return;
+                                                  .data![index].id!,
+                                              index);
+                                      if (context.mounted) return;
                                       if (statusCode != 1) {
                                         Navigator.of(context,
                                                 rootNavigator: true)

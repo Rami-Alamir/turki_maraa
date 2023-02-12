@@ -12,7 +12,7 @@ import '../../../core/utilities/size_config.dart';
 import '../../../models/favourite.dart';
 import '../shared/main_card.dart';
 
-class FavouriteCard extends StatefulWidget {
+class FavouriteCard extends StatelessWidget {
   final Data data;
   final int index;
 
@@ -22,18 +22,13 @@ class FavouriteCard extends StatefulWidget {
     required this.index,
   }) : super(key: key);
   @override
-  State<FavouriteCard> createState() => _FavouriteCardState();
-}
-
-class _FavouriteCardState extends State<FavouriteCard> {
-  @override
   Widget build(BuildContext context) {
     final bool isAr =
         AppLocalizations.of(context)!.locale == const Locale('ar');
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) async {
-        await deleteFromFavourite();
+        await deleteFromFavourite(context);
       },
       background: Container(
         color: AppColors.red,
@@ -55,11 +50,11 @@ class _FavouriteCardState extends State<FavouriteCard> {
           splashColor: Colors.transparent,
           onTap: () {
             FirebaseHelper().pushAnalyticsEvent(
-                name: "product", value: widget.data.product!.nameEn!);
+                name: "product", value: data.product!.nameEn!);
             Navigator.pushNamed(context, productDetails,
                 arguments: <String, dynamic>{
-                  "id": widget.data.product!.id!,
-                  "categoryId": widget.data.product!.categoryId!
+                  "id": data.product!.id!,
+                  "categoryId": data.product!.categoryId!
                 });
           },
           child: MainCard(
@@ -80,8 +75,8 @@ class _FavouriteCardState extends State<FavouriteCard> {
                         color: Colors.transparent,
                         child: FadeInImage.assetNetwork(
                           placeholder: FixedAssets.placeholder,
-                          image: widget.data.product!.productImages!.isNotEmpty
-                              ? widget.data.product!.productImages![0].imageUrl!
+                          image: data.product!.productImages!.isNotEmpty
+                              ? data.product!.productImages![0].imageUrl!
                               : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
                           width: 110,
                           height: 110,
@@ -105,8 +100,8 @@ class _FavouriteCardState extends State<FavouriteCard> {
                             width: SizeConfig.screenWidth! - 160,
                             child: AutoSizeText(
                                 isAr
-                                    ? widget.data.product!.nameAr!
-                                    : widget.data.product!.nameEn!,
+                                    ? data.product!.nameAr!
+                                    : data.product!.nameEn!,
                                 minFontSize: 12,
                                 maxFontSize: 14,
                                 style:
@@ -117,8 +112,8 @@ class _FavouriteCardState extends State<FavouriteCard> {
                                   const EdgeInsets.symmetric(vertical: 4.0),
                               child: ReadMoreText(
                                 isAr
-                                    ? widget.data.product!.descriptionAr!
-                                    : widget.data.product!.descriptionEn!,
+                                    ? data.product!.descriptionAr!
+                                    : data.product!.descriptionEn!,
                                 trimLines: 2,
                                 style: Theme.of(context)
                                     .textTheme
@@ -151,7 +146,7 @@ class _FavouriteCardState extends State<FavouriteCard> {
                               children: [
                                 InkWell(
                                   onTap: () async {
-                                    await deleteFromFavourite();
+                                    await deleteFromFavourite(context);
                                   },
                                   child: Text(
                                       AppLocalizations.of(context)!
@@ -161,7 +156,7 @@ class _FavouriteCardState extends State<FavouriteCard> {
                                           .headlineSmall),
                                 ),
                                 Text(
-                                  '${widget.data.product!.price}',
+                                  '${data.product!.price}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .displayLarge
@@ -186,16 +181,16 @@ class _FavouriteCardState extends State<FavouriteCard> {
     );
   }
 
-  Future<void> deleteFromFavourite() async {
+  Future<void> deleteFromFavourite(BuildContext context) async {
     final FavouriteProvider favourite =
         Provider.of<FavouriteProvider>(context, listen: false);
 
     await favourite.deleteFromFavourite(
         context: context,
         notify: false,
-        id: widget.data.id!.toString(),
-        productName: widget.data.product!.nameAr!);
-    if (!mounted) return;
+        id: data.id!.toString(),
+        productName: data.product!.nameAr!);
+    if (context.mounted) return;
     Navigator.of(context, rootNavigator: true).pop();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../shared/dots_indicator.dart';
 import '../../../models/images.dart';
 import '../../../core/utilities/size_config.dart';
@@ -55,7 +56,7 @@ class ProductHeaderState extends State<ProductHeader> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   DotsIndicator(
-                    accentColor: Colors.grey,
+                    accentColor: AppColors.grey,
                     count: widget.imgList.length,
                     index: index,
                   ),

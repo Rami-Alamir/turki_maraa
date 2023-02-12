@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/address_provider.dart';
-import '../../../controllers/app_provider.dart';
-import '../../../controllers/home_provider.dart';
-import '../../../core/utilities/app_localizations.dart';
-import '../../../core/utilities/enum/request_status.dart';
-import '../../../core/utilities/size_config.dart';
 import '../../widgets/home/address_container.dart';
 import '../../widgets/home/categories_group.dart';
 import '../../widgets/home/location_disabled.dart';
@@ -14,14 +8,16 @@ import '../../widgets/shared/spinkit_indicator.dart';
 import '../../widgets/home/home_app_bar.dart';
 import '../../widgets/home/products_section2.dart';
 import '../../widgets/shared/whatsapp.dart';
+import '../../../controllers/address_provider.dart';
+import '../../../controllers/app_provider.dart';
+import '../../../controllers/home_provider.dart';
+import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/enum/request_status.dart';
+import '../../../core/utilities/size_config.dart';
 
-class HomeCategories extends StatefulWidget {
+class HomeCategories extends StatelessWidget {
   const HomeCategories({Key? key}) : super(key: key);
-  @override
-  HomeCategoriesState createState() => HomeCategoriesState();
-}
 
-class HomeCategoriesState extends State<HomeCategories> {
   @override
   Widget build(BuildContext context) {
     final HomeProvider homeProvider = Provider.of<HomeProvider>(context);
@@ -38,7 +34,6 @@ class HomeCategoriesState extends State<HomeCategories> {
       floatingActionButton: const Whatsapp(),
       appBar: const HomeAppBar(
         back: true,
-        // color: Color.fromRGBO(99, 58, 163, 1.0),
       ),
       body: Stack(children: [
         (homeProvider.locationServiceStatus == 0 ||

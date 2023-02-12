@@ -30,7 +30,7 @@ class ProductsSection extends StatelessWidget {
                   Text(title,
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1!
+                          .titleMedium!
                           .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
                   Visibility(
                     visible: index != null,
@@ -46,7 +46,7 @@ class ProductsSection extends StatelessWidget {
                               AppLocalizations.of(context)!.tr('view_all'),
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle1!
+                                  .titleMedium!
                                   .copyWith(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold)),
@@ -54,7 +54,7 @@ class ProductsSection extends StatelessWidget {
                         Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
-                          color: Theme.of(context).textTheme.subtitle1!.color,
+                          color: Theme.of(context).textTheme.titleMedium!.color,
                         )
                       ],
                     ),

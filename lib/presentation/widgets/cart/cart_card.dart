@@ -17,7 +17,7 @@ import '../../../models/cart_data.dart';
 import '../shared/main_card.dart';
 import '../shared/rounded_rectangle_button.dart';
 
-class CartCard extends StatefulWidget {
+class CartCard extends StatelessWidget {
   final ItemData item;
   final int index;
   const CartCard({
@@ -25,11 +25,6 @@ class CartCard extends StatefulWidget {
     required this.item,
     required this.index,
   }) : super(key: key);
-  @override
-  State<CartCard> createState() => _CartCardState();
-}
-
-class _CartCardState extends State<CartCard> {
   @override
   Widget build(BuildContext context) {
     final bool language =
@@ -43,11 +38,11 @@ class _CartCardState extends State<CartCard> {
         locationProvider.isoCountryCode!);
     return InkWell(
       onTap: () {
-        FirebaseHelper().pushAnalyticsEvent(
-            name: "product", value: widget.item.product!.nameEn!);
+        FirebaseHelper()
+            .pushAnalyticsEvent(name: "product", value: item.product!.nameEn!);
         Navigator.pushNamed(context, productDetails,
             arguments: <String, dynamic>{
-              "id": widget.item.productId,
+              "id": item.productId,
               "categoryId": 0
             });
       },
@@ -67,8 +62,8 @@ class _CartCardState extends State<CartCard> {
               favourite.addToFavourite(
                   context: context,
                   withDialog: false,
-                  productName: widget.item.product!.nameAr!,
-                  id: '${widget.item.product!.id!}');
+                  productName: item.product!.nameAr!,
+                  id: '${item.product!.id!}');
               delete(context, cartProvider);
             }
           },
@@ -122,9 +117,8 @@ class _CartCardState extends State<CartCard> {
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Image.network(
-                          widget.item.product!.productImages!.isNotEmpty
-                              ? widget
-                                  .item.product!.productImages!.first.imageUrl!
+                          item.product!.productImages!.isNotEmpty
+                              ? item.product!.productImages!.first.imageUrl!
                               : "https://turkieshop.com/images/Jk78x2iKpI1608014433.png?431112",
                           width: SizeConfig.setWidgetWidth(100, 135, 135),
                           height: SizeConfig.setWidgetHeight(100, 135, 135),
@@ -150,8 +144,8 @@ class _CartCardState extends State<CartCard> {
                             children: [
                               Text(
                                   language
-                                      ? widget.item.product!.nameAr!
-                                      : widget.item.product!.nameEn!,
+                                      ? item.product!.nameAr!
+                                      : item.product!.nameEn!,
                                   style: Theme.of(context)
                                       .textTheme
                                       .displayLarge!
@@ -162,9 +156,9 @@ class _CartCardState extends State<CartCard> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 5.0),
                                 child: Text(
-                                    "${language ? "${widget.item.size?.nameAr ?? ""} ${widget.item.cut?.nameAr ?? ""}"
-                                        " ${widget.item.preparation?.nameAr ?? ""} ${widget.item.isShalwata == 1 ? "مع شلوطة" : ""}" : "${widget.item.size?.nameEn ?? ""} ${widget.item.cut?.nameEn ?? ""} "
-                                        "${widget.item.preparation?.nameEn ?? ""} ${widget.item.isShalwata == 1 ? "with shalwata" : ""}"}${widget.item.isLyh! ? AppLocalizations.of(context)!.tr('without_tail_fat') : ""} ${widget.item.isRas! ? AppLocalizations.of(context)!.tr('without_head') : ""} ${widget.item.isKwar3! ? AppLocalizations.of(context)!.tr('without_trotters') : ""} ${widget.item.isKarashah! ? AppLocalizations.of(context)!.tr('without_tripe') : ""} ",
+                                    "${language ? "${item.size?.nameAr ?? ""} ${item.cut?.nameAr ?? ""}"
+                                        " ${item.preparation?.nameAr ?? ""} ${item.isShalwata == 1 ? "مع شلوطة" : ""}" : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""} "
+                                        "${item.preparation?.nameEn ?? ""} ${item.isShalwata == 1 ? "with shalwata" : ""}"}${item.isLyh! ? AppLocalizations.of(context)!.tr('without_tail_fat') : ""} ${item.isRas! ? AppLocalizations.of(context)!.tr('without_head') : ""} ${item.isKwar3! ? AppLocalizations.of(context)!.tr('without_trotters') : ""} ${item.isKarashah! ? AppLocalizations.of(context)!.tr('without_tripe') : ""} ",
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall),
@@ -180,17 +174,14 @@ class _CartCardState extends State<CartCard> {
                                   RoundedRectangleButton(
                                     padding: const EdgeInsets.all(0),
                                     onPressed: () {
-                                      if (widget.item.quantity! <= 1) {
+                                      if (item.quantity! <= 1) {
                                         delete(context, cartProvider);
                                       } else {
                                         FirebaseHelper().pushAnalyticsEvent(
                                             name: 'cart_card_action',
                                             value: 'subtract');
-                                        update(
-                                            context,
-                                            cartProvider,
-                                            (widget.item.quantity! - 1)
-                                                .toString());
+                                        update(context, cartProvider,
+                                            (item.quantity! - 1).toString());
                                       }
                                     },
                                     width: 30,
@@ -199,7 +190,7 @@ class _CartCardState extends State<CartCard> {
                                     title: '-',
                                   ),
                                   Text(
-                                    widget.item.quantity.toString(),
+                                    item.quantity.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .displayLarge!
@@ -210,11 +201,8 @@ class _CartCardState extends State<CartCard> {
                                       FirebaseHelper().pushAnalyticsEvent(
                                           name: 'cart_card_action',
                                           value: 'add');
-                                      update(
-                                          context,
-                                          cartProvider,
-                                          (widget.item.quantity! + 1)
-                                              .toString());
+                                      update(context, cartProvider,
+                                          (item.quantity! + 1).toString());
                                     },
                                     padding: const EdgeInsets.all(0),
                                     width: 30,
@@ -225,7 +213,7 @@ class _CartCardState extends State<CartCard> {
                                 ],
                               ),
                               Text(
-                                  "${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros((sl<CalculateHelper>().getCartItemTotalPrice(cartProvider.cartData!.data!.cart!.data![widget.index]) * widget.item.quantity!))} $currency",
+                                  "${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros((sl<CalculateHelper>().getCartItemTotalPrice(cartProvider.cartData!.data!.cart!.data![index]) * item.quantity!))} $currency",
                                   style: Theme.of(context)
                                       .textTheme
                                       .displayLarge!
@@ -250,24 +238,25 @@ class _CartCardState extends State<CartCard> {
         .pushAnalyticsEvent(name: 'cart_card_action', value: 'delete');
     final status = await cartProvider.deleteCartItem(
       context: context,
-      productId: widget.item.id.toString(),
+      productId: item.id.toString(),
     );
-    showErrorMessage(status);
+    if (context.mounted) return;
+    showErrorMessage(context, status);
   }
 
   Future<void> update(
       BuildContext context, CartProvider cartProvider, String quantity) async {
     final status = await cartProvider.updateCartItem(
       context: context,
-      productId: widget.item.id.toString(),
+      productId: item.id.toString(),
       quantity: quantity,
     );
-    showErrorMessage(status);
+    if (context.mounted) return;
+    showErrorMessage(context, status);
   }
 
   // used to hide indicator dialog and show snack bar with error message
-  void showErrorMessage(bool status) {
-    if (!mounted) return;
+  void showErrorMessage(BuildContext context, bool status) {
     Navigator.of(context, rootNavigator: true).pop();
     if (!status) {
       sl<ShowSnackBar>().show(context, "unexpected_error");

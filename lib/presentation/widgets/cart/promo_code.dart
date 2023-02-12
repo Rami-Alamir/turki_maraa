@@ -8,14 +8,9 @@ import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 
-class PromoCode extends StatefulWidget {
+class PromoCode extends StatelessWidget {
   const PromoCode({Key? key}) : super(key: key);
 
-  @override
-  State<PromoCode> createState() => _PromoCodeState();
-}
-
-class _PromoCodeState extends State<PromoCode> {
   @override
   Widget build(BuildContext context) {
     final CartProvider cart = Provider.of<CartProvider>(context);
@@ -137,7 +132,7 @@ class _PromoCodeState extends State<PromoCode> {
                             } else {
                               bool status =
                                   await cart.checkCoupon(context: context);
-                              if (!mounted) return;
+                              if (context.mounted) return;
                               Navigator.of(context, rootNavigator: true).pop();
                               if (!status) {
                                 sl<ShowSnackBar>()

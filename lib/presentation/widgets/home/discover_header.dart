@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/discover_provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 
@@ -48,8 +49,8 @@ class DiscoverHeader extends StatelessWidget {
                   isAr
                       ? discoverProvider.discoverItem!.data!.descriptionAr!
                       : discoverProvider.discoverItem!.data!.descriptionEn!,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: Colors.white,
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                      color: AppColors.white,
                       fontWeight: FontWeight.bold,
                       height: 2),
                 ),

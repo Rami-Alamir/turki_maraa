@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 
-class PinCodeFields extends StatefulWidget {
+class PinCodeFields extends StatelessWidget {
   const PinCodeFields({Key? key}) : super(key: key);
 
-  @override
-  State<PinCodeFields> createState() => _PinCodeFieldsState();
-}
-
-class _PinCodeFieldsState extends State<PinCodeFields> {
   @override
   Widget build(BuildContext context) {
     final Auth auth = Provider.of<Auth>(context);
@@ -59,11 +55,11 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
                   inactiveColor:
                       Theme.of(context).colorScheme.secondaryContainer,
                   activeColor: Theme.of(context).primaryColor,
-                  inactiveFillColor: Theme.of(context).backgroundColor,
-                  selectedFillColor: Theme.of(context).backgroundColor,
+                  inactiveFillColor: Theme.of(context).colorScheme.background,
+                  selectedFillColor: Theme.of(context).colorScheme.background,
                   selectedColor: Theme.of(context).primaryColor,
-                  disabledColor: Theme.of(context).backgroundColor,
-                  activeFillColor: Colors.white,
+                  disabledColor: Theme.of(context).colorScheme.background,
+                  activeFillColor: AppColors.white,
                 ),
                 cursorColor: Theme.of(context).primaryColor,
                 animationDuration: const Duration(milliseconds: 300),
@@ -72,13 +68,13 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
                 boxShadows: const [
                   BoxShadow(
                     offset: Offset(0, 1),
-                    color: Colors.black12,
+                    color: AppColors.black12,
                     blurRadius: 0,
                   )
                 ],
                 onCompleted: (v) async {
                   int statusCode = await auth.verifyOTP(context);
-                  if (!mounted) return;
+                  if (context.mounted) return;
                   Navigator.of(context).pop();
                   if (statusCode == 200) {
                     Navigator.pushNamedAndRemoveUntil(

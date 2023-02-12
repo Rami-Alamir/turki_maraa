@@ -49,7 +49,7 @@ class ProductInformationItem extends StatelessWidget {
                   AppLocalizations.of(context)!.tr(title),
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle1
+                      .titleMedium
                       ?.copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -62,14 +62,14 @@ class ProductInformationItem extends StatelessWidget {
                       "$value ",
                       style: Theme.of(context)
                           .textTheme
-                          .headline4
+                          .headlineMedium
                           ?.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       description,
                       style: Theme.of(context)
                           .textTheme
-                          .headline4
+                          .headlineMedium
                           ?.copyWith(fontSize: 10, fontWeight: FontWeight.bold),
                     ),
                   ],

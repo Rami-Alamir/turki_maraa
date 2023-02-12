@@ -23,8 +23,6 @@ class StateItem extends StatelessWidget {
           Navigator.pushNamed(context, routeName!, arguments: true);
         }
       },
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,

@@ -96,7 +96,7 @@ class SearchRow extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline4!
+                                  .headlineMedium!
                                   .copyWith(fontSize: 12),
                               maxLines: 1,
                             ),
@@ -114,7 +114,7 @@ class SearchRow extends StatelessWidget {
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle1!
+                                  .titleMedium!
                                   .copyWith(fontSize: 14, height: 1.4),
                             ),
                             Text(
@@ -122,7 +122,7 @@ class SearchRow extends StatelessWidget {
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle1!
+                                  .titleMedium!
                                   .copyWith(fontSize: 12, height: 1.4),
                             ),
                           ],

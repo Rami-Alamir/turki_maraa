@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
@@ -87,7 +88,7 @@ class LoginState extends State<Login> {
                                   .tr('enter_your_mobile_number'),
                               style: const TextStyle(
                                   fontSize: 24,
-                                  color: Colors.white,
+                                  color: AppColors.white,
                                   fontWeight: FontWeight.bold)),
                         ),
                         Padding(
@@ -126,7 +127,7 @@ class LoginState extends State<Login> {
                                         AppLocalizations.of(context)!.tr(
                                             'enter_your_mobile_number_here'),
                                         style: const TextStyle(
-                                            color: Colors.white)),
+                                            color: AppColors.white)),
                                   ],
                                 ),
                                 const Divider(

@@ -27,7 +27,7 @@ class ConfirmDialog extends StatelessWidget {
       child: AlertDialog(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.0))),
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         contentPadding: const EdgeInsets.all(0),
         content: Builder(
           builder: (context) {
@@ -53,7 +53,7 @@ class ConfirmDialog extends StatelessWidget {
                     AppLocalizations.of(context)!.tr(title),
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontSize: 14, height: 1),
                   ),
                   Padding(
@@ -62,7 +62,7 @@ class ConfirmDialog extends StatelessWidget {
                       AppLocalizations.of(context)!.tr(message),
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle2!
+                          .titleSmall!
                           .copyWith(fontSize: 14),
                     ),
                   ),
@@ -83,7 +83,7 @@ class ConfirmDialog extends StatelessWidget {
                     AppLocalizations.of(context)!.tr(cancelText),
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1!
+                        .titleMedium!
                         .copyWith(fontSize: 12),
                   ),
                 ),
@@ -100,7 +100,7 @@ class ConfirmDialog extends StatelessWidget {
                     AppLocalizations.of(context)!.tr(confirmText),
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1!
+                        .titleMedium!
                         .copyWith(fontSize: 12),
                   ),
                 ),

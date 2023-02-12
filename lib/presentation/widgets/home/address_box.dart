@@ -27,7 +27,7 @@ class AddressBox extends StatelessWidget {
             height: 60,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(7)),
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context)
@@ -61,7 +61,7 @@ class AddressBox extends StatelessWidget {
                               locationName(context, locationProvider, isPickup),
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline1!
+                                  .displayLarge!
                                   .copyWith(
                                       fontSize: 14,
                                       fontWeight: FontWeight.normal),
@@ -73,7 +73,7 @@ class AddressBox extends StatelessWidget {
                     selected
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
-                    color: Theme.of(context).textTheme.subtitle2!.color,
+                    color: Theme.of(context).textTheme.titleSmall!.color,
                     size: 35,
                   )
                 ],

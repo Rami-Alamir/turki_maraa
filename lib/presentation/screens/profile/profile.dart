@@ -13,14 +13,9 @@ import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/social_media.dart';
 import '../../widgets/shared/spinkit_indicator.dart';
 
-class Profile extends StatefulWidget {
+class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
 
-  @override
-  ProfileState createState() => ProfileState();
-}
-
-class ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final Auth auth = Provider.of<Auth>(context);

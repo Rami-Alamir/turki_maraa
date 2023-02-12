@@ -24,7 +24,7 @@ class ShalwataExtra extends StatelessWidget {
             child: Text(AppLocalizations.of(context)!.tr('shalwata'),
                 style: Theme.of(context)
                     .textTheme
-                    .headline6!
+                    .titleLarge!
                     .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
           ),
           Container(

@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../models/banners_data.dart';
 import '../../../core/utilities/size_config.dart';
@@ -74,7 +75,7 @@ class BannersState extends State<BannersSlider> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DotsIndicator(
-                      accentColor: Colors.white70,
+                      accentColor: AppColors.white70,
                       count: widget.bannersData.data!.length,
                       index: index,
                     ),

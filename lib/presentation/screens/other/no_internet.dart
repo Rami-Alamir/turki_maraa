@@ -1,6 +1,6 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../controllers/app_provider.dart';
@@ -13,15 +13,8 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
 
-class NoInternet extends StatefulWidget {
+class NoInternet extends StatelessWidget {
   const NoInternet({Key? key}) : super(key: key);
-
-  @override
-  State<NoInternet> createState() => _NoInternetState();
-}
-
-class _NoInternetState extends State<NoInternet> {
-  late ConnectivityResult connectivityResult;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +34,11 @@ class _NoInternetState extends State<NoInternet> {
             child: RoundedRectangleButton(
                 title: AppLocalizations.of(context)!.tr('try_again'),
                 onPressed: () async {
-                  await checkConnectivity();
+                  ConnectivityResult connectivityResult =
+                      await checkConnectivity();
                   if (connectivityResult != ConnectivityResult.none) {
-                    await navigate();
+                    if (context.mounted) return;
+                    await navigate(context);
                   }
                 }),
           )
@@ -53,31 +48,32 @@ class _NoInternetState extends State<NoInternet> {
   }
 
   // Check internet connection
-  Future<void> checkConnectivity() async {
+  Future<ConnectivityResult> checkConnectivity() async {
+    late ConnectivityResult connectivityResult;
     try {
       connectivityResult = await Connectivity().checkConnectivity();
     } catch (_) {}
+    return connectivityResult;
   }
 
-  Future<void> navigate() async {
+  Future<void> navigate(BuildContext context) async {
     final LocationProvider location =
         Provider.of<LocationProvider>(context, listen: false);
     final HomeProvider home = Provider.of<HomeProvider>(context, listen: false);
     final AppProvider appProvider =
         Provider.of<AppProvider>(context, listen: false);
-
     await location.initLatLng();
-    if (!mounted) return;
+    if (context.mounted) return;
     final Auth auth = Provider.of<Auth>(context, listen: false);
     FlutterSecureStorage localStorage = const FlutterSecureStorage();
     String accessToken = await localStorage.read(key: 'accessToken') ?? "";
-    if (!mounted) return;
+    if (context.mounted) return;
     auth.getUserData(context, accessToken);
     appProvider.getData();
     home.getHomePageData(notify: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool introStatus = prefs.getBool('intro') ?? true;
-    if (!mounted) return;
+    if (context.mounted) return;
     Navigator.of(context)
         .pushNamedAndRemoveUntil(introStatus ? intro : app, (route) => false);
   }

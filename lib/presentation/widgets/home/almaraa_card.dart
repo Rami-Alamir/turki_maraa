@@ -25,7 +25,7 @@ class AlmaraaCard extends StatelessWidget {
                   width: SizeConfig.screenWidth,
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      color: Theme.of(context).backgroundColor),
+                      color: Theme.of(context).colorScheme.background),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                     child: Image.network(
@@ -40,7 +40,7 @@ class AlmaraaCard extends StatelessWidget {
                   top: 5,
                   child: Card(
                     elevation: 10,
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(11),
                     ),
@@ -70,7 +70,7 @@ class AlmaraaCard extends StatelessWidget {
                       textAlign: TextAlign.start,
                       style: Theme.of(context)
                           .textTheme
-                          .headline4!
+                          .headlineMedium!
                           .copyWith(fontSize: 15),
                     ),
                   ),
@@ -79,7 +79,7 @@ class AlmaraaCard extends StatelessWidget {
                     textAlign: TextAlign.start,
                     style: Theme.of(context)
                         .textTheme
-                        .headline2!
+                        .displayMedium!
                         .copyWith(height: 2, fontSize: 12),
                   ),
                   Row(
@@ -89,17 +89,20 @@ class AlmaraaCard extends StatelessWidget {
                             const EdgeInsetsDirectional.fromSTEB(0, 5, 5, 0),
                         child: Icon(
                           TURKIICONS.delivery_truck_2,
-                          color: Theme.of(context).textTheme.subtitle1!.color,
+                          color: Theme.of(context).textTheme.titleMedium!.color,
                           size: 15,
                         ),
                       ),
                       Text(
                         AppLocalizations.of(context)!.tr("free_delivery"),
                         textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            height: 2,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                height: 2,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

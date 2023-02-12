@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/app_provider.dart';
 import '../../widgets/home/address_container.dart';
 import '../../widgets/home/almaraa_card.dart';
 import '../../widgets/home/location_disabled.dart';
@@ -8,6 +7,7 @@ import '../../widgets/shared/retry.dart';
 import '../../widgets/shared/spinkit_indicator.dart';
 import '../../widgets/home/home_app_bar.dart';
 import '../../widgets/shared/whatsapp.dart';
+import '../../../controllers/app_provider.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';

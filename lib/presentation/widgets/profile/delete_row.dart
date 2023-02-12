@@ -10,21 +10,14 @@ import '../../../core/utilities/show_snack_bar.dart';
 import '../dialog/confirm_dialog.dart';
 import '../dialog/indicator_dialog.dart';
 
-class DeleteRow extends StatefulWidget {
+class DeleteRow extends StatelessWidget {
   const DeleteRow({Key? key}) : super(key: key);
 
-  @override
-  State<DeleteRow> createState() => _DeleteRowState();
-}
-
-class _DeleteRowState extends State<DeleteRow> {
   @override
   Widget build(BuildContext context) {
     return Visibility(
       visible: Platform.isIOS || Platform.isMacOS,
       child: InkWell(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         onTap: () {
           final Auth auth = Provider.of<Auth>(context, listen: false);
           sl<DialogHelper>().show(
@@ -33,11 +26,11 @@ class _DeleteRowState extends State<DeleteRow> {
                 confirmAction: () async {
                   sl<DialogHelper>().show(context, const IndicatorDialog());
                   bool status = await auth.deleteAccount();
-                  if (!mounted) return;
+                  if (context.mounted) return;
                   Navigator.of(context, rootNavigator: true).pop();
                   if (status) {
                     await auth.logOut(context);
-                    if (!mounted) return;
+                    if (context.mounted) return;
                     Navigator.of(context).pop();
                   } else {
                     sl<ShowSnackBar>().show(context, "unexpected_error");

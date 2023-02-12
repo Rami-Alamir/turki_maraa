@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -19,6 +19,7 @@ class OrderStatus extends StatefulWidget {
 class _OrderStatusState extends State<OrderStatus> {
   late bool status;
   late int paymentId;
+
   @override
   void initState() {
     status = widget.status;
@@ -54,8 +55,8 @@ class _OrderStatusState extends State<OrderStatus> {
                           colors: [
                             status ? AppColors.green1 : AppColors.red,
                             status
-                                ? Colors.green.withOpacity(0.8)
-                                : Colors.red.withOpacity(0.8),
+                                ? AppColors.green1.withOpacity(0.8)
+                                : AppColors.red.withOpacity(0.8),
                           ])),
                   child: Icon(
                     status ? Icons.check : Icons.clear,

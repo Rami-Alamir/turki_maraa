@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turki_dabayh/core/constants/app_colors.dart';
 import '../../widgets/intro/intro_card.dart';
 import '../../widgets/intro/intro_footer.dart';
 import '../../widgets/intro/intro_language.dart';
@@ -49,10 +50,9 @@ class IntroState extends State<Intro> {
         Padding(
           padding: const EdgeInsets.only(top: 80.0),
           child: DotsIndicator(
-            index: mSelectedPosition,
-            count: IntroList.introData.length,
-            accentColor: const Color.fromRGBO(132, 15, 15, 0.1),
-          ),
+              index: mSelectedPosition,
+              count: IntroList.introData.length,
+              accentColor: AppColors.brown1),
         ),
         IntroFooter(
             mSelectedPosition: mSelectedPosition,

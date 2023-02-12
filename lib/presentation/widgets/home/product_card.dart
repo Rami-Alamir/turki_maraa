@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "package:auto_size_text/auto_size_text.dart";
+import '../../../core/constants/app_colors.dart';
 import '../../../models/product.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
@@ -113,7 +114,7 @@ class ProductCard extends StatelessWidget {
                                 isAr ? tag!.first.nameAr! : tag!.first.nameEn!,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                    color: Colors.white, fontSize: 12),
+                                    color: AppColors.white, fontSize: 12),
                               ),
                             ),
                           )),
@@ -129,7 +130,7 @@ class ProductCard extends StatelessWidget {
                   textAlign: TextAlign.start,
                   style: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headlineMedium!
                       .copyWith(height: 1.2),
                   minFontSize: 8,
                   maxFontSize: 12,
@@ -151,7 +152,7 @@ class ProductCard extends StatelessWidget {
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6!
+                                  .titleLarge!
                                   .copyWith(
                                       decoration: haveSalePrice
                                           ? TextDecoration.lineThrough
@@ -167,7 +168,7 @@ class ProductCard extends StatelessWidget {
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6!
+                                  .titleLarge!
                                   .copyWith(
                                       fontSize: haveSalePrice ? 8 : 10,
                                       fontWeight: FontWeight.bold),
@@ -189,7 +190,7 @@ class ProductCard extends StatelessWidget {
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6!
+                                  .titleLarge!
                                   .copyWith(fontSize: 14),
                               minFontSize: 10,
                               maxFontSize: 12,
@@ -200,7 +201,7 @@ class ProductCard extends StatelessWidget {
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6!
+                                  .titleLarge!
                                   .copyWith(
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold),

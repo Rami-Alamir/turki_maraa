@@ -13,8 +13,6 @@ class AddressCardItem extends StatelessWidget {
       onTap: () {
         onTap();
       },
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       child: SizedBox(
         width: SizeConfig.screenWidth! / 2 - 15,
         child: Text(

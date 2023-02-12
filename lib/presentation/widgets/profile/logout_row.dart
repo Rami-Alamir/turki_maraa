@@ -19,8 +19,6 @@ class LogOutRow extends StatelessWidget {
     return Visibility(
       visible: auth.isAuth,
       child: InkWell(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         onTap: () {
           sl<DialogHelper>().show(
               context,

@@ -55,7 +55,7 @@ class SimilarProductsSection extends StatelessWidget {
                                             .tr('You_may_also_like'),
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headline6!
+                                            .titleLarge!
                                             .copyWith(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold)),

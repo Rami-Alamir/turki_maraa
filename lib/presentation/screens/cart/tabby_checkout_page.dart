@@ -4,15 +4,11 @@ import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../core/constants/route_constants.dart';
 
-class TabbyCheckoutPage extends StatefulWidget {
+class TabbyCheckoutPage extends StatelessWidget {
   final TabbySession session;
 
   const TabbyCheckoutPage({Key? key, required this.session}) : super(key: key);
-  @override
-  State<TabbyCheckoutPage> createState() => _TabbyCheckoutPageState();
-}
 
-class _TabbyCheckoutPageState extends State<TabbyCheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -20,15 +16,15 @@ class _TabbyCheckoutPageState extends State<TabbyCheckoutPage> {
       child: Scaffold(
         body: SafeArea(
           child: TabbyWebView(
-            webUrl: widget.session.availableProducts.installments!.webUrl,
+            webUrl: session.availableProducts.installments!.webUrl,
             onResult: (WebViewResult resultCode) async {
               final CartProvider cartProvider =
                   Provider.of<CartProvider>(context, listen: false);
               cartProvider.clearCart();
               cartProvider.setSelectedPayment = 7;
               final bool status = await cartProvider
-                  .capturePayment(widget.session.paymentId.toString());
-              if (!mounted) return;
+                  .capturePayment(session.paymentId.toString());
+              if (context.mounted) return;
               Navigator.pushReplacementNamed(context, orderStatus,
                   arguments: resultCode.name == "authorized" ? status : false);
             },

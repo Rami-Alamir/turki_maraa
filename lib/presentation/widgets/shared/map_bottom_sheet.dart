@@ -11,7 +11,7 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../models/user_address.dart';
 
-class MapBottomSheet extends StatefulWidget {
+class MapBottomSheet extends StatelessWidget {
   final int addressIndex;
   final int userAddressId;
   final String addressDescription;
@@ -23,17 +23,11 @@ class MapBottomSheet extends StatefulWidget {
       required this.addressDescription})
       : super(key: key);
   @override
-  State<MapBottomSheet> createState() => _MapBottomSheetState();
-}
-
-class _MapBottomSheetState extends State<MapBottomSheet> {
-  @override
   Widget build(BuildContext context) {
     final AddressProvider addressProvider =
         Provider.of<AddressProvider>(context);
     return InkWell(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      splashColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.background,
@@ -60,7 +54,7 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      widget.addressDescription,
+                      addressDescription,
                       maxLines: 2,
                       textAlign: TextAlign.start,
                       style: Theme.of(context).textTheme.displayMedium,
@@ -110,10 +104,10 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
                 padding: const EdgeInsets.all(10),
                 onPressed: () async {
                   FocusScope.of(context).requestFocus(FocusNode());
-                  if (widget.addressIndex == -100) {
+                  if (addressIndex == -100) {
                     int statusCode =
                         await addressProvider.addNewAddress(context);
-                    if (!mounted) return;
+                    if (context.mounted) return;
                     Navigator.of(context).pop();
                     final locationProvider =
                         Provider.of<LocationProvider>(context, listen: false);
@@ -148,8 +142,8 @@ class _MapBottomSheetState extends State<MapBottomSheet> {
                     }
                   } else {
                     int statusCode = await addressProvider.updateAddress(
-                        context, widget.userAddressId);
-                    if (!mounted) return;
+                        context, userAddressId);
+                    if (context.mounted) return;
                     Navigator.of(context).pop();
                     switch (statusCode) {
                       case 200:

@@ -30,7 +30,7 @@ class TurkiDrawer extends StatelessWidget {
     final AppLanguage language = Provider.of<AppLanguage>(context);
 
     return AdvancedDrawer(
-      backdropColor: Theme.of(context).backgroundColor,
+      backdropColor: Theme.of(context).colorScheme.background,
       controller: drawerProvider.advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),

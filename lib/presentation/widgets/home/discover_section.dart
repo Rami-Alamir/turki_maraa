@@ -26,7 +26,7 @@ class DiscoverSection extends StatelessWidget {
                   child: Text(AppLocalizations.of(context)!.tr('discover'),
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1!
+                          .titleMedium!
                           .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
               ],

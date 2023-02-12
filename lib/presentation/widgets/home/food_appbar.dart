@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'banners.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../models/banners_data.dart';
@@ -23,23 +24,21 @@ class FoodAppBar extends StatelessWidget {
             Icons.arrow_back_ios,
             color: changeColor
                 ? Theme.of(context).primaryColor
-                : Theme.of(context).backgroundColor ==
-                        const Color.fromRGBO(243, 224, 177, 1)
-                    ? const Color.fromRGBO(243, 224, 177, 1)
-                    : Colors.white,
+                : Theme.of(context).colorScheme.background == AppColors.yellow
+                    ? AppColors.yellow
+                    : AppColors.white,
           ),
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         pinned: true,
         actionsIconTheme: IconThemeData(
           color: changeColor
               ? Theme.of(context).primaryColor
-              : Theme.of(context).backgroundColor ==
-                      const Color.fromRGBO(243, 224, 177, 1)
-                  ? const Color.fromRGBO(243, 224, 177, 1)
-                  : Colors.white,
+              : Theme.of(context).colorScheme.background == AppColors.yellow
+                  ? AppColors.yellow
+                  : AppColors.white,
         ),
         actions: [
           Padding(
@@ -59,7 +58,7 @@ class FoodAppBar extends StatelessWidget {
           centerTitle: true,
           title: const Text('',
               style: TextStyle(
-                color: Colors.white,
+                color: AppColors.white,
                 fontSize: 16.0,
               )),
           background: BannersSlider(bannersData: bannersData),

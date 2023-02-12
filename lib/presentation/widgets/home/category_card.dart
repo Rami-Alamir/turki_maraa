@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/constants/route_constants.dart';
@@ -50,9 +51,10 @@ class CategoryCard extends StatelessWidget {
           color: Colors.transparent,
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           image: DecorationImage(
-            image: AssetImage(Theme.of(context).backgroundColor == Colors.black
-                ? FixedAssets.backgroundDark
-                : FixedAssets.background),
+            image: AssetImage(
+                Theme.of(context).colorScheme.background == AppColors.black
+                    ? FixedAssets.backgroundDark
+                    : FixedAssets.background),
             fit: BoxFit.cover,
           ),
         ),
@@ -67,7 +69,7 @@ class CategoryCard extends StatelessWidget {
                 child: AutoSizeText(
                   title,
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         fontSize: 18, height: 1.5,
                         fontWeight: FontWeight.w500,
                         // color: const Color.fromRGBO(199, 154, 72, 1),

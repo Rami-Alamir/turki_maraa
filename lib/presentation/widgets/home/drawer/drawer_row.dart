@@ -36,7 +36,7 @@ class DrawerRow extends StatelessWidget {
                   : Image.asset(icon, width: 20, height: 20),
             ),
             Text(AppLocalizations.of(context)!.tr(title),
-                style: Theme.of(context).textTheme.headline4),
+                style: Theme.of(context).textTheme.headlineMedium),
           ],
         ),
       ),

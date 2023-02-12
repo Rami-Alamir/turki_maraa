@@ -30,7 +30,7 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).colorScheme.background,
       width: SizeConfig.screenWidth,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
@@ -55,7 +55,7 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                     "${widget.count}",
                     style: Theme.of(context)
                         .textTheme
-                        .headline1
+                        .displayLarge
                         ?.copyWith(fontSize: 16),
                   ),
                 ),

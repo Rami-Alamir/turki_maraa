@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../controllers/app_language.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/constants/app_colors.dart';
 
 class IntroLanguage extends StatelessWidget {

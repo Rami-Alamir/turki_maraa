@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/utilities/app_localizations.dart';
 
 class ItemColumn extends StatelessWidget {

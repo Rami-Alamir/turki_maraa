@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../../controllers/location_provider.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/constants/fixed_assets.dart';
 import '../../../../core/service/firebase_helper.dart';
@@ -40,7 +41,7 @@ class TurkiDrawerFooter extends StatelessWidget {
                   backgroundColor: Theme.of(context).primaryColor,
                   child: const Icon(
                     Icons.phone,
-                    color: Colors.white,
+                    color: AppColors.white,
                   ),
                 ),
                 Padding(
@@ -48,7 +49,7 @@ class TurkiDrawerFooter extends StatelessWidget {
                       vertical: 10, horizontal: 10.0),
                   child: AutoSizeText(
                     AppLocalizations.of(context)!.tr('contact_support'),
-                    style: Theme.of(context).textTheme.headline4,
+                    style: Theme.of(context).textTheme.headlineMedium,
                     minFontSize: 11,
                     maxFontSize: 12,
                   ),
