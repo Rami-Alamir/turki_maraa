@@ -74,19 +74,20 @@ class PinCodeFields extends StatelessWidget {
                 ],
                 onCompleted: (v) async {
                   int statusCode = await auth.verifyOTP(context);
-                  if (context.mounted) return;
-                  Navigator.of(context).pop();
-                  if (statusCode == 200) {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        auth.isNewUser ? username : app,
-                        ModalRoute.withName('/'));
-                  } else {
-                    sl<ShowSnackBar>().show(
-                        context,
-                        statusCode == 400
-                            ? 'invalid_activation_code'
-                            : 'unexpected_error');
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                    if (statusCode == 200) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          auth.isNewUser ? username : app,
+                          ModalRoute.withName('/'));
+                    } else {
+                      sl<ShowSnackBar>().show(
+                          context,
+                          statusCode == 400
+                              ? 'invalid_activation_code'
+                              : 'unexpected_error');
+                    }
                   }
                 },
                 onChanged: (value) {

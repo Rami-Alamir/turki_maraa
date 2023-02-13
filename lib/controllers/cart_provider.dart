@@ -413,7 +413,9 @@ class CartProvider with ChangeNotifier {
       tabbyCaptures = await sl<TabbyRepository>().capturePayment({
         "amount": _mockPayload!.amount,
       }, _isoCountryCode == "SA" ? 'TD_APP' : 'TD_APPAE', id);
-      // if (tabbyCaptures.status) await _updateTabbyPaymentStatus();
+      if (tabbyCaptures?.status == "CLOSED") {
+        await _updateTabbyPaymentStatus();
+      }
       return true;
     } catch (_) {
       return false;

@@ -18,7 +18,7 @@ class Constants {
   static const String uaePhone = "+97180050050";
   //whats numbers
   static const String ksaWhats = '+966500852759';
-  static const String uaeWhats = "+971544055556";
+  static const String uaeWhats = "+971566064000";
   //Tamara Checkout url
   static const String checkoutSuccess =
       'https://almaraacompany.com/turki-api/api/v1/checkout/success';

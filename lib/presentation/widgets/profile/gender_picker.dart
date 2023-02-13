@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/shared/rectangle_text_field.dart';
 import '../../../controllers/user_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
-import 'package:provider/provider.dart';
 
 class GenderPicker extends StatelessWidget {
   const GenderPicker({Key? key}) : super(key: key);

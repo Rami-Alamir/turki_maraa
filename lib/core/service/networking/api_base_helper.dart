@@ -130,6 +130,7 @@ class ApiBaseHelper {
       case 200:
       case 201:
         var responseJson = json.decode(response.body.toString());
+
         return responseJson;
       case 400:
         throw BadRequestException(response.body.toString());
