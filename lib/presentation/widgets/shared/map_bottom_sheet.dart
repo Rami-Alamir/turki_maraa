@@ -107,55 +107,57 @@ class MapBottomSheet extends StatelessWidget {
                   if (addressIndex == -100) {
                     int statusCode =
                         await addressProvider.addNewAddress(context);
-                    if (context.mounted) return;
-                    Navigator.of(context).pop();
-                    final locationProvider =
-                        Provider.of<LocationProvider>(context, listen: false);
-                    switch (statusCode) {
-                      case 200:
-                        final Data address = addressProvider.userAddress!
-                            .data![addressProvider.selectedAddress];
-                        locationProvider.updateLocationData(
-                            address.countryIosCode!,
-                            LatLng(double.parse(address.lat!),
-                                double.parse(address.long!)),
-                            address: address.address!);
-                        Navigator.of(context).pop();
-                        break;
-                      // 1 mean user not auth and will use address without add it on server
-                      case 1:
-                        locationProvider.updateLocationData(
-                            addressProvider.mapCountryCode!,
-                            addressProvider.mapLatLng,
-                            language: AppLocalizations.of(context)!
-                                .locale!
-                                .languageCode,
-                            setSelected: true);
-                        break;
-                      default:
-                        sl<ShowSnackBar>().show(
-                            context,
-                            statusCode == 400
-                                ? "region_not_supported"
-                                : "unexpected_error");
-                        break;
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                      final locationProvider =
+                          Provider.of<LocationProvider>(context, listen: false);
+                      switch (statusCode) {
+                        case 200:
+                          final Data address = addressProvider.userAddress!
+                              .data![addressProvider.selectedAddress];
+                          locationProvider.updateLocationData(
+                              address.countryIosCode!,
+                              LatLng(double.parse(address.lat!),
+                                  double.parse(address.long!)),
+                              address: address.address!);
+                          Navigator.of(context).pop();
+                          break;
+                        // 1 mean user not auth and will use address without add it on server
+                        case 1:
+                          locationProvider.updateLocationData(
+                              addressProvider.mapCountryCode!,
+                              addressProvider.mapLatLng,
+                              language: AppLocalizations.of(context)!
+                                  .locale!
+                                  .languageCode,
+                              setSelected: true);
+                          break;
+                        default:
+                          sl<ShowSnackBar>().show(
+                              context,
+                              statusCode == 400
+                                  ? "region_not_supported"
+                                  : "unexpected_error");
+                          break;
+                      }
                     }
                   } else {
                     int statusCode = await addressProvider.updateAddress(
                         context, userAddressId);
-                    if (context.mounted) return;
-                    Navigator.of(context).pop();
-                    switch (statusCode) {
-                      case 200:
-                        Navigator.of(context).pop();
-                        break;
-                      default:
-                        sl<ShowSnackBar>().show(
-                            context,
-                            statusCode == 400
-                                ? "region_not_supported"
-                                : "unexpected_error");
-                        break;
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                      switch (statusCode) {
+                        case 200:
+                          Navigator.of(context).pop();
+                          break;
+                        default:
+                          sl<ShowSnackBar>().show(
+                              context,
+                              statusCode == 400
+                                  ? "region_not_supported"
+                                  : "unexpected_error");
+                          break;
+                      }
                     }
                   }
                 },

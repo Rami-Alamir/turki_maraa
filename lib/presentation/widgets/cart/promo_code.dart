@@ -132,11 +132,13 @@ class PromoCode extends StatelessWidget {
                             } else {
                               bool status =
                                   await cart.checkCoupon(context: context);
-                              if (context.mounted) return;
-                              Navigator.of(context, rootNavigator: true).pop();
-                              if (!status) {
-                                sl<ShowSnackBar>()
-                                    .show(context, "unexpected_error");
+                              if (context.mounted) {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
+                                if (!status) {
+                                  sl<ShowSnackBar>()
+                                      .show(context, "unexpected_error");
+                                }
                               }
                             }
                           }

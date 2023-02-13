@@ -26,14 +26,14 @@ class DeleteRow extends StatelessWidget {
                 confirmAction: () async {
                   sl<DialogHelper>().show(context, const IndicatorDialog());
                   bool status = await auth.deleteAccount();
-                  if (context.mounted) return;
-                  Navigator.of(context, rootNavigator: true).pop();
-                  if (status) {
-                    await auth.logOut(context);
-                    if (context.mounted) return;
-                    Navigator.of(context).pop();
-                  } else {
-                    sl<ShowSnackBar>().show(context, "unexpected_error");
+                  if (context.mounted) {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    if (status) {
+                      await auth.logOut(context);
+                      if (context.mounted) Navigator.of(context).pop();
+                    } else {
+                      sl<ShowSnackBar>().show(context, "unexpected_error");
+                    }
                   }
                 },
                 message: 'are_you_sure_you_want_to_delete_the_account',

@@ -190,7 +190,6 @@ class FavouriteCard extends StatelessWidget {
         notify: false,
         id: data.id!.toString(),
         productName: data.product!.nameAr!);
-    if (context.mounted) return;
-    Navigator.of(context, rootNavigator: true).pop();
+    if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
   }
 }

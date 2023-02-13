@@ -160,14 +160,15 @@ class AddressCard extends StatelessWidget {
                                               addressProvider.userAddress!
                                                   .data![index].id!,
                                               index);
-                                      if (context.mounted) return;
-                                      if (statusCode != 1) {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop();
-                                        if (statusCode == 0) {
-                                          sl<ShowSnackBar>().show(
-                                              context, "unexpected_error");
+                                      if (context.mounted) {
+                                        if (statusCode != 1) {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop();
+                                          if (statusCode == 0) {
+                                            sl<ShowSnackBar>().show(
+                                                context, "unexpected_error");
+                                          }
                                         }
                                       }
                                     },
