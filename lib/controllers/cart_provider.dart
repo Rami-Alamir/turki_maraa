@@ -365,13 +365,18 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> initTabby(Lang language) async {
+    final String email =
+        (_userData?.data?.email ?? "user${_userData?.data?.id}@turkieshop.com")
+            .trim();
+
     _mockPayload = Payment(
       amount:
           _cartData!.data!.invoicePreview!.totalAmountAfterDiscount!.toString(),
       currency: _isoCountryCode == "SA" ? Currency.sar : Currency.aed,
       buyer: Buyer(
-        email: _userData?.data?.email ??
-            "user${_userData?.data?.id}@turkieshop.com",
+        email: email.length > 10
+            ? email
+            : "user${_userData?.data?.id}@turkieshop.com",
         phone: _userData!.data!.mobile!.substring(4),
         name: _userData?.data?.name ?? "user${_userData?.data?.id}",
         dob: '1995-01-30',

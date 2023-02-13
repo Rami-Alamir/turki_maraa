@@ -11,6 +11,8 @@ class TabbyCheckoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        "session.availableProducts.installments!.webUrl ${session.availableProducts.installments!.webUrl}");
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
