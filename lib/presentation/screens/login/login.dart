@@ -10,6 +10,7 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/locals_values.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../widgets/login/phone_number.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,11 +20,12 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  late String _isoCountryCode;
+  String? _isoCountryCode;
 
   @override
   void initState() {
     final Auth auth = Provider.of<Auth>(context, listen: false);
+    auth.formKey = GlobalKey<FormState>();
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
     // init country code by location if found or device locals
@@ -32,8 +34,8 @@ class LoginState extends State<Login> {
     _isoCountryCode = locationProvider.isoCountryCode != null
         ? locationProvider.isoCountryCode!
         : sl<LocalsValues>().getCountryCode(localsIsoCountryCode);
-    auth.setIsoCountryCode = _isoCountryCode;
-    auth.initCountyCode(sl<GetStrings>().getCountryKey(_isoCountryCode));
+    auth.setIsoCountryCode = _isoCountryCode ?? "SA";
+    auth.setDialCode = sl<GetStrings>().getCountryKey(_isoCountryCode ?? "SA");
     super.initState();
   }
 
@@ -99,42 +101,9 @@ class LoginState extends State<Login> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    // CountryCodePicker(
-                                    //   onChanged: (key) {
-                                    //     auth.initCountyCode(key.toString());
-                                    //   }, // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                                    //   initialSelection: _isoCountryCode,
-                                    //   favorite: const ['+966', 'SA'],
-                                    //   countryFilter: const [
-                                    //     'SA',
-                                    //     'AE',
-                                    //   ],
-                                    //   textStyle: Theme.of(context)
-                                    //       .textTheme
-                                    //       .headline4!
-                                    //       .copyWith(
-                                    //           color: Colors.white,
-                                    //           fontWeight: FontWeight.bold,
-                                    //           fontSize: 16),
-                                    //   // flag can be styled with BoxDecoration's `borderRadius` and `shape` fields
-                                    //   flagDecoration: BoxDecoration(
-                                    //     borderRadius: BorderRadius.circular(7),
-                                    //   ),
-                                    // ),
-                                    Text(
-                                        AppLocalizations.of(context)!.tr(
-                                            'enter_your_mobile_number_here'),
-                                        style: const TextStyle(
-                                            color: AppColors.white)),
-                                  ],
-                                ),
-                                const Divider(
-                                  indent: 25,
-                                  endIndent: 20,
-                                  thickness: 3,
-                                )
+                                PhoneNumber(
+                                    isWhite: true,
+                                    isoCountryCode: _isoCountryCode!),
                               ],
                             ),
                           ),

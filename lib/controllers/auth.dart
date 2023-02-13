@@ -13,7 +13,6 @@ import '../core/service/firebase_helper.dart';
 import '../core/utilities/convert_numbers.dart';
 
 class Auth with ChangeNotifier {
-  TextEditingController keyController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController otpController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
@@ -36,9 +35,10 @@ class Auth with ChangeNotifier {
   GlobalKey<FormState>? formKey;
   String? _isoCountryCode;
   bool _logoVisibility = true;
+  String _dialCode = "+966";
 
   String? get isoCountryCode => _isoCountryCode;
-
+  String get dialCode => _dialCode;
   bool get logoVisibility => _logoVisibility;
   UserData? get userData => _userData;
   Timer get timer => _timer!;
@@ -47,9 +47,13 @@ class Auth with ChangeNotifier {
   int get start => _start;
   String get accessToken => _accessToken ?? "";
   String get userPhone =>
-      ConvertNumbers.getPhone(keyController.text, phoneController.text);
+      ConvertNumbers.getPhone(_dialCode, phoneController.text);
   bool get isLoading => _isLoading;
   bool get isNewUser => _isNewUser ?? false;
+
+  set setDialCode(String value) {
+    _dialCode = value;
+  }
 
   set setIsoCountryCode(String value) {
     _isoCountryCode = value;
@@ -87,8 +91,7 @@ class Auth with ChangeNotifier {
   Future<int> sendOTP(BuildContext context, {bool navigate = true}) async {
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
-      _userPhone =
-          ConvertNumbers.getPhone(keyController.text, phoneController.text);
+      _userPhone = ConvertNumbers.getPhone(_dialCode, phoneController.text);
       var response =
           await sl<LoginRepository>().sendOTP({"mobile": _userPhone});
       if (response.statusCode == 200) {
@@ -197,12 +200,14 @@ class Auth with ChangeNotifier {
     }
   }
 
-  void initCountyCode(value) {
-    keyController.text = value;
-  }
-
   // init local storage
   void _initLocalStorage() {
     _localStorage = _localStorage ?? const FlutterSecureStorage();
+  }
+
+  void updateCountry(String dialCode, String isoCountryCode) {
+    _isoCountryCode = isoCountryCode;
+    _dialCode = dialCode;
+    notifyListeners();
   }
 }

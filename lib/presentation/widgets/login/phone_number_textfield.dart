@@ -1,29 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'country_picker.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/country_utils.dart';
+import '../../../core/utilities/dialog_helper.dart';
+import '../../../models/country.dart';
 
 class PhoneNumberTextfield extends StatelessWidget {
+  final String isoCountryCode;
   final GlobalKey<FormState> formKey;
-  final double width;
   final TextEditingController controller;
-  final String hint;
   final bool enabled;
+  final bool isWhite;
 
   const PhoneNumberTextfield(
       {Key? key,
       required this.formKey,
-      required this.width,
       required this.controller,
-      required this.hint,
-      required this.enabled})
+      required this.enabled,
+      required this.isoCountryCode,
+      required this.isWhite})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
+    final Country country =
+        CountryUtils.getCountryByCountryCode(isoCountryCode);
+    return Directionality(
+      textDirection: TextDirection.ltr,
       child: Form(
         key: formKey,
         child: TextFormField(
@@ -37,11 +44,10 @@ class PhoneNumberTextfield extends StatelessWidget {
           controller: controller,
           keyboardType: TextInputType.phone,
           maxLength: 10,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: AppColors.black,
-              height: 1.8),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(fontSize: 16, fontWeight: FontWeight.bold, height: 1.8),
           validator: (text) {
             if (text!.length < 9) {
               return AppLocalizations.of(context)!
@@ -50,13 +56,43 @@ class PhoneNumberTextfield extends StatelessWidget {
             return null;
           },
           decoration: InputDecoration(
-            hintText: hint,
+            contentPadding:
+                const EdgeInsetsDirectional.fromSTEB(10, 20, 10, 10),
+            hintText: ' 51 234 5678',
             hintStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: AppColors.black),
+                color: isWhite
+                    ? AppColors.white
+                    : Theme.of(context).textTheme.titleLarge!.color),
             counterText: "",
-            contentPadding: EdgeInsets.zero,
+            prefixIcon: GestureDetector(
+              onTap: () => sl<DialogHelper>().show(context, CountryPicker()),
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 80, minWidth: 60),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0, left: 8),
+                      child: Text(
+                        country.flag,
+                        style: const TextStyle(fontSize: 25),
+                      ),
+                    ),
+                    Text(
+                      country.dialCode,
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          fontSize: 14,
+                          color: isWhite
+                              ? AppColors.white
+                              : Theme.of(context).textTheme.titleLarge!.color,
+                          fontWeight: FontWeight.bold,
+                          height: 1.9),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             border: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent, width: 0)),
             disabledBorder: const OutlineInputBorder(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/login/phone_number.dart';
+import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/constants/route_constants.dart';
-import '../../widgets/login/phone_number.dart';
-import '../../widgets/shared/rounded_rectangle_button.dart';
 
 class PhoneLogin extends StatefulWidget {
   const PhoneLogin({Key? key}) : super(key: key);
