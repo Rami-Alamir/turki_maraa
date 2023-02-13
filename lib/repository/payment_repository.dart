@@ -6,8 +6,6 @@ class PaymentRepository {
   final ApiBaseHelper _helper = sl<ApiBaseHelper>();
 
   Future<dynamic> updateOrderPayment(body, String authorization) async {
-    print(body);
-    print(authorization);
     final response = await _helper.post4(
         "customers/tabby-manual-payment/updatev2", json.encode(body),
         authorization: authorization);

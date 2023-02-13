@@ -368,7 +368,6 @@ class CartProvider with ChangeNotifier {
     final String email =
         (_userData?.data?.email ?? "user${_userData?.data?.id}@turkieshop.com")
             .trim();
-
     _mockPayload = Payment(
       amount:
           _cartData!.data!.invoicePreview!.totalAmountAfterDiscount!.toString(),

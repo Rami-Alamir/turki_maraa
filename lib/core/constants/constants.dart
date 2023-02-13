@@ -3,8 +3,9 @@ class Constants {
   static const String appVersion = "5.16.0";
   static const String baseUrl = 'https://almaraacompany.com/turki-api/api/v1/';
   static const String tabbyBaseUrl = 'https://api.tabby.ai/api/v1/';
-  static const String tabbyApiKey =
+  static const String tabbyApiKeyTest =
       'sk_test_86f97925-b3e7-4d24-a4b1-9e681e59e3ad';
+  static const String tabbyApiKey = 'sk_bf118569-54a4-4433-9259-345a44937c53';
   static const String tabbyMerchantCodeSA = 'TD_APP';
   static const String tabbyMerchantCodeAE = 'TD_APPAE';
   static const String fontFamily = "Turki";
