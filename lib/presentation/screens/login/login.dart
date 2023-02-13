@@ -41,6 +41,8 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final Auth auth = Provider.of<Auth>(context);
+
     return Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,
@@ -103,7 +105,7 @@ class LoginState extends State<Login> {
                               children: [
                                 PhoneNumber(
                                     isWhite: true,
-                                    isoCountryCode: _isoCountryCode!),
+                                    isoCountryCode: auth.isoCountryCode!),
                               ],
                             ),
                           ),
