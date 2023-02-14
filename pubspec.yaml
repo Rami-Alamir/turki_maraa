@@ -31,7 +31,7 @@ dependencies:
   google_maps_flutter: ^2.2.3
   location: ^4.4.0
   url_launcher: ^6.1.9
-  share_plus: ^6.3.0
+  share_plus: ^6.3.1
   flutter_spinkit: ^5.1.0
   pin_code_fields: ^7.4.0
   flutter_picker: ^2.1.0
@@ -46,10 +46,10 @@ dependencies:
   app_settings: ^4.2.0
   tabby_flutter_inapp_sdk: ^1.1.2
   get_it: ^7.2.0
-  connectivity_plus: ^3.0.2
+  connectivity_plus: ^3.0.3
   lottie: ^2.2.0
   shake: ^2.2.0
-  flutter_secure_storage: ^7.0.1
+  flutter_secure_storage: ^8.0.0
   crypto: ^3.0.2
 
 dev_dependencies:

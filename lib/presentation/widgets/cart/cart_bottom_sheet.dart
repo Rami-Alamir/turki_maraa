@@ -250,8 +250,18 @@ class CartBottomSheetState extends State<CartBottomSheet> {
               arguments: cartProvider.tamara.data!.checkoutUrl!);
           break;
         case 7:
-          Navigator.of(context, rootNavigator: true)
-              .pushNamed(tabbyCheckoutPage, arguments: cartProvider.session);
+          {
+            if (cartProvider.session.availableProducts.installments != null) {
+              Navigator.of(context, rootNavigator: true).pushNamed(
+                  tabbyCheckoutPage,
+                  arguments: cartProvider.session);
+            } else {
+              cartProvider.clearCart();
+              cartProvider.setSelectedPayment = 7;
+              Navigator.of(context, rootNavigator: true)
+                  .pushNamed(orderStatus, arguments: false);
+            }
+          }
           break;
       }
     }
