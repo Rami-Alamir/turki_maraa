@@ -53,6 +53,7 @@ class ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     final ProductProvider productProvider =
         Provider.of<ProductProvider>(context);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: PageBuilder(
@@ -83,7 +84,9 @@ class ProductDetailsState extends State<ProductDetails> {
                         : TextDirection.ltr,
                 child: CircleIcon(
                     icon: Icons.arrow_back_ios,
-                    onTap: () => Navigator.pop(context),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0))),
           ],
@@ -91,7 +94,8 @@ class ProductDetailsState extends State<ProductDetails> {
       ),
       bottomSheet:
           productProvider.requestStatus[_index!] == RequestStatus.completed &&
-                  productProvider.productData[_index!].data!.isActive!
+                  productProvider.productData[_index!].data!.isActive! &&
+                  productProvider.productData[_index!].data!.isAvailable!
               ? ProductDetailsFooter(
                   count: _count,
                   index: _index!,
@@ -106,7 +110,7 @@ class ProductDetailsState extends State<ProductDetails> {
                     });
                   },
                 )
-              : Container(),
+              : null,
     );
   }
 }

@@ -10,14 +10,16 @@ class PaymentInstallmentItem extends StatelessWidget {
   final String logo;
   final String title;
   final EdgeInsetsDirectional padding;
+  final bool visible;
 
-  const PaymentInstallmentItem(
-      {Key? key,
-      required this.selectedValue,
-      required this.title,
-      required this.logo,
-      required this.padding})
-      : super(key: key);
+  const PaymentInstallmentItem({
+    Key? key,
+    required this.selectedValue,
+    required this.title,
+    required this.logo,
+    this.padding = const EdgeInsetsDirectional.fromSTEB(15.0, 15, 0, 0),
+    required this.visible,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class PaymentInstallmentItem extends StatelessWidget {
     final double total =
         cartProvider.cartData!.data!.invoicePreview!.totalAmountAfterDiscount!;
     return Visibility(
-      visible: (cartProvider.tamaraData?.data?.length ?? 0) > 0
+      visible: visible && (cartProvider.tamaraData?.data?.length ?? 0) > 0
           ? ((500.0 <= total) &&
               (selectedValue == 4
                   ? (((cartProvider.tamaraData?.data?[0].maxLimit?.amount ??

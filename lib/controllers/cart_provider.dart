@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import '../core/constants/constants.dart';
+import '../models/payment_types.dart';
 import '../models/tabby_captures.dart';
 import '../repository/tabby_repository.dart';
 import 'address_provider.dart';
@@ -54,6 +55,10 @@ class CartProvider with ChangeNotifier {
   int _selectedTime = -1;
   int _cartLength = 0;
   bool _isAuth = false;
+  bool _cashAvailable = true;
+  bool _onlineAvailable = true;
+  bool _tamaraAvailable = true;
+  bool _tabbyAvailable = true;
   LatLng? _latLng;
   String? _isoCountryCode;
   String? selectedAddress;
@@ -65,6 +70,8 @@ class CartProvider with ChangeNotifier {
   late TamaraPayment tamara;
   late PaymentARB arb;
   late OrderRef orderRef;
+  PaymentTypes? _paymentTypes;
+
   LatLng? get latLng => _latLng;
   String? get currentLocationDescriptionAr => _currentLocationDescriptionAr;
   String? get currentLocationDescriptionEn => _currentLocationDescriptionEn;
@@ -83,6 +90,9 @@ class CartProvider with ChangeNotifier {
   bool get errorMsg => _errorMsg;
   bool get promoIsActive => _promoIsActive;
   RequestStatus get requestStatus => _requestStatus;
+  PaymentTypes? get paymentTypes => _paymentTypes;
+
+  bool get cashAvailable => _cashAvailable;
 
   set setSelectedDate(int value) {
     _selectedDate = value;
@@ -228,7 +238,7 @@ class CartProvider with ChangeNotifier {
         notifyListeners();
       }
       try {
-        await Future.wait([getDeliveryPeriods(), getCart()]);
+        await Future.wait([getDeliveryPeriods(), getCart(), getPaymentTypes()]);
         await getTamaraData();
         _cartLength = sl<CalculateHelper>()
             .calculateCartLength(_cartData?.data?.cart?.data);
@@ -263,6 +273,36 @@ class CartProvider with ChangeNotifier {
     try {
       _cartData = await sl<CartRepository>()
           .getCartList(_authorization!, _latLng!, _isoCountryCode!);
+    } catch (_) {
+      _requestStatus = RequestStatus.error;
+    }
+  }
+
+  Future<void> getPaymentTypes() async {
+    try {
+      _cashAvailable = true;
+      _onlineAvailable = true;
+      _tabbyAvailable = true;
+      _tamaraAvailable = true;
+      _paymentTypes = await sl<PaymentRepository>().getPaymentTypes();
+      for (int i = 0; i < (paymentTypes?.data?.length ?? 0); i++) {
+        if (paymentTypes!.data![i].id == 1 &&
+            paymentTypes!.data![i].active == 0) {
+          _cashAvailable = false;
+        }
+        if (paymentTypes!.data![i].id == 2 &&
+            paymentTypes!.data![i].active == 0) {
+          _onlineAvailable = false;
+        }
+        if (paymentTypes!.data![i].id == 4 &&
+            paymentTypes!.data![i].active == 0) {
+          _tamaraAvailable = false;
+        }
+        if (paymentTypes!.data![i].id == 7 &&
+            paymentTypes!.data![i].active == 0) {
+          _tabbyAvailable = false;
+        }
+      }
     } catch (_) {
       _requestStatus = RequestStatus.error;
     }
@@ -540,4 +580,10 @@ class CartProvider with ChangeNotifier {
     noteController.clear();
     notifyListeners();
   }
+
+  bool get onlineAvailable => _onlineAvailable;
+
+  bool get tamaraAvailable => _tamaraAvailable;
+
+  bool get tabbyAvailable => _tabbyAvailable;
 }

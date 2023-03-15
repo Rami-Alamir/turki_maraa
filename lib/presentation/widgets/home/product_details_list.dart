@@ -29,7 +29,8 @@ class ProductDetailsList extends StatelessWidget {
           imgList: productProvider.productData[index].data!.images!,
         ),
         Visibility(
-            visible: !productProvider.productData[index].data!.isActive!,
+            visible: !productProvider.productData[index].data!.isActive! ||
+                !productProvider.productData[index].data!.isAvailable!,
             child: const NotAvailable()),
         ProductDescription(
             isFavourite: productProvider.isFavourite,
