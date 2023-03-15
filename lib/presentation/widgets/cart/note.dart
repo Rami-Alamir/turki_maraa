@@ -21,7 +21,7 @@ class Note extends StatelessWidget {
             AppLocalizations.of(context)!.tr('note'),
             style: Theme.of(context)
                 .textTheme
-                .displayLarge!
+                .displayMedium!
                 .copyWith(fontSize: 14),
           ),
         ),
@@ -34,7 +34,7 @@ class Note extends StatelessWidget {
                 borderRadius: const BorderRadius.all(
                   Radius.circular(10),
                 ),
-                color: Theme.of(context).colorScheme.primaryContainer,
+                color: Theme.of(context).colorScheme.outline,
               ),
               width: SizeConfig.screenWidth! - 30,
               child: TextFormField(
@@ -48,7 +48,7 @@ class Note extends StatelessWidget {
                 onChanged: (value) {},
                 style: Theme.of(context)
                     .textTheme
-                    .displayMedium!
+                    .displayLarge!
                     .copyWith(fontSize: 16),
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
@@ -75,8 +75,8 @@ class Note extends StatelessWidget {
                     hintText: AppLocalizations.of(context)!.tr("note_hint"),
                     hintStyle: Theme.of(context)
                         .textTheme
-                        .titleSmall!
-                        .copyWith(fontWeight: FontWeight.normal)),
+                        .headlineSmall!
+                        .copyWith(fontSize: 14)),
               ),
             )
           ],

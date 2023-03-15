@@ -5,6 +5,10 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'drawer_row.dart';
+import 'turki_drawer_footer.dart';
+import '../../shared/social_media.dart';
+import '../../shared/user_data_header.dart';
 import '../../../../controllers/app_language.dart';
 import '../../../../controllers/drawer_provider.dart';
 import '../../../../controllers/app_theme.dart';
@@ -14,10 +18,6 @@ import '../../../../core/constants/fixed_assets.dart';
 import '../../../../core/service/firebase_helper.dart';
 import '../../../../core/utilities/app_localizations.dart';
 import '../../../../core/utilities/size_config.dart';
-import '../../shared/social_media.dart';
-import '../../shared/user_data_header.dart';
-import 'drawer_row.dart';
-import 'turki_drawer_footer.dart';
 
 class TurkiDrawer extends StatelessWidget {
   final Widget child;

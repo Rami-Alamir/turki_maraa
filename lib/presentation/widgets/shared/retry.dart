@@ -22,7 +22,7 @@ class Retry extends StatelessWidget {
           icon: Icon(
             Icons.refresh,
             size: 30,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),

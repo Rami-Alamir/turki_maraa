@@ -66,8 +66,8 @@ class ProductDetailsState extends State<ProductDetails> {
         child: Stack(
           children: [
             RefreshIndicator(
-                color: Theme.of(context).primaryColor,
-                backgroundColor: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.primary,
+                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                 onRefresh: () async {
                   await productProvider.getProductData(
                       widget.data['id'].toString(), _index!, false);

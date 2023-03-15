@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/home_provider.dart';
 import 'categories.dart';
 import 'not_supported_area.dart';
+import '../../../controllers/home_provider.dart';
 
 class CategoriesGroup extends StatelessWidget {
   const CategoriesGroup({Key? key}) : super(key: key);

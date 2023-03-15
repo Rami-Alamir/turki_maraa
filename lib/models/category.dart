@@ -18,6 +18,6 @@ class Category {
     typeAr = json['type_ar'] ?? "";
     typeEn = json['type_en'] ?? "";
     description = json['description'] ?? "";
-    imageUrl = json['image_url'] ?? "";
+    imageUrl = json['banner_url'] ?? "";
   }
 }

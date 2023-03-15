@@ -46,6 +46,7 @@ class HomeProvider with ChangeNotifier {
       String? currentLocationDescriptionEn,
       bool isHMS) async {
     _locationServiceStatus = locationServiceStatus ?? 2;
+
     if (latLng != null) {
       _isoCountryCode = isoCountryCode;
       if (latLng != _latLng) {

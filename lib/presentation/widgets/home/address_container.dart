@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/fixed_assets.dart';
-import 'address_row.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../../controllers/address_provider.dart';
-import '../../../controllers/home_provider.dart';
-import '../../../core/utilities/size_config.dart';
+import '../../../core/constants/app_colors.dart';
+import 'address_row.dart';
 import '../../widgets/home/address_box.dart';
 import '../../widgets/shared/add_new_address.dart';
 import '../../../models/user_address.dart';
+import '../../../controllers/address_provider.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../controllers/home_provider.dart';
+import '../../../core/utilities/size_config.dart';
+import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 
 class AddressContainer extends StatefulWidget {
@@ -39,7 +39,6 @@ class AddressContainerState extends State<AddressContainer> {
             _selected = !_selected;
           });
         },
-        splashColor: Colors.transparent,
         child: Container(
           color: Colors.transparent,
           width: SizeConfig.screenWidth,
@@ -50,11 +49,13 @@ class AddressContainerState extends State<AddressContainer> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(
-                        Theme.of(context).colorScheme.background ==
-                                AppColors.black
-                            ? FixedAssets.backgroundDark
-                            : FixedAssets.background,
-                      ),
+                          Theme.of(context).colorScheme.background ==
+                                  AppColors.black
+                              ? FixedAssets.backgroundDark
+                              : Theme.of(context).colorScheme.background ==
+                                      AppColors.clarity
+                                  ? FixedAssets.backgroundClassic
+                                  : FixedAssets.background),
                       fit: BoxFit.cover),
                 ),
               ),

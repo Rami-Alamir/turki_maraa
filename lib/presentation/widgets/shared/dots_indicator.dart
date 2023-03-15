@@ -27,7 +27,9 @@ class DotsIndicator extends StatelessWidget {
           height: 4,
           width: i == index ? 30 : 8,
           decoration: BoxDecoration(
-            color: i == index ? Theme.of(context).primaryColor : accentColor,
+            color: i == index
+                ? Theme.of(context).colorScheme.primary
+                : accentColor,
             shape: BoxShape.rectangle,
             borderRadius: const BorderRadius.all(Radius.circular(0.75)),
           ),

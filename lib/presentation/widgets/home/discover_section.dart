@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'discover_card.dart';
 import '../../../controllers/products_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import 'discover_card.dart';
 
 class DiscoverSection extends StatelessWidget {
   const DiscoverSection({Key? key}) : super(key: key);
@@ -24,10 +24,7 @@ class DiscoverSection extends StatelessWidget {
                   padding: const EdgeInsets.only(
                       right: 20.0, left: 20, bottom: 15, top: 15),
                   child: Text(AppLocalizations.of(context)!.tr('discover'),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
+                      style: Theme.of(context).textTheme.titleSmall),
                 ),
               ],
             ),

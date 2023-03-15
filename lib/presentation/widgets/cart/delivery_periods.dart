@@ -18,10 +18,8 @@ class DeliveryPeriods extends StatelessWidget {
           padding: const EdgeInsets.only(right: 15.0, top: 15, left: 15),
           child: Text(
             AppLocalizations.of(context)!.tr('delivery_time'),
-            style: Theme.of(context)
-                .textTheme
-                .displayLarge!
-                .copyWith(fontSize: 14),
+            style:
+                Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14),
           ),
         ),
         SizedBox(

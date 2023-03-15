@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:turki_dabayh/core/constants/app_colors.dart';
+import 'package:lottie/lottie.dart';
+import 'dart:async';
 import '../../../controllers/app_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/service/service_locator.dart';
@@ -25,7 +25,6 @@ class SplashState extends State<Splash> {
   Timer? _timer;
   late ConnectivityResult connectivityResult;
   bool internetStatus = true;
-
   @override
   void initState() {
     super.initState();
@@ -71,8 +70,7 @@ class SplashState extends State<Splash> {
                   highlightColor: Colors.transparent,
                   child: Text(
                     AppLocalizations.of(context)!.tr('skip'),
-                    style:
-                        const TextStyle(color: AppColors.white, fontSize: 18),
+                    style: const TextStyle(color: AppColors.gold, fontSize: 18),
                   ),
                 ),
               )

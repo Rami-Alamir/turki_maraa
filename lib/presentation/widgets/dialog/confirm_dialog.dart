@@ -39,7 +39,7 @@ class ConfirmDialog extends StatelessWidget {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(12, 25, 10, 20),
+                        const EdgeInsetsDirectional.fromSTEB(12, 25, 10, 15),
                     child: icon != null
                         ? SvgPicture.asset(
                             icon!,
@@ -53,8 +53,8 @@ class ConfirmDialog extends StatelessWidget {
                     AppLocalizations.of(context)!.tr(title),
                     style: Theme.of(context)
                         .textTheme
-                        .displayLarge!
-                        .copyWith(fontSize: 14, height: 1),
+                        .displayMedium!
+                        .copyWith(fontSize: 14),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -62,8 +62,8 @@ class ConfirmDialog extends StatelessWidget {
                       AppLocalizations.of(context)!.tr(message),
                       style: Theme.of(context)
                           .textTheme
-                          .titleSmall!
-                          .copyWith(fontSize: 14),
+                          .headlineSmall!
+                          .copyWith(fontSize: 14, height: 1.4),
                     ),
                   ),
                 ],
@@ -83,7 +83,7 @@ class ConfirmDialog extends StatelessWidget {
                     AppLocalizations.of(context)!.tr(cancelText),
                     style: Theme.of(context)
                         .textTheme
-                        .titleMedium!
+                        .titleSmall!
                         .copyWith(fontSize: 12),
                   ),
                 ),
@@ -100,7 +100,7 @@ class ConfirmDialog extends StatelessWidget {
                     AppLocalizations.of(context)!.tr(confirmText),
                     style: Theme.of(context)
                         .textTheme
-                        .titleMedium!
+                        .titleSmall!
                         .copyWith(fontSize: 12),
                   ),
                 ),

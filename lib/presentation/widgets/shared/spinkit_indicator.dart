@@ -13,7 +13,7 @@ class SpinkitIndicator extends StatelessWidget {
       child: Padding(
         padding: padding,
         child: SpinKitPulse(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           size: 30.0,
         ),
       ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../controllers/search_provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
-import 'package:provider/provider.dart';
 import '../../../core/service/firebase_helper.dart';
 import '../../../core/utilities/size_config.dart';
 
@@ -28,9 +28,9 @@ class SearchBar extends StatelessWidget {
                 name: "search", value: controller.toString());
           },
           textAlignVertical: TextAlignVertical.center,
-          cursorColor: Theme.of(context).textTheme.titleLarge!.color,
+          cursorColor: Theme.of(context).textTheme.titleSmall!.color,
           autofocus: autoFocus,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+          style: Theme.of(context).textTheme.displayLarge!.copyWith(
               fontSize: SizeConfig.screenWidth! > 600 ? 20 : 14,
               fontWeight: FontWeight.normal),
           decoration: InputDecoration(
@@ -39,7 +39,7 @@ class SearchBar extends StatelessWidget {
               hintStyle: Theme.of(context).textTheme.headlineSmall,
               prefixIcon: Icon(
                 Icons.search,
-                color: Theme.of(context).textTheme.titleLarge!.color,
+                color: Theme.of(context).textTheme.titleSmall!.color,
               ),
               contentPadding: const EdgeInsets.only(top: 5),
               border: OutlineInputBorder(

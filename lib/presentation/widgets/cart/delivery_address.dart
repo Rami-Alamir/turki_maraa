@@ -21,7 +21,7 @@ class DeliveryAddress extends StatelessWidget {
             AppLocalizations.of(context)!.tr('delivery_address'),
             style: Theme.of(context)
                 .textTheme
-                .displayLarge!
+                .displayMedium!
                 .copyWith(fontSize: 14),
           ),
         ),
@@ -29,14 +29,15 @@ class DeliveryAddress extends StatelessWidget {
           margin: const EdgeInsets.only(right: 10.0, top: 15, left: 10),
           constraints: const BoxConstraints(minHeight: 56),
           decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primaryContainer,
+              color: Theme.of(context).colorScheme.outline,
               borderRadius: const BorderRadius.all(Radius.circular(10))),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(Icons.location_pin, color: Theme.of(context).primaryColor),
+                Icon(Icons.location_pin,
+                    color: Theme.of(context).colorScheme.primary),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: SizedBox(

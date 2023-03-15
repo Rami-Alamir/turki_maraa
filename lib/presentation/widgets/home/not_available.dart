@@ -7,10 +7,9 @@ class NotAvailable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color color =
-        Theme.of(context).colorScheme.background == AppColors.black
-            ? AppColors.redPink
-            : AppColors.red;
+    final Color color = Theme.of(context).colorScheme.background == Colors.black
+        ? AppColors.redGary
+        : AppColors.red;
     return Container(
       margin: const EdgeInsets.only(right: 10.0, top: 15, left: 10),
       constraints: const BoxConstraints(minHeight: 56),

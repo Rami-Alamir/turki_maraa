@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../shared/rounded_rectangle_button.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
-import '../shared/rounded_rectangle_button.dart';
 
 class MessageDialog extends StatelessWidget {
   final String message;
@@ -14,7 +14,7 @@ class MessageDialog extends StatelessWidget {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15.0))),
-      backgroundColor: Theme.of(context).splashColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       elevation: 0,
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -36,10 +36,9 @@ class MessageDialog extends StatelessWidget {
             child: Text(
               message,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineMedium!
-                  .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                    fontSize: 14,
+                  ),
             ),
           ),
           RoundedRectangleButton(

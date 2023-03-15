@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+import 'circle_icon.dart';
 import '../../../controllers/favourite_provider.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../controllers/product_provider.dart';
@@ -10,7 +11,6 @@ import '../../../core/utilities/format_helper.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../models/product_details.dart';
-import 'circle_icon.dart';
 
 class ProductDescription extends StatefulWidget {
   final ProductDetails product;
@@ -68,14 +68,14 @@ class _ProductDescriptionState extends State<ProductDescription> {
                           : product.data!.subCategory?.typeEn ?? "",
                       style: Theme.of(context)
                           .textTheme
-                          .titleSmall!
-                          .copyWith(fontSize: 14),
+                          .headlineSmall!
+                          .copyWith(fontSize: 14, height: 1.4),
                     ),
                     Text(
                       isAr ? product.data!.nameAr! : product.data!.nameEn!,
                       style: Theme.of(context)
                           .textTheme
-                          .headlineMedium!
+                          .displayMedium!
                           .copyWith(fontSize: 20, height: 1.4),
                     ),
                   ],
@@ -137,28 +137,22 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         sl<FormatHelper>()
                             .formatDecimalAndRemoveTrailingZeros(widget.price),
                         textAlign: TextAlign.start,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(
-                                color: widget.salePrice > 0.0 &&
-                                        widget.salePrice < widget.price
-                                    ? Theme.of(context)
-                                        .textTheme
-                                        .titleLarge!
-                                        .color!
-                                        .withOpacity(0.4)
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .titleMedium!
-                                        .color,
-                                decorationThickness: 2,
-                                decoration: widget.salePrice > 0.0 &&
-                                        widget.salePrice < widget.price
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none,
-                                fontSize: widget.salePrice > 0 ? 14 : 16,
-                                fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            color: widget.salePrice > 0.0 &&
+                                    widget.salePrice < widget.price
+                                ? Theme.of(context)
+                                    .textTheme
+                                    .displayMedium!
+                                    .color!
+                                    .withOpacity(0.4)
+                                : Theme.of(context).textTheme.titleSmall!.color,
+                            decorationThickness: 2,
+                            decoration: widget.salePrice > 0.0 &&
+                                    widget.salePrice < widget.price
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                            fontSize: widget.salePrice > 0 ? 14 : 16,
+                            fontWeight: FontWeight.bold),
                         maxLines: 1,
                       ),
                     ),
@@ -170,22 +164,14 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         textAlign: TextAlign.start,
                         style: Theme.of(context)
                             .textTheme
-                            .titleMedium!
-                            .copyWith(
-                                fontSize: 16,
-                                height: 1.4,
-                                fontWeight: FontWeight.bold),
+                            .titleSmall!
+                            .copyWith(height: 1.4, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Text(currency,
                         textAlign: TextAlign.start,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(
-                                fontSize: 16,
-                                height: 1.4,
-                                fontWeight: FontWeight.bold)),
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            height: 1.4, fontWeight: FontWeight.bold)),
                   ],
                 )),
             Padding(
@@ -195,7 +181,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 AppLocalizations.of(context)!.tr('vat_included'),
                 style: Theme.of(context)
                     .textTheme
-                    .titleSmall!
+                    .headlineSmall!
                     .copyWith(fontSize: 12, height: 1.4),
               ),
             ),
@@ -212,11 +198,9 @@ class _ProductDescriptionState extends State<ProductDescription> {
                     ? product.data!.descriptionAr!
                     : product.data!.descriptionEn!,
                 trimLines: 2,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(fontSize: 14, height: 1.5),
-                colorClickableText: Theme.of(context).primaryColor,
+                style: Theme.of(context).textTheme.bodyLarge,
+                colorClickableText:
+                    Theme.of(context).textTheme.titleSmall!.color,
                 trimMode: TrimMode.Line,
                 semanticsLabel: "",
                 delimiter: " ",
@@ -225,7 +209,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 trimExpandedText: AppLocalizations.of(context)!.tr('show_less'),
                 moreStyle: Theme.of(context)
                     .textTheme
-                    .titleMedium!
+                    .titleSmall!
                     .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
               )),
         ),

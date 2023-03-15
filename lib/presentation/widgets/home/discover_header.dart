@@ -4,6 +4,7 @@ import '../../../controllers/discover_provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../../core/constants/app_colors.dart';
 
 class DiscoverHeader extends StatelessWidget {
   const DiscoverHeader({Key? key}) : super(key: key);
@@ -18,25 +19,23 @@ class DiscoverHeader extends StatelessWidget {
       visible: discoverProvider.discoverItem!.data!.subImage!.isNotEmpty,
       child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              color: Colors.transparent,
-              height: 250,
-              width: SizeConfig.screenWidth!,
-              child: Card(
-                elevation: 1,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0)),
-                child: Container(
-                  color: Colors.transparent,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
-                      child: Image.network(
-                        discoverProvider.discoverItem!.data!.subImage!,
-                        fit: BoxFit.cover,
-                      )),
-                ),
+          Container(
+            margin: const EdgeInsets.all(10.0),
+            color: Colors.transparent,
+            height: 250,
+            width: SizeConfig.screenWidth!,
+            child: Card(
+              elevation: 1,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0)),
+              child: Container(
+                color: Colors.transparent,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15.0),
+                    child: Image.network(
+                      discoverProvider.discoverItem!.data!.subImage!,
+                      fit: BoxFit.cover,
+                    )),
               ),
             ),
           ),

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../../widgets/order/order_details_row.dart';
+import '../../widgets/shared/invoice.dart';
+import '../../widgets/shared/main_card.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../models/order.dart';
-import '../../widgets/order/order_details_row.dart';
-import '../../widgets/shared/invoice.dart';
-import '../../widgets/shared/main_card.dart';
 
 class OrderDetailsCard extends StatelessWidget {
   const OrderDetailsCard({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
@@ -24,8 +24,7 @@ class OrderDetailsCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
         child: Text(
           AppLocalizations.of(context)!.tr('order_details'),
-          style:
-              Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 12),
+          style: Theme.of(context).textTheme.displayMedium,
         ),
       ),
       MainCard(
@@ -36,9 +35,7 @@ class OrderDetailsCard extends StatelessWidget {
               padding: const EdgeInsets.only(right: 15.0, top: 20, bottom: 10),
               child: Text(
                 "${AppLocalizations.of(context)!.tr('items')} (${ordersProvider.orderItems()})",
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      fontSize: 12,
-                    ),
+                style: Theme.of(context).textTheme.displayMedium,
               ),
             ),
             ListView.builder(

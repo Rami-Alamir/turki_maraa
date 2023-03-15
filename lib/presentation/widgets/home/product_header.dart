@@ -4,6 +4,7 @@ import '../../../core/constants/app_colors.dart';
 import '../shared/dots_indicator.dart';
 import '../../../models/images.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../../core/constants/app_colors.dart';
 
 class ProductHeader extends StatefulWidget {
   final List<Images> imgList;

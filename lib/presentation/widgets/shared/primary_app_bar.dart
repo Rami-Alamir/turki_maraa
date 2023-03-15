@@ -28,7 +28,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: title != null
             ? Text(
                 title!,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleSmall,
               )
             : const Logo(),
         centerTitle: true,
@@ -38,10 +38,8 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
             width: 55,
             height: 66,
             child: IconButton(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
               icon: Icon(Icons.arrow_back_ios,
-                  color: Theme.of(context).primaryColor),
+                  color: Theme.of(context).colorScheme.primary),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),

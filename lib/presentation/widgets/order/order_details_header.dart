@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'item_column.dart';
+import '../../widgets/shared/main_card.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../models/order.dart';
-import '../../widgets/shared/main_card.dart';
-import 'item_column.dart';
 
 class OrderDetailsHeader extends StatelessWidget {
   const OrderDetailsHeader({Key? key}) : super(key: key);
@@ -35,7 +34,7 @@ class OrderDetailsHeader extends StatelessWidget {
                     '${AppLocalizations.of(context)!.tr("order_id")}: #${order.refNo}',
                     style: Theme.of(context)
                         .textTheme
-                        .displayLarge!
+                        .displayMedium!
                         .copyWith(fontSize: 14),
                   ),
                 ),

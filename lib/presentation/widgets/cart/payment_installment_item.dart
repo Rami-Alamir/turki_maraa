@@ -39,7 +39,6 @@ class PaymentInstallmentItem extends StatelessWidget {
         onTap: () {
           cartProvider.setSelectedPayment = selectedValue;
         },
-        splashColor: Colors.transparent,
         child: Container(
             margin: padding,
             width: SizeConfig.setWidgetWidth(
@@ -50,8 +49,8 @@ class PaymentInstallmentItem extends StatelessWidget {
             ),
             decoration: BoxDecoration(
                 color: selected
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).colorScheme.primaryContainer,
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.outline,
                 borderRadius: const BorderRadius.all(Radius.circular(10))),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,12 +65,16 @@ class PaymentInstallmentItem extends StatelessWidget {
                 ),
                 Text(
                   AppLocalizations.of(context)!.tr(title),
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 9,
                       fontWeight: FontWeight.bold,
                       color: selected
                           ? AppColors.white
-                          : Theme.of(context).textTheme.headlineSmall!.color),
+                          : Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .color!
+                              .withOpacity(0.6)),
                 ),
               ],
             )),

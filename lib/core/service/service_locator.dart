@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import '../../repository/tabby_repository.dart';
 import 'networking/api_base_helper.dart';
 import '../utilities/calculate_helper.dart';
 import '../utilities/dialog_helper.dart';
@@ -23,6 +22,7 @@ import '../../repository/tamara_repository.dart';
 import '../../repository/user_repository.dart';
 import '../../repository/version_repository.dart';
 import '../../repository/promotions_repository.dart';
+import '../../repository/tabby_repository.dart';
 
 final sl = GetIt.instance;
 

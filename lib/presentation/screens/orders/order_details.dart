@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/orders_provider.dart';
-import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/order/delivery_address.dart';
 import '../../widgets/order/order_details_card.dart';
 import '../../widgets/order/order_details_header.dart';
@@ -9,6 +7,8 @@ import '../../widgets/order/order_note.dart';
 import '../../widgets/order/payment_method.dart';
 import '../../widgets/shared/page_builder.dart';
 import '../../widgets/shared/primary_app_bar.dart';
+import '../../../controllers/orders_provider.dart';
+import '../../../core/utilities/app_localizations.dart';
 
 class OrderDetails extends StatefulWidget {
   final String? id;

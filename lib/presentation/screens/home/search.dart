@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/search_provider.dart';
-import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/home/search_bar.dart';
 import '../../widgets/home/search_row.dart';
+import '../../../controllers/search_provider.dart';
+import '../../../core/utilities/app_localizations.dart';
 
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class Search extends StatelessWidget {
                   child: Text(AppLocalizations.of(context)!.tr('search'),
                       style: Theme.of(context)
                           .textTheme
-                          .titleMedium!
+                          .titleSmall!
                           .copyWith(fontSize: 20, fontWeight: FontWeight.w700)),
                 ),
                 InkWell(
@@ -33,9 +33,8 @@ class Search extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(
                         top: 10.0, right: 30, left: 30, bottom: 20),
-                    child: Text('X',
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
+                    child:
+                        Text('X', style: Theme.of(context).textTheme.titleSmall),
                   ),
                 ),
               ],

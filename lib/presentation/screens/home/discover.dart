@@ -43,8 +43,8 @@ class DiscoverState extends State<Discover> {
           discoverProvider.getDiscoverItem(widget.item.id!);
         },
         child: RefreshIndicator(
-          color: Theme.of(context).primaryColor,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           onRefresh: () async {
             await discoverProvider.getDiscoverItem(widget.item.id!);
           },

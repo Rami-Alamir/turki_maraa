@@ -26,11 +26,10 @@ class ItemColumn extends StatelessWidget {
         ),
         Text(
           value,
-          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              height: 1.6,
-              fontWeight: FontWeight.bold,
-              fontSize: 10,
-              color: Theme.of(context).primaryColor),
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                height: 1.6,
+                fontSize: 10,
+              ),
         ),
       ],
     );

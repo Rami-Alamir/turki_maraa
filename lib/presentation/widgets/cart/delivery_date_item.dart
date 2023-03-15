@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/cart_provider.dart';
-import '../../../core/constants/app_colors.dart';
 
 class DeliveryDateItem extends StatelessWidget {
   final int selectedValue;
@@ -24,7 +23,6 @@ class DeliveryDateItem extends StatelessWidget {
       onTap: () {
         cartProvider.setSelectedDate = selectedValue;
       },
-      splashColor: Colors.transparent,
       child: Container(
         width: 80,
         padding: const EdgeInsets.all(3.0),
@@ -33,8 +31,8 @@ class DeliveryDateItem extends StatelessWidget {
         ),
         decoration: BoxDecoration(
             color: selected
-                ? Theme.of(context).primaryColor
-                : Theme.of(context).colorScheme.primaryContainer,
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.outline,
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -43,24 +41,32 @@ class DeliveryDateItem extends StatelessWidget {
               padding: const EdgeInsets.only(right: 8.0, left: 8, top: 10),
               child: Text(
                 subtitle,
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 11,
                     fontWeight: FontWeight.normal,
                     color: selected
-                        ? AppColors.white
-                        : Theme.of(context).textTheme.headlineSmall!.color),
+                        ? Colors.white
+                        : Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .color!
+                            .withOpacity(0.6)),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8.0, left: 8, top: 10),
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: selected
-                        ? AppColors.white
-                        : Theme.of(context).textTheme.headlineSmall!.color),
+                        ? Colors.white
+                        : Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .color!
+                            .withOpacity(0.6)),
               ),
             ),
           ],

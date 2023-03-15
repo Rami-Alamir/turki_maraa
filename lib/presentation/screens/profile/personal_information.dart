@@ -1,15 +1,15 @@
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
-import '../../../controllers/user_provider.dart';
-import '../../../core/service/service_locator.dart';
-import '../../../core/utilities/app_localizations.dart';
-import '../../../core/utilities/show_snack_bar.dart';
-import '../../widgets/profile/delete_row.dart';
+import 'package:provider/provider.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import '../../widgets/profile/personal_info_item.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/profile/gender_picker.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
-import 'package:provider/provider.dart';
+import '../../widgets/profile/delete_row.dart';
+import '../../../controllers/user_provider.dart';
+import '../../../core/service/service_locator.dart';
+import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/show_snack_bar.dart';
 
 class PersonalInformation extends StatefulWidget {
   const PersonalInformation({Key? key}) : super(key: key);
@@ -44,7 +44,7 @@ class PersonalInformationState extends State<PersonalInformation> {
           padding: const EdgeInsets.only(top: 80),
           children: [
             AvatarGlow(
-              glowColor: Theme.of(context).primaryColor,
+              glowColor: Theme.of(context).colorScheme.primary,
               endRadius: 78.0,
               duration: const Duration(milliseconds: 2000),
               repeat: true,
@@ -52,7 +52,7 @@ class PersonalInformationState extends State<PersonalInformation> {
               repeatPauseDuration: const Duration(milliseconds: 100),
               child: CircleAvatar(
                 radius: 60,
-                backgroundColor: Theme.of(context).primaryColor,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 child: Text(
                     ((userProvider.userData?.data?.name)?.length ?? 0) > 0
                         ? (userProvider.userData?.data?.name ?? " ")

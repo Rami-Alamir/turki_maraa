@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/utilities/app_localizations.dart';
 import 'extra_tag.dart';
+import '../../../core/utilities/app_localizations.dart';
 
 class ShalwataExtra extends StatelessWidget {
   final Function onTap;
@@ -22,10 +22,7 @@ class ShalwataExtra extends StatelessWidget {
             padding:
                 const EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 0.0, 10.0),
             child: Text(AppLocalizations.of(context)!.tr('shalwata'),
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
+                style: Theme.of(context).textTheme.titleSmall),
           ),
           Container(
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),

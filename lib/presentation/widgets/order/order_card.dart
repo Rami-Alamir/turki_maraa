@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 import 'item_column.dart';
 import '../../../models/orders_data.dart';
+import '../../../core/utilities/format_helper.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../../core/utilities/format_helper.dart';
 
 class OrderCard extends StatelessWidget {
   final Data order;
@@ -25,7 +25,6 @@ class OrderCard extends StatelessWidget {
     return InkWell(
       onTap: () =>
           Navigator.pushNamed(context, orderDetails, arguments: order.refNo),
-      splashColor: Colors.transparent,
       child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.5),
           constraints: const BoxConstraints(minHeight: 250),
@@ -34,8 +33,8 @@ class OrderCard extends StatelessWidget {
               begin: Alignment.bottomRight,
               end: Alignment.bottomLeft,
               colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).primaryColor.withOpacity(0.78),
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.primary.withOpacity(0.78),
               ],
             ),
             borderRadius: const BorderRadius.only(
@@ -45,10 +44,7 @@ class OrderCard extends StatelessWidget {
                 bottomLeft: Radius.circular(5.0)),
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context)
-                    .colorScheme
-                    .secondaryContainer
-                    .withOpacity(0.15),
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.15),
                 spreadRadius: 0.5,
                 blurRadius: 11,
               ),
@@ -62,7 +58,7 @@ class OrderCard extends StatelessWidget {
                   child: Container(
                     width: SizeConfig.screenWidth,
                     constraints: const BoxConstraints(minHeight: 175),
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: Theme.of(context).colorScheme.background,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Column(
@@ -84,7 +80,7 @@ class OrderCard extends StatelessWidget {
                                       child: Container(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .secondary,
+                                            .onBackground,
                                         child: Image.network(
                                           (order.orderProducts?.length ?? 0) > 0
                                               ? order
@@ -169,40 +165,6 @@ class OrderCard extends StatelessWidget {
                                             );
                                           }),
                                     ),
-                                    // order.products!.length >= 1
-                                    //     ? Padding(
-                                    //         padding:
-                                    //             const EdgeInsets.symmetric(
-                                    //                 vertical: 5.0),
-                                    //         child: Text(
-                                    //             "qty x ${_isAr ? order.products![0].nameAr : order.products![0].nameEn}",
-                                    //             style: Theme.of(context)
-                                    //                 .textTheme
-                                    //                 .headline5!
-                                    //                 .copyWith(
-                                    //                     height: 1,
-                                    //                     fontSize: 14,
-                                    //                     fontWeight: FontWeight
-                                    //                         .normal)),
-                                    //       )
-                                    //     : Container(),
-                                    // order.products!.length >= 2
-                                    //     ? Padding(
-                                    //         padding:
-                                    //             const EdgeInsets.symmetric(
-                                    //                 vertical: 5.0),
-                                    //         child: Text(
-                                    //             "qty x ${_isAr ? order.products![1].nameAr : order.products![1].nameEn}",
-                                    //             style: Theme.of(context)
-                                    //                 .textTheme
-                                    //                 .headline5!
-                                    //                 .copyWith(
-                                    //                     height: 1,
-                                    //                     fontSize: 14,
-                                    //                     fontWeight: FontWeight
-                                    //                         .normal)),
-                                    //       )
-                                    //     : Container(),
                                   ],
                                 ),
                               )

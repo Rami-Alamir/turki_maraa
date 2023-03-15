@@ -1,16 +1,16 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import '../shared/main_card.dart';
 import '../../../controllers/favourite_provider.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/service/firebase_helper.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../models/favourite.dart';
-import '../shared/main_card.dart';
 
 class FavouriteCard extends StatelessWidget {
   final Data data;
@@ -21,6 +21,7 @@ class FavouriteCard extends StatelessWidget {
     required this.data,
     required this.index,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final bool isAr =
@@ -47,7 +48,6 @@ class FavouriteCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: InkWell(
-          splashColor: Colors.transparent,
           onTap: () {
             FirebaseHelper().pushAnalyticsEvent(
                 name: "product", value: data.product!.nameEn!);
@@ -105,7 +105,7 @@ class FavouriteCard extends StatelessWidget {
                                 minFontSize: 12,
                                 maxFontSize: 14,
                                 style:
-                                    Theme.of(context).textTheme.headlineMedium),
+                                    Theme.of(context).textTheme.displayMedium),
                           ),
                           Padding(
                               padding:
@@ -117,10 +117,10 @@ class FavouriteCard extends StatelessWidget {
                                 trimLines: 2,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall!
+                                    .bodyLarge!
                                     .copyWith(fontSize: 12, height: 1.5),
                                 colorClickableText:
-                                    Theme.of(context).primaryColor,
+                                    Theme.of(context).colorScheme.primary,
                                 trimMode: TrimMode.Line,
                                 semanticsLabel: "",
                                 delimiter: " ",
@@ -130,7 +130,7 @@ class FavouriteCard extends StatelessWidget {
                                     .tr('show_less'),
                                 moreStyle: Theme.of(context)
                                     .textTheme
-                                    .titleMedium!
+                                    .titleSmall!
                                     .copyWith(
                                         fontSize: 10,
                                         fontWeight: FontWeight.normal),
@@ -159,10 +159,9 @@ class FavouriteCard extends StatelessWidget {
                                   '${data.product!.price}',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .displayLarge
+                                      .titleSmall
                                       ?.copyWith(
                                         fontSize: 14,
-                                        color: Theme.of(context).primaryColor,
                                       ),
                                 ),
                               ],
@@ -184,12 +183,13 @@ class FavouriteCard extends StatelessWidget {
   Future<void> deleteFromFavourite(BuildContext context) async {
     final FavouriteProvider favourite =
         Provider.of<FavouriteProvider>(context, listen: false);
-
     await favourite.deleteFromFavourite(
         context: context,
         notify: false,
         id: data.id!.toString(),
         productName: data.product!.nameAr!);
-    if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
+    if (context.mounted) {
+      Navigator.of(context, rootNavigator: true).pop();
+    }
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/route_constants.dart';
-import '../../../models/discover_data.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
+import '../../../models/discover_data.dart';
 
 class DiscoverCard extends StatelessWidget {
   final Data item;
@@ -14,8 +15,6 @@ class DiscoverCard extends StatelessWidget {
       width: 165,
       height: 90,
       child: InkWell(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         onTap: () => Navigator.pushNamed(context, discover, arguments: item),
         child: Stack(
           children: [
@@ -40,7 +39,7 @@ class DiscoverCard extends StatelessWidget {
               height: 90,
               width: 165,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
+                color: AppColors.white.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Center(
@@ -54,7 +53,7 @@ class DiscoverCard extends StatelessWidget {
                           ? item.titleAr!
                           : item.titleEn!,
                       style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 20),
                     ),

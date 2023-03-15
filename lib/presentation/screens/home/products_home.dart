@@ -49,7 +49,7 @@ class ProductsHomeState extends State<ProductsHome> {
                   icon: Icon(
                     TURKIICONS.search,
                     size: 25,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),

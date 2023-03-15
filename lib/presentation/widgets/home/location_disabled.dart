@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:app_settings/app_settings.dart';
+import '../shared/rounded_rectangle_button.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../shared/rounded_rectangle_button.dart';
-import 'package:app_settings/app_settings.dart';
 
 class LocationDisabled extends StatelessWidget {
   final int locationStatus;
@@ -20,7 +20,7 @@ class LocationDisabled extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 280.0),
+            padding: EdgeInsets.only(top: SizeConfig.homeAppBarHeight + 50),
             child:
                 Image.asset(FixedAssets.notSupported, width: 185, height: 185),
           ),
@@ -34,7 +34,7 @@ class LocationDisabled extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .displayMedium!
-                  .copyWith(fontSize: 14, height: 2),
+                  .copyWith(height: 2),
             ),
           ),
           Visibility(

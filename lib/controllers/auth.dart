@@ -59,6 +59,10 @@ class Auth with ChangeNotifier {
     _isoCountryCode = value;
   }
 
+  set setDialCode(String value) {
+    _dialCode = value;
+  }
+
   set setIsLoading(bool value) {
     _isLoading = value;
     notifyListeners();

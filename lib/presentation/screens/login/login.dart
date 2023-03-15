@@ -41,8 +41,7 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    final Auth auth = Provider.of<Auth>(context);
-
+    final Auth auth = Provider.of<Auth>(context, listen: false);
     return Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,

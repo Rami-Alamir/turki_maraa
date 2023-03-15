@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'extra_tag.dart';
 import '../../../controllers/product_provider.dart';
 import '../../../models/product_details.dart';
 import '../../../core/utilities/app_localizations.dart';
-import 'extra_tag.dart';
 
 class WithoutExtra extends StatelessWidget {
   final ProductDetails product;
@@ -28,10 +28,7 @@ class WithoutExtra extends StatelessWidget {
             padding:
                 const EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 0.0, 10.0),
             child: Text(AppLocalizations.of(context)!.tr('without'),
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
+                style: Theme.of(context).textTheme.titleSmall),
           ),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 5),

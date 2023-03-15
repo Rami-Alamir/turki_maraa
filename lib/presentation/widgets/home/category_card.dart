@@ -1,8 +1,7 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/fixed_assets.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/firebase_helper.dart';
 
@@ -33,66 +32,62 @@ class CategoryCard extends StatelessWidget {
             .logEvent(name: 'Categories', parameters: {"name": titleAr});
         FirebaseHelper.analytics!.logEvent(name: titleEn, parameters: null);
       },
-      splashColor: Colors.transparent,
       child: Container(
-        height: 120,
         margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
-        // decoration: BoxDecoration(
-        //   borderRadius: const BorderRadius.all(Radius.circular(12)),
-        //   gradient: LinearGradient(
-        //       begin: Alignment.bottomLeft,
-        //       end: Alignment.topLeft,
-        //       colors: [
-        //         color,
-        //         color2,
-        //       ]),
-        // ),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.transparent,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          image: DecorationImage(
-            image: AssetImage(
-                Theme.of(context).colorScheme.background == AppColors.black
-                    ? FixedAssets.backgroundDark
-                    : FixedAssets.background),
-            fit: BoxFit.cover,
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 10, 0),
-              child: SizedBox(
-                width: SizeConfig.screenWidth! - 190,
-                child: AutoSizeText(
-                  title,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                        fontSize: 18, height: 1.5,
-                        fontWeight: FontWeight.w500,
-                        // color: const Color.fromRGBO(199, 154, 72, 1),
-                      ),
-                  maxFontSize: 18,
-                  minFontSize: 8,
-                  overflow: TextOverflow.visible,
-                  maxLines: 2,
+            Container(
+              height: SizeConfig.setWidgetHeight(120, 200, 200),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(12),
+                    topLeft: Radius.circular(12)),
+                image: DecorationImage(
+                  image: NetworkImage(image),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 5, 5),
-              child: ClipRRect(
+            Container(
+              height: SizeConfig.setWidgetHeight(40, 60, 60),
+              decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(20.0),
-                    bottomLeft: Radius.circular(20.0)),
-                child: Image.network(
-                  image,
-                  fit: BoxFit.contain,
-                  height: 120,
-                  width: 120,
-                ),
+                    bottomRight: Radius.circular(12),
+                    bottomLeft: Radius.circular(12)),
+                color: Theme.of(context).colorScheme.onTertiary,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: SizeConfig.screenWidth! - 60,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: AutoSizeText(
+                        title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onTertiary ==
+                                            AppColors.purpleGray
+                                        ? AppColors.purple
+                                        : AppColors.land,
+                                fontSize: 15),
+                        maxFontSize: 15,
+                        minFontSize: 8,
+                        overflow: TextOverflow.visible,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

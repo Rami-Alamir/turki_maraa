@@ -41,9 +41,11 @@ class FaqRowState extends State<FaqRow> {
                       .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
                 trailing: Icon(
-                  _selected ? Icons.remove : Icons.add,
-                  size: 20,
-                  color: Theme.of(context).textTheme.titleLarge!.color,
+                  _selected
+                      ? Icons.keyboard_arrow_up_sharp
+                      : Icons.keyboard_arrow_down_sharp,
+                  size: 25,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 15),
               ),
@@ -55,7 +57,7 @@ class FaqRowState extends State<FaqRow> {
                   child: Text(
                     widget.answer,
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
               ),

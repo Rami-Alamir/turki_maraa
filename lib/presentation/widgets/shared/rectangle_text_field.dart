@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../../core/constants/app_colors.dart';
 
 class RectangleTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -61,17 +61,17 @@ class RectangleTextField extends StatelessWidget {
           focusNode: focusNode,
           obscureText: obscureText ?? false,
           textAlign: TextAlign.start,
-          cursorColor: Theme.of(context).primaryColor,
+          cursorColor: Theme.of(context).colorScheme.primary,
           controller: controller,
           onChanged: (value) {
             if (onChanged != null) onChanged!(value);
           },
-          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+          style: Theme.of(context).textTheme.displayLarge!.copyWith(
               fontSize: width > 600 ? 18 : 14, fontWeight: FontWeight.normal),
           textInputAction: textInputAction ?? TextInputAction.done,
           decoration: InputDecoration(
               counterText: "",
-              fillColor: white != null ? AppColors.white : Colors.transparent,
+              fillColor: white != null ? Colors.white : Colors.transparent,
               filled: true,
               contentPadding: contentPadding,
               border: OutlineInputBorder(
@@ -82,27 +82,25 @@ class RectangleTextField extends StatelessWidget {
                   borderSide: BorderSide(color: AppColors.red, width: 1)),
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor, width: 1)),
+                      color: Theme.of(context).colorScheme.primary, width: 1)),
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .color!
+                          .colorScheme
+                          .secondaryContainer
                           .withOpacity(0.35),
                       width: 0.35)),
               disabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: Theme.of(context)
-                        .textTheme
-                        .headlineMedium!
-                        .color!
+                        .colorScheme
+                        .secondaryContainer
                         .withOpacity(0.35),
                     width: 0.35),
               ),
               hintText: hint,
-              hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  fontSize: width > 600 ? 18 : 14,
+              hintStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  fontSize: width > 600 ? 14 : 12,
                   fontWeight: FontWeight.normal)),
           validator: (value) {
             if (emailValidate ?? false) {

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/profile/profile_row.dart';
+import '../../widgets/shared/main_card.dart';
 import '../../../controllers/app_language.dart';
 import '../../../controllers/app_theme.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/service/firebase_helper.dart';
-import '../../widgets/profile/profile_row.dart';
-import '../../widgets/shared/main_card.dart';
 
 class SettingsCard extends StatelessWidget {
   const SettingsCard({Key? key}) : super(key: key);
@@ -23,10 +23,7 @@ class SettingsCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
             child: Text(AppLocalizations.of(context)!.tr('settings'),
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    )),
+                style: Theme.of(context).textTheme.displayMedium),
           ),
           MainCard(
               width: SizeConfig.screenWidth!,
@@ -47,6 +44,18 @@ class SettingsCard extends StatelessWidget {
                         withArrow: false,
                         icon: FixedAssets.language,
                         title: 'language'),
+                    Visibility(
+                      visible: theme.themeName != 'main',
+                      child: ProfileRow(
+                          onTap: () {
+                            FirebaseHelper().pushAnalyticsEvent(
+                                name: 'change_app_theme', value: 'main');
+                            theme.changeTheme('main');
+                          },
+                          withArrow: false,
+                          icon: FixedAssets.main,
+                          title: 'main_theme'),
+                    ),
                     Visibility(
                       visible: theme.themeName != 'light',
                       child: ProfileRow(

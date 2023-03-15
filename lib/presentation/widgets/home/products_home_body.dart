@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/home/products_list_section.dart';
-import '../../../controllers/products_provider.dart';
 import 'discover_section.dart';
 import 'food_appbar.dart';
+import '../../widgets/home/products_list_section.dart';
+import '../../../controllers/products_provider.dart';
 
 class ProductsHomeBody extends StatelessWidget {
   final int id;
@@ -22,8 +22,8 @@ class ProductsHomeBody extends StatelessWidget {
         Provider.of<ProductsProvider>(context);
 
     return RefreshIndicator(
-      color: Theme.of(context).primaryColor,
-      backgroundColor: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       onRefresh: () async {
         await productsProvider.getFoodsPageData(id, isLoading: false);
       },

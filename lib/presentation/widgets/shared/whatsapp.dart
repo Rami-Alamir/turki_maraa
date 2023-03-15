@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_colors.dart';
 import 'dart:io';
 import 'package:url_launcher/url_launcher_string.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/service/firebase_helper.dart';
@@ -14,7 +14,7 @@ class Whatsapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: AppColors.green2,
+      backgroundColor: AppColors.green,
       onPressed: () {
         final LocationProvider locationProvider =
             Provider.of<LocationProvider>(context, listen: false);

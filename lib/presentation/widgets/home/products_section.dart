@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'product_card.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../models/product.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import 'product_card.dart';
 
 class ProductsSection extends StatelessWidget {
   final String title;
@@ -27,11 +27,7 @@ class ProductsSection extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(title, style: Theme.of(context).textTheme.titleSmall),
                   Visibility(
                     visible: index != null,
                     child: Row(
@@ -40,21 +36,19 @@ class ProductsSection extends StatelessWidget {
                           onTap: () => Navigator.pushNamed(
                               context, productsList,
                               arguments: {"title": title, "index": index}),
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
                           child: Text(
                               AppLocalizations.of(context)!.tr('view_all'),
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleMedium!
+                                  .titleSmall!
                                   .copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold)),
+                                    fontSize: 10,
+                                  )),
                         ),
                         Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
-                          color: Theme.of(context).textTheme.titleMedium!.color,
+                          color: Theme.of(context).textTheme.titleSmall!.color,
                         )
                       ],
                     ),

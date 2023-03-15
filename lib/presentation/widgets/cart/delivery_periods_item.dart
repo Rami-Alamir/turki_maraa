@@ -19,14 +19,13 @@ class DeliveryPeriodsItem extends StatelessWidget {
       onTap: () {
         cartProvider.setSelectedTime = selectedValue;
       },
-      splashColor: Colors.transparent,
       child: Container(
         padding: const EdgeInsets.all(3.0),
         height: 20,
         decoration: BoxDecoration(
             color: selected
-                ? Theme.of(context).primaryColor
-                : Theme.of(context).colorScheme.primaryContainer,
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.outline,
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,12 +36,16 @@ class DeliveryPeriodsItem extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                     color: selected
                         ? AppColors.white
-                        : Theme.of(context).textTheme.headlineSmall!.color),
+                        : Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .color!
+                            .withOpacity(0.6)),
               ),
             ),
           ],

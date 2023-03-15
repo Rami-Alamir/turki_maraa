@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/orders_provider.dart';
-import '../../../core/constants/fixed_assets.dart';
-import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/order/order_card.dart';
 import '../../widgets/shared/empty_list.dart';
 import '../../widgets/shared/page_builder.dart';
 import '../../widgets/shared/primary_app_bar.dart';
+import '../../../controllers/orders_provider.dart';
+import '../../../core/constants/fixed_assets.dart';
+import '../../../core/utilities/app_localizations.dart';
 
 class Orders extends StatelessWidget {
   final bool? back;
@@ -29,8 +29,8 @@ class Orders extends StatelessWidget {
             orders.getOrdersList(notify: true);
           },
           child: RefreshIndicator(
-            color: Theme.of(context).primaryColor,
-            backgroundColor: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary,
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
             onRefresh: () async {
               await orders.getOrdersList();
             },
@@ -51,7 +51,6 @@ class Orders extends StatelessWidget {
                 : const EmptyList(
                     image: FixedAssets.noOrders, title: 'order_now'),
           ),
-        )
-        );
+        ));
   }
 }

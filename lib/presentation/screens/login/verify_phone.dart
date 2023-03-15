@@ -40,14 +40,17 @@ class VerifyPhoneState extends State<VerifyPhone> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(Icons.arrow_back_ios),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                     Text(
                       AppLocalizations.of(context)!.tr('change_number'),
                       style: TextStyle(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.bold,
                           fontSize: 12),
                     ),
@@ -71,21 +74,26 @@ class VerifyPhoneState extends State<VerifyPhone> {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     AppLocalizations.of(context)!.tr('verify_the_number'),
-                    style: const TextStyle(
-                        fontSize: 16, height: 1, fontWeight: FontWeight.bold),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(fontSize: 16),
                   ),
                 ),
                 Text(
                   "${AppLocalizations.of(context)!.tr('you_will_receive_a_text_message_with_a_verification_code_on_the_number')} ",
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                      fontSize: 14, height: 2, fontWeight: FontWeight.normal),
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                        height: 2,
+                      ),
                 ),
                 Text(
                   auth.userPhone,
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                      fontSize: 14, height: 2, fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium!
+                      .copyWith(fontSize: 14, height: 2),
                 ),
                 const PinCodeFields(),
                 TextButton(
@@ -127,7 +135,8 @@ class VerifyPhoneState extends State<VerifyPhone> {
                                 .textTheme
                                 .headlineSmall!
                                 .copyWith(
-                                    color: Theme.of(context).primaryColor,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     fontWeight: FontWeight.w600)),
                       ),
                     ],

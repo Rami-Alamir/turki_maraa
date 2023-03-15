@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'address_card_item.dart';
+import '../dialog/confirm_dialog.dart';
+import '../../widgets/shared/main_card.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/dialog_helper.dart';
@@ -11,9 +14,6 @@ import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../controllers/address_provider.dart';
-import '../../widgets/shared/main_card.dart';
-import '../dialog/confirm_dialog.dart';
-import 'address_card_item.dart';
 
 class AddressCard extends StatelessWidget {
   final Data userAddress;
@@ -44,7 +44,7 @@ class AddressCard extends StatelessWidget {
                           userAddress.label ?? "",
                           style: Theme.of(context)
                               .textTheme
-                              .titleMedium!
+                              .titleSmall!
                               .copyWith(fontSize: 14),
                         ),
                       ),
@@ -67,17 +67,14 @@ class AddressCard extends StatelessWidget {
                             child: Icon(
                               TURKIICONS.home_location_white,
                               size: 17.5,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .color,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                           SizedBox(
                             width: SizeConfig.screenWidth! * 0.72,
                             child: Text(
                               userAddress.address ?? "",
-                              style: Theme.of(context).textTheme.headlineMedium,
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                           ),
                         ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'product_card.dart';
 import '../../../models/product.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import 'product_card.dart';
 
 class SimilarProductsSection extends StatelessWidget {
   final Product products;
@@ -55,10 +55,7 @@ class SimilarProductsSection extends StatelessWidget {
                                             .tr('You_may_also_like'),
                                         style: Theme.of(context)
                                             .textTheme
-                                            .titleLarge!
-                                            .copyWith(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold)),
+                                            .titleSmall),
                                   ],
                                 ),
                               ),

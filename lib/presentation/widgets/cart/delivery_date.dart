@@ -26,7 +26,7 @@ class DeliveryDate extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .displayLarge!
-                .copyWith(fontWeight: FontWeight.bold, fontSize: 14),
+                .copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(

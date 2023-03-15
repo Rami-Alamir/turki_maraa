@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:turki_dabayh/core/utilities/app_localizations.dart';
 import '../../../controllers/auth.dart';
+import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/country_utils.dart';
 import '../../../models/country.dart';
 
@@ -15,7 +15,7 @@ class CountryPicker extends StatelessWidget {
       child: AlertDialog(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.0))),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
         contentPadding: const EdgeInsets.all(0),
         content: Builder(
           builder: (context) {
@@ -62,7 +62,7 @@ class CountryPicker extends StatelessWidget {
                                     textDirection: TextDirection.ltr,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headlineMedium,
+                                        .displaySmall,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -76,7 +76,7 @@ class CountryPicker extends StatelessWidget {
                                           : countries[index].nameEn,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .displaySmall,
                                     ),
                                   ),
                                 ],

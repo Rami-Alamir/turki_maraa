@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/user_provider.dart';
@@ -23,13 +22,15 @@ class UserDataHeader extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundColor: Theme.of(context).primaryColor,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.tertiaryContainer,
                     child: Text(
                         (user.userData?.data?.name ?? "").isNotEmpty
                             ? (user.userData?.data?.name ?? "").substring(0, 1)
                             : "",
-                        style: const TextStyle(
-                            fontSize: 20, color: AppColors.white)),
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Theme.of(context).colorScheme.surface)),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -40,12 +41,15 @@ class UserDataHeader extends StatelessWidget {
                       children: [
                         Text(
                           user.userData?.data?.name ?? "",
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
                         Directionality(
                           textDirection: TextDirection.ltr,
                           child: Text(user.userData?.data?.mobile ?? "",
-                              style: Theme.of(context).textTheme.titleSmall),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .copyWith(height: 1.5)),
                         )
                       ],
                     ),
@@ -57,14 +61,15 @@ class UserDataHeader extends StatelessWidget {
                 children: [
                   CircleAvatar(
                       radius: 30,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      child: const Icon(
+                      backgroundColor:
+                          Theme.of(context).colorScheme.tertiaryContainer,
+                      child: Icon(
                         TURKIICONS.user6,
-                        color: AppColors.white,
+                        color: Theme.of(context).colorScheme.surface,
                       )),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 10),
+                        horizontal: 10.0, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -75,7 +80,7 @@ class UserDataHeader extends StatelessWidget {
                                   .pushNamed(login),
                           child: Text(
                             AppLocalizations.of(context)!.tr('login'),
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ),
                       ],

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'profile_state.dart';
+import '../shared/user_data_header.dart';
+import '../../widgets/shared/main_card.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/shared/main_card.dart';
-import '../shared/user_data_header.dart';
-import 'profile_state.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({

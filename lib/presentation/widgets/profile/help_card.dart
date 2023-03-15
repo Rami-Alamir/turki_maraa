@@ -4,6 +4,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:share_plus/share_plus.dart';
+import '../shared/main_card.dart';
+import '../../widgets/profile/profile_row.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
@@ -11,8 +13,6 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/service/firebase_helper.dart';
-import '../../widgets/profile/profile_row.dart';
-import '../shared/main_card.dart';
 
 class HelpCard extends StatelessWidget {
   const HelpCard({Key? key}) : super(key: key);
@@ -28,10 +28,7 @@ class HelpCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
             child: Text(AppLocalizations.of(context)!.tr('help_and_support'),
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    )),
+                style: Theme.of(context).textTheme.displayMedium),
           ),
           MainCard(
               width: SizeConfig.screenWidth!,

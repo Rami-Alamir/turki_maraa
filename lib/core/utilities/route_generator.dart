@@ -30,7 +30,6 @@ import '../../presentation/screens/login/username.dart';
 import '../../presentation/screens/login/verify_phone.dart';
 import '../../presentation/screens/splash/splash.dart';
 import '../../presentation/screens/cart/order_status.dart';
-import '../../presentation/screens/home/home_categories.dart';
 import '../../presentation/screens/map/gms_map.dart';
 import '../../presentation/screens/map/hms_map.dart';
 import '../../presentation/screens/profile/add_credit.dart';
@@ -68,8 +67,6 @@ class RouteGenerator {
       case productDetails:
         return MaterialPageRoute(
             builder: (_) => ProductDetails(data: args as Map<String, dynamic>));
-      case homeCategories:
-        return MaterialPageRoute(builder: (_) => const HomeCategories());
       case profile:
         return MaterialPageRoute(builder: (_) => const Profile());
       case userPoints:

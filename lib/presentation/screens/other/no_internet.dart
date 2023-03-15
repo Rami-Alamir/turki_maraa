@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/app_provider.dart';
 import '../../../controllers/auth.dart';
 import '../../../controllers/home_provider.dart';
@@ -11,7 +12,6 @@ import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/shared/rounded_rectangle_button.dart';
 
 class NoInternet extends StatelessWidget {
   const NoInternet({Key? key}) : super(key: key);
@@ -25,10 +25,7 @@ class NoInternet extends StatelessWidget {
           Image.asset(FixedAssets.noInternet),
           Text(AppLocalizations.of(context)!.tr('no_internet_connection'),
               textAlign: TextAlign.justify,
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600)),
+              style: Theme.of(context).textTheme.titleSmall),
           Padding(
             padding: EdgeInsets.only(top: SizeConfig.screenHeight! / 5),
             child: RoundedRectangleButton(
@@ -64,11 +61,11 @@ class NoInternet extends StatelessWidget {
     final AppProvider appProvider =
         Provider.of<AppProvider>(context, listen: false);
     await location.initLatLng();
-    FlutterSecureStorage localStorage = const FlutterSecureStorage();
-    String accessToken = await localStorage.read(key: 'accessToken') ?? "";
     if (context.mounted) {
       final Auth auth = Provider.of<Auth>(context, listen: false);
-      auth.getUserData(context, accessToken);
+      FlutterSecureStorage localStorage = const FlutterSecureStorage();
+      String accessToken = await localStorage.read(key: 'accessToken') ?? "";
+      if (context.mounted) auth.getUserData(context, accessToken);
     }
     appProvider.getData();
     home.getHomePageData(notify: false);

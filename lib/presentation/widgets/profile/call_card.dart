@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import '../shared/main_card.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/service/firebase_helper.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../shared/main_card.dart';
 
 class CallCard extends StatelessWidget {
   const CallCard({Key? key}) : super(key: key);
@@ -22,8 +22,6 @@ class CallCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: InkWell(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
             onTap: () {
               final LocationProvider locationProvider =
                   Provider.of<LocationProvider>(context, listen: false);
@@ -46,10 +44,10 @@ class CallCard extends StatelessWidget {
                         ),
                       ),
                       Text(AppLocalizations.of(context)!.tr('contact_support'),
-                          style:
-                              Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                    fontWeight: FontWeight.normal,
-                                  )),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(fontSize: 12)),
                     ],
                   ),
                 ),

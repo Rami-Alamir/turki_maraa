@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/about_data.dart';
-import '../../../core/constants/fixed_assets.dart';
-import '../../../core/utilities/app_localizations.dart';
-import '../../../core/utilities/size_config.dart';
 import '../../widgets/profile/about_row.dart';
 import '../../widgets/profile/about_text.dart';
 import '../../widgets/profile/services_item.dart';
 import '../../widgets/shared/primary_app_bar.dart';
+import '../../../core/constants/about_data.dart';
+import '../../../core/constants/fixed_assets.dart';
+import '../../../core/utilities/app_localizations.dart';
+import '../../../core/utilities/size_config.dart';
 
 class About extends StatelessWidget {
   const About({Key? key}) : super(key: key);
@@ -23,32 +23,30 @@ class About extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: Container(
-              width: SizeConfig.screenWidth,
-              margin:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
-              height: 190,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(FixedAssets.background),
-                  fit: BoxFit.fill,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Container(
+                width: SizeConfig.screenWidth,
+                height: 190,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(FixedAssets.background),
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 0.0, bottom: 10),
-                    child: Image.asset(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
                       FixedAssets.logo,
                       width: 150,
                       height: 150,
                       fit: BoxFit.contain,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -61,17 +59,18 @@ class About extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.tr('about2'),
-                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                            fontSize: 16,
-                            height: 1.5,
-                          ),
+                      style:
+                          Theme.of(context).textTheme.displayMedium!.copyWith(
+                                fontSize: 16,
+                                height: 1.5,
+                              ),
                     ),
                     Text(
                       " ${AppLocalizations.of(context)!.tr('app_name')}",
                       style: Theme.of(context)
                           .textTheme
-                          .titleMedium!
-                          .copyWith(height: 1.5),
+                          .titleSmall!
+                          .copyWith(fontSize: 16, height: 1.5),
                     ),
                   ],
                 ),
@@ -117,45 +116,28 @@ class About extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.tr('our_services'),
-                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                            fontSize: 16,
-                            height: 1.5,
-                          ),
+                      style:
+                          Theme.of(context).textTheme.displayMedium!.copyWith(
+                                fontSize: 16,
+                                height: 1.5,
+                              ),
                     ),
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: SizeConfig.screenWidth! / 1.6,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20.0),
-                      child: Text(
-                        isAr ? AboutData.aboutAr[5] : AboutData.aboutEn[5],
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            height: 1.5, fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(2.5, 15, 10, 0),
-                    child: Image.asset(
-                      FixedAssets.about,
-                      height: 120,
-                      width: 120,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ],
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20.0),
+                child: Text(
+                  isAr ? AboutData.aboutAr[5] : AboutData.aboutEn[5],
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontSize: 14, height: 1.5, fontWeight: FontWeight.normal),
+                ),
               ),
             ],
           ),
           Padding(
-              padding: const EdgeInsets.only(right: 10.0, left: 10, bottom: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Wrap(
                 children: const [
                   ServicesItem(image: FixedAssets.zabh, title: 'slaughter'),

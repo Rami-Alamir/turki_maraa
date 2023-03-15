@@ -18,7 +18,6 @@ class AddNewAddress extends StatelessWidget {
             locationProvider.isHms ? hmsMap : gmsMap,
             arguments: -100);
       },
-      splashColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Row(
@@ -32,10 +31,7 @@ class AddNewAddress extends StatelessWidget {
               title: '+',
             ),
             Text(AppLocalizations.of(context)!.tr('add_new_delivery_address'),
-                style: Theme.of(context)
-                    .textTheme
-                    .displayLarge!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.normal)),
+                style: Theme.of(context).textTheme.displayLarge),
           ],
         ),
       ),

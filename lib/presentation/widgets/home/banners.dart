@@ -1,11 +1,11 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import '../../widgets/shared/dots_indicator.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/route_constants.dart';
-import '../../../models/banners_data.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/shared/dots_indicator.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import '../../../models/banners_data.dart';
 
 class BannersSlider extends StatefulWidget {
   final BannersData bannersData;

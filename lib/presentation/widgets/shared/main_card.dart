@@ -20,9 +20,10 @@ class MainCard extends StatelessWidget {
     return Padding(
       padding: padding,
       child: Card(
-        color: Theme.of(context).colorScheme.secondary,
+        color: Theme.of(context).colorScheme.onBackground,
         elevation: 3,
-        shadowColor: Theme.of(context).colorScheme.secondary.withOpacity(0.14),
+        shadowColor:
+            Theme.of(context).colorScheme.onBackground.withOpacity(0.14),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(6.5))),
         child: ClipRRect(

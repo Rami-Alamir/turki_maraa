@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/constants/app_colors.dart';
 
 class RoundedRectangleButton extends StatelessWidget {
@@ -10,7 +9,7 @@ class RoundedRectangleButton extends StatelessWidget {
   final double height;
   final EdgeInsets padding;
   final Color? color;
-  final Color fontColor;
+  final Color? fontColor;
   final double fontHeight;
 
   const RoundedRectangleButton({
@@ -22,13 +21,12 @@ class RoundedRectangleButton extends StatelessWidget {
     this.padding = const EdgeInsets.all(25.0),
     this.height = 55,
     this.color,
-    this.fontColor = AppColors.white,
+    this.fontColor,
     this.fontHeight = 1,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = Theme.of(context).primaryColor;
     return Padding(
       padding: padding,
       child: RawMaterialButton(
@@ -39,16 +37,16 @@ class RoundedRectangleButton extends StatelessWidget {
                 onPressed!();
               },
         elevation: 00.0,
-        splashColor: color ?? primaryColor,
         focusElevation: 0,
-        highlightColor: color ?? primaryColor,
-        fillColor: onPressed == null ? AppColors.grey : color ?? primaryColor,
+        fillColor: onPressed == null
+            ? AppColors.grey
+            : color ?? Theme.of(context).colorScheme.tertiaryContainer,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5))),
         child: Text(
           title,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
               fontSize: fontSize, color: fontColor, height: fontHeight),
         ),
       ),

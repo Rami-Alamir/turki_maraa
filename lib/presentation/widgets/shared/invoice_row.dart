@@ -34,7 +34,7 @@ class InvoiceRow extends StatelessWidget {
               value,
               style: Theme.of(context)
                   .textTheme
-                  .titleLarge!
+                  .displayMedium!
                   .copyWith(fontSize: 12, color: fontColor),
             ),
           ],

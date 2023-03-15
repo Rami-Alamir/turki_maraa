@@ -12,7 +12,6 @@ import '../../widgets/home/drawer/turki_drawer.dart';
 import '../../../controllers/app_provider.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/location_provider.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/service/firebase_helper.dart';
 import '../../../core/service/service_locator.dart';
@@ -20,6 +19,7 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import '../../../core/utilities/tab_item.dart';
+import '../../../core/constants/app_colors.dart';
 
 //used to build all in one bottom nav bar
 class App extends StatefulWidget {

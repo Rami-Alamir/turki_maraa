@@ -1,10 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:provider/provider.dart';
 import '../../../core/constants/intro_list.dart';
 import '../../../controllers/app_language.dart';
 import '../../../core/utilities/size_config.dart';
-import 'package:provider/provider.dart';
 
 class IntroCard extends StatelessWidget {
   final int mSelectedPosition;
@@ -40,11 +39,10 @@ class IntroCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   maxFontSize: 20,
                   minFontSize: 16,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.black,
-                    height: 1.40,
-                  ),
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        height: 1.4,
+                      ),
                 )),
             Container(
                 width: SizeConfig.setWidgetWidthWithFactor(0.52, 0.52, 0.52),
@@ -57,10 +55,7 @@ class IntroCard extends StatelessWidget {
                   maxFontSize: 16,
                   minFontSize: 12,
                   maxLines: 4,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                      color: AppColors.darkGray,
-                      height: 1.40),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )),
           ],
         ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'category_card.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/hex_color.dart';
 import '../../../models/category_data.dart';
-import 'category_card.dart';
 
 class Categories extends StatelessWidget {
   final List<Data> categoriesList;

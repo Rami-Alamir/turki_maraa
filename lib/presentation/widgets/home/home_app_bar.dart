@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'order_type.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/route_constants.dart';
+import 'order_type.dart';
 import '../../../controllers/drawer_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
+import '../../../core/constants/route_constants.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState>? parentScaffoldKey;
-  final bool back;
   final Color? color;
   const HomeAppBar({
     Key? key,
     this.parentScaffoldKey,
-    this.back = false,
     this.color,
   }) : super(key: key);
 
@@ -33,9 +31,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         decoration: BoxDecoration(
           color: Colors.transparent,
           image: DecorationImage(
-            image: AssetImage(
-                Theme.of(context).colorScheme.background == AppColors.black
-                    ? FixedAssets.backgroundDark
+            image: AssetImage(Theme.of(context).colorScheme.background ==
+                    AppColors.black
+                ? FixedAssets.backgroundDark
+                : Theme.of(context).colorScheme.background == AppColors.clarity
+                    ? FixedAssets.backgroundClassic
                     : FixedAssets.background),
             fit: BoxFit.cover,
           ),
@@ -48,34 +48,23 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               title: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(
-                  FixedAssets.appName,
+                  FixedAssets.logo,
                   colorBlendMode: BlendMode.dstATop,
                   fit: BoxFit.contain,
-                  width: 200,
-                  height: 30,
+                  width: 260,
+                  height: 60,
                 ),
               ),
               centerTitle: true,
               leading: IconButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
                 icon: Icon(
-                    back
-                        ? Icons.arrow_back_ios
-                        : AppLocalizations.of(context)!.locale ==
-                                const Locale("ar")
-                            ? TURKIICONS.menu_right_1
-                            : TURKIICONS.menu_left_1,
-                    color: Theme.of(context).colorScheme.background ==
-                            AppColors.yellow
-                        ? AppColors.yellow
-                        : AppColors.yellow2),
+                  AppLocalizations.of(context)!.locale == const Locale("ar")
+                      ? TURKIICONS.menu_right_1
+                      : TURKIICONS.menu_left_1,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
                 onPressed: () {
-                  if (back) {
-                    Navigator.of(context).pop();
-                  } else {
-                    appProvider.showDrawer();
-                  }
+                  appProvider.showDrawer();
                 },
               ),
               actions: [
@@ -86,10 +75,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     icon: Icon(
                       TURKIICONS.search,
                       size: 25,
-                      color: Theme.of(context).colorScheme.background ==
-                              AppColors.yellow
-                          ? AppColors.yellow
-                          : AppColors.yellow2,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                 )

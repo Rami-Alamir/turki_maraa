@@ -13,6 +13,16 @@ import 'presentation/screens/app/my_app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Map appsFlyerOptions = {
+  //   "afDevKey": 'DwHjLqoCAQjtFwhcrDAjHZ',
+  //   "afAppId": '1615090430',
+  //   "isDebug": true
+  // };
+  // AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
+  // appsflyerSdk.initSdk(
+  //     registerConversionDataCallback: true,
+  //     registerOnAppOpenAttributionCallback: true,
+  //     registerOnDeepLinkingCallback: true);
   ServiceLocator().init();
   TabbySDK().setup(
     withApiKey: Constants.tabbyApiKey,
@@ -32,7 +42,7 @@ Future<void> main() async {
   FlutterSecureStorage localStorage = const FlutterSecureStorage();
   String accessToken = await localStorage.read(key: 'accessToken') ?? "";
   String? language = prefs.getString('language_code');
-  String theme = prefs.getString('theme') ?? 'light';
+  String theme = prefs.getString('app_theme') ?? 'main';
   Locale locale = Locale(language ?? 'ar');
 
   runApp(MultiProvider(

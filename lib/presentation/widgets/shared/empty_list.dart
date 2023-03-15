@@ -35,7 +35,7 @@ class EmptyList extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .displayLarge!
-                    .copyWith(fontSize: 14),
+                    .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
           ],

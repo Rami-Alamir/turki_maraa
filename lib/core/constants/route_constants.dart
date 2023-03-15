@@ -4,7 +4,6 @@ const String newVersion = "/NewVersion";
 const String myAddresses = "/MyAddresses";
 const String home = "/Home";
 const String productDetails = "/ProductDetails";
-const String homeCategories = "/HomeCategories";
 const String profile = "/Profile";
 const String search = "/Search";
 const String discover = "/Discover";

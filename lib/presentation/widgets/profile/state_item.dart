@@ -28,20 +28,23 @@ class StateItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(convertDouble(value),
-              style: Theme.of(context).textTheme.titleLarge),
+              style: Theme.of(context).textTheme.titleSmall),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 5, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 5, 8),
                   child: SvgPicture.asset(icon),
                 ),
                 Text(AppLocalizations.of(context)!.tr(title),
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 13)),
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                        fontSize: 13,
+                        color: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .color!
+                            .withOpacity(0.5))),
               ],
             ),
           ),

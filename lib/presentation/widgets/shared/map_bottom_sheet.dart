@@ -49,7 +49,7 @@ class MapBottomSheet extends StatelessWidget {
                   Text(
                     AppLocalizations.of(context)!.tr("delivery_address"),
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -57,7 +57,7 @@ class MapBottomSheet extends StatelessWidget {
                       addressDescription,
                       maxLines: 2,
                       textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.displayMedium,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                   Text(
@@ -65,7 +65,7 @@ class MapBottomSheet extends StatelessWidget {
                     textAlign: TextAlign.start,
                     style: Theme.of(context)
                         .textTheme
-                        .headlineMedium!
+                        .displayMedium!
                         .copyWith(height: 2),
                   ),
                 ],
@@ -85,13 +85,12 @@ class MapBottomSheet extends StatelessWidget {
                 AppLocalizations.of(context)!.tr('additional_notes'),
                 maxLines: 2,
                 textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.headlineMedium,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
             ),
             RectangleTextField(
               customWidth: SizeConfig.screenWidth! - 40,
               maxLength: 80,
-              maxLines: 2,
               hint: AppLocalizations.of(context)!.tr('additional_notes'),
               controller: addressProvider.descriptionController,
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),

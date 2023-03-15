@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../shared/main_card.dart';
+import '../shared/rounded_rectangle_button.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/favourite_provider.dart';
 import '../../../controllers/location_provider.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/service/firebase_helper.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -14,8 +16,6 @@ import '../../../core/utilities/get_strings.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../models/cart_data.dart';
-import '../shared/main_card.dart';
-import '../shared/rounded_rectangle_button.dart';
 
 class CartCard extends StatelessWidget {
   final ItemData item;
@@ -46,7 +46,6 @@ class CartCard extends StatelessWidget {
               "categoryId": 0
             });
       },
-      splashColor: Colors.transparent,
       child: SizedBox(
         width: SizeConfig.screenWidth,
         child: Dismissible(
@@ -68,7 +67,7 @@ class CartCard extends StatelessWidget {
             }
           },
           background: Container(
-            color: AppColors.green1,
+            color: AppColors.green,
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Row(
@@ -150,8 +149,8 @@ class CartCard extends StatelessWidget {
                                       .textTheme
                                       .displayLarge!
                                       .copyWith(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 14)),
+                                        fontWeight: FontWeight.w700,
+                                      )),
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 5.0),
@@ -194,7 +193,9 @@ class CartCard extends StatelessWidget {
                                     style: Theme.of(context)
                                         .textTheme
                                         .displayLarge!
-                                        .copyWith(fontSize: 16),
+                                        .copyWith(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
                                   ),
                                   RoundedRectangleButton(
                                     onPressed: () {
@@ -216,8 +217,10 @@ class CartCard extends StatelessWidget {
                                   "${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros((sl<CalculateHelper>().getCartItemTotalPrice(cartProvider.cartData!.data!.cart!.data![index]) * item.quantity!))} $currency",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .displayLarge!
-                                      .copyWith(fontSize: 14)),
+                                      .displayMedium!
+                                      .copyWith(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700)),
                             ],
                           ),
                         ],
@@ -240,7 +243,9 @@ class CartCard extends StatelessWidget {
       context: context,
       productId: item.id.toString(),
     );
-    if (context.mounted) showErrorMessage(context, status);
+    if (context.mounted) {
+      showErrorMessage(context, status);
+    }
   }
 
   Future<void> update(
@@ -250,14 +255,18 @@ class CartCard extends StatelessWidget {
       productId: item.id.toString(),
       quantity: quantity,
     );
-    if (context.mounted) showErrorMessage(context, status);
+    if (context.mounted) {
+      showErrorMessage(context, status);
+    }
   }
 
   // used to hide indicator dialog and show snack bar with error message
   void showErrorMessage(BuildContext context, bool status) {
-    Navigator.of(context, rootNavigator: true).pop();
-    if (!status) {
-      sl<ShowSnackBar>().show(context, "unexpected_error");
+    if (context.mounted) {
+      Navigator.of(context, rootNavigator: true).pop();
+      if (!status) {
+        sl<ShowSnackBar>().show(context, "unexpected_error");
+      }
     }
   }
 }

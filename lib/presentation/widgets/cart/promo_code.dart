@@ -26,17 +26,14 @@ class PromoCode extends StatelessWidget {
               AppLocalizations.of(context)!.tr('promo_code'),
               style: Theme.of(context)
                   .textTheme
-                  .displayLarge!
+                  .displayMedium!
                   .copyWith(fontSize: 14),
             ),
           ),
           Card(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.onBackground,
             elevation: 3,
-            shadowColor: Theme.of(context)
-                .colorScheme
-                .secondaryContainer
-                .withOpacity(0.14),
+            shadowColor: Theme.of(context).colorScheme.shadow.withOpacity(0.14),
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(6.5))),
             child: ClipRRect(
@@ -65,7 +62,7 @@ class PromoCode extends StatelessWidget {
                             keyboardAppearance: Brightness.dark,
                             textAlign: TextAlign.start,
                             enabled: !cart.promoIsActive,
-                            cursorColor: Theme.of(context).primaryColor,
+                            cursorColor: Theme.of(context).colorScheme.primary,
                             controller: cart.promoCodeController,
                             style: Theme.of(context)
                                 .textTheme
@@ -80,15 +77,10 @@ class PromoCode extends StatelessWidget {
                                 isDense: true,
                                 prefixIcon: Icon(
                                   TURKIICONS.ticket_discount,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .color,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                                 counterText: "",
-                                fillColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                filled: true,
+                                filled: false,
                                 border: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: Colors.transparent, width: 1)),
@@ -124,7 +116,6 @@ class PromoCode extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        splashColor: Colors.transparent,
                         onTap: () async {
                           if (cart.promoCodeController.text.isNotEmpty) {
                             if (cart.promoIsActive) {
@@ -156,7 +147,7 @@ class PromoCode extends StatelessWidget {
                                         .tr('remove'),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleMedium!
+                                    .titleSmall!
                                     .copyWith(fontSize: 12),
                               ),
                             ),

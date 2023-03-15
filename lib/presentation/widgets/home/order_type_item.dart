@@ -1,7 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:turki_dabayh/core/constants/app_colors.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
@@ -24,8 +23,6 @@ class OrderTypeItem extends StatelessWidget {
         onTap: () {
           homeProvider.setOrderType = type;
         },
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         child: Container(
           padding: const EdgeInsets.all(3.0),
           width: SizeConfig.screenWidth! / 2 - 30,
@@ -37,7 +34,7 @@ class OrderTypeItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                   color: selected
-                      ? AppColors.yellow2
+                      ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.secondaryContainer,
                   width: selected ? 1 : 0.8)),
           child: Row(
@@ -51,14 +48,17 @@ class OrderTypeItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Theme.of(context)
                             .colorScheme
-                            .primaryContainer
+                            .outline
                             .withOpacity(0.16),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(25))),
                     child: Icon(
                       icon,
                       size: 17.5,
-                      color: AppColors.yellow2.withOpacity(selected ? 1 : 0.5),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(selected ? 1 : 0.5),
                     )),
               ),
               Padding(
@@ -70,11 +70,12 @@ class OrderTypeItem extends StatelessWidget {
                     maxLines: 2,
                     minFontSize: 8,
                     maxFontSize: 12,
-                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        fontSize: 12,
-                        color:
-                            AppColors.yellow2.withOpacity(selected ? 1 : 0.5),
-                        fontWeight: FontWeight.normal,
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .color!
+                            .withOpacity(selected ? 1 : 0.5),
                         height: 2.5),
                   ),
                 ),

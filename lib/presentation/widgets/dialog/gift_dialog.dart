@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/app_provider.dart';
-import '../../../core/utilities/app_localizations.dart';
 import '../../../controllers/user_provider.dart';
+import '../../../core/utilities/app_localizations.dart';
 import '../../../core/constants/fixed_assets.dart';
 
 class GiftDialog extends StatelessWidget {
@@ -54,7 +54,7 @@ class GiftDialog extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .displayLarge!
+                        .displayMedium!
                         .copyWith(fontSize: 18, height: 1),
                   ),
                   Padding(
@@ -68,7 +68,7 @@ class GiftDialog extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .titleSmall!
+                          .bodyLarge!
                           .copyWith(fontSize: 14),
                     ),
                   ),

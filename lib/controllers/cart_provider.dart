@@ -32,6 +32,7 @@ import '../repository/cart_repository.dart';
 import '../repository/order_repository.dart';
 import '../repository/tamara_repository.dart';
 import '../repository/payment_repository.dart';
+import 'package:crypto/crypto.dart';
 
 class CartProvider with ChangeNotifier {
   final ScrollController _scrollController = ScrollController();
@@ -45,6 +46,8 @@ class CartProvider with ChangeNotifier {
   TamaraData? _tamaraData;
   String? _authorization;
   UserData? _userData;
+  Payment? _mockPayload;
+  TabbyCaptures? tabbyCaptures;
   bool _useCredit = false;
   int _selectedPayment = -1;
   int _selectedDate = -1;
@@ -62,8 +65,6 @@ class CartProvider with ChangeNotifier {
   late TamaraPayment tamara;
   late PaymentARB arb;
   late OrderRef orderRef;
-  Payment? _mockPayload;
-  TabbyCaptures? tabbyCaptures;
   LatLng? get latLng => _latLng;
   String? get currentLocationDescriptionAr => _currentLocationDescriptionAr;
   String? get currentLocationDescriptionEn => _currentLocationDescriptionEn;
@@ -83,14 +84,12 @@ class CartProvider with ChangeNotifier {
   bool get promoIsActive => _promoIsActive;
   RequestStatus get requestStatus => _requestStatus;
 
-  UserData? get userData => _userData;
-
   set setSelectedDate(int value) {
     _selectedDate = value;
     notifyListeners();
   }
 
-  set useCredit(bool value) {
+  set usMyCredit(bool value) {
     _useCredit = value;
     notifyListeners();
   }
@@ -220,7 +219,7 @@ class CartProvider with ChangeNotifier {
     return false;
   }
 
-  //get cart items, Tamara status and Delivery periods
+  // get cart items, Tamara status and Delivery periods
   Future<void> getCartData({bool isLoading = false}) async {
     if (_isAuth) {
       _requestStatus = RequestStatus.completed;
@@ -326,7 +325,7 @@ class CartProvider with ChangeNotifier {
           "delivery_period_id": _isoCountryCode == 'AE'
               ? (_selectedTime + 1)
               : _deliveryPeriod!.data![_selectedTime].id,
-          "using_wallet": useCredit ? 1 : 0,
+          "using_wallet": 0,
           if (_selectedPayment == 4)
             "tamara_payment_name": "PAY_BY_INSTALMENTS",
           if (_selectedPayment == 4) "no_instalments": 3,
@@ -435,8 +434,7 @@ class CartProvider with ChangeNotifier {
         title: item.product!.nameEn!,
         description: item.product!.nameEn!,
         quantity: item.quantity!,
-        unitPrice:
-            (sl<CalculateHelper>().getCartItemTotalPrice(item)).toString(),
+        unitPrice: item.product!.salePrice!.toString(),
         referenceId: item.product!.id!.toString(),
         productUrl: 'http://example.com',
         category: item.product!.nameEn!,
@@ -530,7 +528,6 @@ class CartProvider with ChangeNotifier {
     _selectedTime = -1;
     _selectedPayment = -1;
     _selectedDate = -1;
-    _useCredit = false;
   }
 
   void clearCart() {

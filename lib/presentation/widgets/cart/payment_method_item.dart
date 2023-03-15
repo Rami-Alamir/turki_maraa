@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/cart_provider.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
+import '../../../core/constants/app_colors.dart';
 
 class PaymentMethodItem extends StatelessWidget {
   final int selectedValue;
@@ -29,7 +29,6 @@ class PaymentMethodItem extends StatelessWidget {
       onTap: () {
         cartProvider.setSelectedPayment = selectedValue;
       },
-      splashColor: Colors.transparent,
       child: Container(
           margin: padding,
           width: SizeConfig.setWidgetWidth(
@@ -40,8 +39,8 @@ class PaymentMethodItem extends StatelessWidget {
           ),
           decoration: BoxDecoration(
               color: selected
-                  ? Theme.of(context).primaryColor
-                  : Theme.of(context).colorScheme.primaryContainer,
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.outline,
               borderRadius: const BorderRadius.all(Radius.circular(10))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -52,7 +51,7 @@ class PaymentMethodItem extends StatelessWidget {
                 width: 45,
                 margin: const EdgeInsets.symmetric(horizontal: 8.0),
                 decoration: BoxDecoration(
-                    color: selected ? AppColors.darkRed : AppColors.white,
+                    color: selected ? AppColors.purple2 : AppColors.white,
                     shape: BoxShape.circle),
                 child: Icon(
                   icon,
@@ -69,19 +68,17 @@ class PaymentMethodItem extends StatelessWidget {
                     child: Text(
                       AppLocalizations.of(context)!.tr(title),
                       maxLines: 2,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(
-                              fontSize: 11,
-                              height: 1.5,
-                              fontWeight: FontWeight.bold,
-                              color: selected
-                                  ? AppColors.white
-                                  : Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall!
-                                      .color),
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          fontSize: 11,
+                          height: 1.5,
+                          fontWeight: FontWeight.bold,
+                          color: selected
+                              ? AppColors.white
+                              : Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .color!
+                                  .withOpacity(0.6)),
                     ),
                   ),
                   SizedBox(

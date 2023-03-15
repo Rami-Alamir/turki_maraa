@@ -41,7 +41,6 @@ class AppProvider with ChangeNotifier {
     _isHMS = isHMS;
     _isoCountryCode = isoCountryCode ?? 'SA';
     if (_isHMS ?? false) {
-      _canUpdate = false;
       _checkNewVersion();
     }
   }
@@ -71,7 +70,7 @@ class AppProvider with ChangeNotifier {
   // check if app have new version to show update page
   Future<void> _checkNewVersion() async {
     final versionData =
-        await sl<VersionRepository>().getLatestAppVersion(Platform.isIOS
+        await VersionRepository().getLatestAppVersion(Platform.isIOS
             ? 1
             : _isHMS!
                 ? 3

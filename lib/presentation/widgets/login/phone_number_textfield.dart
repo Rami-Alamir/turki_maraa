@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'country_picker.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/service/service_locator.dart';
@@ -8,6 +7,7 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/country_utils.dart';
 import '../../../core/utilities/dialog_helper.dart';
 import '../../../models/country.dart';
+import 'country_picker.dart';
 
 class PhoneNumberTextfield extends StatelessWidget {
   final String isoCountryCode;
@@ -40,14 +40,14 @@ class PhoneNumberTextfield extends StatelessWidget {
             final Auth auth = Provider.of<Auth>(context, listen: false);
             auth.logoVisibility = false;
           },
-          cursorColor: Theme.of(context).primaryColor,
+          cursorColor: Theme.of(context).colorScheme.primary,
           controller: controller,
           keyboardType: TextInputType.phone,
           maxLength: 10,
           style: Theme.of(context)
               .textTheme
-              .titleLarge!
-              .copyWith(fontSize: 16, fontWeight: FontWeight.bold, height: 1.8),
+              .displayMedium!
+              .copyWith(fontSize: 16, height: 1.8),
           validator: (text) {
             if (text!.length < 9) {
               return AppLocalizations.of(context)!
@@ -59,13 +59,9 @@ class PhoneNumberTextfield extends StatelessWidget {
             contentPadding:
                 const EdgeInsetsDirectional.fromSTEB(10, 20, 10, 10),
             hintText: ' 51 234 5678',
-            hintStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-                color: isWhite
-                    ? AppColors.white
-                    : Theme.of(context).textTheme.titleLarge!.color),
-            counterText: "",
+            hintStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  fontSize: 16,
+                ),
             prefixIcon: GestureDetector(
               onTap: () => sl<DialogHelper>().show(context, CountryPicker()),
               child: Container(
@@ -85,7 +81,10 @@ class PhoneNumberTextfield extends StatelessWidget {
                           fontSize: 14,
                           color: isWhite
                               ? AppColors.white
-                              : Theme.of(context).textTheme.titleLarge!.color,
+                              : Theme.of(context)
+                                  .textTheme
+                                  .displayMedium!
+                                  .color,
                           fontWeight: FontWeight.bold,
                           height: 1.9),
                     ),
@@ -93,6 +92,7 @@ class PhoneNumberTextfield extends StatelessWidget {
                 ),
               ),
             ),
+            counterText: "",
             border: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent, width: 0)),
             disabledBorder: const OutlineInputBorder(

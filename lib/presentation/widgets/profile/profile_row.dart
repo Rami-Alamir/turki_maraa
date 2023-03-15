@@ -46,10 +46,9 @@ class ProfileRow extends StatelessWidget {
                       Text(AppLocalizations.of(context)!.tr(title),
                           style: Theme.of(context)
                               .textTheme
-                              .headlineMedium!
+                              .displayLarge!
                               .copyWith(
                                 fontSize: 12,
-                                fontWeight: FontWeight.normal,
                               )),
                     ],
                   ),
@@ -60,11 +59,7 @@ class ProfileRow extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Icon(
                       Icons.arrow_forward_ios,
-                      color: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .color!
-                          .withOpacity(0.2),
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                       size: 18,
                     ),
                   ),

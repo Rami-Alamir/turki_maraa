@@ -27,14 +27,13 @@ class MinValueIndicator extends StatelessWidget {
           RichText(
             text: TextSpan(
               text: AppLocalizations.of(context)!.tr('remaining'),
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme.of(context).textTheme.displaySmall,
               children: <TextSpan>[
                 TextSpan(
                     text:
                         ' ${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(min - total)} $currency ',
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
+                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
                         fontSize: 13)),
                 TextSpan(
                     text: AppLocalizations.of(context)!.tr('min_charge_order')),
@@ -45,18 +44,9 @@ class MinValueIndicator extends StatelessWidget {
             width: SizeConfig.screenWidth! - 40,
             height: 7,
             margin: const EdgeInsetsDirectional.fromSTEB(5, 15, 5, 5),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.grey,
-              borderRadius: const BorderRadius.all(Radius.circular(2)),
-              boxShadow: [
-                BoxShadow(
-                  color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.4),
-                  spreadRadius: 2,
-                  blurRadius: 1,
-                  offset: const Offset(50, 5), // changes position of shadow
-                ),
-              ],
+              borderRadius: BorderRadius.all(Radius.circular(2)),
             ),
             child: Row(
               children: [
@@ -64,7 +54,7 @@ class MinValueIndicator extends StatelessWidget {
                   width: (SizeConfig.screenWidth! - 50) * (total / min),
                   height: 7,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: const BorderRadius.all(Radius.circular(2)),
                   ),
                 )

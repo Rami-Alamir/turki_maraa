@@ -24,8 +24,8 @@ class NotSupportedArea extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .titleLarge!
-                    .copyWith(fontSize: 12, height: 2),
+                    .displayMedium!
+                    .copyWith(height: 3),
               ),
             ),
           ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'extra_tag.dart';
 import '../../../models/extra.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import 'extra_tag.dart';
 
 class ExtrasList extends StatelessWidget {
   final String title;
@@ -32,8 +32,8 @@ class ExtrasList extends StatelessWidget {
                   child: Text(title,
                       style: Theme.of(context)
                           .textTheme
-                          .titleLarge!
-                          .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
+                          .titleSmall!
+                          .copyWith(fontWeight: FontWeight.bold)),
                 ),
                 Container(
                   padding:

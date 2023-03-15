@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/home/address_container.dart';
-import '../../widgets/home/almaraa_card.dart';
+import '../../widgets/home/categories_group.dart';
 import '../../widgets/home/location_disabled.dart';
+import '../../widgets/home/home_app_bar.dart';
+import '../../widgets/home/products_section2.dart';
+import '../../widgets/shared/whatsapp.dart';
 import '../../widgets/shared/retry.dart';
 import '../../widgets/shared/spinkit_indicator.dart';
-import '../../widgets/home/home_app_bar.dart';
-import '../../widgets/shared/whatsapp.dart';
-import '../../../controllers/app_provider.dart';
 import '../../../controllers/address_provider.dart';
+import '../../../controllers/app_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/enum/request_status.dart';
 import '../../../core/utilities/size_config.dart';
 
@@ -60,11 +62,9 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
       addressProvider.initMapMarker();
     }
     return Scaffold(
-      floatingActionButton: const Whatsapp(),
-      appBar: HomeAppBar(
-        parentScaffoldKey: widget.parentScaffoldStateKey,
-      ),
       extendBodyBehindAppBar: true,
+      floatingActionButton: const Whatsapp(),
+      appBar: const HomeAppBar(),
       body: Stack(children: [
         (homeProvider.locationServiceStatus == 0 ||
                     homeProvider.locationServiceStatus == 2) &&
@@ -81,24 +81,54 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
                         padding:
                             EdgeInsets.only(top: SizeConfig.homeAppBarHeight),
                         onPressed: () {
-                          homeProvider.setIsLoading = true;
                           homeProvider.getHomePageData();
                         },
                       )
                     : Padding(
                         padding: EdgeInsets.only(
-                            top: SizeConfig.homeAppBarHeight + 50),
+                            top: SizeConfig.homeAppBarHeight + 20),
                         child: RefreshIndicator(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
+                              Theme.of(context).colorScheme.primaryContainer,
                           onRefresh: () async {
                             await homeProvider.getHomePageData(notify: false);
                           },
                           child: ListView(
-                            padding: const EdgeInsets.only(top: 20),
-                            children: const [
-                              AlmaraaCard(),
+                            padding: EdgeInsets.zero,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 20, left: 20, top: 65),
+                                child: Visibility(
+                                  visible: (homeProvider
+                                              .categoryData?.data?.length ??
+                                          0) >
+                                      0,
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .tr('what_would_you_want_today'),
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall),
+                                ),
+                              ),
+                              const CategoriesGroup(),
+                              Visibility(
+                                visible: ((homeProvider
+                                            .categoryData?.data?.length) ??
+                                        0) !=
+                                    0,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: ProductsSection2(
+                                    title: AppLocalizations.of(context)!
+                                        .tr('most_wanted'),
+                                    products: homeProvider.bestSeller,
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         ),

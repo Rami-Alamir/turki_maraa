@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../models/wallet.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -14,7 +13,7 @@ class TransactionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool status = transaction.after! > 0;
-    final Color color = status ? AppColors.green : AppColors.red;
+    final Color color = status ? Colors.green : Colors.red;
     final LocationProvider locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
     String currency = sl<GetStrings>().getCurrency(
@@ -56,7 +55,7 @@ class TransactionRow extends StatelessWidget {
                               child: Center(
                                 child: Icon(
                                   transaction.iconData,
-                                  color: AppColors.white,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),

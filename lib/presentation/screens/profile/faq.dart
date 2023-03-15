@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../widgets/profile/faq_row.dart';
+import '../../widgets/shared/primary_app_bar.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/faq_data.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../models/qa.dart';
-import '../../widgets/profile/faq_row.dart';
-import '../../widgets/shared/primary_app_bar.dart';
 
 class Faq extends StatelessWidget {
   const Faq({Key? key}) : super(key: key);
@@ -40,7 +40,7 @@ class Faq extends StatelessWidget {
                     AppLocalizations.of(context)!.tr('help_header'),
                     style: Theme.of(context)
                         .textTheme
-                        .displayLarge!
+                        .displayMedium!
                         .copyWith(fontSize: 14),
                   ),
                 )

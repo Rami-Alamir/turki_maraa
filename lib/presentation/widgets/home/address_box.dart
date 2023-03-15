@@ -30,10 +30,7 @@ class AddressBox extends StatelessWidget {
               color: Theme.of(context).colorScheme.background,
               boxShadow: [
                 BoxShadow(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .secondaryContainer
-                      .withOpacity(0.3),
+                  color: Theme.of(context).colorScheme.shadow,
                   blurRadius: 6,
                   spreadRadius: 0.5,
                 )
@@ -52,19 +49,14 @@ class AddressBox extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.place,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.tertiary,
                             size: 17.5,
                           ),
                           SizedBox(
                             width: SizeConfig.screenWidth! - 130,
                             child: Text(
                               locationName(context, locationProvider, isPickup),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge!
-                                  .copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal),
+                              style: Theme.of(context).textTheme.displayLarge,
                             ),
                           ),
                         ],
@@ -73,7 +65,7 @@ class AddressBox extends StatelessWidget {
                     selected
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
-                    color: Theme.of(context).textTheme.titleSmall!.color,
+                    color: Theme.of(context).colorScheme.tertiary,
                     size: 35,
                   )
                 ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'text_button.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/utilities/app_localizations.dart';
-import 'text_button.dart';
 
 class ProfileFooter extends StatelessWidget {
   const ProfileFooter({Key? key}) : super(key: key);

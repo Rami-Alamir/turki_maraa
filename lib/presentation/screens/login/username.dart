@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
@@ -7,6 +6,7 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 import '../../widgets/shared/rectangle_text_field.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
+import 'package:provider/provider.dart';
 
 class Username extends StatefulWidget {
   const Username({Key? key}) : super(key: key);
@@ -34,7 +34,8 @@ class UsernameState extends State<Username> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           elevation: 0,
-          iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+          iconTheme:
+              IconThemeData(color: Theme.of(context).colorScheme.primary),
           backgroundColor: Colors.transparent,
         ),
         body: GestureDetector(
@@ -48,7 +49,7 @@ class UsernameState extends State<Username> {
                 child: Text(
                   AppLocalizations.of(context)!.tr('lets_get_to_know_you'),
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
               Form(

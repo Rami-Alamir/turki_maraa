@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 
@@ -51,7 +50,7 @@ class PointsHeader extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .displayLarge!
-                                .copyWith(fontSize: 26, color: AppColors.white),
+                                .copyWith(fontSize: 26, color: Colors.white),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -61,8 +60,7 @@ class PointsHeader extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .displayLarge!
-                                  .copyWith(
-                                      fontSize: 14, color: AppColors.white),
+                                  .copyWith(fontSize: 14, color: Colors.white),
                             ),
                           ),
                         ],
@@ -76,7 +74,7 @@ class PointsHeader extends StatelessWidget {
                             children: <Widget>[
                               const Icon(
                                 Icons.workspaces_filled,
-                                color: AppColors.white,
+                                color: Colors.white,
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
@@ -89,7 +87,7 @@ class PointsHeader extends StatelessWidget {
                                       .copyWith(
                                           fontWeight: FontWeight.normal,
                                           fontSize: 12,
-                                          color: AppColors.white),
+                                          color: Colors.white),
                                 ),
                               ),
                             ],
@@ -107,7 +105,7 @@ class PointsHeader extends StatelessWidget {
                                     .copyWith(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 10,
-                                        color: AppColors.white),
+                                        color: Colors.white),
                               ),
                             ),
                           ),

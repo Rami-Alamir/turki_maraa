@@ -19,7 +19,6 @@ class ExtraTag extends StatelessWidget {
       onTap: () {
         onTap();
       },
-      splashColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Container(
@@ -27,7 +26,7 @@ class ExtraTag extends StatelessWidget {
             decoration: BoxDecoration(
               color: !selected
                   ? Theme.of(context).colorScheme.secondaryContainer
-                  : Theme.of(context).primaryColor,
+                  : Theme.of(context).colorScheme.primary,
               shape: BoxShape.rectangle,
               borderRadius: const BorderRadius.all(Radius.circular(5)),
             ),
@@ -46,7 +45,7 @@ class ExtraTag extends StatelessWidget {
                                   ? AppColors.white
                                   : Theme.of(context)
                                       .textTheme
-                                      .titleLarge!
+                                      .displayLarge!
                                       .color,
                               fontSize: 14,
                               fontWeight: FontWeight.normal)),

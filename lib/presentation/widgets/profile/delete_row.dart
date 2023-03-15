@@ -1,14 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/app_colors.dart';
+import '../dialog/confirm_dialog.dart';
+import '../dialog/indicator_dialog.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/dialog_helper.dart';
 import '../../../core/utilities/show_snack_bar.dart';
-import '../dialog/confirm_dialog.dart';
-import '../dialog/indicator_dialog.dart';
 
 class DeleteRow extends StatelessWidget {
   const DeleteRow({Key? key}) : super(key: key);
@@ -49,6 +50,7 @@ class DeleteRow extends StatelessWidget {
               Text(AppLocalizations.of(context)!.tr('delete_account'),
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                         fontSize: 12,
+                        color: AppColors.red,
                         fontWeight: FontWeight.bold,
                       )),
             ],

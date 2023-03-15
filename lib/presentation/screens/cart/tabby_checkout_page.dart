@@ -8,7 +8,6 @@ class TabbyCheckoutPage extends StatelessWidget {
   final TabbySession session;
 
   const TabbyCheckoutPage({Key? key, required this.session}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -21,7 +20,6 @@ class TabbyCheckoutPage extends StatelessWidget {
               final CartProvider cartProvider =
                   Provider.of<CartProvider>(context, listen: false);
               cartProvider.clearCart();
-              cartProvider.setSelectedPayment = 7;
               final bool status = await cartProvider
                   .capturePayment(session.paymentId.toString());
               if (context.mounted) {

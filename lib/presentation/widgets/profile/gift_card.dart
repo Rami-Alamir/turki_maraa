@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../shared/main_card.dart';
@@ -37,7 +36,7 @@ class GiftCard extends StatelessWidget {
                               .textTheme
                               .displayLarge!
                               .copyWith(
-                                  color: AppColors.white,
+                                  color: Colors.white,
                                   height: 3,
                                   fontSize: 18))),
                   Padding(
@@ -66,7 +65,7 @@ class GiftCard extends StatelessWidget {
                               .textTheme
                               .displayLarge!
                               .copyWith(
-                                  color: AppColors.white,
+                                  color: Colors.white,
                                   fontSize: 18,
                                   height: 2))),
                 ],
@@ -86,7 +85,7 @@ class GiftCard extends StatelessWidget {
                                 .textTheme
                                 .displayLarge!
                                 .copyWith(
-                                    color: AppColors.white,
+                                    color: Colors.white,
                                     fontSize: 14,
                                     height: 2))),
                   ],

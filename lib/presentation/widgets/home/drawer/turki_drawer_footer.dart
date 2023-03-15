@@ -1,14 +1,11 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../../controllers/location_provider.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/constants.dart';
-import '../../../../core/constants/fixed_assets.dart';
 import '../../../../core/service/firebase_helper.dart';
 import '../../../../core/utilities/app_localizations.dart';
-import 'dart:math' as math;
 
 class TurkiDrawerFooter extends StatelessWidget {
   final bool ltr;
@@ -38,10 +35,11 @@ class TurkiDrawerFooter extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: const Icon(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.tertiaryContainer,
+                  child: Icon(
                     Icons.phone,
-                    color: AppColors.white,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
                 ),
                 Padding(
@@ -49,7 +47,7 @@ class TurkiDrawerFooter extends StatelessWidget {
                       vertical: 10, horizontal: 10.0),
                   child: AutoSizeText(
                     AppLocalizations.of(context)!.tr('contact_support'),
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: Theme.of(context).textTheme.displayMedium,
                     minFontSize: 11,
                     maxFontSize: 12,
                   ),
@@ -57,15 +55,15 @@ class TurkiDrawerFooter extends StatelessWidget {
               ],
             ),
           ),
-          Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.rotationY(ltr ? math.pi : 0),
-            child: Image.asset(
-              FixedAssets.turkiCar,
-              width: 103,
-              height: 75,
-            ),
-          ),
+          // Transform(
+          //   alignment: Alignment.center,
+          //   transform: Matrix4.rotationY(ltr ? math.pi : 0),
+          //   child: Image.asset(
+          //     FixedAssets.turkiCar,
+          //     width: 103,
+          //     height: 75,
+          //   ),
+          // ),
         ],
       ),
     );

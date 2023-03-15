@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -19,7 +19,6 @@ class OrderStatus extends StatefulWidget {
 class _OrderStatusState extends State<OrderStatus> {
   late bool status;
   late int paymentId;
-
   @override
   void initState() {
     status = widget.status;
@@ -53,9 +52,9 @@ class _OrderStatusState extends State<OrderStatus> {
                           begin: Alignment.bottomLeft,
                           end: Alignment.topRight,
                           colors: [
-                            status ? AppColors.green1 : AppColors.red,
+                            status ? AppColors.green : AppColors.red,
                             status
-                                ? AppColors.green1.withOpacity(0.8)
+                                ? AppColors.green.withOpacity(0.8)
                                 : AppColors.red.withOpacity(0.8),
                           ])),
                   child: Icon(
@@ -67,7 +66,10 @@ class _OrderStatusState extends State<OrderStatus> {
             Text(
               AppLocalizations.of(context)!
                   .tr(status ? "order_successful" : "payment_failed"),
-              style: Theme.of(context).textTheme.displayLarge!,
+              style: Theme.of(context)
+                  .textTheme
+                  .displayMedium!
+                  .copyWith(fontSize: 16),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 40),

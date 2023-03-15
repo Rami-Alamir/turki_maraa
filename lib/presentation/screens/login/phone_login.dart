@@ -4,10 +4,10 @@ import '../../widgets/login/phone_number.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/service/service_locator.dart';
+import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../../core/constants/route_constants.dart';
 
 class PhoneLogin extends StatefulWidget {
   const PhoneLogin({Key? key}) : super(key: key);
@@ -32,7 +32,8 @@ class PhoneLoginState extends State<PhoneLogin> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           elevation: 0,
-          iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+          iconTheme:
+              IconThemeData(color: Theme.of(context).colorScheme.primary),
           backgroundColor: Colors.transparent,
         ),
         body: GestureDetector(
@@ -45,7 +46,7 @@ class PhoneLoginState extends State<PhoneLogin> {
                   AppLocalizations.of(context)!
                       .tr('enter_your_mobile_number_to_activate_the_account'),
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
               PhoneNumber(isoCountryCode: auth.isoCountryCode ?? 'SA'),

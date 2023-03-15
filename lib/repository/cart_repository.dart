@@ -38,8 +38,10 @@ class CartRepository {
         "carts?page=1&per_page=500&longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
         authorization: authorization);
     CartData? cartData;
-    cartData = CartData.fromJson(response);
-    return cartData;
+    try {
+      cartData = CartData.fromJson(response);
+    } catch (_) {}
+    return cartData!;
   }
 
   Future<int> checkCoupon(

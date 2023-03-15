@@ -25,7 +25,7 @@ class SocialMediaIcon extends StatelessWidget {
       icon: Icon(
         icon,
         size: 20,
-        color: color ?? Theme.of(context).primaryColor,
+        color: color ?? Theme.of(context).colorScheme.primary,
       ),
     );
   }

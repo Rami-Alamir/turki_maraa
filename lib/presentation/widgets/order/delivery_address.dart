@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/shared/main_card.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/shared/main_card.dart';
 
 class DeliveryAddress extends StatelessWidget {
   const DeliveryAddress({Key? key}) : super(key: key);
@@ -21,10 +21,7 @@ class DeliveryAddress extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
             child: Text(
               AppLocalizations.of(context)!.tr('delivery_address'),
-              style: Theme.of(context)
-                  .textTheme
-                  .displayLarge!
-                  .copyWith(fontSize: 12),
+              style: Theme.of(context).textTheme.displayMedium,
             ),
           ),
           MainCard(
@@ -35,7 +32,7 @@ class DeliveryAddress extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Icon(Icons.location_pin,
-                      color: Theme.of(context).primaryColor),
+                      color: Theme.of(context).colorScheme.primary),
                 ),
                 SizedBox(
                   width: SizeConfig.screenWidth! * 0.8,
@@ -46,11 +43,8 @@ class DeliveryAddress extends StatelessWidget {
                             "",
                         style: Theme.of(context)
                             .textTheme
-                            .displayLarge!
-                            .copyWith(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                height: 1.8)),
+                            .displayMedium!
+                            .copyWith(height: 1.8)),
                   ),
                 ),
               ],

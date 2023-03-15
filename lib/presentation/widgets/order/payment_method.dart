@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../../widgets/shared/main_card.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
-import '../../widgets/shared/main_card.dart';
 
 class PaymentMethod extends StatelessWidget {
   const PaymentMethod({Key? key}) : super(key: key);
@@ -19,10 +18,7 @@ class PaymentMethod extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
           child: Text(
             AppLocalizations.of(context)!.tr('payment_method'),
-            style: Theme.of(context)
-                .textTheme
-                .displayLarge!
-                .copyWith(fontSize: 12),
+            style: Theme.of(context).textTheme.displayMedium,
           ),
         ),
         MainCard(
@@ -58,13 +54,11 @@ class PaymentMethod extends StatelessWidget {
                         : Text(
                             AppLocalizations.of(context)!.tr(
                                 paymentTypeId == 1 ? "cod" : "online_payment"),
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                )),
+                            style:
+                                Theme.of(context).textTheme.displayLarge!.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                    )),
               ),
             ],
           ),

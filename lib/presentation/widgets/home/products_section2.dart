@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'product_card.dart';
 import '../../../models/best_seller.dart';
 import '../../../core/utilities/size_config.dart';
-import 'product_card.dart';
 
 class ProductsSection2 extends StatelessWidget {
   final BestSeller? products;
@@ -35,12 +35,7 @@ class ProductsSection2 extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(title,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .copyWith(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold)),
+                                style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
                       ),

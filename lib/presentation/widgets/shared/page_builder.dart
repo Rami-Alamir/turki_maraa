@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../core/utilities/enum/request_status.dart';
-import '../../../presentation/widgets/shared/retry.dart';
-import '../../../presentation/widgets/shared/spinkit_indicator.dart';
 import 'empty_list.dart';
 import 'not_auth.dart';
+import '../../../presentation/widgets/shared/retry.dart';
+import '../../../presentation/widgets/shared/spinkit_indicator.dart';
+import '../../../core/utilities/enum/request_status.dart';
 
 class PageBuilder extends StatelessWidget {
   final RequestStatus requestStatus;

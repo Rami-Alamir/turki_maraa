@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../../widgets/shared/main_card.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/shared/main_card.dart';
 
 class OrderNote extends StatelessWidget {
   const OrderNote({Key? key}) : super(key: key);
@@ -21,10 +20,7 @@ class OrderNote extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
             child: Text(
               AppLocalizations.of(context)!.tr('note'),
-              style: Theme.of(context)
-                  .textTheme
-                  .displayLarge!
-                  .copyWith(fontSize: 12),
+              style: Theme.of(context).textTheme.displayMedium,
             ),
           ),
           MainCard(

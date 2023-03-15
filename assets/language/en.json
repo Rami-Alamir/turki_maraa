@@ -33,7 +33,6 @@
   "delivery_fees": "Delivery fees",
   "discount": "Discount",
   "credit": "Wallet",
-  "my_credit": "Credit",
   "edit": "Edit",
   "vat_sa": "All prices include 15% VAT",
   "vat_ae": "All prices include 5% VAT",
@@ -52,7 +51,7 @@
   "contact_whatsApp": "Contact us via WhatsApp",
   "share" : "Share",
   "language" : "العربية",
-  "turki_app" : "Turki Dabayh",
+  "turki_app" : "Almara'a",
   "light_mode" : "Light mode",
   "dark_mode": "Dark mode",
   "classic_mode" : "Classic mode",
@@ -174,7 +173,7 @@
   "femaleString": "Female",
   "confirm" : "Confirm",
   "order_successful": "Order successful",
-  "thank_order": "Thank you for choosing Turki dabayh, and now our team is preparing your order with love and care.",
+  "thank_order": "Thank you for choosing Almara'a, and now our team is preparing your order with love and care.",
   "continue_shopping" : "Continue shopping",
   "please_select_size" : "Please select the size",
   "please_select_cut" : "Please select the chopping",
@@ -248,5 +247,6 @@
   "rate_the_app": "Rate the app",
   "you_are_exhausted_today": "You are exhausted all your attempts today",
   "try_tomorrow_and_try_every_day_and_win": "Try tomorrow,try every day and win",
-  "tabby_error": "Sorry, Tabby is unable to approve this purchase. Please use an alternative payment method for your order."
+  "tabby_error": "Sorry, Tabby is unable to approve this purchase. Please use an alternative payment method for your order.",
+  "main_theme": "Main mode"
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 import 'banners.dart';
-import '../../../core/constants/route_constants.dart';
-import '../../../models/banners_data.dart';
-import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 import '../../widgets/shared/logo.dart';
+import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/route_constants.dart';
+import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
+import '../../../models/banners_data.dart';
 
 class FoodAppBar extends StatelessWidget {
   final bool changeColor;
@@ -23,10 +23,8 @@ class FoodAppBar extends StatelessWidget {
           icon: Icon(
             Icons.arrow_back_ios,
             color: changeColor
-                ? Theme.of(context).primaryColor
-                : Theme.of(context).colorScheme.background == AppColors.yellow
-                    ? AppColors.yellow
-                    : AppColors.white,
+                ? Theme.of(context).colorScheme.primary
+                : AppColors.white,
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -35,10 +33,8 @@ class FoodAppBar extends StatelessWidget {
         pinned: true,
         actionsIconTheme: IconThemeData(
           color: changeColor
-              ? Theme.of(context).primaryColor
-              : Theme.of(context).colorScheme.background == AppColors.yellow
-                  ? AppColors.yellow
-                  : AppColors.white,
+              ? Theme.of(context).colorScheme.primary
+              : AppColors.white,
         ),
         actions: [
           Padding(

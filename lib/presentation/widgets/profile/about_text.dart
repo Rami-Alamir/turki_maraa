@@ -19,7 +19,7 @@ class AboutText extends StatelessWidget {
             title,
             style: Theme.of(context)
                 .textTheme
-                .titleSmall!
+                .bodyLarge!
                 .copyWith(height: 1.5, fontWeight: FontWeight.normal),
           ),
         ),

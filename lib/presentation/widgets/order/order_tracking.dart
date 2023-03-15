@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import 'indicator.dart';
 
@@ -48,14 +47,14 @@ class OrderTracking extends StatelessWidget {
             withLine: false,
             color: statusCode! != 200
                 ? statusCode! == 4000
-                    ? AppColors.red
-                    : AppColors.grey
-                : AppColors.green1,
+                    ? Colors.red
+                    : Colors.grey
+                : Colors.green,
             color2: statusCode! != 200
                 ? statusCode! == 4000
-                    ? AppColors.red
-                    : AppColors.grey
-                : AppColors.green1,
+                    ? Colors.red
+                    : Colors.grey
+                : Colors.green,
             icon: Icons.done_all,
           ),
         ],
@@ -63,9 +62,9 @@ class OrderTracking extends StatelessWidget {
     );
   }
 
-  final color1 = AppColors.darkRed;
-  final color2 = AppColors.amber;
-  final color3 = AppColors.grey;
+  final color1 = const Color.fromRGBO(90, 4, 9, 1);
+  final color2 = Colors.amber;
+  final color3 = Colors.grey;
 
   Color getColor1(int code) {
     return statusCode! > code

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'state_item.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/size_config.dart';
-import 'package:provider/provider.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../controllers/user_provider.dart';
-import 'state_item.dart';
 
 class ProfileState extends StatelessWidget {
   const ProfileState({Key? key}) : super(key: key);

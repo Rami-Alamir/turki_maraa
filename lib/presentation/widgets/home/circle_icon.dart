@@ -24,20 +24,17 @@ class CircleIcon extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context)
-                  .colorScheme
-                  .secondaryContainer
-                  .withOpacity(0.3),
+              color: Theme.of(context).colorScheme.shadow,
               blurRadius: 44,
               offset: const Offset(4, 8), // Shadow position
             ),
           ],
           shape: BoxShape.circle,
-          color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
+          color: Theme.of(context).colorScheme.primaryContainer,
         ),
         child: Padding(
           padding: padding,
-          child: Icon(icon, color: Theme.of(context).primaryColor),
+          child: Icon(icon, color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );

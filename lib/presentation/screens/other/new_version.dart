@@ -2,15 +2,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import '../../../controllers/location_provider.dart';
-import '../../../controllers/app_provider.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../widgets/shared/rounded_rectangle_button.dart';
+import '../../../controllers/app_provider.dart';
+import '../../../controllers/location_provider.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/service/firebase_helper.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../widgets/shared/rounded_rectangle_button.dart';
 
 class NewVersion extends StatelessWidget {
   const NewVersion({Key? key}) : super(key: key);
@@ -54,7 +54,7 @@ class NewVersion extends StatelessWidget {
               child: Text(AppLocalizations.of(context)!.tr('new_update_desc'),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                      color: AppColors.gold2,
+                      color: AppColors.gold,
                       height: 1.5,
                       fontSize: 16,
                       fontWeight: FontWeight.w300)),
@@ -82,7 +82,7 @@ class NewVersion extends StatelessWidget {
                   },
                   fontSize: 24,
                   fontColor: AppColors.gold,
-                  color: AppColors.darkRed,
+                  color: AppColors.purple3,
                 ),
               ),
             )

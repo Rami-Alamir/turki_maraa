@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../../controllers/address_provider.dart';
-import '../../../core/utilities/app_localizations.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/profile/address_card.dart';
 import '../../widgets/shared/add_new_address.dart';
 import '../../widgets/shared/main_card.dart';
 import '../../widgets/shared/primary_app_bar.dart';
-import 'package:provider/provider.dart';
+import '../../../controllers/address_provider.dart';
+import '../../../core/utilities/app_localizations.dart';
 
 class MyAddresses extends StatelessWidget {
   const MyAddresses({Key? key}) : super(key: key);
@@ -25,8 +25,12 @@ class MyAddresses extends StatelessWidget {
                 height: 40,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
-                    AddNewAddress(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: AddNewAddress(),
+                    ),
                   ],
                 )),
             ListView.builder(

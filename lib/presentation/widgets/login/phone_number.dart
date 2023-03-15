@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'phone_number_textfield.dart';
 import '../../../controllers/auth.dart';
-import '../../../core/constants/app_colors.dart';
 
 class PhoneNumber extends StatelessWidget {
   final String isoCountryCode;
@@ -29,8 +28,7 @@ class PhoneNumber extends StatelessWidget {
                 controller: auth.phoneController,
                 enabled: !isWhite),
             Divider(
-              color:
-                  isWhite ? AppColors.white : AppColors.grey.withOpacity(0.5),
+              color: Theme.of(context).colorScheme.outline,
               indent: 10,
               endIndent: 15,
               thickness: 1,

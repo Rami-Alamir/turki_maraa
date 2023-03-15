@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../../controllers/auth.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 
@@ -54,10 +54,10 @@ class PinCodeFields extends StatelessWidget {
                   errorBorderColor: Theme.of(context).primaryColor,
                   inactiveColor:
                       Theme.of(context).colorScheme.secondaryContainer,
-                  activeColor: Theme.of(context).primaryColor,
+                  activeColor: Theme.of(context).colorScheme.primary,
                   inactiveFillColor: Theme.of(context).colorScheme.background,
                   selectedFillColor: Theme.of(context).colorScheme.background,
-                  selectedColor: Theme.of(context).primaryColor,
+                  selectedColor: Theme.of(context).colorScheme.primary,
                   disabledColor: Theme.of(context).colorScheme.background,
                   activeFillColor: AppColors.white,
                 ),

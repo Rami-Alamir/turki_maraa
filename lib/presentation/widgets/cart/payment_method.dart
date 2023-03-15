@@ -19,7 +19,7 @@ class PaymentMethod extends StatelessWidget {
             AppLocalizations.of(context)!.tr('payment_method'),
             style: Theme.of(context)
                 .textTheme
-                .displayLarge!
+                .displayMedium!
                 .copyWith(fontSize: 14),
           ),
         ),
@@ -62,7 +62,6 @@ class PaymentMethod extends StatelessWidget {
             ],
           ),
         ),
-        // UseCredit()
       ],
     );
   }

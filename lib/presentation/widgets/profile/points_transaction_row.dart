@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../models/points_tran.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
@@ -11,7 +10,7 @@ class PointTransactionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool status = transaction.after > 0;
-    final Color color = status ? AppColors.green1 : AppColors.red;
+    final Color color = status ? Colors.green : Colors.red;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(

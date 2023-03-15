@@ -26,14 +26,17 @@ class ProductInformationItem extends StatelessWidget {
             height: 45,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: Theme.of(context).primaryColor.withOpacity(0.2),
+              color: Theme.of(context)
+                  .colorScheme
+                  .tertiaryContainer
+                  .withOpacity(0.2),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   icon,
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   size: size,
                 ),
               ],
@@ -49,7 +52,7 @@ class ProductInformationItem extends StatelessWidget {
                   AppLocalizations.of(context)!.tr(title),
                   style: Theme.of(context)
                       .textTheme
-                      .titleMedium
+                      .titleSmall
                       ?.copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -62,14 +65,14 @@ class ProductInformationItem extends StatelessWidget {
                       "$value ",
                       style: Theme.of(context)
                           .textTheme
-                          .headlineMedium
-                          ?.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+                          .displayLarge
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       description,
                       style: Theme.of(context)
                           .textTheme
-                          .headlineMedium
+                          .displayLarge
                           ?.copyWith(fontSize: 10, fontWeight: FontWeight.bold),
                     ),
                   ],

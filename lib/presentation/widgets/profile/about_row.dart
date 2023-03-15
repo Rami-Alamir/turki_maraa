@@ -32,10 +32,7 @@ class AboutRow extends StatelessWidget {
           ),
           Text(
             AppLocalizations.of(context)!.tr(title),
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium!
-                .copyWith(fontSize: 14, height: 3, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(height: 3),
           ),
         ],
       ),

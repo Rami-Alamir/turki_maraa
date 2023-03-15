@@ -35,6 +35,6 @@ class Data {
     titleEn = json['type_en'] ?? "";
     backgroundColor1 = json['background color 1'] ?? "5A0409";
     backgroundColor2 = json['background color 2'] ?? "6B0000";
-    imageUrl = json['image_url'];
+    imageUrl = json['banner_url'];
   }
 }

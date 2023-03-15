@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'order_type_item.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
-import 'order_type_item.dart';
 
 class OrderType extends StatelessWidget {
   final bool visible;

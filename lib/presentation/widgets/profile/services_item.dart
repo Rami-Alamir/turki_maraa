@@ -31,10 +31,8 @@ class ServicesItem extends StatelessWidget {
             ),
             SizedBox(
               width: 95,
-              child: Text(
-                AppLocalizations.of(context)!.tr(title),
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+              child: Text(AppLocalizations.of(context)!.tr(title),
+                  style: Theme.of(context).textTheme.displayMedium),
             ),
           ],
         ),

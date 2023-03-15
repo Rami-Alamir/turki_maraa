@@ -4,6 +4,7 @@ class FixedAssets {
   static const String about = 'assets/images/about.png';
   static const String placeholder = 'assets/images/placeholder.png';
   static const String background = "assets/images/ww1.png";
+  static const String backgroundClassic = "assets/images/ww2.png";
   static const String backgroundDark = "assets/images/background_dark.png";
   static const String loginBackground = "assets/images/t1.gif";
   static const String noInternet = 'assets/images/no_internet.gif';
@@ -21,9 +22,14 @@ class FixedAssets {
   static const String notSupported = 'assets/images/not_supported.png';
   static const String notAuth = 'assets/images/not_auth.png';
   static const String whatsapp2 = 'assets/images/whatsapp.png';
+  static const String founding = 'assets/images/founding.png';
+  static const String founding1 = 'assets/images/founding1.png';
+  static const String foundingday = 'assets/images/foundingday.png';
+
   //SVG ICONS
   static const String support =
       'assets/images/profile_icons/customer-support.svg';
+  static const String main = 'assets/images/profile_icons/main.svg';
   static const String dark = 'assets/images/profile_icons/dark-mode.svg';
   static const String classic = 'assets/images/profile_icons/Classic-Mode.svg';
   static const String light = 'assets/images/profile_icons/light.svg';
@@ -61,6 +67,7 @@ class FixedAssets {
   static const String logout = 'assets/images/profile_icons/logout-colored.svg';
   static const String deleteAddress =
       'assets/images/profile_icons/home-location.svg';
+
   //lottie
   static const String logoLottie = "assets/lottie/logo.json";
   static const String congratulations = "assets/lottie/congratulations.json";

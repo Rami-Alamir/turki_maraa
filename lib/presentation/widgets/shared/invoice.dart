@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_colors.dart';
 import 'invoice_row.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/format_helper.dart';
 import '../../../core/utilities/get_strings.dart';
+import '../../../core/constants/app_colors.dart';
 
 class Invoice extends StatelessWidget {
   final double subtotal;
@@ -53,17 +53,17 @@ class Invoice extends StatelessWidget {
               AppLocalizations.of(context)!.tr('order_summary'),
               style: Theme.of(context)
                   .textTheme
-                  .displayLarge!
+                  .displayMedium!
                   .copyWith(fontSize: 14),
             ),
           ),
           InvoiceRow(
-              fontColor: Theme.of(context).textTheme.headlineMedium!.color!,
+              fontColor: Theme.of(context).textTheme.displayMedium!.color!,
               title: 'order_total',
               value:
                   '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(subtotal)} $currencyStr'),
           InvoiceRow(
-              fontColor: Theme.of(context).textTheme.headlineMedium!.color!,
+              fontColor: Theme.of(context).textTheme.displayMedium!.color!,
               title: 'delivery_fees',
               value:
                   '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(shipping)} $currencyStr'),
@@ -72,14 +72,14 @@ class Invoice extends StatelessWidget {
             value:
                 '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(discountVoucher)} $currencyStr',
             visible: discountVoucher > 0,
-            fontColor: AppColors.green1,
+            fontColor: AppColors.green,
           ),
           InvoiceRow(
-            title: 'my_credit',
+            title: 'credit2',
             value:
                 '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(myCredit)} $currencyStr',
             visible: myCredit > 0,
-            fontColor: AppColors.green1,
+            fontColor: AppColors.green,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -87,9 +87,9 @@ class Invoice extends StatelessWidget {
               height: 2,
               color: Theme.of(context)
                   .textTheme
-                  .headlineMedium!
+                  .headlineSmall!
                   .color!
-                  .withOpacity(0.35),
+                  .withOpacity(0.15),
               indent: 2,
               endIndent: 2,
             ),
@@ -105,7 +105,7 @@ class Invoice extends StatelessWidget {
                     AppLocalizations.of(context)!.tr('total'),
                     style: Theme.of(context)
                         .textTheme
-                        .displayLarge!
+                        .displayMedium!
                         .copyWith(fontSize: 14),
                   ),
                 ),
@@ -113,10 +113,7 @@ class Invoice extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
                     '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(total)} $currencyStr',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
               ],
@@ -127,7 +124,7 @@ class Invoice extends StatelessWidget {
             child: Center(
               child: Text(
                 AppLocalizations.of(context)!.tr(vatStr),
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontSize: 10,
                     ),
               ),

@@ -22,7 +22,7 @@ class GenderPicker extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 10.0, top: 15),
           child: Text(AppLocalizations.of(context)!.tr('gender'),
               textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.displayLarge!.copyWith(
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                   )),
@@ -55,7 +55,7 @@ class GenderPicker extends StatelessWidget {
                   AppLocalizations.of(context)!.tr('maleString'),
                   style: Theme.of(context)
                       .textTheme
-                      .headlineMedium!
+                      .displayMedium!
                       .copyWith(height: 2, fontSize: 16),
                 ),
                 value: "0"),
@@ -64,7 +64,7 @@ class GenderPicker extends StatelessWidget {
                   AppLocalizations.of(context)!.tr('femaleString'),
                   style: Theme.of(context)
                       .textTheme
-                      .headlineMedium!
+                      .displayMedium!
                       .copyWith(height: 2, fontSize: 16),
                 ),
                 value: "1")
@@ -72,15 +72,9 @@ class GenderPicker extends StatelessWidget {
         ),
         itemExtent: 35,
         confirmText: AppLocalizations.of(context)!.tr('confirm'),
-        confirmTextStyle: Theme.of(context)
-            .textTheme
-            .titleMedium!
-            .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+        confirmTextStyle: Theme.of(context).textTheme.titleSmall,
         cancelText: AppLocalizations.of(context)!.tr('cancel'),
-        cancelTextStyle: Theme.of(context)
-            .textTheme
-            .titleMedium!
-            .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+        cancelTextStyle: Theme.of(context).textTheme.titleSmall,
         changeToFirst: false,
         textAlign: TextAlign.left,
         columnPadding: const EdgeInsets.all(20.0),

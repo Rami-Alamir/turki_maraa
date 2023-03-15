@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/product_provider.dart';
-import '../../../core/utilities/app_localizations.dart';
 import '../../widgets/home/product_information.dart';
 import '../../widgets/home/product_description.dart';
 import '../../widgets/home/product_header.dart';
@@ -10,6 +8,8 @@ import '../../widgets/home/shalwata_extra.dart';
 import '../../widgets/home/similar_products_section.dart';
 import '../../widgets/home/without_extra.dart';
 import '../../widgets/home/not_available.dart';
+import '../../../controllers/product_provider.dart';
+import '../../../core/utilities/app_localizations.dart';
 
 class ProductDetailsList extends StatelessWidget {
   final int index;

@@ -3,46 +3,46 @@ import '../../constants/app_colors.dart';
 import '../../constants/constants.dart';
 
 final ThemeData lightTheme = ThemeData(
-  splashColor: AppColors.white,
   primaryColor: AppColors.primaryColor,
   fontFamily: Constants.fontFamily,
-  canvasColor: Colors.transparent,
+  scaffoldBackgroundColor: AppColors.white10,
+  splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
-  scaffoldBackgroundColor: AppColors.white1,
+  canvasColor: Colors.transparent,
   textTheme: const TextTheme(
     titleMedium: TextStyle(
+        fontSize: 18,
+        height: 1.5,
+        fontWeight: FontWeight.w500,
+        color: AppColors.gold),
+    titleSmall: TextStyle(
         fontSize: 16,
         color: AppColors.primaryColor,
         fontWeight: FontWeight.w600),
-    titleSmall: TextStyle(
-        fontSize: 14,
-        height: 2,
-        fontWeight: FontWeight.w500,
-        color: AppColors.grey),
     displayLarge: TextStyle(
-        color: AppColors.black,
-        fontWeight: FontWeight.bold,
-        height: 1.40,
-        fontSize: 20),
+        color: AppColors.black, fontSize: 14, fontWeight: FontWeight.normal),
+    displayMedium: TextStyle(
+        fontWeight: FontWeight.w600, color: AppColors.black, fontSize: 12),
     displaySmall: TextStyle(
-        fontSize: 20, color: AppColors.white, fontWeight: FontWeight.w500),
-    headlineMedium: TextStyle(
         color: AppColors.black, fontWeight: FontWeight.w600, fontSize: 12),
+    headlineMedium: TextStyle(
+        color: AppColors.white, fontWeight: FontWeight.w500, fontSize: 20),
     headlineSmall: TextStyle(
         fontWeight: FontWeight.normal, color: AppColors.darkGray, fontSize: 12),
-    displayMedium: TextStyle(
-        fontWeight: FontWeight.normal,
-        color: AppColors.darkGrayWithOpacity,
-        fontSize: 14),
     titleLarge: TextStyle(
-      fontWeight: FontWeight.w600,
-      color: AppColors.black,
-      fontSize: 20,
+      fontWeight: FontWeight.normal,
+      color: AppColors.gold,
+      fontSize: 12,
     ),
+    bodyLarge: TextStyle(
+        fontWeight: FontWeight.normal,
+        color: AppColors.grey,
+        fontSize: 14,
+        height: 1.5),
   ),
   dialogTheme: const DialogTheme(
     contentTextStyle: TextStyle(
-        color: AppColors.darkGray, fontWeight: FontWeight.w500, fontSize: 16),
+        color: AppColors.darkGray1, fontWeight: FontWeight.w500, fontSize: 16),
   ),
   dividerTheme: const DividerThemeData(
     indent: 50,
@@ -67,11 +67,17 @@ final ThemeData lightTheme = ThemeData(
     fontFamily: Constants.fontFamily,
     color: AppColors.white,
   )),
-  colorScheme: ColorScheme.fromSwatch()
-      .copyWith(
-        secondary: AppColors.white,
-        primaryContainer: AppColors.white2,
-        secondaryContainer: AppColors.grey.withOpacity(0.5),
-      )
-      .copyWith(background: AppColors.white1),
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+      primary: AppColors.primaryColor,
+      tertiary: AppColors.primaryColor,
+      secondary: AppColors.gold,
+      surface: AppColors.white,
+      shadow: AppColors.grey.withOpacity(0.35),
+      outline: AppColors.white20,
+      primaryContainer: AppColors.white10,
+      secondaryContainer: AppColors.grey.withOpacity(0.5),
+      tertiaryContainer: AppColors.primaryColor,
+      onBackground: AppColors.white,
+      onTertiary: AppColors.purpleGray,
+      background: AppColors.white10),
 );

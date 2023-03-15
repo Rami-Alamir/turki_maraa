@@ -73,7 +73,7 @@ class OrderDetailsRow extends StatelessWidget {
                       "${item.quantity} x ${isAr ? item.product!.nameAr : item.product!.nameEn}",
                       style: Theme.of(context)
                           .textTheme
-                          .displayLarge!
+                          .displayMedium!
                           .copyWith(fontSize: 14),
                       maxLines: 1,
                     ),
@@ -85,9 +85,8 @@ class OrderDetailsRow extends StatelessWidget {
                           "${isAr ? "${item.size?.nameAr ?? ""} ${item.cut?.nameAr ?? ""} ${item.preparation?.nameAr ?? ""} ${item.shalwata?.nameAr ?? ""}" : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""} ${item.preparation?.nameEn ?? ""} ${item.shalwata?.nameEn ?? ""}"}${item.isLyh! ? AppLocalizations.of(context)!.tr('without_tail_fat') : ""} ${item.isRas! ? AppLocalizations.of(context)!.tr('without_head') : ""} ${item.isKwar3! ? AppLocalizations.of(context)!.tr('without_trotters') : ""} ${item.isKarashah! ? AppLocalizations.of(context)!.tr('without_tripe') : ""} ",
                           style: Theme.of(context)
                               .textTheme
-                              .headlineMedium!
-                              .copyWith(
-                                  fontSize: 12, fontWeight: FontWeight.w400),
+                              .bodyLarge!
+                              .copyWith(fontSize: 12),
                         ),
                       ),
                     ),
@@ -103,10 +102,9 @@ class OrderDetailsRow extends StatelessWidget {
                               textAlign: TextAlign.end,
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleMedium!
+                                  .titleSmall!
                                   .copyWith(
                                       fontSize: 12,
-                                      color: Theme.of(context).primaryColor,
                                       fontWeight: FontWeight.w600),
                               maxLines: 2,
                             ),
