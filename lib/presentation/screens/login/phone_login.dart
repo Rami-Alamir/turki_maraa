@@ -17,10 +17,11 @@ class PhoneLogin extends StatefulWidget {
 }
 
 class PhoneLoginState extends State<PhoneLogin> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late TextEditingController phoneController;
   @override
   void initState() {
-    final Auth auth = Provider.of<Auth>(context, listen: false);
-    auth.formKey = GlobalKey<FormState>();
+    phoneController = TextEditingController();
     super.initState();
   }
 
@@ -49,7 +50,7 @@ class PhoneLoginState extends State<PhoneLogin> {
                   style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
-              PhoneNumber(isoCountryCode: auth.isoCountryCode ?? 'SA'),
+              PhoneNumber(formKey: formKey, phoneController: phoneController),
               RoundedRectangleButton(
                   width: SizeConfig.screenWidth! - 50,
                   padding:
@@ -59,7 +60,7 @@ class PhoneLoginState extends State<PhoneLogin> {
                       : auth.start.toString(),
                   onPressed: () async {
                     if (auth.start == 30 || auth.start == 0) {
-                      if (auth.formKey!.currentState!.validate()) {
+                      if (formKey.currentState!.validate()) {
                         auth.startTimer();
                         final int statusCode = await auth.sendOTP(context);
                         if (!mounted) return;
@@ -70,6 +71,12 @@ class PhoneLoginState extends State<PhoneLogin> {
             ],
           ),
         ));
+  }
+
+  @override
+  void dispose() {
+    phoneController.dispose();
+    super.dispose();
   }
 
   void show(BuildContext context, int statusCode) {

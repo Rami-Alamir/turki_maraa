@@ -24,12 +24,13 @@ class AppProvider with ChangeNotifier {
   Data? _promotion;
   bool? _isHMS = false;
   String? _isoCountryCode = 'SA';
+  String? _isoCountryCode2;
   String? _url;
   DateTime? _now;
   Promotions? promotions;
   SharedPreferences? _prefs;
   String? _lastShake;
-
+  bool _showEidMessage = true;
   bool get canUpdate => _canUpdate;
   String? get url => _url;
   bool get canShake => _canShake;
@@ -40,6 +41,7 @@ class AppProvider with ChangeNotifier {
   Future<void> updateProvider(bool isHMS, String? isoCountryCode) async {
     _isHMS = isHMS;
     _isoCountryCode = isoCountryCode ?? 'SA';
+    _isoCountryCode2 = isoCountryCode;
     if (_isHMS ?? false) {
       _checkNewVersion();
     }
@@ -69,19 +71,21 @@ class AppProvider with ChangeNotifier {
 
   // check if app have new version to show update page
   Future<void> _checkNewVersion() async {
-    final versionData =
-        await VersionRepository().getLatestAppVersion(Platform.isIOS
-            ? 1
-            : _isHMS!
-                ? 3
-                : 2);
-    Version currentVersion = Version.parse(_currentVersion);
-    Version latestVersion =
-        Version.parse(versionData.data?.value ?? _currentVersion);
-    _url = _isoCountryCode == 'AE'
-        ? versionData.data?.urlAe
-        : versionData.data?.url;
-    if (latestVersion > currentVersion) _canUpdate = true;
+    try {
+      final versionData =
+          await VersionRepository().getLatestAppVersion(Platform.isIOS
+              ? 1
+              : _isHMS!
+                  ? 3
+                  : 2);
+      Version currentVersion = Version.parse(_currentVersion);
+      Version latestVersion =
+          Version.parse(versionData?.data?.value ?? _currentVersion);
+      _url = _isoCountryCode == 'AE'
+          ? versionData?.data?.urlAe
+          : versionData?.data?.url;
+      if (latestVersion > currentVersion) _canUpdate = true;
+    } catch (_) {}
   }
 
   void showAlert(BuildContext context) async {
@@ -121,6 +125,19 @@ class AppProvider with ChangeNotifier {
       _canShake = false;
       HapticFeedback.vibrate();
     }
+  }
+
+  Future<bool> showEidMessage() async {
+    try {
+      if (_isoCountryCode2 == 'SA') {
+        final versionData = await VersionRepository().getLatestAppVersion(100);
+        if (_showEidMessage && versionData != null) {
+          _showEidMessage = false;
+          return true;
+        }
+      }
+    } catch (_) {}
+    return false;
   }
 
   // init Shared Preferences

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:turki_dabayh/core/constants/app_colors.dart';
 import '../../../controllers/cart_provider.dart';
 
 class DeliveryDateItem extends StatelessWidget {
   final int selectedValue;
   final String title;
   final String subtitle;
+  final String month;
   const DeliveryDateItem(
       {Key? key,
       required this.selectedValue,
       required this.title,
-      required this.subtitle})
+      required this.subtitle,
+      required this.month})
       : super(key: key);
 
   @override
@@ -45,7 +48,7 @@ class DeliveryDateItem extends StatelessWidget {
                     fontSize: 11,
                     fontWeight: FontWeight.normal,
                     color: selected
-                        ? Colors.white
+                        ? AppColors.white
                         : Theme.of(context)
                             .textTheme
                             .displayLarge!
@@ -61,7 +64,23 @@ class DeliveryDateItem extends StatelessWidget {
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: selected
-                        ? Colors.white
+                        ? AppColors.white
+                        : Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .color!
+                            .withOpacity(0.6)),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0, left: 8, top: 10),
+              child: Text(
+                month,
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                    fontSize: 11,
+                    fontWeight: FontWeight.normal,
+                    color: selected
+                        ? AppColors.white
                         : Theme.of(context)
                             .textTheme
                             .displayLarge!

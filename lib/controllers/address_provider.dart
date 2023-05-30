@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:huawei_map/map.dart' as hms;
+import 'package:huawei_map/huawei_map.dart' as hms;
 import 'package:http/http.dart' as http;
+import 'dart:io';
 import '../core/utilities/dialog_helper.dart';
 import '../core/constants/fixed_assets.dart';
 import '../core/service/service_locator.dart';

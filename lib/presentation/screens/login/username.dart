@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../widgets/shared/rectangle_text_field.dart';
+import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/show_snack_bar.dart';
-import '../../widgets/shared/rectangle_text_field.dart';
-import '../../widgets/shared/rounded_rectangle_button.dart';
-import 'package:provider/provider.dart';
 
 class Username extends StatefulWidget {
   const Username({Key? key}) : super(key: key);
@@ -17,14 +17,8 @@ class Username extends StatefulWidget {
 
 class UsernameState extends State<Username> {
   bool logoVisibility = true;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    final Auth auth = Provider.of<Auth>(context, listen: false);
-    auth.usernameController.clear();
-    super.initState();
-  }
+  final GlobalKey<FormState> userNameFormKey = GlobalKey<FormState>();
+  TextEditingController usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +47,12 @@ class UsernameState extends State<Username> {
                 ),
               ),
               Form(
-                key: formKey,
+                key: userNameFormKey,
                 child: RectangleTextField(
-                  controller: auth.usernameController,
+                  controller: usernameController,
+                  onChanged: (value) {
+                    auth.usernameControllerValue = value;
+                  },
                   padding: const EdgeInsets.all(20),
                   maxLength: 25,
                   hint: AppLocalizations.of(context)!.tr('name'),
@@ -65,11 +62,12 @@ class UsernameState extends State<Username> {
                   padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
                   title: AppLocalizations.of(context)!.tr('next'),
                   onPressed: () async {
-                    if (formKey.currentState!.validate()) {
+                    if (userNameFormKey.currentState!.validate()) {
                       FocusScope.of(context).requestFocus(FocusNode());
                       int statusCode = await auth.addUsername(context);
-                      if (!mounted) return;
-                      show(context, statusCode);
+                      if (context.mounted) {
+                        show(context, statusCode);
+                      }
                     }
                   }),
             ],
@@ -92,5 +90,11 @@ class UsernameState extends State<Username> {
         sl<ShowSnackBar>().show(context, "unexpected_error");
         break;
     }
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    super.dispose();
   }
 }

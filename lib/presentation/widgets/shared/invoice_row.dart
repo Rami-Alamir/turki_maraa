@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 
 class InvoiceRow extends StatelessWidget {
@@ -13,7 +12,7 @@ class InvoiceRow extends StatelessWidget {
       required this.title,
       required this.value,
       this.visible = true,
-      this.fontColor = AppColors.black})
+      this.fontColor = Colors.black})
       : super(key: key);
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/home/search_bar.dart';
-import '../../widgets/home/search_row.dart';
+import '../../widgets/home/search/custom_search_bar.dart';
+import '../../widgets/home/search/search_row.dart';
 import '../../../controllers/search_provider.dart';
 import '../../../core/utilities/app_localizations.dart';
 
@@ -33,16 +33,13 @@ class Search extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(
                         top: 10.0, right: 30, left: 30, bottom: 20),
-                    child:
-                        Text('X', style: Theme.of(context).textTheme.titleSmall),
+                    child: Text('X',
+                        style: Theme.of(context).textTheme.titleSmall),
                   ),
                 ),
               ],
             ),
-            SearchBar(
-              controller: searchProvider.searchController,
-              autoFocus: true,
-            ),
+            const CustomSearchBar(),
             ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,

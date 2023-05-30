@@ -8,13 +8,19 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 
-class PinCodeFields extends StatelessWidget {
+class PinCodeFields extends StatefulWidget {
   const PinCodeFields({Key? key}) : super(key: key);
+
+  @override
+  State<PinCodeFields> createState() => _PinCodeFieldsState();
+}
+
+class _PinCodeFieldsState extends State<PinCodeFields> {
+  TextEditingController otpController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final Auth auth = Provider.of<Auth>(context);
-    TextEditingController otpController = TextEditingController();
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Padding(
@@ -91,7 +97,7 @@ class PinCodeFields extends StatelessWidget {
                   }
                 },
                 onChanged: (value) {
-                  auth.otpController.text = value;
+                  auth.otpControllerValue = value;
                 },
                 beforeTextPaste: (text) {
                   return true;
@@ -100,5 +106,11 @@ class PinCodeFields extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  @override
+  void dispose() {
+    otpController.dispose();
+    super.dispose();
   }
 }

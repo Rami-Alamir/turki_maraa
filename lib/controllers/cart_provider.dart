@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -279,32 +278,34 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> getPaymentTypes() async {
-    try {
-      _cashAvailable = true;
-      _onlineAvailable = true;
-      _tabbyAvailable = true;
-      _tamaraAvailable = true;
-      _paymentTypes = await sl<PaymentRepository>().getPaymentTypes();
-      for (int i = 0; i < (paymentTypes?.data?.length ?? 0); i++) {
-        if (paymentTypes!.data![i].id == 1 &&
-            paymentTypes!.data![i].active == 0) {
-          _cashAvailable = false;
+    _cashAvailable = true;
+    _onlineAvailable = true;
+    _tabbyAvailable = true;
+    _tamaraAvailable = true;
+    if (_isoCountryCode == 'SA') {
+      try {
+        _paymentTypes = await sl<PaymentRepository>().getPaymentTypes();
+        for (int i = 0; i < (paymentTypes?.data?.length ?? 0); i++) {
+          if (paymentTypes!.data![i].id == 1 &&
+              paymentTypes!.data![i].active == 0) {
+            _cashAvailable = false;
+          }
+          if (paymentTypes!.data![i].id == 2 &&
+              paymentTypes!.data![i].active == 0) {
+            _onlineAvailable = false;
+          }
+          if (paymentTypes!.data![i].id == 4 &&
+              paymentTypes!.data![i].active == 0) {
+            _tamaraAvailable = false;
+          }
+          if (paymentTypes!.data![i].id == 7 &&
+              paymentTypes!.data![i].active == 0) {
+            _tabbyAvailable = false;
+          }
         }
-        if (paymentTypes!.data![i].id == 2 &&
-            paymentTypes!.data![i].active == 0) {
-          _onlineAvailable = false;
-        }
-        if (paymentTypes!.data![i].id == 4 &&
-            paymentTypes!.data![i].active == 0) {
-          _tamaraAvailable = false;
-        }
-        if (paymentTypes!.data![i].id == 7 &&
-            paymentTypes!.data![i].active == 0) {
-          _tabbyAvailable = false;
-        }
+      } catch (_) {
+        _requestStatus = RequestStatus.error;
       }
-    } catch (_) {
-      _requestStatus = RequestStatus.error;
     }
   }
 
@@ -556,7 +557,6 @@ class CartProvider with ChangeNotifier {
         ));
   }
 
-  // used in UAE only
   void initDateTimeList() {
     DateTime dt = DateTime.now();
     for (int i = 0; i < 21; i++) {

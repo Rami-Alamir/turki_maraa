@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import '../../widgets/shared/map_bottom_sheet.dart';
+import '../../widgets/map/map_bottom_sheet.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../core/service/service_locator.dart';
@@ -47,9 +47,8 @@ class GMSMapState extends State<GMSMap> {
       if (locationProvider.latLng != null) {
         addressProvider.mapLatLng = locationProvider.latLng!;
       } else {
-        final List<Locale> systemLocales =
-            WidgetsBinding.instance.window.locales;
-        String localsIsoCountryCode = systemLocales.first.countryCode ?? "SA";
+        final Locale systemLocales = View.of(context).platformDispatcher.locale;
+        String localsIsoCountryCode = systemLocales.countryCode ?? "SA";
         String isoCountryCode =
             sl<LocalsValues>().getCountryCode(localsIsoCountryCode);
         addressProvider.mapLatLng =
@@ -157,5 +156,11 @@ class GMSMapState extends State<GMSMap> {
         );
       });
     } catch (_) {}
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
   }
 }

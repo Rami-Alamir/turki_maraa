@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/home/product_card.dart';
+import '../../widgets/home/shared/product_card.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../../controllers/products_provider.dart';
 

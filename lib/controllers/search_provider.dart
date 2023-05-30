@@ -5,7 +5,6 @@ import '../models/search_data.dart';
 import '../repository/search_repository.dart';
 
 class SearchProvider with ChangeNotifier {
-  TextEditingController searchController = TextEditingController();
   List<SearchData> _searchData = [];
   LatLng? _latLng;
   String? _isoCountryCode;
@@ -22,15 +21,14 @@ class SearchProvider with ChangeNotifier {
         _searchData = [];
         _latLng = latLng;
         _isoCountryCode = isoCountryCode;
-        getSearchResultList();
       }
     }
   }
 
-  Future<void> getSearchResultList() async {
+  Future<void> getSearchResultList(String key) async {
     try {
-      _searchData = await sl<SearchRepository>().getSearchResultList(
-          searchController.text, _latLng!, _isoCountryCode!);
+      _searchData = await sl<SearchRepository>()
+          .getSearchResultList(key, _latLng!, _isoCountryCode!);
     } catch (_) {
       _searchData = [];
     }

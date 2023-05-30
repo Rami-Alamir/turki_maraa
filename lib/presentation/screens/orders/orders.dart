@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/order/order_card.dart';
+import '../../widgets/order/order/order_card.dart';
 import '../../widgets/shared/empty_list.dart';
 import '../../widgets/shared/page_builder.dart';
 import '../../widgets/shared/primary_app_bar.dart';
@@ -40,6 +40,7 @@ class Orders extends StatelessWidget {
                       ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
+                          addRepaintBoundaries: false,
                           physics: const ScrollPhysics(),
                           itemCount: (orders.ordersData?.data?.length ?? 0),
                           itemBuilder: (BuildContext ctxt, int index) {

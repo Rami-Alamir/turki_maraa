@@ -9,20 +9,8 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/show_snack_bar.dart';
 import '../../../core/utilities/size_config.dart';
 
-class VerifyPhone extends StatefulWidget {
+class VerifyPhone extends StatelessWidget {
   const VerifyPhone({Key? key}) : super(key: key);
-
-  @override
-  VerifyPhoneState createState() => VerifyPhoneState();
-}
-
-class VerifyPhoneState extends State<VerifyPhone> {
-  @override
-  void initState() {
-    final Auth auth = Provider.of<Auth>(context, listen: false);
-    auth.otpController.clear();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,27 +23,34 @@ class VerifyPhoneState extends State<VerifyPhone> {
           actions: [
             SizedBox(
               width: SizeConfig.screenWidth,
-              child: InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Theme.of(context).colorScheme.primary,
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: SizedBox(
+                      width: 150,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.tr('change_number'),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      AppLocalizations.of(context)!.tr('change_number'),
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             )
           ],
@@ -63,7 +58,7 @@ class VerifyPhoneState extends State<VerifyPhone> {
           iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
           backgroundColor: Colors.transparent,
         ),
-        body: GestureDetector(
+        body: InkWell(
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -115,14 +110,15 @@ class VerifyPhoneState extends State<VerifyPhone> {
                             auth.startTimer();
                             final int statusCode =
                                 await auth.sendOTP(context, navigate: false);
-                            if (!mounted) return;
-                            Navigator.of(context).pop();
-                            if (statusCode != 200) {
-                              sl<ShowSnackBar>().show(
-                                  context,
-                                  statusCode == 401
-                                      ? "sorry_you_can_not_log_in_after_deleting_your_account"
-                                      : "unexpected_error");
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                              if (statusCode != 200) {
+                                sl<ShowSnackBar>().show(
+                                    context,
+                                    statusCode == 401
+                                        ? "sorry_you_can_not_log_in_after_deleting_your_account"
+                                        : "unexpected_error");
+                              }
                             }
                           }
                         },
@@ -150,8 +146,9 @@ class VerifyPhoneState extends State<VerifyPhone> {
                     title: AppLocalizations.of(context)!.tr('next'),
                     onPressed: () async {
                       final int statusCode = await auth.verifyOTP(context);
-                      if (!mounted) return;
-                      show(context, statusCode, auth.isNewUser);
+                      if (context.mounted) {
+                        show(context, statusCode, auth.isNewUser);
+                      }
                     },
                   ),
                 ),

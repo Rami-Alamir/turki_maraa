@@ -12,7 +12,8 @@ class HomeRepository {
   Future<CategoryData> getCategoriesList(
       LatLng latLng, String countryId) async {
     final response = await _helper.get(
-        "categories/categories-app?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
+        "categories/categories-app-v2?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId");
+
     CategoryData? categoryData;
     try {
       categoryData = CategoryData.fromJson(response);

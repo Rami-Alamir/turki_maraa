@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/profile/wallet_header.dart';
+import '../../widgets/profile/wallet/wallet_header.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../../core/utilities/app_localizations.dart';
 

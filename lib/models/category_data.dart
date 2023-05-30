@@ -20,6 +20,7 @@ class Data {
   String? backgroundColor1;
   String? backgroundColor2;
   String? imageUrl;
+  int? activeTemp;
 
   Data(
       {this.id,
@@ -27,6 +28,7 @@ class Data {
       this.titleEn,
       this.backgroundColor1,
       this.backgroundColor2,
+      this.activeTemp,
       this.imageUrl});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -36,5 +38,6 @@ class Data {
     backgroundColor1 = json['background color 1'] ?? "5A0409";
     backgroundColor2 = json['background color 2'] ?? "6B0000";
     imageUrl = json['banner_url'];
+    activeTemp = json['active_temp'];
   }
 }

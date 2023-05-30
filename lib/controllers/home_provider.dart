@@ -24,6 +24,7 @@ class HomeProvider with ChangeNotifier {
   location_service.LocationData? _locationData;
   location_service.Location location = location_service.Location();
   BannersData? _bannersData;
+  bool _maintenanceStatus = false;
 
   location_service.LocationData get locationData => _locationData!;
   LatLng? get latLng => _latLng;
@@ -36,6 +37,7 @@ class HomeProvider with ChangeNotifier {
   String get isoCountryCode => _isoCountryCode!;
   BannersData? get bannersData => _bannersData;
   RequestStatus get requestStatus => _requestStatus;
+  bool get maintenanceStatus => _maintenanceStatus;
 
   // update location data
   Future<void> updateLocation(
@@ -46,7 +48,6 @@ class HomeProvider with ChangeNotifier {
       String? currentLocationDescriptionEn,
       bool isHMS) async {
     _locationServiceStatus = locationServiceStatus ?? 2;
-
     if (latLng != null) {
       _isoCountryCode = isoCountryCode;
       if (latLng != _latLng) {
@@ -78,8 +79,15 @@ class HomeProvider with ChangeNotifier {
   //get all categories
   Future<void> _getCategories() async {
     try {
+      _maintenanceStatus = false;
       _categoryData = await sl<HomeRepository>()
           .getCategoriesList(_latLng!, _isoCountryCode!);
+      for (int i = 0; i < (_categoryData?.data?.length ?? 0); i++) {
+        if (_categoryData!.data![i].activeTemp == 0) {
+          _maintenanceStatus = true;
+          return;
+        }
+      }
     } catch (_) {
       _requestStatus = RequestStatus.error;
     }
@@ -112,6 +120,9 @@ class HomeProvider with ChangeNotifier {
     } catch (_) {
       _requestStatus = RequestStatus.error;
     }
-    notifyListeners();
+    // notifyListeners();
+    if (notify) {
+      notifyListeners();
+    }
   }
 }

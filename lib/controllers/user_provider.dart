@@ -46,7 +46,7 @@ class UserProvider with ChangeNotifier {
         }, "Bearer $_accessToken");
         if (response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(response.body.toString()));
-          initTextController(context: context);
+          if (context.mounted) initTextController(context: context);
           notifyListeners();
         }
         return response.statusCode;

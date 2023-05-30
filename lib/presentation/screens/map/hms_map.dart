@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:huawei_map/huawei_map.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as gms;
-import 'package:huawei_map/channel/huaweiMapInitializer.dart';
 import 'package:location/location.dart' as location_service;
-import 'package:huawei_map/map.dart' as hms;
-import '../../widgets/shared/map_bottom_sheet.dart';
+import 'package:huawei_map/huawei_map.dart' as hms;
+import '../../widgets/map/map_bottom_sheet.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../core/service/service_locator.dart';
@@ -50,9 +50,8 @@ class HMSMapState extends State<HMSMap> {
       if (locationProvider.latLng != null) {
         addressProvider.mapLatLng = locationProvider.latLng!;
       } else {
-        final List<Locale> systemLocales =
-            WidgetsBinding.instance.window.locales;
-        String localsIsoCountryCode = systemLocales.first.countryCode ?? "SA";
+        final Locale systemLocales = View.of(context).platformDispatcher.locale;
+        String localsIsoCountryCode = systemLocales.countryCode ?? "SA";
         String isoCountryCode =
             sl<LocalsValues>().getCountryCode(localsIsoCountryCode);
         addressProvider.mapLatLng =
@@ -85,7 +84,7 @@ class HMSMapState extends State<HMSMap> {
                 });
               },
               draggable: true,
-              markerId: hms.MarkerId("1"),
+              markerId: const hms.MarkerId("1"),
               position: HMSLatLngConverter()
                   .convertToHMSLatLng(addressProvider.mapLatLng),
               icon: addressProvider.hmsMarker!,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../core/utilities/app_localizations.dart';
-import '../../widgets/profile/points_header.dart';
+import '../../widgets/profile/points/points_header.dart';
 import '../../widgets/shared/primary_app_bar.dart';
+import '../../../core/utilities/app_localizations.dart';
 
-//This feature will be active soon
+//This feature will be activated soon
 class UserPoints extends StatefulWidget {
   const UserPoints({Key? key}) : super(key: key);
 
@@ -12,6 +12,11 @@ class UserPoints extends StatefulWidget {
 }
 
 class UserPointsState extends State<UserPoints> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +48,9 @@ class UserPointsState extends State<UserPoints> {
                       .copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   // Container(
                   //   width: SizeConfig.screenWidth,
                   //   height: 200,

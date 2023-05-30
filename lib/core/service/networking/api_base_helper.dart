@@ -57,18 +57,6 @@ class ApiBaseHelper {
     return response.statusCode;
   }
 
-  Future<dynamic> post(String url, Map<String, dynamic> body,
-      {String authorization = ''}) async {
-    authorization = authorization;
-    headers['authorization'] = authorization;
-    Uri uri = Uri.parse(_baseUrl + url);
-    dynamic response;
-    try {
-      response = await http.post(uri, body: body, headers: headers);
-    } catch (_) {}
-    return _returnResponse(response);
-  }
-
   Future<dynamic> post3(String url, Map<String, dynamic> body,
       {String authorization = ''}) async {
     authorization = authorization;
@@ -130,7 +118,6 @@ class ApiBaseHelper {
       case 200:
       case 201:
         var responseJson = json.decode(response.body.toString());
-
         return responseJson;
       case 400:
         throw BadRequestException(response.body.toString());

@@ -13,15 +13,15 @@ import '../core/service/firebase_helper.dart';
 import '../core/utilities/convert_numbers.dart';
 
 class Auth with ChangeNotifier {
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController otpController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
   FlutterSecureStorage? _localStorage;
 
   //used in send otp (login)
   int _start = 30;
 
   String? _userPhone;
+  String _phoneControllerValue = "";
+  String _otpControllerValue = "";
+  String _usernameControllerValue = "";
   bool? _isNewUser = false;
 
   //new or old user
@@ -32,7 +32,6 @@ class Auth with ChangeNotifier {
   bool _isLoading = true;
   bool _retry = false;
   Timer? _timer;
-  GlobalKey<FormState>? formKey;
   String? _isoCountryCode;
   bool _logoVisibility = true;
   String _dialCode = "+966";
@@ -47,12 +46,20 @@ class Auth with ChangeNotifier {
   int get start => _start;
   String get accessToken => _accessToken ?? "";
   String get userPhone =>
-      ConvertNumbers.getPhone(_dialCode, phoneController.text);
+      ConvertNumbers.getPhone(_dialCode, _phoneControllerValue);
   bool get isLoading => _isLoading;
   bool get isNewUser => _isNewUser ?? false;
 
-  set setDialCode(String value) {
-    _dialCode = value;
+  set usernameControllerValue(String value) {
+    _usernameControllerValue = value;
+  }
+
+  set userPhoneControllerValue(String value) {
+    _phoneControllerValue = value;
+  }
+
+  set otpControllerValue(String value) {
+    _otpControllerValue = value;
   }
 
   set setIsoCountryCode(String value) {
@@ -95,7 +102,7 @@ class Auth with ChangeNotifier {
   Future<int> sendOTP(BuildContext context, {bool navigate = true}) async {
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
-      _userPhone = ConvertNumbers.getPhone(_dialCode, phoneController.text);
+      _userPhone = ConvertNumbers.getPhone(_dialCode, _phoneControllerValue);
       var response =
           await sl<LoginRepository>().sendOTP({"mobile": _userPhone});
       if (response.statusCode == 200) {
@@ -113,7 +120,7 @@ class Auth with ChangeNotifier {
 
   // verify otp and login
   Future<int> verifyOTP(BuildContext context) async {
-    if (otpController.text.length < 4) {
+    if (_otpControllerValue.length < 4) {
       return 1;
     } else {
       sl<DialogHelper>().showIndicatorDialog(context);
@@ -121,7 +128,7 @@ class Auth with ChangeNotifier {
         var response = await sl<LoginRepository>().verifyOtpCode({
           "mobile": _userPhone,
           "mobile_verification_code":
-              ConvertNumbers.convertNumbers(otpController.text.trim())
+              ConvertNumbers.convertNumbers(_otpControllerValue)
         });
         if (response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(response.body.toString()));
@@ -157,7 +164,9 @@ class Auth with ChangeNotifier {
       }
     }
     _isLoading = false;
-    notifyListeners();
+    if (_isAuth ?? false) {
+      notifyListeners();
+    }
   }
 
   Future<bool> deleteAccount() async {
@@ -182,17 +191,16 @@ class Auth with ChangeNotifier {
   }
 
   Future<int> addUsername(BuildContext context) async {
-    if (usernameController.text.isNotEmpty) {
+    if (_usernameControllerValue.isNotEmpty) {
       sl<DialogHelper>().showIndicatorDialog(context);
       try {
         var response = await sl<UserRepository>().updateInfo({
-          if (usernameController.text.trim().isNotEmpty)
-            "name": usernameController.text,
+          "name": _usernameControllerValue,
         }, "Bearer $_accessToken");
         if (response.statusCode == 200) {
           FirebaseHelper().pushAnalyticsEvent(name: "sign_up");
           _userData = UserData.fromJson(json.decode(response.body.toString()));
-          _userData!.data!.name = usernameController.text;
+          _userData!.data!.name = _usernameControllerValue;
           notifyListeners();
         }
         return response.statusCode;

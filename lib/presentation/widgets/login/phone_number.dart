@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'phone_number_textfield.dart';
-import '../../../controllers/auth.dart';
 
 class PhoneNumber extends StatelessWidget {
-  final String isoCountryCode;
   final bool isWhite;
+  final GlobalKey<FormState>? formKey;
+  final TextEditingController? phoneController;
+
   const PhoneNumber(
-      {Key? key, required this.isoCountryCode, this.isWhite = false})
+      {Key? key, this.isWhite = false, this.formKey, this.phoneController})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Auth auth = Provider.of<Auth>(context, listen: false);
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Directionality(
@@ -22,10 +20,9 @@ class PhoneNumber extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PhoneNumberTextfield(
+                phoneController: phoneController,
                 isWhite: isWhite,
-                isoCountryCode: isoCountryCode,
-                formKey: auth.formKey!,
-                controller: auth.phoneController,
+                formKey: formKey,
                 enabled: !isWhite),
             Divider(
               color: Theme.of(context).colorScheme.outline,

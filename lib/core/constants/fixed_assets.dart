@@ -18,6 +18,7 @@ class FixedAssets {
   static const String tamaraEn = "assets/images/tamara_en.png";
   static const String turkiCar = 'assets/images/turki_car.png';
   static const String turkiIcon = 'assets/images/turki_icon_small.png';
+  static const String almaraaIcon = 'assets/images/turki_icon.png';
   static const String appName = "assets/images/turki_gold.png";
   static const String notSupported = 'assets/images/not_supported.png';
   static const String notAuth = 'assets/images/not_auth.png';
@@ -73,4 +74,5 @@ class FixedAssets {
   static const String congratulations = "assets/lottie/congratulations.json";
   static const String gift = "assets/lottie/gift.json";
   static const String spin = "assets/lottie/spin.json";
+  static const String maintenance = "assets/lottie/maintenance.json";
 }

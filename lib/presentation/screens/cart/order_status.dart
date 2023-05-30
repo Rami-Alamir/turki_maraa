@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/orders_provider.dart';
 import '../../../core/utilities/app_localizations.dart';

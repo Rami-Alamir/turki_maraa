@@ -64,7 +64,7 @@
         </provider>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCE7cKb-uXwi1MQl4QDYHJW93IfLhSF4QM"/>
+            android:value="AIzaSyDXBSNK6S8q5r0y7iQ22xQcIZIUF3yU-Pw"/>
         <activity
             android:name="com.digishapes.turkieshop.MainActivity"
             android:exported="true"

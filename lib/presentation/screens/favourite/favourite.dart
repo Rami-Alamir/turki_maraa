@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/favourite/favourite_card.dart';
+import '../../widgets/favourite/favourite_list.dart';
 import '../../widgets/shared/empty_list.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../../presentation/widgets/shared/page_builder.dart';
@@ -30,36 +30,20 @@ class Favourite extends StatelessWidget {
             favourite.getFavouriteList(notify: true);
           },
           child: RefreshIndicator(
-            color: Theme.of(context).colorScheme.primary,
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-            onRefresh: () async {
-              await favourite.getFavouriteList();
-            },
-            child: ((favourite.favourite?.dataT?.data?.length) ?? 0) == 0
-                ? SizedBox(
-                    height: SizeConfig.screenHeight,
-                    child: const EmptyList(
-                      title: 'empty_favourite',
-                      image: FixedAssets.emptyFavourite,
-                    ),
-                  )
-                : ListView(
-                    children: [
-                      ListView.builder(
-                          shrinkWrap: true,
-                          physics: const ScrollPhysics(),
-                          itemCount:
-                              (favourite.favourite?.dataT?.data?.length) ?? 0,
-                          padding: const EdgeInsets.only(top: 10),
-                          itemBuilder: (BuildContext ctxt, int index) {
-                            return FavouriteCard(
-                              index: index,
-                              data: favourite.favourite!.dataT!.data![index],
-                            );
-                          }),
-                    ],
-                  ),
-          ),
+              color: Theme.of(context).colorScheme.primary,
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              onRefresh: () async {
+                await favourite.getFavouriteList();
+              },
+              child: ((favourite.favourite?.dataT?.data?.length) ?? 0) == 0
+                  ? SizedBox(
+                      height: SizeConfig.screenHeight,
+                      child: const EmptyList(
+                        title: 'empty_favourite',
+                        image: FixedAssets.emptyFavourite,
+                      ),
+                    )
+                  : const FavouriteList()),
         ));
   }
 }

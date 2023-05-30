@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'country_picker.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/service/service_locator.dart';
@@ -7,28 +8,25 @@ import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/country_utils.dart';
 import '../../../core/utilities/dialog_helper.dart';
 import '../../../models/country.dart';
-import 'country_picker.dart';
 
 class PhoneNumberTextfield extends StatelessWidget {
-  final String isoCountryCode;
-  final GlobalKey<FormState> formKey;
-  final TextEditingController controller;
+  final GlobalKey<FormState>? formKey;
   final bool enabled;
   final bool isWhite;
-
+  final TextEditingController? phoneController;
   const PhoneNumberTextfield(
       {Key? key,
       required this.formKey,
-      required this.controller,
       required this.enabled,
-      required this.isoCountryCode,
-      required this.isWhite})
+      required this.isWhite,
+      this.phoneController})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Auth auth = Provider.of<Auth>(context);
     final Country country =
-        CountryUtils.getCountryByCountryCode(isoCountryCode);
+        CountryUtils.getCountryByCountryCode(auth.isoCountryCode!);
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Form(
@@ -40,8 +38,11 @@ class PhoneNumberTextfield extends StatelessWidget {
             final Auth auth = Provider.of<Auth>(context, listen: false);
             auth.logoVisibility = false;
           },
+          onChanged: (value) {
+            auth.userPhoneControllerValue = value;
+          },
           cursorColor: Theme.of(context).colorScheme.primary,
-          controller: controller,
+          controller: phoneController,
           keyboardType: TextInputType.phone,
           maxLength: 10,
           style: Theme.of(context)

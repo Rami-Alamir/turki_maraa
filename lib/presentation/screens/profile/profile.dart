@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/auth.dart';
-import '../../../core/utilities/app_localizations.dart';
-import '../../widgets/profile/call_card.dart';
-import '../../widgets/profile/help_card.dart';
-import '../../widgets/profile/logout_row.dart';
-import '../../widgets/profile/personal_info_card.dart';
-import '../../widgets/profile/profile_footer.dart';
-import '../../widgets/profile/profile_header.dart';
-import '../../widgets/profile/settings_card.dart';
+import '../../widgets/profile/profile/call_card.dart';
+import '../../widgets/profile/profile/help_card.dart';
+import '../../widgets/profile/profile/logout_row.dart';
+import '../../widgets/profile/profile/personal_info_card.dart';
+import '../../widgets/profile/profile/profile_footer.dart';
+import '../../widgets/profile/profile/profile_header.dart';
+import '../../widgets/profile/profile/settings_card.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/social_media.dart';
 import '../../widgets/shared/spinkit_indicator.dart';
+import '../../../controllers/auth.dart';
+import '../../../core/utilities/app_localizations.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);

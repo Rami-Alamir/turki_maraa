@@ -112,8 +112,8 @@ class FavouriteCard extends StatelessWidget {
                                   const EdgeInsets.symmetric(vertical: 4.0),
                               child: ReadMoreText(
                                 isAr
-                                    ? data.product!.descriptionAr!
-                                    : data.product!.descriptionEn!,
+                                    ? data.product?.descriptionAr ?? ""
+                                    : data.product?.descriptionEn! ?? "",
                                 trimLines: 2,
                                 style: Theme.of(context)
                                     .textTheme

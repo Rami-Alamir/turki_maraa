@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../core/utilities/app_localizations.dart';
-import '../../widgets/profile/gift_card.dart';
+import '../../widgets/profile/add_gift_card/gift_card.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/rectangle_text_field.dart';
+import '../../../core/utilities/app_localizations.dart';
 
-//This feature will be active soon
+//This feature will be activated soon
 class AddGiftCard extends StatelessWidget {
   const AddGiftCard({Key? key}) : super(key: key);
 

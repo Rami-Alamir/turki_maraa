@@ -8,9 +8,11 @@ import '../../widgets/cart/delivery_periods.dart';
 import '../../widgets/cart/note.dart';
 import '../../widgets/cart/payment_method.dart';
 import '../../widgets/cart/promo_code.dart';
+import '../../widgets/shared/maintenance.dart';
 import '../../widgets/shared/page_builder.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/empty_list.dart';
+import '../../../controllers/home_provider.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -34,6 +36,8 @@ class ShoppingCartState extends State<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
     final CartProvider cart = Provider.of<CartProvider>(context);
+    final HomeProvider homeProvider = Provider.of<HomeProvider>(context);
+
     return Scaffold(
         appBar: PrimaryAppBar(
           title: AppLocalizations.of(context)!.tr('cart'),
@@ -51,27 +55,29 @@ class ShoppingCartState extends State<ShoppingCart> {
           child: (cart.cartData?.data?.cart?.data?.length ?? 0) > 0
               ? GestureDetector(
                   onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-                  child: Stack(
-                    children: [
-                      ListView(
-                        controller: cart.scrollController,
-                        physics: const ScrollPhysics(),
-                        children: [
-                          const CartItemsList(),
-                          const DeliveryAddress(),
-                          const DeliveryDate(),
-                          const DeliveryPeriods(),
-                          const PaymentMethod(),
-                          const PromoCode(),
-                          const Note(),
-                          SizedBox(
-                            height: SizeConfig.screenHeight! * 0.25,
-                          )
-                        ],
-                      ),
-                      const CartBottomSheet()
-                    ],
-                  ),
+                  child: homeProvider.maintenanceStatus
+                      ? const Maintenance()
+                      : Stack(
+                          children: [
+                            ListView(
+                              controller: cart.scrollController,
+                              physics: const ScrollPhysics(),
+                              children: [
+                                const CartItemsList(),
+                                const DeliveryAddress(),
+                                const DeliveryDate(),
+                                const DeliveryPeriods(),
+                                const PaymentMethod(),
+                                const PromoCode(),
+                                const Note(),
+                                SizedBox(
+                                  height: SizeConfig.screenHeight! * 0.25,
+                                )
+                              ],
+                            ),
+                            const CartBottomSheet()
+                          ],
+                        ),
                 )
               : const EmptyList(
                   image: FixedAssets.emptyCart,

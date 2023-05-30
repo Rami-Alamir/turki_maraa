@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import '../../widgets/profile/personal_info_item.dart';
+import '../../widgets/profile/personal_information/personal_info_item.dart';
 import '../../widgets/shared/primary_app_bar.dart';
-import '../../widgets/profile/gender_picker.dart';
+import '../../widgets/profile/personal_information/gender_picker.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
-import '../../widgets/profile/delete_row.dart';
+import '../../widgets/profile/personal_information/delete_row.dart';
 import '../../../controllers/user_provider.dart';
 import '../../../core/service/service_locator.dart';
 import '../../../core/utilities/app_localizations.dart';

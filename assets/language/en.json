@@ -248,5 +248,8 @@
   "you_are_exhausted_today": "You are exhausted all your attempts today",
   "try_tomorrow_and_try_every_day_and_win": "Try tomorrow,try every day and win",
   "tabby_error": "Sorry, Tabby is unable to approve this purchase. Please use an alternative payment method for your order.",
-  "main_theme": "Main mode"
+  "main_theme": "Main mode",
+  "dear_customers": "Dear customers",
+  "maintenance_msg":"In order to serve you better, we will receive your orders again after some maintenance work is done",
+  "eid_msgُ": "On the occasion of the Eid Al-Fitr holiday, your orders will be received again on the morning of April 26th."
 }

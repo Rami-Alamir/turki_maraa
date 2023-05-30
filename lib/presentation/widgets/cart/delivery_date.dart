@@ -46,19 +46,22 @@ class DeliveryDate extends StatelessWidget {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(3.0, 15, 10, 10),
                     child: DeliveryDateItem(
-                      selectedValue: index,
-                      title: cart.deliveryDataTime[index].day.toString(),
-                      subtitle:
-                          cart.deliveryDataTime[index].day == DateTime.now().day
-                              ? AppLocalizations.of(context)!.tr('today')
-                              : cart.deliveryDataTime[index].day ==
-                                      (DateTime.now().day + 1)
-                                  ? AppLocalizations.of(context)!.tr('tomorrow')
-                                  : DateFormat.E(AppLocalizations.of(context)!
-                                          .locale!
-                                          .languageCode)
-                                      .format(cart.deliveryDataTime[index]),
-                    ),
+                        selectedValue: index,
+                        title: cart.deliveryDataTime[index].day.toString(),
+                        subtitle: cart.deliveryDataTime[index].day ==
+                                DateTime.now().day
+                            ? AppLocalizations.of(context)!.tr('today')
+                            : cart.deliveryDataTime[index].day ==
+                                    (DateTime.now().day + 1)
+                                ? AppLocalizations.of(context)!.tr('tomorrow')
+                                : DateFormat.E(AppLocalizations.of(context)!
+                                        .locale!
+                                        .languageCode)
+                                    .format(cart.deliveryDataTime[index]),
+                        month: DateFormat.MMM(AppLocalizations.of(context)!
+                                .locale!
+                                .languageCode)
+                            .format(cart.deliveryDataTime[index])),
                   ),
                 );
               }),

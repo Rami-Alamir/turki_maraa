@@ -9,7 +9,7 @@ import GoogleMaps
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GMSServices.provideAPIKey("AIzaSyCE7cKb-uXwi1MQl4QDYHJW93IfLhSF4QM")
+    GMSServices.provideAPIKey("AIzaSyDXBSNK6S8q5r0y7iQ22xQcIZIUF3yU-Pw")
     FirebaseApp.configure() //add this before the code below
     GeneratedPluginRegistrant.register(with: self)
     UIApplication.shared.applicationIconBadgeNumber = 0
