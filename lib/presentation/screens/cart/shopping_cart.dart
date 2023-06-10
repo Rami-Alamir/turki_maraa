@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/cart/adha_delivery_days.dart';
 import '../../widgets/cart/cart_bottom_sheet.dart';
 import '../../widgets/cart/cart_items_list.dart';
 import '../../widgets/cart/delivery_address.dart';
@@ -65,7 +66,9 @@ class ShoppingCartState extends State<ShoppingCart> {
                               children: [
                                 const CartItemsList(),
                                 const DeliveryAddress(),
-                                const DeliveryDate(),
+                                cart.isAdhia
+                                    ? const AdhaDeliveryDays()
+                                    : const DeliveryDate(),
                                 const DeliveryPeriods(),
                                 const PaymentMethod(),
                                 const PromoCode(),

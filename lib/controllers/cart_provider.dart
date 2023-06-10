@@ -70,7 +70,9 @@ class CartProvider with ChangeNotifier {
   late PaymentARB arb;
   late OrderRef orderRef;
   PaymentTypes? _paymentTypes;
+  bool _isAdhia = false;
 
+  bool get isAdhia => _isAdhia;
   LatLng? get latLng => _latLng;
   String? get currentLocationDescriptionAr => _currentLocationDescriptionAr;
   String? get currentLocationDescriptionEn => _currentLocationDescriptionEn;
@@ -272,6 +274,7 @@ class CartProvider with ChangeNotifier {
     try {
       _cartData = await sl<CartRepository>()
           .getCartList(_authorization!, _latLng!, _isoCountryCode!);
+      _checkIsAdhia();
     } catch (_) {
       _requestStatus = RequestStatus.error;
     }
@@ -361,8 +364,16 @@ class CartProvider with ChangeNotifier {
           addressId = addressProvider.userAddress!.data!.last.id!;
         }
         DateFormat format = DateFormat('MM-dd');
+        final List<String> adhaDates = [
+          "06-29",
+          "06-30",
+          "06-31",
+          "07-01",
+        ];
         response = await sl<OrderRepository>().placeOrder({
-          "delivery_date": format.format(deliveryDataTime[_selectedDate]),
+          "delivery_date": _isAdhia
+              ? adhaDates[_selectedDate]
+              : format.format(deliveryDataTime[_selectedDate]),
           "delivery_period_id": _isoCountryCode == 'AE'
               ? (_selectedTime + 1)
               : _deliveryPeriod!.data![_selectedTime].id,
@@ -402,6 +413,16 @@ class CartProvider with ChangeNotifier {
       }
     }
     return -1;
+  }
+
+  void _checkIsAdhia() {
+    _isAdhia = false;
+    for (int i = 0; i < ((_cartData?.data?.cart?.data?.length) ?? 0); i++) {
+      if (_cartData!.data!.cart!.data![i].product!.categoryId! == 34) {
+        _isAdhia = true;
+        break;
+      }
+    }
   }
 
   Future<void> initTabby(Lang language) async {

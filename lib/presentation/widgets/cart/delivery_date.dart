@@ -15,7 +15,6 @@ class DeliveryDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CartProvider cart = Provider.of<CartProvider>(context);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

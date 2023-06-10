@@ -113,7 +113,7 @@ class FavouriteCard extends StatelessWidget {
                               child: ReadMoreText(
                                 isAr
                                     ? data.product?.descriptionAr ?? ""
-                                    : data.product?.descriptionEn! ?? "",
+                                    : data.product?.descriptionEn ?? "",
                                 trimLines: 2,
                                 style: Theme.of(context)
                                     .textTheme
