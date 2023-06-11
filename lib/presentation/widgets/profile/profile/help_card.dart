@@ -65,14 +65,16 @@ class HelpCard extends StatelessWidget {
                         onTap: () => Navigator.pushNamed(context, about),
                         icon: FixedAssets.aboutIcon,
                         title: 'about'),
-                    ProfileRow(
-                        onTap: () {
-                          FirebaseHelper().pushAnalyticsEvent(name: "share");
-                          _share(context);
-                        },
-                        withArrow: false,
-                        icon: FixedAssets.share,
-                        title: 'share'),
+                    Builder(builder: (context) {
+                      return ProfileRow(
+                          onTap: () {
+                            FirebaseHelper().pushAnalyticsEvent(name: "share");
+                            _share(context);
+                          },
+                          withArrow: false,
+                          icon: FixedAssets.share,
+                          title: 'share');
+                    }),
                     ProfileRow(
                         onTap: () {
                           FirebaseHelper().pushAnalyticsEvent(
