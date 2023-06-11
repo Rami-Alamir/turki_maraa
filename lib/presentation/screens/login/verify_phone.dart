@@ -166,6 +166,7 @@ class VerifyPhone extends StatelessWidget {
       case 200:
         FocusScope.of(context).requestFocus(FocusNode());
         Navigator.of(context).pop();
+
         Navigator.pushNamedAndRemoveUntil(
             context, isNewUser ? username : app, ModalRoute.withName('/'));
         break;

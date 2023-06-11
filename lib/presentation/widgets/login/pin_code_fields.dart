@@ -84,9 +84,10 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
                     Navigator.of(context).pop();
                     if (statusCode == 200) {
                       Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          auth.isNewUser ? username : app,
-                          ModalRoute.withName('/'));
+                        context,
+                        auth.isNewUser ? username : app,
+                        ModalRoute.withName('/'),
+                      );
                     } else {
                       sl<ShowSnackBar>().show(
                           context,
