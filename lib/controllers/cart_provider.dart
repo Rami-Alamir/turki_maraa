@@ -367,8 +367,8 @@ class CartProvider with ChangeNotifier {
         final List<String> adhaDates = [
           "06-29",
           "06-30",
-          "06-31",
           "07-01",
+          "07-02",
         ];
         response = await sl<OrderRepository>().placeOrder({
           "delivery_date": _isAdhia

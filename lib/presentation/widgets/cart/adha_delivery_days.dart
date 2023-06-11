@@ -18,10 +18,10 @@ class AdhaDeliveryDays extends StatelessWidget {
       AppLocalizations.of(context)!.tr('fourth_day'),
     ];
     final List<String> date = [
-      "2022-06-29",
-      "2022-06-30",
-      "2022-06-31",
-      "2022-07-01",
+      "2023-06-29",
+      "2023-06-30",
+      "2023-07-01",
+      "2023-07-02",
     ];
 
     return Column(
