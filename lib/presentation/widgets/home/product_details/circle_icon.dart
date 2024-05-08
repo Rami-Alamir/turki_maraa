@@ -1,0 +1,41 @@
+import 'package:flutter/material.dart';
+
+class CircleIcon extends StatelessWidget {
+  final Function onTap;
+  final IconData icon;
+  final EdgeInsetsDirectional padding;
+
+  const CircleIcon(
+      {super.key,
+      required this.onTap,
+      required this.icon,
+      this.padding = const EdgeInsetsDirectional.fromSTEB(0.0, 0, 0, 0)});
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      splashColor: Colors.transparent,
+      child: Container(
+        width: 45,
+        height: 45,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow,
+              blurRadius: 44,
+              offset: const Offset(4, 8), // Shadow position
+            ),
+          ],
+          shape: BoxShape.circle,
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: Padding(
+          padding: padding,
+          child: Icon(icon, color: Theme.of(context).colorScheme.primary),
+        ),
+      ),
+    );
+  }
+}

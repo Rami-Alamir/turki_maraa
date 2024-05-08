@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+import '../../../../core/utilities/size_config.dart';
+
+class AddressCardItem extends StatelessWidget {
+  final String title;
+  final Function onTap;
+  const AddressCardItem({super.key, required this.title, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      child: SizedBox(
+        width: SizeConfig.screenWidth! / 2 - 15,
+        child: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12),
+        ),
+      ),
+    );
+  }
+}

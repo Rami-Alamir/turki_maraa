@@ -1,0 +1,253 @@
+import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
+import 'package:huawei_location/huawei_location.dart';
+import 'package:localstorage/localstorage.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:location/location.dart' as location_service;
+import 'package:turki_maraa_app/core/utilities/calculate_helper.dart';
+import '../core/constants/constants.dart';
+import '../core/service/firebase_helper.dart';
+import '../core/service/service_locator.dart';
+import '../core/utilities/enum/location_service_status.dart';
+import '../core/utilities/get_strings.dart';
+import '../core/utilities/hms_latlng_converter.dart';
+import '../models/location_data.dart';
+
+class LocationProvider with ChangeNotifier {
+  bool _customerHaveLocation = false;
+  bool _customerLocationIsDifferent = false;
+  int? _customerLocationId;
+  LatLng? _latLng;
+  LatLng? _currentLocationLatLng;
+  location_service.LocationData? _locationData;
+  HWLocation? _hwlocation;
+  String _selectedLocationDescription = '';
+  LocationServiceStatus _locationServiceStatus =
+      LocationServiceStatus.beingDetermined;
+  String? _isoCountryCode;
+  String? _currentLocationDescriptionAr = '';
+  String? _currentLocationDescriptionEn = '';
+  String? _currentLocationIsoCountryCode = 'SA';
+  final location_service.Location _location = location_service.Location();
+  bool isHms = false;
+
+  bool get customerHaveLocation => _customerHaveLocation;
+  String? get isoCountryCode => _isoCountryCode;
+  LatLng? get latLng => _latLng;
+  String? get currentLocationDescriptionAr => _currentLocationDescriptionAr;
+  String? get currentLocationDescriptionEn => _currentLocationDescriptionEn;
+  LocationServiceStatus get locationServiceStatus => _locationServiceStatus;
+  String get selectedLocationDescription => _selectedLocationDescription;
+  LatLng? get currentLocationLatLng => _currentLocationLatLng;
+  int? get customerLocationId => _customerLocationId;
+  bool get customerLocationIsDifferent => _customerLocationIsDifferent;
+
+  set customerLocationIsDifferent(bool value) {
+    _customerLocationIsDifferent = value;
+    notifyListeners();
+  }
+
+  Future<void> initLatLng(String languageCode) async {
+    await _getLocation();
+    try {
+      await fetchLocation();
+      if (_locationServiceStatus != LocationServiceStatus.noAccess &&
+          _locationServiceStatus != LocationServiceStatus.unableToDetermine) {
+        _currentLocationLatLng = isHms
+            ? sl<HMSLatLngConverter>().convertToGMSLatLng(_hwlocation!)
+            : LatLng(_locationData!.latitude!, _locationData!.longitude!);
+        _latLng ??= _currentLocationLatLng;
+        _locationServiceStatus = LocationServiceStatus.fetched;
+        if (_customerHaveLocation) {
+          _customerLocationIsDifferent = sl<CalculateHelper>()
+                  .calculateDistance(_latLng, _currentLocationLatLng) >
+              0.1;
+        }
+        await Future.wait([
+          currentLocationDescriptionArabic(),
+          currentLocationDescriptionEnglish()
+        ]);
+        _saveLocation(
+            selectedLocationDescription: languageCode == 'ar'
+                ? currentLocationDescriptionAr
+                : currentLocationDescriptionEn);
+      }
+    } catch (_) {
+      _locationServiceStatus = LocationServiceStatus.unableToDetermine;
+    }
+    notifyListeners();
+  }
+
+  Future<void> currentLocationDescriptionArabic() async {
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        _currentLocationLatLng!.latitude, _currentLocationLatLng!.longitude,
+        localeIdentifier: 'ar');
+    _currentLocationIsoCountryCode = placemark.first.isoCountryCode;
+    _isoCountryCode = _currentLocationIsoCountryCode;
+    Placemark place = placemark.first;
+    _currentLocationDescriptionAr = sl<GetStrings>().locationDescription(place);
+  }
+
+  Future<void> currentLocationDescriptionEnglish() async {
+    List<Placemark> placemark2 = await placemarkFromCoordinates(
+        _currentLocationLatLng!.latitude, _currentLocationLatLng!.longitude,
+        localeIdentifier: "en");
+    Placemark place2 = placemark2.first;
+    FirebaseHelper().pushAnalyticsEvent(name: "country", value: place2.country);
+    FirebaseHelper().pushAnalyticsEvent(name: "city", value: place2.locality);
+    _currentLocationDescriptionEn =
+        sl<GetStrings>().locationDescription(place2);
+  }
+
+  Future<void> fetchLocation() async {
+    if (_locationServiceStatus != LocationServiceStatus.beingDetermined) {
+      _locationServiceStatus = LocationServiceStatus.beingDetermined;
+      notifyListeners();
+    }
+    bool serviceEnabled;
+    location_service.PermissionStatus permissionGranted;
+    serviceEnabled = await _location.serviceEnabled();
+    if (!serviceEnabled) {
+      _locationServiceStatus = LocationServiceStatus.noAccess;
+      serviceEnabled = await _location.requestService();
+      if (!serviceEnabled) {
+        _locationServiceStatus = LocationServiceStatus.noAccess;
+        return;
+      }
+    }
+    permissionGranted = await _location.hasPermission();
+    if (permissionGranted == location_service.PermissionStatus.denied) {
+      permissionGranted = await _location.requestPermission();
+      if (permissionGranted != location_service.PermissionStatus.granted) {
+        _locationServiceStatus = LocationServiceStatus.noAccess;
+        return;
+      }
+    }
+    if (Platform.isAndroid) {
+      try {
+        HmsApiAvailability hmsApiAvailability = HmsApiAvailability();
+        final int resultCode = await hmsApiAvailability.isHMSAvailable();
+        isHms = resultCode == 0 || resultCode == 2;
+      } catch (_) {}
+    }
+    try {
+      if (isHms) {
+        FusedLocationProviderClient locationService =
+            FusedLocationProviderClient();
+        locationService.initFusedLocationService();
+        LocationRequest locationRequest = LocationRequest();
+        _hwlocation =
+            await locationService.getLastLocationWithAddress(locationRequest);
+      } else {
+        _locationData =
+            await _location.getLocation().timeout(const Duration(seconds: 15));
+      }
+    } catch (_) {
+      _locationServiceStatus = LocationServiceStatus.unableToDetermine;
+    }
+    //when app cannot get LatLng data and location service is enabled
+    if (isHms) {
+      if (_hwlocation == null) {
+        _locationServiceStatus = LocationServiceStatus.unableToDetermine;
+      }
+    } else if (_locationData == null) {
+      _locationServiceStatus = LocationServiceStatus.unableToDetermine;
+    }
+  }
+
+  //update current Location Data
+  void updateLocationData(String isoCountryCode, LatLng latLng,
+      {bool setSelected = false,
+      String? language,
+      String address = '',
+      int? id}) {
+    _customerLocationId = null;
+    _customerHaveLocation = false;
+    _isoCountryCode = isoCountryCode;
+    _latLng = latLng;
+    if (setSelected) {
+      _setSelectedLocationDescription(language!);
+    } else {
+      _selectedLocationDescription = address;
+    }
+    _saveLocation(id: id, isoCountryCode: isoCountryCode);
+    notifyListeners();
+  }
+
+  //used when user select current location
+  void selectCurrentLocation(String language) {
+    _customerLocationId = null;
+    _customerHaveLocation = false;
+    _latLng = _currentLocationLatLng;
+    _isoCountryCode = _currentLocationIsoCountryCode;
+    _selectedLocationDescription = (language == "ar"
+        ? _currentLocationDescriptionAr!
+        : _currentLocationDescriptionEn!);
+    _saveLocation();
+    notifyListeners();
+  }
+
+  Future<void> _setSelectedLocationDescription(String language) async {
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        _latLng!.latitude, _latLng!.longitude,
+        localeIdentifier: language);
+    Placemark place = placemark.first;
+    _selectedLocationDescription = sl<GetStrings>().locationDescription(place);
+    notifyListeners();
+  }
+
+  //used when user logout
+  void initDataAfterLogout() {
+    if (_locationServiceStatus == LocationServiceStatus.fetched ||
+        _currentLocationLatLng != null) {
+      selectCurrentLocation('ar');
+    } else {
+      _latLng = null;
+      _customerHaveLocation = false;
+      _customerLocationId = null;
+      _currentLocationLatLng = null;
+      _isoCountryCode = 'SA';
+      _currentLocationIsoCountryCode = null;
+      notifyListeners();
+    }
+  }
+
+  Future<void> _saveLocation(
+      {int? id,
+      String? selectedLocationDescription,
+      String? isoCountryCode}) async {
+    try {
+      final LocalStorage storage = LocalStorage(Constants.localStorage);
+      await storage.setItem(
+          Constants.locationData,
+          LocationData(
+            id: id,
+            latitude: _latLng?.latitude,
+            longitude: _latLng?.longitude,
+            isoCountryCode: isoCountryCode ?? _isoCountryCode,
+            selectedLocationDescription:
+                selectedLocationDescription ?? _selectedLocationDescription,
+          ).toJson());
+    } catch (_) {}
+  }
+
+  Future<void> _getLocation() async {
+    try {
+      final LocalStorage storage = LocalStorage(Constants.localStorage);
+      await storage.ready;
+      LocationData? locationData =
+          LocationData.fromJson(storage.getItem(Constants.locationData));
+      _latLng = LatLng(locationData.latitude ?? 0, locationData.longitude ?? 0);
+      _isoCountryCode = locationData.isoCountryCode ?? "";
+      _selectedLocationDescription =
+          locationData.selectedLocationDescription ?? "";
+      _locationServiceStatus = LocationServiceStatus.savedLocation;
+      _customerHaveLocation = true;
+      _customerLocationId = locationData.id;
+      notifyListeners();
+    } catch (_) {}
+  }
+}

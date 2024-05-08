@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>565100833915-t8g9ndr0itcmp3cdgkc77b2pv7t6ff0q.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.565100833915-t8g9ndr0itcmp3cdgkc77b2pv7t6ff0q</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>565100833915-2ll3glmk9t8fegl59vbeao5kq6sqihvm.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAL_eq3a9iUPupLnfd2I2hYyP0SXi97_eg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>565100833915</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.digishapes.turkieshop</string>
+	<key>PROJECT_ID</key>
+	<string>turkieshop-c8917</string>
+	<key>STORAGE_BUCKET</key>
+	<string>turkieshop-c8917.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:565100833915:ios:b2dcb2d6f6dd5fca3d06de</string>
+	<key>DATABASE_URL</key>
+	<string>https://turkieshop-c8917.firebaseio.com</string>
+</dict>
+</plist>
