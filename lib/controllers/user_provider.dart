@@ -4,21 +4,20 @@ import '../core/utilities/dialog_helper.dart';
 import '../models/user_data.dart';
 import '../repository/user_repository.dart';
 import '../core/service/service_locator.dart';
-import '../core/utilities/get_strings.dart';
 
 class UserProvider with ChangeNotifier {
   TextEditingController ageController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
+  // TextEditingController genderController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
   UserData? _userData;
   String? _accessToken;
   //used to update gender
-  int? _gender = -1;
+  // int? _gender = -1;
 
   UserData? get userData => _userData;
-  int get gender => _gender!;
+  // int get gender => _gender!;
 
   //used when auth provider changed
   void updateUserData(UserData? userData) {
@@ -42,7 +41,7 @@ class UserProvider with ChangeNotifier {
           if (emailController.text.trim().isNotEmpty &&
               _userData!.data!.email! != emailController.text.trim())
             "email": emailController.text.trim(),
-          if (_gender! > -1) "gender": "$_gender",
+          // if (_gender! > -1) "gender": "$_gender",
         }, "Bearer $_accessToken");
         if (response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(response.body.toString()));
@@ -56,27 +55,27 @@ class UserProvider with ChangeNotifier {
     return 1;
   }
 
-  void setGender(int value, BuildContext context) {
-    _gender = value;
-    genderController.text = sl<GetStrings>().getGender(context, value);
-    notifyListeners();
-  }
+  // void setGender(int value, BuildContext context) {
+  //   _gender = value;
+  //   genderController.text = sl<GetStrings>().getGender(context, value);
+  //   notifyListeners();
+  // }
 
   void initTextController({BuildContext? context}) {
     ageController.text = (_userData?.data?.age ?? "");
     usernameController.text = _userData?.data?.name ?? "";
     emailController.text = _userData?.data?.email ?? "";
-    initGenderController(context: context);
+    // initGenderController(context: context);
   }
 
-  void initGenderController({BuildContext? context}) {
-    try {
-      if (context != null) {
-        genderController.text = sl<GetStrings>()
-            .getGender(context, int.parse((_userData?.data?.gender ?? "-1")));
-      }
-    } catch (_) {
-      genderController.text = "";
-    }
-  }
+  // void initGenderController({BuildContext? context}) {
+  //   try {
+  //     if (context != null) {
+  //       genderController.text = sl<GetStrings>()
+  //           .getGender(context, int.parse((_userData?.data?.gender ?? "-1")));
+  //     }
+  //   } catch (_) {
+  //     genderController.text = "";
+  //   }
+  // }
 }

@@ -53,7 +53,9 @@ class CartProvider with ChangeNotifier {
   int _selectedDate = -1;
   int _selectedTime = -1;
   int _cartLength = 0;
+  int _adhaCategoryId = 0;
   bool _isAuth = false;
+  bool _isAdhia = false;
   bool _cashAvailable = true;
   bool _onlineAvailable = true;
   bool _tamaraAvailable = true;
@@ -62,6 +64,12 @@ class CartProvider with ChangeNotifier {
   String? _isoCountryCode;
   String? selectedAddress;
   final List<DateTime> _deliveryDataTime = [];
+  final List<DeliveryPeriodData> _adhiaDeliveryDataTime = [
+    DeliveryPeriodData(
+        id: 13, nameAr: 'فتره اولي من ١٠ صباحا ل ٢ مساءً', nameEn: 'Morning'),
+    DeliveryPeriodData(
+        id: 14, nameAr: 'فتره ثانية من ٢ ل ٦ مساءً', nameEn: 'Midnight'),
+  ];
   DeliveryPeriod? _deliveryPeriod;
   String? _currentLocationDescriptionAr = '';
   String? _currentLocationDescriptionEn = '';
@@ -71,11 +79,13 @@ class CartProvider with ChangeNotifier {
   late OrderRef orderRef;
   PaymentTypes? _paymentTypes;
 
+  bool get isAdhia => _isAdhia;
   LatLng? get latLng => _latLng;
   String? get currentLocationDescriptionAr => _currentLocationDescriptionAr;
   String? get currentLocationDescriptionEn => _currentLocationDescriptionEn;
   TamaraData? get tamaraData => _tamaraData;
   DeliveryPeriod get deliveryPeriod => _deliveryPeriod!;
+  List<DeliveryPeriodData> get adhiaDeliveryDataTime => _adhiaDeliveryDataTime;
   String get isoCountryCode => _isoCountryCode!;
   ScrollController get scrollController => _scrollController;
   List<DateTime> get deliveryDataTime => _deliveryDataTime;
@@ -90,6 +100,10 @@ class CartProvider with ChangeNotifier {
   bool get promoIsActive => _promoIsActive;
   RequestStatus get requestStatus => _requestStatus;
   PaymentTypes? get paymentTypes => _paymentTypes;
+
+  set adhaCategoryId(int value) {
+    _adhaCategoryId = value;
+  }
 
   bool get cashAvailable => _cashAvailable;
 
@@ -239,6 +253,7 @@ class CartProvider with ChangeNotifier {
       try {
         await Future.wait(
             [_getDeliveryPeriods(), _getCart(), _getPaymentTypes()]);
+
         await getTamaraData();
         _cartLength = sl<CalculateHelper>()
             .calculateCartLength(_cartData?.data?.cart?.data);
@@ -272,6 +287,7 @@ class CartProvider with ChangeNotifier {
   Future<void> _getCart() async {
     _cartData = await sl<CartRepository>()
         .getCartList(_authorization!, _latLng!, _isoCountryCode!);
+    checkIsAdhia();
   }
 
   Future<void> _getPaymentTypes() async {
@@ -336,9 +352,21 @@ class CartProvider with ChangeNotifier {
       {required BuildContext context,
       required String currency,
       required int addressId,
+      List<String>? dates,
+      List<bool>? cutStatus,
+      int? cutId = 15,
       required Lang language}) async {
     http.Response response;
-    final bool status = checkRequiredData(context);
+    bool status = checkRequiredData(context);
+
+    if (isAdhia && _selectedDate != -1) {
+      if (!_checkAdhiaOrder()) {
+        return 8;
+      }
+      if (!_checkAdhiaOrderExtra(cutStatus![_selectedDate], cutId!)) {
+        return 9;
+      }
+    }
     if (status) {
       try {
         // check if user have selected address if not add new address
@@ -353,8 +381,12 @@ class CartProvider with ChangeNotifier {
         DateFormat format = DateFormat('yyyy-MM-dd');
         // DateFormat format = DateFormat('dd-MM-yyyy');
         response = await sl<OrderRepository>().placeOrder({
-          "delivery_date": format.format(deliveryDataTime[_selectedDate]),
-          "delivery_period_id": _deliveryPeriod!.data![_selectedTime].id,
+          "delivery_date": isAdhia
+              ? dates![_selectedDate]
+              : format.format(deliveryDataTime[_selectedDate]),
+          "delivery_period_id": isAdhia
+              ? _adhiaDeliveryDataTime[_selectedTime].id
+              : _deliveryPeriod!.data![_selectedTime].id,
           "using_wallet": 0,
           if (_selectedPayment == 4)
             "tamara_payment_name": "PAY_BY_INSTALMENTS",
@@ -525,7 +557,8 @@ class CartProvider with ChangeNotifier {
         curve: Curves.linear, duration: const Duration(milliseconds: 250));
     String message = AppLocalizations.of(context)!.tr("please_select");
     if (_selectedDate == -1) {
-      message += AppLocalizations.of(context)!.tr("delivery_date");
+      message += AppLocalizations.of(context)!
+          .tr(_isAdhia ? "day_of_sacrifice" : "delivery_date");
     }
     if (_selectedTime == -1) {
       if (message != AppLocalizations.of(context)!.tr("please_select")) {
@@ -569,6 +602,50 @@ class CartProvider with ChangeNotifier {
     promoCodeController.clear();
     noteController.clear();
     notifyListeners();
+  }
+
+  void checkIsAdhia() {
+    _isAdhia = false;
+    for (int i = 0; i < ((_cartData?.data?.cart?.data?.length) ?? 0); i++) {
+      if (_cartData!.data!.cart!.data![i].product!.categoryId! ==
+              _adhaCategoryId ||
+          _cartData!.data!.cart!.data![i].product!.categoryId! == 43) {
+        _isAdhia = true;
+        break;
+      }
+    }
+    // notifyListeners();
+  }
+
+  bool _checkAdhiaOrder() {
+    bool valid = true;
+    for (int i = 0; i < ((_cartData?.data?.cart?.data?.length) ?? 0); i++) {
+      if (_cartData!.data!.cart!.data![i].product!.categoryId! !=
+              _adhaCategoryId &&
+          _cartData!.data!.cart!.data![i].product!.categoryId! != 43) {
+        valid = false;
+        break;
+      }
+    }
+    return valid;
+  }
+
+  bool _checkAdhiaOrderExtra(bool cutStatus, int cutId) {
+    bool valid = true;
+    for (int i = 0; i < ((_cartData?.data?.cart?.data?.length) ?? 0); i++) {
+      if (_cartData!.data!.cart!.data![i].product!.categoryId! == 43) {
+        return true;
+      }
+    }
+    if (!cutStatus) {
+      for (int i = 0; i < ((_cartData?.data?.cart?.data?.length) ?? 0); i++) {
+        if (_cartData!.data!.cart!.data![i].cut!.id == cutId) {
+          valid = false;
+          break;
+        }
+      }
+    }
+    return valid;
   }
 
   bool get onlineAvailable => _onlineAvailable;

@@ -1,26 +1,26 @@
 class DeliveryPeriod {
-  List<Data>? data;
+  List<DeliveryPeriodData>? data;
 
   DeliveryPeriod({this.data});
 
   DeliveryPeriod.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <DeliveryPeriodData>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(DeliveryPeriodData.fromJson(v));
       });
     }
   }
 }
 
-class Data {
+class DeliveryPeriodData {
   int? id;
   String? nameAr;
   String? nameEn;
   // String? from;
   // String? to;
   String? timeHhmm;
-  Data({
+  DeliveryPeriodData({
     this.id,
     this.nameAr,
     this.nameEn,
@@ -29,7 +29,7 @@ class Data {
     this.timeHhmm,
   });
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DeliveryPeriodData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nameAr = json['name_ar'];
     nameEn = json['name_en'];

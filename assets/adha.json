@@ -1,0 +1,11 @@
+{
+  "category_id":28,
+  "cut_id":15,
+  "dates": [
+    "2024-06-16",
+    "2024-06-17",
+    "2024-06-18",
+    "2024-06-19"
+  ],
+  "cut_status": [false,true,true,true]
+}

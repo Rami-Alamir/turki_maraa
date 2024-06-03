@@ -24,7 +24,7 @@ class LocationProvider with ChangeNotifier {
   LatLng? _currentLocationLatLng;
   location_service.LocationData? _locationData;
   HWLocation? _hwlocation;
-  String _selectedLocationDescription = '';
+  String? _selectedLocationDescription;
   LocationServiceStatus _locationServiceStatus =
       LocationServiceStatus.beingDetermined;
   String? _isoCountryCode;
@@ -40,7 +40,7 @@ class LocationProvider with ChangeNotifier {
   String? get currentLocationDescriptionAr => _currentLocationDescriptionAr;
   String? get currentLocationDescriptionEn => _currentLocationDescriptionEn;
   LocationServiceStatus get locationServiceStatus => _locationServiceStatus;
-  String get selectedLocationDescription => _selectedLocationDescription;
+  String get selectedLocationDescription => _selectedLocationDescription ?? "";
   LatLng? get currentLocationLatLng => _currentLocationLatLng;
   int? get customerLocationId => _customerLocationId;
   bool get customerLocationIsDifferent => _customerLocationIsDifferent;
@@ -61,6 +61,7 @@ class LocationProvider with ChangeNotifier {
             : LatLng(_locationData!.latitude!, _locationData!.longitude!);
         _latLng ??= _currentLocationLatLng;
         _locationServiceStatus = LocationServiceStatus.fetched;
+        notifyListeners();
         if (_customerHaveLocation) {
           _customerLocationIsDifferent = sl<CalculateHelper>()
                   .calculateDistance(_latLng, _currentLocationLatLng) >
@@ -70,10 +71,16 @@ class LocationProvider with ChangeNotifier {
           currentLocationDescriptionArabic(),
           currentLocationDescriptionEnglish()
         ]);
-        _saveLocation(
-            selectedLocationDescription: languageCode == 'ar'
-                ? currentLocationDescriptionAr
-                : currentLocationDescriptionEn);
+        if (_locationData != null) {
+          _saveLocation(
+            latitude: _locationData!.latitude!,
+            longitude: _locationData!.longitude!,
+            selectedLocationDescription: (languageCode == 'ar'
+                ? currentLocationDescriptionAr ?? ""
+                : currentLocationDescriptionEn ?? ""),
+            isoCountryCode: _currentLocationIsoCountryCode ?? "",
+          );
+        }
       }
     } catch (_) {
       _locationServiceStatus = LocationServiceStatus.unableToDetermine;
@@ -86,7 +93,7 @@ class LocationProvider with ChangeNotifier {
         _currentLocationLatLng!.latitude, _currentLocationLatLng!.longitude,
         localeIdentifier: 'ar');
     _currentLocationIsoCountryCode = placemark.first.isoCountryCode;
-    _isoCountryCode = _currentLocationIsoCountryCode;
+    _isoCountryCode ??= _currentLocationIsoCountryCode;
     Placemark place = placemark.first;
     _currentLocationDescriptionAr = sl<GetStrings>().locationDescription(place);
   }
@@ -159,21 +166,30 @@ class LocationProvider with ChangeNotifier {
   }
 
   //update current Location Data
-  void updateLocationData(String isoCountryCode, LatLng latLng,
+  void updateLocationData(String countryCode, LatLng latLng,
       {bool setSelected = false,
       String? language,
       String address = '',
       int? id}) {
+    // print('updateLocationData');
+    // print('address $address');
     _customerLocationId = null;
     _customerHaveLocation = false;
-    _isoCountryCode = isoCountryCode;
+    _isoCountryCode = countryCode;
     _latLng = latLng;
     if (setSelected) {
       _setSelectedLocationDescription(language!);
     } else {
       _selectedLocationDescription = address;
     }
-    _saveLocation(id: id, isoCountryCode: isoCountryCode);
+    // print('_selectedLocationDescription $_selectedLocationDescription');
+    _saveLocation(
+      id: id,
+      latitude: latLng.latitude,
+      longitude: latLng.longitude,
+      selectedLocationDescription: address,
+      isoCountryCode: countryCode,
+    );
     notifyListeners();
   }
 
@@ -186,7 +202,12 @@ class LocationProvider with ChangeNotifier {
     _selectedLocationDescription = (language == "ar"
         ? _currentLocationDescriptionAr!
         : _currentLocationDescriptionEn!);
-    _saveLocation();
+    _saveLocation(
+      latitude: _currentLocationLatLng!.latitude,
+      longitude: _currentLocationLatLng!.longitude,
+      selectedLocationDescription: _selectedLocationDescription ?? "",
+      isoCountryCode: _currentLocationIsoCountryCode ?? "",
+    );
     notifyListeners();
   }
 
@@ -217,19 +238,20 @@ class LocationProvider with ChangeNotifier {
 
   Future<void> _saveLocation(
       {int? id,
-      String? selectedLocationDescription,
-      String? isoCountryCode}) async {
+      required double latitude,
+      required double longitude,
+      required String selectedLocationDescription,
+      required String isoCountryCode}) async {
     try {
       final LocalStorage storage = LocalStorage(Constants.localStorage);
       await storage.setItem(
           Constants.locationData,
           LocationData(
             id: id,
-            latitude: _latLng?.latitude,
-            longitude: _latLng?.longitude,
-            isoCountryCode: isoCountryCode ?? _isoCountryCode,
-            selectedLocationDescription:
-                selectedLocationDescription ?? _selectedLocationDescription,
+            latitude: latitude,
+            longitude: longitude,
+            isoCountryCode: isoCountryCode,
+            selectedLocationDescription: selectedLocationDescription,
           ).toJson());
     } catch (_) {}
   }
@@ -241,6 +263,7 @@ class LocationProvider with ChangeNotifier {
       LocationData? locationData =
           LocationData.fromJson(storage.getItem(Constants.locationData));
       _latLng = LatLng(locationData.latitude ?? 0, locationData.longitude ?? 0);
+
       _isoCountryCode = locationData.isoCountryCode ?? "";
       _selectedLocationDescription =
           locationData.selectedLocationDescription ?? "";

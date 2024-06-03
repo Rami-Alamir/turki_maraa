@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import '../../widgets/profile/personal_information/personal_info_item.dart';
 import '../../widgets/shared/primary_app_bar.dart';
-import '../../widgets/profile/personal_information/gender_picker.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../widgets/profile/personal_information/delete_row.dart';
 import '../../../controllers/user_provider.dart';
@@ -71,7 +70,7 @@ class PersonalInformationState extends State<PersonalInformation> {
                     PersonalInfoItem(
                         title: 'email',
                         textEditingController: userProvider.emailController),
-                    const GenderPicker(),
+                    // const GenderPicker(),
                     PersonalInfoItem(
                         title: 'age',
                         textEditingController: userProvider.ageController,

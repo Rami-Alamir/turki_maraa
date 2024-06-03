@@ -148,6 +148,7 @@ class AddressContainerState extends State<AddressContainer> {
                                                         addressProvider
                                                             .userAddress!
                                                             .data![index];
+
                                                     locationProvider
                                                         .updateLocationData(
                                                             address

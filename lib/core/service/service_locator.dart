@@ -10,6 +10,7 @@ import '../utilities/hms_latlng_converter.dart';
 import '../utilities/locals_values.dart';
 import '../utilities/show_snack_bar.dart';
 import '../utilities/size_config.dart';
+import '../../repository/adha_repository.dart';
 import '../../repository/booking_repository.dart';
 import '../../repository/cart_repository.dart';
 import '../../repository/favourite_repository.dart';
@@ -41,6 +42,7 @@ class ServiceLocator {
     sl.registerLazySingleton(() => SearchRepository());
     sl.registerLazySingleton(() => TamaraRepository());
     sl.registerLazySingleton(() => TabbyRepository());
+    sl.registerLazySingleton(() => AdhaRepository());
     sl.registerLazySingleton(() => UserRepository());
     sl.registerLazySingleton(() => VersionRepository());
     sl.registerLazySingleton(() => ApiBaseHelper());

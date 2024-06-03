@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'categories.dart';
-import 'not_supported_area.dart';
 import '../../../../controllers/home_provider.dart';
 import '../../../../models/category_data.dart';
 
@@ -16,6 +15,6 @@ class CategoriesGroup extends StatelessWidget {
 Widget categoriesGroup(CategoryData? categoryData) {
   int length = categoryData?.data?.length ?? 0;
   return length == 0
-      ? const NotSupportedArea()
+      ? const SizedBox.shrink()
       : Categories(categoriesList: categoryData!.data!);
 }

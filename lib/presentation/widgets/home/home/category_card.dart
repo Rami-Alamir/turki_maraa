@@ -26,6 +26,7 @@ class CategoryCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, productsHome, arguments: categoryId);

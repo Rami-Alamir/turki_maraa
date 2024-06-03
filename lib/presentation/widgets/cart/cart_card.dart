@@ -245,6 +245,7 @@ class CartCard extends StatelessWidget {
       context: context,
       productId: item.id.toString(),
     );
+    cartProvider.setSelectedTime = -1;
     if (context.mounted) {
       showErrorMessage(context, status);
     }

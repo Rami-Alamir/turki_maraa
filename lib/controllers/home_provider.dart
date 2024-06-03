@@ -14,7 +14,7 @@ import '../repository/products_repository.dart';
 class HomeProvider with ChangeNotifier {
   RequestStatus _requestStatus = RequestStatus.isLoading;
   final bool _canPickup = true;
-  final bool _areaStatus = false;
+  final bool _areaStatus = true;
   int _selectedOrderType = 0;
   //used to determine location service status
   LocationServiceStatus _locationServiceStatus =
@@ -53,12 +53,8 @@ class HomeProvider with ChangeNotifier {
         locationServiceStatus ?? LocationServiceStatus.unableToDetermine;
     if (latLng != null) {
       _isoCountryCode = isoCountryCode;
-      if (latLng != _latLng) {
-        _latLng = latLng;
-        getHomePageData();
-      } else if (_categoryData == null) {
-        getHomePageData();
-      }
+      _latLng = latLng;
+      getHomePageData();
     } else {
       if (_locationServiceStatus != LocationServiceStatus.noAccess ||
           _locationServiceStatus != LocationServiceStatus.unableToDetermine) {

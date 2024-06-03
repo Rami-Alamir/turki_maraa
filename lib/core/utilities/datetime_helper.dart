@@ -35,4 +35,24 @@ class DateTimeHelper {
     }
     return true;
   }
+
+  bool checkDateWithAdhia({
+    required List<NotIncludedDates> notIncludedDates,
+    required String date,
+    required String timeHhmm,
+  }) {
+    DateTime now = DateTime.now();
+    DateTime parsedDate = DateTime.parse('${date.trim()} 00:00:00');
+    for (int i = 0; i < notIncludedDates.length; i++) {
+      if (date.trim() == notIncludedDates[i].deliveryDate!.trim()) return false;
+    }
+    if (date.trim() == '2024-06-16' ||
+        date.trim() == '2024-06-17' ||
+        date.trim() == '2024-06-18' ||
+        date.trim() == '2024-06-19') return false;
+    if (now.day == parsedDate.day) {
+      return checkPeriod(timeHhmm: timeHhmm, date: date);
+    }
+    return true;
+  }
 }

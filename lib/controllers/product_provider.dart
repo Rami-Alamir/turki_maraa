@@ -15,6 +15,7 @@ class ProductProvider with ChangeNotifier {
   int _selectedSize = -1;
   int _selectedPackaging = -1;
   int _selectedChopping = -1;
+  int _selectedDay = -1;
   bool _selectedShalwata = false;
   bool _isFavourite = false;
   bool _withoutTrotters = false;
@@ -23,6 +24,13 @@ class ProductProvider with ChangeNotifier {
   bool _withoutTripe = false;
   LatLng? _latLng;
   String? _isoCountryCode;
+
+  int get selectedDay => _selectedDay;
+
+  set selectedDay(int value) {
+    _selectedDay = value;
+    notifyListeners();
+  }
 
   bool get withoutHead => _withoutHead;
   bool get withoutTailFat => _withoutTailFat;
@@ -126,6 +134,7 @@ class ProductProvider with ChangeNotifier {
   }
 
   void initExtras() {
+    _selectedDay = -1;
     _selectedSize = -1;
     _selectedChopping = -1;
     _selectedPackaging = -1;

@@ -93,11 +93,14 @@ class AddressProvider with ChangeNotifier {
           "comment": comment,
           "label": addressNameController.text.isNotEmpty
               ? addressNameController.text
-              : comment,
+              : address.length > 99
+                  ? address.substring(0, 90)
+                  : address,
           "is_default": "0",
           "long": "${latLng?.longitude ?? _mapLatLng!.longitude}",
           "lat": "${latLng?.latitude ?? _mapLatLng!.latitude}",
         }, _authorization!);
+
         if (response.statusCode == 200) {
           _selectedAddress = _userAddress!.data!.length;
           await getAddressList();

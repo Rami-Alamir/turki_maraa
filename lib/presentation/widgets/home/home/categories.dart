@@ -16,7 +16,7 @@ class Categories extends StatelessWidget {
         scrollDirection: Axis.vertical,
         physics: const ScrollPhysics(),
         itemCount: categoriesList.length,
-        itemBuilder: (BuildContext ctxt, int index) {
+        itemBuilder: (_, int index) {
           return CategoryCard(
             categoryId: categoriesList[index].id!,
             image: categoriesList[index].imageUrl!,

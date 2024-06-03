@@ -19,20 +19,23 @@ class ProductInformation extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ProductInformationItem(
-                title: 'weight',
-                value: weight,
-                description: "",
-                size: 20,
-                icon: TURKIICONS.weight_1),
+            if (weight != "0")
+              ProductInformationItem(
+                  title: 'weight',
+                  value: weight,
+                  description: "",
+                  size: 20,
+                  icon: TURKIICONS.weight_1),
             Visibility(
-                visible: weight.isNotEmpty, child: const SizedBox(width: 70)),
-            ProductInformationItem(
-                title: 'calories',
-                description: AppLocalizations.of(context)!.tr('per_grams'),
-                value: product.data!.calories!,
-                size: 40,
-                icon: TURKIICONS.calories_1),
+                visible: weight.isNotEmpty && weight != "0",
+                child: const SizedBox(width: 70)),
+            if (product.data!.calories! != "0")
+              ProductInformationItem(
+                  title: 'calories',
+                  description: AppLocalizations.of(context)!.tr('per_grams'),
+                  value: product.data!.calories!,
+                  size: 40,
+                  icon: TURKIICONS.calories_1),
           ],
         ),
       ),

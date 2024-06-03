@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:turki_maraa_app/controllers/app_provider.dart';
 import '../../shared/rounded_rectangle_button.dart';
 import '../../../../controllers/product_provider.dart';
 import '../../../../controllers/cart_provider.dart';
@@ -12,6 +13,7 @@ import '../../../../core/utilities/size_config.dart';
 class ProductDetailsFooter extends StatefulWidget {
   final int count;
   final int index;
+  final int categoryId;
   final Function add;
   final Function subtract;
 
@@ -19,6 +21,7 @@ class ProductDetailsFooter extends StatefulWidget {
       {super.key,
       required this.count,
       required this.index,
+      required this.categoryId,
       required this.add,
       required this.subtract});
   @override
@@ -74,7 +77,20 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                         Provider.of<ProductProvider>(context, listen: false);
                     final CartProvider cartProvider =
                         Provider.of<CartProvider>(context, listen: false);
+
                     if (cartProvider.isAuth) {
+                      if (widget.categoryId ==
+                              context
+                                  .read<AppProvider>()
+                                  .adhaConfig
+                                  ?.categoryId &&
+                          productProvider.selectedDay == -1 &&
+                          context.read<AppProvider>().adhaConfig?.dates?.last !=
+                              DateTime.now().toString().substring(0, 10)) {
+                        sl<ShowSnackBar>().show(
+                            context, "please_choose_the_day_of_sacrifice");
+                        return;
+                      }
                       if ((productProvider.productData[widget.index].data?.sizes
                                       ?.length ??
                                   0) >

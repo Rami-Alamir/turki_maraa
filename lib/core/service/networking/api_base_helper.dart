@@ -48,6 +48,15 @@ class ApiBaseHelper {
     return response;
   }
 
+  Future<dynamic> get4(String url) async {
+    Uri uri = Uri.parse(url);
+    dynamic response;
+    try {
+      response = await http.get(uri);
+    } catch (_) {}
+    return _returnResponse(response);
+  }
+
   Future<int> post2(String url, Map<String, dynamic> body,
       {String authorization = " "}) async {
     headers['authorization'] = authorization;
@@ -78,13 +87,13 @@ class ApiBaseHelper {
   Future<dynamic> post4(String url, body, {String authorization = " "}) async {
     headers2['authorization'] = authorization;
     Uri uri = Uri.parse(_baseUrl + url);
-    print(Uri.parse(_baseUrl + url));
-    print(body);
+    // print(Uri.parse(_baseUrl + url));
+    // print(body);
     dynamic response;
     try {
       response = await http.post(uri, body: body.toString(), headers: headers2);
-      print(response.statusCode);
-      print(response.body);
+      // print(response.statusCode);
+      // print(response.body);
     } catch (_) {}
     return response;
   }
@@ -116,6 +125,7 @@ class ApiBaseHelper {
   Future<int> get3(String url, {String authorization = " "}) async {
     headers['authorization'] = authorization;
     Uri uri = Uri.parse(_baseUrl + url);
+
     dynamic response;
     try {
       response = await http.get(uri, headers: headers);

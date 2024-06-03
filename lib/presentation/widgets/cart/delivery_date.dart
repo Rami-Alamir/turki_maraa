@@ -39,7 +39,7 @@ class DeliveryDate extends StatelessWidget {
                 physics: const ScrollPhysics(),
                 itemCount: cartProvider.deliveryDataTime.length,
                 itemBuilder: (BuildContext ctxt, int index) {
-                  return sl<DateTimeHelper>().checkDate(
+                  return sl<DateTimeHelper>().checkDateWithAdhia(
                           notIncludedDates:
                               cartProvider.cartData!.data!.notIncludedDates!,
                           date: cartProvider.deliveryDataTime[index]

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/home/home/not_supported_area.dart';
 import '../other/new_version.dart';
 import '../../widgets/dialog/special_message_dialog.dart';
 import '../../widgets/home/home/address_container.dart';
@@ -62,19 +63,11 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
   @override
   void didChangeDependencies() async {
     final AppProvider appProvider = Provider.of<AppProvider>(context);
-    // final LocationProvider locationProvider =
-    //     Provider.of<LocationProvider>(context);
     bool status = await appProvider.showEidMessage();
-    // if (locationProvider.customerLocationIsDifferent) {
-    //   locationProvider.customerLocationIsDifferent = false;
-    //   if (!mounted) return;
-    //   sl<DialogHelper>().show(context, const SpecialMessageDialog());
-    // }
     if (status) {
       if (!mounted) return;
       sl<DialogHelper>().show(context, const SpecialMessageDialog());
     }
-
     if (appProvider.canUpdate) {
       Future.microtask(() => Navigator.of(
             context,
@@ -146,7 +139,14 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
                                                   .textTheme
                                                   .titleSmall),
                                         ),
-                                      const CategoriesGroup(),
+                                      if (homeProvider.locationServiceStatus !=
+                                              LocationServiceStatus
+                                                  .beingDetermined &&
+                                          !homeProvider.areaStatus) ...[
+                                        const NotSupportedArea()
+                                      ] else ...[
+                                        const CategoriesGroup(),
+                                      ],
                                       if (((homeProvider.categoryData?.data
                                                   ?.length) ??
                                               0) !=

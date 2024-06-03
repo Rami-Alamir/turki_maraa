@@ -33,7 +33,7 @@ class PaymentMethod extends StatelessWidget {
             padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
             child: Wrap(
               children: [
-                if (cartProvider.cashAvailable)
+                if (cartProvider.cashAvailable && !cartProvider.isAdhia)
                   const PaymentMethodItem(
                     selectedValue: 1,
                     title: 'cod',
@@ -50,10 +50,7 @@ class PaymentMethod extends StatelessWidget {
                 if (context.read<LocationProvider>().isoCountryCode == "SA" &&
                     cartProvider.tamaraAvailable &&
                     (100 <= total) &&
-                    (((cartProvider.tamaraData?.data?[0].maxLimit?.amount ??
-                                0.0) *
-                            1.0) >=
-                        total))
+                    total <= 5000)
                   PaymentInstallmentItem(
                     selectedValue: 4,
                     title: 'tamara_desc',
@@ -62,7 +59,9 @@ class PaymentMethod extends StatelessWidget {
                         ? FixedAssets.tamaraAr
                         : FixedAssets.tamaraEn,
                   ),
-                if (cartProvider.tabbyAvailable && (100 <= total))
+                if (cartProvider.tabbyAvailable &&
+                    (100 <= total) &&
+                    cartProvider.isoCountryCode != 'AE')
                   const PaymentInstallmentItem(
                     selectedValue: 7,
                     title: 'tabby_desc',

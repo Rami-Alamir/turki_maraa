@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/cart/cart_bottom_sheet.dart';
 import '../../widgets/cart/cart_items_list.dart';
+import '../../widgets/cart/day_of_sacrifice.dart';
 import '../../widgets/cart/delivery_address.dart';
 import '../../widgets/cart/delivery_date.dart';
 import '../../widgets/cart/delivery_periods.dart';
@@ -13,6 +14,7 @@ import '../../widgets/shared/page_builder.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/empty_list.dart';
 import '../../../controllers/home_provider.dart';
+import '../../../controllers/app_provider.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -29,6 +31,8 @@ class ShoppingCartState extends State<ShoppingCart> {
   @override
   void initState() {
     context.read<CartProvider>().initDateTimeList();
+    context.read<CartProvider>().adhaCategoryId =
+        context.read<AppProvider>().adhaConfig?.categoryId ?? 0;
     super.initState();
   }
 
@@ -63,7 +67,15 @@ class ShoppingCartState extends State<ShoppingCart> {
                                 children: [
                                   const CartItemsList(),
                                   const DeliveryAddress(),
-                                  const DeliveryDate(),
+                                  cartProvider.isAdhia
+                                      ? DayOfSacrifice(
+                                          notIncludedDates: cartProvider
+                                              .cartData!
+                                              .data!
+                                              .notIncludedDates!,
+                                          deliveryDataTime:
+                                              cartProvider.deliveryDataTime)
+                                      : const DeliveryDate(),
                                   if (cartProvider.selectedDate != -1)
                                     const DeliveryPeriods(),
                                   const PaymentMethod(),

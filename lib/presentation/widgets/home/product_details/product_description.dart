@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+import '../../../../controllers/app_provider.dart';
+import '../../../../core/constants/app_colors.dart';
 import 'circle_icon.dart';
 import '../../../../controllers/favourite_provider.dart';
 import '../../../../controllers/location_provider.dart';
@@ -196,22 +198,34 @@ class _ProductDescriptionState extends State<ProductDescription> {
               padding: const EdgeInsets.only(right: 15.0, left: 15, bottom: 10),
               child: ReadMoreText(
                 isAr
-                    ? product.data!.descriptionAr!
-                    : product.data!.descriptionEn!,
-                trimLines: 2,
-                style: Theme.of(context).textTheme.bodyLarge,
+                    ? "${product.data!.descriptionAr!} "
+                    : "${product.data!.descriptionEn!} ",
+                trimLines: context.read<AppProvider>().adhaConfig?.categoryId ==
+                        product.data!.subCategory!.categoryId
+                    ? 4
+                    : 2,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontWeight:
+                        context.read<AppProvider>().adhaConfig?.categoryId ==
+                                product.data!.subCategory!.categoryId
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                    color: context.read<AppProvider>().adhaConfig?.categoryId ==
+                            product.data!.subCategory!.categoryId
+                        ? AppColors.gold
+                        : null),
                 colorClickableText:
                     Theme.of(context).textTheme.titleSmall!.color,
                 trimMode: TrimMode.Line,
                 semanticsLabel: "",
                 delimiter: " ",
                 trimCollapsedText:
-                    "...${AppLocalizations.of(context)!.tr('show_more')}",
+                    " ...${AppLocalizations.of(context)!.tr('show_more')}",
                 trimExpandedText: AppLocalizations.of(context)!.tr('show_less'),
-                moreStyle: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
+                moreStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                    ),
               )),
         ),
       ],
