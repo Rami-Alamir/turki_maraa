@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:turki_maraa_app/controllers/location_provider.dart';
 import 'delivery_date_item.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../core/service/service_locator.dart';
@@ -40,6 +41,9 @@ class DeliveryDate extends StatelessWidget {
                 itemCount: cartProvider.deliveryDataTime.length,
                 itemBuilder: (BuildContext ctxt, int index) {
                   return sl<DateTimeHelper>().checkDateWithAdhia(
+                          withAdhia:
+                              context.read<LocationProvider>().isoCountryCode ==
+                                  'SA',
                           notIncludedDates:
                               cartProvider.cartData!.data!.notIncludedDates!,
                           date: cartProvider.deliveryDataTime[index]

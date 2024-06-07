@@ -1,6 +1,6 @@
 class Constants {
   Constants._();
-  static const String appVersion = "6.7.0";
+  static const String appVersion = "6.8.0";
   // static const String baseUrl = 'https://almaraacompany.com/turki-api/api/v1/';
   static const String baseUrl = 'https://almaraacompany.com/dashboard/api/v2/';
   static const String tabbyBaseUrl = 'https://api.tabby.ai/api/v1/';

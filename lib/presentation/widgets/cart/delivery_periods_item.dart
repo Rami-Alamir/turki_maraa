@@ -21,10 +21,11 @@ class DeliveryPeriodsItem extends StatelessWidget {
     return Consumer<CartProvider>(builder: (_, cartProvider, __) {
       final bool selected = cartProvider.selectedTime == selectedValue;
       return sl<DateTimeHelper>().checkPeriod(
-              timeHhmm: timeHhmm,
-              date: cartProvider.deliveryDataTime[cartProvider.selectedDate]
-                  .toString()
-                  .substring(0, 11))
+                  timeHhmm: timeHhmm,
+                  date: cartProvider.deliveryDataTime[cartProvider.selectedDate]
+                      .toString()
+                      .substring(0, 11)) ||
+              cartProvider.isAdhia
           ? InkWell(
               onTap: () {
                 cartProvider.setSelectedTime = selectedValue;
