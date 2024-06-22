@@ -8,16 +8,13 @@ import 'package:version/version.dart';
 import '../core/constants/constants.dart';
 import '../core/service/service_locator.dart';
 import '../core/utilities/dialog_helper.dart';
-import '../models/adha_config.dart';
 import '../models/promotions.dart';
 import '../presentation/widgets/dialog/gift_dialog.dart';
-import '../repository/adha_repository.dart';
 import '../repository/promotions_repository.dart';
 import '../repository/version_repository.dart';
 
 class AppProvider with ChangeNotifier {
   final String _currentVersion = Constants.appVersion;
-  AdhaConfig? _adhaConfig;
   bool _canUpdate = false;
   bool _canShake = false;
   bool _canShakeToday = true;
@@ -39,8 +36,6 @@ class AppProvider with ChangeNotifier {
   bool get canShakeToday => _canShakeToday;
   bool get isPopPromotion => _isPopPromotion;
 
-  AdhaConfig? get adhaConfig => _adhaConfig;
-
   Future<void> updateProvider(bool isHMS, String? isoCountryCode) async {
     _isHMS = isHMS;
     _isoCountryCode = isoCountryCode ?? 'SA';
@@ -48,12 +43,6 @@ class AppProvider with ChangeNotifier {
     if (_isHMS ?? false) {
       _checkNewVersion();
     }
-  }
-
-  Future<void> _getAdhaConfig() async {
-    try {
-      _adhaConfig = await sl<AdhaRepository>().getAdhaConfig();
-    } catch (_) {}
   }
 
   Future<void> _getPromotions() async {
@@ -100,7 +89,6 @@ class AppProvider with ChangeNotifier {
   Future<void> getData({bool notify = true}) async {
     try {
       await Future.wait([
-        _getAdhaConfig(),
         _getPromotions(),
         _checkNewVersion(),
       ]);

@@ -99,7 +99,6 @@ class ProductDetailsState extends State<ProductDetails> {
               ? ProductDetailsFooter(
                   count: _count,
                   index: _index!,
-                  categoryId: widget.data['categoryId'],
                   subtract: () {
                     setState(() {
                       _count = _count == 1 ? _count : _count - 1;

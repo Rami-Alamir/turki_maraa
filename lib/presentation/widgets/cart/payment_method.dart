@@ -33,7 +33,7 @@ class PaymentMethod extends StatelessWidget {
             padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
             child: Wrap(
               children: [
-                if (cartProvider.cashAvailable && !cartProvider.isAdhia)
+                if (cartProvider.cashAvailable)
                   const PaymentMethodItem(
                     selectedValue: 1,
                     title: 'cod',

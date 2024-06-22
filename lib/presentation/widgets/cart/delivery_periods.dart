@@ -31,23 +31,13 @@ class DeliveryPeriods extends StatelessWidget {
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 physics: const ScrollPhysics(),
-                itemCount: cartProvider.isAdhia
-                    ? cartProvider.adhiaDeliveryDataTime.length
-                    : cartProvider.deliveryPeriod.data!.length,
+                itemCount: cartProvider.deliveryPeriod.data!.length,
                 itemBuilder: (BuildContext ctxt, int index) {
                   return DeliveryPeriodsItem(
                     title: AppLocalizations.of(context)!.locale!.languageCode ==
                             'ar'
-                        ? (cartProvider.isAdhia
-                            ? cartProvider
-                                    .adhiaDeliveryDataTime[index].nameAr ??
-                                ""
-                            : cartProvider.deliveryPeriod.data![index].nameAr!)
-                        : (cartProvider.isAdhia
-                            ? cartProvider
-                                    .adhiaDeliveryDataTime[index].nameEn ??
-                                ""
-                            : cartProvider.deliveryPeriod.data![index].nameEn!),
+                        ? (cartProvider.deliveryPeriod.data![index].nameAr!)
+                        : (cartProvider.deliveryPeriod.data![index].nameEn!),
                     selectedValue: index,
                     timeHhmm:
                         cartProvider.deliveryPeriod.data?[index].timeHhmm ?? "",
