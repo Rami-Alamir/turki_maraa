@@ -26,7 +26,7 @@ class GiftDialog extends StatelessWidget {
       child: AlertDialog(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.0))),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         contentPadding: const EdgeInsets.all(0),
         content: Builder(
           builder: (context) {

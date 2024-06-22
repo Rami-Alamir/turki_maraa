@@ -13,7 +13,7 @@ class TextBtn extends StatelessWidget {
     return TextButton(
       style: ButtonStyle(
         overlayColor:
-            MaterialStateColor.resolveWith((states) => Colors.transparent),
+            WidgetStateColor.resolveWith((states) => Colors.transparent),
       ),
       onPressed: () {
         FirebaseHelper().pushAnalyticsEvent(name: "policies", value: title);

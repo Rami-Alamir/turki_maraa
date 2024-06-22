@@ -29,7 +29,7 @@ class MapBottomSheet extends StatelessWidget {
         splashColor: Colors.transparent,
         child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: const BorderRadius.only(
               topRight: Radius.circular(25.0),
               topLeft: Radius.circular(25.0),

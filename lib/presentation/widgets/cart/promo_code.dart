@@ -30,7 +30,7 @@ class PromoCode extends StatelessWidget {
               ),
             ),
             Card(
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
               elevation: 3,
               shadowColor:
                   Theme.of(context).colorScheme.shadow.withOpacity(0.14),

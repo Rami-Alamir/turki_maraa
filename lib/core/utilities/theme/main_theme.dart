@@ -80,6 +80,5 @@ final ThemeData mainTheme = ThemeData(
         primaryContainer: AppColors.purple2,
         secondaryContainer: AppColors.purple2.withOpacity(0.5),
         tertiaryContainer: AppColors.purple,
-        onBackground: AppColors.black12,
-        onTertiary: AppColors.purpleGray,
-        background: AppColors.primaryColor));
+        onSurface: AppColors.black12,
+        onTertiary: AppColors.purpleGray));

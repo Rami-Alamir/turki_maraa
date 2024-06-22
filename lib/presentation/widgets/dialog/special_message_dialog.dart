@@ -13,7 +13,7 @@ class SpecialMessageDialog extends StatelessWidget {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15.0))),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0,
       content: Column(
         mainAxisSize: MainAxisSize.min,

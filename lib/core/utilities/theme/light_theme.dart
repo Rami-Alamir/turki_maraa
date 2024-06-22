@@ -78,7 +78,6 @@ final ThemeData lightTheme = ThemeData(
       primaryContainer: AppColors.white10,
       secondaryContainer: AppColors.grey.withOpacity(0.5),
       tertiaryContainer: AppColors.primaryColor,
-      onBackground: AppColors.white,
-      onTertiary: AppColors.purpleGray,
-      background: AppColors.white10),
+      onSurface: AppColors.white,
+      onTertiary: AppColors.purpleGray),
 );

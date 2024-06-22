@@ -93,7 +93,7 @@ class VerifyPhone extends StatelessWidget {
                   const PinCodeFields(),
                   TextButton(
                     style: ButtonStyle(
-                      overlayColor: MaterialStateColor.resolveWith(
+                      overlayColor: WidgetStateColor.resolveWith(
                           (states) => Colors.transparent),
                     ),
                     onPressed: () {},

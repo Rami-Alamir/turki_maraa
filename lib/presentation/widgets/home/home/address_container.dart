@@ -47,10 +47,10 @@ class AddressContainerState extends State<AddressContainer> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(
-                            Theme.of(context).colorScheme.background ==
+                            Theme.of(context).colorScheme.surface ==
                                     AppColors.black
                                 ? FixedAssets.backgroundDark
-                                : Theme.of(context).colorScheme.background ==
+                                : Theme.of(context).colorScheme.surface ==
                                         AppColors.clarity
                                     ? FixedAssets.backgroundClassic
                                     : FixedAssets.background),
@@ -69,7 +69,7 @@ class AddressContainerState extends State<AddressContainer> {
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(7),
                           bottomRight: Radius.circular(7)),
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                     child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),

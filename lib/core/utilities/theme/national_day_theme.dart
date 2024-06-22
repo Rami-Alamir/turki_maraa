@@ -77,5 +77,5 @@ final ThemeData nationalDayTheme = ThemeData(
         primaryContainer: const Color.fromRGBO(240, 240, 240, 1),
         secondaryContainer: Colors.grey.withOpacity(0.5),
       )
-      .copyWith(background: const Color.fromRGBO(250, 250, 250, 1)),
+      .copyWith(surface: const Color.fromRGBO(250, 250, 250, 1)),
 );

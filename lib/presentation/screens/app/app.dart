@@ -131,7 +131,7 @@ class AppState extends State<App> {
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent),
                 child: BottomNavigationBar(
-                    backgroundColor: Theme.of(context).colorScheme.background,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                     type: BottomNavigationBarType.fixed,
                     iconSize: 24,
                     showUnselectedLabels: true,

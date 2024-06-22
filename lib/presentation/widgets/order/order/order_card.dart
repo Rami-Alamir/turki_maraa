@@ -59,7 +59,7 @@ class OrderCard extends StatelessWidget {
                   child: Container(
                     width: SizeConfig.screenWidth,
                     constraints: const BoxConstraints(minHeight: 175),
-                    color: Theme.of(context).colorScheme.background,
+                    color: Theme.of(context).colorScheme.surface,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Column(
@@ -81,7 +81,7 @@ class OrderCard extends StatelessWidget {
                                       child: Container(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onBackground,
+                                            .onSurface,
                                         child: Image.network(
                                           (order.orderProducts?.length ?? 0) > 0
                                               ? order
