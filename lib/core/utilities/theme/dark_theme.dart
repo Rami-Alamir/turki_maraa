@@ -76,6 +76,7 @@ final ThemeData darkTheme = ThemeData(
       primaryContainer: AppColors.black,
       secondaryContainer: AppColors.grey.withOpacity(0.5),
       tertiaryContainer: AppColors.primaryColor,
+      onPrimary: AppColors.black,
       onTertiary: AppColors.purpleGray,
       onSurface: AppColors.black10),
 );

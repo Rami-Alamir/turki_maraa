@@ -10,8 +10,8 @@ class TabbyCheckoutPage extends StatelessWidget {
   const TabbyCheckoutPage({super.key, required this.session});
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         body: SafeArea(
           child: TabbyWebView(

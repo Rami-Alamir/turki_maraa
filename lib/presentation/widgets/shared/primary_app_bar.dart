@@ -23,7 +23,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         backgroundColor: isTransparent
             ? Colors.transparent
-            : Theme.of(context).colorScheme.surface,
+            : Theme.of(context).colorScheme.onSurface,
         title: title != null
             ? Text(
                 title!,

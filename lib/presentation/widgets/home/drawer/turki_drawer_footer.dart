@@ -36,7 +36,7 @@ class TurkiDrawerFooter extends StatelessWidget {
                       Theme.of(context).colorScheme.tertiaryContainer,
                   child: Icon(
                     Icons.phone,
-                    color: Theme.of(context).colorScheme.surface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 Padding(

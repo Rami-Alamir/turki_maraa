@@ -61,10 +61,10 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
                     inactiveColor:
                         Theme.of(context).colorScheme.secondaryContainer,
                     activeColor: Theme.of(context).colorScheme.primary,
-                    inactiveFillColor: Theme.of(context).colorScheme.surface,
-                    selectedFillColor: Theme.of(context).colorScheme.surface,
+                    inactiveFillColor: Theme.of(context).colorScheme.onSurface,
+                    selectedFillColor: Theme.of(context).colorScheme.onSurface,
                     selectedColor: Theme.of(context).colorScheme.primary,
-                    disabledColor: Theme.of(context).colorScheme.surface,
+                    disabledColor: Theme.of(context).colorScheme.onSurface,
                     activeFillColor: AppColors.white,
                   ),
                   cursorColor: Theme.of(context).primaryColor,

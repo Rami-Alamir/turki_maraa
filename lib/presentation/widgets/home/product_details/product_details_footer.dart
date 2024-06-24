@@ -29,7 +29,7 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.surface,
+      color: Theme.of(context).colorScheme.onSurface,
       width: SizeConfig.screenWidth,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
@@ -118,10 +118,11 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                         isLyh: productProvider.withoutTailFat ? "1" : "0",
                         iskwar3: productProvider.withoutTrotters ? "1" : "0",
                       );
-                      if (!mounted) return;
-                      Navigator.of(context, rootNavigator: true).pop();
-                      sl<ShowSnackBar>().show(context,
-                          status ? "product_added_cart" : "unexpected_error");
+                      if (context.mounted) {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        sl<ShowSnackBar>().show(context,
+                            status ? "product_added_cart" : "unexpected_error");
+                      }
                     } else {
                       Navigator.of(context, rootNavigator: true)
                           .pushNamed(login);

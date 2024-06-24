@@ -96,8 +96,9 @@ class AppState extends State<App> {
   Widget build(BuildContext context) {
     sl<SizeConfig>().init(context);
     // WillPopScope handle android back button
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (canPop) async {
         final isFirstRouteInCurrentTab =
             !await tabs[currentTab].key.currentState!.maybePop();
         if (isFirstRouteInCurrentTab) {
@@ -106,11 +107,15 @@ class AppState extends State<App> {
             // select 'main' tab
             _selectTab(0);
             // back button handled by app
-            return false;
+            if (context.mounted) Navigator.of(context).pop();
+            return;
           }
         }
         // let system handle back button if we're on the first route
-        return isFirstRouteInCurrentTab;
+        if (isFirstRouteInCurrentTab) {
+          if (context.mounted) Navigator.of(context).pop();
+          return;
+        }
       },
       child: Consumer<CartProvider>(builder: (_, cartProvider, __) {
         return TurkiDrawer(
@@ -131,7 +136,7 @@ class AppState extends State<App> {
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent),
                 child: BottomNavigationBar(
-                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    backgroundColor: Theme.of(context).colorScheme.onSurface,
                     type: BottomNavigationBarType.fixed,
                     iconSize: 24,
                     showUnselectedLabels: true,

@@ -24,7 +24,7 @@ class AddressBox extends StatelessWidget {
             height: 60,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(7)),
-              color: Theme.of(context).colorScheme.surface,
+              color: Theme.of(context).colorScheme.onSurface,
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).colorScheme.shadow,

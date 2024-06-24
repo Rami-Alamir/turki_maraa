@@ -28,7 +28,7 @@ class TurkiDrawer extends StatelessWidget {
     return Consumer3<DrawerProvider, AppTheme, AppLanguage>(
         builder: (_, drawerProvider, theme, language, __) {
       return AdvancedDrawer(
-        backdropColor: Theme.of(context).colorScheme.surface,
+        backdropColor: Theme.of(context).colorScheme.onSurface,
         controller: drawerProvider.advancedDrawerController,
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 300),

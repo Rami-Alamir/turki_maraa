@@ -60,7 +60,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme.of(context).colorScheme.onSurface,
                 boxShadow: [
                   BoxShadow(
                     color:

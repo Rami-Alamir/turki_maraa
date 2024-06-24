@@ -7,7 +7,7 @@ class NotAvailable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color color = Theme.of(context).colorScheme.surface == Colors.black
+    final Color color = Theme.of(context).colorScheme.onSurface == Colors.black
         ? AppColors.redGary
         : AppColors.red;
     return Container(

@@ -105,15 +105,17 @@ class _ProductDescriptionState extends State<ProductDescription> {
                                       .getFavouriteId(
                                           int.parse('${product.data!.id!}'))
                                       .toString());
-                              if (!mounted) return;
-                              action(context, status, false);
+                              if (context.mounted) {
+                                action(context, status, false);
+                              }
                             } else {
                               bool status = await favourite.addToFavourite(
                                   productName: product.data!.nameAr!,
                                   context: context,
                                   id: '${product.data!.id!}');
-                              if (!mounted) return;
-                              action(context, status, true);
+                              if (context.mounted) {
+                                action(context, status, true);
+                              }
                             }
                           }
                         },

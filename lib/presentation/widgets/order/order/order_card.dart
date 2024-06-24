@@ -59,7 +59,7 @@ class OrderCard extends StatelessWidget {
                   child: Container(
                     width: SizeConfig.screenWidth,
                     constraints: const BoxConstraints(minHeight: 175),
-                    color: Theme.of(context).colorScheme.surface,
+                    color: Theme.of(context).colorScheme.onSurface,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Column(

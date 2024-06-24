@@ -32,7 +32,8 @@ class UserDataHeader extends StatelessWidget {
                                 : "",
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Theme.of(context).colorScheme.surface)),
+                                color:
+                                    Theme.of(context).colorScheme.onSurface)),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -69,7 +70,7 @@ class UserDataHeader extends StatelessWidget {
                           Theme.of(context).colorScheme.tertiaryContainer,
                       child: Icon(
                         TURKIICONS.user6,
-                        color: Theme.of(context).colorScheme.surface,
+                        color: Theme.of(context).colorScheme.onSurface,
                       )),
                   Padding(
                     padding: const EdgeInsets.symmetric(
