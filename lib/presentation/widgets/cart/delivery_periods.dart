@@ -31,16 +31,19 @@ class DeliveryPeriods extends StatelessWidget {
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 physics: const ScrollPhysics(),
-                itemCount: cartProvider.deliveryPeriod.data!.length,
+                itemCount: cartProvider.deliveryPeriod?.data?.length ?? 0,
                 itemBuilder: (BuildContext ctxt, int index) {
                   return DeliveryPeriodsItem(
                     title: AppLocalizations.of(context)!.locale!.languageCode ==
                             'ar'
-                        ? (cartProvider.deliveryPeriod.data![index].nameAr!)
-                        : (cartProvider.deliveryPeriod.data![index].nameEn!),
+                        ? (cartProvider.deliveryPeriod?.data![index].nameAr ??
+                            "")
+                        : (cartProvider.deliveryPeriod?.data![index].nameEn ??
+                            ""),
                     selectedValue: index,
                     timeHhmm:
-                        cartProvider.deliveryPeriod.data?[index].timeHhmm ?? "",
+                        cartProvider.deliveryPeriod?.data?[index].timeHhmm ??
+                            "",
                   );
                 }),
           ),

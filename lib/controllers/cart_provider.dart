@@ -27,7 +27,6 @@ import '../core/utilities/enum/request_status.dart';
 import '../core/utilities/app_localizations.dart';
 import '../core/utilities/calculate_helper.dart';
 import '../core/utilities/get_strings.dart';
-import '../repository/booking_repository.dart';
 import '../repository/cart_repository.dart';
 import '../repository/order_repository.dart';
 import '../repository/tamara_repository.dart';
@@ -76,7 +75,7 @@ class CartProvider with ChangeNotifier {
   String? get currentLocationDescriptionAr => _currentLocationDescriptionAr;
   String? get currentLocationDescriptionEn => _currentLocationDescriptionEn;
   TamaraData? get tamaraData => _tamaraData;
-  DeliveryPeriod get deliveryPeriod => _deliveryPeriod!;
+  DeliveryPeriod? get deliveryPeriod => _deliveryPeriod;
   String get isoCountryCode => _isoCountryCode!;
   ScrollController get scrollController => _scrollController;
   List<DateTime> get deliveryDataTime => _deliveryDataTime;
@@ -238,8 +237,7 @@ class CartProvider with ChangeNotifier {
         notifyListeners();
       }
       try {
-        await Future.wait(
-            [_getDeliveryPeriods(), _getCart(), _getPaymentTypes()]);
+        await Future.wait([_getCart(), _getPaymentTypes()]);
 
         await getTamaraData();
         _cartLength = sl<CalculateHelper>()
@@ -252,6 +250,8 @@ class CartProvider with ChangeNotifier {
             _promoIsActive = true;
           }
         }
+        _initDateTimeList();
+        _getDeliveryPeriods();
         _requestStatus = RequestStatus.completed;
       } catch (_) {
         _requestStatus = RequestStatus.error;
@@ -283,6 +283,7 @@ class CartProvider with ChangeNotifier {
     _tamaraAvailable = true;
     if (_isoCountryCode == 'SA') {
       _paymentTypes = await sl<PaymentRepository>().getPaymentTypes();
+      _cashAvailable = _cartData?.currentCity?.allowCash ?? true;
       for (int i = 0; i < (paymentTypes?.data?.length ?? 0); i++) {
         if (paymentTypes!.data![i].id == 1 &&
             paymentTypes!.data![i].active == 0) {
@@ -305,7 +306,8 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> _getDeliveryPeriods() async {
-    _deliveryPeriod = await sl<BookingRepository>().getDeliveryPeriods();
+    _deliveryPeriod =
+        DeliveryPeriod(data: _cartData?.currentCity?.deliveryPeriod);
   }
 
   Future<bool> checkCoupon({required BuildContext context}) async {
@@ -552,10 +554,11 @@ class CartProvider with ChangeNotifier {
         ));
   }
 
-  void initDateTimeList() {
-    DateTime dt = DateTime.now();
-    for (int i = 0; i < 21; i++) {
-      _deliveryDataTime.add(DateTime(dt.year, dt.month, (dt.day + i)));
+  void _initDateTimeList() {
+    _deliveryDataTime.clear();
+    final List<String> dates = cartData?.currentCity?.dates ?? [];
+    for (int i = 0; i < dates.length; i++) {
+      _deliveryDataTime.add(DateTime.parse('${dates[i]} 00:00:00.000'));
     }
   }
 

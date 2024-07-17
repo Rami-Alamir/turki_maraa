@@ -1,35 +1,27 @@
+import 'delivery_period.dart';
 import 'extra.dart';
 import 'invoice_preview.dart';
 import 'product.dart';
 
 class CartData {
   Data? data;
-  CartData({this.data});
+  CurrentCity? currentCity;
+
+  CartData({this.data, this.currentCity});
   CartData.fromJson(Map<String, dynamic> json) {
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    currentCity = json['currentCity'] != null
+        ? CurrentCity.fromJson(json['currentCity'])
+        : null;
   }
 }
 
 class Data {
   Cart? cart;
-  List<MinOrder>? minOrder;
-  List<NotIncludedDates>? notIncludedDates;
   InvoicePreview? invoicePreview;
-  Data({this.cart, this.invoicePreview, this.notIncludedDates, this.minOrder});
+  Data({this.cart, this.invoicePreview});
   Data.fromJson(Map<String, dynamic> json) {
-    if (json['not_included_dates'] != null) {
-      notIncludedDates = <NotIncludedDates>[];
-      json['not_included_dates'].forEach((v) {
-        notIncludedDates!.add(NotIncludedDates.fromJson(v));
-      });
-    }
     cart = json['cart'] != null ? Cart.fromJson(json['cart']) : null;
-    if (json['min_order'] != null) {
-      minOrder = <MinOrder>[];
-      json['min_order'].forEach((v) {
-        minOrder!.add(MinOrder.fromJson(v));
-      });
-    }
     invoicePreview = json['invoice-preview'] != null
         ? InvoicePreview.fromJson(json['invoice-preview'])
         : null;
@@ -108,24 +100,36 @@ class ItemData {
   }
 }
 
-class MinOrder {
-  int? countryId;
-  String? minOrder;
+class CurrentCity {
+  int? id;
+  String? nameEn;
+  String? nameAr;
+  bool? allowCash;
+  double? minPrice;
+  List<String>? dates;
+  List<DeliveryPeriodData>? deliveryPeriod;
 
-  MinOrder({this.countryId, this.minOrder});
+  CurrentCity(
+      {this.id,
+      this.nameEn,
+      this.nameAr,
+      this.allowCash,
+      this.minPrice,
+      this.dates,
+      this.deliveryPeriod});
 
-  MinOrder.fromJson(Map<String, dynamic> json) {
-    countryId = json['country_id'];
-    minOrder = json['min_order'];
-  }
-}
-
-class NotIncludedDates {
-  String? deliveryDate;
-
-  NotIncludedDates({this.deliveryDate});
-
-  NotIncludedDates.fromJson(Map<String, dynamic> json) {
-    deliveryDate = json['delivery_date'];
+  CurrentCity.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nameEn = json['name_en'];
+    nameAr = json['name_ar'];
+    allowCash = json['allow_cash'];
+    minPrice = double.parse(json['min_price'] ?? '0.0');
+    dates = json['dates'].cast<String>();
+    if (json['delivery_period'] != null) {
+      deliveryPeriod = <DeliveryPeriodData>[];
+      json['delivery_period'].forEach((v) {
+        deliveryPeriod!.add(DeliveryPeriodData.fromJson(v));
+      });
+    }
   }
 }

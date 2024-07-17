@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import '../../models/cart_data.dart';
 
 class DateTimeHelper {
   bool checkPeriod({
@@ -21,14 +20,13 @@ class DateTimeHelper {
   }
 
   bool checkDate({
-    required List<NotIncludedDates> notIncludedDates,
     required String date,
     required String timeHhmm,
   }) {
     DateTime now = DateTime.now();
     DateTime parsedDate = DateTime.parse('${date.trim()} 00:00:00');
-    for (int i = 0; i < notIncludedDates.length; i++) {
-      if (date.trim() == notIncludedDates[i].deliveryDate!.trim()) return false;
+    if (timeHhmm.isEmpty) {
+      return false;
     }
     if (now.day == parsedDate.day) {
       return checkPeriod(timeHhmm: timeHhmm, date: date);

@@ -27,12 +27,6 @@ class ShoppingCart extends StatefulWidget {
 
 class ShoppingCartState extends State<ShoppingCart> {
   @override
-  void initState() {
-    context.read<CartProvider>().initDateTimeList();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PrimaryAppBar(

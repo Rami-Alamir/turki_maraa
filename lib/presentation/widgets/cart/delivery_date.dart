@@ -40,14 +40,12 @@ class DeliveryDate extends StatelessWidget {
                 itemCount: cartProvider.deliveryDataTime.length,
                 itemBuilder: (BuildContext ctxt, int index) {
                   return sl<DateTimeHelper>().checkDate(
-                          notIncludedDates:
-                              cartProvider.cartData!.data!.notIncludedDates!,
                           date: cartProvider.deliveryDataTime[index]
                               .toString()
                               .substring(0, 11),
-                          timeHhmm:
-                              cartProvider.deliveryPeriod.data?.last.timeHhmm ??
-                                  "")
+                          timeHhmm: cartProvider
+                                  .deliveryPeriod?.data?.last.timeHhmm ??
+                              "")
                       ? Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               3.0, 15, 10, 10),

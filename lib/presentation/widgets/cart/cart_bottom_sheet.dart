@@ -42,8 +42,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
             context.read<LocationProvider>().isoCountryCode!);
         final double total = cartProvider
             .cartData!.data!.invoicePreview!.totalAmountAfterDiscount!;
-        final double min = double.parse(
-            cartProvider.cartData!.data!.minOrder!.first.minOrder ?? "60");
+        final double min = cartProvider.cartData!.currentCity?.minPrice ?? 0;
         return DraggableScrollableSheet(
           initialChildSize: min > total
               ? 0.35

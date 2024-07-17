@@ -17,15 +17,12 @@ class DeliveryPeriodData {
   int? id;
   String? nameAr;
   String? nameEn;
-  // String? from;
-  // String? to;
   String? timeHhmm;
+
   DeliveryPeriodData({
     this.id,
     this.nameAr,
     this.nameEn,
-    // this.from,
-    // this.to,
     this.timeHhmm,
   });
 
@@ -33,8 +30,7 @@ class DeliveryPeriodData {
     id = json['id'];
     nameAr = json['name_ar'];
     nameEn = json['name_en'];
-    // from = json['from'];
-    // to = json['to'];
+
     timeHhmm = json['time_hhmm'];
   }
 }
