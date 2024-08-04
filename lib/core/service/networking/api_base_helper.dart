@@ -134,7 +134,7 @@ class ApiBaseHelper {
   }
 
   dynamic _returnResponse(http.Response response) {
-    // print(response.body.toString());
+    print(response.body.toString());
     // print(response.statusCode);
     switch (response.statusCode) {
       case 200:
