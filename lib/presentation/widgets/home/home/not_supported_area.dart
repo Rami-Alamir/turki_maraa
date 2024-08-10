@@ -9,7 +9,7 @@ class NotSupportedArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 80.0),
+      padding: const EdgeInsets.only(top: 150.0),
       child: SizedBox(
         width: SizeConfig.screenWidth,
         child: Column(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tamara_sdk/tamara_sdk.dart';
+import 'package:tamara_flutter_sdk/tamara_checkout.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/constants/route_constants.dart';
 
