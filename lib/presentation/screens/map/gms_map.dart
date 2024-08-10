@@ -108,7 +108,7 @@ class GMSMapState extends State<GMSMap> {
                   draggable: true,
                   markerId: const MarkerId("1"),
                   position: addressProvider.mapLatLng,
-                  icon: BytesMapBitmap(markerIcon!, width: 40, height: 40),
+                  icon: BytesMapBitmap(markerIcon!, width: 50, height: 50),
                 )
             },
             initialCameraPosition: CameraPosition(

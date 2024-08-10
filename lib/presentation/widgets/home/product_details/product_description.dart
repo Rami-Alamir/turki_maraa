@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:readmore/readmore.dart';
 import 'circle_icon.dart';
 import '../../../../controllers/favourite_provider.dart';
 import '../../../../controllers/location_provider.dart';
@@ -190,32 +189,19 @@ class _ProductDescriptionState extends State<ProductDescription> {
               ),
           ],
         ),
-        Visibility(
-          visible: isAr
-              ? product.data!.descriptionAr!.isNotEmpty
-              : product.data!.descriptionEn!.isNotEmpty,
-          child: Padding(
-              padding: const EdgeInsets.only(right: 15.0, left: 15, bottom: 10),
-              child: ReadMoreText(
-                isAr
-                    ? product.data!.descriptionAr!
-                    : product.data!.descriptionEn!,
-                trimLines: 2,
-                style: Theme.of(context).textTheme.bodyLarge,
-                colorClickableText:
-                    Theme.of(context).textTheme.titleSmall!.color,
-                trimMode: TrimMode.Line,
-                semanticsLabel: "",
-                delimiter: " ",
-                trimCollapsedText:
-                    "...${AppLocalizations.of(context)!.tr('show_more')}",
-                trimExpandedText: AppLocalizations.of(context)!.tr('show_less'),
-                moreStyle: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
-              )),
-        ),
+        if (isAr
+            ? product.data!.descriptionAr!.isNotEmpty
+            : product.data!.descriptionEn!.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0, left: 15, bottom: 10),
+            child: Text(
+              isAr
+                  ? product.data!.descriptionAr!
+                  : product.data!.descriptionEn!,
+              // trimLines: 2,
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
+          ),
       ],
     );
   }
