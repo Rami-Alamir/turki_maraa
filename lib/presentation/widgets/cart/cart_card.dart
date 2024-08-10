@@ -122,14 +122,10 @@ class CartCard extends StatelessWidget {
                             fit: BoxFit.cover,
                           )),
                     ),
-                    Container(
-                      constraints: BoxConstraints(
-                          minHeight: SizeConfig.setWidgetWidth(100, 135, 135)),
+                    Expanded(
                       child: Container(
                         margin: const EdgeInsetsDirectional.fromSTEB(
                             10.0, 5.0, 0.0, 0.0),
-                        width: SizeConfig.screenWidth! -
-                            SizeConfig.setWidgetWidth(158, 193, 185),
                         constraints: BoxConstraints(
                             minHeight:
                                 SizeConfig.setWidgetWidth(100, 135, 135)),
@@ -137,34 +133,47 @@ class CartCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                    language
-                                        ? item.product!.nameAr!
-                                        : item.product!.nameEn!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displayLarge!
-                                        .copyWith(
-                                          fontWeight: FontWeight.w700,
-                                        )),
-                                if ((item.size?.nameAr ?? "") !=
-                                    item.product!.nameAr!)
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5.0),
-                                    child: Text(
-                                        "${language ? "${item.size?.nameAr ?? ""} ${item.cut?.nameAr ?? ""}"
-                                            " ${item.preparation?.nameAr ?? ""} ${item.isShalwata == 1 ? "مع شلوطة" : ""}" : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""} "
-                                            "${item.preparation?.nameEn ?? ""} ${item.isShalwata == 1 ? "with shalwata" : ""}"}${item.isLyh! ? AppLocalizations.of(context)!.tr('without_tail_fat') : ""} ${item.isRas! ? AppLocalizations.of(context)!.tr('without_head') : ""} ${item.isKwar3! ? AppLocalizations.of(context)!.tr('without_trotters') : ""} ${item.isKarashah! ? AppLocalizations.of(context)!.tr('without_tripe') : ""} ",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineSmall),
+                                Expanded(
+                                  child: Text(
+                                      language
+                                          ? item.product!.nameAr!
+                                          : item.product!.nameEn!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .copyWith(
+                                            fontWeight: FontWeight.w700,
+                                          )),
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.delete_outline_outlined,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onTertiary,
                                   ),
+                                  onPressed: () {
+                                    delete(context, cartProvider);
+                                  },
+                                )
                               ],
                             ),
+                            if ((item.size?.nameAr ?? "") !=
+                                item.product!.nameAr!)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5.0),
+                                child: Text(
+                                    "${language ? "${item.size?.nameAr ?? ""} ${item.cut?.nameAr ?? ""}"
+                                        " ${item.preparation?.nameAr ?? ""} ${item.isShalwata == 1 ? "مع شلوطة" : ""}" : "${item.size?.nameEn ?? ""} ${item.cut?.nameEn ?? ""} "
+                                        "${item.preparation?.nameEn ?? ""} ${item.isShalwata == 1 ? "with shalwata" : ""}"}${item.isLyh! ? AppLocalizations.of(context)!.tr('without_tail_fat') : ""} ${item.isRas! ? AppLocalizations.of(context)!.tr('without_head') : ""} ${item.isKwar3! ? AppLocalizations.of(context)!.tr('without_trotters') : ""} ${item.isKarashah! ? AppLocalizations.of(context)!.tr('without_tripe') : ""} ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall),
+                              ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.end,
