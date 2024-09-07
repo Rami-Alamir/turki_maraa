@@ -8,7 +8,7 @@ class AppLanguage with ChangeNotifier {
       (_appLocale ?? const Locale("ar")) == const Locale("ar") ? 'ar' : 'en';
   bool get isArabic => (_appLocale ?? const Locale("ar")) == const Locale("ar");
 
-  Locale? get appLocal => _appLocale;
+  Locale get appLocal => _appLocale ?? const Locale("ar");
 
   set appLocale(Locale value) {
     _appLocale = value;

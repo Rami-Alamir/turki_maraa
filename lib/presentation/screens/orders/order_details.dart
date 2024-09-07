@@ -28,6 +28,7 @@ class OrderDetailsState extends State<OrderDetails> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
+عحيشفث      if (!mounted) return;
       (OrderModel?, RequestStatus) record =
           await context.read<OrdersProvider>().getOrderData(widget.id);
       _order = record.$1;

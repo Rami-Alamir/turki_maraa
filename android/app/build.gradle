@@ -56,8 +56,8 @@ android {
         multiDexEnabled true
         minSdkVersion 23
         targetSdkVersion 34
-        versionCode 7000609
-        versionName "6.9.0"
+        versionCode 7000610
+        versionName "6.10.0"
     }
 
     signingConfigs {
@@ -86,8 +86,8 @@ flutter {
 dependencies {
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
-    implementation 'com.huawei.agconnect:agconnect-core:1.9.1.301'
-    implementation 'com.huawei.hms:base:6.11.0.302'
+    implementation 'com.huawei.agconnect:agconnect-core:1.9.1.302'
+    implementation 'com.huawei.hms:base:6.12.0.300'
     implementation 'com.huawei.hms:maps:6.11.2.301'
     implementation 'com.huawei.hms:location:6.12.0.300'
 }
