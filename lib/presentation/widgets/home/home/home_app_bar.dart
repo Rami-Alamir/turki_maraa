@@ -25,18 +25,23 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       preferredSize: preferredSize,
       child: Container(
         height: SizeConfig.homeAppBarHeight,
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          image: DecorationImage(
-            image: AssetImage(
-                Theme.of(context).colorScheme.onSurface == AppColors.black
-                    ? FixedAssets.backgroundDark
-                    : Theme.of(context).colorScheme.onSurface == AppColors.clarity
-                        ? FixedAssets.backgroundClassic
-                        : FixedAssets.background),
-            fit: BoxFit.cover,
-          ),
-        ),
+        decoration: Theme.of(context).primaryColor == AppColors.nd94
+            ? const BoxDecoration(
+                color: AppColors.nd94,
+              )
+            : BoxDecoration(
+                color: Colors.transparent,
+                image: DecorationImage(
+                  image: AssetImage(
+                      Theme.of(context).colorScheme.onSurface == AppColors.black
+                          ? FixedAssets.backgroundDark
+                          : Theme.of(context).colorScheme.onSurface ==
+                                  AppColors.clarity
+                              ? FixedAssets.backgroundClassic
+                              : FixedAssets.background),
+                  fit: BoxFit.cover,
+                ),
+              ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

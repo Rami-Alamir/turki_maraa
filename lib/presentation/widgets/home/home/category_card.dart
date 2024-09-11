@@ -26,7 +26,6 @@ class CategoryCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, productsHome, arguments: categoryId);
@@ -76,8 +75,12 @@ class CategoryCard extends StatelessWidget {
                             .textTheme
                             .displayMedium!
                             .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onTertiary ==
+                                color: Theme.of(context).primaryColor ==
+                                        AppColors.nd94
+                                    ? AppColors.nd94
+                                    : Theme.of(context)
+                                                .colorScheme
+                                                .onTertiary ==
                                             AppColors.purpleGray
                                         ? AppColors.primaryColor
                                         : AppColors.land,

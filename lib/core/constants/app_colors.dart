@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
   static const Color primaryColor = Color.fromRGBO(109, 20, 66, 1);
+  static const Color nd94 = Color.fromRGBO(0, 104, 71, 1);
   static const Color gold = Color.fromRGBO(226, 193, 77, 1);
   static const Color gold100 = Color.fromRGBO(226, 193, 77, 0.3);
   static const Color darkGold = Color.fromRGBO(181, 165, 126, 0.5);

@@ -3,7 +3,7 @@ description: "Turki Dabayh app created by Rami Alamir"
 
 publish_to: 'none'
 
-version: 6.10.0+43
+version: 6.11.0+43
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -56,10 +56,11 @@ dependencies:
   rate_my_app: ^2.2.0
   localstorage: ^4.0.1+4
 
-#flutter_native_splash:
-#  background_image: "assets/images/ww1.png"
+flutter_native_splash:
+  color: "#ffffff"
+  #  background_image: "assets/images/ww1.png"
 dev_dependencies:
-#  flutter_native_splash:
+  flutter_native_splash: ^2.4.1
 
   flutter_test:
     sdk: flutter

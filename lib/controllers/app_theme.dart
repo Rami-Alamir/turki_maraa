@@ -4,6 +4,7 @@ import '../core/utilities/theme/classic_theme.dart';
 import '../core/utilities/theme/dark_theme.dart';
 import '../core/utilities/theme/light_theme.dart';
 import '../core/utilities/theme/main_theme.dart';
+import '../core/utilities/theme/national_day_theme.dart';
 
 class AppTheme with ChangeNotifier {
   late bool isLightTheme;
@@ -32,6 +33,10 @@ class AppTheme with ChangeNotifier {
       case 'classic':
         _theme = classicTheme;
         _themeName = 'classic';
+        break;
+      case 'nd':
+        _theme = ndTheme;
+        _themeName = 'nd';
         break;
       default:
         _theme = mainTheme;

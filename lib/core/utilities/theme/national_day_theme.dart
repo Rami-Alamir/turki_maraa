@@ -1,81 +1,82 @@
 import 'package:flutter/material.dart';
-
+import '../../constants/app_colors.dart';
 import '../../constants/constants.dart';
 
-final ThemeData nationalDayTheme = ThemeData(
+final ThemeData ndTheme = ThemeData(
   useMaterial3: false,
-  splashColor: Colors.white,
-  primaryColor: const Color.fromRGBO(35, 98, 4, 1.0),
+  primaryColor: AppColors.nd94,
   fontFamily: Constants.fontFamily,
+  scaffoldBackgroundColor: AppColors.white10,
+  splashColor: Colors.transparent,
+  highlightColor: Colors.transparent,
   canvasColor: Colors.transparent,
-  scaffoldBackgroundColor: const Color.fromRGBO(250, 250, 250, 1),
   textTheme: const TextTheme(
     titleMedium: TextStyle(
-        fontSize: 16,
-        color: Color.fromRGBO(35, 98, 4, 1.0),
-        fontWeight: FontWeight.w600),
-    titleSmall: TextStyle(
-        fontSize: 14,
-        height: 2,
+        fontSize: 18,
+        height: 1.5,
         fontWeight: FontWeight.w500,
-        color: Colors.grey),
+        color: AppColors.gold),
+    titleSmall: TextStyle(
+        fontSize: 16, color: AppColors.nd94, fontWeight: FontWeight.w600),
     displayLarge: TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
-        height: 1.40,
-        fontSize: 20),
-    displaySmall: TextStyle(
-        fontSize: 20, color: Colors.white, fontWeight: FontWeight.w500),
-    headlineMedium: TextStyle(
-        color: Colors.black, fontWeight: FontWeight.w600, fontSize: 12),
-    headlineSmall: TextStyle(
-        fontWeight: FontWeight.normal,
-        color: Color.fromRGBO(87, 87, 87, 1),
-        fontSize: 12),
+        color: AppColors.black, fontSize: 14, fontWeight: FontWeight.normal),
     displayMedium: TextStyle(
-        fontWeight: FontWeight.normal,
-        color: Color.fromRGBO(87, 87, 87, 0.5),
-        fontSize: 14),
+        fontWeight: FontWeight.w600, color: AppColors.black, fontSize: 12),
+    displaySmall: TextStyle(
+        color: AppColors.black, fontWeight: FontWeight.w600, fontSize: 12),
+    headlineMedium: TextStyle(
+        color: AppColors.white, fontWeight: FontWeight.w500, fontSize: 20),
+    headlineSmall: TextStyle(
+        fontWeight: FontWeight.normal, color: AppColors.darkGray, fontSize: 12),
     titleLarge: TextStyle(
-      fontWeight: FontWeight.w600,
-      color: Colors.black,
-      fontSize: 20,
+      fontWeight: FontWeight.normal,
+      color: AppColors.gold,
+      fontSize: 12,
     ),
+    bodyLarge: TextStyle(
+        fontWeight: FontWeight.normal,
+        color: AppColors.grey,
+        fontSize: 14,
+        height: 1.5),
   ),
   dialogTheme: const DialogTheme(
     contentTextStyle: TextStyle(
-        color: Color.fromRGBO(87, 87, 87, 1),
-        fontWeight: FontWeight.w500,
-        fontSize: 16),
+        color: AppColors.darkGray1, fontWeight: FontWeight.w500, fontSize: 16),
   ),
   dividerTheme: const DividerThemeData(
     indent: 50,
-    color: Colors.grey,
+    color: AppColors.grey,
     thickness: .35,
     endIndent: 5,
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    backgroundColor: Colors.white10,
-    selectedItemColor: Color.fromRGBO(35, 98, 4, 1.0),
-    unselectedItemColor: Colors.black38,
+    backgroundColor: AppColors.white10,
+    selectedItemColor: AppColors.nd94,
+    unselectedItemColor: AppColors.black38,
     selectedLabelStyle: TextStyle(fontSize: 12, height: 2),
     unselectedLabelStyle: TextStyle(fontSize: 10, height: 2),
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-        foregroundColor: const Color.fromRGBO(35, 98, 4, 1.0),
-        textStyle: const TextStyle(color: Colors.white, fontSize: 20)),
+        foregroundColor: AppColors.nd94,
+        textStyle: const TextStyle(color: AppColors.white, fontSize: 20)),
   ),
   snackBarTheme: const SnackBarThemeData(
       contentTextStyle: TextStyle(
     fontFamily: Constants.fontFamily,
-    color: Colors.white,
+    color: AppColors.white,
   )),
-  colorScheme: ColorScheme.fromSwatch()
-      .copyWith(
-        secondary: Colors.white,
-        primaryContainer: const Color.fromRGBO(240, 240, 240, 1),
-        secondaryContainer: Colors.grey.withOpacity(0.5),
-      )
-      .copyWith(surface: const Color.fromRGBO(250, 250, 250, 1)),
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+      primary: AppColors.nd94,
+      tertiary: AppColors.nd94,
+      secondary: AppColors.gold,
+      surface: AppColors.white,
+      shadow: AppColors.grey.withOpacity(0.35),
+      outline: AppColors.white20,
+      primaryContainer: AppColors.white10,
+      secondaryContainer: AppColors.grey.withOpacity(0.5),
+      tertiaryContainer: AppColors.nd94,
+      onSecondary: AppColors.white,
+      onTertiary: AppColors.purpleGray,
+      onSurface: AppColors.white10),
 );
