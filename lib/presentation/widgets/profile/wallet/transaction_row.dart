@@ -13,7 +13,9 @@ class TransactionRow extends StatelessWidget {
       {super.key, required this.transaction, required this.currency});
   @override
   Widget build(BuildContext context) {
-    final bool status = double.parse(transaction.newAmount ?? "0") > 0;
+    final bool status = (double.parse(transaction.newAmount ?? "0") -
+            double.parse(transaction.lastAmount ?? "0")) >
+        0;
     final Color color = status ? AppColors.green : AppColors.red;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -105,7 +107,10 @@ class TransactionRow extends StatelessWidget {
                             child: Row(
                               children: <Widget>[
                                 Text(
-                                  transaction.lastAmount ?? "",
+                                  sl<FormatHelper>()
+                                      .formatDecimalAndRemoveTrailingZeros(
+                                          double.parse(
+                                              transaction.newAmount ?? "0")),
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleSmall!
@@ -114,7 +119,7 @@ class TransactionRow extends StatelessWidget {
                                           fontWeight: FontWeight.normal),
                                 ),
                                 Text(
-                                  currency,
+                                  " $currency",
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleSmall!
