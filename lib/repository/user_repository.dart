@@ -1,6 +1,7 @@
 import '../models/user_address.dart';
 import '../core/service/networking/api_base_helper.dart';
 import '../core/service/service_locator.dart';
+import '../models/wallet.dart';
 
 class UserRepository {
   final ApiBaseHelper _helper = sl<ApiBaseHelper>();
@@ -39,5 +40,11 @@ class UserRepository {
     final response = await _helper.get("customers/get-addresses",
         authorization: authorization);
     return UserAddress.fromJson(response);
+  }
+
+  Future<Wallet> getWallet(String authorization) async {
+    final response =
+        await _helper.get("get-customer-wallet", authorization: authorization);
+    return Wallet.fromJson(response);
   }
 }

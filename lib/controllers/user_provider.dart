@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../core/utilities/dialog_helper.dart';
 import '../models/user_data.dart';
+import '../models/wallet.dart';
 import '../repository/user_repository.dart';
 import '../core/service/service_locator.dart';
 
@@ -10,10 +11,11 @@ class UserProvider with ChangeNotifier {
   TextEditingController usernameController = TextEditingController();
   // TextEditingController genderController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-
+  Wallet? _wallet;
   UserData? _userData;
   String? _accessToken;
-  //used to update gender
+
+  Wallet? get wallet => _wallet; //used to update gender
   // int? _gender = -1;
 
   UserData? get userData => _userData;
@@ -53,6 +55,13 @@ class UserProvider with ChangeNotifier {
       return 0;
     }
     return 1;
+  }
+
+  Future<void> getWallet() async {
+    try {
+      _wallet = await sl<UserRepository>().getWallet("Bearer $_accessToken");
+      notifyListeners();
+    } catch (_) {}
   }
 
   // void setGender(int value, BuildContext context) {

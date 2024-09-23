@@ -28,6 +28,7 @@ class ApiBaseHelper {
   Future<dynamic> get(String url, {String authorization = " "}) async {
     headers['authorization'] = authorization;
     Uri uri = Uri.parse(_baseUrl + url);
+    // print(authorization);
     // print(Uri.parse(_baseUrl + url));
     // print(authorization);
     dynamic responseJson;
@@ -41,6 +42,8 @@ class ApiBaseHelper {
   Future<dynamic> get2(String url, {String authorization = " "}) async {
     headers['authorization'] = authorization;
     Uri uri = Uri.parse(_baseUrl + url);
+    print(authorization);
+    print(Uri.parse(_baseUrl + url));
     dynamic response;
     try {
       response = await http.get(uri, headers: headers);
@@ -50,6 +53,8 @@ class ApiBaseHelper {
 
   Future<dynamic> get4(String url) async {
     Uri uri = Uri.parse(url);
+    print(authorization);
+    print(Uri.parse(_baseUrl + url));
     dynamic response;
     try {
       response = await http.get(uri);

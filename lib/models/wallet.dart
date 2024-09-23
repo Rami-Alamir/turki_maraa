@@ -1,30 +1,49 @@
-import 'package:flutter/material.dart';
-
 class Wallet {
-  final String? sId;
-  final double? before;
-  final double? after;
-  final String? description;
-  final Color? color;
-  final IconData? iconData;
-  final String? userId;
-  final String? date;
+  WalletData? data;
 
-  Wallet(
-      {this.sId,
-      this.before,
-      this.color,
-      this.after,
-      this.date,
-      this.iconData,
-      this.description,
-      this.userId});
+  Wallet({this.data});
 
-  factory Wallet.fromJson(Map<String, dynamic> json) => Wallet(
-        sId: json["_id"],
-        before: (json["before"] ?? 0) * 1.0,
-        after: (json["after"] ?? 0) * 1.0,
-        description: json["description"],
-        userId: json["userId"],
-      );
+  Wallet.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null ? WalletData.fromJson(json['data']) : null;
+  }
+}
+
+class WalletData {
+  String? wallet;
+  List<WalletLogs>? walletLogs;
+
+  WalletData({this.wallet, this.walletLogs});
+
+  WalletData.fromJson(Map<String, dynamic> json) {
+    wallet = json['wallet'];
+    if (json['wallet_logs'] != null) {
+      walletLogs = <WalletLogs>[];
+      json['wallet_logs'].forEach((v) {
+        walletLogs!.add(WalletLogs.fromJson(v));
+      });
+    }
+  }
+}
+
+class WalletLogs {
+  String? lastAmount;
+  String? newAmount;
+  String? action;
+  String? actionId;
+  String? createdAt;
+
+  WalletLogs(
+      {this.lastAmount,
+      this.newAmount,
+      this.action,
+      this.actionId,
+      this.createdAt});
+
+  WalletLogs.fromJson(Map<String, dynamic> json) {
+    lastAmount = json['last_amount'];
+    newAmount = json['new_amount'];
+    action = json['action'];
+    actionId = json['action_id'];
+    createdAt = json['created_at'];
+  }
 }
