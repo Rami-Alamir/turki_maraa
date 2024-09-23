@@ -258,5 +258,8 @@
   "rating_message" : "عطنا رايك وقيمنا لنخدمك بشكل افضل",
   "later" : "لاحقاً",
   "rate" : "تقييم",
-  "no_thanks" : "لا شكراً"
+  "no_thanks" : "لا شكراً",
+  "cash_back": "كاش باك",
+  "compensation": "تعويض",
+  "payment_of_the_order" :"سداد الطلب"
 }

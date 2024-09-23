@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../core/utilities/dialog_helper.dart';
+import '../core/utilities/enum/request_status.dart';
 import '../models/user_data.dart';
 import '../models/wallet.dart';
 import '../repository/user_repository.dart';
@@ -14,7 +15,9 @@ class UserProvider with ChangeNotifier {
   Wallet? _wallet;
   UserData? _userData;
   String? _accessToken;
+  RequestStatus _requestStatus = RequestStatus.isLoading;
 
+  RequestStatus get requestStatus => _requestStatus;
   Wallet? get wallet => _wallet; //used to update gender
   // int? _gender = -1;
 
@@ -57,11 +60,18 @@ class UserProvider with ChangeNotifier {
     return 1;
   }
 
-  Future<void> getWallet() async {
+  Future<void> getWallet({bool withNotify = false}) async {
     try {
+      _requestStatus = RequestStatus.isLoading;
+      if (withNotify) {
+        notifyListeners();
+      }
       _wallet = await sl<UserRepository>().getWallet("Bearer $_accessToken");
-      notifyListeners();
-    } catch (_) {}
+      _requestStatus = RequestStatus.completed;
+    } catch (_) {
+      _requestStatus = RequestStatus.error;
+    }
+    notifyListeners();
   }
 
   // void setGender(int value, BuildContext context) {

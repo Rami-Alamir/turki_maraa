@@ -256,5 +256,8 @@
   "rating_message": "Tap a star to rate it on the App Store.",
   "later": "Not Now",
   "rate": "Rate",
-  "no_thanks": "No Thanks"
+  "no_thanks": "No Thanks",
+  "cash_back": "Cash back",
+  "compensation": "Compensation",
+  "payment_of_the_order": "Payment of the order"
 }

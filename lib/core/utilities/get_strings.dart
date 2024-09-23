@@ -114,4 +114,16 @@ class GetStrings {
             ? AppLocalizations.of(context)!.tr('femaleString')
             : "";
   }
+
+  String getWalletDescription(BuildContext context, String key) {
+    switch (key) {
+      case "cash_back":
+        return AppLocalizations.of(context)!.tr('cash_back');
+      case "induction":
+        return AppLocalizations.of(context)!.tr('compensation');
+      case "new_order":
+        return AppLocalizations.of(context)!.tr('payment_of_the_order');
+    }
+    return key;
+  }
 }
