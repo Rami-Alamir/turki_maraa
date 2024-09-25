@@ -79,7 +79,7 @@ class Invoice extends StatelessWidget {
           InvoiceRow(
             title: 'credit',
             value:
-                '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(myCredit)} $currencyStr',
+                '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(calculateTotal ? myCredit > total ? total : myCredit : myCredit)} $currencyStr',
             visible: myCredit > 0,
             fontColor: AppColors.green,
           ),

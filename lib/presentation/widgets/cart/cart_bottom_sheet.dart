@@ -42,6 +42,9 @@ class CartBottomSheetState extends State<CartBottomSheet> {
             context.read<LocationProvider>().isoCountryCode!);
         final double total = cartProvider
             .cartData!.data!.invoicePreview!.totalAmountAfterDiscount!;
+        final double myCredit = cartProvider.useCredit
+            ? cartProvider.cartData!.data!.customerWallet!
+            : 0;
         final double min = cartProvider.cartData!.currentCity?.minPrice ?? 0;
         return DraggableScrollableSheet(
           initialChildSize: min > total
@@ -94,11 +97,8 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                           children: [
                             Invoice(
                               calculateTotal: true,
-                              myCredit: cartProvider.useCredit
-                                  ? cartProvider.cartData!.data!.customerWallet!
-                                  : 0,
-                              total: cartProvider.cartData!.data!
-                                  .invoicePreview!.totalAmountAfterDiscount!,
+                              myCredit: myCredit,
+                              total: total,
                               subtotal: cartProvider.cartData!.data!
                                   .invoicePreview!.orderSubtotal!,
                               shipping: cartProvider
@@ -134,7 +134,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 5.0),
                                     child: Text(
-                                      '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(cartProvider.cartData!.data!.invoicePreview!.totalAmountAfterDiscount!)} $currency',
+                                      '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(((total - myCredit) > 0 ? total - myCredit : 0))} $currency',
                                       style: Theme.of(context)
                                           .textTheme
                                           .displayMedium!
