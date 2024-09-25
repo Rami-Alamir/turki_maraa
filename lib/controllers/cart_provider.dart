@@ -100,6 +100,17 @@ class CartProvider with ChangeNotifier {
 
   set usMyCredit(bool value) {
     _useCredit = value;
+    if (!value && selectedPayment == 8) {
+      _selectedPayment = -1;
+    }
+    if (_selectedPayment == 1) {
+      _selectedPayment = -1;
+    }
+    if (value &&
+        (cartData?.data?.customerWallet ?? 0) >=
+            (cartData?.data?.invoicePreview?.totalAmountAfterDiscount ?? 0)) {
+      _selectedPayment = 8;
+    }
     notifyListeners();
   }
 
@@ -162,6 +173,8 @@ class CartProvider with ChangeNotifier {
     String iskarashah = "0",
     String iskwar3 = "0",
   }) async {
+    _useCredit = false;
+    _selectedPayment = -1;
     int response;
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
@@ -196,6 +209,8 @@ class CartProvider with ChangeNotifier {
     required String productId,
     required String quantity,
   }) async {
+    _useCredit = false;
+    _selectedPayment = -1;
     HapticFeedback.heavyImpact();
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
@@ -362,7 +377,7 @@ class CartProvider with ChangeNotifier {
         response = await sl<OrderRepository>().placeOrder({
           "delivery_date": format.format(deliveryDataTime[_selectedDate]),
           "delivery_period_id": _deliveryPeriod!.data![_selectedTime].id,
-          "using_wallet": 0,
+          "using_wallet": _useCredit,
           if (_selectedPayment == 4)
             "tamara_payment_name": "PAY_BY_INSTALMENTS",
           if (_selectedPayment == 4) "no_instalments": 3,
@@ -374,7 +389,7 @@ class CartProvider with ChangeNotifier {
         if (response.statusCode == 200) {
           FirebaseHelper()
               .pushAnalyticsEvent(name: "notes", value: noteController.text);
-          if (paymentId == 1) {
+          if (paymentId == 1 || paymentId == 8) {
             return 1;
           } else if (paymentId == 2) {
             arb = PaymentARB.fromJson(json.decode(response.body.toString()));
@@ -566,6 +581,7 @@ class CartProvider with ChangeNotifier {
     _selectedTime = -1;
     _selectedPayment = -1;
     _selectedDate = -1;
+    _useCredit = false;
   }
 
   void clearCart() {

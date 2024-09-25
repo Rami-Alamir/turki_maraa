@@ -227,6 +227,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
           ShowSnackBar().show(context, "unexpected_error");
           break;
         case 1:
+        case 8:
           cartProvider.clearCart();
           Navigator.of(context, rootNavigator: true)
               .pushNamed(orderStatus, arguments: true);

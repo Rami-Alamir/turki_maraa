@@ -6,7 +6,6 @@ import 'product.dart';
 class CartData {
   Data? data;
   CurrentCity? currentCity;
-
   CartData({this.data, this.currentCity});
   CartData.fromJson(Map<String, dynamic> json) {
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
@@ -19,9 +18,12 @@ class CartData {
 class Data {
   Cart? cart;
   InvoicePreview? invoicePreview;
-  Data({this.cart, this.invoicePreview});
+  double? customerWallet;
+
+  Data({this.cart, this.invoicePreview, this.customerWallet});
   Data.fromJson(Map<String, dynamic> json) {
     cart = json['cart'] != null ? Cart.fromJson(json['cart']) : null;
+    customerWallet = double.parse(json['customer_wallet'] ?? "0.0");
     invoicePreview = json['invoice-preview'] != null
         ? InvoicePreview.fromJson(json['invoice-preview'])
         : null;
