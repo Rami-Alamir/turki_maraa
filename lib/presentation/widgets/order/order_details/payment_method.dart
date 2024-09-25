@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../shared/main_card.dart';
 import '../../../../core/constants/fixed_assets.dart';
+import '../../../../core/service/service_locator.dart';
+import '../../../../core/utilities/get_strings.dart';
 import '../../../../core/utilities/app_localizations.dart';
 
 class PaymentMethod extends StatelessWidget {
@@ -51,7 +53,7 @@ class PaymentMethod extends StatelessWidget {
                           )
                         : Text(
                             AppLocalizations.of(context)!.tr(
-                                paymentTypeId == 1 ? "cod" : "online_payment"),
+                                sl<GetStrings>().getPaymentName(paymentTypeId)),
                             style: Theme.of(context)
                                 .textTheme
                                 .displayLarge!

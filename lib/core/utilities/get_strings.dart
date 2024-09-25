@@ -44,6 +44,9 @@ class GetStrings {
       case 7:
         paymentName = "tabby";
         break;
+      case 8:
+        paymentName = "credit";
+        break;
     }
     return paymentName;
   }
