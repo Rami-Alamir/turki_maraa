@@ -17,7 +17,6 @@ class PaymentMethod extends StatelessWidget {
     return Consumer<CartProvider>(builder: (_, cartProvider, __) {
       final double total = cartProvider
           .cartData!.data!.invoicePreview!.totalAmountAfterDiscount!;
-      print(cartProvider.selectedPayment);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
