@@ -93,8 +93,10 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                       ? Column(
                           children: [
                             Invoice(
-                              myCredit: cartProvider.cartData!.data!
-                                  .invoicePreview!.walletAmountUsed!,
+                              calculateTotal: true,
+                              myCredit: cartProvider.useCredit
+                                  ? cartProvider.cartData!.data!.customerWallet!
+                                  : 0,
                               total: cartProvider.cartData!.data!
                                   .invoicePreview!.totalAmountAfterDiscount!,
                               subtotal: cartProvider.cartData!.data!

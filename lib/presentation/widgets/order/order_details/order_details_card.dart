@@ -54,7 +54,8 @@ class OrderDetailsCard extends StatelessWidget {
               subtotal: double.parse(order.data!.order!.orderSubtotal!),
               shipping: double.parse(order.data!.order!.deliveryFee!),
               discountVoucher: double.parse(order.data!.order!.totalAmount!) -
-                  double.parse(order.data!.order!.totalAmountAfterDiscount!),
+                  double.parse(order.data!.order!.totalAmountAfterDiscount!) -
+                  double.parse(order.data!.order!.walletAmountUsed!),
               myCredit: double.parse(order.data!.order!.walletAmountUsed!),
               currency: currency,
               vat: (order.data!.order!.refNo!.substring(0, 2)) == "AE"

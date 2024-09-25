@@ -24,6 +24,11 @@ class UserProvider with ChangeNotifier {
   UserData? get userData => _userData;
   // int get gender => _gender!;
 
+  void updateUserWallet(double amount) {
+    _userData?.data?.wallet = amount.toString();
+    notifyListeners();
+  }
+
   //used when auth provider changed
   void updateUserData(UserData? userData) {
     _userData = userData;
@@ -67,6 +72,7 @@ class UserProvider with ChangeNotifier {
         notifyListeners();
       }
       _wallet = await sl<UserRepository>().getWallet("Bearer $_accessToken");
+      _userData?.data?.wallet = _wallet?.data?.wallet ?? "0";
       _requestStatus = RequestStatus.completed;
     } catch (_) {
       _requestStatus = RequestStatus.error;

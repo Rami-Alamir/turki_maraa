@@ -253,7 +253,6 @@ class CartProvider with ChangeNotifier {
       }
       try {
         await Future.wait([_getCart(), _getPaymentTypes()]);
-
         await getTamaraData();
         _cartLength = sl<CalculateHelper>()
             .calculateCartLength(_cartData?.data?.cart?.data);

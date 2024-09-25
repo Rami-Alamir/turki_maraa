@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:turki_maraa_app/controllers/user_provider.dart';
 // import 'package:shake/shake.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
@@ -190,14 +191,18 @@ class AppState extends State<App> {
                         label: AppLocalizations.of(context)!.tr('profile'),
                       ),
                     ],
-                    onTap: (index) {
+                    onTap: (index) async {
                       if (index != 1) {
                         this.index = index;
                         _selectTab(index);
                       }
                       if (index == 2 && cartProvider.isAuth) {
                         cartProvider.initSomeValues();
-                        cartProvider.getCartData(isLoading: true);
+                        await cartProvider.getCartData(isLoading: true);
+                        if (context.mounted) {
+                          context.read<UserProvider>().updateUserWallet(
+                              cartProvider.cartData?.data?.customerWallet ?? 0);
+                        }
                       } else if (index == 1) {
                         FirebaseHelper()
                             .pushAnalyticsEvent(name: "contact_support");

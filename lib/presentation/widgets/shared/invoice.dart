@@ -16,6 +16,7 @@ class Invoice extends StatelessWidget {
   final double total;
   final String currency;
   final String vat;
+  final bool calculateTotal;
 
   const Invoice({
     super.key,
@@ -26,6 +27,7 @@ class Invoice extends StatelessWidget {
     this.myCredit = 0,
     this.currency = "",
     this.vat = "vat_sa",
+    this.calculateTotal = false,
   });
 
   @override
@@ -75,7 +77,7 @@ class Invoice extends StatelessWidget {
             fontColor: AppColors.green,
           ),
           InvoiceRow(
-            title: 'credit2',
+            title: 'credit',
             value:
                 '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(myCredit)} $currencyStr',
             visible: myCredit > 0,
@@ -112,7 +114,7 @@ class Invoice extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
-                    '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(total)} $currencyStr',
+                    '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(calculateTotal ? ((total - myCredit) > 0 ? total - myCredit : 0) : total)} $currencyStr',
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
