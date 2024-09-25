@@ -57,8 +57,8 @@ dependencies:
   localstorage: ^4.0.1+4
 
 flutter_native_splash:
-  color: "#ffffff"
-  #  background_image: "assets/images/ww1.png"
+  background_image: "assets/images/ww1.png"
+
 dev_dependencies:
   flutter_native_splash: ^2.4.1
 

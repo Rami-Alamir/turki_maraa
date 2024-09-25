@@ -30,8 +30,7 @@ Future<void> main() async {
   FlutterSecureStorage localStorage = const FlutterSecureStorage();
   String accessToken = await localStorage.read(key: 'accessToken') ?? "";
   String? language = prefs.getString('language_code');
-  // String theme = prefs.getString('app_theme') ?? 'main';
-  String theme = 'nd';
+  String theme = prefs.getString('app_theme') ?? 'main';
   Locale locale = Locale(language ?? 'ar');
 
   runApp(MultiProvider(

@@ -79,11 +79,11 @@ class SplashState extends State<Splash> {
         width: SizeConfig.screenWidth,
         height: SizeConfig.screenHeight,
         decoration: const BoxDecoration(
-            // image: DecorationImage(
-            //   image: AssetImage(FixedAssets.background),
-            //   fit: BoxFit.cover,
-            // ),
-            color: AppColors.nd94),
+          image: DecorationImage(
+            image: AssetImage(FixedAssets.background),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: Image.asset(FixedAssets.logoGif,
               height: 300, width: 300, fit: BoxFit.cover),
