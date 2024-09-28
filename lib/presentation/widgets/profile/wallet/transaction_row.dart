@@ -28,7 +28,7 @@ class TransactionRow extends StatelessWidget {
         child: Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(5)),
-              color: Theme.of(context).colorScheme.surface,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             constraints: const BoxConstraints(minHeight: 85),
             width: SizeConfig.screenWidth,
@@ -98,7 +98,7 @@ class TransactionRow extends StatelessWidget {
                                 5, 10, 0, 0),
                             child: Text(
                               (transaction.createdAt ?? "").substring(0, 10),
-                              style: Theme.of(context).textTheme.bodySmall,
+                              style: Theme.of(context).textTheme.headlineSmall,
                             ),
                           ),
                           Padding(
