@@ -31,8 +31,9 @@ class PaymentMethod extends StatelessWidget {
                   .copyWith(fontSize: 14),
             ),
           ),
-          if ((cartProvider.cartData?.data?.customerWallet ?? 0) > 0)
-            const UseCredit(),
+          if (cartProvider.isoCountryCode == 'SA')
+            if ((cartProvider.cartData?.data?.customerWallet ?? 0) > 0)
+              const UseCredit(),
           if (cartProvider.selectedPayment != 8)
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),

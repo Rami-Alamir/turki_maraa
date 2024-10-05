@@ -15,7 +15,9 @@ class CategoriesGroup extends StatelessWidget {
 
 Widget categoriesGroup(CategoryData? categoryData) {
   int length = categoryData?.data?.length ?? 0;
-  return length == 0
-      ? const NotSupportedArea()
-      : Categories(categoriesList: categoryData!.data!);
+  return categoryData == null
+      ? const SizedBox.shrink()
+      : length == 0
+          ? const NotSupportedArea()
+          : Categories(categoriesList: categoryData.data!);
 }
