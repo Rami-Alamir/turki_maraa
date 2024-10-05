@@ -29,6 +29,9 @@ class WalletLogs {
   String? lastAmount;
   String? newAmount;
   String? action;
+  String? messageAr;
+  String? messageEn;
+  String? expiryDate;
   String? actionId;
   String? createdAt;
 
@@ -36,6 +39,9 @@ class WalletLogs {
       {this.lastAmount,
       this.newAmount,
       this.action,
+      this.messageAr,
+      this.messageEn,
+      this.expiryDate,
       this.actionId,
       this.createdAt});
 
@@ -43,7 +49,10 @@ class WalletLogs {
     lastAmount = json['last_amount'];
     newAmount = json['new_amount'];
     action = json['action'];
+    messageAr = json['message_ar'];
+    messageEn = json['message_en'];
     actionId = json['action_id'];
+    expiryDate = json['expired_at'];
     createdAt = json['created_at'];
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../models/wallet.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/service/service_locator.dart';
-import '../../../../core/utilities/get_strings.dart';
+import '../../../../core/utilities/app_localizations.dart';
 import '../../../../core/utilities/format_helper.dart';
 import '../../../../core/utilities/size_config.dart';
 
@@ -59,9 +59,14 @@ class TransactionRow extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           SizedBox(
-                            width: SizeConfig.screenWidth! * 0.5,
+                            width: SizeConfig.screenWidth! * 0.52,
                             child: Text(
-                              "${sl<GetStrings>().getWalletDescription(context, transaction.action ?? "")} ${transaction.actionId ?? ""}",
+                              AppLocalizations.of(context)!
+                                          .locale!
+                                          .languageCode ==
+                                      "ar"
+                                  ? transaction.messageAr ?? ""
+                                  : transaction.messageEn ?? "",
                               style: Theme.of(context).textTheme.displayMedium,
                             ),
                           ),
@@ -90,6 +95,21 @@ class TransactionRow extends StatelessWidget {
                           ),
                         ],
                       ),
+                      if (transaction.expiryDate != null)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  5, 10, 0, 0),
+                              child: Text(
+                                "${AppLocalizations.of(context)!.tr('expiry_date')} ${transaction.expiryDate ?? ""}",
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              ),
+                            ),
+                          ],
+                        ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[

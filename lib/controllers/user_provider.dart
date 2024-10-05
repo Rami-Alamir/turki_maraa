@@ -31,6 +31,9 @@ class UserProvider with ChangeNotifier {
 
   //used when auth provider changed
   void updateUserData(UserData? userData) {
+    if (_userData == null) {
+      _wallet = null;
+    }
     _userData = userData;
     _accessToken = _userData?.data?.accessToken ?? "";
     initTextController();

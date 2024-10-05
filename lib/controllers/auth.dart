@@ -47,6 +47,10 @@ class Auth with ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get isNewUser => _isNewUser ?? false;
 
+  set isNewUser(bool value) {
+    _isNewUser = value;
+  }
+
   set usernameControllerValue(String value) {
     _usernameControllerValue = value;
   }
@@ -197,6 +201,7 @@ class Auth with ChangeNotifier {
           FirebaseHelper().pushAnalyticsEvent(name: "sign_up");
           _userData = UserData.fromJson(json.decode(response.body.toString()));
           _userData!.data!.name = _usernameControllerValue;
+          _userData!.data!.accessToken = _accessToken;
           notifyListeners();
         }
         return response.statusCode;

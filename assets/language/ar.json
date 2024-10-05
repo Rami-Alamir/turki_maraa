@@ -261,5 +261,8 @@
   "no_thanks" : "لا شكراً",
   "cash_back": "كاش باك",
   "compensation": "تعويض",
-  "payment_of_the_order" :"سداد الطلب"
+  "payment_of_the_order" :"سداد الطلب",
+  "expiry_date": "تاريخ الانتهاء",
+  "congratulations_you_got": "تهانينا لقد حصلت على",
+  "balance_in_your_wallet": "رصيد بمحفظتك"
 }

@@ -259,5 +259,8 @@
   "no_thanks": "No Thanks",
   "cash_back": "Cash back",
   "compensation": "Compensation",
-  "payment_of_the_order": "Payment of the order"
+  "payment_of_the_order": "Payment of the order",
+  "expiry_date": "Expiry date",
+  "congratulations_you_got": "Congratulations you got",
+  "balance_in_your_wallet": "Balance in your wallet"
 }
