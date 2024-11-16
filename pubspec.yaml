@@ -3,7 +3,7 @@ description: "Turki Dabayh app created by Rami Alamir"
 
 publish_to: 'none'
 
-version: 6.11.0+43
+version: 6.14.0+43
 
 environment:
   sdk: '>=3.4.3 <4.0.0'

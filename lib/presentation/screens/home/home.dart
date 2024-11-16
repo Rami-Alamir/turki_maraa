@@ -71,13 +71,17 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
       sl<DialogHelper>().show(context, const SpecialMessageDialog());
     }
     if (appProvider.canUpdate) {
-      Future.microtask(() => Navigator.of(
-            context,
-            rootNavigator: true,
-          ).pushAndRemoveUntil(
-              MaterialPageRoute(
-                  builder: (BuildContext context) => const NewVersion()),
-              ModalRoute.withName('/')));
+      if (!mounted) return;
+      Future.microtask(() {
+        if (!mounted) return;
+        Navigator.of(
+          context,
+          rootNavigator: true,
+        ).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (BuildContext context) => const NewVersion()),
+            ModalRoute.withName('/'));
+      });
     }
     if (auth.isNewUser &&
         (auth.userData?.data?.name ?? "user") != "user" &&
