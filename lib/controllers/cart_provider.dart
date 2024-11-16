@@ -420,8 +420,9 @@ class CartProvider with ChangeNotifier {
         (_userData?.data?.email ?? "user${_userData?.data?.id}@turkieshop.com")
             .trim();
     _mockPayload = Payment(
-      amount:
-          _cartData!.data!.invoicePreview!.totalAmountAfterDiscount!.toString(),
+      amount: ((_cartData!.data!.invoicePreview!.totalAmountAfterDiscount! -
+              (_useCredit ? (_cartData?.data?.customerWallet ?? 0) : 0)))
+          .toString(),
       currency: _isoCountryCode == "SA" ? Currency.sar : Currency.aed,
       buyer: Buyer(
         email: email.length > 10
