@@ -99,7 +99,7 @@ class AppState extends State<App> {
     // WillPopScope handle android back button
     return PopScope(
       canPop: false,
-      onPopInvoked: (canPop) async {
+      onPopInvokedWithResult: (canPop, result) async {
         final isFirstRouteInCurrentTab =
             !await tabs[currentTab].key.currentState!.maybePop();
         if (isFirstRouteInCurrentTab) {
