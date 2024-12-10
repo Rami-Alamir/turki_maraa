@@ -102,7 +102,9 @@ class SplashState extends State<Splash> {
         introStatus
             ? intro
             : internetStatus
-                ? app
+                ? context.read<AppProvider>().isVideoSean
+                    ? app
+                    : videoSplash
                 : noInternet,
         (route) => false);
   }
