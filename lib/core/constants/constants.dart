@@ -17,7 +17,7 @@ class Constants {
       'https://almaraacompany.com/turki-app/terms-of-use.html';
 
   //Phone numbers
-  static const String ksaPhone = "+966920002974";
+  static const String ksaPhone = "+9668001110103";
   static const String uaePhone = "+971563055557";
 
   //whats numbers
@@ -45,4 +45,5 @@ class Constants {
   //keys
   static const String locationData = 'location_data';
   static const String localStorage = 'local_storage';
+  static const String isVideoSean = 'is_video_sean';
 }
