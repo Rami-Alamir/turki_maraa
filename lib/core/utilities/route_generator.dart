@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import '../../presentation/screens/cart/tabby_checkout_page.dart';
 import '../../presentation/screens/intro/intro.dart';
+import '../../presentation/screens/splash/video_splash.dart';
 import '../constants/route_constants.dart';
 import '../service/firebase_helper.dart';
 import '../../models/discover_data.dart';
@@ -51,6 +52,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => const Splash());
+      case videoSplash:
+        return MaterialPageRoute(builder: (_) => const VideoSplash());
       case app:
         return MaterialPageRoute(builder: (_) => const App());
       case noInternet:

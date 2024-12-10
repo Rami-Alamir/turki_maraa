@@ -21,6 +21,7 @@ class AppProvider with ChangeNotifier {
   bool _isPopPromotion = false;
   Data? _promotion;
   bool? _isHMS = false;
+  bool _isVideoSean = false;
   String? _isoCountryCode = 'SA';
   String? _isoCountryCode2;
   String? _url;
@@ -35,6 +36,7 @@ class AppProvider with ChangeNotifier {
   Data? get promotion => _promotion;
   bool get canShakeToday => _canShakeToday;
   bool get isPopPromotion => _isPopPromotion;
+  bool get isVideoSean => _isVideoSean;
 
   Future<void> updateProvider(bool isHMS, String? isoCountryCode) async {
     _isHMS = isHMS;
@@ -88,6 +90,7 @@ class AppProvider with ChangeNotifier {
 
   Future<void> getData({bool notify = true}) async {
     try {
+      _checkIsVideoSeen();
       await Future.wait([
         _getPromotions(),
         _checkNewVersion(),
@@ -120,5 +123,14 @@ class AppProvider with ChangeNotifier {
   // init Shared Preferences
   Future<void> _initPrefs() async {
     _prefs = _prefs ?? await SharedPreferences.getInstance();
+  }
+
+  Future<void> _checkIsVideoSeen() async {
+    await _initPrefs();
+    _isVideoSean = _prefs!.getBool(Constants.isVideoSean) ?? false;
+  }
+
+  void setVideoSeen() {
+    _prefs!.setBool(Constants.isVideoSean, true);
   }
 }

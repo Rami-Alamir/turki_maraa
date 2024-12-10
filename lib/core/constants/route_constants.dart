@@ -1,4 +1,5 @@
 const String app = "/App";
+const String videoSplash = "/videoSplash";
 const String noInternet = "/NoInternet";
 const String newVersion = "/NewVersion";
 const String myAddresses = "/MyAddresses";
