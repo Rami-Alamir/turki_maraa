@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
-import 'package:huawei_location/huawei_location.dart';
+// import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
+// import 'package:huawei_location/huawei_location.dart';
 import 'package:localstorage/localstorage.dart';
 import 'dart:async';
-import 'dart:io';
+// import 'dart:io';
 import 'package:location/location.dart' as location_service;
 import 'package:turki_maraa_app/core/utilities/calculate_helper.dart';
 import '../core/constants/constants.dart';
@@ -13,7 +13,7 @@ import '../core/service/firebase_helper.dart';
 import '../core/service/service_locator.dart';
 import '../core/utilities/enum/location_service_status.dart';
 import '../core/utilities/get_strings.dart';
-import '../core/utilities/hms_latlng_converter.dart';
+// import '../core/utilities/hms_latlng_converter.dart';
 import '../models/location_data.dart';
 
 class LocationProvider with ChangeNotifier {
@@ -23,7 +23,7 @@ class LocationProvider with ChangeNotifier {
   LatLng? _latLng;
   LatLng? _currentLocationLatLng;
   location_service.LocationData? _locationData;
-  HWLocation? _hwlocation;
+  // HWLocation? _hwlocation;
   String? _selectedLocationDescription;
   LocationServiceStatus _locationServiceStatus =
       LocationServiceStatus.beingDetermined;
@@ -56,9 +56,11 @@ class LocationProvider with ChangeNotifier {
       await fetchLocation();
       if (_locationServiceStatus != LocationServiceStatus.noAccess &&
           _locationServiceStatus != LocationServiceStatus.unableToDetermine) {
-        _currentLocationLatLng = isHms
-            ? sl<HMSLatLngConverter>().convertToGMSLatLng(_hwlocation!)
-            : LatLng(_locationData!.latitude!, _locationData!.longitude!);
+        _currentLocationLatLng =
+            // isHms
+            //     ? sl<HMSLatLngConverter>().convertToGMSLatLng(_hwlocation!)
+            //     :
+            LatLng(_locationData!.latitude!, _locationData!.longitude!);
         _latLng ??= _currentLocationLatLng;
         _locationServiceStatus = LocationServiceStatus.fetched;
         notifyListeners();
@@ -133,34 +135,37 @@ class LocationProvider with ChangeNotifier {
         return;
       }
     }
-    if (Platform.isAndroid) {
-      try {
-        HmsApiAvailability hmsApiAvailability = HmsApiAvailability();
-        final int resultCode = await hmsApiAvailability.isHMSAvailable();
-        isHms = resultCode == 0 || resultCode == 2;
-      } catch (_) {}
-    }
+    // if (Platform.isAndroid) {
+    //   try {
+    //     HmsApiAvailability hmsApiAvailability = HmsApiAvailability();
+    //     final int resultCode = await hmsApiAvailability.isHMSAvailable();
+    //     isHms = resultCode == 0 || resultCode == 2;
+    //   } catch (_) {}
+    // }
     try {
-      if (isHms) {
-        FusedLocationProviderClient locationService =
-            FusedLocationProviderClient();
-        locationService.initFusedLocationService();
-        LocationRequest locationRequest = LocationRequest();
-        _hwlocation =
-            await locationService.getLastLocationWithAddress(locationRequest);
-      } else {
-        _locationData =
-            await _location.getLocation().timeout(const Duration(seconds: 15));
-      }
+      // if (isHms) {
+      //   FusedLocationProviderClient locationService =
+      //       FusedLocationProviderClient();
+      //   locationService.initFusedLocationService();
+      //   LocationRequest locationRequest = LocationRequest();
+      //   _hwlocation =
+      //       await locationService.getLastLocationWithAddress(locationRequest);
+      // } else {
+      //   _locationData =
+      //       await _location.getLocation().timeout(const Duration(seconds: 15));
+      // }
+      _locationData =
+          await _location.getLocation().timeout(const Duration(seconds: 15));
     } catch (_) {
       _locationServiceStatus = LocationServiceStatus.unableToDetermine;
     }
     //when app cannot get LatLng data and location service is enabled
-    if (isHms) {
-      if (_hwlocation == null) {
-        _locationServiceStatus = LocationServiceStatus.unableToDetermine;
-      }
-    } else if (_locationData == null) {
+    // if (isHms) {
+    //   if (_hwlocation == null) {
+    //     _locationServiceStatus = LocationServiceStatus.unableToDetermine;
+    //   }
+    // } else
+    if (_locationData == null) {
       _locationServiceStatus = LocationServiceStatus.unableToDetermine;
     }
   }
