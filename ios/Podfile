@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '12.0'
+platform :ios, '14.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -32,13 +32,33 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  pod 'Firebase/Messaging'
+  pod 'GoogleUtilities'
   target 'RunnerTests' do
     inherit! :search_paths
   end
 end
 
+# Separate target for ImageNotification
+target 'ImageNotification' do
+  use_frameworks!
+  inherit! :none # Prevent duplication of dependencies from the parent target
+
+  # Include only the necessary dependencies for this target
+  pod 'Firebase/Messaging'
+  pod 'GoogleUtilities'
+end
+
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+    if target.name == 'ImageNotification'
+      target.build_configurations.each do |config|
+        config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'YES'
+      end
+    end
   end
 end
+
+
