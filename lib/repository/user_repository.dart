@@ -24,6 +24,14 @@ class UserRepository {
     return response;
   }
 
+  Future<dynamic> updateDeviceToken(
+      body, String customerId, String authorization) async {
+    final response = await _helper.post3(
+        "update-device-token/$customerId", body,
+        authorization: authorization);
+    return response;
+  }
+
   Future<dynamic> updateAddress(body, String authorization, String id) async {
     final response = await _helper.post3("customers/edit-address/$id", body,
         authorization: authorization);

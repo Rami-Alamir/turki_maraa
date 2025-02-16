@@ -138,6 +138,7 @@ class Auth with ChangeNotifier {
           _initLocalStorage();
           await _localStorage!.write(key: "accessToken", value: _accessToken!);
           _isAuth = true;
+          _updateDeviceToken();
           notifyListeners();
         }
         return response.statusCode;
@@ -158,6 +159,7 @@ class Auth with ChangeNotifier {
           _userData!.data!.accessToken = token;
           _accessToken = token;
           _isAuth = true;
+          _updateDeviceToken();
         }
       } catch (_) {
         _retry = true;
@@ -222,5 +224,13 @@ class Auth with ChangeNotifier {
     _isoCountryCode = isoCountryCode;
     _dialCode = dialCode;
     notifyListeners();
+  }
+
+  Future<void> _updateDeviceToken() async {
+    try {
+      var response = await sl<UserRepository>().updateDeviceToken({
+        "device_token": "${FirebaseHelper.deviceToken}",
+      }, "${_userData?.data?.id}", "Bearer $_accessToken");
+    } catch (_) {}
   }
 }

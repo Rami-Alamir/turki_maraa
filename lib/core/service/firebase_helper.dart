@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 class FirebaseHelper {
   static FirebaseAnalytics? analytics;
+  static String? deviceToken;
   static FirebaseAnalyticsObserver? observer;
   FirebaseInAppMessaging? fiam;
   FirebaseMessaging? messaging;
@@ -15,6 +16,7 @@ class FirebaseHelper {
     messaging = FirebaseMessaging.instance;
     fiam!.toString();
     messaging!.getToken().then((token) {
+      deviceToken = token;
       // print("token is $token");
     });
     messaging!.getAPNSToken().then((value) {
