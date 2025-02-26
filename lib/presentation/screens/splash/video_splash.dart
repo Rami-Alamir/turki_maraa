@@ -19,7 +19,7 @@ class _VideoSplashState extends State<VideoSplash> {
 
   @override
   void initState() {
-    context.read<AppProvider>().setVideoSeen();
+    context.read<AppProvider>().setLastShownVideo();
     Future.delayed(const Duration(milliseconds: 8000), () async {
       if (!mounted) return;
       navigate();

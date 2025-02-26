@@ -1,8 +1,10 @@
 class Constants {
   Constants._();
-  static const String appVersion = "6.15.0";
+  static const String appVersion = "6.17.0";
   // static const String baseUrl = 'https://almaraacompany.com/turki-api/api/v1/';
   static const String baseUrl = 'https://almaraacompany.com/dashboard/api/v2/';
+  // static const String baseUrl =
+  //     'https://turki.almaraacompany.com/admin/api/v2/';
   static const String tabbyBaseUrl = 'https://api.tabby.ai/api/v1/';
   static const String tabbyApiKeyTest =
       'sk_test_86f97925-b3e7-4d24-a4b1-9e681e59e3ad';
@@ -38,7 +40,7 @@ class Constants {
 
   //Social Media
   static const String instagramUae = "https://www.instagram.com/almaraa_uae/";
-  static const String instagramKsa = "https://www.instagram.com/almaraa_ksa/";
+  static const String instagramKsa = "https://www.instagram.com/turki_dabayh";
   static const String snapchat = 'https://www.snapchat.com/add/TORKI666008';
   static const String twitter = "https://twitter.com/Almaraa_ksa";
 
@@ -46,4 +48,5 @@ class Constants {
   static const String locationData = 'location_data';
   static const String localStorage = 'local_storage';
   static const String isVideoSean = 'is_video_sean';
+  static const String lastShownVideo = 'last_shown_video';
 }

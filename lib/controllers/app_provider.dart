@@ -90,7 +90,7 @@ class AppProvider with ChangeNotifier {
 
   Future<void> getData({bool notify = true}) async {
     try {
-      _checkIsVideoSeen();
+      _checkLastShownVideo();
       await Future.wait([
         _getPromotions(),
         _checkNewVersion(),
@@ -124,13 +124,28 @@ class AppProvider with ChangeNotifier {
   Future<void> _initPrefs() async {
     _prefs = _prefs ?? await SharedPreferences.getInstance();
   }
+  //
+  // Future<void> _checkIsVideoSeen() async {
+  //   await _initPrefs();
+  //   _isVideoSean = _prefs!.getBool(Constants.isVideoSean) ?? false;
+  // }
 
-  Future<void> _checkIsVideoSeen() async {
+  // void setVideoSeen() {
+  //   _prefs!.setBool(Constants.isVideoSean, true);
+  // }
+
+  Future<void> _checkLastShownVideo() async {
     await _initPrefs();
-    _isVideoSean = _prefs!.getBool(Constants.isVideoSean) ?? false;
+    String? lastShown = _prefs!.getString(Constants.lastShownVideo);
+    if (lastShown == null) {
+      _isVideoSean = false;
+    } else {
+      _isVideoSean =
+          !(DateTime.parse(lastShown).difference(DateTime.now()).inDays >= 1);
+    }
   }
 
-  void setVideoSeen() {
-    _prefs!.setBool(Constants.isVideoSean, true);
+  void setLastShownVideo() {
+    _prefs!.setString(Constants.lastShownVideo, DateTime.now().toString());
   }
 }
