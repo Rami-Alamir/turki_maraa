@@ -81,5 +81,5 @@ class FixedAssets {
   static const String maintenance = "assets/lottie/maintenance.json";
 
   //videos
-  static const String video = "assets/videos/turki.mp4";
+  static const String video = "assets/videos/faisal.mp4";
 }

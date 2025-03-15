@@ -228,9 +228,13 @@ class Auth with ChangeNotifier {
 
   Future<void> _updateDeviceToken() async {
     try {
-      var response = await sl<UserRepository>().updateDeviceToken({
-        "device_token": "${FirebaseHelper.deviceToken}",
-      }, "${_userData?.data?.id}", "Bearer $_accessToken");
+      String? deviceToken = FirebaseHelper.deviceToken;
+      // deviceToken ??= await FirebaseHelper().messaging!.getToken();
+      if (deviceToken != null) {
+        await sl<UserRepository>().updateDeviceToken({
+          "device_token": deviceToken,
+        }, "${_userData?.data?.id}", "Bearer $_accessToken");
+      }
     } catch (_) {}
   }
 }

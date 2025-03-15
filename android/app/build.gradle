@@ -16,11 +16,18 @@ android {
     namespace = "com.digishapes.turkieshop"
     compileSdk = 34
     ndkVersion = "27.0.12077973"
+    defaultConfig {
+        multiDexEnabled true
+    }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
+        // Sets Java compatibility to Java 8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
+
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17
@@ -32,10 +39,10 @@ android {
         applicationId = "com.digishapes.turkieshop"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 23
+        minSdk = 26
         targetSdk = 34
-        versionCode 7000619
-        versionName "6.17.0"
+        versionCode 7000621
+        versionName "6.18.1"
     }
     signingConfigs {
         release {
@@ -59,4 +66,8 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 }
