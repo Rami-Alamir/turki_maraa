@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -22,7 +21,7 @@ class MessagingConfig {
       if (title != null) {
         await flutterLocalNotificationsPlugin.show(
           0,
-          title ?? '',
+          title,
           body ?? '',
           NotificationDetails(
             android: AndroidNotificationDetails(
@@ -53,8 +52,6 @@ class MessagingConfig {
   // Initialize Firebase Messaging and Local Notifications
   static Future<void> initFirebaseMessaging() async {
     await createNotificationChannel();
-
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     // Register the background message handler
     FirebaseMessaging.onBackgroundMessage(MessagingConfig.messageHandler);
