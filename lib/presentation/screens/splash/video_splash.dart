@@ -20,7 +20,7 @@ class _VideoSplashState extends State<VideoSplash> {
   @override
   void initState() {
     context.read<AppProvider>().setLastShownVideo();
-    Future.delayed(const Duration(milliseconds: 8000), () async {
+    Future.delayed(const Duration(milliseconds: 33000), () async {
       if (!mounted) return;
       navigate();
     });
@@ -69,20 +69,20 @@ class _VideoSplashState extends State<VideoSplash> {
                   ],
                 ),
               )),
-          Positioned(
-              top: 90,
-              right: 0,
-              left: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    FixedAssets.logo,
-                    height: 150,
-                    width: 150,
-                  )
-                ],
-              )),
+          // Positioned(
+          //     top: 90,
+          //     right: 0,
+          //     left: 0,
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Image.asset(
+          //           FixedAssets.logo,
+          //           height: 150,
+          //           width: 150,
+          //         )
+          //       ],
+          //     )),
         ],
       ),
     );

@@ -36,7 +36,8 @@ class AppProvider with ChangeNotifier {
   Data? get promotion => _promotion;
   bool get canShakeToday => _canShakeToday;
   bool get isPopPromotion => _isPopPromotion;
-  bool get isVideoSean => _isVideoSean;
+  // bool get isVideoSean => _isVideoSean;
+  bool get isVideoSean => false;
 
   Future<void> updateProvider(bool isHMS, String? isoCountryCode) async {
     _isHMS = isHMS;
