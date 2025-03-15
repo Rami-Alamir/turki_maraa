@@ -56,6 +56,8 @@ dependencies:
   rate_my_app: ^2.2.0
   localstorage: ^4.0.1+4
   video_player: ^2.9.1
+  flutter_local_notifications: ^18.0.1
+  googleapis_auth: ^1.6.0
 
 #flutter_native_splash:
 #  background_image: "assets/images/ww1.png"
@@ -71,6 +73,7 @@ flutter:
 
   uses-material-design: true
   assets:
+    - assets/turkieshop-c8917-firebase-adminsdk-0v51v-fd39c1d9be.json
     - assets/images/
     - assets/images/profile_icons/
     - assets/language/
