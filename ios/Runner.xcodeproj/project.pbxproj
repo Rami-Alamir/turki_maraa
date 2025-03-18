@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		0B7134522D233BE4002A496A /* ImageNotification.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0B71344B2D233BE4002A496A /* ImageNotification.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B93A04E2B4B52B900EA1AF0 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 0B93A04D2B4B52B900EA1AF0 /* InfoPlist.xcstrings */; };
-		0BFA06762D85948E00FF3C9B /* custom_sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0BFA06752D85948E00FF3C9B /* custom_sound.caf */; };
-		0BFA06772D85948E00FF3C9B /* custom_sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0BFA06752D85948E00FF3C9B /* custom_sound.caf */; };
 		0BFA068D2D859CCB00FF3C9B /* cowbell.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0BFA068C2D859CCB00FF3C9B /* cowbell.caf */; };
 		0BFA068E2D859CCB00FF3C9B /* cowbell.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0BFA068C2D859CCB00FF3C9B /* cowbell.caf */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
@@ -71,7 +69,6 @@
 		0B71344B2D233BE4002A496A /* ImageNotification.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ImageNotification.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B93A04D2B4B52B900EA1AF0 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		0BEA25B62B58717B007F19F5 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
-		0BFA06752D85948E00FF3C9B /* custom_sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = custom_sound.caf; sourceTree = "<group>"; };
 		0BFA068C2D859CCB00FF3C9B /* cowbell.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cowbell.caf; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
@@ -178,7 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				0BFA068C2D859CCB00FF3C9B /* cowbell.caf */,
-				0BFA06752D85948E00FF3C9B /* custom_sound.caf */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				0B71344C2D233BE4002A496A /* ImageNotification */,
@@ -351,7 +347,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0BFA06772D85948E00FF3C9B /* custom_sound.caf in Resources */,
 				0BFA068E2D859CCB00FF3C9B /* cowbell.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,7 +364,6 @@
 			files = (
 				0B93A04E2B4B52B900EA1AF0 /* InfoPlist.xcstrings in Resources */,
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
-				0BFA06762D85948E00FF3C9B /* custom_sound.caf in Resources */,
 				0BFA068D2D859CCB00FF3C9B /* cowbell.caf in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
