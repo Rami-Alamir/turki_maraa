@@ -173,6 +173,7 @@ class CartProvider with ChangeNotifier {
     String iskarashah = "0",
     String iskwar3 = "0",
   }) async {
+    HapticFeedback.heavyImpact();
     _useCredit = false;
     _selectedPayment = -1;
     int response;
@@ -358,6 +359,7 @@ class CartProvider with ChangeNotifier {
       List<bool>? cutStatus,
       int? cutId = 15,
       required Lang language}) async {
+    HapticFeedback.heavyImpact();
     http.Response response;
     bool status = checkRequiredData(context);
     if (status) {

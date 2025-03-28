@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/services.dart';
 import 'package:turki_maraa_app/controllers/user_provider.dart';
 // import 'package:shake/shake.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -192,6 +193,7 @@ class AppState extends State<App> {
                       ),
                     ],
                     onTap: (index) async {
+                      HapticFeedback.heavyImpact();
                       if (index != 1) {
                         this.index = index;
                         _selectTab(index);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../shared/rounded_rectangle_button.dart';
 import '../../../../controllers/product_provider.dart';
@@ -41,6 +42,7 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                 RoundedRectangleButton(
                   padding: const EdgeInsets.all(0),
                   onPressed: () {
+                    HapticFeedback.heavyImpact();
                     widget.subtract();
                   },
                   width: 40,
@@ -60,6 +62,7 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                 ),
                 RoundedRectangleButton(
                   onPressed: () {
+                    HapticFeedback.heavyImpact();
                     widget.add();
                   },
                   padding: const EdgeInsets.all(0),
