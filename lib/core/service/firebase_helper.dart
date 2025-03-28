@@ -20,7 +20,7 @@ class FirebaseHelper {
     // fiam!.toString();
     messaging!.getToken().then((token) {
       deviceToken = token;
-      print("token is $token");
+      // print("token is $token");
     });
 
     // messaging!.getAPNSToken().then((value) {
@@ -42,5 +42,9 @@ class FirebaseHelper {
       {required String name, String key = 'name', String? value}) {
     analytics!
         .logEvent(name: name, parameters: value == null ? null : {key: value});
+  }
+
+  void subscribeToTopic(String topic) {
+    messaging!.subscribeToTopic(topic);
   }
 }

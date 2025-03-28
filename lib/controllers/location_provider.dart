@@ -275,6 +275,7 @@ class LocationProvider with ChangeNotifier {
       _locationServiceStatus = LocationServiceStatus.savedLocation;
       _customerHaveLocation = true;
       _customerLocationId = locationData.id;
+      FirebaseHelper().subscribeToTopic(_isoCountryCode!);
       notifyListeners();
     } catch (_) {}
   }
