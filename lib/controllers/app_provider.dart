@@ -8,13 +8,16 @@ import 'package:version/version.dart';
 import '../core/constants/constants.dart';
 import '../core/service/service_locator.dart';
 import '../core/utilities/dialog_helper.dart';
+import '../models/adha_config.dart';
 import '../models/promotions.dart';
 import '../presentation/widgets/dialog/gift_dialog.dart';
+import '../repository/adha_repository.dart';
 import '../repository/promotions_repository.dart';
 import '../repository/version_repository.dart';
 
 class AppProvider with ChangeNotifier {
   final String _currentVersion = Constants.appVersion;
+  AdhaConfig? _adhaConfig;
   bool _canUpdate = false;
   bool _canShake = false;
   bool _canShakeToday = true;
@@ -38,6 +41,7 @@ class AppProvider with ChangeNotifier {
   bool get isPopPromotion => _isPopPromotion;
   // bool get isVideoSean => _isVideoSean;
   bool get isVideoSean => false;
+  AdhaConfig? get adhaConfig => _adhaConfig;
 
   Future<void> updateProvider(bool isHMS, String? isoCountryCode) async {
     _isHMS = isHMS;
@@ -92,10 +96,8 @@ class AppProvider with ChangeNotifier {
   Future<void> getData({bool notify = true}) async {
     try {
       _checkLastShownVideo();
-      await Future.wait([
-        _getPromotions(),
-        _checkNewVersion(),
-      ]);
+      await Future.wait(
+          [_getPromotions(), _checkNewVersion(), _getAdhaConfig()]);
     } catch (_) {}
   }
 
@@ -148,5 +150,11 @@ class AppProvider with ChangeNotifier {
 
   void setLastShownVideo() {
     _prefs!.setString(Constants.lastShownVideo, DateTime.now().toString());
+  }
+
+  Future<void> _getAdhaConfig() async {
+    try {
+      _adhaConfig = await sl<AdhaRepository>().getAdhaConfig();
+    } catch (_) {}
   }
 }

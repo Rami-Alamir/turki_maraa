@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import '../../../controllers/app_provider.dart';
 import 'min_value_indicator.dart';
 import '../shared/invoice.dart';
 import '../shared/rounded_rectangle_button.dart';
@@ -190,6 +191,18 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                               int statusCode = await cartProvider.placeOrder(
                                   context: context,
                                   currency: currency,
+                                  dates: context
+                                      .read<AppProvider>()
+                                      .adhaConfig
+                                      ?.dates,
+                                  cutStatus: context
+                                      .read<AppProvider>()
+                                      .adhaConfig
+                                      ?.cutStatus,
+                                  cutId: context
+                                      .read<AppProvider>()
+                                      .adhaConfig
+                                      ?.cutId,
                                   addressId: addressProvider.selectedAddress ==
                                               -1 ||
                                           addressProvider.selectedAddress == -2
@@ -225,6 +238,14 @@ class CartBottomSheetState extends State<CartBottomSheet> {
     if (statusCode != -1) {
       Navigator.of(context, rootNavigator: true).pop();
       switch (statusCode) {
+        case 10:
+          ShowSnackBar().show(context,
+              "it_is_not_possible_to_add_other_items_with_the_sacrifice_items");
+          break;
+        case 9:
+          ShowSnackBar().show(context,
+              "we_apologize_the_specified_cutting_packaging_not_available_first_day");
+          break;
         case 0:
           ShowSnackBar().show(context, "unexpected_error");
           break;

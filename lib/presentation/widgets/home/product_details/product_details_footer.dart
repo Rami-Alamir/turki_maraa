@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import '../../../../controllers/app_provider.dart';
 import '../../shared/rounded_rectangle_button.dart';
 import '../../../../controllers/product_provider.dart';
 import '../../../../controllers/cart_provider.dart';
@@ -15,13 +16,15 @@ class ProductDetailsFooter extends StatefulWidget {
   final int index;
   final Function add;
   final Function subtract;
+  final int categoryId;
 
   const ProductDetailsFooter(
       {super.key,
       required this.count,
       required this.index,
       required this.add,
-      required this.subtract});
+      required this.subtract,
+      required this.categoryId});
   @override
   State<ProductDetailsFooter> createState() => _ProductDetailsFooterState();
 }
@@ -77,6 +80,21 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                         Provider.of<ProductProvider>(context, listen: false);
                     final CartProvider cartProvider =
                         Provider.of<CartProvider>(context, listen: false);
+                    if (cartProvider.isAuth) {
+                      if (widget.categoryId ==
+                              context
+                                  .read<AppProvider>()
+                                  .adhaConfig
+                                  ?.categoryId &&
+                          productProvider.selectedDay == -1 &&
+                          context.read<AppProvider>().adhaConfig?.dates?.last !=
+                              DateTime.now().toString().substring(0, 10)) {
+                        sl<ShowSnackBar>().show(
+                            context, "please_choose_the_day_of_sacrifice");
+                        return;
+                      }
+                    }
+
                     if (cartProvider.isAuth) {
                       if ((productProvider.productData[widget.index].data?.sizes
                                       ?.length ??

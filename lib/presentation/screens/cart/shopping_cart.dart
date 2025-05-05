@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../controllers/app_provider.dart';
 import '../../widgets/cart/cart_bottom_sheet.dart';
 import '../../widgets/cart/cart_items_list.dart';
+import '../../widgets/cart/day_of_sacrifice.dart';
 import '../../widgets/cart/delivery_address.dart';
 import '../../widgets/cart/delivery_date.dart';
 import '../../widgets/cart/delivery_periods.dart';
@@ -26,6 +28,13 @@ class ShoppingCart extends StatefulWidget {
 }
 
 class ShoppingCartState extends State<ShoppingCart> {
+  @override
+  void initState() {
+    context.read<CartProvider>().adhaCategoryId =
+        context.read<AppProvider>().adhaConfig?.categoryId ?? 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +66,12 @@ class ShoppingCartState extends State<ShoppingCart> {
                                 children: [
                                   const CartItemsList(),
                                   const DeliveryAddress(),
-                                  const DeliveryDate(),
+                                  // const DeliveryDate(),
+                                  cartProvider.isAdhia
+                                      ? DayOfSacrifice(
+                                          deliveryDataTime:
+                                              cartProvider.deliveryDataTime)
+                                      : const DeliveryDate(),
                                   if (cartProvider.selectedDate != -1)
                                     const DeliveryPeriods(),
                                   const PaymentMethod(),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../../controllers/app_provider.dart';
 import 'extra_tag.dart';
 import '../../../../models/extra.dart';
 import '../../../../core/utilities/app_localizations.dart';
@@ -9,12 +11,15 @@ class ExtrasList extends StatelessWidget {
   final List<ExtraData> tags;
   final Function onTap;
   final int selected;
+  final bool? isVisible;
+
   const ExtrasList({
     super.key,
     required this.title,
     required this.tags,
     required this.onTap,
     required this.selected,
+    this.isVisible = true,
   });
 
   @override
@@ -54,12 +59,23 @@ class ExtrasList extends StatelessWidget {
         AppLocalizations.of(context)!.locale == const Locale('ar');
     List<Widget> tagsList = [];
     for (int i = 0; i < tags.length; i++) {
-      tagsList.add(ExtraTag(
-        selected: selected == i,
-        onTap: () {
-          onTap(i);
-        },
-        title: "${(isAr ? tags[i].nameAr : tags[i].nameEn)}",
+      tagsList.add(Visibility(
+        visible: title ==
+                AppLocalizations.of(context)!.tr('choose_the_day_of_sacrifice')
+            ? DateTime.parse(
+                        context.read<AppProvider>().adhaConfig?.dates?[i] ?? "")
+                    .compareTo(DateTime.now()) >
+                0
+            : (tags[i].id == context.read<AppProvider>().adhaConfig?.cutId
+                ? isVisible!
+                : true),
+        child: ExtraTag(
+          selected: selected == i,
+          onTap: () {
+            onTap(i);
+          },
+          title: "${(isAr ? tags[i].nameAr : tags[i].nameEn)}",
+        ),
       ));
     }
     return tagsList;

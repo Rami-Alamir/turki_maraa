@@ -97,6 +97,7 @@ class ProductDetailsState extends State<ProductDetails> {
                   productProvider.productData[_index!].data!.isActive! &&
                   productProvider.productData[_index!].data!.isAvailable!
               ? ProductDetailsFooter(
+                  categoryId: widget.data['categoryId'],
                   count: _count,
                   index: _index!,
                   subtract: () {

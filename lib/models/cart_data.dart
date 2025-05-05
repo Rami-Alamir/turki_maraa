@@ -135,3 +135,13 @@ class CurrentCity {
     }
   }
 }
+
+class NotIncludedDates {
+  String? deliveryDate;
+
+  NotIncludedDates({this.deliveryDate});
+
+  NotIncludedDates.fromJson(Map<String, dynamic> json) {
+    deliveryDate = json['delivery_date'];
+  }
+}

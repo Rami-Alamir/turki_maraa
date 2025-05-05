@@ -10,6 +10,7 @@ import '../utilities/hms_latlng_converter.dart';
 import '../utilities/locals_values.dart';
 import '../utilities/show_snack_bar.dart';
 import '../utilities/size_config.dart';
+import '../../repository/adha_repository.dart';
 import '../../repository/cart_repository.dart';
 import '../../repository/favourite_repository.dart';
 import '../../repository/home_repository.dart';
@@ -28,6 +29,7 @@ final sl = GetIt.instance;
 
 class ServiceLocator {
   void init() {
+    sl.registerLazySingleton(() => AdhaRepository());
     sl.registerLazySingleton(() => CartRepository());
     sl.registerLazySingleton(() => FavouriteRepository());
     sl.registerLazySingleton(() => HomeRepository());
