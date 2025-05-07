@@ -58,8 +58,10 @@ class DeliveryPeriods extends StatelessWidget {
                                     .deliveryPeriod?.data![index].nameEn!) ??
                             "",
                     selectedValue: index,
-                    timeHhmm:
-                        cartProvider.deliveryPeriod?.data?[index].timeHhmm ??
+                    timeHhmm: cartProvider.isAdhia
+                        ? cartProvider.adhiaDeliveryDataTime[index].timeHhmm ??
+                            ""
+                        : cartProvider.deliveryPeriod?.data?[index].timeHhmm ??
                             "",
                   );
                 }),

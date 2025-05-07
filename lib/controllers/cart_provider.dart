@@ -43,9 +43,15 @@ class CartProvider with ChangeNotifier {
 
   final List<DeliveryPeriodData> _adhiaDeliveryDataTime = [
     DeliveryPeriodData(
-        id: 13, nameAr: 'فتره اولي من ١٠ صباحا ل ٢ مساءً', nameEn: 'Morning'),
+        id: 13,
+        nameAr: 'فتره اولي من ١٠ صباحا ل ٢ مساءً',
+        nameEn: 'Morning',
+        timeHhmm: '23:59:00'),
     DeliveryPeriodData(
-        id: 14, nameAr: 'فتره ثانية من ٢ ل ٦ مساءً', nameEn: 'Midnight'),
+        id: 14,
+        nameAr: 'فتره ثانية من ٢ ل ٦ مساءً',
+        nameEn: 'Midnight',
+        timeHhmm: '23:59:00'),
   ];
 
   //used with promo code
