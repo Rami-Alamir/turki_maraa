@@ -97,7 +97,9 @@ class GetStrings {
     }
     if (place.street!.length > 1 &&
         description.length < 10 &&
-        Platform.isAndroid) description += ", ${place.street!}";
+        Platform.isAndroid) {
+      description += ", ${place.street!}";
+    }
     return description;
   }
 

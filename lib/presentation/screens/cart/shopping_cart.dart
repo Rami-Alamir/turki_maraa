@@ -69,8 +69,11 @@ class ShoppingCartState extends State<ShoppingCart> {
                                   // const DeliveryDate(),
                                   cartProvider.isAdhia
                                       ? DayOfSacrifice(
-                                          deliveryDataTime:
-                                              cartProvider.deliveryDataTime)
+                                          deliveryDataTime: cartProvider
+                                                  .cartData
+                                                  ?.currentCity
+                                                  ?.dates ??
+                                              [])
                                       : const DeliveryDate(),
                                   if (cartProvider.selectedDate != -1)
                                     const DeliveryPeriods(),

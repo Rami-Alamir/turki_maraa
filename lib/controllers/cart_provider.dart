@@ -685,4 +685,26 @@ class CartProvider with ChangeNotifier {
   bool get tamaraAvailable => _tamaraAvailable;
 
   bool get tabbyAvailable => _tabbyAvailable;
+  bool checkCity() {
+    final allowedCityIds = {
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      25,
+      164,
+      165,
+      166,
+      167,
+      168
+    };
+    if (cartData?.currentCity?.id != null) {
+      return allowedCityIds.contains(cartData!.currentCity?.id);
+    }
+    return true;
+  }
 }

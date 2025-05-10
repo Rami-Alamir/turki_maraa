@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../controllers/app_provider.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
-import '../../../models/cart_data.dart';
 
 class DayOfSacrifice extends StatelessWidget {
-  final List<DateTime> deliveryDataTime;
+  final List<String> deliveryDataTime;
   const DayOfSacrifice({
     super.key,
     required this.deliveryDataTime,
@@ -43,20 +43,19 @@ class DayOfSacrifice extends StatelessWidget {
               physics: const ScrollPhysics(),
               itemCount: 4,
               itemBuilder: (BuildContext ctxt, int index) {
-                return
-                    // Visibility(
-                    // visible: checkDate(
-                    //     notIncludedDates,
-                    //     context.read<AppProvider>().adhaConfig?.dates?[index] ??
-                    //         ""),
-                    // child:
-                    Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(3.0, 15, 10, 0),
-                  child: _item(
-                    context,
-                    index,
-                    days[index],
-                    // ),
+                return Visibility(
+                  visible: checkDate(
+                      deliveryDataTime,
+                      context.read<AppProvider>().adhaConfig?.dates?[index] ??
+                          ""),
+                  child: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(3.0, 15, 10, 0),
+                    child: _item(
+                      context,
+                      index,
+                      days[index],
+                    ),
                   ),
                 );
               }),
@@ -65,10 +64,10 @@ class DayOfSacrifice extends StatelessWidget {
     );
   }
 
-  bool checkDate(List<NotIncludedDates> notIncludedDates, String date) {
-    bool status = true;
-    for (int i = 0; i < notIncludedDates.length; i++) {
-      if (date.trim() == notIncludedDates[i].deliveryDate!.trim()) return false;
+  bool checkDate(List<String> dates, String date) {
+    bool status = false;
+    for (int i = 0; i < dates.length; i++) {
+      if (date.trim() == dates[i]) return true;
     }
     return status;
   }

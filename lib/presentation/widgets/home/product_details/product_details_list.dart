@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:turki_maraa_app/controllers/app_provider.dart';
+import 'package:turki_maraa_app/controllers/cart_provider.dart';
 import '../../../../models/extra.dart';
 import 'product_information.dart';
 import 'product_description.dart';
@@ -54,7 +55,8 @@ class _ProductDetailsListState extends State<ProductDetailsList> {
             title:
                 AppLocalizations.of(context)!.tr('choose_the_day_of_sacrifice'),
             tags: [
-              if (productProvider.productData[widget.index].data!.id != 1260)
+              if (productProvider.productData[widget.index].data!.id != 1260 &&
+                  (context.read<CartProvider>().checkCity()))
                 ExtraData(nameAr: 'اليوم الأول', nameEn: 'First day'),
               if (productProvider.productData[widget.index].data!.id != 1260)
                 ExtraData(nameAr: 'اليوم الثاني', nameEn: 'Second day'),
