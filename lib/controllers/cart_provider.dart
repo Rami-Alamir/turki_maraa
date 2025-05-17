@@ -41,7 +41,7 @@ class CartProvider with ChangeNotifier {
   int _adhaCategoryId = 0;
   bool _isAdhia = false;
 
-  final List<DeliveryPeriodData> _adhiaDeliveryDataTime = [
+  final List<DeliveryPeriodData> _adhiaDeliveryDataTimeSa = [
     DeliveryPeriodData(
         id: 13,
         nameAr: 'فتره اولي من ١٠ صباحا ل ٢ مساءً',
@@ -51,6 +51,24 @@ class CartProvider with ChangeNotifier {
         id: 14,
         nameAr: 'فتره ثانية من ٢ ل ٦ مساءً',
         nameEn: 'Midnight',
+        timeHhmm: '23:59:00'),
+  ];
+
+  final List<DeliveryPeriodData> _adhiaDeliveryDataTimeUae = [
+    DeliveryPeriodData(
+        id: 21,
+        nameAr: 'الفتره الأولى من 10 الصبح الى 3 العصر',
+        nameEn: '10 am - 3 pm',
+        timeHhmm: '23:59:00'),
+    DeliveryPeriodData(
+        id: 22,
+        nameAr: 'الفتره الثانيه من 3 العصر إلى 7 المغرب',
+        nameEn: '3 pm - 7 pm',
+        timeHhmm: '23:59:00'),
+    DeliveryPeriodData(
+        id: 23,
+        nameAr: 'الفتره الثالثه من 7 المغرب الى 12 منتصف الليلً',
+        nameEn: '7 pm - 12 ',
         timeHhmm: '23:59:00'),
   ];
 
@@ -108,7 +126,9 @@ class CartProvider with ChangeNotifier {
   PaymentTypes? get paymentTypes => _paymentTypes;
   bool get isAdhia => _isAdhia;
   bool get cashAvailable => _cashAvailable;
-  List<DeliveryPeriodData> get adhiaDeliveryDataTime => _adhiaDeliveryDataTime;
+  List<DeliveryPeriodData> get adhiaDeliveryDataTime => _isoCountryCode == "AE"
+      ? _adhiaDeliveryDataTimeUae
+      : _adhiaDeliveryDataTimeSa;
 
   set adhaCategoryId(int value) {
     _adhaCategoryId = value;
@@ -455,7 +475,7 @@ class CartProvider with ChangeNotifier {
               ? dates![_selectedDate]
               : format.format(deliveryDataTime[_selectedDate]),
           "delivery_period_id": isAdhia
-              ? _adhiaDeliveryDataTime[_selectedTime].id
+              ? adhiaDeliveryDataTime[_selectedTime].id
               : _deliveryPeriod!.data![_selectedTime].id,
           // "delivery_date": format.format(deliveryDataTime[_selectedDate]),
           // "delivery_period_id": _deliveryPeriod!.data![_selectedTime].id,
