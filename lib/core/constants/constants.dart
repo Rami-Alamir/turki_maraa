@@ -1,6 +1,6 @@
 class Constants {
   Constants._();
-  static const String appVersion = "6.24.0";
+  static const String appVersion = "6.24.1";
   // static const String baseUrl = 'https://almaraacompany.com/turki-api/api/v1/';
   static const String baseUrl = 'https://almaraacompany.com/dashboard/api/v2/';
   // static const String baseUrl =
@@ -12,7 +12,7 @@ class Constants {
   static const String tabbyMerchantCodeSA = 'TD_APP';
   static const String tabbyMerchantCodeAE = 'TD_APPAE';
   static const String fontFamily = "Turki";
-  static const String shareUrl = 'https://bit.ly/3tB2qdu';
+  static const String shareUrl = 'https://onelink.to/turkidabayeh';
   static const String privacyPolicy =
       'https://almaraacompany.com/turki-app/privacy-policy.html';
   static const String terms =
@@ -24,8 +24,7 @@ class Constants {
 
   //whats numbers
   static const String ksaWhats = '+966500852759';
-  static const String uaeWhats = "+971566064000";
-
+  static const String uaeWhats = "+971563055557";
   //Tamara Checkout url
   static const String checkoutSuccess = '${baseUrl}checkout/success';
   static const String checkoutFailure = '${baseUrl}checkout/failure';

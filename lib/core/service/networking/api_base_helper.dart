@@ -66,7 +66,7 @@ class ApiBaseHelper {
       {String authorization = " "}) async {
     headers['authorization'] = authorization;
     // print("headers: $headers");
-    // print("body $body");
+    // print("body ${jsonEncode(body)}");
     // print(Uri.parse(_baseUrl + url));
     Uri uri = Uri.parse(_baseUrl + url);
     dynamic response;
@@ -128,6 +128,7 @@ class ApiBaseHelper {
   Future<int> delete(String url, {String authorization = " "}) async {
     headers['authorization'] = authorization;
     Uri uri = Uri.parse(_baseUrl + url);
+    // print(uri);
     dynamic response;
     try {
       response = await http.delete(uri, headers: headers);
