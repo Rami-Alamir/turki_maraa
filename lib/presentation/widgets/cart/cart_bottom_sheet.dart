@@ -38,7 +38,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
         return true;
       },
       child: Consumer<CartProvider>(
-        builder: (_, cartProvider, __) {
+        builder: (_, cartProvider, _) {
           String currency = sl<GetStrings>().getCurrency(
             AppLocalizations.of(context)!.locale!.languageCode,
             context.read<LocationProvider>().isoCountryCode!,

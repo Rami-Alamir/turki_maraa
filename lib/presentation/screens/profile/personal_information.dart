@@ -28,85 +28,100 @@ class PersonalInformationState extends State<PersonalInformation> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const PrimaryAppBar(
-        title: '',
-        back: true,
-        isTransparent: true,
-      ),
+      appBar: const PrimaryAppBar(title: '', back: true, isTransparent: true),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        child: Consumer<UserProvider>(builder: (_, userProvider, __) {
-          return ListView(
-            padding: const EdgeInsets.only(top: 80),
-            children: [
-              AvatarGlow(
-                glowColor: Theme.of(context).colorScheme.primary,
-                glowRadiusFactor: 0.18,
-                duration: const Duration(milliseconds: 2000),
-                repeat: true,
-                glowCount: 2,
-                child: CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  child: Text(
+        child: Consumer<UserProvider>(
+          builder: (_, userProvider, _) {
+            return ListView(
+              padding: const EdgeInsets.only(top: 80),
+              children: [
+                AvatarGlow(
+                  glowColor: Theme.of(context).colorScheme.primary,
+                  glowRadiusFactor: 0.18,
+                  duration: const Duration(milliseconds: 2000),
+                  repeat: true,
+                  glowCount: 2,
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    child: Text(
                       ((userProvider.userData?.data?.name)?.length ?? 0) > 0
                           ? (userProvider.userData?.data?.name ?? " ")
-                              .substring(0, 1)
+                                .substring(0, 1)
                           : "",
-                      style: const TextStyle(
-                        fontSize: 20,
-                      )),
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: 20, left: 20, top: 10, bottom: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    PersonalInfoItem(
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 20,
+                    left: 20,
+                    top: 10,
+                    bottom: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      PersonalInfoItem(
                         title: 'name',
-                        textEditingController: userProvider.usernameController),
-                    PersonalInfoItem(
+                        textEditingController: userProvider.usernameController,
+                      ),
+                      PersonalInfoItem(
                         title: 'email',
-                        textEditingController: userProvider.emailController),
-                    // const GenderPicker(),
-                    PersonalInfoItem(
+                        textEditingController: userProvider.emailController,
+                      ),
+                      // const GenderPicker(),
+                      PersonalInfoItem(
                         title: 'age',
                         textEditingController: userProvider.ageController,
-                        textInputType: TextInputType.number),
-                  ],
+                        textInputType: TextInputType.number,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              RoundedRectangleButton(
-                height: 50,
-                padding: const EdgeInsets.only(
-                    right: 20, left: 20, top: 0, bottom: 20),
-                fontSize: 16,
-                title: AppLocalizations.of(context)!.tr('update'),
-                onPressed: () async {
-                  RegExp regex = RegExp(
-                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                  if (!regex.hasMatch(userProvider.emailController.text) &&
-                      userProvider.emailController.text.isNotEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                      AppLocalizations.of(context)!.tr('enter_valid_email'),
-                      textAlign: TextAlign.center,
-                    )));
-                  } else {
-                    final int statusCode =
-                        await userProvider.updateUser(context);
-                    if (context.mounted) {
-                      show(context, statusCode);
+                RoundedRectangleButton(
+                  height: 50,
+                  padding: const EdgeInsets.only(
+                    right: 20,
+                    left: 20,
+                    top: 0,
+                    bottom: 20,
+                  ),
+                  fontSize: 16,
+                  title: AppLocalizations.of(context)!.tr('update'),
+                  onPressed: () async {
+                    RegExp regex = RegExp(
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                    );
+                    if (!regex.hasMatch(userProvider.emailController.text) &&
+                        userProvider.emailController.text.isNotEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            AppLocalizations.of(
+                              context,
+                            )!.tr('enter_valid_email'),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    } else {
+                      final int statusCode = await userProvider.updateUser(
+                        context,
+                      );
+                      if (context.mounted) {
+                        show(context, statusCode);
+                      }
                     }
-                  }
-                },
-              ),
-              const DeleteRow(),
-            ],
-          );
-        }),
+                  },
+                ),
+                const DeleteRow(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -118,12 +133,13 @@ class PersonalInformationState extends State<PersonalInformation> {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.of(context, rootNavigator: true).pop();
       sl<ShowSnackBar>().show(
-          context,
-          statusCode == 200
-              ? "data_has_been_updated_successfully"
-              : statusCode == 400
-                  ? "email_is_used_please_enter_different_email"
-                  : "unexpected_error");
+        context,
+        statusCode == 200
+            ? "data_has_been_updated_successfully"
+            : statusCode == 400
+            ? "email_is_used_please_enter_different_email"
+            : "unexpected_error",
+      );
     }
   }
 }

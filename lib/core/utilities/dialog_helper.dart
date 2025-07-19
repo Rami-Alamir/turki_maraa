@@ -12,12 +12,13 @@ class DialogHelper {
     );
   }
 
-  void showIndicatorDialog(context) {
+  void showIndicatorDialog(BuildContext context) {
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const IndicatorDialog();
-        });
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const IndicatorDialog();
+      },
+    );
   }
 }

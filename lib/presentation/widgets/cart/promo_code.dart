@@ -16,7 +16,7 @@ class PromoCode extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Consumer<CartProvider>(
-        builder: (_, cartProvider, __) {
+        builder: (_, cartProvider, _) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

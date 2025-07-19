@@ -20,7 +20,7 @@ class DeliveryPeriodsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<CartProvider>(
-      builder: (_, cartProvider, __) {
+      builder: (_, cartProvider, _) {
         final bool selected = cartProvider.selectedTime == selectedValue;
         return cartProvider.isAdhia ||
                 sl<DateTimeHelper>().checkPeriod(

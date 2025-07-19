@@ -16,11 +16,12 @@ class Orders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PrimaryAppBar(
-          title: AppLocalizations.of(context)!.tr('orders'),
-          back: back!,
-        ),
-        body: Consumer<OrdersProvider>(builder: (_, ordersProvider, __) {
+      appBar: PrimaryAppBar(
+        title: AppLocalizations.of(context)!.tr('orders'),
+        back: back!,
+      ),
+      body: Consumer<OrdersProvider>(
+        builder: (_, ordersProvider, _) {
           return PageBuilder(
             requestStatus: ordersProvider.requestStatus,
             isAuth: ordersProvider.isAuth,
@@ -35,27 +36,39 @@ class Orders extends StatelessWidget {
               },
               child:
                   (ordersProvider.ordersData?.orderData?.data?.length ?? 0) > 0
-                      ? ListView(
-                          children: [
-                            ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                addRepaintBoundaries: false,
-                                physics: const ScrollPhysics(),
-                                itemCount: (ordersProvider
-                                        .ordersData?.orderData?.data?.length ??
-                                    0),
-                                itemBuilder: (BuildContext ctxt, int index) {
-                                  return OrderCard(
-                                      order: (ordersProvider.ordersData!
-                                          .orderData!.data![index]));
-                                }),
-                          ],
-                        )
-                      : const EmptyList(
-                          image: FixedAssets.noOrders, title: 'order_now'),
+                  ? ListView(
+                      children: [
+                        ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          addRepaintBoundaries: false,
+                          physics: const ScrollPhysics(),
+                          itemCount:
+                              (ordersProvider
+                                  .ordersData
+                                  ?.orderData
+                                  ?.data
+                                  ?.length ??
+                              0),
+                          itemBuilder: (BuildContext ctxt, int index) {
+                            return OrderCard(
+                              order: (ordersProvider
+                                  .ordersData!
+                                  .orderData!
+                                  .data![index]),
+                            );
+                          },
+                        ),
+                      ],
+                    )
+                  : const EmptyList(
+                      image: FixedAssets.noOrders,
+                      title: 'order_now',
+                    ),
             ),
           );
-        }));
+        },
+      ),
+    );
   }
 }

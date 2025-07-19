@@ -15,54 +15,59 @@ class ProfileState extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Consumer2<UserProvider, OrdersProvider>(
-          builder: (_, user, ordersProvider, __) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: SizeConfig.screenWidth! * .85,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  StateItem(
+        builder: (_, user, ordersProvider, _) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: SizeConfig.screenWidth! * .85,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    StateItem(
                       icon: FixedAssets.orders,
                       routeName: orders,
                       value:
                           (ordersProvider.ordersData?.orderData?.data?.length ??
-                                  0) *
-                              1.0,
-                      title: 'orders'),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      height: 50,
-                      color: Theme.of(context).colorScheme.secondaryContainer,
-                      width: 0.2,
+                              0) *
+                          1.0,
+                      title: 'orders',
                     ),
-                  ),
-                  StateItem(
-                      icon: FixedAssets.points,
-                      // routeName: "/UserPoints",
-                      value: double.parse(user.userData?.data?.points ?? "0"),
-                      title: 'my_points'),
-                  Padding(
+                    Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Container(
                         height: 50,
                         color: Theme.of(context).colorScheme.secondaryContainer,
                         width: 0.2,
-                      )),
-                  StateItem(
+                      ),
+                    ),
+                    StateItem(
+                      icon: FixedAssets.points,
+                      // routeName: "/UserPoints",
+                      value: double.parse(user.userData?.data?.points ?? "0"),
+                      title: 'my_points',
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        height: 50,
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                        width: 0.2,
+                      ),
+                    ),
+                    StateItem(
                       icon: FixedAssets.wallet,
                       routeName: "/UserWallet",
                       value: double.parse(user.userData?.data?.wallet ?? "0"),
-                      title: 'credit'),
-                ],
+                      title: 'credit',
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        );
-      }),
+            ],
+          );
+        },
+      ),
     );
   }
 }

@@ -29,8 +29,9 @@ class OrderDetailsState extends State<OrderDetails> {
   void initState() {
     Future.delayed(Duration.zero, () async {
       if (!mounted) return;
-      (OrderModel?, RequestStatus) record =
-          await context.read<OrdersProvider>().getOrderData(widget.id);
+      (OrderModel?, RequestStatus) record = await context
+          .read<OrdersProvider>()
+          .getOrderData(widget.id);
       _order = record.$1;
       _requestStatus = record.$2;
     });
@@ -40,55 +41,54 @@ class OrderDetailsState extends State<OrderDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PrimaryAppBar(
-            title: AppLocalizations.of(context)!.tr('order_details')),
-        body: Consumer<OrdersProvider>(builder: (_, ordersProvider, __) {
+      appBar: PrimaryAppBar(
+        title: AppLocalizations.of(context)!.tr('order_details'),
+      ),
+      body: Consumer<OrdersProvider>(
+        builder: (_, ordersProvider, _) {
           return PageBuilder(
             requestStatus: _requestStatus,
             onError: () async {
-              (OrderModel?, RequestStatus) record =
-                  await context.read<OrdersProvider>().getOrderData(widget.id);
+              (OrderModel?, RequestStatus) record = await context
+                  .read<OrdersProvider>()
+                  .getOrderData(widget.id);
               _order = record.$1;
               _requestStatus = record.$2;
             },
             isAuth: ordersProvider.isAuth,
             child: RefreshIndicator(
-                color: Theme.of(context).colorScheme.primary,
-                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                onRefresh: () async {
-                  (OrderModel?, RequestStatus) record = await context
-                      .read<OrdersProvider>()
-                      .getOrderData(widget.id);
-                  _order = record.$1;
-                  _requestStatus = record.$2;
-                },
-                child: ListView(
-                  children: [
-                    if (_order != null) ...[
-                      OrderDetailsHeader(
-                        order: _order!.data!,
+              color: Theme.of(context).colorScheme.primary,
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              onRefresh: () async {
+                (OrderModel?, RequestStatus) record = await context
+                    .read<OrdersProvider>()
+                    .getOrderData(widget.id);
+                _order = record.$1;
+                _requestStatus = record.$2;
+              },
+              child: ListView(
+                children: [
+                  if (_order != null) ...[
+                    OrderDetailsHeader(order: _order!.data!),
+                    if ((_order?.data?.order?.selectedAddress?.address ?? "")
+                        .isNotEmpty)
+                      DeliveryAddress(
+                        address:
+                            _order?.data?.order?.selectedAddress?.address ?? "",
                       ),
-                      if ((_order?.data?.order?.selectedAddress?.address ?? "")
-                          .isNotEmpty)
-                        DeliveryAddress(
-                          address:
-                              _order?.data?.order?.selectedAddress?.address ??
-                                  "",
-                        ),
-                      PaymentMethod(
-                        paymentTypeId: _order!.data!.order!.paymentTypeId!,
-                      ),
-                      if ((_order?.data?.order?.comment ?? "").isNotEmpty)
-                        OrderNote(
-                          note: (_order?.data?.order?.comment ?? ""),
-                        ),
-                      OrderDetailsCard(
-                        order: _order!,
-                      )
-                    ]
+                    PaymentMethod(
+                      paymentTypeId: _order!.data!.order!.paymentTypeId!,
+                    ),
+                    if ((_order?.data?.order?.comment ?? "").isNotEmpty)
+                      OrderNote(note: (_order?.data?.order?.comment ?? "")),
+                    OrderDetailsCard(order: _order!),
                   ],
-                )),
+                ],
+              ),
+            ),
           );
-        }));
+        },
+      ),
+    );
   }
 }

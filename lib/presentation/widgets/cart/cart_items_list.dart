@@ -8,8 +8,9 @@ class CartItemsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartProvider>(builder: (_, cartProvider, __) {
-      return ListView.builder(
+    return Consumer<CartProvider>(
+      builder: (_, cartProvider, _) {
+        return ListView.builder(
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -19,7 +20,9 @@ class CartItemsList extends StatelessWidget {
               item: cartProvider.cartData!.data!.cart!.data![index],
               index: index,
             );
-          });
-    });
+          },
+        );
+      },
+    );
   }
 }

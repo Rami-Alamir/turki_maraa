@@ -15,21 +15,25 @@ class IntroCard extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Consumer<AppLanguage>(builder: (_, lang, __) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                width: SizeConfig.setWidgetWidthWithFactor(0.7, 0.4, 0.3),
-                child: Image.asset(
-                  IntroList.introData[mSelectedPosition].image!,
-                  width: SizeConfig.setWidgetWidthWithFactor(1, .5, .5),
-                  height:
-                      SizeConfig.setWidgetHeightWithFactor(0.45, 0.49, 0.49),
-                  fit: BoxFit.contain,
+        Consumer<AppLanguage>(
+          builder: (_, lang, _) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: SizeConfig.setWidgetWidthWithFactor(0.7, 0.4, 0.3),
+                  child: Image.asset(
+                    IntroList.introData[mSelectedPosition].image!,
+                    width: SizeConfig.setWidgetWidthWithFactor(1, .5, .5),
+                    height: SizeConfig.setWidgetHeightWithFactor(
+                      0.45,
+                      0.49,
+                      0.49,
+                    ),
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-              Container(
+                Container(
                   width: SizeConfig.setWidgetWidthWithFactor(0.8, 0.8, 0.8),
                   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
                   child: AutoSizeText(
@@ -40,11 +44,12 @@ class IntroCard extends StatelessWidget {
                     maxFontSize: 20,
                     minFontSize: 16,
                     style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                          height: 1.4,
-                        ),
-                  )),
-              Container(
+                      fontWeight: FontWeight.bold,
+                      height: 1.4,
+                    ),
+                  ),
+                ),
+                Container(
                   width: SizeConfig.setWidgetWidthWithFactor(0.52, 0.52, 0.52),
                   padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                   child: AutoSizeText(
@@ -56,10 +61,12 @@ class IntroCard extends StatelessWidget {
                     minFontSize: 12,
                     maxLines: 4,
                     style: Theme.of(context).textTheme.bodyLarge,
-                  )),
-            ],
-          );
-        }),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ],
     );
   }

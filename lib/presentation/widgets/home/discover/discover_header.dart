@@ -10,32 +10,35 @@ class DiscoverHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DiscoverProvider>(builder: (_, discoverProvider, __) {
-      final bool isAr =
-          AppLocalizations.of(context)!.locale == const Locale('ar');
-      return Stack(
-        children: [
-          Container(
-            margin: const EdgeInsets.all(10.0),
-            color: Colors.transparent,
-            height: 250,
-            width: SizeConfig.screenWidth!,
-            child: Card(
-              elevation: 1,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0)),
-              child: Container(
-                color: Colors.transparent,
-                child: ClipRRect(
+    return Consumer<DiscoverProvider>(
+      builder: (_, discoverProvider, _) {
+        final bool isAr =
+            AppLocalizations.of(context)!.locale == const Locale('ar');
+        return Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(10.0),
+              color: Colors.transparent,
+              height: 250,
+              width: SizeConfig.screenWidth!,
+              child: Card(
+                elevation: 1,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Container(
+                  color: Colors.transparent,
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
                     child: Image.network(
                       discoverProvider.discoverItem!.data!.subImage!,
                       fit: BoxFit.cover,
-                    )),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
-          Positioned(
+            Positioned(
               top: 40,
               right: 40,
               child: SizedBox(
@@ -45,13 +48,16 @@ class DiscoverHeader extends StatelessWidget {
                       ? discoverProvider.discoverItem!.data!.descriptionAr!
                       : discoverProvider.discoverItem!.data!.descriptionEn!,
                   style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                      height: 2),
+                    color: AppColors.white,
+                    fontWeight: FontWeight.bold,
+                    height: 2,
+                  ),
                 ),
-              ))
-        ],
-      );
-    });
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -43,33 +43,38 @@ class CartProvider with ChangeNotifier {
 
   final List<DeliveryPeriodData> _adhiaDeliveryDataTimeSa = [
     DeliveryPeriodData(
-        id: 13,
-        nameAr: 'فتره اولي من ١٠ صباحا ل ٢ مساءً',
-        nameEn: 'Morning',
-        timeHhmm: '23:59:00'),
+      id: 13,
+      nameAr: 'فتره اولي من ١٠ صباحا ل ٢ مساءً',
+      nameEn: 'Morning',
+      timeHhmm: '23:59:00',
+    ),
     DeliveryPeriodData(
-        id: 14,
-        nameAr: 'فتره ثانية من ٢ ل ٦ مساءً',
-        nameEn: 'Midnight',
-        timeHhmm: '23:59:00'),
+      id: 14,
+      nameAr: 'فتره ثانية من ٢ ل ٦ مساءً',
+      nameEn: 'Midnight',
+      timeHhmm: '23:59:00',
+    ),
   ];
 
   final List<DeliveryPeriodData> _adhiaDeliveryDataTimeUae = [
     DeliveryPeriodData(
-        id: 21,
-        nameAr: 'الفتره الأولى من 10 الصبح الى 3 العصر',
-        nameEn: '10 am - 3 pm',
-        timeHhmm: '23:59:00'),
+      id: 21,
+      nameAr: 'الفتره الأولى من 10 الصبح الى 3 العصر',
+      nameEn: '10 am - 3 pm',
+      timeHhmm: '23:59:00',
+    ),
     DeliveryPeriodData(
-        id: 22,
-        nameAr: 'الفتره الثانيه من 3 العصر إلى 7 المغرب',
-        nameEn: '3 pm - 7 pm',
-        timeHhmm: '23:59:00'),
+      id: 22,
+      nameAr: 'الفتره الثانيه من 3 العصر إلى 7 المغرب',
+      nameEn: '3 pm - 7 pm',
+      timeHhmm: '23:59:00',
+    ),
     DeliveryPeriodData(
-        id: 23,
-        nameAr: 'الفتره الثالثه من 7 المغرب الى 12 منتصف الليلً',
-        nameEn: '7 pm - 12 ',
-        timeHhmm: '23:59:00'),
+      id: 23,
+      nameAr: 'الفتره الثالثه من 7 المغرب الى 12 منتصف الليلً',
+      nameEn: '7 pm - 12 ',
+      timeHhmm: '23:59:00',
+    ),
   ];
 
   //used with promo code
@@ -97,8 +102,7 @@ class CartProvider with ChangeNotifier {
   final List<DateTime> _deliveryDataTime = [];
 
   DeliveryPeriod? _deliveryPeriod;
-  String? _currentLocationDescriptionAr = '';
-  String? _currentLocationDescriptionEn = '';
+  String? _currentLocationDescription = '';
   late TabbySession session;
   late TamaraPayment tamara;
   late PaymentARB arb;
@@ -106,8 +110,7 @@ class CartProvider with ChangeNotifier {
   PaymentTypes? _paymentTypes;
 
   LatLng? get latLng => _latLng;
-  String? get currentLocationDescriptionAr => _currentLocationDescriptionAr;
-  String? get currentLocationDescriptionEn => _currentLocationDescriptionEn;
+  String? get currentLocationDescription => _currentLocationDescription;
   TamaraData? get tamaraData => _tamaraData;
   DeliveryPeriod? get deliveryPeriod => _deliveryPeriod;
   String get isoCountryCode => _isoCountryCode!;
@@ -167,15 +170,14 @@ class CartProvider with ChangeNotifier {
 
   // used to update cart provider
   void updateCartProvider(
-      String accessToken,
-      bool isAuth,
-      LatLng? latLng,
-      UserData? userData,
-      String? isoCountryCode,
-      String? currentLocationDescriptionAr,
-      String? currentLocationDescriptionEn) {
-    _currentLocationDescriptionAr = currentLocationDescriptionAr;
-    _currentLocationDescriptionEn = currentLocationDescriptionEn;
+    String accessToken,
+    bool isAuth,
+    LatLng? latLng,
+    UserData? userData,
+    String? isoCountryCode,
+    String? currentLocationDescription,
+  ) {
+    _currentLocationDescription = currentLocationDescription;
     _authorization = "Bearer $accessToken";
     _isAuth = isAuth;
     _userData = userData;
@@ -220,20 +222,25 @@ class CartProvider with ChangeNotifier {
     int response;
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
-      response = await sl<CartRepository>().addToCart({
-        "product_id": productId,
-        "quantity": quantity,
-        "preparation_id": preparationId,
-        "size_id": sizeId,
-        "cut_id": cutId,
-        "is_Ras": isRas,
-        "is_lyh": isLyh,
-        "is_karashah": iskarashah,
-        "is_kwar3": iskwar3,
-        "is_shalwata": isShalwata,
-        "comment": "",
-        "applied_discount_code": ""
-      }, _authorization!, _latLng!, _isoCountryCode!);
+      response = await sl<CartRepository>().addToCart(
+        {
+          "product_id": productId,
+          "quantity": quantity,
+          "preparation_id": preparationId,
+          "size_id": sizeId,
+          "cut_id": cutId,
+          "is_Ras": isRas,
+          "is_lyh": isLyh,
+          "is_karashah": iskarashah,
+          "is_kwar3": iskwar3,
+          "is_shalwata": isShalwata,
+          "comment": "",
+          "applied_discount_code": "",
+        },
+        _authorization!,
+        _latLng!,
+        _isoCountryCode!,
+      );
       _cartLength += response == 200 ? int.parse(quantity) : 0;
       if (response == 200) {
         await getCartData();
@@ -256,10 +263,13 @@ class CartProvider with ChangeNotifier {
     HapticFeedback.heavyImpact();
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
-      int response = await sl<CartRepository>().updateCartItem({
-        "quantity": quantity,
-        "comment": "",
-      }, _authorization!, productId, _latLng!, _isoCountryCode!);
+      int response = await sl<CartRepository>().updateCartItem(
+        {"quantity": quantity, "comment": ""},
+        _authorization!,
+        productId,
+        _latLng!,
+        _isoCountryCode!,
+      );
       if (response == 200) {
         await getCartData();
         return true;
@@ -276,7 +286,11 @@ class CartProvider with ChangeNotifier {
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
       int response = await sl<CartRepository>().deleteCartItem(
-          _authorization!, productId, _latLng!, _isoCountryCode!);
+        _authorization!,
+        productId,
+        _latLng!,
+        _isoCountryCode!,
+      );
       if (response == 200) {
         await getCartData();
         return true;
@@ -296,8 +310,9 @@ class CartProvider with ChangeNotifier {
       try {
         await Future.wait([_getCart(), _getPaymentTypes()]);
         await getTamaraData();
-        _cartLength = sl<CalculateHelper>()
-            .calculateCartLength(_cartData?.data?.cart?.data);
+        _cartLength = sl<CalculateHelper>().calculateCartLength(
+          _cartData?.data?.cart?.data,
+        );
         if ((_cartData?.data?.cart?.data?.length ?? 0) > 0) {
           if (_cartData!.data!.cart!.data![0].appliedDiscountCode != null) {
             promoCodeController.text =
@@ -320,16 +335,19 @@ class CartProvider with ChangeNotifier {
     try {
       _tamaraData = null;
       _tamaraData = await sl<TamaraRepository>().getTamaraStatus(
-          _isoCountryCode!,
-          sl<GetStrings>().getCurrency('en', _isoCountryCode!),
-          _cartData!.data!.invoicePreview!.totalAmountAfterDiscount!
-              .toString());
+        _isoCountryCode!,
+        sl<GetStrings>().getCurrency('en', _isoCountryCode!),
+        _cartData!.data!.invoicePreview!.totalAmountAfterDiscount!.toString(),
+      );
     } catch (_) {}
   }
 
   Future<void> _getCart() async {
-    _cartData = await sl<CartRepository>()
-        .getCartList(_authorization!, _latLng!, _isoCountryCode!);
+    _cartData = await sl<CartRepository>().getCartList(
+      _authorization!,
+      _latLng!,
+      _isoCountryCode!,
+    );
     checkIsAdhia();
   }
 
@@ -407,8 +425,9 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> _getDeliveryPeriods() async {
-    _deliveryPeriod =
-        DeliveryPeriod(data: _cartData?.currentCity?.deliveryPeriod);
+    _deliveryPeriod = DeliveryPeriod(
+      data: _cartData?.currentCity?.deliveryPeriod,
+    );
   }
 
   Future<bool> checkCoupon({required BuildContext context}) async {
@@ -420,12 +439,11 @@ class CartProvider with ChangeNotifier {
 
     try {
       response = await sl<CartRepository>().checkCoupon(
-          _latLng!,
-          _isoCountryCode!,
-          {
-            "code": promoCodeController.text.trim(),
-          },
-          _authorization!);
+        _latLng!,
+        _isoCountryCode!,
+        {"code": promoCodeController.text.trim()},
+        _authorization!,
+      );
       if (response == 200) {
         await getCartData();
       } else {
@@ -437,14 +455,15 @@ class CartProvider with ChangeNotifier {
     return false;
   }
 
-  Future<int> placeOrder(
-      {required BuildContext context,
-      required String currency,
-      required int addressId,
-      List<String>? dates,
-      List<bool>? cutStatus,
-      int? cutId = 15,
-      required Lang language}) async {
+  Future<int> placeOrder({
+    required BuildContext context,
+    required String currency,
+    required int addressId,
+    List<String>? dates,
+    List<bool>? cutStatus,
+    int? cutId = 15,
+    required Lang language,
+  }) async {
     HapticFeedback.heavyImpact();
     http.Response response;
     bool status = checkRequiredData(context);
@@ -461,44 +480,57 @@ class CartProvider with ChangeNotifier {
       try {
         // check if user have selected address if not add new address
         if (addressId == -1) {
-          final AddressProvider addressProvider =
-              Provider.of<AddressProvider>(context, listen: false);
-          await addressProvider.addNewAddress(context,
-              latLng: _latLng, isoCountryCode: _isoCountryCode);
+          final AddressProvider addressProvider = Provider.of<AddressProvider>(
+            context,
+            listen: false,
+          );
+          await addressProvider.addNewAddress(
+            context,
+            latLng: _latLng,
+            isoCountryCode: _isoCountryCode,
+          );
           addressId = addressProvider.userAddress!.data!.last.id!;
         }
         // DateFormat format = DateFormat('MM-dd');
         DateFormat format = DateFormat('yyyy-MM-dd');
         // DateFormat format = DateFormat('dd-MM-yyyy');
-        response = await sl<OrderRepository>().placeOrder({
-          "delivery_date": isAdhia
-              ? dates![_selectedDate]
-              : format.format(deliveryDataTime[_selectedDate]),
-          "delivery_period_id": isAdhia
-              ? adhiaDeliveryDataTime[_selectedTime].id
-              : _deliveryPeriod!.data![_selectedTime].id,
-          // "delivery_date": format.format(deliveryDataTime[_selectedDate]),
-          // "delivery_period_id": _deliveryPeriod!.data![_selectedTime].id,
-          "using_wallet": _useCredit,
-          if (_selectedPayment == 4)
-            "tamara_payment_name": "PAY_BY_INSTALMENTS",
-          if (_selectedPayment == 4) "no_instalments": 3,
-          "comment": " ${noteController.text}",
-          "payment_type_id": _selectedPayment,
-          "address_id": addressId
-        }, _authorization!, _latLng!, _isoCountryCode!);
+        response = await sl<OrderRepository>().placeOrder(
+          {
+            "delivery_date": isAdhia
+                ? dates![_selectedDate]
+                : format.format(deliveryDataTime[_selectedDate]),
+            "delivery_period_id": isAdhia
+                ? adhiaDeliveryDataTime[_selectedTime].id
+                : _deliveryPeriod!.data![_selectedTime].id,
+            // "delivery_date": format.format(deliveryDataTime[_selectedDate]),
+            // "delivery_period_id": _deliveryPeriod!.data![_selectedTime].id,
+            "using_wallet": _useCredit,
+            if (_selectedPayment == 4)
+              "tamara_payment_name": "PAY_BY_INSTALMENTS",
+            if (_selectedPayment == 4) "no_instalments": 3,
+            "comment": " ${noteController.text}",
+            "payment_type_id": _selectedPayment,
+            "address_id": addressId,
+          },
+          _authorization!,
+          _latLng!,
+          _isoCountryCode!,
+        );
         var paymentId = _selectedPayment;
         if (response.statusCode == 200) {
-          FirebaseHelper()
-              .pushAnalyticsEvent(name: "notes", value: noteController.text);
+          FirebaseHelper().pushAnalyticsEvent(
+            name: "notes",
+            value: noteController.text,
+          );
           if (paymentId == 1 || paymentId == 8) {
             return 1;
           } else if (paymentId == 2) {
             arb = PaymentARB.fromJson(json.decode(response.body.toString()));
             return 2;
           } else if (paymentId == 4) {
-            tamara =
-                TamaraPayment.fromJson(json.decode(response.body.toString()));
+            tamara = TamaraPayment.fromJson(
+              json.decode(response.body.toString()),
+            );
             return 4;
           } else if (paymentId == 7) {
             orderRef = OrderRef.fromJson(json.decode(response.body.toString()));
@@ -523,9 +555,10 @@ class CartProvider with ChangeNotifier {
         (_userData?.data?.email ?? "user${_userData?.data?.id}@turkieshop.com")
             .trim();
     _mockPayload = Payment(
-      amount: ((_cartData!.data!.invoicePreview!.totalAmountAfterDiscount! -
-              (_useCredit ? (_cartData?.data?.customerWallet ?? 0) : 0)))
-          .toString(),
+      amount:
+          ((_cartData!.data!.invoicePreview!.totalAmountAfterDiscount! -
+                  (_useCredit ? (_cartData?.data?.customerWallet ?? 0) : 0)))
+              .toString(),
       currency: _isoCountryCode == "SA" ? Currency.sar : Currency.aed,
       buyer: Buyer(
         email: email.length > 10
@@ -545,8 +578,10 @@ class CartProvider with ChangeNotifier {
         address: (selectedAddress ?? " "),
         zip: '12345',
       ),
-      order:
-          Order(referenceId: orderRef.data!.orderRef!, items: _getOrderItems()),
+      order: Order(
+        referenceId: orderRef.data!.orderRef!,
+        items: _getOrderItems(),
+      ),
       orderHistory: [
         OrderHistoryItem(
           purchasedAt: '2019-08-24T14:15:22Z',
@@ -554,24 +589,28 @@ class CartProvider with ChangeNotifier {
               .toString(),
           paymentMethod: OrderHistoryItemPaymentMethod.card,
           status: OrderHistoryItemStatus.newOne,
-        )
+        ),
       ],
     );
-    session = await TabbySDK().createSession(TabbyCheckoutPayload(
-      merchantCode: _isoCountryCode == "SA"
-          ? Constants.tabbyMerchantCodeSA
-          : Constants.tabbyMerchantCodeAE,
-      lang: language,
-      payment: _mockPayload!,
-    ));
+    session = await TabbySDK().createSession(
+      TabbyCheckoutPayload(
+        merchantCode: _isoCountryCode == "SA"
+            ? Constants.tabbyMerchantCodeSA
+            : Constants.tabbyMerchantCodeAE,
+        lang: language,
+        payment: _mockPayload!,
+      ),
+    );
   }
 
   //capture tabby payment
   Future<bool> capturePayment(String id) async {
     try {
-      tabbyCaptures = await sl<TabbyRepository>().capturePayment({
-        "amount": _mockPayload!.amount,
-      }, _isoCountryCode == "SA" ? 'TD_APP' : 'TD_APPAE', id);
+      tabbyCaptures = await sl<TabbyRepository>().capturePayment(
+        {"amount": _mockPayload!.amount},
+        _isoCountryCode == "SA" ? 'TD_APP' : 'TD_APPAE',
+        id,
+      );
       if (tabbyCaptures?.status == "CLOSED") {
         await _updateTabbyPaymentStatus();
       }
@@ -586,15 +625,17 @@ class CartProvider with ChangeNotifier {
     List<OrderItem> orderItems = [];
     for (int i = 0; i < cartData!.data!.cart!.data!.length; i++) {
       final ItemData item = cartData!.data!.cart!.data![i];
-      orderItems.add(OrderItem(
-        title: item.product!.nameEn!,
-        description: item.product!.nameEn!,
-        quantity: item.quantity!,
-        unitPrice: item.product!.salePrice!.toString(),
-        referenceId: item.product!.id!.toString(),
-        productUrl: 'http://example.com',
-        category: item.product!.nameEn!,
-      ));
+      orderItems.add(
+        OrderItem(
+          title: item.product!.nameEn!,
+          description: item.product!.nameEn!,
+          quantity: item.quantity!,
+          unitPrice: item.product!.salePrice!.toString(),
+          referenceId: item.product!.id!.toString(),
+          productUrl: 'http://example.com',
+          category: item.product!.nameEn!,
+        ),
+      );
     }
     return orderItems;
   }
@@ -606,7 +647,7 @@ class CartProvider with ChangeNotifier {
         "payment_ref": orderRef.data!.paymentRef!,
         "order_ref": "${orderRef.data!.orderRef}",
         "paid": "1",
-        "sauce": _encryptTabbyPayment()
+        "sauce": _encryptTabbyPayment(),
       }, _authorization!);
     } catch (_) {
       throw Exception();
@@ -614,20 +655,18 @@ class CartProvider with ChangeNotifier {
   }
 
   String _encryptTabbyPayment() {
-    var bytes = utf8.encode("${json.encode({
-          "bank_ref": "${tabbyCaptures?.id}",
-          "payment_ref": orderRef.data!.paymentRef!,
-          "order_ref": "${orderRef.data!.orderRef}",
-          "paid": "1",
-        })}330b838b-6c2a-450d-8e2e-0cde4c38abb6");
+    var bytes = utf8.encode(
+      "${json.encode({"bank_ref": "${tabbyCaptures?.id}", "payment_ref": orderRef.data!.paymentRef!, "order_ref": "${orderRef.data!.orderRef}", "paid": "1"})}330b838b-6c2a-450d-8e2e-0cde4c38abb6",
+    );
     final sauce = sha512.convert(bytes);
     return base64.encode(utf8.encode("$sauce"));
   }
 
   // check required data to move screen controller to required fields
   bool checkRequiredData(BuildContext context) {
-    double offset = sl<CalculateHelper>()
-        .calculateOffset(_cartData!.data!.cart!.data!.length);
+    double offset = sl<CalculateHelper>().calculateOffset(
+      _cartData!.data!.cart!.data!.length,
+    );
     if (_selectedDate == -1) {
       animateScrollController(context, offset);
       return false;
@@ -646,12 +685,16 @@ class CartProvider with ChangeNotifier {
 
   // animate scrollController to required fields and show message
   void animateScrollController(BuildContext context, double offset) {
-    _scrollController.animateTo(offset,
-        curve: Curves.linear, duration: const Duration(milliseconds: 250));
+    _scrollController.animateTo(
+      offset,
+      curve: Curves.linear,
+      duration: const Duration(milliseconds: 250),
+    );
     String message = AppLocalizations.of(context)!.tr("please_select");
     if (_selectedDate == -1) {
-      message += AppLocalizations.of(context)!
-          .tr(_isAdhia ? "day_of_sacrifice" : "delivery_date");
+      message += AppLocalizations.of(
+        context,
+      )!.tr(_isAdhia ? "day_of_sacrifice" : "delivery_date");
       // message += AppLocalizations.of(context)!.tr("delivery_date");
     }
     if (_selectedTime == -1) {
@@ -667,11 +710,9 @@ class CartProvider with ChangeNotifier {
       message += AppLocalizations.of(context)!.tr("payment_method");
     }
     sl<DialogHelper>().show(
-        context,
-        MessageDialog(
-          message: message,
-          image: FixedAssets.warning,
-        ));
+      context,
+      MessageDialog(message: message, image: FixedAssets.warning),
+    );
   }
 
   void _initDateTimeList() {
@@ -720,7 +761,7 @@ class CartProvider with ChangeNotifier {
       165,
       166,
       167,
-      168
+      168,
     };
     if (cartData?.currentCity?.id != null) {
       return allowedCityIds.contains(cartData!.currentCity?.id);

@@ -15,8 +15,9 @@ class UseCredit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String currency = sl<GetStrings>().getCurrency(
-        AppLocalizations.of(context)!.locale!.languageCode,
-        context.read<LocationProvider>().isoCountryCode!);
+      AppLocalizations.of(context)!.locale!.languageCode,
+      context.read<LocationProvider>().isoCountryCode!,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -25,18 +26,20 @@ class UseCredit extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Consumer<CartProvider>(builder: (_, cartProvider, __) {
-                return CustomCheckbox(
-                  cheeked: cartProvider.useCredit,
-                  title:
-                      '${AppLocalizations.of(context)!.tr('use_my_credit')} (${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(cartProvider.cartData?.data?.customerWallet ?? 0)} $currency)',
-                  onTap: () {
-                    HapticFeedback.heavyImpact();
-                    cartProvider.usMyCredit = !cartProvider.useCredit;
-                  },
-                  width: SizeConfig.screenWidth! - 150,
-                );
-              }),
+              Consumer<CartProvider>(
+                builder: (_, cartProvider, _) {
+                  return CustomCheckbox(
+                    cheeked: cartProvider.useCredit,
+                    title:
+                        '${AppLocalizations.of(context)!.tr('use_my_credit')} (${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(cartProvider.cartData?.data?.customerWallet ?? 0)} $currency)',
+                    onTap: () {
+                      HapticFeedback.heavyImpact();
+                      cartProvider.usMyCredit = !cartProvider.useCredit;
+                    },
+                    width: SizeConfig.screenWidth! - 150,
+                  );
+                },
+              ),
             ],
           ),
         ),

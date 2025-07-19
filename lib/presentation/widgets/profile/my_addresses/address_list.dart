@@ -8,8 +8,9 @@ class AddressList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddressProvider>(builder: (_, addressProvider, __) {
-      return ListView.builder(
+    return Consumer<AddressProvider>(
+      builder: (_, addressProvider, _) {
+        return ListView.builder(
           padding: const EdgeInsets.only(bottom: 95),
           shrinkWrap: true,
           physics: const ScrollPhysics(),
@@ -17,9 +18,12 @@ class AddressList extends StatelessWidget {
           itemCount: (addressProvider.userAddress?.data?.length ?? 0),
           itemBuilder: (BuildContext ctxt, int index) {
             return AddressCard(
-                index: index,
-                userAddress: addressProvider.userAddress!.data![index]);
-          });
-    });
+              index: index,
+              userAddress: addressProvider.userAddress!.data![index],
+            );
+          },
+        );
+      },
+    );
   }
 }

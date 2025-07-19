@@ -86,104 +86,106 @@ class HMSMapState extends State<HMSMap> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddressProvider>(builder: (_, addressProvider, __) {
-      return Scaffold(
-        extendBody: true,
-        appBar: PrimaryAppBar(
-          title: AppLocalizations.of(context)!.tr("choose_delivery_location"),
-        ),
-        // body: SizedBox(
-        //   height: SizeConfig.screenHeight,
-        //   width: SizeConfig.screenWidth,
-        //   child: hms.HuaweiMap(
-        //     minMaxZoomPreference: hms.MinMaxZoomPreference.unbounded,
-        //     markers: <hms.Marker>{
-        //       if (markerIcon != null)
-        //         hms.Marker(
-        //           onDragEnd: (latLng) {
-        //             setState(() {
-        //               addressProvider.mapLatLng =
-        //                   _hmsLatLngConverter.convertToGMSLatLng2(latLng);
-        //             });
-        //           },
-        //           draggable: true,
-        //           markerId: const hms.MarkerId("1"),
-        //           position: HMSLatLngConverter()
-        //               .convertToHMSLatLng(addressProvider.mapLatLng),
-        //           icon: hms.BitmapDescriptor.fromBytes(markerIcon!),
-        //         )
-        //     },
-        //     buildingsEnabled: true,
-        //     initialCameraPosition: hms.CameraPosition(
-        //       target: _hmsLatLngConverter
-        //           .convertToHMSLatLng(addressProvider.mapLatLng),
-        //       zoom: 17.5,
-        //     ),
-        //     mapType: hms.MapType.normal,
-        //     compassEnabled: true,
-        //     onMapCreated: _onMapCreated,
-        //     onCameraMove: (latLng) {
-        //       _showBottomSheet = false;
-        //       addressProvider.mapLatLng =
-        //           _hmsLatLngConverter.convertToGMSLatLng2(latLng.target);
-        //       setState(() {});
-        //     },
-        //     onClick: (latLng) {
-        //       _showBottomSheet = false;
-        //       addressProvider.mapLatLng =
-        //           _hmsLatLngConverter.convertToGMSLatLng2(latLng);
-        //       setState(() {});
-        //     },
-        //     myLocationButtonEnabled: true,
-        //   ),
-        // ),
-        // bottomSheet: _showBottomSheet
-        //     ? MapBottomSheet(
-        //         addressIndex: widget.addressIndex,
-        //         userAddressId: _userAddress?.id ?? 0,
-        //         addressDescription: _addressDescription)
-        //     : Row(
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: [
-        //           RoundedRectangleButton(
-        //             title: AppLocalizations.of(context)!.tr('confirm_location'),
-        //             fontSize: 16.0,
-        //             width: SizeConfig.screenWidth! * 0.9,
-        //             padding: const EdgeInsets.symmetric(vertical: 20),
-        //             onPressed: () async {
-        //               _showBottomSheet = true;
-        //               setState(() {});
-        //               _addressDescription = await addressProvider.description(
-        //                   AppLocalizations.of(context)!.locale!.languageCode);
-        //             },
-        //           ),
-        //         ],
-        //       ),
-      );
-    });
+    return Consumer<AddressProvider>(
+      builder: (_, addressProvider, _) {
+        return Scaffold(
+          extendBody: true,
+          appBar: PrimaryAppBar(
+            title: AppLocalizations.of(context)!.tr("choose_delivery_location"),
+          ),
+          // body: SizedBox(
+          //   height: SizeConfig.screenHeight,
+          //   width: SizeConfig.screenWidth,
+          //   child: hms.HuaweiMap(
+          //     minMaxZoomPreference: hms.MinMaxZoomPreference.unbounded,
+          //     markers: <hms.Marker>{
+          //       if (markerIcon != null)
+          //         hms.Marker(
+          //           onDragEnd: (latLng) {
+          //             setState(() {
+          //               addressProvider.mapLatLng =
+          //                   _hmsLatLngConverter.convertToGMSLatLng2(latLng);
+          //             });
+          //           },
+          //           draggable: true,
+          //           markerId: const hms.MarkerId("1"),
+          //           position: HMSLatLngConverter()
+          //               .convertToHMSLatLng(addressProvider.mapLatLng),
+          //           icon: hms.BitmapDescriptor.fromBytes(markerIcon!),
+          //         )
+          //     },
+          //     buildingsEnabled: true,
+          //     initialCameraPosition: hms.CameraPosition(
+          //       target: _hmsLatLngConverter
+          //           .convertToHMSLatLng(addressProvider.mapLatLng),
+          //       zoom: 17.5,
+          //     ),
+          //     mapType: hms.MapType.normal,
+          //     compassEnabled: true,
+          //     onMapCreated: _onMapCreated,
+          //     onCameraMove: (latLng) {
+          //       _showBottomSheet = false;
+          //       addressProvider.mapLatLng =
+          //           _hmsLatLngConverter.convertToGMSLatLng2(latLng.target);
+          //       setState(() {});
+          //     },
+          //     onClick: (latLng) {
+          //       _showBottomSheet = false;
+          //       addressProvider.mapLatLng =
+          //           _hmsLatLngConverter.convertToGMSLatLng2(latLng);
+          //       setState(() {});
+          //     },
+          //     myLocationButtonEnabled: true,
+          //   ),
+          // ),
+          // bottomSheet: _showBottomSheet
+          //     ? MapBottomSheet(
+          //         addressIndex: widget.addressIndex,
+          //         userAddressId: _userAddress?.id ?? 0,
+          //         addressDescription: _addressDescription)
+          //     : Row(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         children: [
+          //           RoundedRectangleButton(
+          //             title: AppLocalizations.of(context)!.tr('confirm_location'),
+          //             fontSize: 16.0,
+          //             width: SizeConfig.screenWidth! * 0.9,
+          //             padding: const EdgeInsets.symmetric(vertical: 20),
+          //             onPressed: () async {
+          //               _showBottomSheet = true;
+          //               setState(() {});
+          //               _addressDescription = await addressProvider.description(
+          //                   AppLocalizations.of(context)!.locale!.languageCode);
+          //             },
+          //           ),
+          //         ],
+          //       ),
+        );
+      },
+    );
   }
 
-//   void _onMapCreated(hms.HuaweiMapController cntlr) {
-//     try {
-//       final AddressProvider addressProvider =
-//           Provider.of<AddressProvider>(context, listen: false);
-//       _controller = cntlr;
-//       _location!.onLocationChanged.listen((l) {
-//         if (!addressProvider.initMap) {
-//           addressProvider.mapLatLng = gms.LatLng(l.latitude!, l.longitude!);
-//           addressProvider.initMap = true;
-//           setState(() {});
-//         }
-//         _controller!.animateCamera(
-//           hms.CameraUpdate.newCameraPosition(
-//             hms.CameraPosition(
-//               target: _hmsLatLngConverter
-//                   .convertToHMSLatLng(addressProvider.mapLatLng),
-//               zoom: 0,
-//             ),
-//           ),
-//         );
-//       });
-//     } catch (_) {}
-//   }
+  //   void _onMapCreated(hms.HuaweiMapController cntlr) {
+  //     try {
+  //       final AddressProvider addressProvider =
+  //           Provider.of<AddressProvider>(context, listen: false);
+  //       _controller = cntlr;
+  //       _location!.onLocationChanged.listen((l) {
+  //         if (!addressProvider.initMap) {
+  //           addressProvider.mapLatLng = gms.LatLng(l.latitude!, l.longitude!);
+  //           addressProvider.initMap = true;
+  //           setState(() {});
+  //         }
+  //         _controller!.animateCamera(
+  //           hms.CameraUpdate.newCameraPosition(
+  //             hms.CameraPosition(
+  //               target: _hmsLatLngConverter
+  //                   .convertToHMSLatLng(addressProvider.mapLatLng),
+  //               zoom: 0,
+  //             ),
+  //           ),
+  //         );
+  //       });
+  //     } catch (_) {}
+  //   }
 }

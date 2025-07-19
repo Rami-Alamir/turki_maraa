@@ -45,16 +45,20 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     //used to get data after change location premonition
     if (mounted) {
-      final LocationProvider locationProvider =
-          Provider.of<LocationProvider>(context, listen: false);
+      final LocationProvider locationProvider = Provider.of<LocationProvider>(
+        context,
+        listen: false,
+      );
       if (locationProvider.latLng == null &&
           state == AppLifecycleState.resumed &&
           (locationProvider.locationServiceStatus ==
                   LocationServiceStatus.noAccess ||
               locationProvider.locationServiceStatus ==
                   LocationServiceStatus.unableToDetermine)) {
-        final HomeProvider homeProvider =
-            Provider.of<HomeProvider>(context, listen: false);
+        final HomeProvider homeProvider = Provider.of<HomeProvider>(
+          context,
+          listen: false,
+        );
         homeProvider.setIsLoading = true;
         locationProvider.initLatLng(context.read<AppLanguage>().language);
       }
@@ -74,13 +78,12 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
       if (!mounted) return;
       Future.microtask(() {
         if (!mounted) return;
-        Navigator.of(
-          context,
-          rootNavigator: true,
-        ).pushAndRemoveUntil(
-            MaterialPageRoute(
-                builder: (BuildContext context) => const NewVersion()),
-            ModalRoute.withName('/'));
+        Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (BuildContext context) => const NewVersion(),
+          ),
+          ModalRoute.withName('/'),
+        );
       });
     }
     if (auth.isNewUser &&
@@ -99,92 +102,111 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
       extendBodyBehindAppBar: true,
       floatingActionButton: const Whatsapp(),
       appBar: const HomeAppBar(),
-      body: Consumer<HomeProvider>(builder: (_, homeProvider, __) {
-        return Stack(children: [
-          (homeProvider.locationServiceStatus ==
-                          LocationServiceStatus.noAccess ||
-                      homeProvider.locationServiceStatus ==
-                          LocationServiceStatus.unableToDetermine) &&
-                  homeProvider.latLng == null
-              ? LocationDisabled(
-                  locationStatus: homeProvider.locationServiceStatus)
-              : homeProvider.requestStatus == RequestStatus.isLoading ||
+      body: Consumer<HomeProvider>(
+        builder: (_, homeProvider, _) {
+          return Stack(
+            children: [
+              (homeProvider.locationServiceStatus ==
+                              LocationServiceStatus.noAccess ||
+                          homeProvider.locationServiceStatus ==
+                              LocationServiceStatus.unableToDetermine) &&
                       homeProvider.latLng == null
+                  ? LocationDisabled(
+                      locationStatus: homeProvider.locationServiceStatus,
+                    )
+                  : homeProvider.requestStatus == RequestStatus.isLoading ||
+                        homeProvider.latLng == null
                   ? SpinkitIndicator(
-                      padding:
-                          EdgeInsets.only(top: SizeConfig.homeAppBarHeight),
+                      padding: EdgeInsets.only(
+                        top: SizeConfig.homeAppBarHeight,
+                      ),
                     )
                   : homeProvider.requestStatus == RequestStatus.error
-                      ? Retry(
-                          padding:
-                              EdgeInsets.only(top: SizeConfig.homeAppBarHeight),
-                          onPressed: () {
-                            homeProvider.getHomePageData();
-                          },
-                        )
-                      : Padding(
-                          padding: EdgeInsets.only(
-                              top: SizeConfig.homeAppBarHeight + 20),
-                          child: RefreshIndicator(
-                            color: Theme.of(context).colorScheme.primary,
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primaryContainer,
-                            onRefresh: () async {
-                              await homeProvider.getHomePageData(notify: false);
-                            },
-                            child: homeProvider.maintenanceStatus
-                                ? const Maintenance()
-                                : ListView(
-                                    padding: EdgeInsets.zero,
-                                    children: [
-                                      if ((homeProvider
-                                                  .categoryData?.data?.length ??
-                                              0) >
-                                          0)
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 20, left: 20, top: 65),
-                                          child: Text(
-                                              AppLocalizations.of(context)!.tr(
-                                                  'what_would_you_want_today'),
-                                              textAlign: TextAlign.start,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall),
+                  ? Retry(
+                      padding: EdgeInsets.only(
+                        top: SizeConfig.homeAppBarHeight,
+                      ),
+                      onPressed: () {
+                        homeProvider.getHomePageData();
+                      },
+                    )
+                  : Padding(
+                      padding: EdgeInsets.only(
+                        top: SizeConfig.homeAppBarHeight + 20,
+                      ),
+                      child: RefreshIndicator(
+                        color: Theme.of(context).colorScheme.primary,
+                        backgroundColor: Theme.of(
+                          context,
+                        ).colorScheme.primaryContainer,
+                        onRefresh: () async {
+                          await homeProvider.getHomePageData(notify: false);
+                        },
+                        child: homeProvider.maintenanceStatus
+                            ? const Maintenance()
+                            : ListView(
+                                padding: EdgeInsets.zero,
+                                children: [
+                                  if ((homeProvider
+                                              .categoryData
+                                              ?.data
+                                              ?.length ??
+                                          0) >
+                                      0)
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        right: 20,
+                                        left: 20,
+                                        top: 65,
+                                      ),
+                                      child: Text(
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.tr('what_would_you_want_today'),
+                                        textAlign: TextAlign.start,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.titleSmall,
+                                      ),
+                                    ),
+                                  if (homeProvider.locationServiceStatus !=
+                                          LocationServiceStatus
+                                              .beingDetermined &&
+                                      !homeProvider.areaStatus) ...[
+                                    const NotSupportedArea(),
+                                  ] else ...[
+                                    const CategoriesGroup(),
+                                  ],
+                                  if (((homeProvider
+                                              .categoryData
+                                              ?.data
+                                              ?.length) ??
+                                          0) !=
+                                      0)
+                                    if (homeProvider.bestSeller != null)
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 8.0,
                                         ),
-                                      if (homeProvider.locationServiceStatus !=
-                                              LocationServiceStatus
-                                                  .beingDetermined &&
-                                          !homeProvider.areaStatus) ...[
-                                        const NotSupportedArea()
-                                      ] else ...[
-                                        const CategoriesGroup(),
-                                      ],
-                                      if (((homeProvider.categoryData?.data
-                                                  ?.length) ??
-                                              0) !=
-                                          0)
-                                        if (homeProvider.bestSeller != null)
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 8.0),
-                                            child: ProductsSection2(
-                                              title:
-                                                  AppLocalizations.of(context)!
-                                                      .tr('most_wanted'),
-                                              products: homeProvider.bestSeller,
-                                            ),
-                                          )
-                                    ],
-                                  ),
-                          ),
-                        ),
-          Positioned(
-            top: SizeConfig.homeAppBarHeight,
-            child: const AddressContainer(),
-          ),
-        ]);
-      }),
+                                        child: ProductsSection2(
+                                          title: AppLocalizations.of(
+                                            context,
+                                          )!.tr('most_wanted'),
+                                          products: homeProvider.bestSeller,
+                                        ),
+                                      ),
+                                ],
+                              ),
+                      ),
+                    ),
+              Positioned(
+                top: SizeConfig.homeAppBarHeight,
+                child: const AddressContainer(),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

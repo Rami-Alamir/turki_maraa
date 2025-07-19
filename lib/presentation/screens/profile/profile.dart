@@ -32,28 +32,30 @@ class Profile extends StatelessWidget {
         //   ),
         // ),
       ),
-      body: Consumer<Auth>(builder: (_, auth, __) {
-        return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-          child: auth.isLoading
-              ? const SpinkitIndicator()
-              : ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    const ProfileHeader(),
-                    if (auth.isAuth) const PersonalInfoCard(),
-                    const SettingsCard(),
-                    const HelpCard(),
-                    const CallCard(),
-                    if (auth.isAuth) const LogOutRow(),
-                    SocialMedia(
-                      color: Theme.of(context).colorScheme.secondaryContainer,
-                    ),
-                    const ProfileFooter()
-                  ],
-                ),
-        );
-      }),
+      body: Consumer<Auth>(
+        builder: (_, auth, _) {
+          return GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+            child: auth.isLoading
+                ? const SpinkitIndicator()
+                : ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      const ProfileHeader(),
+                      if (auth.isAuth) const PersonalInfoCard(),
+                      const SettingsCard(),
+                      const HelpCard(),
+                      const CallCard(),
+                      if (auth.isAuth) const LogOutRow(),
+                      SocialMedia(
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                      ),
+                      const ProfileFooter(),
+                    ],
+                  ),
+          );
+        },
+      ),
     );
   }
 }

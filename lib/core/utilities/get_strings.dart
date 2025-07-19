@@ -103,20 +103,19 @@ class GetStrings {
     return description;
   }
 
-  String currentLocation(BuildContext context,
-      String? currentLocationDescription, String? currentLocationDescription2) {
-    return AppLocalizations.of(context)!.locale!.languageCode == "ar"
-        ? (currentLocationDescription ??
-            AppLocalizations.of(context)!.tr('current_location'))
-        : (currentLocationDescription2 ??
-            AppLocalizations.of(context)!.tr('current_location'));
+  String currentLocation(
+    BuildContext context,
+    String? currentLocationDescription,
+  ) {
+    return (currentLocationDescription ??
+        AppLocalizations.of(context)!.tr('current_location'));
   }
 
   String getGender(BuildContext context, int value) {
     return value == 0
         ? AppLocalizations.of(context)!.tr('maleString')
         : value == 1
-            ? AppLocalizations.of(context)!.tr('femaleString')
-            : "";
+        ? AppLocalizations.of(context)!.tr('femaleString')
+        : "";
   }
 }

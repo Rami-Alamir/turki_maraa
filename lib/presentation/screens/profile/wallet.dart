@@ -30,16 +30,18 @@ class UserWalletState extends State<UserWallet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PrimaryAppBar(
-          back: true,
-          title: AppLocalizations.of(context)!.tr('credit'),
-        ),
-        body: Consumer<UserProvider>(builder: (_, userProvider, __) {
+      appBar: PrimaryAppBar(
+        back: true,
+        title: AppLocalizations.of(context)!.tr('credit'),
+      ),
+      body: Consumer<UserProvider>(
+        builder: (_, userProvider, _) {
           final LocationProvider locationProvider =
               Provider.of<LocationProvider>(context, listen: false);
           final String currency = sl<GetStrings>().getCurrency(
-              AppLocalizations.of(context)!.locale!.languageCode,
-              locationProvider.isoCountryCode!);
+            AppLocalizations.of(context)!.locale!.languageCode,
+            locationProvider.isoCountryCode!,
+          );
           return PageBuilder(
             requestStatus: userProvider.requestStatus,
             onError: () async {
@@ -61,33 +63,35 @@ class UserWalletState extends State<UserWallet> {
                       child: Text(
                         AppLocalizations.of(context)!.tr('transaction_details'),
                         textAlign: TextAlign.start,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
+                        style: Theme.of(context).textTheme.displayLarge!
                             .copyWith(
-                                fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                     ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount:
-                            (userProvider.wallet?.data?.walletLogs?.length ??
-                                0),
-                        padding: const EdgeInsets.all(0),
-                        itemBuilder: (_, int index) {
-                          return TransactionRow(
-                            transaction:
-                                userProvider.wallet!.data!.walletLogs![index],
-                            currency: currency,
-                          );
-                        })
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount:
+                          (userProvider.wallet?.data?.walletLogs?.length ?? 0),
+                      padding: const EdgeInsets.all(0),
+                      itemBuilder: (_, int index) {
+                        return TransactionRow(
+                          transaction:
+                              userProvider.wallet!.data!.walletLogs![index],
+                          currency: currency,
+                        );
+                      },
+                    ),
                   ],
                 ],
               ),
             ),
           );
-        }));
+        },
+      ),
+    );
   }
 }

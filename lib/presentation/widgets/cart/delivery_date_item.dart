@@ -19,7 +19,7 @@ class DeliveryDateItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<CartProvider>(
-      builder: (_, cartProvider, __) {
+      builder: (_, cartProvider, _) {
         final bool selected = cartProvider.selectedDate == selectedValue;
 
         return InkWell(

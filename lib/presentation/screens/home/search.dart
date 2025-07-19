@@ -21,26 +21,35 @@ class Search extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: Text(AppLocalizations.of(context)!.tr('search'),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontSize: 20, fontWeight: FontWeight.w700)),
+                  child: Text(
+                    AppLocalizations.of(context)!.tr('search'),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
                 InkWell(
                   onTap: () => Navigator.pop(context),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 10.0, right: 30, left: 30, bottom: 20),
-                    child: Text('X',
-                        style: Theme.of(context).textTheme.titleSmall),
+                      top: 10.0,
+                      right: 30,
+                      left: 30,
+                      bottom: 20,
+                    ),
+                    child: Text(
+                      'X',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
                   ),
                 ),
               ],
             ),
             const CustomSearchBar(),
-            Consumer<SearchProvider>(builder: (_, searchProvider, __) {
-              return ListView.builder(
+            Consumer<SearchProvider>(
+              builder: (_, searchProvider, _) {
+                return ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                   physics: const NeverScrollableScrollPhysics(),
@@ -49,11 +58,11 @@ class Search extends StatelessWidget {
                       : searchProvider.searchData.length,
                   padding: const EdgeInsets.all(0),
                   itemBuilder: (BuildContext ctxt, int index) {
-                    return SearchRow(
-                      item: searchProvider.searchData[index],
-                    );
-                  });
-            })
+                    return SearchRow(item: searchProvider.searchData[index]);
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -38,11 +38,12 @@ class ShoppingCartState extends State<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PrimaryAppBar(
-          title: AppLocalizations.of(context)!.tr('cart'),
-          back: false,
-        ),
-        body: Consumer<CartProvider>(builder: (_, cartProvider, __) {
+      appBar: PrimaryAppBar(
+        title: AppLocalizations.of(context)!.tr('cart'),
+        back: false,
+      ),
+      body: Consumer<CartProvider>(
+        builder: (_, cartProvider, _) {
           return PageBuilder(
             isAuth: cartProvider.isAuth,
             requestStatus: cartProvider.requestStatus,
@@ -69,11 +70,13 @@ class ShoppingCartState extends State<ShoppingCart> {
                                   // const DeliveryDate(),
                                   cartProvider.isAdhia
                                       ? DayOfSacrifice(
-                                          deliveryDataTime: cartProvider
+                                          deliveryDataTime:
+                                              cartProvider
                                                   .cartData
                                                   ?.currentCity
                                                   ?.dates ??
-                                              [])
+                                              [],
+                                        )
                                       : const DeliveryDate(),
                                   if (cartProvider.selectedDate != -1)
                                     const DeliveryPeriods(),
@@ -82,10 +85,10 @@ class ShoppingCartState extends State<ShoppingCart> {
                                   const Note(),
                                   SizedBox(
                                     height: SizeConfig.screenHeight! * 0.25,
-                                  )
+                                  ),
                                 ],
                               ),
-                              const CartBottomSheet()
+                              const CartBottomSheet(),
                             ],
                           ),
                   )
@@ -94,6 +97,8 @@ class ShoppingCartState extends State<ShoppingCart> {
                     title: 'empty_cart',
                   ),
           );
-        }));
+        },
+      ),
+    );
   }
 }

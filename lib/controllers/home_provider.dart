@@ -43,12 +43,11 @@ class HomeProvider with ChangeNotifier {
 
   // update location data
   Future<void> updateLocation(
-      LatLng? latLng,
-      String? isoCountryCode,
-      LocationServiceStatus? locationServiceStatus,
-      String? currentLocationDescriptionAr,
-      String? currentLocationDescriptionEn,
-      bool isHMS) async {
+    LatLng? latLng,
+    String? isoCountryCode,
+    LocationServiceStatus? locationServiceStatus,
+    bool isHMS,
+  ) async {
     _locationServiceStatus =
         locationServiceStatus ?? LocationServiceStatus.unableToDetermine;
     if (latLng != null) {
@@ -80,8 +79,10 @@ class HomeProvider with ChangeNotifier {
   Future<void> _getCategories() async {
     try {
       _maintenanceStatus = false;
-      _categoryData = await sl<HomeRepository>()
-          .getCategoriesList(_latLng!, _isoCountryCode!);
+      _categoryData = await sl<HomeRepository>().getCategoriesList(
+        _latLng!,
+        _isoCountryCode!,
+      );
       for (int i = 0; i < (_categoryData?.data?.length ?? 0); i++) {
         if (_categoryData!.data![i].activeTemp == 0) {
           _maintenanceStatus = true;
@@ -96,8 +97,10 @@ class HomeProvider with ChangeNotifier {
   //get Best Seller
   Future<void> _getBestSeller() async {
     try {
-      _bestSeller = await sl<ProductsRepository>()
-          .getBestSeller(_latLng!, _isoCountryCode!);
+      _bestSeller = await sl<ProductsRepository>().getBestSeller(
+        _latLng!,
+        _isoCountryCode!,
+      );
     } catch (_) {
       _requestStatus = RequestStatus.error;
     }
@@ -111,10 +114,7 @@ class HomeProvider with ChangeNotifier {
         if (notify) {
           notifyListeners();
         }
-        await Future.wait([
-          _getCategories(),
-          _getBestSeller(),
-        ]);
+        await Future.wait([_getCategories(), _getBestSeller()]);
       }
       _requestStatus = RequestStatus.completed;
     } catch (_) {

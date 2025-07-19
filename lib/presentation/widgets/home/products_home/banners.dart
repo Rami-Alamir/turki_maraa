@@ -27,13 +27,14 @@ class BannersState extends State<BannersSlider> {
             width: SizeConfig.screenWidth,
             child: CarouselSlider(
               options: CarouselOptions(
-                  viewportFraction: 1,
-                  onPageChanged: _onPageChanged,
-                  enableInfiniteScroll: true,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 5),
-                  height: 270,
-                  disableCenter: false),
+                viewportFraction: 1,
+                onPageChanged: _onPageChanged,
+                enableInfiniteScroll: true,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 5),
+                height: 270,
+                disableCenter: false,
+              ),
               items: widget.bannersData.data!.map((item) {
                 return Builder(
                   builder: (BuildContext context) {
@@ -41,11 +42,14 @@ class BannersState extends State<BannersSlider> {
                       onTap: () {
                         try {
                           if (item.type == "2") {
-                            Navigator.pushNamed(context, productDetails,
-                                arguments: <String, dynamic>{
-                                  "id": item.productId,
-                                  "categoryId": 0
-                                });
+                            Navigator.pushNamed(
+                              context,
+                              productDetails,
+                              arguments: <String, dynamic>{
+                                "id": item.productId,
+                                "categoryId": 0,
+                              },
+                            );
                           } else if (item.type == "1") {
                             _launchURL(item.redirectUrl.toString());
                           }
@@ -83,7 +87,7 @@ class BannersState extends State<BannersSlider> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -100,7 +104,7 @@ class BannersState extends State<BannersSlider> {
     } catch (_) {}
   }
 
-  _onPageChanged(int index, CarouselPageChangedReason reason) {
+  void _onPageChanged(int index, CarouselPageChangedReason reason) {
     setState(() {
       this.index = index;
     });

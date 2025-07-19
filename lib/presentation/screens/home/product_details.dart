@@ -24,35 +24,45 @@ class ProductDetailsState extends State<ProductDetails> {
 
   @override
   void initState() {
-    final ProductProvider productProvider =
-        Provider.of<ProductProvider>(context, listen: false);
+    final ProductProvider productProvider = Provider.of<ProductProvider>(
+      context,
+      listen: false,
+    );
     _index = productProvider.productData.length;
     _similarIndex = productProvider.similarProductsList.length;
-    productProvider.initLoading(_index);
+    productProvider.initLoading(_index!);
     productProvider.initExtras();
     productProvider.getProductData(widget.data['id'].toString(), _index!, true);
     productProvider.getSimilarProducts(
-        _similarIndex!, widget.data['categoryId'].toString());
-    final FavouriteProvider favourite =
-        Provider.of<FavouriteProvider>(context, listen: false);
+      _similarIndex!,
+      widget.data['categoryId'].toString(),
+    );
+    final FavouriteProvider favourite = Provider.of<FavouriteProvider>(
+      context,
+      listen: false,
+    );
     productProvider.setIsFavourite = favourite.isFavourite(widget.data['id']);
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant ProductDetails oldWidget) {
-    final FavouriteProvider favourite =
-        Provider.of<FavouriteProvider>(context, listen: false);
-    final ProductProvider productProvider =
-        Provider.of<ProductProvider>(context);
+    final FavouriteProvider favourite = Provider.of<FavouriteProvider>(
+      context,
+      listen: false,
+    );
+    final ProductProvider productProvider = Provider.of<ProductProvider>(
+      context,
+    );
     productProvider.setIsFavourite = favourite.isFavourite(widget.data['id']);
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    final ProductProvider productProvider =
-        Provider.of<ProductProvider>(context);
+    final ProductProvider productProvider = Provider.of<ProductProvider>(
+      context,
+    );
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -62,56 +72,66 @@ class ProductDetailsState extends State<ProductDetails> {
         onError: () {
           productProvider.setProductIsLoading(_index!);
           productProvider.getProductData(
-              widget.data['id'].toString(), _index!, false);
+            widget.data['id'].toString(),
+            _index!,
+            false,
+          );
         },
         child: Stack(
           children: [
             RefreshIndicator(
-                color: Theme.of(context).colorScheme.primary,
-                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                onRefresh: () async {
-                  await productProvider.getProductData(
-                      widget.data['id'].toString(), _index!, false);
-                },
-                child: ProductDetailsList(
-                    index: _index!, similarIndex: _similarIndex!)),
+              color: Theme.of(context).colorScheme.primary,
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              onRefresh: () async {
+                await productProvider.getProductData(
+                  widget.data['id'].toString(),
+                  _index!,
+                  false,
+                );
+              },
+              child: ProductDetailsList(
+                index: _index!,
+                similarIndex: _similarIndex!,
+              ),
+            ),
             Positioned.directional(
-                start: 20,
-                top: 52,
-                textDirection:
-                    AppLocalizations.of(context)!.locale == const Locale('ar')
-                        ? TextDirection.rtl
-                        : TextDirection.ltr,
-                child: CircleIcon(
-                    icon: Icons.arrow_back_ios,
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0))),
+              start: 20,
+              top: 52,
+              textDirection:
+                  AppLocalizations.of(context)!.locale == const Locale('ar')
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              child: CircleIcon(
+                icon: Icons.arrow_back_ios,
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0),
+              ),
+            ),
           ],
         ),
       ),
       bottomSheet:
           productProvider.requestStatus[_index!] == RequestStatus.completed &&
-                  productProvider.productData[_index!].data!.isActive! &&
-                  productProvider.productData[_index!].data!.isAvailable!
-              ? ProductDetailsFooter(
-                  categoryId: widget.data['categoryId'],
-                  count: _count,
-                  index: _index!,
-                  subtract: () {
-                    setState(() {
-                      _count = _count == 1 ? _count : _count - 1;
-                    });
-                  },
-                  add: () {
-                    setState(() {
-                      _count += 1;
-                    });
-                  },
-                )
-              : null,
+              productProvider.productData[_index!].data!.isActive! &&
+              productProvider.productData[_index!].data!.isAvailable!
+          ? ProductDetailsFooter(
+              categoryId: widget.data['categoryId'],
+              count: _count,
+              index: _index!,
+              subtract: () {
+                setState(() {
+                  _count = _count == 1 ? _count : _count - 1;
+                });
+              },
+              add: () {
+                setState(() {
+                  _count += 1;
+                });
+              },
+            )
+          : null,
     );
   }
 }

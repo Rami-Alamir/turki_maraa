@@ -27,7 +27,7 @@ class CartCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartProvider>(builder: (_, cartProvider, __) {
+    return Consumer<CartProvider>(builder: (_, cartProvider, _) {
       final bool language =
           AppLocalizations.of(context)!.locale == const Locale('ar');
       String currency = sl<GetStrings>().getCurrency(

@@ -12,17 +12,19 @@ class IntroLanguage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Consumer<AppLanguage>(builder: (_, lang, __) {
-            return TextButton(
-              onPressed: () {
-                lang.changeLanguage();
-              },
-              child: Text(
-                lang.language == 'ar' ? 'En' : 'العربية',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            );
-          }),
+          Consumer<AppLanguage>(
+            builder: (_, lang, _) {
+              return TextButton(
+                onPressed: () {
+                  lang.changeLanguage();
+                },
+                child: Text(
+                  lang.language == 'ar' ? 'En' : 'العربية',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

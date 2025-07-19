@@ -6,7 +6,6 @@ import '../core/utilities/dialog_helper.dart';
 import '../core/service/service_locator.dart';
 import '/../core/utilities/get_strings.dart';
 import '/../core/utilities/show_snack_bar.dart';
-import '/../core/utilities/app_localizations.dart';
 import '/../models/user_address.dart';
 import '/../repository/user_repository.dart';
 
@@ -60,27 +59,29 @@ class AddressProvider with ChangeNotifier {
   Future<void> getAddressList() async {
     if (_isAuth ?? false) {
       try {
-        _userAddress =
-            await sl<UserRepository>().getAddressList(_authorization!);
+        _userAddress = await sl<UserRepository>().getAddressList(
+          _authorization!,
+        );
         notifyListeners();
       } catch (_) {}
     }
   }
 
-  Future<int> addNewAddress(BuildContext context,
-      {LatLng? latLng,
-      String? isoCountryCode,
-      bool showIndicatorDialog = true}) async {
-    String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
+  Future<int> addNewAddress(
+    BuildContext context, {
+    LatLng? latLng,
+    String? isoCountryCode,
+    bool showIndicatorDialog = true,
+  }) async {
     if (latLng == null && (_isAuth ?? false) && showIndicatorDialog) {
       sl<DialogHelper>().showIndicatorDialog(context);
     }
     http.Response response;
     try {
       List<Placemark> placemark = await placemarkFromCoordinates(
-          latLng?.latitude ?? _mapLatLng!.latitude,
-          latLng?.longitude ?? _mapLatLng!.longitude,
-          localeIdentifier: languageCode);
+        latLng?.latitude ?? _mapLatLng!.latitude,
+        latLng?.longitude ?? _mapLatLng!.longitude,
+      );
       String address = sl<GetStrings>().locationDescription(placemark.first);
       String comment = descriptionController.text.isNotEmpty
           ? descriptionController.text
@@ -94,8 +95,8 @@ class AddressProvider with ChangeNotifier {
           "label": addressNameController.text.isNotEmpty
               ? addressNameController.text
               : address.length > 99
-                  ? address.substring(0, 90)
-                  : address,
+              ? address.substring(0, 90)
+              : address,
           "is_default": "0",
           "long": "${latLng?.longitude ?? _mapLatLng!.longitude}",
           "lat": "${latLng?.latitude ?? _mapLatLng!.latitude}",
@@ -115,27 +116,31 @@ class AddressProvider with ChangeNotifier {
   }
 
   Future<int> updateAddress(BuildContext context, int addressId) async {
-    String languageCode = AppLocalizations.of(context)!.locale!.languageCode;
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
       List<Placemark> placemark = await placemarkFromCoordinates(
-          _mapLatLng!.latitude, _mapLatLng!.longitude,
-          localeIdentifier: languageCode);
+        _mapLatLng!.latitude,
+        _mapLatLng!.longitude,
+      );
       String address = sl<GetStrings>().locationDescription(placemark.first);
       String comment = descriptionController.text.isNotEmpty
           ? descriptionController.text
           : sl<GetStrings>().locationDescription(placemark.first);
-      var response = await sl<UserRepository>().updateAddress({
-        "country_iso_code": placemark.first.isoCountryCode,
-        "address": address,
-        "comment": comment,
-        "label": addressNameController.text.isNotEmpty
-            ? addressNameController.text
-            : comment,
-        "is_default": "0",
-        "long": "${_mapLatLng!.longitude}",
-        "lat": "${_mapLatLng!.latitude}",
-      }, _authorization!, "$addressId");
+      var response = await sl<UserRepository>().updateAddress(
+        {
+          "country_iso_code": placemark.first.isoCountryCode,
+          "address": address,
+          "comment": comment,
+          "label": addressNameController.text.isNotEmpty
+              ? addressNameController.text
+              : comment,
+          "is_default": "0",
+          "long": "${_mapLatLng!.longitude}",
+          "lat": "${_mapLatLng!.latitude}",
+        },
+        _authorization!,
+        "$addressId",
+      );
       if (response.statusCode == 200) {
         await getAddressList();
         notifyListeners();
@@ -146,16 +151,23 @@ class AddressProvider with ChangeNotifier {
   }
 
   Future<int> deleteAddress(
-      BuildContext context, int addressId, int index) async {
+    BuildContext context,
+    int addressId,
+    int index,
+  ) async {
     if (index == _selectedAddress) {
       sl<ShowSnackBar>().show(
-          context, "the_address_used_as_a_delivery_address_cannot_be_deleted");
+        context,
+        "the_address_used_as_a_delivery_address_cannot_be_deleted",
+      );
       return 1;
     } else {
       try {
         sl<DialogHelper>().showIndicatorDialog(context);
-        var response =
-            await UserRepository().deleteAddress(_authorization!, "$addressId");
+        var response = await UserRepository().deleteAddress(
+          _authorization!,
+          "$addressId",
+        );
         if (response.statusCode == 200) {
           await getAddressList();
         }
@@ -167,10 +179,11 @@ class AddressProvider with ChangeNotifier {
     }
   }
 
-  Future<String> description(String language) async {
+  Future<String> description() async {
     List<Placemark> placemark = await placemarkFromCoordinates(
-        _mapLatLng!.latitude, _mapLatLng!.longitude,
-        localeIdentifier: language);
+      _mapLatLng!.latitude,
+      _mapLatLng!.longitude,
+    );
     notifyListeners();
     return sl<GetStrings>().locationDescription(placemark.first);
   }

@@ -20,10 +20,11 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Auth>(builder: (_, auth, __) {
-      return Directionality(
-        textDirection: TextDirection.ltr,
-        child: Padding(
+    return Consumer<Auth>(
+      builder: (_, auth, _) {
+        return Directionality(
+          textDirection: TextDirection.ltr,
+          child: Padding(
             padding: const EdgeInsets.only(top: 25.0),
             child: Center(
               child: SizedBox(
@@ -58,8 +59,9 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
                     fieldHeight: 50,
                     fieldWidth: 50,
                     errorBorderColor: Theme.of(context).primaryColor,
-                    inactiveColor:
-                        Theme.of(context).colorScheme.secondaryContainer,
+                    inactiveColor: Theme.of(
+                      context,
+                    ).colorScheme.secondaryContainer,
                     activeColor: Theme.of(context).colorScheme.primary,
                     inactiveFillColor: Theme.of(context).colorScheme.onSurface,
                     selectedFillColor: Theme.of(context).colorScheme.onSurface,
@@ -76,7 +78,7 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
                       offset: Offset(0, 1),
                       color: AppColors.black12,
                       blurRadius: 0,
-                    )
+                    ),
                   ],
                   onCompleted: (v) async {
                     int statusCode = await auth.verifyOTP(context);
@@ -90,10 +92,11 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
                         );
                       } else {
                         sl<ShowSnackBar>().show(
-                            context,
-                            statusCode == 400
-                                ? 'invalid_activation_code'
-                                : 'unexpected_error');
+                          context,
+                          statusCode == 400
+                              ? 'invalid_activation_code'
+                              : 'unexpected_error',
+                        );
                       }
                     }
                   },
@@ -105,9 +108,11 @@ class _PinCodeFieldsState extends State<PinCodeFields> {
                   },
                 ),
               ),
-            )),
-      );
-    });
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override

@@ -20,8 +20,9 @@ class ProductHeaderState extends State<ProductHeader> {
   Widget build(BuildContext context) {
     return Container(
       height: SizeConfig.screenWidth,
-      constraints:
-          BoxConstraints(maxHeight: SizeConfig.screenWidth! > 500 ? 600 : 400),
+      constraints: BoxConstraints(
+        maxHeight: SizeConfig.screenWidth! > 500 ? 600 : 400,
+      ),
       color: Colors.transparent,
       width: SizeConfig.screenWidth,
       child: Stack(
@@ -69,7 +70,7 @@ class ProductHeaderState extends State<ProductHeader> {
     );
   }
 
-  _onPageChanged(int index, CarouselPageChangedReason reason) {
+  void _onPageChanged(int index, CarouselPageChangedReason reason) {
     setState(() {
       this.index = index;
     });

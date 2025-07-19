@@ -94,7 +94,7 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void initLoading(index) {
+  void initLoading(int index) {
     _requestStatus.insert(index, RequestStatus.isLoading);
   }
 
@@ -122,8 +122,11 @@ class ProductProvider with ChangeNotifier {
       if (isNew) {
         _productData.insert(index, ProductDetails());
       }
-      product = await sl<ProductsRepository>()
-          .getProduct(id, _latLng!, _isoCountryCode!);
+      product = await sl<ProductsRepository>().getProduct(
+        id,
+        _latLng!,
+        _isoCountryCode!,
+      );
       _productData[index] = product;
       if (_productData[index].data!.sizes!.length == 1) _selectedSize = 0;
       _requestStatus[index] = RequestStatus.completed;
@@ -157,26 +160,25 @@ class ProductProvider with ChangeNotifier {
 
   double getProductPrice(int index) {
     return sl<CalculateHelper>().getProductPrice(
-        productData: _productData[index],
-        selectedSize: _selectedSize,
-        selectedPackaging: _selectedPackaging,
-        selectedChopping: _selectedChopping,
-        selectedShalwata: _selectedShalwata);
+      productData: _productData[index],
+      selectedSize: _selectedSize,
+      selectedPackaging: _selectedPackaging,
+      selectedChopping: _selectedChopping,
+      selectedShalwata: _selectedShalwata,
+    );
   }
 
   double getProductSalePrice(int index) {
     return sl<CalculateHelper>().getProductSalePrice(
-        productData: _productData[index],
-        selectedSize: _selectedSize,
-        selectedPackaging: _selectedPackaging,
-        selectedChopping: _selectedChopping,
-        selectedShalwata: _selectedShalwata);
+      productData: _productData[index],
+      selectedSize: _selectedSize,
+      selectedPackaging: _selectedPackaging,
+      selectedChopping: _selectedChopping,
+      selectedShalwata: _selectedShalwata,
+    );
   }
 
-  Future<void> updateLocation(
-    LatLng? latLng,
-    String? isoCountryCode,
-  ) async {
+  Future<void> updateLocation(LatLng? latLng, String? isoCountryCode) async {
     if (latLng != null) {
       if (latLng != _latLng) {
         _latLng = latLng;

@@ -15,11 +15,12 @@ class Favourite extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PrimaryAppBar(
-          title: AppLocalizations.of(context)!.tr('favorite'),
-          back: true,
-        ),
-        body: Consumer<FavouriteProvider>(builder: (_, favouriteProvider, __) {
+      appBar: PrimaryAppBar(
+        title: AppLocalizations.of(context)!.tr('favorite'),
+        back: true,
+      ),
+      body: Consumer<FavouriteProvider>(
+        builder: (_, favouriteProvider, _) {
           return PageBuilder(
             isAuth: favouriteProvider.isAuth,
             emptyStateTitle: 'empty_favourite',
@@ -30,23 +31,25 @@ class Favourite extends StatelessWidget {
               favouriteProvider.getFavouriteList(notify: true);
             },
             child: RefreshIndicator(
-                color: Theme.of(context).colorScheme.primary,
-                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                onRefresh: () async {
-                  await favouriteProvider.getFavouriteList();
-                },
-                child:
-                    ((favouriteProvider.favourite?.dataT?.data?.length) ?? 0) ==
-                            0
-                        ? SizedBox(
-                            height: SizeConfig.screenHeight,
-                            child: const EmptyList(
-                              title: 'empty_favourite',
-                              image: FixedAssets.emptyFavourite,
-                            ),
-                          )
-                        : const FavouriteList()),
+              color: Theme.of(context).colorScheme.primary,
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              onRefresh: () async {
+                await favouriteProvider.getFavouriteList();
+              },
+              child:
+                  ((favouriteProvider.favourite?.dataT?.data?.length) ?? 0) == 0
+                  ? SizedBox(
+                      height: SizeConfig.screenHeight,
+                      child: const EmptyList(
+                        title: 'empty_favourite',
+                        image: FixedAssets.emptyFavourite,
+                      ),
+                    )
+                  : const FavouriteList(),
+            ),
           );
-        }));
+        },
+      ),
+    );
   }
 }

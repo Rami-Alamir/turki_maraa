@@ -30,7 +30,7 @@ class AddressBox extends StatelessWidget {
                   color: Theme.of(context).colorScheme.shadow,
                   blurRadius: 6,
                   spreadRadius: 0.5,
-                )
+                ),
               ],
             ),
             child: Padding(
@@ -39,34 +39,38 @@ class AddressBox extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                      width: SizeConfig.screenWidth! - 110,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.place,
-                            color: Theme.of(context).colorScheme.tertiary,
-                            size: 17.5,
-                          ),
-                          SizedBox(
-                            width: SizeConfig.screenWidth! - 130,
-                            child: Text(
-                              locationName(context,
-                                  context.watch<LocationProvider>(), isPickup),
-                              maxLines: 3,
-                              style: Theme.of(context).textTheme.displayLarge,
+                    width: SizeConfig.screenWidth! - 110,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.place,
+                          color: Theme.of(context).colorScheme.tertiary,
+                          size: 17.5,
+                        ),
+                        SizedBox(
+                          width: SizeConfig.screenWidth! - 130,
+                          child: Text(
+                            locationName(
+                              context,
+                              context.watch<LocationProvider>(),
+                              isPickup,
                             ),
+                            maxLines: 3,
+                            style: Theme.of(context).textTheme.displayLarge,
                           ),
-                        ],
-                      )),
+                        ),
+                      ],
+                    ),
+                  ),
                   Icon(
                     selected
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
                     color: Theme.of(context).colorScheme.tertiary,
                     size: 35,
-                  )
+                  ),
                 ],
               ),
             ),
@@ -77,7 +81,10 @@ class AddressBox extends StatelessWidget {
   }
 
   String locationName(
-      BuildContext context, LocationProvider locationProvider, bool isPickup) {
+    BuildContext context,
+    LocationProvider locationProvider,
+    bool isPickup,
+  ) {
     LocationServiceStatus locationServiceStatus =
         locationProvider.locationServiceStatus;
     if (isPickup) {
@@ -90,12 +97,13 @@ class AddressBox extends StatelessWidget {
         case LocationServiceStatus.savedLocation:
           return locationProvider.selectedLocationDescription;
         case LocationServiceStatus.beingDetermined:
-          return AppLocalizations.of(context)!
-              .tr('your_location_is_being_determined');
+          return AppLocalizations.of(
+            context,
+          )!.tr('your_location_is_being_determined');
         case LocationServiceStatus.noAccess:
           return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${AppLocalizations.of(context)!.tr('choose')}");
         case LocationServiceStatus.fetched:
-          return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${sl<GetStrings>().currentLocation(context, locationProvider.currentLocationDescriptionAr, locationProvider.currentLocationDescriptionEn)}");
+          return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${sl<GetStrings>().currentLocation(context, locationProvider.currentLocationDescription)}");
         default:
           return ("${AppLocalizations.of(context)!.tr('delivery_to')} ${AppLocalizations.of(context)!.tr('choose')}");
       }

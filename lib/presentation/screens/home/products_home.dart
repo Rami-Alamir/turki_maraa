@@ -21,9 +21,7 @@ class ProductsHomeState extends State<ProductsHome> {
   @override
   void initState() {
     _scrollController = ScrollController()..addListener(() => setState(() {}));
-    context.read<ProductsProvider>().getFoodsPageData(
-          widget.id,
-        );
+    context.read<ProductsProvider>().getFoodsPageData(widget.id);
     super.initState();
   }
 
@@ -35,36 +33,38 @@ class ProductsHomeState extends State<ProductsHome> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductsProvider>(builder: (_, productsProvider, __) {
-      return Scaffold(
-        appBar: ((productsProvider.bannersData?.data?.length ?? 0) == 0)
-            ? PrimaryAppBar(
-                action: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                    onPressed: () => Navigator.pushNamed(context, search),
-                    icon: Icon(
-                      TURKIICONS.search,
-                      size: 25,
-                      color: Theme.of(context).colorScheme.primary,
+    return Consumer<ProductsProvider>(
+      builder: (_, productsProvider, _) {
+        return Scaffold(
+          appBar: ((productsProvider.bannersData?.data?.length ?? 0) == 0)
+              ? PrimaryAppBar(
+                  action: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IconButton(
+                      onPressed: () => Navigator.pushNamed(context, search),
+                      icon: Icon(
+                        TURKIICONS.search,
+                        size: 25,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
-                ),
-              )
-            : null,
-        body: PageBuilder(
-          padding: const EdgeInsets.only(top: 60),
-          requestStatus: productsProvider.requestStatus,
-          onError: () {
-            productsProvider.getFoodsPageData(widget.id, notify: true);
-          },
-          child: ProductsHomeBody(
-            id: widget.id,
-            scrollController: _scrollController,
-            changeColor: _changeColor,
+                )
+              : null,
+          body: PageBuilder(
+            padding: const EdgeInsets.only(top: 60),
+            requestStatus: productsProvider.requestStatus,
+            onError: () {
+              productsProvider.getFoodsPageData(widget.id, notify: true);
+            },
+            child: ProductsHomeBody(
+              id: widget.id,
+              scrollController: _scrollController,
+              changeColor: _changeColor,
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

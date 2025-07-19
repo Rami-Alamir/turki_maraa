@@ -17,84 +17,89 @@ import '../../controllers/search_provider.dart';
 import '../../controllers/user_provider.dart';
 
 class ProvidersList {
+  // ignore: strict_top_level_inference
   static providersList() {
     return [
       ChangeNotifierProvider<Auth>(create: (context) => Auth()),
       ChangeNotifierProvider<DrawerProvider>(
-          create: (context) => DrawerProvider()),
+        create: (context) => DrawerProvider(),
+      ),
       ChangeNotifierProvider<LocationProvider>(
-          create: (context) => LocationProvider()),
+        create: (context) => LocationProvider(),
+      ),
       ChangeNotifierProxyProvider<Auth, UserProvider>(
-          create: (context) => UserProvider(),
-          update: (_, auth, user) => user!..updateUserData(auth.userData)),
+        create: (context) => UserProvider(),
+        update: (_, auth, user) => user!..updateUserData(auth.userData),
+      ),
       ChangeNotifierProxyProvider<Auth, AddressProvider>(
-          create: (context) => AddressProvider(),
-          update: (_, auth, user) =>
-              user!..updateAddressProvider(auth.isAuth, auth.accessToken)),
+        create: (context) => AddressProvider(),
+        update: (_, auth, user) =>
+            user!..updateAddressProvider(auth.isAuth, auth.accessToken),
+      ),
       ChangeNotifierProxyProvider<Auth, OrdersProvider>(
-          create: (context) => OrdersProvider(),
-          update: (_, auth, orders) =>
-              orders!..updateOrderProvider(auth.accessToken, auth.isAuth)),
+        create: (context) => OrdersProvider(),
+        update: (_, auth, orders) =>
+            orders!..updateOrderProvider(auth.accessToken, auth.isAuth),
+      ),
       ChangeNotifierProxyProvider<LocationProvider, HomeProvider>(
-          create: (context) => HomeProvider(),
-          update: (_, location, home) => home!
-            ..updateLocation(
-                location.latLng,
-                location.isoCountryCode,
-                location.locationServiceStatus,
-                location.currentLocationDescriptionAr,
-                location.currentLocationDescriptionEn,
-                location.isHms)),
+        create: (context) => HomeProvider(),
+        update: (_, location, home) => home!
+          ..updateLocation(
+            location.latLng,
+            location.isoCountryCode,
+            location.locationServiceStatus,
+            location.isHms,
+          ),
+      ),
       ChangeNotifierProxyProvider<LocationProvider, AppProvider>(
-          create: (context) => AppProvider(),
-          update: (_, location, app) =>
-              app!..updateProvider(location.isHms, location.isoCountryCode)),
+        create: (context) => AppProvider(),
+        update: (_, location, app) =>
+            app!..updateProvider(location.isHms, location.isoCountryCode),
+      ),
       ChangeNotifierProxyProvider<LocationProvider, SearchProvider>(
-          create: (context) => SearchProvider(),
-          update: (_, location, search) => search!
-            ..updateLocation(
-              location.latLng,
-              location.isoCountryCode,
-            )),
+        create: (context) => SearchProvider(),
+        update: (_, location, search) =>
+            search!..updateLocation(location.latLng, location.isoCountryCode),
+      ),
       ChangeNotifierProxyProvider<LocationProvider, ProductsProvider>(
-          create: (context) => ProductsProvider(),
-          update: (_, location, product) => product!
-            ..updateLocation(
-              location.latLng,
-              location.isoCountryCode,
-            )),
+        create: (context) => ProductsProvider(),
+        update: (_, location, product) =>
+            product!..updateLocation(location.latLng, location.isoCountryCode),
+      ),
       ChangeNotifierProxyProvider<LocationProvider, ProductProvider>(
-          create: (context) => ProductProvider(),
-          update: (_, location, product) => product!
-            ..updateLocation(
-              location.latLng,
-              location.isoCountryCode,
-            )),
+        create: (context) => ProductProvider(),
+        update: (_, location, product) =>
+            product!..updateLocation(location.latLng, location.isoCountryCode),
+      ),
       ChangeNotifierProxyProvider<LocationProvider, DiscoverProvider>(
-          create: (context) => DiscoverProvider(),
-          update: (_, location, discover) => discover!
-            ..updateLocation(
-              location.latLng,
-              location.isoCountryCode,
-            )),
+        create: (context) => DiscoverProvider(),
+        update: (_, location, discover) =>
+            discover!..updateLocation(location.latLng, location.isoCountryCode),
+      ),
       ChangeNotifierProvider<AppLanguage>(create: (context) => AppLanguage()),
       ChangeNotifierProvider<AppTheme>(create: (context) => AppTheme()),
       ChangeNotifierProxyProvider2<Auth, LocationProvider, CartProvider>(
-          create: (context) => CartProvider(),
-          update: (_, auth, location, cart) => cart!
-            ..updateCartProvider(
-                auth.accessToken,
-                auth.isAuth,
-                location.latLng,
-                auth.userData,
-                location.isoCountryCode,
-                location.currentLocationDescriptionAr,
-                location.currentLocationDescriptionEn)),
+        create: (context) => CartProvider(),
+        update: (_, auth, location, cart) => cart!
+          ..updateCartProvider(
+            auth.accessToken,
+            auth.isAuth,
+            location.latLng,
+            auth.userData,
+            location.isoCountryCode,
+            location.currentLocationDescription,
+          ),
+      ),
       ChangeNotifierProxyProvider2<Auth, LocationProvider, FavouriteProvider>(
-          create: (context) => FavouriteProvider(),
-          update: (_, auth, location, favourite) => favourite!
-            ..updateFavouriteProvider(auth.accessToken, auth.isAuth,
-                location.latLng, location.isoCountryCode)),
+        create: (context) => FavouriteProvider(),
+        update: (_, auth, location, favourite) => favourite!
+          ..updateFavouriteProvider(
+            auth.accessToken,
+            auth.isAuth,
+            location.latLng,
+            location.isoCountryCode,
+          ),
+      ),
     ];
   }
 }

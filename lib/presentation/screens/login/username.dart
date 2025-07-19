@@ -25,19 +25,21 @@ class UsernameState extends State<Username> {
     return ScaffoldMessenger(
       key: scaffoldMessengerKey,
       child: Scaffold(
-          extendBody: true,
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            elevation: 0,
-            iconTheme:
-                IconThemeData(color: Theme.of(context).colorScheme.primary),
-            backgroundColor: Colors.transparent,
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          elevation: 0,
+          iconTheme: IconThemeData(
+            color: Theme.of(context).colorScheme.primary,
           ),
-          body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(FocusNode());
-            },
-            child: Consumer<Auth>(builder: (_, auth, __) {
+          backgroundColor: Colors.transparent,
+        ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: Consumer<Auth>(
+            builder: (_, auth, _) {
               return ListView(
                 children: [
                   Padding(
@@ -61,46 +63,61 @@ class UsernameState extends State<Username> {
                     ),
                   ),
                   RoundedRectangleButton(
-                      padding:
-                          const EdgeInsets.only(top: 20, right: 20, left: 20),
-                      title: AppLocalizations.of(context)!.tr('next'),
-                      onPressed: () async {
-                        if (userNameFormKey.currentState!.validate()) {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          int statusCode = await auth.addUsername(context);
-                          if (context.mounted) {
-                            show(context, statusCode, scaffoldMessengerKey);
-                          }
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      right: 20,
+                      left: 20,
+                    ),
+                    title: AppLocalizations.of(context)!.tr('next'),
+                    onPressed: () async {
+                      if (userNameFormKey.currentState!.validate()) {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        int statusCode = await auth.addUsername(context);
+                        if (context.mounted) {
+                          show(context, statusCode, scaffoldMessengerKey);
                         }
-                      }),
+                      }
+                    },
+                  ),
                 ],
               );
-            }),
-          )),
+            },
+          ),
+        ),
+      ),
     );
   }
 
   void show(BuildContext context, int statusCode, scaffoldMessengerKey) {
     switch (statusCode) {
       case 1:
-        scaffoldMessengerKey.currentState.showSnackBar(SnackBar(
+        scaffoldMessengerKey.currentState.showSnackBar(
+          SnackBar(
             content: Text(
-          AppLocalizations.of(context)!.tr("please_enter_your_name"),
-          textAlign: TextAlign.center,
-        )));
+              AppLocalizations.of(context)!.tr("please_enter_your_name"),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
         break;
       case 200:
         Navigator.of(context).pop();
         Navigator.pushNamedAndRemoveUntil(
-            context, app, ModalRoute.withName('/'));
+          context,
+          app,
+          ModalRoute.withName('/'),
+        );
         break;
       default:
         Navigator.of(context).pop();
-        scaffoldMessengerKey.currentState.showSnackBar(SnackBar(
+        scaffoldMessengerKey.currentState.showSnackBar(
+          SnackBar(
             content: Text(
-          AppLocalizations.of(context)!.tr("unexpected_error"),
-          textAlign: TextAlign.center,
-        )));
+              AppLocalizations.of(context)!.tr("unexpected_error"),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
         break;
     }
   }

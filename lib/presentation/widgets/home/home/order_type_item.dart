@@ -19,7 +19,7 @@ class OrderTypeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
-      builder: (_, homeProvider, __) {
+      builder: (_, homeProvider, _) {
         bool selected = homeProvider.selectedOrderType == type;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),

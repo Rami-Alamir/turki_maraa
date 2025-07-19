@@ -18,7 +18,7 @@ class ProductsProvider with ChangeNotifier {
   LatLng? _latLng;
   String? _isoCountryCode;
   BannersData? get bannersData => _bannersData;
-  get bannersList => _bannersList;
+  List get bannersList => _bannersList;
   Product get productsList => _productsList!;
   DiscoverData? get discoverData => _discoverData;
   RequestStatus get requestStatus => _requestStatus;
@@ -28,8 +28,11 @@ class ProductsProvider with ChangeNotifier {
     _bannersList.clear();
   }
 
-  Future<void> getFoodsPageData(int id,
-      {bool notify = false, bool isLoading = true}) async {
+  Future<void> getFoodsPageData(
+    int id, {
+    bool notify = false,
+    bool isLoading = true,
+  }) async {
     if (isLoading) {
       _requestStatus = RequestStatus.isLoading;
     }
@@ -52,15 +55,21 @@ class ProductsProvider with ChangeNotifier {
   Future<void> _getDiscoverList(int categoryId) async {
     _discoverData = null;
     try {
-      _discoverData = await sl<HomeRepository>()
-          .getDiscover(categoryId, _latLng!, _isoCountryCode!);
+      _discoverData = await sl<HomeRepository>().getDiscover(
+        categoryId,
+        _latLng!,
+        _isoCountryCode!,
+      );
     } catch (_) {}
   }
 
   Future<void> _getBanners(int categoryId) async {
     try {
-      _bannersData = await sl<HomeRepository>()
-          .getBannersList(categoryId, _latLng!, _isoCountryCode!);
+      _bannersData = await sl<HomeRepository>().getBannersList(
+        categoryId,
+        _latLng!,
+        _isoCountryCode!,
+      );
     } catch (_) {
       _requestStatus = RequestStatus.error;
     }
@@ -68,18 +77,18 @@ class ProductsProvider with ChangeNotifier {
 
   Future<void> _getProducts(String id) async {
     try {
-      _productsList = await sl<ProductsRepository>()
-          .getProductsList(id, _latLng!, _isoCountryCode!);
+      _productsList = await sl<ProductsRepository>().getProductsList(
+        id,
+        _latLng!,
+        _isoCountryCode!,
+      );
     } catch (_) {
       _requestStatus = RequestStatus.error;
     }
   }
 
   // update location data
-  Future<void> updateLocation(
-    LatLng? latLng,
-    String? isoCountryCode,
-  ) async {
+  Future<void> updateLocation(LatLng? latLng, String? isoCountryCode) async {
     if (latLng != null) {
       if (latLng != _latLng) {
         _latLng = latLng;

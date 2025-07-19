@@ -13,9 +13,10 @@ class IndicatorDialog extends StatelessWidget {
     );
   }
 
-  dialogContent(BuildContext context) {
+  Container dialogContent(BuildContext context) {
     return Container(
-        color: Colors.transparent,
-        child: const Center(child: SpinkitIndicator()));
+      color: Colors.transparent,
+      child: const Center(child: SpinkitIndicator()),
+    );
   }
 }

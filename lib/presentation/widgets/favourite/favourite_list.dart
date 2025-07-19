@@ -10,8 +10,9 @@ class FavouriteList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Consumer<FavouriteProvider>(builder: (_, favouriteProvider, __) {
-          return ListView.builder(
+        Consumer<FavouriteProvider>(
+          builder: (_, favouriteProvider, _) {
+            return ListView.builder(
               shrinkWrap: true,
               physics: const ScrollPhysics(),
               itemCount:
@@ -22,8 +23,10 @@ class FavouriteList extends StatelessWidget {
                   index: index,
                   data: favouriteProvider.favourite!.dataT!.data![index],
                 );
-              });
-        }),
+              },
+            );
+          },
+        ),
       ],
     );
   }

@@ -33,28 +33,30 @@ class DiscoverState extends State<Discover> {
         title: isAr ? widget.item.titleAr : widget.item.titleEn,
         back: true,
       ),
-      body: Consumer<DiscoverProvider>(builder: (_, discoverProvider, __) {
-        return PageBuilder(
-          requestStatus: discoverProvider.requestStatus,
-          onError: () {
-            discoverProvider.getDiscoverItem(widget.item.id!);
-          },
-          child: RefreshIndicator(
-            color: Theme.of(context).colorScheme.primary,
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-            onRefresh: () async {
-              await discoverProvider.getDiscoverItem(widget.item.id!);
+      body: Consumer<DiscoverProvider>(
+        builder: (_, discoverProvider, _) {
+          return PageBuilder(
+            requestStatus: discoverProvider.requestStatus,
+            onError: () {
+              discoverProvider.getDiscoverItem(widget.item.id!);
             },
-            child: ListView(
-              children: [
-                if (discoverProvider.discoverItem!.data!.subImage!.isNotEmpty)
-                  const DiscoverHeader(),
-                const DiscoverList()
-              ],
+            child: RefreshIndicator(
+              color: Theme.of(context).colorScheme.primary,
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              onRefresh: () async {
+                await discoverProvider.getDiscoverItem(widget.item.id!);
+              },
+              child: ListView(
+                children: [
+                  if (discoverProvider.discoverItem!.data!.subImage!.isNotEmpty)
+                    const DiscoverHeader(),
+                  const DiscoverList(),
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

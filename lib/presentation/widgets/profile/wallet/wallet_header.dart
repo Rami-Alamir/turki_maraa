@@ -16,40 +16,44 @@ class WalletHeader extends StatelessWidget {
           padding: const EdgeInsets.only(top: 60.0, bottom: 20),
           child: Column(
             children: [
-              Consumer<UserProvider>(builder: (_, userProvider, __) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(
+              Consumer<UserProvider>(
+                builder: (_, userProvider, _) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(
                           double.parse(
-                              userProvider.wallet?.data?.wallet ?? "0")),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayLarge!
-                          .copyWith(fontSize: 40),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        currency,
+                            userProvider.wallet?.data?.wallet ?? "0",
+                          ),
+                        ),
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(fontSize: 14),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.displayLarge!.copyWith(fontSize: 40),
                       ),
-                    ),
-                  ],
-                );
-              }),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          currency,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.displayLarge!.copyWith(fontSize: 14),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
               Text(
                 AppLocalizations.of(context)!.tr('your_current_balance'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                    fontSize: 12, color: Theme.of(context).primaryColor),
+                  fontSize: 12,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
             ],
           ),

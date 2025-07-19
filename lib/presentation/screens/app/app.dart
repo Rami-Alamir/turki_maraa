@@ -40,21 +40,11 @@ class AppState extends State<App> {
   List<TabItem> tabs = [];
   AppState() {
     tabs = [
-      TabItem(
-        page: Home(parentScaffoldStateKey: _appKey),
-      ),
-      TabItem(
-        page: Container(),
-      ),
-      TabItem(
-        page: const ShoppingCart(),
-      ),
-      TabItem(
-        page: const Orders(back: false),
-      ),
-      TabItem(
-        page: const Profile(),
-      ),
+      TabItem(page: Home(parentScaffoldStateKey: _appKey)),
+      TabItem(page: Container()),
+      TabItem(page: const ShoppingCart()),
+      TabItem(page: const Orders(back: false)),
+      TabItem(page: const Profile()),
     ];
     // indexing is necessary for proper functionality of determining which tab is active
     tabs.asMap().forEach((index, details) {
@@ -101,8 +91,10 @@ class AppState extends State<App> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (canPop, result) async {
-        final isFirstRouteInCurrentTab =
-            !await tabs[currentTab].key.currentState!.maybePop();
+        final isFirstRouteInCurrentTab = !await tabs[currentTab]
+            .key
+            .currentState!
+            .maybePop();
         if (isFirstRouteInCurrentTab) {
           // if not on the 'main' tab
           if (currentTab != 0) {
@@ -119,9 +111,10 @@ class AppState extends State<App> {
           return;
         }
       },
-      child: Consumer<CartProvider>(builder: (_, cartProvider, __) {
-        return TurkiDrawer(
-          child: Scaffold(
+      child: Consumer<CartProvider>(
+        builder: (_, cartProvider, _) {
+          return TurkiDrawer(
+            child: Scaffold(
               key: _appKey,
               // indexed stack shows only one child
               body: Stack(
@@ -134,90 +127,102 @@ class AppState extends State<App> {
               ),
               bottomNavigationBar: Theme(
                 data: Theme.of(context).copyWith(
-                    canvasColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent),
+                  canvasColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                ),
                 child: BottomNavigationBar(
-                    backgroundColor: Theme.of(context).colorScheme.onSurface,
-                    type: BottomNavigationBarType.fixed,
-                    iconSize: 24,
-                    showUnselectedLabels: true,
-                    elevation: 5,
-                    currentIndex: index,
-                    items: [
-                      BottomNavigationBarItem(
-                        icon: const Icon(TURKIICONS.tabnav_home),
-                        label: AppLocalizations.of(context)!.tr('home'),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: const Icon(TURKIICONS.c1),
-                        label: AppLocalizations.of(context)!.tr('support'),
-                      ),
-                      BottomNavigationBarItem(
-                        label: AppLocalizations.of(context)!.tr('cart'),
-                        icon: Stack(clipBehavior: Clip.none, children: <Widget>[
+                  backgroundColor: Theme.of(context).colorScheme.onSurface,
+                  type: BottomNavigationBarType.fixed,
+                  iconSize: 24,
+                  showUnselectedLabels: true,
+                  elevation: 5,
+                  currentIndex: index,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: const Icon(TURKIICONS.tabnav_home),
+                      label: AppLocalizations.of(context)!.tr('home'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(TURKIICONS.c1),
+                      label: AppLocalizations.of(context)!.tr('support'),
+                    ),
+                    BottomNavigationBarItem(
+                      label: AppLocalizations.of(context)!.tr('cart'),
+                      icon: Stack(
+                        clipBehavior: Clip.none,
+                        children: <Widget>[
                           const Icon(TURKIICONS.cart),
                           Positioned(
-                              // draw a red marble
-                              top: -5.0,
-                              left: -8.0,
-                              child: Visibility(
-                                visible: cartProvider.cartLength > 0,
-                                child: Container(
-                                  width: 15,
-                                  height: 15,
-                                  decoration: const BoxDecoration(
-                                      color: AppColors.red,
-                                      shape: BoxShape.circle),
-                                  child: AutoSizeText(
-                                    cartProvider.cartLength.toString(),
-                                    textAlign: TextAlign.center,
-                                    minFontSize: 6,
-                                    maxFontSize: 12,
-                                    style: const TextStyle(
-                                        color: AppColors.white,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12),
+                            // draw a red marble
+                            top: -5.0,
+                            left: -8.0,
+                            child: Visibility(
+                              visible: cartProvider.cartLength > 0,
+                              child: Container(
+                                width: 15,
+                                height: 15,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: AutoSizeText(
+                                  cartProvider.cartLength.toString(),
+                                  textAlign: TextAlign.center,
+                                  minFontSize: 6,
+                                  maxFontSize: 12,
+                                  style: const TextStyle(
+                                    color: AppColors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
                                   ),
                                 ),
-                              ))
-                        ]),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      BottomNavigationBarItem(
-                        icon: const Icon(TURKIICONS.tabnav_myorders),
-                        label: AppLocalizations.of(context)!.tr('orders'),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: const Icon(TURKIICONS.tabnav_user),
-                        label: AppLocalizations.of(context)!.tr('profile'),
-                      ),
-                    ],
-                    onTap: (index) async {
-                      HapticFeedback.heavyImpact();
-                      if (index != 1) {
-                        this.index = index;
-                        _selectTab(index);
+                    ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(TURKIICONS.tabnav_myorders),
+                      label: AppLocalizations.of(context)!.tr('orders'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(TURKIICONS.tabnav_user),
+                      label: AppLocalizations.of(context)!.tr('profile'),
+                    ),
+                  ],
+                  onTap: (index) async {
+                    HapticFeedback.heavyImpact();
+                    if (index != 1) {
+                      this.index = index;
+                      _selectTab(index);
+                    }
+                    if (index == 2 && cartProvider.isAuth) {
+                      cartProvider.initSomeValues();
+                      await cartProvider.getCartData(isLoading: true);
+                      if (context.mounted) {
+                        context.read<UserProvider>().updateUserWallet(
+                          cartProvider.cartData?.data?.customerWallet ?? 0,
+                        );
                       }
-                      if (index == 2 && cartProvider.isAuth) {
-                        cartProvider.initSomeValues();
-                        await cartProvider.getCartData(isLoading: true);
-                        if (context.mounted) {
-                          context.read<UserProvider>().updateUserWallet(
-                              cartProvider.cartData?.data?.customerWallet ?? 0);
-                        }
-                      } else if (index == 1) {
-                        FirebaseHelper()
-                            .pushAnalyticsEvent(name: "contact_support");
-                        _launchURL(
-                            context.read<LocationProvider>().isoCountryCode ==
-                                    "AE"
-                                ? "tel:${Constants.uaePhone}"
-                                : "tel:${Constants.ksaPhone}");
-                      }
-                    }),
-              )),
-        );
-      }),
+                    } else if (index == 1) {
+                      FirebaseHelper().pushAnalyticsEvent(
+                        name: "contact_support",
+                      );
+                      _launchURL(
+                        context.read<LocationProvider>().isoCountryCode == "AE"
+                            ? "tel:${Constants.uaePhone}"
+                            : "tel:${Constants.ksaPhone}",
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
