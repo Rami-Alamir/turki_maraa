@@ -67,41 +67,53 @@ class RectangleTextField extends StatelessWidget {
             if (onChanged != null) onChanged!(value);
           },
           style: Theme.of(context).textTheme.displayLarge!.copyWith(
-              fontSize: width > 600 ? 18 : 14, fontWeight: FontWeight.normal),
+            fontSize: width > 600 ? 18 : 14,
+            fontWeight: FontWeight.normal,
+          ),
           textInputAction: textInputAction ?? TextInputAction.done,
           decoration: InputDecoration(
-              counterText: "",
-              fillColor: white != null ? Colors.white : Colors.transparent,
-              filled: true,
-              contentPadding: contentPadding,
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor, width: 1)),
-              errorStyle: const TextStyle(fontSize: 12),
-              errorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.red, width: 1)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.primary, width: 1)),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondaryContainer
-                          .withOpacity(0.35),
-                      width: 0.35)),
-              disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondaryContainer
-                        .withOpacity(0.35),
-                    width: 0.35),
+            counterText: "",
+            fillColor: white != null ? Colors.white : Colors.transparent,
+            filled: true,
+            contentPadding: contentPadding,
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1,
               ),
-              hintText: hint,
-              hintStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  fontSize: width > 600 ? 14 : 12,
-                  fontWeight: FontWeight.normal)),
+            ),
+            errorStyle: const TextStyle(fontSize: 12),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.red, width: 1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+                width: 1,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(
+                  context,
+                ).colorScheme.secondaryContainer.withValues(alpha: 0.35),
+                width: 0.35,
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(
+                  context,
+                ).colorScheme.secondaryContainer.withValues(alpha: 0.35),
+                width: 0.35,
+              ),
+            ),
+            hintText: hint,
+            hintStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+              fontSize: width > 600 ? 14 : 12,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
           validator: (value) {
             if (emailValidate ?? false) {
               Pattern pattern =

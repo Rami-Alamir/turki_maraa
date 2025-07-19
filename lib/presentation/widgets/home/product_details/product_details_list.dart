@@ -17,17 +17,22 @@ import '../../../../core/utilities/app_localizations.dart';
 class ProductDetailsList extends StatefulWidget {
   final int index;
   final int similarIndex;
-  const ProductDetailsList(
-      {super.key, required this.index, required this.similarIndex});
+  const ProductDetailsList({
+    super.key,
+    required this.index,
+    required this.similarIndex,
+  });
 
+  @override
   State<ProductDetailsList> createState() => _ProductDetailsListState();
 }
 
 class _ProductDetailsListState extends State<ProductDetailsList> {
   @override
   Widget build(BuildContext context) {
-    final ProductProvider productProvider =
-        Provider.of<ProductProvider>(context);
+    final ProductProvider productProvider = Provider.of<ProductProvider>(
+      context,
+    );
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -35,25 +40,31 @@ class _ProductDetailsListState extends State<ProductDetailsList> {
           imgList: productProvider.productData[widget.index].data!.images!,
         ),
         Visibility(
-            visible: !productProvider
-                    .productData[widget.index].data!.isActive! ||
-                !productProvider.productData[widget.index].data!.isAvailable!,
-            child: const NotAvailable()),
+          visible:
+              !productProvider.productData[widget.index].data!.isActive! ||
+              !productProvider.productData[widget.index].data!.isAvailable!,
+          child: const NotAvailable(),
+        ),
         ProductDescription(
-            isFavourite: productProvider.isFavourite,
-            product: productProvider.productData[widget.index],
-            salePrice: productProvider.getProductSalePrice(widget.index),
-            price: productProvider.getProductPrice(widget.index)),
+          isFavourite: productProvider.isFavourite,
+          product: productProvider.productData[widget.index],
+          salePrice: productProvider.getProductSalePrice(widget.index),
+          price: productProvider.getProductPrice(widget.index),
+        ),
         ProductInformation(
           product: productProvider.productData[widget.index],
           weight: productProvider.getProductWeight(widget.index),
         ),
         if (context.read<AppProvider>().adhaConfig?.categoryId ==
             productProvider
-                .productData[widget.index].data!.subCategory!.categoryId)
+                .productData[widget.index]
+                .data!
+                .subCategory!
+                .categoryId)
           ExtrasList(
-            title:
-                AppLocalizations.of(context)!.tr('choose_the_day_of_sacrifice'),
+            title: AppLocalizations.of(
+              context,
+            )!.tr('choose_the_day_of_sacrifice'),
             tags: [
               if (productProvider.productData[widget.index].data!.id != 1260 &&
                   (context.read<CartProvider>().checkCity()))
@@ -97,11 +108,17 @@ class _ProductDetailsListState extends State<ProductDetailsList> {
             productProvider.setSelectedChopping = value;
           },
           isVisible: productProvider.selectedDay != -1
-              ? (context.read<AppProvider>().adhaConfig?.cutStatus?[
-                      productProvider.productData[widget.index].data!.id != 1260
-                          ? productProvider.selectedDay
-                          : productProvider.selectedDay + 2] ??
-                  true)
+              ? (context
+                        .read<AppProvider>()
+                        .adhaConfig
+                        ?.cutStatus?[productProvider
+                                .productData[widget.index]
+                                .data!
+                                .id !=
+                            1260
+                        ? productProvider.selectedDay
+                        : productProvider.selectedDay + 2] ??
+                    true)
               : true,
         ),
         ExtrasList(
@@ -120,25 +137,32 @@ class _ProductDetailsListState extends State<ProductDetailsList> {
             },
           ),
         Visibility(
-            visible: productProvider.productData[widget.index].data!.isActive!,
-            child: WithoutExtra(
-                product: productProvider.productData[widget.index])),
+          visible: productProvider.productData[widget.index].data!.isActive!,
+          child: WithoutExtra(
+            product: productProvider.productData[widget.index],
+          ),
+        ),
         Visibility(
           visible:
               productProvider.similarProductsList.length > widget.similarIndex
-                  ? productProvider.similarProductsList[widget.similarIndex]
-                          .data?.isNotEmpty ??
-                      false
-                  : false,
+              ? productProvider
+                        .similarProductsList[widget.similarIndex]
+                        .data
+                        ?.isNotEmpty ??
+                    false
+              : false,
           child: SimilarProductsSection(
             products: productProvider.similarProductsList[widget.similarIndex],
             subCategoryId: productProvider
-                .productData[widget.similarIndex].data!.subCategory!.id!,
+                .productData[widget.similarIndex]
+                .data!
+                .subCategory!
+                .id!,
             productId:
                 productProvider.productData[widget.similarIndex].data!.id!,
           ),
         ),
-        const SizedBox(height: 60)
+        const SizedBox(height: 60),
       ],
     );
   }

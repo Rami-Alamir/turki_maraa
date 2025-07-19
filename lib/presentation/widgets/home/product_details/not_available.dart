@@ -14,7 +14,7 @@ class NotAvailable extends StatelessWidget {
       margin: const EdgeInsets.only(right: 10.0, top: 15, left: 10),
       constraints: const BoxConstraints(minHeight: 56),
       decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha:0.1),
           borderRadius: const BorderRadius.all(Radius.circular(10))),
       child: Padding(
         padding: const EdgeInsets.all(8.0),

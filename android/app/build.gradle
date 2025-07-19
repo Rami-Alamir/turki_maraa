@@ -14,7 +14,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.digishapes.turkieshop"
-    compileSdk = 34
+    compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
     defaultConfig {
         multiDexEnabled true
@@ -40,9 +40,9 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 26
-        targetSdk = 34
-        versionCode 7000629
-        versionName "6.24.1"
+        targetSdk = flutter.targetSdkVersion
+        versionCode 7000630
+        versionName "6.25.0"
     }
     signingConfigs {
         release {

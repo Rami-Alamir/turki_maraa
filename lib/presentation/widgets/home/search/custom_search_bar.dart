@@ -33,51 +33,48 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           cursorColor: Theme.of(context).textTheme.titleSmall!.color,
           autofocus: widget.autoFocus,
           style: Theme.of(context).textTheme.displayLarge!.copyWith(
-              fontSize: SizeConfig.screenWidth! > 600 ? 20 : 14,
-              fontWeight: FontWeight.normal),
+            fontSize: SizeConfig.screenWidth! > 600 ? 20 : 14,
+            fontWeight: FontWeight.normal,
+          ),
           decoration: InputDecoration(
-              fillColor: AppColors.white,
-              hintText: AppLocalizations.of(context)!.tr('search_products'),
-              hintStyle: Theme.of(context).textTheme.headlineSmall,
-              prefixIcon: Icon(
-                Icons.search,
-                color: Theme.of(context).textTheme.titleSmall!.color,
+            fillColor: AppColors.white,
+            hintText: AppLocalizations.of(context)!.tr('search_products'),
+            hintStyle: Theme.of(context).textTheme.headlineSmall,
+            prefixIcon: Icon(
+              Icons.search,
+              color: Theme.of(context).textTheme.titleSmall!.color,
+            ),
+            contentPadding: const EdgeInsets.only(top: 5),
+            border: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+              borderSide: BorderSide(
+                color: Theme.of(
+                  context,
+                ).textTheme.titleLarge!.color!.withValues(alpha: 0.35),
+                width: 2,
               ),
-              contentPadding: const EdgeInsets.only(top: 5),
-              border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(8.0),
-                  ),
-                  borderSide: BorderSide(
-                      color: Theme.of(context)
-                          .textTheme
-                          .titleLarge!
-                          .color!
-                          .withOpacity(0.35),
-                      width: 2)),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(8.0),
-                  ),
-                  borderSide: BorderSide(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondaryContainer
-                          .withOpacity(0.35),
-                      width: 1)),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(8.0),
-                  ),
-                  borderSide: BorderSide(
-                    width: 1.8,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondaryContainer
-                        .withOpacity(0.35),
-                  )),
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+              borderSide: BorderSide(
+                color: Theme.of(
+                  context,
+                ).colorScheme.secondaryContainer.withValues(alpha: 0.35),
+                width: 1,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+              borderSide: BorderSide(
+                width: 1.8,
+                color: Theme.of(
+                  context,
+                ).colorScheme.secondaryContainer.withValues(alpha: 0.35),
+              ),
+            ),
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+          ),
         ),
       ),
     );

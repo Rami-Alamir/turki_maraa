@@ -7,12 +7,13 @@ class StateItem extends StatelessWidget {
   final String title;
   final String icon;
   final double value;
-  const StateItem(
-      {super.key,
-      required this.title,
-      required this.icon,
-      required this.value,
-      this.routeName = ""});
+  const StateItem({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.value,
+    this.routeName = "",
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +27,10 @@ class StateItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(convertDouble(value),
-              style: Theme.of(context).textTheme.titleSmall),
+          Text(
+            convertDouble(value),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
@@ -36,14 +39,15 @@ class StateItem extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 5, 8),
                   child: SvgPicture.asset(icon),
                 ),
-                Text(AppLocalizations.of(context)!.tr(title),
-                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        fontSize: 13,
-                        color: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .color!
-                            .withOpacity(0.5))),
+                Text(
+                  AppLocalizations.of(context)!.tr(title),
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                    fontSize: 13,
+                    color: Theme.of(
+                      context,
+                    ).textTheme.displayLarge!.color!.withValues(alpha: 0.5),
+                  ),
+                ),
               ],
             ),
           ),

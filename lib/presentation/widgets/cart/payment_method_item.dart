@@ -23,25 +23,28 @@ class PaymentMethodItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartProvider>(builder: (_, cartProvider, __) {
-      final bool selected = cartProvider.selectedPayment == selectedValue;
-      return InkWell(
-        onTap: () {
-          cartProvider.setSelectedPayment = selectedValue;
-        },
-        child: Container(
+    return Consumer<CartProvider>(
+      builder: (_, cartProvider, __) {
+        final bool selected = cartProvider.selectedPayment == selectedValue;
+        return InkWell(
+          onTap: () {
+            cartProvider.setSelectedPayment = selectedValue;
+          },
+          child: Container(
             margin: padding,
             width: SizeConfig.setWidgetWidth(
-                SizeConfig.screenWidth! / 2 - 22.5, 200, 200),
-            padding: const EdgeInsets.all(3.0),
-            constraints: const BoxConstraints(
-              minHeight: 92,
+              SizeConfig.screenWidth! / 2 - 22.5,
+              200,
+              200,
             ),
+            padding: const EdgeInsets.all(3.0),
+            constraints: const BoxConstraints(minHeight: 92),
             decoration: BoxDecoration(
-                color: selected
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.outline,
-                borderRadius: const BorderRadius.all(Radius.circular(10))),
+              color: selected
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.outline,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,8 +54,9 @@ class PaymentMethodItem extends StatelessWidget {
                   width: 45,
                   margin: const EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
-                      color: selected ? AppColors.purple2 : AppColors.white,
-                      shape: BoxShape.circle),
+                    color: selected ? AppColors.purple2 : AppColors.white,
+                    shape: BoxShape.circle,
+                  ),
                   child: Icon(
                     icon,
                     size: 40,
@@ -68,46 +72,45 @@ class PaymentMethodItem extends StatelessWidget {
                       child: Text(
                         AppLocalizations.of(context)!.tr(title),
                         maxLines: 2,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
+                        style: Theme.of(context).textTheme.displayLarge!
                             .copyWith(
-                                fontSize: 11,
-                                height: 1.5,
-                                fontWeight: FontWeight.bold,
-                                color: selected
-                                    ? AppColors.white
-                                    : Theme.of(context)
+                              fontSize: 11,
+                              height: 1.5,
+                              fontWeight: FontWeight.bold,
+                              color: selected
+                                  ? AppColors.white
+                                  : Theme.of(context)
                                         .textTheme
                                         .displayLarge!
                                         .color!
-                                        .withOpacity(0.6)),
+                                        .withValues(alpha: 0.6),
+                            ),
                       ),
                     ),
                     SizedBox(
                       width: SizeConfig.setWidgetWidth(90, 120, 120),
                       child: Text(
                         AppLocalizations.of(context)!.tr(subtitle),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
+                        style: Theme.of(context).textTheme.headlineSmall!
                             .copyWith(
-                                fontSize: 8,
-                                fontWeight: FontWeight.normal,
-                                height: 2,
-                                color: selected
-                                    ? AppColors.white
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .color),
+                              fontSize: 8,
+                              fontWeight: FontWeight.normal,
+                              height: 2,
+                              color: selected
+                                  ? AppColors.white
+                                  : Theme.of(
+                                      context,
+                                    ).textTheme.headlineSmall!.color,
+                            ),
                       ),
                     ),
                   ],
-                )
+                ),
               ],
-            )),
-      );
-    });
+            ),
+          ),
+        );
+      },
+    );
   }
 }

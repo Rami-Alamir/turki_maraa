@@ -16,17 +16,21 @@ class SearchRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String currency = sl<GetStrings>().getCurrency(
-        AppLocalizations.of(context)!.locale!.languageCode,
-        context.read<LocationProvider>().isoCountryCode!);
+      AppLocalizations.of(context)!.locale!.languageCode,
+      context.read<LocationProvider>().isoCountryCode!,
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
       child: InkWell(
         onTap: () {
-          Navigator.pushReplacementNamed(context, productDetails,
-              arguments: <String, dynamic>{
-                "id": item.id,
-                "categoryId": item.categoryId
-              });
+          Navigator.pushReplacementNamed(
+            context,
+            productDetails,
+            arguments: <String, dynamic>{
+              "id": item.id,
+              "categoryId": item.categoryId,
+            },
+          );
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -52,22 +56,24 @@ class SearchRow extends StatelessWidget {
                           child: Card(
                             elevation: 5,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
                             child: Container(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .secondaryContainer,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.secondaryContainer,
                               width: 60,
                               height: 60,
                               child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  child: Image.network(
-                                    item.productImages!.first.imageUrl ??
-                                        'https://turki.turkieshop.com/images/Jk78x2iKpI1608014433.png?431112',
-                                    width: 60,
-                                    height: 60,
-                                    fit: BoxFit.cover,
-                                  )),
+                                borderRadius: BorderRadius.circular(5.0),
+                                child: Image.network(
+                                  item.productImages!.first.imageUrl ??
+                                      'https://turki.turkieshop.com/images/Jk78x2iKpI1608014433.png?431112',
+                                  width: 60,
+                                  height: 60,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -103,37 +109,33 @@ class SearchRow extends StatelessWidget {
                             Text(
                               sl<FormatHelper>()
                                   .formatDecimalAndRemoveTrailingZeros(
-                                      double.parse(item.salePrice!) > 0.0
-                                          ? double.parse(item.salePrice!)
-                                          : double.parse(item.price!)),
+                                    double.parse(item.salePrice!) > 0.0
+                                        ? double.parse(item.salePrice!)
+                                        : double.parse(item.price!),
+                                  ),
                               textAlign: TextAlign.start,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
+                              style: Theme.of(context).textTheme.titleSmall!
                                   .copyWith(fontSize: 14, height: 1.4),
                             ),
                             Text(
                               " $currency",
                               textAlign: TextAlign.start,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
+                              style: Theme.of(context).textTheme.titleSmall!
                                   .copyWith(fontSize: 12, height: 1.4),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
             Divider(
-              color: Theme.of(context)
-                  .colorScheme
-                  .secondaryContainer
-                  .withOpacity(0.3),
-            )
+              color: Theme.of(
+                context,
+              ).colorScheme.secondaryContainer.withValues(alpha: 0.3),
+            ),
           ],
         ),
       ),

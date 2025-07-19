@@ -15,118 +15,120 @@ class PointTransactionRow extends StatelessWidget {
       child: Card(
         color: Colors.transparent,
         elevation: 500,
-        shadowColor:
-            Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.14),
+        shadowColor: Theme.of(
+          context,
+        ).colorScheme.secondaryContainer.withValues(alpha: 0.14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Container(
-                width: SizeConfig.screenWidth,
-                color: Theme.of(context).colorScheme.secondary,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          child: Container(
+            width: SizeConfig.screenWidth,
+            color: Theme.of(context).colorScheme.secondary,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 10,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Row(
-                            children: <Widget>[
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    transaction.image,
-                                    width: 30,
-                                    height: 30,
-                                  ),
-                                  SizedBox(
-                                    width: SizeConfig.screenWidth! * .58,
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 6.0),
-                                      child: Text(
-                                        transaction.description,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displayLarge!
-                                            .copyWith(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                            children: [
+                              Image.asset(
+                                transaction.image,
+                                width: 30,
+                                height: 30,
                               ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                '${transaction.after}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .copyWith(fontSize: 14, color: color),
-                              ),
-                              Text(
-                                AppLocalizations.of(context)!.tr('point'),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .copyWith(fontSize: 12, color: color),
+                              SizedBox(
+                                width: SizeConfig.screenWidth! * .58,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 6.0),
+                                  child: Text(
+                                    transaction.description,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge!
+                                        .copyWith(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 7.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            '${transaction.after}',
+                            style: Theme.of(context).textTheme.displayLarge!
+                                .copyWith(fontSize: 14, color: color),
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.tr('point'),
+                            style: Theme.of(context).textTheme.displayLarge!
+                                .copyWith(fontSize: 12, color: color),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 7.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                            5,
+                            5,
+                            0,
+                            0,
+                          ),
+                          child: Text(
+                            transaction.date,
+                            style: Theme.of(context).textTheme.titleSmall!
+                                .copyWith(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                          ),
+                        ),
+                        Row(
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 5, 0, 0),
-                              child: Text(
-                                transaction.date,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.normal),
-                              ),
+                            Text(
+                              transaction.before.toString(),
+                              style: Theme.of(context).textTheme.titleSmall!
+                                  .copyWith(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                             ),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  transaction.before.toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.normal),
-                                ),
-                                Text(
-                                  AppLocalizations.of(context)!.tr('point'),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.normal),
-                                ),
-                              ],
+                            Text(
+                              AppLocalizations.of(context)!.tr('point'),
+                              style: Theme.of(context).textTheme.titleSmall!
+                                  .copyWith(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                             ),
                           ],
                         ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
-                ))),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

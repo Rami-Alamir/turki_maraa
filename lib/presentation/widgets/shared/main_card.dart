@@ -7,13 +7,18 @@ class MainCard extends StatelessWidget {
   final double height;
   final EdgeInsetsGeometry padding;
 
-  const MainCard(
-      {super.key,
-      required this.child,
-      this.width = 0,
-      this.height = 100,
-      this.padding =
-          const EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 10)});
+  const MainCard({
+    super.key,
+    required this.child,
+    this.width = 0,
+    this.height = 100,
+    this.padding = const EdgeInsets.only(
+      top: 5,
+      bottom: 5,
+      right: 10,
+      left: 10,
+    ),
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,15 +26,20 @@ class MainCard extends StatelessWidget {
       child: Card(
         color: Theme.of(context).colorScheme.onSurface,
         elevation: 3,
-        shadowColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.14),
+        shadowColor: Theme.of(
+          context,
+        ).colorScheme.onSurface.withValues(alpha: 0.14),
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(6.5))),
+          borderRadius: BorderRadius.all(Radius.circular(6.5)),
+        ),
         child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(6.5)),
-            child: Container(
-                constraints: BoxConstraints(minHeight: height),
-                width: SizeConfig.screenWidth,
-                child: child)),
+          borderRadius: const BorderRadius.all(Radius.circular(6.5)),
+          child: Container(
+            constraints: BoxConstraints(minHeight: height),
+            width: SizeConfig.screenWidth,
+            child: child,
+          ),
+        ),
       ),
     );
   }

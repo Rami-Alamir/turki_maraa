@@ -8,12 +8,13 @@ class CustomCheckbox extends StatelessWidget {
   final double? width;
   final Function onTap;
 
-  const CustomCheckbox(
-      {super.key,
-      required this.cheeked,
-      required this.title,
-      this.width,
-      required this.onTap});
+  const CustomCheckbox({
+    super.key,
+    required this.cheeked,
+    required this.title,
+    this.width,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,40 +39,37 @@ class CustomCheckbox extends StatelessWidget {
                     : Theme.of(context).colorScheme.surface,
                 boxShadow: [
                   BoxShadow(
-                      blurRadius: 10,
-                      color: cheeked
-                          ? Colors.black.withOpacity(0.3)
-                          : Colors.transparent,
-                      offset: const Offset(1, 3))
+                    blurRadius: 10,
+                    color: cheeked
+                        ? Colors.black.withValues(alpha: 0.3)
+                        : Colors.transparent,
+                    offset: const Offset(1, 3),
+                  ),
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(7)),
                 border: Border.all(
                   color: cheeked
                       ? Theme.of(context).primaryColor
-                      : AppColors.grey.withOpacity(0.3),
+                      : AppColors.grey.withValues(alpha: 0.3),
                   width: 1.5,
                 ),
               ),
               child: Visibility(
                 visible: cheeked,
                 child: const Center(
-                    child: Icon(
-                  Icons.check,
-                  size: 20,
-                  color: AppColors.white,
-                )),
+                  child: Icon(Icons.check, size: 20, color: AppColors.white),
+                ),
               ),
             ),
             SizedBox(
               width: width ?? (SizeConfig.screenWidth! - 75),
               child: Text(
                 title,
-                style: Theme.of(context)
-                    .textTheme
-                    .displayMedium!
-                    .copyWith(fontSize: 13),
+                style: Theme.of(
+                  context,
+                ).textTheme.displayMedium!.copyWith(fontSize: 13),
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -10,13 +10,14 @@ class Indicator extends StatelessWidget {
   final String title;
   final bool withLine;
 
-  const Indicator(
-      {super.key,
-      required this.color,
-      required this.color2,
-      this.withLine = true,
-      required this.icon,
-      required this.title});
+  const Indicator({
+    super.key,
+    required this.color,
+    required this.color2,
+    this.withLine = true,
+    required this.icon,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class Indicator extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: color.withOpacity(0.25), // border color
+                color: color.withValues(alpha: 0.25), // border color
                 shape: BoxShape.circle,
               ),
               child: Container(
@@ -46,10 +47,12 @@ class Indicator extends StatelessWidget {
               ),
             ),
             Visibility(
-                visible: withLine,
-                child: Line(
-                    color1: color2 == Colors.grey ? color2 : color,
-                    color2: color2)),
+              visible: withLine,
+              child: Line(
+                color1: color2 == Colors.grey ? color2 : color,
+                color2: color2,
+              ),
+            ),
           ],
         ),
         Padding(
@@ -59,10 +62,10 @@ class Indicator extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineMedium!
-                  .copyWith(fontWeight: FontWeight.normal, fontSize: 10),
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                fontWeight: FontWeight.normal,
+                fontSize: 10,
+              ),
             ),
           ),
         ),

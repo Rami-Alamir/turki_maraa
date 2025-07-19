@@ -8,10 +8,7 @@ import '../../../core/utilities/size_config.dart';
 
 class DayOfSacrifice extends StatelessWidget {
   final List<String> deliveryDataTime;
-  const DayOfSacrifice({
-    super.key,
-    required this.deliveryDataTime,
-  });
+  const DayOfSacrifice({super.key, required this.deliveryDataTime});
   @override
   Widget build(BuildContext context) {
     final List<String> days = [
@@ -27,38 +24,33 @@ class DayOfSacrifice extends StatelessWidget {
           padding: const EdgeInsets.only(right: 15.0, top: 30, left: 15),
           child: Text(
             AppLocalizations.of(context)!.tr('choose_the_day_of_sacrifice'),
-            style: Theme.of(context)
-                .textTheme
-                .displayLarge!
-                .copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(
+              context,
+            ).textTheme.displayLarge!.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(
           width: SizeConfig.screenWidth,
           height: 122,
           child: ListView.builder(
-              padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              physics: const ScrollPhysics(),
-              itemCount: 4,
-              itemBuilder: (BuildContext ctxt, int index) {
-                return Visibility(
-                  visible: checkDate(
-                      deliveryDataTime,
-                      context.read<AppProvider>().adhaConfig?.dates?[index] ??
-                          ""),
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(3.0, 15, 10, 0),
-                    child: _item(
-                      context,
-                      index,
-                      days[index],
-                    ),
-                  ),
-                );
-              }),
+            padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            physics: const ScrollPhysics(),
+            itemCount: 4,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return Visibility(
+                visible: checkDate(
+                  deliveryDataTime,
+                  context.read<AppProvider>().adhaConfig?.dates?[index] ?? "",
+                ),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(3.0, 15, 10, 0),
+                  child: _item(context, index, days[index]),
+                ),
+              );
+            },
+          ),
         ),
       ],
     );
@@ -73,8 +65,10 @@ class DayOfSacrifice extends StatelessWidget {
   }
 
   Widget _item(BuildContext context, int selectedValue, String title) {
-    final CartProvider cartProvider =
-        Provider.of<CartProvider>(context, listen: false);
+    final CartProvider cartProvider = Provider.of<CartProvider>(
+      context,
+      listen: false,
+    );
     final bool selected = cartProvider.selectedDate == selectedValue;
     return InkWell(
       onTap: () {
@@ -83,14 +77,13 @@ class DayOfSacrifice extends StatelessWidget {
       child: Container(
         width: 80,
         padding: const EdgeInsets.all(3.0),
-        constraints: const BoxConstraints(
-          minHeight: 50,
-        ),
+        constraints: const BoxConstraints(minHeight: 50),
         decoration: BoxDecoration(
-            color: selected
-                ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.outline,
-            borderRadius: const BorderRadius.all(Radius.circular(10))),
+          color: selected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.outline,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -100,16 +93,15 @@ class DayOfSacrifice extends StatelessWidget {
                 title,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    height: 2,
-                    color: selected
-                        ? AppColors.white
-                        : Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .color!
-                            .withOpacity(0.6)),
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  height: 2,
+                  color: selected
+                      ? AppColors.white
+                      : Theme.of(
+                          context,
+                        ).textTheme.displayLarge!.color!.withValues(alpha: 0.6),
+                ),
               ),
             ),
           ],

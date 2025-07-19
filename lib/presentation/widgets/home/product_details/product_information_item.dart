@@ -7,13 +7,14 @@ class ProductInformationItem extends StatelessWidget {
   final String value;
   final String description;
   final double size;
-  const ProductInformationItem(
-      {super.key,
-      required this.title,
-      required this.icon,
-      required this.value,
-      required this.description,
-      required this.size});
+  const ProductInformationItem({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.value,
+    required this.description,
+    required this.size,
+  });
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -25,10 +26,9 @@ class ProductInformationItem extends StatelessWidget {
             height: 45,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: Theme.of(context)
-                  .colorScheme
-                  .tertiaryContainer
-                  .withOpacity(0.2),
+              color: Theme.of(
+                context,
+              ).colorScheme.tertiaryContainer.withValues(alpha: 0.2),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -45,34 +45,41 @@ class ProductInformationItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 5.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  8.0,
+                  0.0,
+                  0.0,
+                  5.0,
+                ),
                 child: Text(
                   AppLocalizations.of(context)!.tr(title),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(fontSize: 12, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(8.0, 5.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  8.0,
+                  5.0,
+                  0.0,
+                  0.0,
+                ),
                 child: Row(
                   children: [
                     Text(
                       "$value ",
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayLarge
-                          ?.copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       description,
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayLarge
-                          ?.copyWith(fontSize: 10, fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),

@@ -42,11 +42,14 @@ class _ProductDescriptionState extends State<ProductDescription> {
   Widget build(BuildContext context) {
     final bool isAr =
         AppLocalizations.of(context)!.locale == const Locale('ar');
-    final LocationProvider locationProvider =
-        Provider.of<LocationProvider>(context, listen: false);
+    final LocationProvider locationProvider = Provider.of<LocationProvider>(
+      context,
+      listen: false,
+    );
     String currency = sl<GetStrings>().getCurrency(
-        AppLocalizations.of(context)!.locale!.languageCode,
-        locationProvider.isoCountryCode!);
+      AppLocalizations.of(context)!.locale!.languageCode,
+      locationProvider.isoCountryCode!,
+    );
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,16 +68,12 @@ class _ProductDescriptionState extends State<ProductDescription> {
                       isAr
                           ? product.data!.subCategory?.typeAr ?? ""
                           : product.data!.subCategory?.typeEn ?? "",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
+                      style: Theme.of(context).textTheme.headlineSmall!
                           .copyWith(fontSize: 14, height: 1.4),
                     ),
                     Text(
                       isAr ? product.data!.nameAr! : product.data!.nameEn!,
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayMedium!
+                      style: Theme.of(context).textTheme.displayMedium!
                           .copyWith(fontSize: 20, height: 1.4),
                     ),
                   ],
@@ -88,103 +87,120 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0),
                     child: CircleIcon(
-                        icon: widget.isFavourite
-                            ? Icons.favorite
-                            : Icons.favorite_border_outlined,
-                        onTap: () async {
-                          final favourite = Provider.of<FavouriteProvider>(
-                              context,
-                              listen: false);
-                          if (favourite.isAuth) {
-                            if (widget.isFavourite) {
-                              bool status = await favourite.deleteFromFavourite(
-                                  context: context,
-                                  productName: product.data!.nameAr!,
-                                  id: favourite
-                                      .getFavouriteId(
-                                          int.parse('${product.data!.id!}'))
-                                      .toString());
-                              if (context.mounted) {
-                                action(context, status, false);
-                              }
-                            } else {
-                              bool status = await favourite.addToFavourite(
-                                  productName: product.data!.nameAr!,
-                                  context: context,
-                                  id: '${product.data!.id!}');
-                              if (context.mounted) {
-                                action(context, status, true);
-                              }
+                      icon: widget.isFavourite
+                          ? Icons.favorite
+                          : Icons.favorite_border_outlined,
+                      onTap: () async {
+                        final favourite = Provider.of<FavouriteProvider>(
+                          context,
+                          listen: false,
+                        );
+                        if (favourite.isAuth) {
+                          if (widget.isFavourite) {
+                            bool status = await favourite.deleteFromFavourite(
+                              context: context,
+                              productName: product.data!.nameAr!,
+                              id: favourite
+                                  .getFavouriteId(
+                                    int.parse('${product.data!.id!}'),
+                                  )
+                                  .toString(),
+                            );
+                            if (context.mounted) {
+                              action(context, status, false);
+                            }
+                          } else {
+                            bool status = await favourite.addToFavourite(
+                              productName: product.data!.nameAr!,
+                              context: context,
+                              id: '${product.data!.id!}',
+                            );
+                            if (context.mounted) {
+                              action(context, status, true);
                             }
                           }
-                        },
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0, 0, 0)),
+                        }
+                      },
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        0,
+                        0,
+                        0,
+                      ),
+                    ),
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
         Row(
           children: [
             Padding(
-                padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 3, left: 5, right: 5),
-                      child: Text(
-                        sl<FormatHelper>()
-                            .formatDecimalAndRemoveTrailingZeros(widget.price),
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            color: widget.salePrice > 0.0 &&
-                                    widget.salePrice < widget.price
-                                ? Theme.of(context)
-                                    .textTheme
-                                    .displayMedium!
-                                    .color!
-                                    .withOpacity(0.4)
-                                : Theme.of(context).textTheme.titleSmall!.color,
-                            decorationThickness: 2,
-                            decoration: widget.salePrice > 0.0 &&
-                                    widget.salePrice < widget.price
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
-                            fontSize: widget.salePrice > 0 ? 14 : 16,
-                            fontWeight: FontWeight.bold),
-                        maxLines: 1,
+              padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3, left: 5, right: 5),
+                    child: Text(
+                      sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(
+                        widget.price,
+                      ),
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        color:
+                            widget.salePrice > 0.0 &&
+                                widget.salePrice < widget.price
+                            ? Theme.of(context).textTheme.displayMedium!.color!
+                                  .withValues(alpha: 0.4)
+                            : Theme.of(context).textTheme.titleSmall!.color,
+                        decorationThickness: 2,
+                        decoration:
+                            widget.salePrice > 0.0 &&
+                                widget.salePrice < widget.price
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                        fontSize: widget.salePrice > 0 ? 14 : 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                    ),
+                  ),
+                  Visibility(
+                    visible:
+                        widget.salePrice > 0 && widget.salePrice < widget.price,
+                    child: Text(
+                      '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(widget.salePrice)} ',
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        height: 1.4,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Visibility(
-                      visible: widget.salePrice > 0 &&
-                          widget.salePrice < widget.price,
-                      child: Text(
-                        '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(widget.salePrice)} ',
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(height: 1.4, fontWeight: FontWeight.bold),
-                      ),
+                  ),
+                  Text(
+                    currency,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      height: 1.4,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(currency,
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            height: 1.4, fontWeight: FontWeight.bold)),
-                  ],
-                )),
+                  ),
+                ],
+              ),
+            ),
             if (locationProvider.isoCountryCode! == 'SA')
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12.0,
+                  horizontal: 8,
+                ),
                 child: Text(
                   AppLocalizations.of(context)!.tr('vat_included'),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall!
-                      .copyWith(fontSize: 12, height: 1.4),
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    fontSize: 12,
+                    height: 1.4,
+                  ),
                 ),
               ),
           ],
@@ -209,8 +225,10 @@ class _ProductDescriptionState extends State<ProductDescription> {
   void action(BuildContext context, bool status, bool isFavourite) {
     Navigator.of(context, rootNavigator: true).pop();
     if (status) {
-      final productProvider =
-          Provider.of<ProductProvider>(context, listen: false);
+      final productProvider = Provider.of<ProductProvider>(
+        context,
+        listen: false,
+      );
       productProvider.setIsFavouriteWithNotify = isFavourite;
     }
   }

@@ -27,7 +27,7 @@ class NotificationCard extends StatelessWidget {
                 color: Theme.of(context)
                     .colorScheme
                     .secondaryContainer
-                    .withOpacity(0.14),
+                    .withValues(alpha:0.14),
                 spreadRadius: 0.5,
                 blurRadius: 11,
               ),

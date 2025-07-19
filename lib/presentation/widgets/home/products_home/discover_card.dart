@@ -26,20 +26,21 @@ class DiscoverCard extends StatelessWidget {
                 height: 90,
                 width: 165,
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.network(
-                      item.image!.trim(),
-                      width: 165,
-                      height: 90,
-                      fit: BoxFit.fill,
-                    )),
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.network(
+                    item.image!.trim(),
+                    width: 165,
+                    height: 90,
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
             ),
             Container(
               height: 90,
               width: 165,
               decoration: BoxDecoration(
-                color: AppColors.white.withOpacity(0.05),
+                color: AppColors.white.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Center(
@@ -53,9 +54,10 @@ class DiscoverCard extends StatelessWidget {
                           ? item.titleAr!
                           : item.titleEn!,
                       style: const TextStyle(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
+                        color: AppColors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),

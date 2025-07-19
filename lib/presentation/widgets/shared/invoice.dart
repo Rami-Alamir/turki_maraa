@@ -32,18 +32,21 @@ class Invoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LocationProvider locationProvider =
-        Provider.of<LocationProvider>(context, listen: false);
+    final LocationProvider locationProvider = Provider.of<LocationProvider>(
+      context,
+      listen: false,
+    );
     String currencyStr = currency.isNotEmpty
         ? currency
         : sl<GetStrings>().getCurrency(
             AppLocalizations.of(context)!.locale!.languageCode,
-            locationProvider.isoCountryCode!);
+            locationProvider.isoCountryCode!,
+          );
     String vatStr = vat.isNotEmpty
         ? vat
         : locationProvider.isoCountryCode!.toUpperCase() == "AE"
-            ? "vat_ae"
-            : 'vat_sa';
+        ? "vat_ae"
+        : 'vat_sa';
     return Padding(
       padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
       child: Column(
@@ -53,22 +56,23 @@ class Invoice extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
               AppLocalizations.of(context)!.tr('order_summary'),
-              style: Theme.of(context)
-                  .textTheme
-                  .displayMedium!
-                  .copyWith(fontSize: 14),
+              style: Theme.of(
+                context,
+              ).textTheme.displayMedium!.copyWith(fontSize: 14),
             ),
           ),
           InvoiceRow(
-              fontColor: Theme.of(context).textTheme.displayMedium!.color!,
-              title: 'order_total',
-              value:
-                  '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(subtotal)} $currencyStr'),
+            fontColor: Theme.of(context).textTheme.displayMedium!.color!,
+            title: 'order_total',
+            value:
+                '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(subtotal)} $currencyStr',
+          ),
           InvoiceRow(
-              fontColor: Theme.of(context).textTheme.displayMedium!.color!,
-              title: 'delivery_fees',
-              value:
-                  '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(shipping)} $currencyStr'),
+            fontColor: Theme.of(context).textTheme.displayMedium!.color!,
+            title: 'delivery_fees',
+            value:
+                '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(shipping)} $currencyStr',
+          ),
           InvoiceRow(
             title: 'discount',
             value:
@@ -79,7 +83,11 @@ class Invoice extends StatelessWidget {
           InvoiceRow(
             title: 'credit',
             value:
-                '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(calculateTotal ? myCredit > total ? total : myCredit : myCredit)} $currencyStr',
+                '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(calculateTotal
+                    ? myCredit > total
+                          ? total
+                          : myCredit
+                    : myCredit)} $currencyStr',
             visible: myCredit > 0,
             fontColor: AppColors.green,
           ),
@@ -87,11 +95,9 @@ class Invoice extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             child: Divider(
               height: 2,
-              color: Theme.of(context)
-                  .textTheme
-                  .headlineSmall!
-                  .color!
-                  .withOpacity(0.15),
+              color: Theme.of(
+                context,
+              ).textTheme.headlineSmall!.color!.withValues(alpha: 0.15),
               indent: 2,
               endIndent: 2,
             ),
@@ -105,10 +111,9 @@ class Invoice extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
                     AppLocalizations.of(context)!.tr('total'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayMedium!
-                        .copyWith(fontSize: 14),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.displayMedium!.copyWith(fontSize: 14),
                   ),
                 ),
                 Padding(
@@ -126,9 +131,9 @@ class Invoice extends StatelessWidget {
             child: Center(
               child: Text(
                 AppLocalizations.of(context)!.tr(vatStr),
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      fontSize: 10,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.displayMedium!.copyWith(fontSize: 10),
               ),
             ),
           ),
