@@ -43,7 +43,7 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    //used to get data after change location premonition
+    //used to get data after change location permission
     if (mounted) {
       final LocationProvider locationProvider = Provider.of<LocationProvider>(
         context,

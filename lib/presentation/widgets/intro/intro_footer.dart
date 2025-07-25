@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../controllers/app_language.dart';
+import '../../../controllers/location_provider.dart';
 import '../../../core/constants/intro_list.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
@@ -9,8 +12,11 @@ class IntroFooter extends StatelessWidget {
   final int mSelectedPosition;
 
   final Function next;
-  const IntroFooter(
-      {super.key, required this.mSelectedPosition, required this.next});
+  const IntroFooter({
+    super.key,
+    required this.mSelectedPosition,
+    required this.next,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,29 +32,39 @@ class IntroFooter extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   changeIntroStatus();
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(app, (route) => false);
+                  Navigator.of(
+                    context,
+                  ).pushNamedAndRemoveUntil(app, (route) => false);
                 },
                 child: Text(
                   AppLocalizations.of(context)!.tr('skip'),
                   style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Theme.of(context).colorScheme.primary),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ),
             ),
             IconButton(
-              icon: Icon(Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.primary),
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               onPressed: () {
                 changeIntroStatus();
-                mSelectedPosition + 1 == IntroList.introData.length
-                    ? Navigator.of(context)
-                        .pushNamedAndRemoveUntil(app, (route) => false)
-                    : next();
+                if (mSelectedPosition + 1 == IntroList.introData.length) {
+                  context.read<LocationProvider>().initLatLng(
+                    context.read<AppLanguage>().language,
+                  );
+                  Navigator.of(
+                    context,
+                  ).pushNamedAndRemoveUntil(app, (route) => false);
+                } else {
+                  next();
+                }
               },
-            )
+            ),
           ],
         ),
       ),

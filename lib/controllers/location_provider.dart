@@ -81,7 +81,7 @@ class LocationProvider with ChangeNotifier {
           );
         }
       }
-    } catch (_) {
+    } catch (e) {
       _locationServiceStatus = LocationServiceStatus.unableToDetermine;
     }
     notifyListeners();
@@ -114,6 +114,7 @@ class LocationProvider with ChangeNotifier {
         return;
       }
     }
+
     permissionGranted = await _location.hasPermission();
     if (permissionGranted == location_service.PermissionStatus.denied) {
       permissionGranted = await _location.requestPermission();
@@ -122,6 +123,7 @@ class LocationProvider with ChangeNotifier {
         return;
       }
     }
+
     // if (Platform.isAndroid) {
     //   try {
     //     HmsApiAvailability hmsApiAvailability = HmsApiAvailability();
