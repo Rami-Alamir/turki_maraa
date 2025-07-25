@@ -38,10 +38,15 @@ class FirebaseHelper {
     );
   }
 
-  void pushAnalyticsEvent(
-      {required String name, String key = 'name', String? value}) {
-    analytics!
-        .logEvent(name: name, parameters: value == null ? null : {key: value});
+  void pushAnalyticsEvent({
+    required String name,
+    String key = 'name',
+    String? value,
+  }) {
+    analytics!.logEvent(
+      name: name,
+      parameters: value == null ? null : {key: value},
+    );
   }
 
   void subscribeToTopic(String topic) {
