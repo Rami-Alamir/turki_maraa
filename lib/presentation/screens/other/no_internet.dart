@@ -24,31 +24,34 @@ class NoInternet extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(FixedAssets.noInternet),
-          Text(AppLocalizations.of(context)!.tr('no_internet_connection'),
-              textAlign: TextAlign.justify,
-              style: Theme.of(context).textTheme.titleSmall),
+          Text(
+            AppLocalizations.of(context)!.tr('no_internet_connection'),
+            textAlign: TextAlign.justify,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
           Padding(
             padding: EdgeInsets.only(top: SizeConfig.screenHeight! / 5),
             child: RoundedRectangleButton(
-                title: AppLocalizations.of(context)!.tr('try_again'),
-                onPressed: () async {
-                  ConnectivityResult connectivityResult =
-                      await checkConnectivity();
-                  if (connectivityResult != ConnectivityResult.none) {
-                    if (context.mounted) {
-                      await navigate(context);
-                    }
+              title: AppLocalizations.of(context)!.tr('try_again'),
+              onPressed: () async {
+                List<ConnectivityResult> connectivityResult =
+                    await checkConnectivity();
+                if (!connectivityResult.contains(ConnectivityResult.none)) {
+                  if (context.mounted) {
+                    await navigate(context);
                   }
-                }),
-          )
+                }
+              },
+            ),
+          ),
         ],
       ),
     );
   }
 
   // Check internet connection
-  Future<ConnectivityResult> checkConnectivity() async {
-    late ConnectivityResult connectivityResult;
+  Future<List<ConnectivityResult>> checkConnectivity() async {
+    List<ConnectivityResult> connectivityResult = [];
     try {
       connectivityResult = await Connectivity().checkConnectivity();
     } catch (_) {}
@@ -56,9 +59,9 @@ class NoInternet extends StatelessWidget {
   }
 
   Future<void> navigate(BuildContext context) async {
-    await context
-        .read<LocationProvider>()
-        .initLatLng(context.read<AppLanguage>().language);
+    await context.read<LocationProvider>().initLatLng(
+      context.read<AppLanguage>().language,
+    );
     if (context.mounted) {
       FlutterSecureStorage localStorage = const FlutterSecureStorage();
       String accessToken = await localStorage.read(key: 'accessToken') ?? "";
@@ -71,8 +74,9 @@ class NoInternet extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool introStatus = prefs.getBool('intro') ?? true;
     if (context.mounted) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(introStatus ? intro : app, (route) => false);
+      Navigator.of(
+        context,
+      ).pushNamedAndRemoveUntil(introStatus ? intro : app, (route) => false);
     }
   }
 }

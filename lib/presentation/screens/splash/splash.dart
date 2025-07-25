@@ -29,9 +29,9 @@ class SplashState extends State<Splash> {
   void initState() {
     super.initState();
     checkConnectivity();
-    context
-        .read<LocationProvider>()
-        .initLatLng(context.read<AppLanguage>().language);
+    context.read<LocationProvider>().initLatLng(
+      context.read<AppLanguage>().language,
+    );
     context.read<AppProvider>().getData();
     context.read<HomeProvider>().getHomePageData(notify: false);
     _timer = Timer(const Duration(milliseconds: 3000), () {
@@ -70,7 +70,7 @@ class SplashState extends State<Splash> {
                     style: const TextStyle(color: AppColors.gold, fontSize: 18),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -85,8 +85,12 @@ class SplashState extends State<Splash> {
           ),
         ),
         child: Center(
-          child: Image.asset(FixedAssets.logoGif,
-              height: 300, width: 300, fit: BoxFit.cover),
+          child: Image.asset(
+            FixedAssets.logoGif,
+            height: 300,
+            width: 300,
+            fit: BoxFit.cover,
+          ),
           // Lottie.asset(FixedAssets.logoLottie,
           //     height: 450, width: 450, fit: BoxFit.contain),
         ),
@@ -99,24 +103,27 @@ class SplashState extends State<Splash> {
     bool introStatus = prefs.getBool('intro') ?? true;
     if (!mounted) return;
     Navigator.of(context).pushNamedAndRemoveUntil(
-        introStatus
-            ? intro
-            : internetStatus
-                ? context.read<AppProvider>().isVideoSean
-                    ? app
-                    : videoSplash
-                : noInternet,
-        (route) => false);
+      introStatus
+          ? intro
+          : internetStatus
+          ? context.read<AppProvider>().isVideoSean
+                ? app
+                : videoSplash
+          : noInternet,
+      (route) => false,
+    );
   }
 
   // Check internet connection
-  Future<void> checkConnectivity() async {
+  Future<List<ConnectivityResult>> checkConnectivity() async {
+    List<ConnectivityResult> connectivityResult = [];
     try {
       connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult == ConnectivityResult.none) {
+      if (connectivityResult.contains(ConnectivityResult.none)) {
         connectivityResult = await Connectivity().checkConnectivity();
       }
-      internetStatus = (connectivityResult != ConnectivityResult.none);
+      internetStatus = (!connectivityResult.contains(ConnectivityResult.none));
     } catch (_) {}
+    return connectivityResult;
   }
 }
