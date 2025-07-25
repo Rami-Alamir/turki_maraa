@@ -230,9 +230,11 @@ class TurkiDrawer extends StatelessWidget {
 
   //used to share app url
   Future<void> _share(BuildContext context) async {
-    Share.share(
-      Constants.shareUrl,
-      subject: AppLocalizations.of(context)!.tr('turki_app'),
+    SharePlus.instance.share(
+      ShareParams(
+        text: Constants.shareUrl,
+        subject: AppLocalizations.of(context)!.tr('turki_app'),
+      ),
     );
   }
 }
