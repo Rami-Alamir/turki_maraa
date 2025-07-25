@@ -18,7 +18,7 @@ class FirebaseHelper {
     fiam = FirebaseInAppMessaging.instance;
     messaging = FirebaseMessaging.instance;
     // fiam!.toString();
-    messaging!.getToken().then((token) {
+    messaging?.getToken().then((token) {
       deviceToken = token;
       // print("token is $token");
     });
@@ -26,8 +26,8 @@ class FirebaseHelper {
     // messaging!.getAPNSToken().then((value) {
     //   // print("getAPNSToken is $value");
     // });
-    messaging!.subscribeToTopic('all');
-    messaging!.requestPermission(
+    messaging?.subscribeToTopic('all');
+    messaging?.requestPermission(
       alert: true,
       announcement: false,
       badge: true,
@@ -43,13 +43,13 @@ class FirebaseHelper {
     String key = 'name',
     String? value,
   }) {
-    analytics!.logEvent(
+    analytics?.logEvent(
       name: name,
       parameters: value == null ? null : {key: value},
     );
   }
 
   void subscribeToTopic(String topic) {
-    messaging!.subscribeToTopic(topic);
+    messaging?.subscribeToTopic(topic);
   }
 }
