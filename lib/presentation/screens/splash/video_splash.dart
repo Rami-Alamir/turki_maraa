@@ -19,17 +19,19 @@ class _VideoSplashState extends State<VideoSplash> {
 
   @override
   void initState() {
+    super.initState();
     context.read<AppProvider>().setLastShownVideo();
+
+    _videoController = VideoPlayerController.asset(FixedAssets.video)
+      ..initialize().then((_) {
+        setState(() {
+          _videoController.play();
+        });
+      });
     Future.delayed(const Duration(milliseconds: 33000), () async {
       if (!mounted) return;
       navigate();
     });
-    _videoController = VideoPlayerController.asset(FixedAssets.video)
-      ..initialize().then((_) {
-        setState(() {});
-      });
-    _videoController.play();
-    super.initState();
   }
 
   @override
@@ -42,33 +44,33 @@ class _VideoSplashState extends State<VideoSplash> {
               ? Center(
                   child: AspectRatio(
                     aspectRatio: 9 / 16,
-                    child: VideoPlayer(
-                      _videoController,
-                    ),
+                    child: VideoPlayer(_videoController),
                   ),
                 )
               : const SizedBox.shrink(),
           Positioned(
-              top: 50,
-              left: 50,
-              right: 50,
-              child: InkWell(
-                onTap: () {
-                  navigate();
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.tr('skip'),
-                      style: const TextStyle(
-                          color: AppColors.gold,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-              )),
+            top: 50,
+            left: 50,
+            right: 50,
+            child: InkWell(
+              onTap: () {
+                navigate();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.tr('skip'),
+                    style: const TextStyle(
+                      color: AppColors.gold,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           // Positioned(
           //     top: 90,
           //     right: 0,

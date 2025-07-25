@@ -54,7 +54,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   crypto: ^3.0.6
   rate_my_app: ^2.3.2
-  localstorage: ^4.0.0
+  localstorage: ^6.0.0
   video_player: ^2.10.0
   flutter_local_notifications: ^19.3.1
 

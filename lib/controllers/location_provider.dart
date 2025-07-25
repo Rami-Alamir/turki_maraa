@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -237,36 +238,39 @@ class LocationProvider with ChangeNotifier {
     required String isoCountryCode,
   }) async {
     try {
-      final LocalStorage storage = LocalStorage(Constants.localStorage);
-      await storage.setItem(
+      localStorage.setItem(
         Constants.locationData,
-        LocationData(
-          id: id,
-          latitude: latitude,
-          longitude: longitude,
-          isoCountryCode: isoCountryCode,
-          selectedLocationDescription: selectedLocationDescription,
-        ).toJson(),
+        jsonEncode(
+          LocationData(
+            id: id,
+            latitude: latitude,
+            longitude: longitude,
+            isoCountryCode: isoCountryCode,
+            selectedLocationDescription: selectedLocationDescription,
+          ).toJson(),
+        ),
       );
     } catch (_) {}
   }
 
   Future<void> _getLocation() async {
     try {
-      final LocalStorage storage = LocalStorage(Constants.localStorage);
-      await storage.ready;
-      LocationData? locationData = LocationData.fromJson(
-        storage.getItem(Constants.locationData),
-      );
-      _latLng = LatLng(locationData.latitude ?? 0, locationData.longitude ?? 0);
-      _isoCountryCode = locationData.isoCountryCode ?? "";
-      _selectedLocationDescription =
-          locationData.selectedLocationDescription ?? "";
-      _locationServiceStatus = LocationServiceStatus.savedLocation;
-      _customerHaveLocation = true;
-      _customerLocationId = locationData.id;
-      FirebaseHelper().subscribeToTopic(_isoCountryCode!);
-      notifyListeners();
+      final String? jsonString = localStorage.getItem(Constants.locationData);
+      if (jsonString != null) {
+        final Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+        LocationData? locationData = LocationData.fromJson(jsonMap);
+        _latLng = LatLng(
+          locationData.latitude ?? 0,
+          locationData.longitude ?? 0,
+        );
+        _isoCountryCode = locationData.isoCountryCode ?? "";
+        _selectedLocationDescription =
+            locationData.selectedLocationDescription ?? "";
+        _locationServiceStatus = LocationServiceStatus.savedLocation;
+        _customerHaveLocation = true;
+        _customerLocationId = locationData.id;
+        FirebaseHelper().subscribeToTopic(_isoCountryCode!);
+      }
     } catch (_) {}
   }
 }
