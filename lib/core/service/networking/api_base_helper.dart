@@ -9,20 +9,20 @@ class ApiBaseHelper {
   Map<String, String> headers = {
     "Accept": "application/json",
     "App-Key": "Nghf9AP72aWF635xLHCnd9q88pRmSaP95BLRDI0n",
-    "Authorization": ""
+    "Authorization": "",
   };
   Map<String, String> headers2 = {
     "Accept": "application/json",
     "Content-Type": "application/json",
     "App-Key": "Nghf9AP72aWF635xLHCnd9q88pRmSaP95BLRDI0n",
-    "Authorization": ""
+    "Authorization": "",
   };
 
   Map<String, String> tabbyHeader = {
     "Accept": "application/json",
     "Content-Type": "application/json",
     "Authorization": "Bearer ${Constants.tabbyApiKey}",
-    "X-Merchant-Code": ""
+    "X-Merchant-Code": "",
   };
 
   Future<dynamic> get(String url, {String authorization = " "}) async {
@@ -62,8 +62,11 @@ class ApiBaseHelper {
     return _returnResponse(response);
   }
 
-  Future<int> post2(String url, Map<String, dynamic> body,
-      {String authorization = " "}) async {
+  Future<int> post2(
+    String url,
+    Map<String, dynamic> body, {
+    String authorization = " ",
+  }) async {
     headers['authorization'] = authorization;
     // print("headers: $headers");
     // print("body ${jsonEncode(body)}");
@@ -76,8 +79,11 @@ class ApiBaseHelper {
     return response.statusCode;
   }
 
-  Future<dynamic> post3(String url, Map<String, dynamic> body,
-      {String authorization = ''}) async {
+  Future<dynamic> post3(
+    String url,
+    Map<String, dynamic> body, {
+    String authorization = '',
+  }) async {
     authorization = authorization;
     headers['authorization'] = authorization;
     Uri uri = Uri.parse(_baseUrl + url);
@@ -111,16 +117,20 @@ class ApiBaseHelper {
     return response;
   }
 
-  Future<dynamic> post5(
-      {required String url,
-      required body,
-      required String merchantCode}) async {
+  Future<dynamic> post5({
+    required String url,
+    required body,
+    required String merchantCode,
+  }) async {
     tabbyHeader['X-Merchant-Code'] = merchantCode;
     Uri uri = Uri.parse(url);
     dynamic response;
     try {
-      response =
-          await http.post(uri, body: json.encode(body), headers: tabbyHeader);
+      response = await http.post(
+        uri,
+        body: json.encode(body),
+        headers: tabbyHeader,
+      );
     } catch (_) {}
     return _returnResponse(response);
   }
@@ -164,7 +174,8 @@ class ApiBaseHelper {
       case 500:
       default:
         throw FetchDataException(
-            'Error occurred while Communication with Server with StatusCode : ${response.statusCode}');
+          'Error occurred while Communication with Server with StatusCode : ${response.statusCode}',
+        );
     }
   }
 }

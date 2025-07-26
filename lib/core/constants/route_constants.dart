@@ -25,6 +25,7 @@ const String favourite = "/Favourite";
 const String fAQ = "/FAQ";
 const String about = "/About";
 const String orderStatus = "/OrderStatus";
+const String myFatoorah = "/MyFatoorah";
 const String productsHome = "/ProductsHome";
 const String personalInformation = "/PersonalInformation";
 const String productsList = "/ProductsList";

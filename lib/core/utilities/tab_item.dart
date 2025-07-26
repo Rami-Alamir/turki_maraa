@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
-import '../../presentation/screens/intro/intro.dart';
+import 'package:turki_maraa_app/presentation/screens/cart/my_fatoorah.dart';
 import '../constants/route_constants.dart';
 import '../service/firebase_helper.dart';
 import '../../models/discover_data.dart';
+import '../../presentation/screens/intro/intro.dart';
 import '../../presentation/screens/app/app.dart';
 import '../../presentation/screens/cart/tabby_checkout_page.dart';
 import '../../presentation/screens/cart/shopping_cart.dart';
@@ -43,9 +44,7 @@ class TabItem {
   int _index = 0;
   late Widget _page;
 
-  TabItem({
-    required Widget page,
-  }) {
+  TabItem({required Widget page}) {
     _page = page;
   }
 
@@ -72,10 +71,11 @@ class TabItem {
         onGenerateRoute: (RouteSettings settings) {
           final args = settings.arguments;
           FirebaseHelper().pushAnalyticsEvent(
-              name: 'route',
-              value: settings.name!.substring(1).isEmpty
-                  ? 'Splash'
-                  : settings.name!.substring(1));
+            name: 'route',
+            value: settings.name!.substring(1).isEmpty
+                ? 'Splash'
+                : settings.name!.substring(1),
+          );
 
           switch (settings.name) {
             case '/':
@@ -90,14 +90,15 @@ class TabItem {
               return MaterialPageRoute(builder: (_) => const MyAddresses());
             case home:
               return MaterialPageRoute(
-                  builder: (_) => Home(
-                        parentScaffoldStateKey:
-                            args as GlobalKey<ScaffoldState>,
-                      ));
+                builder: (_) => Home(
+                  parentScaffoldStateKey: args as GlobalKey<ScaffoldState>,
+                ),
+              );
             case productDetails:
               return MaterialPageRoute(
-                  builder: (_) =>
-                      ProductDetails(data: args as Map<String, dynamic>));
+                builder: (_) =>
+                    ProductDetails(data: args as Map<String, dynamic>),
+              );
             case intro:
               return MaterialPageRoute(builder: (_) => const Intro());
             case profile:
@@ -112,13 +113,16 @@ class TabItem {
               return MaterialPageRoute(builder: (_) => const AddGiftCard());
             case orders:
               return MaterialPageRoute(
-                  builder: (_) => Orders(back: args as bool));
+                builder: (_) => Orders(back: args as bool),
+              );
             case userNotifications:
               return MaterialPageRoute(
-                  builder: (_) => const UserNotification());
+                builder: (_) => const UserNotification(),
+              );
             case orderDetails:
               return MaterialPageRoute(
-                  builder: (_) => OrderDetails(id: args as String));
+                builder: (_) => OrderDetails(id: args as String),
+              );
             case cart:
               return MaterialPageRoute(builder: (_) => const ShoppingCart());
             case login:
@@ -137,47 +141,55 @@ class TabItem {
               return MaterialPageRoute(builder: (_) => const About());
             case orderStatus:
               return MaterialPageRoute(
-                  builder: (_) => OrderStatus(status: args as bool));
+                builder: (_) => OrderStatus(status: args as bool),
+              );
+            case myFatoorah:
+              return MaterialPageRoute(
+                builder: (_) => MyFatoorahWebview(url: args as String),
+              );
+
             case tamaraCheckoutPage:
               return MaterialPageRoute(
-                  builder: (_) => TamaraCheckoutPage(
-                        checkoutUrl: args as String,
-                      ));
+                builder: (_) => TamaraCheckoutPage(checkoutUrl: args as String),
+              );
             case tabbyCheckoutPage:
               return MaterialPageRoute(
-                  builder: (_) => TabbyCheckoutPage(
-                        session: args as TabbySession,
-                      ));
+                builder: (_) =>
+                    TabbyCheckoutPage(session: args as TabbySession),
+              );
             case policies:
               return MaterialPageRoute(
-                  builder: (_) =>
-                      Policies(policiesData: args as Map<String, String>));
+                builder: (_) =>
+                    Policies(policiesData: args as Map<String, String>),
+              );
             case personalInformation:
               return MaterialPageRoute(
-                  builder: (_) => const PersonalInformation());
+                builder: (_) => const PersonalInformation(),
+              );
             case productsHome:
               return MaterialPageRoute(
-                  builder: (_) => ProductsHome(id: args as int));
+                builder: (_) => ProductsHome(id: args as int),
+              );
             case hmsMap:
               return MaterialPageRoute(
-                  builder: (_) => HMSMap(
-                        addressIndex: args as int,
-                      ));
+                builder: (_) => HMSMap(addressIndex: args as int),
+              );
             case gmsMap:
               return MaterialPageRoute(
-                  builder: (_) => GMSMap(
-                        addressIndex: args as int,
-                      ));
+                builder: (_) => GMSMap(addressIndex: args as int),
+              );
             case search:
               return MaterialPageRoute(builder: (_) => const Search());
 
             case discover:
               return MaterialPageRoute(
-                  builder: (_) => Discover(item: args as Data));
+                builder: (_) => Discover(item: args as Data),
+              );
             case productsList:
               return MaterialPageRoute(
-                  builder: (_) =>
-                      ProductsList(data: args as Map<String, dynamic>));
+                builder: (_) =>
+                    ProductsList(data: args as Map<String, dynamic>),
+              );
             default:
               return null;
           }

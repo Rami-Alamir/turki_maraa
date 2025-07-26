@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
-import '../../../controllers/app_provider.dart';
 import 'min_value_indicator.dart';
 import '../shared/invoice.dart';
 import '../shared/rounded_rectangle_button.dart';
+import '../../../controllers/app_provider.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/address_provider.dart';
 import '../../../controllers/location_provider.dart';
@@ -312,11 +311,10 @@ class CartBottomSheetState extends State<CartBottomSheet> {
           break;
         case 2:
           cartProvider.clearCart();
-          Navigator.of(
-            context,
-            rootNavigator: true,
-          ).pushNamed(orderStatus, arguments: true);
-          launchUrlString(cartProvider.arb.data!.invoiceURL!);
+          Navigator.of(context, rootNavigator: true).pushNamed(
+            myFatoorah,
+            arguments: cartProvider.arb.data!.invoiceURL!,
+          );
           break;
         case 4:
           cartProvider.clearCart();
