@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/route_constants.dart';
+import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 
 class MyFatoorahAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyFatoorahAppBar({super.key});
@@ -7,6 +8,8 @@ class MyFatoorahAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Theme.of(context).colorScheme.onSurface,
+
       flexibleSpace: SafeArea(
         child: Directionality(
           textDirection: TextDirection.rtl,
@@ -24,7 +27,11 @@ class MyFatoorahAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
-                icon: const Icon(Icons.arrow_back_ios, size: 15),
+                icon: Icon(
+                  TURKIICONS.x2,
+                  size: 15,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ],
           ),

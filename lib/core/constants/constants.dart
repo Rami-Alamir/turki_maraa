@@ -42,7 +42,7 @@ class Constants {
   static const String instagramUae = "https://www.instagram.com/almaraa_uae/";
   static const String instagramKsa = "https://www.instagram.com/turki_dabayh";
   static const String snapchat = 'https://www.snapchat.com/add/TORKI666008';
-  static const String twitter = "https://twitter.com/Almaraa_ksa";
+  static const String twitter = "https://x.com/turki_dabayh";
 
   //keys
   static const String locationData = 'location_data';

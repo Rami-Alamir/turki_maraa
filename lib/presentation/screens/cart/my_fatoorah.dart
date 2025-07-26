@@ -19,6 +19,7 @@ class _MyFatoorahWebviewState extends State<MyFatoorahWebview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: const MyFatoorahAppBar(),
       body: PopScope(
         canPop: false,
@@ -47,6 +48,7 @@ class _MyFatoorahWebviewState extends State<MyFatoorahWebview> {
                   mediaPlaybackRequiresUserGesture: false,
                 ),
                 onPageCommitVisible: (controller, url) async {
+                  print(url);
                   bool paymentStatus = false;
                   if (url.toString().contains("almaraacompany")) {
                     try {
