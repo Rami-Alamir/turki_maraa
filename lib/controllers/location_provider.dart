@@ -81,7 +81,7 @@ class LocationProvider with ChangeNotifier {
           );
         }
       }
-    } catch (e) {
+    } catch (_) {
       _locationServiceStatus = LocationServiceStatus.unableToDetermine;
     }
     notifyListeners();
