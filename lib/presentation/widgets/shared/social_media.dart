@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'social_media_icon.dart';
 import '../../../controllers/location_provider.dart';
 import '../../../core/constants/constants.dart';
-import '../../../core/utilities/social_icons_icons.dart';
+import '../../../core/utilities/t_u_r_k_i_i_c_o_n_s_icons.dart';
 
 class SocialMedia extends StatelessWidget {
   final Color? color;
@@ -26,19 +26,20 @@ class SocialMedia extends StatelessWidget {
                   url: context.read<LocationProvider>().isoCountryCode == "AE"
                       ? Constants.instagramUae
                       : Constants.instagramKsa,
-                  icon: SocialIcons.instagram,
+                  icon: TURKIICONS.instagram2,
+
                   color: color,
                 ),
                 SocialMediaIcon(
                   name: "snapchat",
                   url: Constants.snapchat,
-                  icon: SocialIcons.snapchat,
+                  icon: TURKIICONS.snapchat,
                   color: color,
                 ),
                 SocialMediaIcon(
                   name: "twitter",
                   url: Constants.twitter,
-                  icon: SocialIcons.twitter,
+                  icon: TURKIICONS.x_1,
                   color: color,
                 ),
               ],
