@@ -48,7 +48,6 @@ class _MyFatoorahWebviewState extends State<MyFatoorahWebview> {
                   mediaPlaybackRequiresUserGesture: false,
                 ),
                 onPageCommitVisible: (controller, url) async {
-                  print(url);
                   bool paymentStatus = false;
                   if (url.toString().contains("almaraacompany")) {
                     try {
