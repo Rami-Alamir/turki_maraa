@@ -28,7 +28,7 @@ class _VideoSplashState extends State<VideoSplash> {
           _videoController.play();
         });
       });
-    Future.delayed(const Duration(milliseconds: 33000), () async {
+    Future.delayed(const Duration(milliseconds: 8000), () async {
       if (!mounted) return;
       navigate();
     });
