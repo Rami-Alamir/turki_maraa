@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -85,17 +86,14 @@ class Auth with ChangeNotifier {
   void startTimer() {
     _start = 30;
     const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 0) {
-          timer.cancel();
-        } else {
-          _start--;
-        }
-        notifyListeners();
-      },
-    );
+    _timer = Timer.periodic(oneSec, (Timer timer) {
+      if (_start == 0) {
+        timer.cancel();
+      } else {
+        _start--;
+      }
+      notifyListeners();
+    });
     _start = 30;
     notifyListeners();
   }
@@ -104,8 +102,9 @@ class Auth with ChangeNotifier {
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
       _userPhone = ConvertNumbers.getPhone(_dialCode, _phoneControllerValue);
-      var response =
-          await sl<LoginRepository>().sendOTP({"mobile": _userPhone});
+      var response = await sl<LoginRepository>().sendOTP({
+        "mobile": _userPhone,
+      });
       if (response.statusCode == 200) {
         _userType = UserType.fromJson(json.decode(response.body.toString()));
         _isNewUser = _userType!.code == "C100";
@@ -128,8 +127,9 @@ class Auth with ChangeNotifier {
       try {
         var response = await sl<LoginRepository>().verifyOtpCode({
           "mobile": _userPhone,
-          "mobile_verification_code":
-              ConvertNumbers.convertNumbers(_otpControllerValue)
+          "mobile_verification_code": ConvertNumbers.convertNumbers(
+            _otpControllerValue,
+          ),
         });
         if (response.statusCode == 200) {
           _userData = UserData.fromJson(json.decode(response.body.toString()));
@@ -140,6 +140,9 @@ class Auth with ChangeNotifier {
           _isAuth = true;
           _updateDeviceToken();
           notifyListeners();
+          final Smartlook smartlook = Smartlook.instance;
+          smartlook.user.setName(_userData?.data?.name ?? "");
+          smartlook.user.setIdentifier(_userData?.data?.id.toString() ?? "");
         }
         return response.statusCode;
       } catch (_) {
@@ -173,8 +176,9 @@ class Auth with ChangeNotifier {
 
   Future<bool> deleteAccount() async {
     try {
-      int statusCode =
-          await sl<UserRepository>().deleteUserAccount("Bearer $_accessToken");
+      int statusCode = await sl<UserRepository>().deleteUserAccount(
+        "Bearer $_accessToken",
+      );
       if (statusCode == 200) {
         return true;
       }
@@ -231,9 +235,11 @@ class Auth with ChangeNotifier {
       String? deviceToken = FirebaseHelper.deviceToken;
       // deviceToken ??= await FirebaseHelper().messaging!.getToken();
       if (deviceToken != null) {
-        await sl<UserRepository>().updateDeviceToken({
-          "device_token": deviceToken,
-        }, "${_userData?.data?.id}", "Bearer $_accessToken");
+        await sl<UserRepository>().updateDeviceToken(
+          {"device_token": deviceToken},
+          "${_userData?.data?.id}",
+          "Bearer $_accessToken",
+        );
       }
     } catch (_) {}
   }

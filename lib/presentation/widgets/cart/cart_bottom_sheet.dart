@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import 'min_value_indicator.dart';
@@ -311,6 +312,9 @@ class CartBottomSheetState extends State<CartBottomSheet> {
           break;
         case 2:
           cartProvider.clearCart();
+          Smartlook.instance.preferences.setRenderingMode(
+            RenderingMode.wireframe,
+          );
           Navigator.of(context, rootNavigator: true).pushNamed(
             myFatoorah,
             arguments: cartProvider.arb.data!.invoiceURL!,
@@ -318,6 +322,9 @@ class CartBottomSheetState extends State<CartBottomSheet> {
           break;
         case 4:
           cartProvider.clearCart();
+          Smartlook.instance.preferences.setRenderingMode(
+            RenderingMode.wireframe,
+          );
           Navigator.of(context, rootNavigator: true).pushNamed(
             tamaraCheckoutPage,
             arguments: cartProvider.tamara.data!.checkoutUrl!,
@@ -326,6 +333,9 @@ class CartBottomSheetState extends State<CartBottomSheet> {
         case 7:
           {
             if (cartProvider.session.availableProducts.installments != null) {
+              Smartlook.instance.preferences.setRenderingMode(
+                RenderingMode.wireframe,
+              );
               Navigator.of(
                 context,
                 rootNavigator: true,

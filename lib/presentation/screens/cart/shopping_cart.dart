@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/app_provider.dart';
+import '../../../core/constants/constants.dart';
 import '../../widgets/cart/cart_bottom_sheet.dart';
 import '../../widgets/cart/cart_items_list.dart';
 import '../../widgets/cart/day_of_sacrifice.dart';
@@ -32,6 +34,8 @@ class ShoppingCartState extends State<ShoppingCart> {
   void initState() {
     context.read<CartProvider>().adhaCategoryId =
         context.read<AppProvider>().adhaConfig?.categoryId ?? 0;
+    Smartlook.instance.trackEvent(Constants.smartlookShowCart);
+
     super.initState();
   }
 

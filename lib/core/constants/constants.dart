@@ -1,6 +1,6 @@
 class Constants {
   Constants._();
-  static const String appVersion = "6.26.0";
+  static const String appVersion = "6.27.0";
   // static const String baseUrl = 'https://almaraacompany.com/turki-api/api/v1/';
   static const String baseUrl = 'https://almaraacompany.com/dashboard/api/v2/';
   // static const String baseUrl =
@@ -49,4 +49,9 @@ class Constants {
   static const String localStorage = 'local_storage';
   static const String isVideoSean = 'is_video_sean';
   static const String lastShownVideo = 'last_shown_video';
+
+  //smartlook
+  static const String smartLockProjectKey =
+      '705fa6c0e3b8e320664d975b9050f40558a49db5';
+  static const String smartlookShowCart = 'show_cart';
 }

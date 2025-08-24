@@ -58,6 +58,7 @@ dependencies:
   video_player: ^2.10.0
   flutter_local_notifications: ^19.3.1
   flutter_inappwebview: ^6.1.5
+  flutter_smartlook: ^4.1.29
 
 #flutter_native_splash:
 #  background_image: "assets/images/ww1.png"

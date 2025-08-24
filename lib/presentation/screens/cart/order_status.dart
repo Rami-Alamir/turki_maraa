@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
@@ -51,6 +52,7 @@ class _OrderStatusState extends State<OrderStatus> {
 
   @override
   void initState() {
+    Smartlook.instance.preferences.setRenderingMode(RenderingMode.native);
     status = widget.status;
     context.read<OrdersProvider>().getOrdersList();
     paymentId = context.read<CartProvider>().selectedPayment;
