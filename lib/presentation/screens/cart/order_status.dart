@@ -116,9 +116,7 @@ class _OrderStatusState extends State<OrderStatus> {
               child: Text(
                 AppLocalizations.of(context)!.tr(
                   status
-                      ? (paymentId == 2
-                            ? "the_order_has_been_sent_and_the_payment_is_being_verified"
-                            : "thank_order")
+                      ? "thank_order"
                       : paymentId == 7
                       ? "tabby_error"
                       : "payment_failed_description",
