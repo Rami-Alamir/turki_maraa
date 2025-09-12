@@ -1,6 +1,6 @@
 class Constants {
   Constants._();
-  static const String appVersion = "6.28.0";
+  static const String appVersion = "6.29.0";
   // static const String baseUrl =
   //     'https://almaraacompany.com/dashboard-api/api/v2/';
 
@@ -55,4 +55,13 @@ class Constants {
   static const String smartLockProjectKey =
       '705fa6c0e3b8e320664d975b9050f40558a49db5';
   static const String smartlookShowCart = 'show_cart';
+
+  // Adjust Events Token
+  static const String adjustToken = "jjwnj44cxwcg";
+  static const String adjustAddToCart = "rbkuvo";
+  static const String adjustAddToWishlist = "ndo2ne";
+  static const String adjustLoginByPhone = "xxft8g";
+  static const String adjustAppOpen = "hejkam";
+  static const String adjustPurchases = "en0t2l";
+  static const String adjustBeginCheckout = "l04xx8";
 }

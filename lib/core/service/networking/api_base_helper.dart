@@ -26,7 +26,7 @@ class ApiBaseHelper {
   };
 
   Uri _getParsedUrl(String path) {
-    print(Uri.parse('$_baseUrl$path'));
+    // print(Uri.parse('$_baseUrl$path'));
     return Uri.parse('$_baseUrl$path');
   }
 

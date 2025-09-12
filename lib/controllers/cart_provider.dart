@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import 'package:crypto/crypto.dart';
+import '../core/service/adjust_helper.dart';
 import 'address_provider.dart';
 import '../presentation/widgets/dialog/message_dialog.dart';
 import '../models/payment_types.dart';
@@ -467,7 +468,6 @@ class CartProvider with ChangeNotifier {
     HapticFeedback.heavyImpact();
     http.Response response;
     bool status = checkRequiredData(context);
-
     if (isAdhia && _selectedDate != -1) {
       if (!_checkAdhiaOrder()) {
         return 10;
@@ -521,6 +521,12 @@ class CartProvider with ChangeNotifier {
           FirebaseHelper().pushAnalyticsEvent(
             name: "notes",
             value: noteController.text,
+          );
+
+          _adjustPurchaseEvents(
+            currency: currency,
+            total:
+                cartData?.data?.invoicePreview?.totalAmountAfterDiscount ?? 0,
           );
           if (paymentId == 1 || paymentId == 8) {
             return 1;
@@ -767,5 +773,12 @@ class CartProvider with ChangeNotifier {
       return allowedCityIds.contains(cartData!.currentCity?.id);
     }
     return true;
+  }
+
+  void _adjustPurchaseEvents({
+    required String currency,
+    required double total,
+  }) {
+    AdjustHelper().pushAdjustPurchaseEvents(total: total, currency: currency);
   }
 }

@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:adjust_sdk/adjust.dart';
+import 'package:adjust_sdk/adjust_config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -7,9 +10,11 @@ import '../../../controllers/app_language.dart';
 import '../../../controllers/app_provider.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/location_provider.dart';
+import '../../../core/constants/constants.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/service/adjust_helper.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/service/service_locator.dart';
@@ -28,6 +33,7 @@ class SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
+    initAdjustSDK();
     checkConnectivity();
     context.read<LocationProvider>().initLatLng(
       context.read<AppLanguage>().language,
@@ -125,5 +131,18 @@ class SplashState extends State<Splash> {
       internetStatus = (!connectivityResult.contains(ConnectivityResult.none));
     } catch (_) {}
     return connectivityResult;
+  }
+
+  void initAdjustSDK() async {
+    if (Platform.isIOS) {
+      await Adjust.requestAppTrackingAuthorization();
+    }
+    final AdjustConfig config = AdjustConfig(
+      Constants.adjustToken,
+      AdjustEnvironment.production,
+    );
+    config.logLevel = AdjustLogLevel.verbose;
+    Adjust.initSdk(config);
+    AdjustHelper().pushAdjustEvents(eventToken: Constants.adjustAppOpen);
   }
 }

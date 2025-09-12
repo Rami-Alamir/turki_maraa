@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/app_provider.dart';
-import '../../../core/constants/constants.dart';
 import '../../widgets/cart/cart_bottom_sheet.dart';
 import '../../widgets/cart/cart_items_list.dart';
 import '../../widgets/cart/day_of_sacrifice.dart';
@@ -18,6 +16,9 @@ import '../../widgets/shared/primary_app_bar.dart';
 import '../../widgets/shared/empty_list.dart';
 import '../../../controllers/home_provider.dart';
 import '../../../controllers/cart_provider.dart';
+import '../../../controllers/app_provider.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/service/adjust_helper.dart';
 import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
@@ -35,7 +36,7 @@ class ShoppingCartState extends State<ShoppingCart> {
     context.read<CartProvider>().adhaCategoryId =
         context.read<AppProvider>().adhaConfig?.categoryId ?? 0;
     Smartlook.instance.trackEvent(Constants.smartlookShowCart);
-
+    AdjustHelper().pushAdjustEvents(eventToken: Constants.adjustBeginCheckout);
     super.initState();
   }
 

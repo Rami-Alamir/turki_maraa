@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../widgets/login/phone_number.dart';
 import '../../widgets/shared/rounded_rectangle_button.dart';
 import '../../../controllers/auth.dart';
 import '../../../core/service/service_locator.dart';
+import '../../../core/service/adjust_helper.dart';
+import '../../../core/constants/constants.dart';
 import '../../../core/constants/route_constants.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/show_snack_bar.dart';
@@ -89,6 +92,11 @@ class PhoneLoginState extends State<PhoneLogin> {
   void show(BuildContext context, int statusCode) {
     Navigator.of(context).pop();
     if (statusCode == 200) {
+      AdjustHelper().pushAdjustEventsWithValue(
+        eventToken: Constants.adjustLoginByPhone,
+        value: phoneController.text,
+        key: "phone",
+      );
       Navigator.pushNamed(context, verifyPhone);
     } else {
       sl<ShowSnackBar>().show(

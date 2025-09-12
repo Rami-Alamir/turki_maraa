@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../../../../controllers/app_provider.dart';
 import '../../shared/rounded_rectangle_button.dart';
 import '../../../../controllers/product_provider.dart';
 import '../../../../controllers/cart_provider.dart';
+import '../../../../controllers/app_provider.dart';
+import '../../../../core/service/adjust_helper.dart';
 import '../../../../core/constants/route_constants.dart';
 import '../../../../core/service/service_locator.dart';
 import '../../../../core/utilities/app_localizations.dart';
@@ -18,13 +19,14 @@ class ProductDetailsFooter extends StatefulWidget {
   final Function subtract;
   final int categoryId;
 
-  const ProductDetailsFooter(
-      {super.key,
-      required this.count,
-      required this.index,
-      required this.add,
-      required this.subtract,
-      required this.categoryId});
+  const ProductDetailsFooter({
+    super.key,
+    required this.count,
+    required this.index,
+    required this.add,
+    required this.subtract,
+    required this.categoryId,
+  });
   @override
   State<ProductDetailsFooter> createState() => _ProductDetailsFooterState();
 }
@@ -57,10 +59,9 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "${widget.count}",
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayLarge
-                        ?.copyWith(fontSize: 16),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.displayLarge?.copyWith(fontSize: 16),
                   ),
                 ),
                 RoundedRectangleButton(
@@ -78,8 +79,10 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                   onPressed: () async {
                     final ProductProvider productProvider =
                         Provider.of<ProductProvider>(context, listen: false);
-                    final CartProvider cartProvider =
-                        Provider.of<CartProvider>(context, listen: false);
+                    final CartProvider cartProvider = Provider.of<CartProvider>(
+                      context,
+                      listen: false,
+                    );
                     if (cartProvider.isAuth) {
                       if (widget.categoryId ==
                               context
@@ -90,13 +93,18 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                           context.read<AppProvider>().adhaConfig?.dates?.last !=
                               DateTime.now().toString().substring(0, 10)) {
                         sl<ShowSnackBar>().show(
-                            context, "please_choose_the_day_of_sacrifice");
+                          context,
+                          "please_choose_the_day_of_sacrifice",
+                        );
                         return;
                       }
                     }
 
                     if (cartProvider.isAuth) {
-                      if ((productProvider.productData[widget.index].data?.sizes
+                      if ((productProvider
+                                      .productData[widget.index]
+                                      .data
+                                      ?.sizes
                                       ?.length ??
                                   0) >
                               0 &&
@@ -104,8 +112,11 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                         sl<ShowSnackBar>().show(context, "please_select_size");
                         return;
                       }
-                      if ((productProvider.productData[widget.index].data
-                                      ?.chopping?.length ??
+                      if ((productProvider
+                                      .productData[widget.index]
+                                      .data
+                                      ?.chopping
+                                      ?.length ??
                                   0) >
                               0 &&
                           productProvider.selectedChopping == -1) {
@@ -113,8 +124,11 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
 
                         return;
                       }
-                      if ((productProvider.productData[widget.index].data
-                                      ?.packaging?.length ??
+                      if ((productProvider
+                                      .productData[widget.index]
+                                      .data
+                                      ?.packaging
+                                      ?.length ??
                                   0) >
                               0 &&
                           productProvider.selectedPackaging == -1) {
@@ -139,14 +153,29 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                         isLyh: productProvider.withoutTailFat ? "1" : "0",
                         iskwar3: productProvider.withoutTrotters ? "1" : "0",
                       );
+
                       if (context.mounted) {
+                        AdjustHelper().pushAdjustAddToCartEvents(
+                          isoCountryCode: cartProvider.isoCountryCode,
+                          price:
+                              "'${productProvider.productData[widget.index].data!.salePrice}',",
+                          productName:
+                              '${productProvider.productData[widget.index].data!.nameAr}',
+                          productId:
+                              '${productProvider.productData[widget.index].data!.id}',
+                          quantity: '${widget.count}',
+                        );
                         Navigator.of(context, rootNavigator: true).pop();
-                        sl<ShowSnackBar>().show(context,
-                            status ? "product_added_cart" : "unexpected_error");
+                        sl<ShowSnackBar>().show(
+                          context,
+                          status ? "product_added_cart" : "unexpected_error",
+                        );
                       }
                     } else {
-                      Navigator.of(context, rootNavigator: true)
-                          .pushNamed(login);
+                      Navigator.of(
+                        context,
+                        rootNavigator: true,
+                      ).pushNamed(login);
                     }
                   },
                   padding: const EdgeInsets.all(0),
@@ -154,7 +183,7 @@ class _ProductDetailsFooterState extends State<ProductDetailsFooter> {
                   height: 40,
                   fontSize: 15,
                   title: AppLocalizations.of(context)!.tr('add_to_cart'),
-                )
+                ),
               ],
             ),
           ],

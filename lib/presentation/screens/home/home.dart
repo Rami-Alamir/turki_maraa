@@ -1,3 +1,4 @@
+import 'package:adjust_sdk/adjust.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../other/new_version.dart';
@@ -39,6 +40,9 @@ class HomeState extends State<Home> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {});
+    Future.delayed(Duration.zero, () async {
+      await Adjust.requestAppTrackingAuthorization();
+    });
   }
 
   @override

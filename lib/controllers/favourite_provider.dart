@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../core/constants/constants.dart';
+import '../core/service/adjust_helper.dart';
 import '../core/service/firebase_helper.dart';
 import '../core/service/service_locator.dart';
 import '../core/utilities/dialog_helper.dart';
@@ -23,7 +25,11 @@ class FavouriteProvider with ChangeNotifier {
   LatLng? get latLng => _latLng;
 
   void updateFavouriteProvider(
-      String accessToken, bool isAuth, LatLng? latLng, String? isoCountryCode) {
+    String accessToken,
+    bool isAuth,
+    LatLng? latLng,
+    String? isoCountryCode,
+  ) {
     _accessToken = accessToken;
     _isAuth = isAuth;
     if (isAuth && _favourite == null && accessToken.isNotEmpty) {
@@ -53,7 +59,10 @@ class FavouriteProvider with ChangeNotifier {
       }
       try {
         _favourite = await sl<FavouriteRepository>().getFavouriteList(
-            "Bearer ${_accessToken!}", _latLng!, _isoCountryCode!);
+          "Bearer ${_accessToken!}",
+          _latLng!,
+          _isoCountryCode!,
+        );
         _requestStatus = RequestStatus.completed;
       } catch (_) {
         _requestStatus = RequestStatus.error;
@@ -72,10 +81,14 @@ class FavouriteProvider with ChangeNotifier {
     int response;
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
-      response = await sl<FavouriteRepository>()
-          .deleteFromFavourite(id, "Bearer ${_accessToken!}");
+      response = await sl<FavouriteRepository>().deleteFromFavourite(
+        id,
+        "Bearer ${_accessToken!}",
+      );
       FirebaseHelper().pushAnalyticsEvent(
-          name: 'delete_from_favourite', value: productName);
+        name: 'delete_from_favourite',
+        value: productName,
+      );
       if (response == 200) {
         if (index > -1) _favourite!.dataT!.data!.removeAt(index);
         getFavouriteList(notify: notify);
@@ -85,20 +98,30 @@ class FavouriteProvider with ChangeNotifier {
     return false;
   }
 
-  Future<bool> addToFavourite(
-      {required BuildContext context,
-      required String id,
-      required String productName,
-      bool withDialog = true}) async {
+  Future<bool> addToFavourite({
+    required BuildContext context,
+    required String id,
+    required String productName,
+    bool withDialog = true,
+  }) async {
     int response;
     if (withDialog) {
       sl<DialogHelper>().showIndicatorDialog(context);
     }
     try {
-      response = await sl<FavouriteRepository>()
-          .addFavourite(id, "Bearer ${_accessToken!}");
-      FirebaseHelper()
-          .pushAnalyticsEvent(name: 'add_to_favourite', value: productName);
+      response = await sl<FavouriteRepository>().addFavourite(
+        id,
+        "Bearer ${_accessToken!}",
+      );
+      FirebaseHelper().pushAnalyticsEvent(
+        name: 'add_to_favourite',
+        value: productName,
+      );
+      AdjustHelper().pushAdjustEventsWithValue(
+        key: "productName",
+        value: productName,
+        eventToken: Constants.adjustAddToWishlist,
+      );
       if (response == 200) {
         getFavouriteList(notify: withDialog);
         return true;
