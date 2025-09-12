@@ -25,11 +25,15 @@ class ApiBaseHelper {
     "X-Merchant-Code": "",
   };
 
-  Future<dynamic> get(String url, {String authorization = " "}) async {
+  Uri _getParsedUrl(String path) {
+    print(Uri.parse('$_baseUrl$path'));
+    return Uri.parse('$_baseUrl$path');
+  }
+
+  Future<dynamic> get(String path, {String authorization = " "}) async {
     headers['authorization'] = authorization;
-    Uri uri = Uri.parse(_baseUrl + url);
+    Uri uri = _getParsedUrl(path);
     // print("headers: $headers");
-    // print(Uri.parse(_baseUrl + url));
     // print(authorization);
     dynamic responseJson;
     try {
@@ -39,11 +43,10 @@ class ApiBaseHelper {
     return responseJson;
   }
 
-  Future<dynamic> get2(String url, {String authorization = " "}) async {
+  Future<dynamic> get2(String path, {String authorization = " "}) async {
     headers['authorization'] = authorization;
-    Uri uri = Uri.parse(_baseUrl + url);
+    Uri uri = _getParsedUrl(path);
     // print("headers: $headers");
-    // print(Uri.parse(_baseUrl + url));
     dynamic response;
     try {
       response = await http.get(uri, headers: headers);
@@ -63,7 +66,7 @@ class ApiBaseHelper {
   }
 
   Future<int> post2(
-    String url,
+    String path,
     Map<String, dynamic> body, {
     String authorization = " ",
   }) async {
@@ -71,7 +74,7 @@ class ApiBaseHelper {
     // print("headers: $headers");
     // print("body ${jsonEncode(body)}");
     // print(Uri.parse(_baseUrl + url));
-    Uri uri = Uri.parse(_baseUrl + url);
+    Uri uri = _getParsedUrl(path);
     dynamic response;
     try {
       response = await http.post(uri, body: body, headers: headers);
@@ -80,14 +83,13 @@ class ApiBaseHelper {
   }
 
   Future<dynamic> post3(
-    String url,
+    String path,
     Map<String, dynamic> body, {
     String authorization = '',
   }) async {
     authorization = authorization;
     headers['authorization'] = authorization;
-    Uri uri = Uri.parse(_baseUrl + url);
-    // print(Uri.parse(_baseUrl + url));
+    Uri uri = _getParsedUrl(path);
     // print("headers: $headers");
     // print("body $body");
     dynamic response;
@@ -100,12 +102,9 @@ class ApiBaseHelper {
     return response;
   }
 
-  Future<dynamic> post4(String url, body, {String authorization = " "}) async {
+  Future<dynamic> post4(String path, body, {String authorization = " "}) async {
     headers2['authorization'] = authorization;
-    Uri uri = Uri.parse(_baseUrl + url);
-    // print(Uri.parse(_baseUrl + url));
-    // print(body);
-    // print(Uri.parse(_baseUrl + url));
+    Uri uri = _getParsedUrl(path);
     // print("headers: $headers");
     // print("body $body");
     dynamic response;
@@ -135,9 +134,9 @@ class ApiBaseHelper {
     return _returnResponse(response);
   }
 
-  Future<int> delete(String url, {String authorization = " "}) async {
+  Future<int> delete(String path, {String authorization = " "}) async {
     headers['authorization'] = authorization;
-    Uri uri = Uri.parse(_baseUrl + url);
+    Uri uri = _getParsedUrl(path);
     // print(uri);
     dynamic response;
     try {
@@ -146,9 +145,9 @@ class ApiBaseHelper {
     return response.statusCode;
   }
 
-  Future<int> get3(String url, {String authorization = " "}) async {
+  Future<int> get3(String path, {String authorization = " "}) async {
     headers['authorization'] = authorization;
-    Uri uri = Uri.parse(_baseUrl + url);
+    Uri uri = _getParsedUrl(path);
     // print(Uri.parse(_baseUrl + url));
     // print("headers: $headers");
     dynamic response;
