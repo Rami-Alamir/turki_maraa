@@ -1,13 +1,11 @@
 class Constants {
   Constants._();
   static const String appVersion = "6.28.0";
-  // static const String baseUrl = 'https://almaraacompany.com/turki-api/api/v1/';
-  static const String baseUrl =
-      'https://almaraacompany.com/dashboard-api/api/v2/';
-
-  // static const String baseUrl = 'https://almaraacompany.com/dashboard/api/v2/';
   // static const String baseUrl =
-  // 'https://turki.almaraacompany.com/admin/api/v2/';
+  //     'https://almaraacompany.com/dashboard-api/api/v2/';
+
+  static const String baseUrl = 'https://almaraacompany.com/dashboard/api/v2/';
+
   static const String tabbyBaseUrl = 'https://api.tabby.ai/api/v1/';
   static const String tabbyApiKeyTest =
       'sk_test_86f97925-b3e7-4d24-a4b1-9e681e59e3ad';
