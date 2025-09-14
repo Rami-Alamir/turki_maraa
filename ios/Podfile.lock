@@ -1,4 +1,12 @@
 PODS:
+  - Adjust (5.4.3):
+    - Adjust/Adjust (= 5.4.3)
+  - Adjust/Adjust (5.4.3):
+    - AdjustSignature (= 3.47.0)
+  - adjust_sdk (5.4.2):
+    - Adjust (= 5.4.3)
+    - Flutter
+  - AdjustSignature (3.47.0)
   - Alamofire (5.10.2)
   - app_settings (5.1.1):
     - Flutter
@@ -219,6 +227,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - adjust_sdk (from `.symlinks/plugins/adjust_sdk/ios`)
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - Firebase/Messaging
@@ -252,6 +261,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Adjust
+    - AdjustSignature
     - Alamofire
     - Firebase
     - FirebaseABTesting
@@ -274,6 +285,8 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
+  adjust_sdk:
+    :path: ".symlinks/plugins/adjust_sdk/ios"
   app_settings:
     :path: ".symlinks/plugins/app_settings/ios"
   connectivity_plus:
@@ -332,6 +345,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
+  Adjust: c45e9ad1074b970df6ab78b1c2d17fd0338b4645
+  adjust_sdk: 5e497760da2cb31debf196a715bf7f71797a3912
+  AdjustSignature: d634fc6b66295c38807f3b4e50978c1f72355950
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
   app_settings: 58017cd26b604ae98c3e65acbdd8ba173703cc82
   connectivity_plus: 2a701ffec2c0ae28a48cf7540e279787e77c447d

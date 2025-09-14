@@ -43,6 +43,17 @@ class AppProvider with ChangeNotifier {
   bool get isVideoSean => false;
   AdhaConfig? get adhaConfig => _adhaConfig;
 
+  bool checkVideoDate(DateTime targetDate) {
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime target = DateTime(
+      targetDate.year,
+      targetDate.month,
+      targetDate.day,
+    );
+    return today.isBefore(target) || today.isAtSameMomentAs(target);
+  }
+
   Future<void> updateProvider(bool isHMS, String? isoCountryCode) async {
     _isHMS = isHMS;
     _isoCountryCode = isoCountryCode ?? 'SA';
@@ -55,8 +66,9 @@ class AppProvider with ChangeNotifier {
   Future<void> _getPromotions() async {
     promotions = await sl<PromotionsRepository>().getPromotions();
     await _initPrefs();
-    _canShake =
-        (promotions != null ? (promotions?.data?.last.type == "1") : false);
+    _canShake = (promotions != null
+        ? (promotions?.data?.last.type == "1")
+        : false);
     if (_canShake) {
       Random random = Random();
       int randomNumber = random.nextInt(promotions!.data!.length);
@@ -68,8 +80,9 @@ class AppProvider with ChangeNotifier {
         _canShakeToday = false;
       }
     } else {
-      _isPopPromotion =
-          (promotions != null ? (promotions?.data?.last.type == "2") : false);
+      _isPopPromotion = (promotions != null
+          ? (promotions?.data?.last.type == "2")
+          : false);
       _promotion = promotions!.data!.last;
     }
   }
@@ -77,15 +90,17 @@ class AppProvider with ChangeNotifier {
   // check if app have new version to show update page
   Future<void> _checkNewVersion() async {
     try {
-      final versionData =
-          await VersionRepository().getLatestAppVersion(Platform.isIOS
-              ? 1
-              : _isHMS!
-                  ? 3
-                  : 2);
+      final versionData = await VersionRepository().getLatestAppVersion(
+        Platform.isIOS
+            ? 1
+            : _isHMS!
+            ? 3
+            : 2,
+      );
       Version currentVersion = Version.parse(_currentVersion);
-      Version latestVersion =
-          Version.parse(versionData?.data?.value ?? _currentVersion);
+      Version latestVersion = Version.parse(
+        versionData?.data?.value ?? _currentVersion,
+      );
       _url = _isoCountryCode == 'AE'
           ? versionData?.data?.urlAe
           : versionData?.data?.url;
@@ -96,8 +111,11 @@ class AppProvider with ChangeNotifier {
   Future<void> getData({bool notify = true}) async {
     try {
       _checkLastShownVideo();
-      await Future.wait(
-          [_getPromotions(), _checkNewVersion(), _getAdhaConfig()]);
+      await Future.wait([
+        _getPromotions(),
+        _checkNewVersion(),
+        _getAdhaConfig(),
+      ]);
     } catch (_) {}
   }
 
