@@ -100,6 +100,18 @@
           }
         }
       }
+    },
+    "NSUserTrackingUsageDescription" : {
+      "comment" : "Privacy - Tracking Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your data will be used to deliver personalized ads to you"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

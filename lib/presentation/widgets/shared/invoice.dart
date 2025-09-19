@@ -13,6 +13,7 @@ class Invoice extends StatelessWidget {
   final double discountVoucher;
   final double shipping;
   final double myCredit;
+  final double cashTurki;
   final double total;
   final String currency;
   final String vat;
@@ -25,6 +26,7 @@ class Invoice extends StatelessWidget {
     this.discountVoucher = 0,
     this.shipping = 0,
     this.myCredit = 0,
+    this.cashTurki = 0,
     this.currency = "",
     this.vat = "vat_sa",
     this.calculateTotal = false,
@@ -81,13 +83,20 @@ class Invoice extends StatelessWidget {
             fontColor: AppColors.green,
           ),
           InvoiceRow(
+            title: 'cash_turki',
+            value:
+                '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(cashTurki)} $currencyStr',
+            visible: cashTurki > 0,
+            fontColor: AppColors.green,
+          ),
+          InvoiceRow(
             title: 'credit',
             value:
-                '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(calculateTotal
-                    ? myCredit > total
-                          ? total
+                '-${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros((calculateTotal
+                    ? myCredit > total - cashTurki
+                          ? total - cashTurki
                           : myCredit
-                    : myCredit)} $currencyStr',
+                    : myCredit))} $currencyStr',
             visible: myCredit > 0,
             fontColor: AppColors.green,
           ),
@@ -119,7 +128,7 @@ class Invoice extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
-                    '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(calculateTotal ? ((total - myCredit) > 0 ? total - myCredit : 0) : total)} $currencyStr',
+                    '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(calculateTotal ? ((total - myCredit - cashTurki) > 0 ? total - myCredit - cashTurki : 0) : total)} $currencyStr',
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),

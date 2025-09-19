@@ -35,6 +35,7 @@ class Order {
   String? comment;
   int? usingWallet;
   String? walletAmountUsed;
+  String? cashTurkiUsed;
   String? appliedDiscountCode;
   String? discountApplied;
   int? addressId;
@@ -52,32 +53,34 @@ class Order {
   DeliveryPeriod? deliveryPeriod;
   SelectedAddress? selectedAddress;
 
-  Order(
-      {this.id,
-      this.refNo,
-      this.deliveryFee,
-      this.orderSubtotal,
-      this.totalAmount,
-      this.totalAmountAfterDiscount,
-      this.comment,
-      this.usingWallet,
-      this.walletAmountUsed,
-      this.appliedDiscountCode,
-      this.discountApplied,
-      this.addressId,
-      this.customerId,
-      this.orderStateId,
-      this.paymentTypeId,
-      this.deliveryPeriodId,
-      this.deliveryDate,
-      this.paymentId,
-      this.versionApp,
-      this.createdAt,
-      this.updatedAt,
-      this.paymentType,
-      this.orderState,
-      this.deliveryPeriod,
-      this.selectedAddress});
+  Order({
+    this.id,
+    this.refNo,
+    this.deliveryFee,
+    this.orderSubtotal,
+    this.totalAmount,
+    this.totalAmountAfterDiscount,
+    this.comment,
+    this.usingWallet,
+    this.walletAmountUsed,
+    this.cashTurkiUsed,
+    this.appliedDiscountCode,
+    this.discountApplied,
+    this.addressId,
+    this.customerId,
+    this.orderStateId,
+    this.paymentTypeId,
+    this.deliveryPeriodId,
+    this.deliveryDate,
+    this.paymentId,
+    this.versionApp,
+    this.createdAt,
+    this.updatedAt,
+    this.paymentType,
+    this.orderState,
+    this.deliveryPeriod,
+    this.selectedAddress,
+  });
 
   Order.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -89,6 +92,7 @@ class Order {
     comment = json['comment'];
     usingWallet = json['using_wallet'];
     walletAmountUsed = json['wallet_amount_used'];
+    cashTurkiUsed = json['cash_turki_used'];
     appliedDiscountCode = json['applied_discount_code'];
     discountApplied = json['discount_applied'];
     addressId = json['address_id'];
@@ -135,11 +139,7 @@ class OrderState {
   String? stateEn;
   String? stateAr;
 
-  OrderState({
-    this.code,
-    this.stateEn,
-    this.stateAr,
-  });
+  OrderState({this.code, this.stateEn, this.stateAr});
 
   OrderState.fromJson(Map<String, dynamic> json) {
     code = json['code'];
@@ -167,8 +167,13 @@ class SelectedAddress {
   String? long;
   String? lat;
 
-  SelectedAddress(
-      {this.address, this.comment, this.label, this.long, this.lat});
+  SelectedAddress({
+    this.address,
+    this.comment,
+    this.label,
+    this.long,
+    this.lat,
+  });
 
   SelectedAddress.fromJson(Map<String, dynamic> json) {
     address = json['address'];
@@ -197,23 +202,24 @@ class Products {
   Extra? cut;
   Product? product;
 
-  Products(
-      {this.id,
-      this.quantity,
-      this.totalPrice,
-      this.orderRefNo,
-      this.isKwar3,
-      this.isRas,
-      this.isLyh,
-      this.isKarashah,
-      this.productId,
-      this.createdAt,
-      this.updatedAt,
-      this.shalwata,
-      this.preparation,
-      this.size,
-      this.cut,
-      this.product});
+  Products({
+    this.id,
+    this.quantity,
+    this.totalPrice,
+    this.orderRefNo,
+    this.isKwar3,
+    this.isRas,
+    this.isLyh,
+    this.isKarashah,
+    this.productId,
+    this.createdAt,
+    this.updatedAt,
+    this.shalwata,
+    this.preparation,
+    this.size,
+    this.cut,
+    this.product,
+  });
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -230,12 +236,14 @@ class Products {
     preparation = json['preparation'] != null
         ? Extra.fromJson(json['preparation'])
         : null;
-    shalwata =
-        json['shalwata'] != null ? Extra.fromJson(json['shalwata']) : null;
+    shalwata = json['shalwata'] != null
+        ? Extra.fromJson(json['shalwata'])
+        : null;
     size = json['size'] != null ? Extra.fromJson(json['size']) : null;
     cut = json['cut'] != null ? Extra.fromJson(json['cut']) : null;
-    product =
-        json['product'] != null ? Product.fromJson(json['product']) : null;
+    product = json['product'] != null
+        ? Product.fromJson(json['product'])
+        : null;
   }
 }
 
@@ -268,21 +276,22 @@ class Product {
   bool? isShalwata;
   List<ProductImages>? productImages;
   int? categoryId;
-  Product(
-      {this.id,
-      this.nameAr,
-      this.nameEn,
-      this.categoryId,
-      this.descriptionAr,
-      this.descriptionEn,
-      this.price,
-      this.salePrice,
-      this.isKwar3,
-      this.isRas,
-      this.isLyh,
-      this.isKarashah,
-      this.isShalwata,
-      this.productImages});
+  Product({
+    this.id,
+    this.nameAr,
+    this.nameEn,
+    this.categoryId,
+    this.descriptionAr,
+    this.descriptionEn,
+    this.price,
+    this.salePrice,
+    this.isKwar3,
+    this.isRas,
+    this.isLyh,
+    this.isKarashah,
+    this.isShalwata,
+    this.productImages,
+  });
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -314,9 +323,7 @@ class ProductImages {
   String? imageUrl;
   String? thumbnailUrl;
 
-  ProductImages({
-    this.imageUrl,
-  });
+  ProductImages({this.imageUrl});
 
   ProductImages.fromJson(Map<String, dynamic> json) {
     imageUrl = json['image_url'];

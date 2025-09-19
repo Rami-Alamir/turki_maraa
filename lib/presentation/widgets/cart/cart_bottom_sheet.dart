@@ -51,6 +51,9 @@ class CartBottomSheetState extends State<CartBottomSheet> {
           final double myCredit = cartProvider.useCredit
               ? cartProvider.cartData!.data!.customerWallet!
               : 0;
+          final double cashTurki = cartProvider.useCashTurki
+              ? cartProvider.cartData!.data!.cashTurki!
+              : 0;
           final double min = cartProvider.cartData!.currentCity?.minPrice ?? 0;
           return DraggableScrollableSheet(
             initialChildSize: min > total
@@ -108,6 +111,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                               Invoice(
                                 calculateTotal: true,
                                 myCredit: myCredit,
+                                cashTurki: cashTurki,
                                 total: total,
                                 subtotal: cartProvider
                                     .cartData!
@@ -164,7 +168,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                                         bottom: 5.0,
                                       ),
                                       child: Text(
-                                        '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(((total - myCredit) > 0 ? total - myCredit : 0))} $currency',
+                                        '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(((total - myCredit - cashTurki) > 0 ? total - myCredit - cashTurki : 0))} $currency',
                                         style: Theme.of(context)
                                             .textTheme
                                             .displayMedium!
@@ -304,6 +308,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
           break;
         case 1:
         case 8:
+        case 16:
           cartProvider.clearCart();
           Navigator.of(
             context,

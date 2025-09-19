@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import 'package:crypto/crypto.dart';
-import '../core/service/adjust_helper.dart';
 import 'address_provider.dart';
 import '../presentation/widgets/dialog/message_dialog.dart';
 import '../models/payment_types.dart';
@@ -23,6 +22,7 @@ import '../core/constants/constants.dart';
 import '../core/constants/fixed_assets.dart';
 import '../core/service/firebase_helper.dart';
 import '../core/service/service_locator.dart';
+import '../core/service/adjust_helper.dart';
 import '../core/utilities/dialog_helper.dart';
 import '../core/utilities/enum/request_status.dart';
 import '../core/utilities/app_localizations.dart';
@@ -88,6 +88,7 @@ class CartProvider with ChangeNotifier {
   Payment? _mockPayload;
   TabbyCaptures? tabbyCaptures;
   bool _useCredit = false;
+  bool _useCashTurki = false;
   int _selectedPayment = -1;
   int _selectedDate = -1;
   int _selectedTime = -1;
@@ -124,6 +125,7 @@ class CartProvider with ChangeNotifier {
   int get selectedPayment => _selectedPayment;
   int get selectedTime => _selectedTime;
   bool get useCredit => _useCredit;
+  bool get useCashTurki => _useCashTurki;
   bool get errorMsg => _errorMsg;
   bool get promoIsActive => _promoIsActive;
   RequestStatus get requestStatus => _requestStatus;
@@ -140,6 +142,23 @@ class CartProvider with ChangeNotifier {
 
   set setSelectedDate(int value) {
     _selectedDate = value;
+    notifyListeners();
+  }
+
+  set ussCashTurki(bool value) {
+    _useCashTurki = value;
+    if (!value && selectedPayment == 16) {
+      _selectedPayment = -1;
+    }
+    if (_selectedPayment == 1) {
+      _selectedPayment = -1;
+    }
+    if (value &&
+        (cartData?.data?.cashTurki ?? 0) >=
+            (cartData?.data?.invoicePreview?.totalAmountAfterDiscount ?? 0)) {
+      _selectedPayment = 16;
+      _useCredit = false;
+    }
     notifyListeners();
   }
 
@@ -219,6 +238,7 @@ class CartProvider with ChangeNotifier {
   }) async {
     HapticFeedback.heavyImpact();
     _useCredit = false;
+    _useCashTurki = false;
     _selectedPayment = -1;
     int response;
     sl<DialogHelper>().showIndicatorDialog(context);
@@ -260,6 +280,7 @@ class CartProvider with ChangeNotifier {
     required String quantity,
   }) async {
     _useCredit = false;
+    _useCashTurki = false;
     _selectedPayment = -1;
     HapticFeedback.heavyImpact();
     sl<DialogHelper>().showIndicatorDialog(context);
@@ -284,6 +305,8 @@ class CartProvider with ChangeNotifier {
     required String productId,
   }) async {
     HapticFeedback.vibrate();
+    _useCredit = false;
+    _useCashTurki = false;
     sl<DialogHelper>().showIndicatorDialog(context);
     try {
       int response = await sl<CartRepository>().deleteCartItem(
@@ -505,6 +528,7 @@ class CartProvider with ChangeNotifier {
             // "delivery_date": format.format(deliveryDataTime[_selectedDate]),
             // "delivery_period_id": _deliveryPeriod!.data![_selectedTime].id,
             "using_wallet": _useCredit,
+            "use_cash_turki": _useCashTurki ? 1 : 0,
             if (_selectedPayment == 4)
               "tamara_payment_name": "PAY_BY_INSTALMENTS",
             if (_selectedPayment == 4) "no_instalments": 3,
@@ -563,7 +587,8 @@ class CartProvider with ChangeNotifier {
     _mockPayload = Payment(
       amount:
           ((_cartData!.data!.invoicePreview!.totalAmountAfterDiscount! -
-                  (_useCredit ? (_cartData?.data?.customerWallet ?? 0) : 0)))
+                  (_useCredit ? (_cartData?.data?.customerWallet ?? 0) : 0) -
+                  (_useCashTurki ? (_cartData?.data?.cashTurki ?? 0) : 0)))
               .toString(),
       currency: _isoCountryCode == "SA" ? Currency.sar : Currency.aed,
       buyer: Buyer(
@@ -734,6 +759,7 @@ class CartProvider with ChangeNotifier {
     _selectedPayment = -1;
     _selectedDate = -1;
     _useCredit = false;
+    _useCashTurki = false;
   }
 
   void clearCart() {

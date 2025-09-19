@@ -38,16 +38,16 @@ class PaymentMethod extends StatelessWidget {
                 ).textTheme.displayMedium!.copyWith(fontSize: 14),
               ),
             ),
-            if (cartProvider.isoCountryCode == 'SA')
-              if ((cartProvider.cartData?.data?.customerWallet ?? 0) > 0)
-                const UseCredit(),
-            if (cartProvider.selectedPayment != 8)
+            if (cartProvider.isoCountryCode == 'SA') const UseCredit(),
+            if (cartProvider.selectedPayment != 8 &&
+                cartProvider.selectedPayment != 16)
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
                 child: Wrap(
                   children: [
                     if (cartProvider.cashAvailable &&
                         !cartProvider.useCredit &&
+                        !cartProvider.useCashTurki &&
                         !cartProvider.isAdhia)
                       const PaymentMethodItem(
                         selectedValue: 1,

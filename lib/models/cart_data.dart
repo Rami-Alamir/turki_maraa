@@ -19,11 +19,13 @@ class Data {
   Cart? cart;
   InvoicePreview? invoicePreview;
   double? customerWallet;
+  double? cashTurki;
 
   Data({this.cart, this.invoicePreview, this.customerWallet});
   Data.fromJson(Map<String, dynamic> json) {
     cart = json['cart'] != null ? Cart.fromJson(json['cart']) : null;
     customerWallet = double.parse(json['customer_wallet'] ?? "0.0");
+    cashTurki = (json['cash_turki'] ?? 0) * 1.0;
     invoicePreview = json['invoice-preview'] != null
         ? InvoicePreview.fromJson(json['invoice-preview'])
         : null;
@@ -62,22 +64,23 @@ class ItemData {
   bool? isLyh;
   bool? isKarashah;
 
-  ItemData(
-      {this.id,
-      this.comment,
-      this.appliedDiscountCode,
-      this.isKwar3,
-      this.isRas,
-      this.isLyh,
-      this.isKarashah,
-      this.isShalwata,
-      this.productId,
-      this.quantity,
-      this.product,
-      this.preparation,
-      this.size,
-      this.cut,
-      this.shalwata});
+  ItemData({
+    this.id,
+    this.comment,
+    this.appliedDiscountCode,
+    this.isKwar3,
+    this.isRas,
+    this.isLyh,
+    this.isKarashah,
+    this.isShalwata,
+    this.productId,
+    this.quantity,
+    this.product,
+    this.preparation,
+    this.size,
+    this.cut,
+    this.shalwata,
+  });
 
   ItemData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -90,15 +93,17 @@ class ItemData {
     isShalwata = json['is_shalwata'];
     productId = json['product_id'];
     quantity = json['quantity'];
-    product =
-        json['product'] != null ? ProductData.fromJson(json['product']) : null;
+    product = json['product'] != null
+        ? ProductData.fromJson(json['product'])
+        : null;
     preparation = json['preparation'] != null
         ? ExtraData.fromJson(json['preparation'])
         : null;
     size = json['size'] != null ? ExtraData.fromJson(json['size']) : null;
     cut = json['cut'] != null ? ExtraData.fromJson(json['cut']) : null;
-    shalwata =
-        json['shalwata'] != null ? ExtraData.fromJson(json['shalwata']) : null;
+    shalwata = json['shalwata'] != null
+        ? ExtraData.fromJson(json['shalwata'])
+        : null;
   }
 }
 
@@ -111,14 +116,15 @@ class CurrentCity {
   List<String>? dates;
   List<DeliveryPeriodData>? deliveryPeriod;
 
-  CurrentCity(
-      {this.id,
-      this.nameEn,
-      this.nameAr,
-      this.allowCash,
-      this.minPrice,
-      this.dates,
-      this.deliveryPeriod});
+  CurrentCity({
+    this.id,
+    this.nameEn,
+    this.nameAr,
+    this.allowCash,
+    this.minPrice,
+    this.dates,
+    this.deliveryPeriod,
+  });
 
   CurrentCity.fromJson(Map<String, dynamic> json) {
     id = json['id'];
