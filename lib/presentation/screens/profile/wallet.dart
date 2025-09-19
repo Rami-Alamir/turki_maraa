@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/profile/wallet/transaction_row.dart';
-import '../../widgets/profile/wallet/wallet_header.dart';
+import '../../widgets/profile/wallet/wallet_cards.dart';
 import '../../widgets/shared/page_builder.dart';
 import '../../widgets/shared/primary_app_bar.dart';
 import '../../../controllers/user_provider.dart';
@@ -55,7 +55,7 @@ class UserWalletState extends State<UserWallet> {
               },
               child: ListView(
                 children: [
-                  WalletHeader(currency: currency),
+                  WalletCards(currency: currency),
                   if ((userProvider.wallet?.data?.walletLogs?.length ?? 0) >
                       0) ...[
                     Padding(

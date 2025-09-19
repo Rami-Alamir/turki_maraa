@@ -17,6 +17,13 @@ class UserProvider with ChangeNotifier {
   String? _accessToken;
   RequestStatus _requestStatus = RequestStatus.isLoading;
 
+  int activeCard = 0;
+
+  void swapCards() {
+    activeCard = activeCard == 0 ? 1 : 0;
+    notifyListeners();
+  }
+
   RequestStatus get requestStatus => _requestStatus;
   Wallet? get wallet => _wallet; //used to update gender
   // int? _gender = -1;
