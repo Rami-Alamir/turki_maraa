@@ -552,7 +552,7 @@ class CartProvider with ChangeNotifier {
             total:
                 cartData?.data?.invoicePreview?.totalAmountAfterDiscount ?? 0,
           );
-          if (paymentId == 1 || paymentId == 8) {
+          if (paymentId == 1 || paymentId == 8 || paymentId == 16) {
             return 1;
           } else if (paymentId == 2) {
             arb = PaymentARB.fromJson(json.decode(response.body.toString()));

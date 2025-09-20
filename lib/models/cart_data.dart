@@ -25,7 +25,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     cart = json['cart'] != null ? Cart.fromJson(json['cart']) : null;
     customerWallet = double.parse(json['customer_wallet'] ?? "0.0");
-    cashTurki = (json['cash_turki'] ?? 0) * 1.0;
+    cashTurki = double.parse(json['cash_turki'] ?? "0.0");
     invoicePreview = json['invoice-preview'] != null
         ? InvoicePreview.fromJson(json['invoice-preview'])
         : null;

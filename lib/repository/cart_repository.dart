@@ -7,36 +7,56 @@ class CartRepository {
   final ApiBaseHelper _helper = sl<ApiBaseHelper>();
 
   Future<int> addToCart(
-      body, String authorization, LatLng latLng, String countryId) async {
+    body,
+    String authorization,
+    LatLng latLng,
+    String countryId,
+  ) async {
     final response = await _helper.post2(
-        "carts/add-to-cart-v2?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
-        body,
-        authorization: authorization);
+      "carts/add-to-cart-v2?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
+      body,
+      authorization: authorization,
+    );
     return response;
   }
 
-  Future<int> updateCartItem(body, String authorization, String id,
-      LatLng latLng, String countryId) async {
+  Future<int> updateCartItem(
+    body,
+    String authorization,
+    String id,
+    LatLng latLng,
+    String countryId,
+  ) async {
     final response = await _helper.post2(
-        "carts/update-cart/$id?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
-        body,
-        authorization: authorization);
+      "carts/update-cart/$id?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
+      body,
+      authorization: authorization,
+    );
     return response;
   }
 
   Future<int> deleteCartItem(
-      String authorization, String id, LatLng latLng, String countryId) async {
+    String authorization,
+    String id,
+    LatLng latLng,
+    String countryId,
+  ) async {
     final response = await _helper.delete(
-        "carts/delete-cart/$id?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
-        authorization: authorization);
+      "carts/delete-cart/$id?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
+      authorization: authorization,
+    );
     return response;
   }
 
   Future<CartData> getCartList(
-      String authorization, LatLng latLng, String countryId) async {
+    String authorization,
+    LatLng latLng,
+    String countryId,
+  ) async {
     final response = await _helper.get(
-        "carts?page=1&per_page=500&longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
-        authorization: authorization);
+      "carts?page=1&per_page=500&longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
+      authorization: authorization,
+    );
     CartData? cartData;
     try {
       cartData = CartData.fromJson(response);
@@ -45,11 +65,16 @@ class CartRepository {
   }
 
   Future<int> checkCoupon(
-      LatLng latLng, String countryId, body, String authorization) async {
+    LatLng latLng,
+    String countryId,
+    body,
+    String authorization,
+  ) async {
     final response = await _helper.post2(
-        "carts/check-coupon?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
-        body,
-        authorization: authorization);
+      "carts/check-coupon?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
+      body,
+      authorization: authorization,
+    );
     return response;
   }
 }
