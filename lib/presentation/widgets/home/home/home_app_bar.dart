@@ -13,11 +13,7 @@ import '../../../../core/constants/route_constants.dart';
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState>? parentScaffoldKey;
   final Color? color;
-  const HomeAppBar({
-    super.key,
-    this.parentScaffoldKey,
-    this.color,
-  });
+  const HomeAppBar({super.key, this.parentScaffoldKey, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +22,18 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: Container(
         height: SizeConfig.homeAppBarHeight,
         decoration: Theme.of(context).primaryColor == AppColors.nd94
-            ? const BoxDecoration(
-                color: AppColors.nd94,
-              )
+            ? const BoxDecoration(color: AppColors.nd94)
             : BoxDecoration(
                 color: Colors.transparent,
                 image: DecorationImage(
                   image: AssetImage(
-                      Theme.of(context).colorScheme.onSurface == AppColors.black
-                          ? FixedAssets.backgroundDark
-                          : Theme.of(context).colorScheme.onSurface ==
-                                  AppColors.clarity
-                              ? FixedAssets.backgroundClassic
-                              : FixedAssets.background),
+                    Theme.of(context).colorScheme.onSurface == AppColors.black
+                        ? FixedAssets.backgroundDark
+                        : Theme.of(context).colorScheme.onSurface ==
+                              AppColors.clarity
+                        ? FixedAssets.backgroundClassic
+                        : FixedAssets.background,
+                  ),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -47,7 +42,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             AppBar(
               backgroundColor: Colors.transparent,
-              title: const Logo(),
+              title: const Logo(type: 1, width: 200, height: 60),
               centerTitle: true,
               leading: IconButton(
                 icon: Icon(
@@ -71,7 +66,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
-                )
+                ),
               ],
               elevation: 0,
             ),
