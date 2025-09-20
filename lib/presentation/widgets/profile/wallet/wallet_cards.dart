@@ -34,9 +34,8 @@ class WalletCards extends StatelessWidget {
                 value = userProvider.wallet?.data?.wallet ?? "0";
               } else {
                 title = AppLocalizations.of(context)!.tr('cash_turki');
-                value = userProvider.wallet?.data?.wallet ?? "0";
+                value = userProvider.cashTurki?.data?.cashturki ?? "0";
               }
-
               return AnimatedPositioned(
                 key: ValueKey(type),
                 duration: const Duration(milliseconds: 350),

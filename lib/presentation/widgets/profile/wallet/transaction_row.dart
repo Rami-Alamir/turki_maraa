@@ -7,7 +7,7 @@ import '../../../../core/utilities/format_helper.dart';
 import '../../../../core/utilities/size_config.dart';
 
 class TransactionRow extends StatelessWidget {
-  final WalletLogs transaction;
+  final TransactionLogs transaction;
   final String currency;
   const TransactionRow({
     super.key,
@@ -61,7 +61,7 @@ class TransactionRow extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         SizedBox(
-                          width: SizeConfig.screenWidth! * 0.52,
+                          width: SizeConfig.screenWidth! * 0.5,
                           child: Text(
                             AppLocalizations.of(
                                       context,

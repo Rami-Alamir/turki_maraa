@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../core/utilities/dialog_helper.dart';
 import '../core/utilities/enum/request_status.dart';
+import '../models/cash_turki.dart';
 import '../models/user_data.dart';
 import '../models/wallet.dart';
 import '../repository/user_repository.dart';
@@ -13,6 +14,7 @@ class UserProvider with ChangeNotifier {
   // TextEditingController genderController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   Wallet? _wallet;
+  CashTurki? _cashTurki;
   UserData? _userData;
   String? _accessToken;
   RequestStatus _requestStatus = RequestStatus.isLoading;
@@ -25,7 +27,8 @@ class UserProvider with ChangeNotifier {
   }
 
   RequestStatus get requestStatus => _requestStatus;
-  Wallet? get wallet => _wallet; //used to update gender
+  Wallet? get wallet => _wallet;
+  CashTurki? get cashTurki => _cashTurki;
   // int? _gender = -1;
 
   UserData? get userData => _userData;
@@ -40,6 +43,7 @@ class UserProvider with ChangeNotifier {
   void updateUserData(UserData? userData) {
     if (_userData == null) {
       _wallet = null;
+      _cashTurki = null;
     }
     _userData = userData;
     _accessToken = _userData?.data?.accessToken ?? "";
@@ -75,19 +79,30 @@ class UserProvider with ChangeNotifier {
     return 1;
   }
 
-  Future<void> getWallet({bool withNotify = false}) async {
+  Future<void> getWalletAnDCashTurki({bool withNotify = false}) async {
     try {
       _requestStatus = RequestStatus.isLoading;
       if (withNotify) {
         notifyListeners();
       }
-      _wallet = await sl<UserRepository>().getWallet("Bearer $_accessToken");
-      _userData?.data?.wallet = _wallet?.data?.wallet ?? "0";
+      await Future.wait([_getCashTurki(), _getWallet()]);
       _requestStatus = RequestStatus.completed;
     } catch (_) {
       _requestStatus = RequestStatus.error;
     }
     notifyListeners();
+  }
+
+  Future<void> _getWallet() async {
+    _wallet = await sl<UserRepository>().getWallet("Bearer $_accessToken");
+    _userData?.data?.wallet = _wallet?.data?.wallet ?? "0";
+  }
+
+  Future<void> _getCashTurki() async {
+    _cashTurki = await sl<UserRepository>().getCashTurki(
+      "Bearer $_accessToken",
+    );
+    _userData?.data?.cashTurki = _cashTurki?.data?.cashturki ?? "0";
   }
 
   // void setGender(int value, BuildContext context) {

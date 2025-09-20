@@ -10,22 +10,22 @@ class Wallet {
 
 class WalletData {
   String? wallet;
-  List<WalletLogs>? walletLogs;
+  List<TransactionLogs>? walletLogs;
 
   WalletData({this.wallet, this.walletLogs});
 
   WalletData.fromJson(Map<String, dynamic> json) {
     wallet = json['wallet'];
     if (json['wallet_logs'] != null) {
-      walletLogs = <WalletLogs>[];
+      walletLogs = <TransactionLogs>[];
       json['wallet_logs'].forEach((v) {
-        walletLogs!.add(WalletLogs.fromJson(v));
+        walletLogs!.add(TransactionLogs.fromJson(v));
       });
     }
   }
 }
 
-class WalletLogs {
+class TransactionLogs {
   String? lastAmount;
   String? newAmount;
   String? action;
@@ -35,17 +35,18 @@ class WalletLogs {
   String? actionId;
   String? createdAt;
 
-  WalletLogs(
-      {this.lastAmount,
-      this.newAmount,
-      this.action,
-      this.messageAr,
-      this.messageEn,
-      this.expiryDate,
-      this.actionId,
-      this.createdAt});
+  TransactionLogs({
+    this.lastAmount,
+    this.newAmount,
+    this.action,
+    this.messageAr,
+    this.messageEn,
+    this.expiryDate,
+    this.actionId,
+    this.createdAt,
+  });
 
-  WalletLogs.fromJson(Map<String, dynamic> json) {
+  TransactionLogs.fromJson(Map<String, dynamic> json) {
     lastAmount = json['last_amount'];
     newAmount = json['new_amount'];
     action = json['action'];

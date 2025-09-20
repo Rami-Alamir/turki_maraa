@@ -82,7 +82,7 @@ class UserRepository {
 
   Future<CashTurki> getCashTurki(String authorization) async {
     final response = await _helper.get(
-      "cashturki-logs",
+      "get-customer-cashturki",
       authorization: authorization,
     );
     return CashTurki.fromJson(response);

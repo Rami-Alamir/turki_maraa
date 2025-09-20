@@ -58,7 +58,9 @@ class ProfileState extends StatelessWidget {
                     StateItem(
                       icon: FixedAssets.wallet,
                       routeName: "/UserWallet",
-                      value: double.parse(user.userData?.data?.wallet ?? "0"),
+                      value:
+                          double.parse((user.userData?.data?.wallet ?? "0")) +
+                          double.parse((user.userData?.data?.cashTurki ?? "0")),
                       title: 'credit',
                     ),
                   ],

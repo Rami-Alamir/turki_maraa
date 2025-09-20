@@ -22,7 +22,9 @@ class UserWalletState extends State<UserWallet> {
   void initState() {
     Future.delayed(Duration.zero, () async {
       if (!mounted) return;
-      await context.read<UserProvider>().getWallet();
+      await context.read<UserProvider>().getWalletAnDCashTurki(
+        withNotify: true,
+      );
     });
     super.initState();
   }
@@ -45,46 +47,92 @@ class UserWalletState extends State<UserWallet> {
           return PageBuilder(
             requestStatus: userProvider.requestStatus,
             onError: () async {
-              userProvider.getWallet(withNotify: true);
+              userProvider.getWalletAnDCashTurki(withNotify: true);
             },
             child: RefreshIndicator(
               color: Theme.of(context).colorScheme.primary,
               backgroundColor: Theme.of(context).colorScheme.primaryContainer,
               onRefresh: () async {
-                await userProvider.getWallet();
+                await userProvider.getWalletAnDCashTurki();
               },
               child: ListView(
                 children: [
                   WalletCards(currency: currency),
-                  if ((userProvider.wallet?.data?.walletLogs?.length ?? 0) >
-                      0) ...[
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        AppLocalizations.of(context)!.tr('transaction_details'),
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.displayLarge!
-                            .copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  if (userProvider.activeCard == 0) ...[
+                    if ((userProvider.wallet?.data?.walletLogs?.length ?? 0) >
+                        0) ...[
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          AppLocalizations.of(
+                            context,
+                          )!.tr('transaction_details'),
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.displayLarge!
+                              .copyWith(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
                       ),
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount:
-                          (userProvider.wallet?.data?.walletLogs?.length ?? 0),
-                      padding: const EdgeInsets.all(0),
-                      itemBuilder: (_, int index) {
-                        return TransactionRow(
-                          transaction:
-                              userProvider.wallet!.data!.walletLogs![index],
-                          currency: currency,
-                        );
-                      },
-                    ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount:
+                            (userProvider.wallet?.data?.walletLogs?.length ??
+                            0),
+                        padding: const EdgeInsets.all(0),
+                        itemBuilder: (_, int index) {
+                          return TransactionRow(
+                            transaction:
+                                userProvider.wallet!.data!.walletLogs![index],
+                            currency: currency,
+                          );
+                        },
+                      ),
+                    ],
+                  ] else ...[
+                    if ((userProvider.cashTurki?.data?.cashTurkiLogs?.length ??
+                            0) >
+                        0) ...[
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          AppLocalizations.of(
+                            context,
+                          )!.tr('transaction_details'),
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.displayLarge!
+                              .copyWith(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount:
+                            (userProvider
+                                .cashTurki
+                                ?.data
+                                ?.cashTurkiLogs
+                                ?.length ??
+                            0),
+                        padding: const EdgeInsets.all(0),
+                        itemBuilder: (_, int index) {
+                          return TransactionRow(
+                            transaction: userProvider
+                                .cashTurki!
+                                .data!
+                                .cashTurkiLogs![index],
+                            currency: currency,
+                          );
+                        },
+                      ),
+                    ],
                   ],
                 ],
               ),

@@ -1,47 +1,28 @@
+import 'wallet.dart' show TransactionLogs;
+
 class CashTurki {
-  List<Data>? data;
+  CashTurkiData? data;
 
   CashTurki({this.data});
 
   CashTurki.fromJson(Map<String, dynamic> json) {
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
-      });
-    }
+    data = json['data'] != null ? CashTurkiData.fromJson(json['data']) : null;
   }
 }
 
-class Data {
-  int? id;
-  String? lastAmount;
-  String? newAmount;
-  String? action;
-  String? messageAr;
-  String? messageEn;
-  String? expiredAt;
-  String? createdAt;
+class CashTurkiData {
+  String? cashturki;
+  List<TransactionLogs>? cashTurkiLogs;
 
-  Data({
-    this.id,
-    this.lastAmount,
-    this.newAmount,
-    this.action,
-    this.messageAr,
-    this.messageEn,
-    this.expiredAt,
-    this.createdAt,
-  });
+  CashTurkiData({this.cashturki, this.cashTurkiLogs});
 
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    lastAmount = json['last_amount'];
-    newAmount = json['new_amount'];
-    action = json['action'];
-    messageAr = json['message_ar'];
-    messageEn = json['message_en'];
-    expiredAt = json['expired_at'];
-    createdAt = json['created_at'];
+  CashTurkiData.fromJson(Map<String, dynamic> json) {
+    cashturki = json['cashturki'];
+    if (json['cashturki_logs'] != null) {
+      cashTurkiLogs = <TransactionLogs>[];
+      json['cashturki_logs'].forEach((v) {
+        cashTurkiLogs!.add(TransactionLogs.fromJson(v));
+      });
+    }
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../../core/service/service_locator.dart';
 import '../../../../core/utilities/app_localizations.dart';
+import '../../../../core/utilities/format_helper.dart';
 
 class StateItem extends StatelessWidget {
   final String? routeName;
@@ -28,7 +30,7 @@ class StateItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            convertDouble(value),
+            sl<FormatHelper>().removeTrailingZerosFromString("$value"),
             style: Theme.of(context).textTheme.titleSmall,
           ),
           Padding(
@@ -54,9 +56,5 @@ class StateItem extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String convertDouble(double value) {
-    return value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 2);
   }
 }
