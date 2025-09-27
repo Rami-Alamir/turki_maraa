@@ -109,16 +109,11 @@ class SplashState extends State<Splash> {
     bool introStatus = prefs.getBool('intro') ?? true;
 
     if (!mounted) return;
-    bool videoStatus = context.read<AppProvider>().checkVideoDate(
-      DateTime(2025, 09, 30),
-    );
     Navigator.of(context).pushNamedAndRemoveUntil(
       introStatus
           ? intro
           : internetStatus
-          ? videoStatus
-                ? videoSplash
-                : app
+          ? app
           : noInternet,
       (route) => false,
     );

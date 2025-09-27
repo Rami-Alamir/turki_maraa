@@ -60,6 +60,7 @@ dependencies:
   flutter_inappwebview: ^6.1.5
   flutter_smartlook: ^4.1.29
   adjust_sdk: ^5.4.2
+  myfatoorah_flutter: ^3.2.3
 
 #flutter_native_splash:
 #  background_image: "assets/images/ww1.png"
