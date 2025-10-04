@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/cart_provider.dart';
+import '../../../core/constants/fixed_assets.dart';
 import '../../../core/utilities/app_localizations.dart';
 import '../../../core/utilities/size_config.dart';
 import '../../../core/constants/app_colors.dart';
@@ -9,6 +11,7 @@ class PaymentMethodItem extends StatelessWidget {
   final int selectedValue;
   final String title;
   final String subtitle;
+  final bool isApplePay;
   final IconData icon;
   final EdgeInsetsDirectional padding;
 
@@ -19,6 +22,7 @@ class PaymentMethodItem extends StatelessWidget {
     required this.subtitle,
     required this.icon,
     this.padding = const EdgeInsetsDirectional.fromSTEB(15.0, 15, 0, 0),
+    this.isApplePay = false,
   });
 
   @override
@@ -45,69 +49,84 @@ class PaymentMethodItem extends StatelessWidget {
                   : Theme.of(context).colorScheme.outline,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: 45,
-                  width: 45,
-                  margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                  decoration: BoxDecoration(
-                    color: selected ? AppColors.purple2 : AppColors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    icon,
-                    size: 40,
-                    color: selected ? AppColors.white : AppColors.black,
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: SizeConfig.setWidgetWidth(95, 130, 130),
-                      child: Text(
-                        AppLocalizations.of(context)!.tr(title),
-                        maxLines: 2,
-                        style: Theme.of(context).textTheme.displayLarge!
-                            .copyWith(
-                              fontSize: 11,
-                              height: 1.5,
-                              fontWeight: FontWeight.bold,
-                              color: selected
-                                  ? AppColors.white
-                                  : Theme.of(context)
-                                        .textTheme
-                                        .displayLarge!
-                                        .color!
-                                        .withValues(alpha: 0.6),
-                            ),
+            child: isApplePay
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        FixedAssets.applepay,
+                        height: 40,
+                        width: 40,
+                        colorFilter: ColorFilter.mode(
+                          selected ? Colors.white : Colors.black,
+                          BlendMode.srcIn,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: SizeConfig.setWidgetWidth(90, 120, 120),
-                      child: Text(
-                        AppLocalizations.of(context)!.tr(subtitle),
-                        style: Theme.of(context).textTheme.headlineSmall!
-                            .copyWith(
-                              fontSize: 8,
-                              fontWeight: FontWeight.normal,
-                              height: 2,
-                              color: selected
-                                  ? AppColors.white
-                                  : Theme.of(
-                                      context,
-                                    ).textTheme.headlineSmall!.color,
-                            ),
+                    ],
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 45,
+                        width: 45,
+                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                        decoration: BoxDecoration(
+                          color: selected ? AppColors.purple2 : AppColors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          icon,
+                          size: 40,
+                          color: selected ? AppColors.white : AppColors.black,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: SizeConfig.setWidgetWidth(95, 130, 130),
+                            child: Text(
+                              AppLocalizations.of(context)!.tr(title),
+                              maxLines: 2,
+                              style: Theme.of(context).textTheme.displayLarge!
+                                  .copyWith(
+                                    fontSize: 11,
+                                    height: 1.5,
+                                    fontWeight: FontWeight.bold,
+                                    color: selected
+                                        ? AppColors.white
+                                        : Theme.of(context)
+                                              .textTheme
+                                              .displayLarge!
+                                              .color!
+                                              .withValues(alpha: 0.6),
+                                  ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: SizeConfig.setWidgetWidth(90, 120, 120),
+                            child: Text(
+                              AppLocalizations.of(context)!.tr(subtitle),
+                              style: Theme.of(context).textTheme.headlineSmall!
+                                  .copyWith(
+                                    fontSize: 8,
+                                    fontWeight: FontWeight.normal,
+                                    height: 2,
+                                    color: selected
+                                        ? AppColors.white
+                                        : Theme.of(
+                                            context,
+                                          ).textTheme.headlineSmall!.color,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
           ),
         );
       },

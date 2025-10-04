@@ -8,8 +8,10 @@ class PaymentRepository {
 
   Future<dynamic> updateOrderPayment(body, String authorization) async {
     final response = await _helper.post4(
-        "customers/tabby-manual-payment/updatev2", json.encode(body),
-        authorization: authorization);
+      "customers/tabby-manual-payment/updatev2",
+      json.encode(body),
+      authorization: authorization,
+    );
     return response;
   }
 

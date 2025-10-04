@@ -45,15 +45,14 @@ class PaymentMethod extends StatelessWidget {
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
                 child: Wrap(
                   children: [
-                    if (cartProvider.cashAvailable &&
-                        !cartProvider.useCredit &&
-                        !cartProvider.useCashTurki &&
-                        !cartProvider.isAdhia)
+                    if (cartProvider.applePayAvailable &&
+                        cartProvider.isoCountryCode == "SA")
                       const PaymentMethodItem(
-                        selectedValue: 1,
-                        title: 'cod',
-                        subtitle: 'cod_description',
-                        icon: TURKIICONS.cart_cash_uncolored,
+                        selectedValue: 17,
+                        isApplePay: true,
+                        title: 'applepay',
+                        subtitle: 'applepay',
+                        icon: TURKIICONS.cart_online_uncolored,
                       ),
                     if (cartProvider.onlineAvailable)
                       const PaymentMethodItem(
@@ -85,6 +84,16 @@ class PaymentMethod extends StatelessWidget {
                         selectedValue: 7,
                         title: 'tabby_desc',
                         logo: FixedAssets.tabby,
+                      ),
+                    if (cartProvider.cashAvailable &&
+                        !cartProvider.useCredit &&
+                        !cartProvider.useCashTurki &&
+                        !cartProvider.isAdhia)
+                      const PaymentMethodItem(
+                        selectedValue: 1,
+                        title: 'cod',
+                        subtitle: 'cod_description',
+                        icon: TURKIICONS.cart_cash_uncolored,
                       ),
                   ],
                 ),

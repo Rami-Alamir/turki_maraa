@@ -19,6 +19,7 @@ class FixedAssets {
   static const String turkiLogo = 'assets/images/logo2.png';
   static const String turkiLogoHome = 'assets/images/turki_home.png';
   static const String tabby = "assets/images/tabby.png";
+  static const String applepay = "assets/images/applepay.svg";
   static const String tamaraAr = "assets/images/tamara_ar.png";
   static const String tamaraEn = "assets/images/tamara_en.png";
   static const String turkiCar = 'assets/images/turki_car.png';

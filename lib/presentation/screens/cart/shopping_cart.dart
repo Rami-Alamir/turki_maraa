@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smartlook/flutter_smartlook.dart';
+import 'package:myfatoorah_flutter/myfatoorah_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/cart/cart_bottom_sheet.dart';
 import '../../widgets/cart/cart_items_list.dart';
@@ -37,6 +40,13 @@ class ShoppingCartState extends State<ShoppingCart> {
         context.read<AppProvider>().adhaConfig?.categoryId ?? 0;
     Smartlook.instance.trackEvent(Constants.smartlookShowCart);
     AdjustHelper().pushAdjustEvents(eventToken: Constants.adjustBeginCheckout);
+    if (Platform.isIOS) {
+      MFSDK.init(
+        Constants.myFatoorahApiKey,
+        MFCountry.SAUDIARABIA,
+        MFEnvironment.LIVE,
+      );
+    }
     super.initState();
   }
 

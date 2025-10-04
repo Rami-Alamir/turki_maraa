@@ -1,6 +1,6 @@
 class Constants {
   Constants._();
-  static const String appVersion = "6.30.1";
+  static const String appVersion = "6.31.0";
   // static const String baseUrl =
   //     'https://almaraacompany.com/dashboard-api/api/v2/';
 
@@ -12,6 +12,9 @@ class Constants {
   static const String tabbyApiKey = 'sk_bf118569-54a4-4433-9259-345a44937c53';
   static const String tabbyMerchantCodeSA = 'TD_APP';
   static const String tabbyMerchantCodeAE = 'TD_APPAE';
+  static const String myFatoorahApiKey =
+      "b9GUEu3nRvdp9T0CgMVQD7nrbySRW3bCkWEwTBXLK4S7C1GGPFFX8LThwyz3pr3D2nyOCnWTAp4pWz9BBNTCzKcioSIqzQ8qsUKTjvWSEmrA8hsaMd-XarT3mUnHmuGFZ5ZDA0B-mdtZ7PzGneRRliPlRrcbvFbjJQVNnYAmZ8fP-vIwYeSI0xekQ4babTHTLGUyTtL1-Q2mx3XIKqS0ONv4j1yTSfG2P-hxRQzTYFkxwhlS1bqWVfq7owMZmiWqh9Fjr40mbOnGgdJu-yVXywR2a2Lt4iiNgcsMjTu_zxFxjzb7G04e5ybnD7DUVXLdSVh5aJHY4niOinjuNA2e3tOvR_5VTw69ECAol6Jj6d7ERrTDkDxVuwyqOz1Vb-skEwhbMEnFjNaZv_JBTzmd2clCKeONPtW3qxKPvifOCeHV_6pxHzcGI6bHWxQjdSPSn1K6lZkXAf9qmVTx5pJWC0HuWcS1Z1d4mx9zNXMqiV_qZEj6ZGxRjpxbHe6mWPfWJ0Vq7S_BQM0tHvxiHjghWZc_4xG7WcvgDgtJHv7pYqR4Q9IUva37iO8A5fQVtpkK8BJMgYPjzX_PrP1dgw16AMGoUYD2_tpV_KAyjhOJfsTVj9S4myl8g_CbSyZfo_yePLXBqnSYVrWeXuLbN9ysd7vxWo3kRWMZeyeaXNOJ_5pyjB-f";
+
   static const String fontFamily = "Turki";
   static const String shareUrl = 'https://onelink.to/turkidabayeh';
   static const String privacyPolicy =
