@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,7 @@ import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import 'min_value_indicator.dart';
 import '../shared/invoice.dart';
 import '../shared/rounded_rectangle_button.dart';
+import '../../../controllers/auth.dart';
 import '../../../controllers/app_provider.dart';
 import '../../../controllers/cart_provider.dart';
 import '../../../controllers/address_provider.dart';
@@ -28,6 +30,20 @@ class CartBottomSheet extends StatefulWidget {
 
 class CartBottomSheetState extends State<CartBottomSheet> {
   bool _isExpanded = true;
+
+  @override
+  void initState() {
+    if (Platform.isIOS) {
+      context.read<CartProvider>().initMyFatoorahButton();
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await context.read<CartProvider>().initiateApplePayPayment(
+          userId: "${context.read<Auth>().userData?.data?.id}",
+          isAr: AppLocalizations.of(context)?.locale?.languageCode == "ar",
+        );
+      });
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +184,7 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                                         bottom: 5.0,
                                       ),
                                       child: Text(
-                                        '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros(((total - myCredit - cashTurki) > 0 ? total - myCredit - cashTurki : 0))} $currency',
+                                        '${sl<FormatHelper>().formatDecimalAndRemoveTrailingZeros((cartProvider.cartValue()))} $currency',
                                         style: Theme.of(context)
                                             .textTheme
                                             .displayMedium!
@@ -209,70 +225,85 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                               ),
                             ],
                           ),
-                    RoundedRectangleButton(
-                      title: AppLocalizations.of(context)!.tr('place_order'),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 5,
-                      ),
-                      fontSize: 16,
-                      onPressed: total >= min
-                          ? () async {
-                              final AddressProvider addressProvider =
-                                  Provider.of<AddressProvider>(
-                                    context,
-                                    listen: false,
-                                  );
-                              addressProvider.validateAddressId(
-                                context
-                                    .read<LocationProvider>()
-                                    .customerLocationId,
-                              );
-                              FirebaseHelper().pushAnalyticsEvent(
-                                name: "purchase",
-                                value: sl<GetStrings>().getPaymentName(
-                                  cartProvider.selectedPayment,
-                                ),
-                              );
-                              int statusCode = await cartProvider.placeOrder(
-                                context: context,
-                                currency: currency,
-                                dates: context
-                                    .read<AppProvider>()
-                                    .adhaConfig
-                                    ?.dates,
-                                cutStatus: context
-                                    .read<AppProvider>()
-                                    .adhaConfig
-                                    ?.cutStatus,
-                                cutId: context
-                                    .read<AppProvider>()
-                                    .adhaConfig
-                                    ?.cutId,
-                                addressId:
-                                    addressProvider.selectedAddress == -1 ||
-                                        addressProvider.selectedAddress == -2
-                                    ? -1
-                                    : addressProvider
-                                          .userAddress!
-                                          .data![addressProvider
-                                              .selectedAddress]
-                                          .id!,
-                                language:
-                                    AppLocalizations.of(
+                    cartProvider.checkApplePayStatus()
+                        ? Container(
+                            height: 50,
+                            margin: const EdgeInsets.all(15),
+                            child: cartProvider.mfApplePayButton,
+                          )
+                        : RoundedRectangleButton(
+                            title: AppLocalizations.of(
+                              context,
+                            )!.tr('place_order'),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 5,
+                            ),
+                            fontSize: 16,
+                            onPressed: total >= min
+                                ? () async {
+                                    final AddressProvider addressProvider =
+                                        Provider.of<AddressProvider>(
                                           context,
-                                        )!.locale!.languageCode ==
-                                        "en"
-                                    ? Lang.en
-                                    : Lang.ar,
-                              );
+                                          listen: false,
+                                        );
+                                    addressProvider.validateAddressId(
+                                      context
+                                          .read<LocationProvider>()
+                                          .customerLocationId,
+                                    );
+                                    FirebaseHelper().pushAnalyticsEvent(
+                                      name: "purchase",
+                                      value: sl<GetStrings>().getPaymentName(
+                                        cartProvider.selectedPayment,
+                                      ),
+                                    );
+                                    int
+                                    statusCode = await cartProvider.placeOrder(
+                                      context: context,
+                                      currency: currency,
+                                      dates: context
+                                          .read<AppProvider>()
+                                          .adhaConfig
+                                          ?.dates,
+                                      cutStatus: context
+                                          .read<AppProvider>()
+                                          .adhaConfig
+                                          ?.cutStatus,
+                                      cutId: context
+                                          .read<AppProvider>()
+                                          .adhaConfig
+                                          ?.cutId,
+                                      addressId:
+                                          addressProvider.selectedAddress ==
+                                                  -1 ||
+                                              addressProvider.selectedAddress ==
+                                                  -2
+                                          ? -1
+                                          : addressProvider
+                                                .userAddress!
+                                                .data![addressProvider
+                                                    .selectedAddress]
+                                                .id!,
+                                      language:
+                                          AppLocalizations.of(
+                                                context,
+                                              )!.locale!.languageCode ==
+                                              "en"
+                                          ? Lang.en
+                                          : Lang.ar,
+                                    );
 
-                              if (context.mounted) {
-                                await action(context, statusCode, cartProvider);
-                              }
-                            }
-                          : null,
-                    ),
+                                    if (context.mounted) {
+                                      await action(
+                                        context,
+                                        statusCode,
+                                        cartProvider,
+                                      );
+                                    }
+                                  }
+                                : null,
+                          ),
                   ],
                 ),
               );
