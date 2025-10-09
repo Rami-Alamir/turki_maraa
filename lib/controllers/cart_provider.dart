@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:myfatoorah_flutter/myfatoorah_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import 'package:crypto/crypto.dart';
+import '../core/constants/route_constants.dart';
 import 'address_provider.dart';
 import '../presentation/widgets/dialog/message_dialog.dart';
 import '../models/payment_types.dart';
@@ -35,13 +38,18 @@ import '../repository/payment_repository.dart';
 import '../repository/tabby_repository.dart';
 
 class CartProvider with ChangeNotifier {
+  BuildContext? context;
+  int? addressId;
   final ScrollController _scrollController = ScrollController();
   TextEditingController noteController = TextEditingController();
   TextEditingController promoCodeController = TextEditingController();
   RequestStatus _requestStatus = RequestStatus.isLoading;
   int _adhaCategoryId = 0;
   bool _isAdhia = false;
-
+  bool _isAr = true;
+  String _userId = "0";
+  MFApplePayButton? mfApplePayButton;
+  String? _applePayInvoiceId;
   final List<DeliveryPeriodData> _adhiaDeliveryDataTimeSa = [
     DeliveryPeriodData(
       id: 13,
@@ -94,6 +102,7 @@ class CartProvider with ChangeNotifier {
   int _selectedTime = -1;
   int _cartLength = 0;
   bool _isAuth = false;
+  bool _applePayAvailable = true;
   bool _cashAvailable = true;
   bool _onlineAvailable = true;
   bool _tamaraAvailable = true;
@@ -132,6 +141,9 @@ class CartProvider with ChangeNotifier {
   PaymentTypes? get paymentTypes => _paymentTypes;
   bool get isAdhia => _isAdhia;
   bool get cashAvailable => _cashAvailable;
+
+  bool get applePayAvailable => _applePayAvailable;
+
   List<DeliveryPeriodData> get adhiaDeliveryDataTime => _isoCountryCode == "AE"
       ? _adhiaDeliveryDataTimeUae
       : _adhiaDeliveryDataTimeSa;
@@ -146,6 +158,8 @@ class CartProvider with ChangeNotifier {
   }
 
   set ussCashTurki(bool value) {
+    initMyFatoorahButton();
+    initiateApplePayPayment();
     _useCashTurki = value;
     if (!value && selectedPayment == 16) {
       _selectedPayment = -1;
@@ -163,6 +177,8 @@ class CartProvider with ChangeNotifier {
   }
 
   set usMyCredit(bool value) {
+    initMyFatoorahButton();
+    initiateApplePayPayment();
     _useCredit = value;
     if (!value && selectedPayment == 8) {
       _selectedPayment = -1;
@@ -420,6 +436,7 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> _getPaymentTypes() async {
+    _applePayAvailable = true;
     _cashAvailable = true;
     _onlineAvailable = true;
     _tabbyAvailable = true;
@@ -443,6 +460,13 @@ class CartProvider with ChangeNotifier {
         if (paymentTypes!.data![i].id == 7 &&
             paymentTypes!.data![i].active == 0) {
           _tabbyAvailable = false;
+        }
+        if (paymentTypes!.data![i].id == 17 &&
+            paymentTypes!.data![i].active == 0) {
+          _applePayAvailable = false;
+        } else if (Platform.isIOS) {
+          mfApplePayButton?.applePayStyle?.height = 50;
+          _selectedPayment = 17;
         }
       }
     }
@@ -529,6 +553,7 @@ class CartProvider with ChangeNotifier {
             // "delivery_period_id": _deliveryPeriod!.data![_selectedTime].id,
             "using_wallet": _useCredit,
             "use_cash_turki": _useCashTurki ? 1 : 0,
+            if (_selectedPayment == 17) "paymentId": "$_applePayInvoiceId",
             if (_selectedPayment == 4)
               "tamara_payment_name": "PAY_BY_INSTALMENTS",
             if (_selectedPayment == 4) "no_instalments": 3,
@@ -546,12 +571,15 @@ class CartProvider with ChangeNotifier {
             name: "notes",
             value: noteController.text,
           );
-
           _adjustPurchaseEvents(
             currency: currency,
             total:
                 cartData?.data?.invoicePreview?.totalAmountAfterDiscount ?? 0,
           );
+          if (paymentId == 17) {
+            print('apple pay 17');
+            return 1;
+          }
           if (paymentId == 1 || paymentId == 8 || paymentId == 16) {
             return 1;
           } else if (paymentId == 2) {
@@ -578,6 +606,69 @@ class CartProvider with ChangeNotifier {
       }
     }
     return -1;
+  }
+
+  Future<void> placeApplePayOrder({
+    required BuildContext context,
+    required int addressId,
+  }) async {
+    bool status = false;
+    print("place apple pay order");
+    sl<DialogHelper>().showIndicatorDialog(context);
+    http.Response response;
+    try {
+      if (addressId == -1) {
+        final AddressProvider addressProvider = Provider.of<AddressProvider>(
+          context,
+          listen: false,
+        );
+        await addressProvider.addNewAddress(
+          context,
+          latLng: _latLng,
+          isoCountryCode: _isoCountryCode,
+        );
+        addressId = addressProvider.userAddress!.data!.last.id!;
+      }
+      DateFormat format = DateFormat('yyyy-MM-dd');
+      response = await sl<OrderRepository>().placeOrder(
+        {
+          "delivery_date": format.format(deliveryDataTime[_selectedDate]),
+          "delivery_period_id": isAdhia
+              ? adhiaDeliveryDataTime[_selectedTime].id
+              : _deliveryPeriod!.data![_selectedTime].id,
+          "using_wallet": _useCredit,
+          "use_cash_turki": _useCashTurki ? 1 : 0,
+          "paymentId": "$_applePayInvoiceId",
+          "comment": " ${noteController.text}",
+          "payment_type_id": _selectedPayment,
+          "address_id": addressId,
+        },
+        _authorization!,
+        _latLng!,
+        _isoCountryCode!,
+      );
+      if (response.statusCode == 200) {
+        FirebaseHelper().pushAnalyticsEvent(
+          name: "notes",
+          value: noteController.text,
+        );
+        _adjustPurchaseEvents(
+          currency: "SAR",
+          total: cartData?.data?.invoicePreview?.totalAmountAfterDiscount ?? 0,
+        );
+        status = true;
+      }
+    } catch (_) {
+      status = false;
+    }
+    if (context.mounted) {
+      clearCart();
+      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.of(
+        context,
+        rootNavigator: true,
+      ).pushNamed(orderStatus, arguments: status);
+    }
   }
 
   Future<void> initTabby(Lang language) async {
@@ -714,6 +805,31 @@ class CartProvider with ChangeNotifier {
     return true;
   }
 
+  bool checkApplePayStatus() {
+    if (_applePayAvailable) {
+      if (_isoCountryCode != "SA") {
+        return false;
+      }
+      if (_selectedPayment != 17) {
+        return false;
+      }
+      if (!Platform.isIOS) {
+        return false;
+      }
+      if (_selectedDate == -1) {
+        return false;
+      }
+      if (_selectedTime == -1) {
+        return false;
+      }
+      if (_selectedPayment == -1) {
+        return false;
+      }
+      return true;
+    }
+    return false;
+  }
+
   // animate scrollController to required fields and show message
   void animateScrollController(BuildContext context, double offset) {
     _scrollController.animateTo(
@@ -806,5 +922,71 @@ class CartProvider with ChangeNotifier {
     required double total,
   }) {
     AdjustHelper().pushAdjustPurchaseEvents(total: total, currency: currency);
+  }
+
+  void initMyFatoorahButton() {
+    mfApplePayButton ??= MFApplePayButton(applePayStyle: MFApplePayStyle());
+    mfApplePayButton?.applePayStyle?.height = 50;
+    mfApplePayButton?.applePayStyle?.buttonText = '';
+  }
+
+  Future<void> initiateApplePayPayment({String? userId, bool? isAr}) async {
+    _applePayInvoiceId = null;
+    if (userId != null) {
+      _userId = userId;
+      _isAr = isAr!;
+    }
+    print('initiateApplePayPayment');
+    MFInitiateSessionRequest request = MFInitiateSessionRequest(
+      customerIdentifier: _userId,
+    );
+    try {
+      MFInitiateSessionResponse session = await MFSDK.initSession(
+        request,
+        _isAr ? MFLanguage.ARABIC : MFLanguage.ENGLISH,
+      );
+      print("session.sessionId");
+      print(session.sessionId);
+      await _applePayPayment(session, _isAr);
+    } catch (error) {
+      print("initiateApplePayPayment error");
+      print(error.toString());
+    }
+  }
+
+  Future<void> _applePayPayment(
+    MFInitiateSessionResponse session,
+    bool isAr,
+  ) async {
+    print('_applePayPayment');
+    MFExecutePaymentRequest executePaymentRequest = MFExecutePaymentRequest(
+      invoiceValue: cartValue(),
+    );
+    executePaymentRequest.displayCurrencyIso = MFCurrencyISO.SAUDIARABIA_SAR;
+    try {
+      await mfApplePayButton?.applePayPayment(
+        executePaymentRequest,
+        isAr ? MFLanguage.ARABIC : MFLanguage.ENGLISH,
+        (invoiceId) {
+          _applePayInvoiceId = invoiceId;
+          debugPrint("✅ Apple Pay Success - Invoice ID: $invoiceId");
+        },
+      );
+    } catch (error) {
+      print("❌ Apple Pay Payment Failed: ${error.toString()}");
+    }
+    if (_applePayInvoiceId != null) {
+      await placeApplePayOrder(context: context!, addressId: addressId!);
+    }
+  }
+
+  double cartValue() {
+    final double total =
+        cartData!.data!.invoicePreview!.totalAmountAfterDiscount!;
+    final double myCredit = useCredit ? cartData!.data!.customerWallet! : 0;
+    final double cashTurki = useCashTurki ? cartData!.data!.cashTurki! : 0;
+    return ((total - myCredit - cashTurki) > 0
+        ? total - myCredit - cashTurki
+        : 0);
   }
 }

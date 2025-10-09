@@ -101,7 +101,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0B7134572D233BE4002A496A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		0B7134572D233BE4002A496A /* Exceptions for "ImageNotification" folder in "ImageNotification" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -111,7 +111,18 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0B71344C2D233BE4002A496A /* ImageNotification */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0B7134572D233BE4002A496A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = ImageNotification; sourceTree = "<group>"; };
+		0B71344C2D233BE4002A496A /* ImageNotification */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0B7134572D233BE4002A496A /* Exceptions for "ImageNotification" folder in "ImageNotification" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = ImageNotification;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -748,18 +759,18 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 970;
+				CURRENT_PROJECT_VERSION = 971;
 				DEVELOPMENT_TEAM = MM3S34CZBC;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 970;
-				FLUTTER_BUILD_NUMBER = 970;
+				FLUTTER_BUILD_NAME = 971;
+				FLUTTER_BUILD_NUMBER = 971;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 970;
+				MARKETING_VERSION = 971;
 				PRODUCT_BUNDLE_IDENTIFIER = com.digishapes.turkieshop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -940,18 +951,18 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 970;
+				CURRENT_PROJECT_VERSION = 971;
 				DEVELOPMENT_TEAM = MM3S34CZBC;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 970;
-				FLUTTER_BUILD_NUMBER = 970;
+				FLUTTER_BUILD_NAME = 971;
+				FLUTTER_BUILD_NUMBER = 971;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 970;
+				MARKETING_VERSION = 971;
 				PRODUCT_BUNDLE_IDENTIFIER = com.digishapes.turkieshop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -971,18 +982,18 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 970;
+				CURRENT_PROJECT_VERSION = 971;
 				DEVELOPMENT_TEAM = MM3S34CZBC;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 970;
-				FLUTTER_BUILD_NUMBER = 970;
+				FLUTTER_BUILD_NAME = 971;
+				FLUTTER_BUILD_NUMBER = 971;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 970;
+				MARKETING_VERSION = 971;
 				PRODUCT_BUNDLE_IDENTIFIER = com.digishapes.turkieshop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

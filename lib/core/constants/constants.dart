@@ -1,6 +1,6 @@
 class Constants {
   Constants._();
-  static const String appVersion = "6.31.0";
+  static const String appVersion = "6.32.0";
   // static const String baseUrl =
   //     'https://almaraacompany.com/dashboard-api/api/v2/';
 

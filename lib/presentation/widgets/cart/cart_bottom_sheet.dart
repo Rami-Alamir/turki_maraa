@@ -55,6 +55,21 @@ class CartBottomSheetState extends State<CartBottomSheet> {
       },
       child: Consumer<CartProvider>(
         builder: (_, cartProvider, _) {
+          cartProvider.initMyFatoorahButton();
+          final AddressProvider addressProvider = Provider.of<AddressProvider>(
+            context,
+            listen: false,
+          );
+          cartProvider.context = context;
+          cartProvider.addressId =
+              addressProvider.selectedAddress == -1 ||
+                  addressProvider.selectedAddress == -2
+              ? -1
+              : addressProvider
+                    .userAddress!
+                    .data![addressProvider.selectedAddress]
+                    .id!;
+
           String currency = sl<GetStrings>().getCurrency(
             AppLocalizations.of(context)!.locale!.languageCode,
             context.read<LocationProvider>().isoCountryCode!,
@@ -229,7 +244,10 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                         ? Container(
                             height: 50,
                             margin: const EdgeInsets.all(15),
-                            child: cartProvider.mfApplePayButton,
+                            child: SizedBox(
+                              height: 50,
+                              child: cartProvider.mfApplePayButton,
+                            ),
                           )
                         : RoundedRectangleButton(
                             title: AppLocalizations.of(
