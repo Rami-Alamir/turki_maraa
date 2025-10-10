@@ -153,6 +153,8 @@ class CartProvider with ChangeNotifier {
   }
 
   set setSelectedDate(int value) {
+    initMyFatoorahButton();
+    initiateApplePayPayment();
     _selectedDate = value;
     notifyListeners();
   }
@@ -310,6 +312,8 @@ class CartProvider with ChangeNotifier {
       );
       if (response == 200) {
         await getCartData();
+        initMyFatoorahButton();
+        initiateApplePayPayment();
         return true;
       }
     } catch (_) {}
@@ -333,6 +337,8 @@ class CartProvider with ChangeNotifier {
       );
       if (response == 200) {
         await getCartData();
+        initMyFatoorahButton();
+        initiateApplePayPayment();
         return true;
       }
     } catch (_) {}
@@ -577,7 +583,6 @@ class CartProvider with ChangeNotifier {
                 cartData?.data?.invoicePreview?.totalAmountAfterDiscount ?? 0,
           );
           if (paymentId == 17) {
-            print('apple pay 17');
             return 1;
           }
           if (paymentId == 1 || paymentId == 8 || paymentId == 16) {
@@ -613,7 +618,6 @@ class CartProvider with ChangeNotifier {
     required int addressId,
   }) async {
     bool status = false;
-    print("place apple pay order");
     sl<DialogHelper>().showIndicatorDialog(context);
     http.Response response;
     try {
@@ -936,7 +940,6 @@ class CartProvider with ChangeNotifier {
       _userId = userId;
       _isAr = isAr!;
     }
-    print('initiateApplePayPayment');
     MFInitiateSessionRequest request = MFInitiateSessionRequest(
       customerIdentifier: _userId,
     );
@@ -945,20 +948,14 @@ class CartProvider with ChangeNotifier {
         request,
         _isAr ? MFLanguage.ARABIC : MFLanguage.ENGLISH,
       );
-      print("session.sessionId");
-      print(session.sessionId);
       await _applePayPayment(session, _isAr);
-    } catch (error) {
-      print("initiateApplePayPayment error");
-      print(error.toString());
-    }
+    } catch (_) {}
   }
 
   Future<void> _applePayPayment(
     MFInitiateSessionResponse session,
     bool isAr,
   ) async {
-    print('_applePayPayment');
     MFExecutePaymentRequest executePaymentRequest = MFExecutePaymentRequest(
       invoiceValue: cartValue(),
     );
@@ -972,9 +969,7 @@ class CartProvider with ChangeNotifier {
           debugPrint("✅ Apple Pay Success - Invoice ID: $invoiceId");
         },
       );
-    } catch (error) {
-      print("❌ Apple Pay Payment Failed: ${error.toString()}");
-    }
+    } catch (_) {}
     if (_applePayInvoiceId != null) {
       await placeApplePayOrder(context: context!, addressId: addressId!);
     }

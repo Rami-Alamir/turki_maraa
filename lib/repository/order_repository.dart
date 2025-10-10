@@ -9,25 +9,34 @@ class OrderRepository {
   final ApiBaseHelper _helper = sl<ApiBaseHelper>();
 
   Future<dynamic> placeOrder(
-      body, String authorization, LatLng latLng, String countryId) async {
+    body,
+    String authorization,
+    LatLng latLng,
+    String countryId,
+  ) async {
     final response = await _helper.post4(
-        "orders/add-order?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
-        json.encode(body),
-        authorization: authorization);
+      "orders/add-order?longitude=${latLng.longitude}&latitude=${latLng.latitude}&countryId=$countryId",
+      json.encode(body),
+      authorization: authorization,
+    );
     return response;
   }
 
   Future<OrdersData> getOrdersList(String authorization) async {
-    final response =
-        await _helper.get("orders/get-order", authorization: authorization);
+    final response = await _helper.get(
+      "orders/get-order",
+      authorization: authorization,
+    );
     OrdersData ordersData;
     ordersData = OrdersData.fromJson(response);
     return ordersData;
   }
 
   Future<OrderModel> getOrderData(String id, String authorization) async {
-    final response = await _helper.get("orders/get-one-order/$id",
-        authorization: authorization);
+    final response = await _helper.get(
+      "orders/get-one-order/$id",
+      authorization: authorization,
+    );
     OrderModel? orderData;
     orderData = OrderModel.fromJson(response);
     return orderData;

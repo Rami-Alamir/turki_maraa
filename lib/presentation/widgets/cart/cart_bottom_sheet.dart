@@ -55,7 +55,6 @@ class CartBottomSheetState extends State<CartBottomSheet> {
       },
       child: Consumer<CartProvider>(
         builder: (_, cartProvider, _) {
-          cartProvider.initMyFatoorahButton();
           final AddressProvider addressProvider = Provider.of<AddressProvider>(
             context,
             listen: false,
@@ -244,9 +243,15 @@ class CartBottomSheetState extends State<CartBottomSheet> {
                         ? Container(
                             height: 50,
                             margin: const EdgeInsets.all(15),
-                            child: SizedBox(
-                              height: 50,
-                              child: cartProvider.mfApplePayButton,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                  child: cartProvider.mfApplePayButton,
+                                ),
+                              ],
                             ),
                           )
                         : RoundedRectangleButton(
